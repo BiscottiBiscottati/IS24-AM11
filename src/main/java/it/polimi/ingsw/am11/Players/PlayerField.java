@@ -10,11 +10,7 @@ public class PlayerField {
     private EnumMap exposedSymbols;
     private EnumMap placedCardColours;
 
-    public PlayerField(HashMap cardsPositioned, EnumMap exposedColours, EnumMap exposedSymbols, EnumMap placedCardColours) {
-        this.cardsPositioned = cardsPositioned;
-        this.exposedColours = exposedColours;
-        this.exposedSymbols = exposedSymbols;
-        this.placedCardColours = placedCardColours;
+    public PlayerField() {
     }
 
     public HashMap getCardsPositioned() {

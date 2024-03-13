@@ -6,13 +6,15 @@ import it.polimi.ingsw.am11.Cards.ObjectiveCardType;
 import java.util.ArrayList;
 
 public class PersonalSpace {
-
+    static {
+        maxHandCards = getMaxHand;
+    }
+    private static final int maxHandCards;
     private ArrayList playerHand;
     private ObjectiveCard playerObjective;
 
-    public PersonalSpace(ArrayList playerHand, ObjectiveCard playerObjective) {
-        this.playerHand = playerHand;
-        this.playerObjective = playerObjective;
+    public PersonalSpace() {
+        playerHand = new ArrayList();
     }
 
     public ArrayList getPlayerHand() {
@@ -21,5 +23,9 @@ public class PersonalSpace {
 
     public ObjectiveCard getPlayerObjective() {
         return playerObjective;
+    }
+
+    public void addCardToHand(){
+
     }
 }
