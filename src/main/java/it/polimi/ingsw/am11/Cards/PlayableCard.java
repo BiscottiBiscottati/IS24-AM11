@@ -28,18 +28,22 @@ public abstract class PlayableCard {
 
     public abstract PointsRequirementsType getPointsRequirements();
 
-    public abstract Optional<Item> checkItemCorner();
+    public abstract Optional<Item> checkItemCorner(Corner corner);
 
-    public static abstract class Builder {
-        int cardPoints;
-        Color cardPrimaryColor;
+    public abstract Optional<Symbol> getSymbolToCollect();
 
-        public void hasColor(Color color) {
+    public abstract static class Builder {
+        protected int cardPoints;
+        protected Color cardPrimaryColor;
+
+        public Builder hasColor(Color color) {
             this.cardPrimaryColor = color;
+            return this;
         }
 
-        public void hasPoints(int points) {
+        public Builder hasPoints(int points) {
             this.cardPoints = points;
+            return this;
         }
 
         public abstract PlayableCard build();

@@ -12,6 +12,7 @@ module it.polimi.ingsw.am11 {
     requires com.almasb.fxgl.all;
 
     requires java.sql;
+    requires annotations;
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
     exports it.polimi.ingsw.am11;
