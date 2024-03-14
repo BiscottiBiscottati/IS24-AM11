@@ -10,9 +10,9 @@ module it.polimi.ingsw.am11 {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires org.jetbrains.annotations;
 
     requires java.sql;
-    requires annotations;
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
     exports it.polimi.ingsw.am11;
