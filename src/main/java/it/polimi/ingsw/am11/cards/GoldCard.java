@@ -13,7 +13,7 @@ public class GoldCard extends PlayableCard {
     private final Symbol symbolToCollect;
 
     private GoldCard(@NotNull Builder builder) {
-        super(builder.primaryColor, builder.cardPoints);
+        super(builder);
         this.availableCorners = builder.availableCorners;
         this.colorPlacingRequirements = builder.colorPlacingRequirements;
         this.pointsRequirements = builder.pointsRequirements;

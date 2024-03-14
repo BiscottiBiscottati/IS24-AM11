@@ -9,9 +9,9 @@ public abstract class PlayableCard {
     final Color color;
     final int points;
 
-    protected PlayableCard(@NotNull Color color, int points) {
-        this.color = color;
-        this.points = points;
+    protected PlayableCard(@NotNull Builder builder) {
+        this.color = builder.primaryColor;
+        this.points = builder.cardPoints;
     }
 
     public int getPoints() {
@@ -35,8 +35,8 @@ public abstract class PlayableCard {
     public abstract Optional<Symbol> getSymbolToCollect();
 
     public abstract static class Builder {
-        protected int cardPoints;
-        protected Color primaryColor;
+        private final int cardPoints;
+        private final Color primaryColor;
 
         public Builder(int cardPoints, @NotNull Color primaryColor) {
             this.cardPoints = cardPoints;

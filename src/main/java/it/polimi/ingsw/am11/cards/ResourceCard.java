@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ResourceCard extends PlayableCard {
-    private final static EnumMap<Color, Integer> defaultPlacingRequirements = new EnumMap<>(Map.of(
+    private final static EnumMap<Color, Integer> PLACING_REQUIREMENTS = new EnumMap<>(Map.of(
             Color.BLUE, 0,
             Color.RED, 0,
             Color.GREEN, 0,
@@ -16,7 +16,7 @@ public class ResourceCard extends PlayableCard {
     private final EnumMap<Corner, CornerContainer> availableCornerOrItem;
 
     private ResourceCard(@NotNull Builder builder) {
-        super(builder.primaryColor, builder.cardPoints);
+        super(builder);
         this.availableCornerOrItem = builder.availableCornerOrItem;
     }
 
@@ -32,7 +32,7 @@ public class ResourceCard extends PlayableCard {
 
     @Override
     public EnumMap<Color, Integer> getPlacingRequirements() {
-        return defaultPlacingRequirements;
+        return PLACING_REQUIREMENTS;
     }
 
     @Override
@@ -63,7 +63,6 @@ public class ResourceCard extends PlayableCard {
         }
 
         public Builder hasItemIn(@NotNull Corner corner, CornerContainer cornerContainer) {
-
             availableCornerOrItem.put(corner, cornerContainer);
             return this;
         }
