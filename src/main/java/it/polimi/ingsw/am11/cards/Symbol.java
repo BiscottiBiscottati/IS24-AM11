@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.cards;
 
-public enum Symbol implements CornerContainer {
+public enum Symbol implements CornerContainer, AnySymbol {
     GLASS,
     FEATHER,
     PAPER;

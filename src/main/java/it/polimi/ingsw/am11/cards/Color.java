@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.cards;
 
-public enum Color implements CornerContainer {
+public enum Color implements CornerContainer, AnySymbol {
     RED,
     BLUE,
     GREEN,
