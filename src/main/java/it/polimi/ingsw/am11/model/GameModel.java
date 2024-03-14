@@ -1,24 +1,39 @@
 package it.polimi.ingsw.am11.model;
 
-import it.polimi.ingsw.am11.Players.Colours;
+import it.polimi.ingsw.am11.Players.PlayerColor;
 
 public interface GameModel {
-    public void initGame();
-    public void addPlayerToTable(String nickname, Colours colour);
-    public void shufflePlayers();
-    public void setStartingPlayer();
-    public void goNextTurn();
-    public void placeCard();
-    public void drawCardFrom();
+    void initGame();
 
-    public void getExposedCards();
-    public void getPlayerHand();
-    public void getPlayerObjective();
-    public void getPlateau();
-    public void getPlayerInfo();
-    public void getCurrentTurnPlayer();
-    public void getCommonObjectives();
-    public void isFinished();
-    public void getResults();
-    public void getWinner();
+    void addPlayerToTable(String nickname, PlayerColor colour);
+
+    void shufflePlayers();
+
+    void setStartingPlayer();
+
+    void goNextTurn();
+
+    void placeCard();
+
+    void drawCardFrom();
+
+    void getExposedCards();
+
+    void getPlayerHand();
+
+    void getPlayerObjective();
+
+    void getPlateau();
+
+    void getPlayerInfo();
+
+    void getCurrentTurnPlayer();
+
+    void getCommonObjectives();
+
+    void isFinished();
+
+    void getResults();
+
+    void getWinner();
 }

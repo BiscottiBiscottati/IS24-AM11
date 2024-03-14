@@ -7,9 +7,9 @@ import java.util.HashMap;
 
 public class PlayerField {
 
-    private HashMap cardsPositioned;
     private final EnumMap<Color, Integer> exposedColors;
     private final EnumMap<Symbol, Integer> exposedSymbols;
+    private HashMap cardsPositioned;
     private EnumMap placedCardColors;
 
     public PlayerField() {
@@ -40,7 +40,7 @@ public class PlayerField {
         return placedCardColors;
     }
 
-    public int getNumberOf(AnySymbol aSymbol) {
+    public int getNumberOf(Item item) {
         return 0;
     }
 

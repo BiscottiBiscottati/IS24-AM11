@@ -2,17 +2,18 @@ package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.Players.PersonalSpace;
 import it.polimi.ingsw.am11.Players.Player;
-import it.polimi.ingsw.am11.Players.Colours;
+import it.polimi.ingsw.am11.Players.PlayerColor;
 import it.polimi.ingsw.am11.Players.PlayerField;
 import it.polimi.ingsw.am11.Table.PickablesTable;
 import it.polimi.ingsw.am11.Table.Plateau;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
 
-public class GameLogic implements GameModel{
+public class GameLogic implements GameModel {
 
     private int numOfPlayers;
-    private LinkedList<Player> playerQueue;
+    private final LinkedList<Player> playerQueue;
     private Player firstPlayer;
     private Plateau gamePlateau;
     private PickablesTable gameTable;
@@ -28,23 +29,22 @@ public class GameLogic implements GameModel{
     }
 
     @Override
-    public void addPlayerToTable(String nickname, Colours colour) {
-        if(playerQueue.size() < numOfPlayers) {
+    public void addPlayerToTable(String nickname, PlayerColor colour) {
+        if (playerQueue.size() < numOfPlayers) {
             PlayerField newField = new PlayerField();
             PersonalSpace newSpace = new PersonalSpace();
 
             Player newPlayer = new Player(nickname, colour, newSpace, newField);
-        }
-        else{
+        } else {
             //NOTE: it should throw a SetPlayersLimitReachedException
         }
     }
 
     @Override
-    public void shufflePlayers(){
+    public void shufflePlayers() {
         Collections.shuffle(playerQueue);
 
-    };
+    }
 
     @Override
     public void setStartingPlayer() {

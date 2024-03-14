@@ -3,11 +3,11 @@ package it.polimi.ingsw.am11.Players;
 public final class Player {
 
     private final String nickname;
-    private final Colours color;
+    private final PlayerColor color;
     private final PersonalSpace space;
     private final PlayerField field;
 
-    public Player(String nickname, Colours color, PersonalSpace space, PlayerField field) {
+    public Player(String nickname, PlayerColor color, PersonalSpace space, PlayerField field) {
         this.nickname = nickname;
         this.color = color;
         this.space = space;
@@ -18,7 +18,7 @@ public final class Player {
         return nickname;
     }
 
-    public Colours getColor() {
+    public PlayerColor getColor() {
         return color;
     }
 
