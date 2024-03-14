@@ -8,8 +8,8 @@ import java.util.HashMap;
 public class PlayerField {
 
     private HashMap cardsPositioned;
-    private EnumMap<Color, Integer> exposedColors;
-    private EnumMap<Symbol, Integer> exposedSymbols;
+    private final EnumMap<Color, Integer> exposedColors;
+    private final EnumMap<Symbol, Integer> exposedSymbols;
     private EnumMap placedCardColors;
 
     public PlayerField() {
@@ -24,7 +24,9 @@ public class PlayerField {
         exposedSymbols.put(Symbol.PAPER, 0);
     }
 
-    public HashMap getCardsPositioned() { return cardsPositioned; }
+    public HashMap getCardsPositioned() {
+        return cardsPositioned;
+    }
 
     public EnumMap getExposedColours() {
         return exposedColors;
@@ -38,15 +40,15 @@ public class PlayerField {
         return placedCardColors;
     }
 
-    public int getNumberOf(AnySymbol aSymbol){
-        
+    public int getNumberOf(AnySymbol aSymbol) {
+        return 0;
     }
 
-    public void placeStartingCard(StarterCard firstCard){
+    public void placeStartingCard(StarterCard firstCard) {
         //place startercard in the field
     }
 
-    public void place(PlayableCard card, int x, int y){
+    public void place(PlayableCard card, int x, int y) {
         //place a new card in position (x,y)
         //not sure on how to implement, it may change
     }
