@@ -1,16 +1,19 @@
 package it.polimi.ingsw.am11.cards;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ResourceCardTest {
 
-    static private PlayableCard playable;
-    static private ResourceCard resource;
+    private PlayableCard playable;
+    private ResourceCard resource;
+    private PlayableCard playable2;
 
-    @BeforeAll
-    static void setUp() {
+
+    @BeforeEach
+    void setUp() {
+
         playable = new ResourceCard.Builder(1, Color.RED)
                 .hasItemIn(Corner.TOP_LX, Color.RED)
                 .hasItemIn(Corner.TOP_RX, Color.RED)
@@ -21,6 +24,9 @@ class ResourceCardTest {
                 .hasItemIn(Corner.TOP_RX, Color.RED)
                 .build();
 
+        playable2 = new ResourceCard.Builder(0, Color.GREEN)
+                .hasItemIn(Corner.DOWN_LX, Color.PURPLE)
+                .build();
     }
 
 
@@ -59,21 +65,25 @@ class ResourceCardTest {
     void getPointsRequirements() {
         Assertions.assertSame(playable.getPointsRequirements(), PointsRequirementsType.CLASSIC);
         Assertions.assertSame(resource.getPointsRequirements(), PointsRequirementsType.CLASSIC);
+        Assertions.assertSame(playable2.getPointsRequirements(), PointsRequirementsType.CLASSIC);
     }
 
     @Test
     void checkItemCorner() {
         for (Corner corner : Corner.values()) {
             switch (corner) {
-                case TOP_LX -> {
+                case TOP_LX, TOP_RX -> {
                     Assertions.assertSame(playable.checkItemCorner(corner), Color.RED);
                     Assertions.assertSame(resource.checkItemCorner(corner), Color.RED);
                 }
-                case TOP_RX -> {
-                    Assertions.assertSame(playable.checkItemCorner(corner), Color.RED);
-                    Assertions.assertSame(playable.checkItemCorner(corner), Color.RED);
+                case null, default -> {
+                    Assertions.assertFalse(playable.checkItemCorner(corner).isAvailable());
+                    Assertions.assertFalse(resource.checkItemCorner(corner).isAvailable());
                 }
-                case null, default -> Assertions.assertNotSame(playable.checkItemCorner(corner), Color.RED);
+            }
+            switch (corner) {
+                case DOWN_LX -> Assertions.assertSame(playable2.checkItemCorner(corner), Color.PURPLE);
+                case null, default -> Assertions.assertFalse(playable2.checkItemCorner(corner).isAvailable());
             }
         }
     }
@@ -82,5 +92,19 @@ class ResourceCardTest {
     void getSymbolToCollect() {
         Assertions.assertTrue(playable.getSymbolToCollect().isEmpty());
         Assertions.assertTrue(resource.getSymbolToCollect().isEmpty());
+    }
+
+    @Test
+    void getColor() {
+        Assertions.assertSame(playable.getColor(), Color.RED);
+        Assertions.assertSame(resource.getColor(), Color.RED);
+        Assertions.assertSame(playable2.getColor(), Color.GREEN);
+    }
+
+    @Test
+    void getPoints() {
+        Assertions.assertEquals(playable.getPoints(), 1);
+        Assertions.assertEquals(resource.getPoints(), 1);
+        Assertions.assertEquals(playable2.getPoints(), 0);
     }
 }

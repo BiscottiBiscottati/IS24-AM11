@@ -8,6 +8,6 @@ public enum Symbol implements CornerContainer {
 
     @Override
     public boolean isAvailable() {
-        return false;
+        return true;
     }
 }

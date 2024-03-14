@@ -5,11 +5,7 @@ import it.polimi.ingsw.am11.cards.ObjectiveCard;
 import java.util.ArrayList;
 
 public class PersonalSpace {
-    private static final int maxHandCards;
 
-    static {
-        maxHandCards = getMaxHand;
-    }
 
     private final ArrayList playerHand;
     private ObjectiveCard playerObjective;
