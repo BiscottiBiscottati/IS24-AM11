@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.Cards;
+package it.polimi.ingsw.am11.cards;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -7,36 +7,17 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ResourceCard extends PlayableCard {
-    private final EnumMap<Corner, Optional<Item>> availableCornerOrItem;
     private final static EnumMap<Color, Integer> defaultPlacingRequirements = new EnumMap<>(Map.of(
             Color.BLUE, 0,
             Color.RED, 0,
             Color.GREEN, 0,
             Color.PURPLE, 0
     ));
+    private final EnumMap<Corner, CornerContainer> availableCornerOrItem;
 
     private ResourceCard(@NotNull Builder builder) {
-        super(builder.cardPrimaryColor, builder.cardPoints);
+        super(builder.primaryColor, 0);
         this.availableCornerOrItem = builder.availableCornerOrItem;
-    }
-
-    public static class Builder extends PlayableCard.Builder {
-
-        private EnumMap<Corner, Optional<Item>> availableCornerOrItem;
-
-        public ResourceCard build() {
-            return new ResourceCard(this);
-        }
-
-        public Builder hasItemIn(Corner corner, Item item) {
-            availableCornerOrItem.put(corner, Optional.of(item));
-            return this;
-        }
-
-        public Builder hasEmpty(Corner corner) {
-            availableCornerOrItem.put(corner, Optional.empty());
-            return this;
-        }
     }
 
     public static EnumMap<Color, Integer> getDefaultPlacingRequirements() {
@@ -50,7 +31,7 @@ public class ResourceCard extends PlayableCard {
 
     @Override
     public boolean isCornerAvail(Corner corner) {
-        return availableCornerOrItem.get(corner).isPresent();
+        return availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE).isAvailable();
     }
 
     @Override
@@ -64,12 +45,31 @@ public class ResourceCard extends PlayableCard {
     }
 
     @Override
-    public Optional<Item> checkItemCorner(Corner corner) {
+    public CornerContainer checkItemCorner(Corner corner) {
         return availableCornerOrItem.get(corner);
     }
 
     @Override
     public Optional<Symbol> getSymbolToCollect() {
         return Optional.empty();
+    }
+
+    public static class Builder extends PlayableCard.Builder {
+        private final EnumMap<Corner, CornerContainer> availableCornerOrItem;
+
+        public Builder(int cardPoints, Color cardPrimaryColor) {
+            super(cardPoints, cardPrimaryColor);
+            this.availableCornerOrItem = new EnumMap<>(Corner.class);
+        }
+
+        public ResourceCard build() {
+            return new ResourceCard(this);
+        }
+
+        public Builder hasItemIn(Corner corner, CornerContainer cornerContainer) {
+            availableCornerOrItem.put(corner, cornerContainer);
+            return this;
+        }
+
     }
 }

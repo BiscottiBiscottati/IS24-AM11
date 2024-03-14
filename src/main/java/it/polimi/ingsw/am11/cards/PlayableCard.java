@@ -1,14 +1,14 @@
-package it.polimi.ingsw.am11.Cards;
+package it.polimi.ingsw.am11.cards;
 
 import java.util.EnumMap;
 import java.util.Optional;
 
 public abstract class PlayableCard {
-    final Color cardColor;
+    final Color color;
     final int points;
 
-    protected PlayableCard(Color cardColor, int points) {
-        this.cardColor = cardColor;
+    protected PlayableCard(Color color, int points) {
+        this.color = color;
         this.points = points;
     }
 
@@ -17,7 +17,7 @@ public abstract class PlayableCard {
     }
 
     public Color getColor() {
-        return cardColor;
+        return color;
     }
 
     public abstract PlayableCardType getType();
@@ -28,22 +28,17 @@ public abstract class PlayableCard {
 
     public abstract PointsRequirementsType getPointsRequirements();
 
-    public abstract Optional<Item> checkItemCorner(Corner corner);
+    public abstract CornerContainer checkItemCorner(Corner corner);
 
     public abstract Optional<Symbol> getSymbolToCollect();
 
     public abstract static class Builder {
         protected int cardPoints;
-        protected Color cardPrimaryColor;
+        protected Color primaryColor;
 
-        public Builder hasColor(Color color) {
-            this.cardPrimaryColor = color;
-            return this;
-        }
-
-        public Builder hasPoints(int points) {
-            this.cardPoints = points;
-            return this;
+        public Builder(int cardPoints, Color primaryColor) {
+            this.cardPoints = cardPoints;
+            this.primaryColor = primaryColor;
         }
 
         public abstract PlayableCard build();
