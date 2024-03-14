@@ -9,7 +9,7 @@ public abstract class PlayableCard {
     final Color color;
     final int points;
 
-    protected PlayableCard(Color color, int points) {
+    protected PlayableCard(@NotNull Color color, int points) {
         this.color = color;
         this.points = points;
     }
@@ -24,13 +24,13 @@ public abstract class PlayableCard {
 
     public abstract PlayableCardType getType();
 
-    public abstract boolean isCornerAvail(Corner corner);
+    public abstract boolean isCornerAvail(@NotNull Corner corner);
 
     public abstract EnumMap<Color, Integer> getPlacingRequirements();
 
     public abstract PointsRequirementsType getPointsRequirements();
 
-    public abstract CornerContainer checkItemCorner(Corner corner);
+    public abstract CornerContainer checkItemCorner(@NotNull Corner corner);
 
     public abstract Optional<Symbol> getSymbolToCollect();
 

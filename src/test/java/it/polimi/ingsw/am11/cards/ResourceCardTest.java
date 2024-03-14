@@ -48,7 +48,7 @@ class ResourceCardTest {
                     Assertions.assertTrue(playable.isCornerAvail(corner));
                     Assertions.assertTrue(playable.isCornerAvail(corner));
                 }
-                case null, default -> Assertions.assertFalse(playable.isCornerAvail(corner));
+                default -> Assertions.assertFalse(playable.isCornerAvail(corner));
             }
         }
     }
@@ -76,14 +76,15 @@ class ResourceCardTest {
                     Assertions.assertSame(playable.checkItemCorner(corner), Color.RED);
                     Assertions.assertSame(resource.checkItemCorner(corner), Color.RED);
                 }
-                case null, default -> {
+                default -> {
                     Assertions.assertFalse(playable.checkItemCorner(corner).isAvailable());
                     Assertions.assertFalse(resource.checkItemCorner(corner).isAvailable());
                 }
             }
-            switch (corner) {
-                case DOWN_LX -> Assertions.assertSame(playable2.checkItemCorner(corner), Color.PURPLE);
-                case null, default -> Assertions.assertFalse(playable2.checkItemCorner(corner).isAvailable());
+            if (corner == Corner.DOWN_LX) {
+                Assertions.assertSame(playable2.checkItemCorner(corner), Color.PURPLE);
+            } else {
+                Assertions.assertFalse(playable2.checkItemCorner(corner).isAvailable());
             }
         }
     }
@@ -106,5 +107,19 @@ class ResourceCardTest {
         Assertions.assertEquals(playable.getPoints(), 1);
         Assertions.assertEquals(resource.getPoints(), 1);
         Assertions.assertEquals(playable2.getPoints(), 0);
+    }
+
+    @Test
+    void checkNulls() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> playable.checkItemCorner(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> playable.isCornerAvail(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> resource.checkItemCorner(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> resource.isCornerAvail(null));
+    }
+
+    @Test
+    void checkBuilderNulls() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new ResourceCard.Builder(10, null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new ResourceCard.Builder(10, Color.RED).hasItemIn(null, Color.RED));
     }
 }
