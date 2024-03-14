@@ -6,7 +6,6 @@ import it.polimi.ingsw.am11.cards.PlayableCard;
 import java.util.ArrayList;
 
 public class PersonalSpace {
-    private static int maxHandCards; //deve essere messo a final
 
     private final ArrayList playerHand;
     private ObjectiveCard playerObjective;
@@ -24,29 +23,27 @@ public class PersonalSpace {
     }
 
     public void addCardToHand(PlayableCard newCard) {
-        if (playerHand.size() < maxHandCards){
+        if (playerHand.size() < maxHandCards) {
             playerHand.add(newCard);
-        }
-        else{
+        } else {
             //throw alreadyMaxCardInHand
         }
     }
 
-    public void addObjectiveToHand(ObjectiveCard newObjective){
+    public void addObjectiveToHand(ObjectiveCard newObjective) {
         playerObjective = newObjective;
     }
 
-    public void pickCard(PlayableCard cardToPick){
-        if(playerHand.contains(cardToPick)){
+    public void pickCard(PlayableCard cardToPick) {
+        if (playerHand.contains(cardToPick)) {
             playerHand.remove(cardToPick);
-        }
-        else{
+        } else {
             //throw not card in hand exception
         }
     }
 
     //clear both hand and objective
-    public void clearAll(){
+    public void clearAll() {
         playerHand.clear();
         playerObjective = null;
     }

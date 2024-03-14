@@ -16,12 +16,8 @@ public class ResourceCard extends PlayableCard {
     private final EnumMap<Corner, CornerContainer> availableCornerOrItem;
 
     private ResourceCard(@NotNull Builder builder) {
-        super(builder.primaryColor, 0);
+        super(builder.primaryColor, builder.cardPoints);
         this.availableCornerOrItem = builder.availableCornerOrItem;
-    }
-
-    public static EnumMap<Color, Integer> getDefaultPlacingRequirements() {
-        return defaultPlacingRequirements;
     }
 
     @Override
@@ -30,7 +26,7 @@ public class ResourceCard extends PlayableCard {
     }
 
     @Override
-    public boolean isCornerAvail(Corner corner) {
+    public boolean isCornerAvail(@NotNull Corner corner) {
         return availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE).isAvailable();
     }
 
@@ -45,8 +41,8 @@ public class ResourceCard extends PlayableCard {
     }
 
     @Override
-    public CornerContainer checkItemCorner(Corner corner) {
-        return availableCornerOrItem.get(corner);
+    public CornerContainer checkItemCorner(@NotNull Corner corner) {
+        return availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE);
     }
 
     @Override
@@ -66,7 +62,8 @@ public class ResourceCard extends PlayableCard {
             return new ResourceCard(this);
         }
 
-        public Builder hasItemIn(Corner corner, CornerContainer cornerContainer) {
+        public Builder hasItemIn(@NotNull Corner corner, CornerContainer cornerContainer) {
+
             availableCornerOrItem.put(corner, cornerContainer);
             return this;
         }

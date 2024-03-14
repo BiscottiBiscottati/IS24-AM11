@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.cards;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.EnumMap;
 import java.util.Optional;
 
@@ -10,7 +12,7 @@ public class GoldCard extends PlayableCard {
     private final PointsRequirementsType pointsRequirements;
     private final Symbol symbolToCollect;
 
-    private GoldCard(Builder builder) {
+    private GoldCard(@NotNull Builder builder) {
         super(builder.primaryColor, builder.cardPoints);
         this.availableCorners = builder.availableCorners;
         this.colorPlacingRequirements = builder.colorPlacingRequirements;
@@ -24,8 +26,8 @@ public class GoldCard extends PlayableCard {
     }
 
     @Override
-    public boolean isCornerAvail(Corner corner) {
-        return availableCorners.get(corner).isAvailable();
+    public boolean isCornerAvail(@NotNull Corner corner) {
+        return availableCorners.getOrDefault(corner, Availability.NOT_USABLE).isAvailable();
     }
 
     @Override
@@ -43,8 +45,8 @@ public class GoldCard extends PlayableCard {
     }
 
     @Override
-    public CornerContainer checkItemCorner(Corner corner) {
-        return availableCorners.get(corner);
+    public CornerContainer checkItemCorner(@NotNull Corner corner) {
+        return availableCorners.getOrDefault(corner, Availability.NOT_USABLE);
     }
 
     public static class Builder extends PlayableCard.Builder {
