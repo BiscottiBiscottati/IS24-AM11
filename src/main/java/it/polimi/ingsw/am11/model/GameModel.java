@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.model;
 
-import it.polimi.ingsw.am11.Players.PlayerColor;
+import it.polimi.ingsw.am11.players.PlayerColor;
 
 public interface GameModel {
     void initGame();

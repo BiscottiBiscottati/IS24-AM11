@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.Players;
+package it.polimi.ingsw.am11.players;
 
 import it.polimi.ingsw.am11.cards.*;
 

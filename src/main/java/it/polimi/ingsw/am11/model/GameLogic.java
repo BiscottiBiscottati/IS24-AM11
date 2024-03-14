@@ -1,19 +1,19 @@
 package it.polimi.ingsw.am11.model;
 
-import it.polimi.ingsw.am11.Players.PersonalSpace;
-import it.polimi.ingsw.am11.Players.Player;
-import it.polimi.ingsw.am11.Players.PlayerColor;
-import it.polimi.ingsw.am11.Players.PlayerField;
-import it.polimi.ingsw.am11.Table.PickablesTable;
-import it.polimi.ingsw.am11.Table.Plateau;
+import it.polimi.ingsw.am11.players.PersonalSpace;
+import it.polimi.ingsw.am11.players.Player;
+import it.polimi.ingsw.am11.players.PlayerColor;
+import it.polimi.ingsw.am11.players.PlayerField;
+import it.polimi.ingsw.am11.table.PickablesTable;
+import it.polimi.ingsw.am11.table.Plateau;
 
 import java.util.Collections;
 import java.util.LinkedList;
 
 public class GameLogic implements GameModel {
 
-    private int numOfPlayers;
     private final LinkedList<Player> playerQueue;
+    private int numOfPlayers;
     private Player firstPlayer;
     private Plateau gamePlateau;
     private PickablesTable gameTable;
