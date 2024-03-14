@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.cards;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.EnumMap;
 import java.util.Optional;
 
@@ -36,7 +38,7 @@ public abstract class PlayableCard {
         protected int cardPoints;
         protected Color primaryColor;
 
-        public Builder(int cardPoints, Color primaryColor) {
+        public Builder(int cardPoints, @NotNull Color primaryColor) {
             this.cardPoints = cardPoints;
             this.primaryColor = primaryColor;
         }

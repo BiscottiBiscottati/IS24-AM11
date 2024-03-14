@@ -66,7 +66,8 @@ public class ResourceCard extends PlayableCard {
             return new ResourceCard(this);
         }
 
-        public Builder hasItemIn(Corner corner, CornerContainer cornerContainer) {
+        public Builder hasItemIn(@NotNull Corner corner, CornerContainer cornerContainer) {
+
             availableCornerOrItem.put(corner, cornerContainer);
             return this;
         }

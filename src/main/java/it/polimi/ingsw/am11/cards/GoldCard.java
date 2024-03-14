@@ -45,7 +45,7 @@ public class GoldCard extends PlayableCard {
     }
 
     @Override
-    public CornerContainer checkItemCorner(Corner corner) {
+    public CornerContainer checkItemCorner(@NotNull Corner corner) {
         return availableCorners.getOrDefault(corner, Availability.NOT_USABLE);
     }
 
