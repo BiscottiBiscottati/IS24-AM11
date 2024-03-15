@@ -7,14 +7,15 @@ public class LCard extends PositioningCard {
 
     private LCard(Builder builder) {
         super(builder);
-        this.isFlippedFlag = builder.isFlippedFlag;
-        this.isRotatedFlag = builder.isRotatedFlag;
+        isFlippedFlag = builder.isFlippedFlag;
+        isRotatedFlag = builder.isRotatedFlag;
     }
 
     @Override
     public ObjectiveCardType getType() {
         return ObjectiveCardType.L_SHAPE;
     }
+
 
     public static class Builder extends PositioningCard.Builder {
 
@@ -26,12 +27,12 @@ public class LCard extends PositioningCard {
         }
 
         public Builder isFlipped(boolean flippedFlag) {
-            this.isFlippedFlag = flippedFlag;
+            isFlippedFlag = flippedFlag;
             return this;
         }
 
         public Builder isRotated(boolean rotatedFlag) {
-            this.isRotatedFlag = rotatedFlag;
+            isRotatedFlag = rotatedFlag;
             return this;
         }
 
