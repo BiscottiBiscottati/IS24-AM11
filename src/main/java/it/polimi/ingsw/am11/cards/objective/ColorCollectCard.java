@@ -2,10 +2,8 @@ package it.polimi.ingsw.am11.cards.objective;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.utils.Color;
-import it.polimi.ingsw.am11.cards.utils.EnumMapUtils;
-import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
-import it.polimi.ingsw.am11.cards.utils.Symbol;
+import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.cards.utils.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -45,7 +43,7 @@ public class ColorCollectCard extends CollectingCard {
 
         public Builder(int points) {
             super(points);
-            this.colorToCollect = new EnumMap<>(Color.class);
+            this.colorToCollect = EnumMapUtils.defaultInit(Color.class, 0);
         }
 
         public @NotNull Builder hasColor(Color color, int quantity) {
@@ -59,8 +57,9 @@ public class ColorCollectCard extends CollectingCard {
         }
 
         @Override
-        public @NotNull ObjectiveCard build() {
-            return new ColorCollectCard(this);
+        public @NotNull ObjectiveCard build() throws IllegalBuildException {
+            if (Validator.nonNegativeValues(colorToCollect)) return new ColorCollectCard(this);
+            else throw new IllegalBuildException("Colors to collect cannot be less than 0!");
         }
     }
 }

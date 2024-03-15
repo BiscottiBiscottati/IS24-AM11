@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.cards.objective;
 
 import com.google.common.collect.ImmutableMap;
+import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.Color;
 import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.Symbol;
@@ -30,7 +31,7 @@ public abstract class ObjectiveCard {
             this.points = points;
         }
 
-        public abstract ObjectiveCard build();
+        public abstract ObjectiveCard build() throws IllegalBuildException;
     }
 
 }

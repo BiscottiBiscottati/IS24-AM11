@@ -73,10 +73,8 @@ public class StarterCard {
         }
 
         public @NotNull StarterCard build() throws IllegalBuildException {
-            if (checkAllBackCornerCovered()) {
-                return new StarterCard(this);
-            }
-            throw new IllegalBuildException("Not all Corners Covered");
+            if (checkAllBackCornerCovered()) return new StarterCard(this);
+            else throw new IllegalBuildException("Not all Corners Covered");
         }
     }
 }
