@@ -60,10 +60,11 @@ public class GoldCard extends PlayableCard {
         private PointsRequirementsType pointsRequirements;
         private @Nullable Symbol symbolToCollect;
 
+
         public Builder(int points, @NotNull Color primaryColor) {
             super(points, primaryColor);
-            this.availableCorners = new EnumMap<>(Corner.class);
-            this.colorPlacingRequirements = new EnumMap<>(Color.class);
+            this.availableCorners = InitEnumMap(Corner.class, Availability.NOT_USABLE);
+            this.colorPlacingRequirements = InitEnumMap(Color.class, 0);
             this.symbolToCollect = null;
 
         }

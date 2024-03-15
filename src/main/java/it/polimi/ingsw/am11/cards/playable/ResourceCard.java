@@ -11,12 +11,7 @@ import java.util.Optional;
 
 public class ResourceCard extends PlayableCard {
     private final static ImmutableMap<Color, Integer> PLACING_REQUIREMENTS = Maps.immutableEnumMap(
-            ImmutableMap.of(
-                    Color.RED, 0,
-                    Color.BLUE, 0,
-                    Color.GREEN, 0,
-                    Color.PURPLE, 0
-            )
+            PlayableCard.Builder.InitEnumMap(Color.class, 0)
     );
     private final @NotNull ImmutableMap<Corner, CornerContainer> availableCornerOrItem;
 
@@ -60,7 +55,7 @@ public class ResourceCard extends PlayableCard {
 
         public Builder(int cardPoints, @NotNull Color cardPrimaryColor) {
             super(cardPoints, cardPrimaryColor);
-            this.availableCornerOrItem = new EnumMap<>(Corner.class);
+            this.availableCornerOrItem = InitEnumMap(Corner.class, Availability.NOT_USABLE);
         }
 
         public @NotNull ResourceCard build() {

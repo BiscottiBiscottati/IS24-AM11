@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.cards.util.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumMap;
 import java.util.Optional;
 
 public abstract class PlayableCard {
@@ -43,6 +44,14 @@ public abstract class PlayableCard {
         protected Builder(int cardPoints, @NotNull Color primaryColor) {
             this.cardPoints = cardPoints;
             this.primaryColor = primaryColor;
+        }
+
+        protected static <K extends Enum<K>, V> @NotNull EnumMap<K, V> InitEnumMap(Class<K> keyType, V value) {
+            EnumMap<K, V> temp = new EnumMap<>(keyType);
+            for (K key : keyType.getEnumConstants()) {
+                temp.put(key, value);
+            }
+            return temp;
         }
 
         public abstract PlayableCard build();
