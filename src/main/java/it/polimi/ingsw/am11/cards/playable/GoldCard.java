@@ -63,8 +63,8 @@ public class GoldCard extends PlayableCard {
 
         public Builder(int points, @NotNull Color primaryColor) {
             super(points, primaryColor);
-            this.availableCorners = InitEnumMap(Corner.class, Availability.NOT_USABLE);
-            this.colorPlacingRequirements = InitEnumMap(Color.class, 0);
+            this.availableCorners = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
+            this.colorPlacingRequirements = EnumMapUtils.Init(Color.class, 0);
             this.symbolToCollect = null;
 
         }
