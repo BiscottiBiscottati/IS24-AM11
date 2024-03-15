@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.cards.playable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -97,8 +98,9 @@ public class GoldCard extends PlayableCard {
         }
 
         @Override
-        public @NotNull GoldCard build() {
-            return new GoldCard(this);
+        public @NotNull GoldCard build() throws IllegalBuildException {
+            if (Validator.nonNegativeValues(colorPlacingRequirements)) return new GoldCard(this);
+            throw new IllegalBuildException("Placing requirements cannot be less than 0!");
         }
     }
 }

@@ -2,10 +2,8 @@ package it.polimi.ingsw.am11.cards.objective;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.utils.Color;
-import it.polimi.ingsw.am11.cards.utils.EnumMapUtils;
-import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
-import it.polimi.ingsw.am11.cards.utils.Symbol;
+import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.cards.utils.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -58,8 +56,9 @@ public class SymbolCollectCard extends CollectingCard {
         }
 
         @Override
-        public @NotNull ObjectiveCard build() {
-            return new SymbolCollectCard(this);
+        public @NotNull ObjectiveCard build() throws IllegalBuildException {
+            if(Validator.nonNegativeValues(symbolToCollect)) return new SymbolCollectCard(this);
+            throw new IllegalBuildException("Symbols to collect cannot be less than 0!");
         }
     }
 }

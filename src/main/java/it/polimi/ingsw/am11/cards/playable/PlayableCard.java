@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.cards.playable;
 
 import com.google.common.collect.ImmutableMap;
+import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,7 +46,7 @@ public abstract class PlayableCard {
             this.primaryColor = primaryColor;
         }
 
-        public abstract PlayableCard build();
+        public abstract PlayableCard build() throws IllegalBuildException;
     }
 
 
