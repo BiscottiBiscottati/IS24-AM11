@@ -37,14 +37,14 @@ class GoldCardTest {
 
     @Test
     void isCornerAvail() {
-        Assertions.assertTrue(goldClassic.isCornerAvail(Corner.TOP_LX));
-        Assertions.assertTrue(goldClassic.isCornerAvail(Corner.TOP_RX));
-        Assertions.assertTrue(goldSymbols.isCornerAvail(Corner.TOP_LX));
-        Assertions.assertTrue(goldSymbols.isCornerAvail(Corner.TOP_RX));
-        Assertions.assertFalse(goldClassic.isCornerAvail(Corner.DOWN_LX));
-        Assertions.assertFalse(goldClassic.isCornerAvail(Corner.DOWN_RX));
-        Assertions.assertFalse(goldSymbols.isCornerAvail(Corner.DOWN_LX));
-        Assertions.assertFalse(goldSymbols.isCornerAvail(Corner.DOWN_RX));
+        Assertions.assertTrue(goldClassic.isAvailable(Corner.TOP_LX));
+        Assertions.assertTrue(goldClassic.isAvailable(Corner.TOP_RX));
+        Assertions.assertTrue(goldSymbols.isAvailable(Corner.TOP_LX));
+        Assertions.assertTrue(goldSymbols.isAvailable(Corner.TOP_RX));
+        Assertions.assertFalse(goldClassic.isAvailable(Corner.DOWN_LX));
+        Assertions.assertFalse(goldClassic.isAvailable(Corner.DOWN_RX));
+        Assertions.assertFalse(goldSymbols.isAvailable(Corner.DOWN_LX));
+        Assertions.assertFalse(goldSymbols.isAvailable(Corner.DOWN_RX));
     }
 
     @Test

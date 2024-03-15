@@ -31,7 +31,7 @@ public class ResourceCard extends PlayableCard {
     }
 
     @Override
-    public boolean isCornerAvail(@NotNull Corner corner) {
+    public boolean isAvailable(@NotNull Corner corner) {
         return availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE).isAvailable();
     }
 

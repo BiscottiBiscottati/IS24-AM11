@@ -45,14 +45,14 @@ class ResourceCardTest {
         for (Corner corner : Corner.values()) {
             switch (corner) {
                 case TOP_LX -> {
-                    Assertions.assertTrue(playable.isCornerAvail(corner));
-                    Assertions.assertTrue(resource.isCornerAvail(corner));
+                    Assertions.assertTrue(playable.isAvailable(corner));
+                    Assertions.assertTrue(resource.isAvailable(corner));
                 }
                 case TOP_RX -> {
-                    Assertions.assertTrue(playable.isCornerAvail(corner));
-                    Assertions.assertTrue(playable.isCornerAvail(corner));
+                    Assertions.assertTrue(playable.isAvailable(corner));
+                    Assertions.assertTrue(playable.isAvailable(corner));
                 }
-                default -> Assertions.assertFalse(playable.isCornerAvail(corner));
+                default -> Assertions.assertFalse(playable.isAvailable(corner));
             }
         }
     }
@@ -116,9 +116,9 @@ class ResourceCardTest {
     @Test
     void checkNulls() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> playable.checkItemCorner(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> playable.isCornerAvail(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> playable.isAvailable(null));
         Assertions.assertThrows(IllegalArgumentException.class, () -> resource.checkItemCorner(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> resource.isCornerAvail(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> resource.isAvailable(null));
     }
 
     @Test

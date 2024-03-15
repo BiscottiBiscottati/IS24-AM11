@@ -26,7 +26,7 @@ public abstract class PlayableCard {
 
     public abstract PlayableCardType getType();
 
-    public abstract boolean isCornerAvail(@NotNull Corner corner);
+    public abstract boolean isAvailable(@NotNull Corner corner);
 
     public abstract ImmutableMap<Color, Integer> getPlacingRequirements();
 
