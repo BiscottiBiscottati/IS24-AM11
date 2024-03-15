@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards;
+package it.polimi.ingsw.am11.cards.objective;
 
 import org.jetbrains.annotations.NotNull;
 

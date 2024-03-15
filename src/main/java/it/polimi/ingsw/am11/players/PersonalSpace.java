@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.players;
 
-import it.polimi.ingsw.am11.cards.ObjectiveCard;
-import it.polimi.ingsw.am11.cards.PlayableCard;
+import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 
 import java.util.ArrayList;
 

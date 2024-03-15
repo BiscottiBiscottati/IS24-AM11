@@ -1,5 +1,9 @@
-package it.polimi.ingsw.am11.cards;
+package it.polimi.ingsw.am11.cards.starter;
 
+import it.polimi.ingsw.am11.cards.Availability;
+import it.polimi.ingsw.am11.cards.Color;
+import it.polimi.ingsw.am11.cards.Corner;
+import it.polimi.ingsw.am11.cards.IllegalBuildException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

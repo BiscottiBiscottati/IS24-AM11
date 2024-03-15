@@ -1,5 +1,9 @@
 package it.polimi.ingsw.am11.cards;
 
+import it.polimi.ingsw.am11.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.cards.playable.PlayableCardType;
+import it.polimi.ingsw.am11.cards.playable.PointsRequirementsType;
+import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
