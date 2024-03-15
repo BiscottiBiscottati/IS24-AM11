@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.cards.playable;
 
-import it.polimi.ingsw.am11.cards.*;
+import it.polimi.ingsw.am11.cards.util.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;

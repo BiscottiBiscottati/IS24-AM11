@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.cards.objective;
 
+import it.polimi.ingsw.am11.cards.util.ObjectiveCardType;
 import org.jetbrains.annotations.NotNull;
 
 public class TripletCard extends PositioningCard {

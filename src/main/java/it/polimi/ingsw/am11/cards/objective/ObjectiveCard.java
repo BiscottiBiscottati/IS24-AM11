@@ -1,7 +1,8 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import it.polimi.ingsw.am11.cards.Color;
-import it.polimi.ingsw.am11.cards.Symbol;
+import it.polimi.ingsw.am11.cards.util.Color;
+import it.polimi.ingsw.am11.cards.util.ObjectiveCardType;
+import it.polimi.ingsw.am11.cards.util.Symbol;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -26,7 +27,7 @@ public abstract class ObjectiveCard {
     public static abstract class Builder {
         protected final int points;
 
-        public Builder(int points) {
+        protected Builder(int points) {
             this.points = points;
         }
 

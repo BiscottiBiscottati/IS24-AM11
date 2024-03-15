@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective;
+package it.polimi.ingsw.am11.cards.util;
 
 public enum ObjectiveCardType {
     TRIPLET,

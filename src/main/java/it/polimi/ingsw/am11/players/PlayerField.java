@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.players;
 
-import it.polimi.ingsw.am11.cards.Color;
-import it.polimi.ingsw.am11.cards.Item;
-import it.polimi.ingsw.am11.cards.Symbol;
+import it.polimi.ingsw.am11.cards.util.Color;
+import it.polimi.ingsw.am11.cards.util.Item;
+import it.polimi.ingsw.am11.cards.util.Symbol;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 

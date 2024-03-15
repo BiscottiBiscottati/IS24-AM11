@@ -1,9 +1,11 @@
 package it.polimi.ingsw.am11.cards;
 
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
-import it.polimi.ingsw.am11.cards.playable.PlayableCardType;
-import it.polimi.ingsw.am11.cards.playable.PointsRequirementsType;
+import it.polimi.ingsw.am11.cards.util.PlayableCardType;
+import it.polimi.ingsw.am11.cards.util.PointsRequirementsType;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
+import it.polimi.ingsw.am11.cards.util.Color;
+import it.polimi.ingsw.am11.cards.util.Corner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

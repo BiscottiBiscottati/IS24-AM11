@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.cards.objective;
 
+import it.polimi.ingsw.am11.cards.util.ObjectiveCardType;
+
 public class LCard extends PositioningCard {
 
     private final boolean isFlippedFlag;

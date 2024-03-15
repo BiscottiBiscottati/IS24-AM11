@@ -1,9 +1,6 @@
 package it.polimi.ingsw.am11.cards.playable;
 
-import it.polimi.ingsw.am11.cards.Color;
-import it.polimi.ingsw.am11.cards.Corner;
-import it.polimi.ingsw.am11.cards.CornerContainer;
-import it.polimi.ingsw.am11.cards.Symbol;
+import it.polimi.ingsw.am11.cards.util.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;

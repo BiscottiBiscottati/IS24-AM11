@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards;
+package it.polimi.ingsw.am11.cards.util;
 
 public enum Availability implements CornerContainer {
     EMPTY(true),
