@@ -1,9 +1,6 @@
 package it.polimi.ingsw.am11.cards.playable;
 
-import it.polimi.ingsw.am11.cards.utils.Color;
-import it.polimi.ingsw.am11.cards.utils.Corner;
-import it.polimi.ingsw.am11.cards.utils.PlayableCardType;
-import it.polimi.ingsw.am11.cards.utils.PointsRequirementsType;
+import it.polimi.ingsw.am11.cards.utils.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -81,14 +78,15 @@ class ResourceCardTest {
                     Assertions.assertSame(resource.checkItemCorner(corner), Color.RED);
                 }
                 default -> {
-                    Assertions.assertFalse(playable.checkItemCorner(corner).isAvailable());
-                    Assertions.assertFalse(resource.checkItemCorner(corner).isAvailable());
+                    Assertions.assertSame(Availability.NOT_USABLE, playable.checkItemCorner(corner));
+                    Assertions.assertSame(Availability.NOT_USABLE, resource.checkItemCorner(corner));
                 }
             }
             if (corner == Corner.DOWN_LX) {
                 Assertions.assertSame(playable2.checkItemCorner(corner), Color.PURPLE);
             } else {
-                Assertions.assertFalse(playable2.checkItemCorner(corner).isAvailable());
+                Assertions.assertSame(Availability.NOT_USABLE, playable2.checkItemCorner(corner));
+
             }
         }
     }
@@ -123,7 +121,10 @@ class ResourceCardTest {
 
     @Test
     void checkBuilderNulls() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new ResourceCard.Builder(10, null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new ResourceCard.Builder(10, Color.RED).hasItemIn(null, Color.RED));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> new ResourceCard.Builder(10, null));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> new ResourceCard.Builder(10, Color.RED)
+                                        .hasItemIn(null, Color.RED));
     }
 }

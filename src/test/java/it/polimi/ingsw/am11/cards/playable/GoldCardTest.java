@@ -84,9 +84,9 @@ class GoldCardTest {
 
     @Test
     void checkItemCorner() {
-        Assertions.assertTrue(goldClassic.checkItemCorner(Corner.TOP_LX).isAvailable());
-        Assertions.assertTrue(goldSymbols.checkItemCorner(Corner.TOP_LX).isAvailable());
-        Assertions.assertFalse(goldClassic.checkItemCorner(Corner.DOWN_LX).isAvailable());
-        Assertions.assertFalse(goldSymbols.checkItemCorner(Corner.DOWN_RX).isAvailable());
+        Assertions.assertSame(Availability.EMPTY, goldClassic.checkItemCorner(Corner.TOP_LX));
+        Assertions.assertSame(Availability.EMPTY, goldSymbols.checkItemCorner(Corner.TOP_LX));
+        Assertions.assertSame(Availability.NOT_USABLE, goldClassic.checkItemCorner(Corner.DOWN_LX));
+        Assertions.assertSame(Availability.NOT_USABLE, goldSymbols.checkItemCorner(Corner.DOWN_RX));
     }
 }
