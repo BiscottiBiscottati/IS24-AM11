@@ -1,10 +1,10 @@
 package it.polimi.ingsw.am11.players;
 
-import it.polimi.ingsw.am11.cards.util.Color;
-import it.polimi.ingsw.am11.cards.util.Item;
-import it.polimi.ingsw.am11.cards.util.Symbol;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.cards.utils.Color;
+import it.polimi.ingsw.am11.cards.utils.Item;
+import it.polimi.ingsw.am11.cards.utils.Symbol;
 
 import java.util.EnumMap;
 import java.util.HashMap;

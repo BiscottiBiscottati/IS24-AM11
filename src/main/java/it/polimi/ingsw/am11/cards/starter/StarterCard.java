@@ -5,9 +5,10 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
-import it.polimi.ingsw.am11.cards.util.Availability;
-import it.polimi.ingsw.am11.cards.util.Color;
-import it.polimi.ingsw.am11.cards.util.Corner;
+import it.polimi.ingsw.am11.cards.utils.Availability;
+import it.polimi.ingsw.am11.cards.utils.Color;
+import it.polimi.ingsw.am11.cards.utils.Corner;
+import it.polimi.ingsw.am11.cards.utils.EnumMapUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,7 +46,7 @@ public class StarterCard {
         private final @NotNull EnumSet<Color> centerColors;
 
         public Builder() {
-            availableCornersFront = new EnumMap<>(Corner.class);
+            availableCornersFront = EnumMapUtils.defaultInit(Corner.class, Availability.NOT_USABLE);
             availableColorCornerBack = new EnumMap<>(Corner.class);
             centerColors = EnumSet.noneOf(Color.class);
         }

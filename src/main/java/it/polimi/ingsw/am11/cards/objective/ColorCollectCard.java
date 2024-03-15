@@ -2,20 +2,17 @@ package it.polimi.ingsw.am11.cards.objective;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.util.Color;
-import it.polimi.ingsw.am11.cards.util.ObjectiveCardType;
-import it.polimi.ingsw.am11.cards.util.Symbol;
+import it.polimi.ingsw.am11.cards.utils.Color;
+import it.polimi.ingsw.am11.cards.utils.EnumMapUtils;
+import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
+import it.polimi.ingsw.am11.cards.utils.Symbol;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
 
 public class ColorCollectCard extends CollectingCard {
     private static final ImmutableMap<Symbol, Integer> SYMBOL_TO_COLLECT = Maps.immutableEnumMap(
-            ImmutableMap.of(
-                    Symbol.FEATHER, 0,
-                    Symbol.PAPER, 0,
-                    Symbol.GLASS, 0
-            )
+            EnumMapUtils.defaultInit(Symbol.class, 0)
     );
 
     private final @NotNull ImmutableMap<Color, Integer> colorToCollect;

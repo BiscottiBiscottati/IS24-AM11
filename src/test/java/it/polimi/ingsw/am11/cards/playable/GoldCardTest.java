@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.cards.playable;
 
-import it.polimi.ingsw.am11.cards.util.*;
+import it.polimi.ingsw.am11.cards.utils.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

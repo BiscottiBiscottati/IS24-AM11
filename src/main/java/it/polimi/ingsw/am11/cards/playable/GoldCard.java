@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.cards.playable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.util.*;
+import it.polimi.ingsw.am11.cards.utils.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -63,8 +63,8 @@ public class GoldCard extends PlayableCard {
 
         public Builder(int points, @NotNull Color primaryColor) {
             super(points, primaryColor);
-            this.availableCorners = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
-            this.colorPlacingRequirements = EnumMapUtils.Init(Color.class, 0);
+            this.availableCorners = EnumMapUtils.defaultInit(Corner.class, Availability.NOT_USABLE);
+            this.colorPlacingRequirements = EnumMapUtils.defaultInit(Color.class, 0);
             this.symbolToCollect = null;
 
         }

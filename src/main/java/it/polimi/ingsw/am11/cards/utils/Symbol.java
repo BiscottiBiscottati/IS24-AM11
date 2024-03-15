@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.util;
+package it.polimi.ingsw.am11.cards.utils;
 
 public enum Symbol implements CornerContainer, Item {
     GLASS,

@@ -2,8 +2,8 @@ package it.polimi.ingsw.am11.cards.objective;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.util.Color;
-import it.polimi.ingsw.am11.cards.util.Symbol;
+import it.polimi.ingsw.am11.cards.utils.Color;
+import it.polimi.ingsw.am11.cards.utils.Symbol;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;

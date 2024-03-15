@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.cards.playable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.util.*;
+import it.polimi.ingsw.am11.cards.utils.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class ResourceCard extends PlayableCard {
     private final static ImmutableMap<Color, Integer> PLACING_REQUIREMENTS = Maps.immutableEnumMap(
-            EnumMapUtils.Init(Color.class, 0)
+            EnumMapUtils.defaultInit(Color.class, 0)
     );
     private final @NotNull ImmutableMap<Corner, CornerContainer> availableCornerOrItem;
 
@@ -55,7 +55,7 @@ public class ResourceCard extends PlayableCard {
 
         public Builder(int cardPoints, @NotNull Color cardPrimaryColor) {
             super(cardPoints, cardPrimaryColor);
-            this.availableCornerOrItem = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
+            this.availableCornerOrItem = EnumMapUtils.defaultInit(Corner.class, Availability.NOT_USABLE);
         }
 
         public @NotNull ResourceCard build() {

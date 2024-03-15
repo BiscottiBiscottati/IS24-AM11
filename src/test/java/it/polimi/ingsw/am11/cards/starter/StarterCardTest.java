@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.cards.starter;
 
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
-import it.polimi.ingsw.am11.cards.util.Color;
-import it.polimi.ingsw.am11.cards.util.Corner;
+import it.polimi.ingsw.am11.cards.utils.Color;
+import it.polimi.ingsw.am11.cards.utils.Corner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
