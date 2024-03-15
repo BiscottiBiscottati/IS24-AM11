@@ -1,20 +1,21 @@
 package it.polimi.ingsw.am11.cards.objective;
 
 import it.polimi.ingsw.am11.cards.util.ObjectiveCardType;
+import org.jetbrains.annotations.NotNull;
 
 public class LCard extends PositioningCard {
 
     private final boolean isFlippedFlag;
     private final boolean isRotatedFlag;
 
-    private LCard(Builder builder) {
+    private LCard(@NotNull Builder builder) {
         super(builder);
         isFlippedFlag = builder.isFlippedFlag;
         isRotatedFlag = builder.isRotatedFlag;
     }
 
     @Override
-    public ObjectiveCardType getType() {
+    public @NotNull ObjectiveCardType getType() {
         return ObjectiveCardType.L_SHAPE;
     }
 
@@ -28,18 +29,18 @@ public class LCard extends PositioningCard {
             super(points);
         }
 
-        public Builder isFlipped(boolean flippedFlag) {
+        public @NotNull Builder isFlipped(boolean flippedFlag) {
             isFlippedFlag = flippedFlag;
             return this;
         }
 
-        public Builder isRotated(boolean rotatedFlag) {
+        public @NotNull Builder isRotated(boolean rotatedFlag) {
             isRotatedFlag = rotatedFlag;
             return this;
         }
 
         @Override
-        public ObjectiveCard build() {
+        public @NotNull ObjectiveCard build() {
             return new LCard(this);
         }
     }

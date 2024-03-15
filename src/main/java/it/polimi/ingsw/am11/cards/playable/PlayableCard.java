@@ -1,9 +1,10 @@
 package it.polimi.ingsw.am11.cards.playable;
 
+import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.util.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumMap;
 import java.util.Optional;
 
 public abstract class PlayableCard {
@@ -27,19 +28,19 @@ public abstract class PlayableCard {
 
     public abstract boolean isCornerAvail(@NotNull Corner corner);
 
-    public abstract EnumMap<Color, Integer> getPlacingRequirements();
+    public abstract ImmutableMap<Color, Integer> getPlacingRequirements();
 
     public abstract PointsRequirementsType getPointsRequirements();
 
-    public abstract CornerContainer checkItemCorner(@NotNull Corner corner);
+    public abstract @Nullable CornerContainer checkItemCorner(@NotNull Corner corner);
 
     public abstract Optional<Symbol> getSymbolToCollect();
 
     public abstract static class Builder {
         private final int cardPoints;
-        private final Color primaryColor;
+        private final @NotNull Color primaryColor;
 
-        public Builder(int cardPoints, @NotNull Color primaryColor) {
+        protected Builder(int cardPoints, @NotNull Color primaryColor) {
             this.cardPoints = cardPoints;
             this.primaryColor = primaryColor;
         }

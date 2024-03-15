@@ -12,7 +12,7 @@ public class TripletCard extends PositioningCard {
     }
 
     @Override
-    public ObjectiveCardType getType() {
+    public @NotNull ObjectiveCardType getType() {
         return ObjectiveCardType.TRIPLET;
     }
 
@@ -28,13 +28,13 @@ public class TripletCard extends PositioningCard {
             super(points);
         }
 
-        public Builder isFlipped(boolean flippedFlag) {
+        public @NotNull Builder isFlipped(boolean flippedFlag) {
             this.flippedFlag = flippedFlag;
             return this;
         }
 
         @Override
-        public ObjectiveCard build() {
+        public @NotNull ObjectiveCard build() {
             return new TripletCard(this);
         }
     }

@@ -1,28 +1,31 @@
 package it.polimi.ingsw.am11.cards.playable;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.util.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Optional;
 
 public class GoldCard extends PlayableCard {
 
-    private final EnumMap<Corner, Availability> availableCorners;
-    private final EnumMap<Color, Integer> colorPlacingRequirements;
+    private final @NotNull ImmutableMap<Corner, Availability> availableCorners;
+    private final @NotNull ImmutableMap<Color, Integer> colorPlacingRequirements;
     private final PointsRequirementsType pointsRequirements;
     private final Symbol symbolToCollect;
 
     private GoldCard(@NotNull Builder builder) {
         super(builder);
-        this.availableCorners = builder.availableCorners;
-        this.colorPlacingRequirements = builder.colorPlacingRequirements;
+        this.availableCorners = Maps.immutableEnumMap(builder.availableCorners);
+        this.colorPlacingRequirements = Maps.immutableEnumMap(builder.colorPlacingRequirements);
         this.pointsRequirements = builder.pointsRequirements;
         this.symbolToCollect = builder.symbolToCollect;
     }
 
     @Override
-    public PlayableCardType getType() {
+    public @NotNull PlayableCardType getType() {
         return PlayableCardType.GOLD;
     }
 
@@ -32,7 +35,7 @@ public class GoldCard extends PlayableCard {
     }
 
     @Override
-    public EnumMap<Color, Integer> getPlacingRequirements() {
+    public ImmutableMap<Color, Integer> getPlacingRequirements() {
         return colorPlacingRequirements;
     }
 
@@ -41,23 +44,23 @@ public class GoldCard extends PlayableCard {
         return pointsRequirements;
     }
 
-    public Optional<Symbol> getSymbolToCollect() {
+    public @NotNull Optional<Symbol> getSymbolToCollect() {
         return Optional.ofNullable(symbolToCollect);
     }
 
     @Override
-    public CornerContainer checkItemCorner(@NotNull Corner corner) {
+    public @Nullable CornerContainer checkItemCorner(@NotNull Corner corner) {
         return availableCorners.getOrDefault(corner, Availability.NOT_USABLE);
     }
 
     public static class Builder extends PlayableCard.Builder {
 
-        private final EnumMap<Corner, Availability> availableCorners;
-        private final EnumMap<Color, Integer> colorPlacingRequirements;
+        private final @NotNull EnumMap<Corner, Availability> availableCorners;
+        private final @NotNull EnumMap<Color, Integer> colorPlacingRequirements;
         private PointsRequirementsType pointsRequirements;
-        private Symbol symbolToCollect;
+        private @Nullable Symbol symbolToCollect;
 
-        public Builder(int points, Color primaryColor) {
+        public Builder(int points, @NotNull Color primaryColor) {
             super(points, primaryColor);
             this.availableCorners = new EnumMap<>(Corner.class);
             this.colorPlacingRequirements = new EnumMap<>(Color.class);
@@ -65,30 +68,35 @@ public class GoldCard extends PlayableCard {
 
         }
 
-        public Builder hasCorner(Corner corner, boolean available) {
+        public @NotNull Builder hasCorner(@NotNull Corner corner, boolean available) {
             availableCorners.put(corner, available ? Availability.EMPTY : Availability.NOT_USABLE);
             return this;
         }
 
-        public Builder hasRequirements(Color color, Integer number) {
+        public @NotNull Builder hasCorner(@NotNull Corner corner) {
+            availableCorners.put(corner, Availability.EMPTY);
+            return this;
+        }
+
+        public @NotNull Builder hasRequirements(@NotNull Color color, Integer number) {
             colorPlacingRequirements.put(color, number);
             return this;
         }
 
-        public Builder hasPointsRequirements(PointsRequirementsType type) {
+        public @NotNull Builder hasPointsRequirements(@NotNull PointsRequirementsType type) {
             this.pointsRequirements = type;
             if (!(type == PointsRequirementsType.SYMBOLS)) this.symbolToCollect = null;
             return this;
         }
 
-        public Builder hasSymbol(Symbol symbol) {
+        public @NotNull Builder hasSymbolToCollect(@NotNull Symbol symbol) {
             this.pointsRequirements = PointsRequirementsType.SYMBOLS;
             this.symbolToCollect = symbol;
             return this;
         }
 
         @Override
-        public PlayableCard build() {
+        public @NotNull GoldCard build() {
             return new GoldCard(this);
         }
     }

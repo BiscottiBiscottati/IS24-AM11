@@ -1,10 +1,15 @@
 package it.polimi.ingsw.am11.cards.starter;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.util.Availability;
 import it.polimi.ingsw.am11.cards.util.Color;
 import it.polimi.ingsw.am11.cards.util.Corner;
-import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -12,21 +17,21 @@ import java.util.EnumSet;
 import java.util.Set;
 
 public class StarterCard {
-    private final EnumMap<Corner, Availability> availableCornersFront;
-    private final EnumMap<Corner, Color> availableColorCornerBack;
-    private final EnumSet<Color> centerColorsFront;
+    private final @NotNull ImmutableMap<Corner, Availability> availableCornersFront;
+    private final @NotNull ImmutableMap<Corner, Color> availableColorCornerBack;
+    private final @NotNull ImmutableSet<Color> centerColorsFront;
 
     protected StarterCard(@NotNull Builder builder) {
-        this.availableCornersFront = builder.availableCornersFront;
-        this.availableColorCornerBack = builder.availableColorCornerBack;
-        this.centerColorsFront = builder.centerColors;
+        this.availableCornersFront = Maps.immutableEnumMap(builder.availableCornersFront);
+        this.availableColorCornerBack = Maps.immutableEnumMap(builder.availableColorCornerBack);
+        this.centerColorsFront = Sets.immutableEnumSet(builder.centerColors);
     }
 
     public boolean isFrontCornerAvail(@NotNull Corner corner) {
         return availableCornersFront.getOrDefault(corner, Availability.NOT_USABLE).isAvailable();
     }
 
-    public Color getRetroColorIn(@NotNull Corner corner) {
+    public @Nullable Color getRetroColorIn(@NotNull Corner corner) {
         return availableColorCornerBack.get(corner);
     }
 
@@ -35,9 +40,9 @@ public class StarterCard {
     }
 
     public static class Builder {
-        private final EnumMap<Corner, Availability> availableCornersFront;
-        private final EnumMap<Corner, Color> availableColorCornerBack;
-        private final EnumSet<Color> centerColors;
+        private final @NotNull EnumMap<Corner, Availability> availableCornersFront;
+        private final @NotNull EnumMap<Corner, Color> availableColorCornerBack;
+        private final @NotNull EnumSet<Color> centerColors;
 
         public Builder() {
             availableCornersFront = new EnumMap<>(Corner.class);
@@ -51,22 +56,22 @@ public class StarterCard {
                     .noneMatch(e -> true);
         }
 
-        public Builder hasAvailableFrontCorner(@NotNull Corner corner) {
+        public @NotNull Builder hasAvailableFrontCorner(@NotNull Corner corner) {
             availableCornersFront.put(corner, Availability.EMPTY);
             return this;
         }
 
-        public Builder hasColorBackIn(@NotNull Corner corner, @NotNull Color color) {
+        public @NotNull Builder hasColorBackIn(@NotNull Corner corner, @NotNull Color color) {
             availableColorCornerBack.put(corner, color);
             return this;
         }
 
-        public Builder hasCenterColors(Set<Color> colors) {
+        public @NotNull Builder hasCenterColors(@NotNull Set<Color> colors) {
             centerColors.addAll(colors);
             return this;
         }
 
-        public StarterCard build() throws IllegalBuildException {
+        public @NotNull StarterCard build() throws IllegalBuildException {
             if (checkAllBackCornerCovered()) {
                 return new StarterCard(this);
             }

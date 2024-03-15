@@ -1,11 +1,10 @@
 package it.polimi.ingsw.am11.cards.objective;
 
+import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.util.Color;
 import it.polimi.ingsw.am11.cards.util.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.util.Symbol;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.EnumMap;
 
 public abstract class ObjectiveCard {
     private final int points;
@@ -14,9 +13,9 @@ public abstract class ObjectiveCard {
         this.points = builder.points;
     }
 
-    public abstract EnumMap<Symbol, Integer> getSymbolRequirements();
+    public abstract ImmutableMap<Symbol, Integer> getSymbolRequirements();
 
-    public abstract EnumMap<Color, Integer> getColorRequirements();
+    public abstract ImmutableMap<Color, Integer> getColorRequirements();
 
     public int getPoints() {
         return points;

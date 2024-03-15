@@ -11,6 +11,7 @@ module it.polimi.ingsw.am11 {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires org.jetbrains.annotations;
+    requires com.google.common;
 
     requires java.sql;
 
