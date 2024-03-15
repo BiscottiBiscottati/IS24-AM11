@@ -12,11 +12,11 @@ public class EnumMapUtils {
             @NotNull Class<K> keyType,
             @NotNull V defaultValue) {
         return Arrays.stream(keyType.getEnumConstants())
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        x -> defaultValue,
-                        (x, y) -> x,
-                        () -> new EnumMap<>(keyType)
-                ));
+                     .collect(Collectors.toMap(
+                             Function.identity(),
+                             x -> defaultValue,
+                             (x, y) -> x,
+                             () -> new EnumMap<>(keyType)
+                     ));
     }
 }

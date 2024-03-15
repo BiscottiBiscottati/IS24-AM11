@@ -53,8 +53,8 @@ public class StarterCard {
 
         private boolean checkAllBackCornerCovered() {
             return Arrays.stream(Corner.values())
-                    .filter(key -> !availableColorCornerBack.containsKey(key))
-                    .noneMatch(e -> true);
+                         .filter(key -> !availableColorCornerBack.containsKey(key))
+                         .noneMatch(e -> true);
         }
 
         public @NotNull Builder hasAvailableFrontCorner(@NotNull Corner corner) {

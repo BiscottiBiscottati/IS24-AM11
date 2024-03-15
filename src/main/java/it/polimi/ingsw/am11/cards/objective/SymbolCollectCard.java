@@ -56,8 +56,8 @@ public class SymbolCollectCard extends CollectingCard {
         }
 
         @Override
-        public @NotNull ObjectiveCard build() throws IllegalBuildException {
-            if(Validator.nonNegativeValues(symbolToCollect)) return new SymbolCollectCard(this);
+        public @NotNull SymbolCollectCard build() throws IllegalBuildException {
+            if (Validator.nonNegativeValues(symbolToCollect)) return new SymbolCollectCard(this);
             throw new IllegalBuildException("Symbols to collect cannot be less than 0!");
         }
     }

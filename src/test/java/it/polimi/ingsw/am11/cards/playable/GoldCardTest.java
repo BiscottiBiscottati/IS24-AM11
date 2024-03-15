@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.cards.playable;
 
+import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,21 +13,24 @@ class GoldCardTest {
 
     @BeforeEach
     void setUp() {
-        goldClassic = new GoldCard.Builder(3, Color.RED)
-                .hasCorner(Corner.TOP_LX)
-                .hasCorner(Corner.TOP_RX, true)
-                .hasPointsRequirements(PointsRequirementsType.CLASSIC)
-                .hasRequirements(Color.RED, 3)
-                .hasRequirements(Color.GREEN, 1)
-                .build();
-
-        goldSymbols = new GoldCard.Builder(2, Color.BLUE)
-                .hasCorner(Corner.TOP_LX)
-                .hasCorner(Corner.TOP_RX)
-                .hasCorner(Corner.DOWN_LX, false)
-                .hasPointsRequirements(PointsRequirementsType.SYMBOLS)
-                .hasSymbolToCollect(Symbol.FEATHER)
-                .build();
+        try {
+            goldClassic = new GoldCard.Builder(3, Color.RED)
+                    .hasCorner(Corner.TOP_LX)
+                    .hasCorner(Corner.TOP_RX, true)
+                    .hasPointsRequirements(PointsRequirementsType.CLASSIC)
+                    .hasRequirements(Color.RED, 3)
+                    .hasRequirements(Color.GREEN, 1)
+                    .build();
+            goldSymbols = new GoldCard.Builder(2, Color.BLUE)
+                    .hasCorner(Corner.TOP_LX)
+                    .hasCorner(Corner.TOP_RX)
+                    .hasCorner(Corner.DOWN_LX, false)
+                    .hasPointsRequirements(PointsRequirementsType.SYMBOLS)
+                    .hasSymbolToCollect(Symbol.FEATHER)
+                    .build();
+        } catch (IllegalBuildException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -53,7 +57,7 @@ class GoldCardTest {
             Assertions.assertEquals(
                     0,
                     goldSymbols.getPlacingRequirements()
-                            .getOrDefault(color, 0)
+                               .getOrDefault(color, 0)
             );
         }
         Assertions.assertEquals(

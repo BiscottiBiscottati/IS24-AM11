@@ -40,7 +40,7 @@ public class LCard extends PositioningCard {
         }
 
         @Override
-        public @NotNull ObjectiveCard build() {
+        public @NotNull LCard build() {
             return new LCard(this);
         }
     }

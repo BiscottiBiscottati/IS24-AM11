@@ -25,7 +25,7 @@ public abstract class ObjectiveCard {
     public abstract ObjectiveCardType getType();
 
     public static abstract class Builder {
-        protected final int points;
+        private final int points;
 
         protected Builder(int points) {
             this.points = points;

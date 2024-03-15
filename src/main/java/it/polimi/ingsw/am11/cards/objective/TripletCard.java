@@ -34,7 +34,7 @@ public class TripletCard extends PositioningCard {
         }
 
         @Override
-        public @NotNull ObjectiveCard build() {
+        public @NotNull TripletCard build() {
             return new TripletCard(this);
         }
     }

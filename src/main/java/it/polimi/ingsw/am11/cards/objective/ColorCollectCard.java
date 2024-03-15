@@ -52,12 +52,12 @@ public class ColorCollectCard extends CollectingCard {
         }
 
         public @NotNull Builder hasColor(Color color) {
-            this.colorToCollect.put(color, 1);
+            this.colorToCollect.compute(color, (key, value) -> value == null ? 0 : value + 1);
             return this;
         }
 
         @Override
-        public @NotNull ObjectiveCard build() throws IllegalBuildException {
+        public @NotNull ColorCollectCard build() throws IllegalBuildException {
             if (Validator.nonNegativeValues(colorToCollect)) return new ColorCollectCard(this);
             else throw new IllegalBuildException("Colors to collect cannot be less than 0!");
         }
