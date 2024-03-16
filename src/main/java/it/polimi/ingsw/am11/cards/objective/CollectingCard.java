@@ -9,7 +9,7 @@ public abstract class CollectingCard extends ObjectiveCard {
     }
 
     public static abstract class Builder extends ObjectiveCard.Builder {
-        protected Builder(int points) {
+        protected Builder(int points) throws IllegalArgumentException {
             super(points);
         }
     }

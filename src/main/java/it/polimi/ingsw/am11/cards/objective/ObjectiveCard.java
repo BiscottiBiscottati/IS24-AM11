@@ -30,8 +30,9 @@ public abstract class ObjectiveCard {
     public static abstract class Builder {
         private final int points;
 
-        protected Builder(int points) {
-            this.points = points;
+        protected Builder(int points) throws IllegalArgumentException {
+            if (points > 0) this.points = points;
+            else throw new IllegalArgumentException("points cannot be less than 0!");
         }
 
         public abstract ObjectiveCard build() throws IllegalBuildException;

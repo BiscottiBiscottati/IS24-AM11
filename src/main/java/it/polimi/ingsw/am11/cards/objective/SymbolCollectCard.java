@@ -43,7 +43,7 @@ public class SymbolCollectCard extends CollectingCard {
 
         private final EnumMap<Symbol, Integer> symbolToCollect;
 
-        public Builder(int points) {
+        public Builder(int points) throws IllegalArgumentException {
             super(points);
             symbolToCollect = new EnumMap<>(Symbol.class);
         }
