@@ -12,8 +12,8 @@ import java.util.Optional;
 
 public class GoldCard extends PlayableCard {
 
-    private final @NotNull ImmutableMap<Corner, Availability> availableCorners;
-    private final @NotNull ImmutableMap<Color, Integer> colorPlacingRequirements;
+    private final ImmutableMap<Corner, Availability> availableCorners;
+    private final ImmutableMap<Color, Integer> colorPlacingRequirements;
     private final PointsRequirementsType pointsRequirements;
     private final Symbol symbolToCollect;
 
@@ -26,7 +26,7 @@ public class GoldCard extends PlayableCard {
     }
 
     @Override
-    public @NotNull PlayableCardType getType() {
+    public PlayableCardType getType() {
         return PlayableCardType.GOLD;
     }
 
@@ -45,24 +45,24 @@ public class GoldCard extends PlayableCard {
         return pointsRequirements;
     }
 
-    public @NotNull Optional<Symbol> getSymbolToCollect() {
+    public Optional<Symbol> getSymbolToCollect() {
         return Optional.ofNullable(symbolToCollect);
     }
 
     @Override
-    public @Nullable CornerContainer checkItemCorner(@NotNull Corner corner) {
+    public CornerContainer checkItemCorner(@NotNull Corner corner) {
         return availableCorners.getOrDefault(corner, Availability.NOT_USABLE);
     }
 
     public static class Builder extends PlayableCard.Builder {
 
-        private final @NotNull EnumMap<Corner, Availability> availableCorners;
-        private final @NotNull EnumMap<Color, Integer> colorPlacingRequirements;
+        private final EnumMap<Corner, Availability> availableCorners;
+        private final EnumMap<Color, Integer> colorPlacingRequirements;
         private PointsRequirementsType pointsRequirements;
         private @Nullable Symbol symbolToCollect;
 
 
-        public Builder(int points, @NotNull Color primaryColor) {
+        public Builder(int points, @NotNull Color primaryColor) throws IllegalBuildException {
             super(points, primaryColor);
             this.availableCorners = EnumMapUtils.defaultInit(Corner.class, Availability.NOT_USABLE);
             this.colorPlacingRequirements = EnumMapUtils.defaultInit(Color.class, 0);
@@ -70,28 +70,28 @@ public class GoldCard extends PlayableCard {
 
         }
 
-        public @NotNull Builder hasCorner(@NotNull Corner corner, boolean available) {
+        public Builder hasCorner(@NotNull Corner corner, boolean available) {
             availableCorners.put(corner, available ? Availability.EMPTY : Availability.NOT_USABLE);
             return this;
         }
 
-        public @NotNull Builder hasCorner(@NotNull Corner corner) {
+        public Builder hasCorner(@NotNull Corner corner) {
             availableCorners.put(corner, Availability.EMPTY);
             return this;
         }
 
-        public @NotNull Builder hasRequirements(@NotNull Color color, Integer number) {
+        public Builder hasRequirements(@NotNull Color color, Integer number) {
             colorPlacingRequirements.put(color, number);
             return this;
         }
 
-        public @NotNull Builder hasPointsRequirements(@NotNull PointsRequirementsType type) {
+        public Builder hasPointsRequirements(@NotNull PointsRequirementsType type) {
             this.pointsRequirements = type;
             if (!(type == PointsRequirementsType.SYMBOLS)) this.symbolToCollect = null;
             return this;
         }
 
-        public @NotNull Builder hasSymbolToCollect(@NotNull Symbol symbol) {
+        public Builder hasSymbolToCollect(@NotNull Symbol symbol) {
             this.pointsRequirements = PointsRequirementsType.SYMBOLS;
             this.symbolToCollect = symbol;
             return this;

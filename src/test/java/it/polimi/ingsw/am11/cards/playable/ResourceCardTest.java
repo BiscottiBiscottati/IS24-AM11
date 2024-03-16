@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.cards.playable;
 
+import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,20 +15,23 @@ class ResourceCardTest {
 
     @BeforeEach
     void setUp() {
+        try {
+            playable = new ResourceCard.Builder(1, Color.RED)
+                    .hasItemIn(Corner.TOP_LX, Color.RED)
+                    .hasItemIn(Corner.TOP_RX, Color.RED)
+                    .build();
 
-        playable = new ResourceCard.Builder(1, Color.RED)
-                .hasItemIn(Corner.TOP_LX, Color.RED)
-                .hasItemIn(Corner.TOP_RX, Color.RED)
-                .build();
+            resource = new ResourceCard.Builder(1, Color.RED)
+                    .hasItemIn(Corner.TOP_LX, Color.RED)
+                    .hasItemIn(Corner.TOP_RX, Color.RED)
+                    .build();
 
-        resource = new ResourceCard.Builder(1, Color.RED)
-                .hasItemIn(Corner.TOP_LX, Color.RED)
-                .hasItemIn(Corner.TOP_RX, Color.RED)
-                .build();
-
-        playable2 = new ResourceCard.Builder(0, Color.GREEN)
-                .hasItemIn(Corner.DOWN_LX, Color.PURPLE)
-                .build();
+            playable2 = new ResourceCard.Builder(0, Color.GREEN)
+                    .hasItemIn(Corner.DOWN_LX, Color.PURPLE)
+                    .build();
+        } catch (IllegalBuildException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -122,9 +126,11 @@ class ResourceCardTest {
     @Test
     void checkBuilderNulls() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new ResourceCard.Builder(10, null));
+                                () -> new ResourceCard.Builder(10, null).build());
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> new ResourceCard.Builder(10, Color.RED)
-                                        .hasItemIn(null, Color.RED));
+                                        .hasItemIn(null, Color.RED)
+                                        .build()
+        );
     }
 }

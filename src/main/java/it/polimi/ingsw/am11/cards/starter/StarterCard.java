@@ -22,7 +22,7 @@ public class StarterCard {
     private final @NotNull ImmutableMap<Corner, Color> availableColorCornerBack;
     private final @NotNull ImmutableSet<Color> centerColorsFront;
 
-    protected StarterCard(@NotNull Builder builder) {
+    private StarterCard(@NotNull Builder builder) {
         this.availableCornersFront = Maps.immutableEnumMap(builder.availableCornersFront);
         this.availableColorCornerBack = Maps.immutableEnumMap(builder.availableColorCornerBack);
         this.centerColorsFront = Sets.immutableEnumSet(builder.centerColors);

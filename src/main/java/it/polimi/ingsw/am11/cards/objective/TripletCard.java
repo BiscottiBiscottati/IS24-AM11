@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 public class TripletCard extends PositioningCard {
     private final boolean flippedFlag;
 
-    protected TripletCard(@NotNull Builder builder) {
+    private TripletCard(@NotNull Builder builder) {
         super(builder);
         this.flippedFlag = builder.flippedFlag;
     }

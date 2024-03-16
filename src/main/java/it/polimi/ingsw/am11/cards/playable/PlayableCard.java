@@ -41,7 +41,8 @@ public abstract class PlayableCard {
         private final int cardPoints;
         private final @NotNull Color primaryColor;
 
-        protected Builder(int cardPoints, @NotNull Color primaryColor) {
+        protected Builder(int cardPoints, @NotNull Color primaryColor) throws IllegalBuildException {
+            if (cardPoints < 0) throw new IllegalBuildException("Points cannot be less than 0!");
             this.cardPoints = cardPoints;
             this.primaryColor = primaryColor;
         }

@@ -16,7 +16,7 @@ public class SymbolCollectCard extends CollectingCard {
     );
     private final @NotNull ImmutableMap<Symbol, Integer> symbolToCollect;
 
-    protected SymbolCollectCard(@NotNull Builder builder) {
+    private SymbolCollectCard(@NotNull Builder builder) {
         super(builder);
         this.symbolToCollect = Maps.immutableEnumMap(builder.symbolToCollect);
     }

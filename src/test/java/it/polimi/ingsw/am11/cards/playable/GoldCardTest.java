@@ -89,4 +89,63 @@ class GoldCardTest {
         Assertions.assertSame(Availability.NOT_USABLE, goldClassic.checkItemCorner(Corner.DOWN_LX));
         Assertions.assertSame(Availability.NOT_USABLE, goldSymbols.checkItemCorner(Corner.DOWN_RX));
     }
+
+    @Test
+    void checkNulls() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> goldClassic.checkItemCorner(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> goldSymbols.isAvailable(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> goldClassic.checkItemCorner(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> goldSymbols.isAvailable(null));
+    }
+
+    @Test
+    void checkBuilderNulls() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> new GoldCard.Builder(10, null).build());
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> new GoldCard.Builder(10, Color.RED)
+                                        .hasCorner(null)
+                                        .build()
+        );
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> new GoldCard.Builder(10, null).build());
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> new GoldCard.Builder(10, Color.RED)
+                                        .hasCorner(null, true)
+                                        .build()
+        );
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> new GoldCard.Builder(10, Color.RED)
+                                        .hasSymbolToCollect(null)
+                                        .build()
+        );
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> new GoldCard.Builder(10, Color.RED)
+                                        .hasRequirements(null, 10)
+                                        .build()
+        );
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> new GoldCard.Builder(10, Color.RED)
+                                        .hasPointsRequirements(null)
+                                        .build()
+        );
+    }
+
+    @Test
+    void checkNegativePlacingRequirements() {
+        Assertions.assertThrows(IllegalBuildException.class,
+                                () -> new GoldCard.Builder(3, Color.GREEN)
+                                        .hasRequirements(Color.BLUE, -1)
+                                        .build()
+        );
+    }
+
+    @Test
+    void checkNegativePoints() {
+        Assertions.assertThrows(
+                IllegalBuildException.class,
+                () -> new GoldCard.Builder(-1, Color.PURPLE)
+                        .build()
+        );
+    }
 }
