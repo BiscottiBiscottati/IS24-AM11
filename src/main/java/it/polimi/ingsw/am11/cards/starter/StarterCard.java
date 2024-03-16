@@ -29,7 +29,7 @@ public class StarterCard {
     }
 
     public boolean isFrontCornerAvail(@NotNull Corner corner) {
-        return availableCornersFront.getOrDefault(corner, Availability.NOT_USABLE).isAvailable();
+        return availableCornersFront.get(corner).isAvailable();
     }
 
     public @Nullable Color getRetroColorIn(@NotNull Corner corner) {
@@ -58,7 +58,7 @@ public class StarterCard {
         }
 
         public @NotNull Builder hasAvailableFrontCorner(@NotNull Corner corner) {
-            availableCornersFront.put(corner, Availability.EMPTY);
+            availableCornersFront.put(corner, Availability.USABLE);
             return this;
         }
 

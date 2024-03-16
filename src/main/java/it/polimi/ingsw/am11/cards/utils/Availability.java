@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.cards.utils;
 
 public enum Availability implements CornerContainer {
-    EMPTY(true),
+    USABLE(true),
     NOT_USABLE(false);
 
     private final boolean isAvailable;

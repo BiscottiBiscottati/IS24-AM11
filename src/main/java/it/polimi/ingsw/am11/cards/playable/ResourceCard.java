@@ -43,7 +43,7 @@ public class ResourceCard extends PlayableCard {
 
     @Override
     public @Nullable CornerContainer checkItemCorner(@NotNull Corner corner) {
-        return availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE);
+        return availableCornerOrItem.get(corner);
     }
 
     @Override

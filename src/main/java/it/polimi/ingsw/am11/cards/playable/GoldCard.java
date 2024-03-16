@@ -32,7 +32,7 @@ public class GoldCard extends PlayableCard {
 
     @Override
     public boolean isAvailable(@NotNull Corner corner) {
-        return availableCorners.getOrDefault(corner, Availability.NOT_USABLE).isAvailable();
+        return availableCorners.get(corner).isAvailable();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class GoldCard extends PlayableCard {
 
     @Override
     public CornerContainer checkItemCorner(@NotNull Corner corner) {
-        return availableCorners.getOrDefault(corner, Availability.NOT_USABLE);
+        return availableCorners.get(corner);
     }
 
     public static class Builder extends PlayableCard.Builder {
@@ -71,12 +71,12 @@ public class GoldCard extends PlayableCard {
         }
 
         public Builder hasCorner(@NotNull Corner corner, boolean available) {
-            availableCorners.put(corner, available ? Availability.EMPTY : Availability.NOT_USABLE);
+            availableCorners.put(corner, available ? Availability.USABLE : Availability.NOT_USABLE);
             return this;
         }
 
         public Builder hasCorner(@NotNull Corner corner) {
-            availableCorners.put(corner, Availability.EMPTY);
+            availableCorners.put(corner, Availability.USABLE);
             return this;
         }
 

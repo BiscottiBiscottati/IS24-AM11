@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.cards.playable;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
 import org.jetbrains.annotations.NotNull;
@@ -9,12 +10,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public abstract class PlayableCard {
-    final Color color;
-    final int points;
+    private static final ImmutableMap<Corner, Availability> retroCorners = Maps.immutableEnumMap(
+            EnumMapUtils.defaultInit(Corner.class, Availability.USABLE)
+    );
+    private final Color color;
+    private final int points;
 
     protected PlayableCard(@NotNull Builder builder) {
         this.color = builder.primaryColor;
         this.points = builder.cardPoints;
+    }
+
+    public static boolean isRetroAvailable(@NotNull Corner corner) {
+        return retroCorners.get(corner).isAvailable();
     }
 
     public int getPoints() {
