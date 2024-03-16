@@ -18,9 +18,9 @@ import java.util.EnumSet;
 import java.util.Set;
 
 public class StarterCard {
-    private final @NotNull ImmutableMap<Corner, Availability> availableCornersFront;
-    private final @NotNull ImmutableMap<Corner, Color> availableColorCornerBack;
-    private final @NotNull ImmutableSet<Color> centerColorsFront;
+    private final ImmutableMap<Corner, Availability> availableCornersFront;
+    private final ImmutableMap<Corner, Color> availableColorCornerBack;
+    private final ImmutableSet<Color> centerColorsFront;
 
     private StarterCard(@NotNull Builder builder) {
         this.availableCornersFront = Maps.immutableEnumMap(builder.availableCornersFront);
@@ -69,6 +69,11 @@ public class StarterCard {
 
         public @NotNull Builder hasCenterColors(@NotNull Set<Color> colors) {
             centerColors.addAll(colors);
+            return this;
+        }
+
+        public Builder hasCenterColor(@NotNull Color color) {
+            centerColors.add(color);
             return this;
         }
 

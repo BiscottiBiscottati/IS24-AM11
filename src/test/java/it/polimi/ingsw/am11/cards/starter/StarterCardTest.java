@@ -17,6 +17,8 @@ class StarterCardTest {
     void setUp() throws IllegalBuildException {
         starter = new StarterCard.Builder()
                 .hasCenterColors(Set.of(Color.RED, Color.BLUE))
+                .hasCenterColor(Color.BLUE)
+                .hasCenterColor(Color.GREEN)
                 .hasAvailableFrontCorner(Corner.TOP_LX)
                 .hasAvailableFrontCorner(Corner.TOP_RX)
                 .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
@@ -46,15 +48,15 @@ class StarterCardTest {
 
     @Test
     void getCenterColorsFront() {
-        Assertions.assertTrue(Set.of(Color.RED, Color.BLUE).containsAll(starter.getCenterColorsFront()));
-        Assertions.assertTrue(starter.getCenterColorsFront().containsAll(Set.of(Color.RED, Color.BLUE)));
+        Assertions.assertEquals(Set.of(Color.RED, Color.BLUE, Color.GREEN), starter.getCenterColorsFront());
     }
 
     @Test
     void checkIllegalBuild() {
 
-        Assertions.assertThrows(IllegalBuildException.class, () ->
-                new StarterCard.Builder()
+        Assertions.assertThrows(
+                IllegalBuildException.class,
+                () -> new StarterCard.Builder()
                         .hasCenterColors(Set.of(Color.RED, Color.BLUE))
                         .hasAvailableFrontCorner(Corner.DOWN_LX)
                         .hasAvailableFrontCorner(Corner.TOP_LX)
@@ -62,5 +64,71 @@ class StarterCardTest {
                         .build()
         );
 
+    }
+
+    @Test
+    void checkBuilderNulls() {
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> new StarterCard.Builder()
+                        .hasCenterColor(null)
+                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
+                        .hasColorBackIn(Corner.DOWN_RX, Color.RED)
+                        .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                        .build()
+        );
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> new StarterCard.Builder()
+                        .hasAvailableFrontCorner(null)
+                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
+                        .hasColorBackIn(Corner.DOWN_RX, Color.RED)
+                        .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                        .build()
+        );
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> new StarterCard.Builder()
+                        .hasCenterColors(null)
+                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
+                        .hasColorBackIn(Corner.DOWN_RX, Color.RED)
+                        .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                        .build()
+        );
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> new StarterCard.Builder()
+                        .hasColorBackIn(null, Color.BLUE)
+                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
+                        .hasColorBackIn(Corner.DOWN_RX, Color.RED)
+                        .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                        .build()
+        );
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> new StarterCard.Builder()
+                        .hasColorBackIn(Corner.TOP_LX, null)
+                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
+                        .hasColorBackIn(Corner.DOWN_RX, Color.RED)
+                        .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                        .build()
+        );
+    }
+
+    @Test
+    void checkNulls() {
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> starter.getRetroColorIn(null)
+        );
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> starter.isFrontCornerAvail(null)
+        );
     }
 }
