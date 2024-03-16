@@ -14,7 +14,7 @@ public class SymbolCollectCard extends CollectingCard {
     private static final ImmutableMap<Color, Integer> COLOR_TO_COLLECT = Maps.immutableEnumMap(
             EnumMapUtils.defaultInit(Color.class, 0)
     );
-    private final @NotNull ImmutableMap<Symbol, Integer> symbolToCollect;
+    private final ImmutableMap<Symbol, Integer> symbolToCollect;
 
     private SymbolCollectCard(@NotNull Builder builder) {
         super(builder);
@@ -22,23 +22,26 @@ public class SymbolCollectCard extends CollectingCard {
     }
 
     @Override
+    @NotNull
     public ImmutableMap<Symbol, Integer> getSymbolRequirements() {
         return symbolToCollect;
     }
 
     @Override
+    @NotNull
     public ImmutableMap<Color, Integer> getColorRequirements() {
         return COLOR_TO_COLLECT;
     }
 
     @Override
-    public @NotNull ObjectiveCardType getType() {
+    @NotNull
+    public ObjectiveCardType getType() {
         return ObjectiveCardType.OBJECT_COLLECT;
     }
 
     public static class Builder extends CollectingCard.Builder {
 
-        private final @NotNull EnumMap<Symbol, Integer> symbolToCollect;
+        private final EnumMap<Symbol, Integer> symbolToCollect;
 
         public Builder(int points) {
             super(points);

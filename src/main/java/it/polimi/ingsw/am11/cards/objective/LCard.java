@@ -10,12 +10,13 @@ public class LCard extends PositioningCard {
 
     private LCard(@NotNull Builder builder) {
         super(builder);
-        isFlippedFlag = builder.isFlippedFlag;
-        isRotatedFlag = builder.isRotatedFlag;
+        this.isFlippedFlag = builder.isFlippedFlag;
+        this.isRotatedFlag = builder.isRotatedFlag;
     }
 
     @Override
-    public @NotNull ObjectiveCardType getType() {
+    @NotNull
+    public ObjectiveCardType getType() {
         return ObjectiveCardType.L_SHAPE;
     }
 

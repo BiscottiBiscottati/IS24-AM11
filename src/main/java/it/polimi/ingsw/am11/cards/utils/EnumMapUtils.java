@@ -8,7 +8,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class EnumMapUtils {
-    public static <K extends Enum<K>, V> @NotNull EnumMap<K, V> defaultInit(
+    @NotNull
+    public static <K extends Enum<K>, V> EnumMap<K, V> defaultInit(
             @NotNull Class<K> keyType,
             @NotNull V defaultValue) {
         return Arrays.stream(keyType.getEnumConstants())

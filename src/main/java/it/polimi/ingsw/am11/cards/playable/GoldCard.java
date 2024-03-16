@@ -26,6 +26,7 @@ public class GoldCard extends PlayableCard {
     }
 
     @Override
+    @NotNull
     public PlayableCardType getType() {
         return PlayableCardType.GOLD;
     }
@@ -36,20 +37,25 @@ public class GoldCard extends PlayableCard {
     }
 
     @Override
+    @NotNull
     public ImmutableMap<Color, Integer> getPlacingRequirements() {
         return colorPlacingRequirements;
     }
 
     @Override
+    @NotNull
     public PointsRequirementsType getPointsRequirements() {
         return pointsRequirements;
     }
 
+    @Override
+    @NotNull
     public Optional<Symbol> getSymbolToCollect() {
         return Optional.ofNullable(symbolToCollect);
     }
 
     @Override
+    @NotNull
     public CornerContainer checkItemCorner(@NotNull Corner corner) {
         return availableCorners.get(corner);
     }
@@ -98,7 +104,8 @@ public class GoldCard extends PlayableCard {
         }
 
         @Override
-        public @NotNull GoldCard build() throws IllegalBuildException {
+        @NotNull
+        public GoldCard build() throws IllegalBuildException {
             if (Validator.nonNegativeValues(colorPlacingRequirements)) return new GoldCard(this);
             throw new IllegalBuildException("Placing requirements cannot be less than 0!");
         }

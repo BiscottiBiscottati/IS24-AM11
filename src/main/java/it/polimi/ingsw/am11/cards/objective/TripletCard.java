@@ -12,7 +12,8 @@ public class TripletCard extends PositioningCard {
     }
 
     @Override
-    public @NotNull ObjectiveCardType getType() {
+    @NotNull
+    public ObjectiveCardType getType() {
         return ObjectiveCardType.TRIPLET;
     }
 

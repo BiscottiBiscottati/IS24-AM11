@@ -23,12 +23,12 @@ public class ColorCollectCard extends CollectingCard {
     }
 
     @Override
-    public ImmutableMap<Symbol, Integer> getSymbolRequirements() {
+    public @NotNull ImmutableMap<Symbol, Integer> getSymbolRequirements() {
         return SYMBOL_TO_COLLECT;
     }
 
     @Override
-    public ImmutableMap<Color, Integer> getColorRequirements() {
+    public @NotNull ImmutableMap<Color, Integer> getColorRequirements() {
         return this.colorToCollect;
     }
 

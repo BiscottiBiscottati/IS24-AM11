@@ -14,14 +14,17 @@ public abstract class ObjectiveCard {
         this.points = builder.points;
     }
 
+    @NotNull
     public abstract ImmutableMap<Symbol, Integer> getSymbolRequirements();
 
+    @NotNull
     public abstract ImmutableMap<Color, Integer> getColorRequirements();
 
     public int getPoints() {
         return points;
     }
 
+    @NotNull
     public abstract ObjectiveCardType getType();
 
     public static abstract class Builder {

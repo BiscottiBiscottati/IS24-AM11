@@ -5,7 +5,6 @@ import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Optional;
@@ -14,7 +13,7 @@ public class ResourceCard extends PlayableCard {
     private final static ImmutableMap<Color, Integer> PLACING_REQUIREMENTS = Maps.immutableEnumMap(
             EnumMapUtils.defaultInit(Color.class, 0)
     );
-    private final @NotNull ImmutableMap<Corner, CornerContainer> availableCornerOrItem;
+    private final ImmutableMap<Corner, CornerContainer> availableCornerOrItem;
 
     private ResourceCard(@NotNull Builder builder) {
         super(builder);
@@ -22,7 +21,8 @@ public class ResourceCard extends PlayableCard {
     }
 
     @Override
-    public @NotNull PlayableCardType getType() {
+    @NotNull
+    public PlayableCardType getType() {
         return PlayableCardType.RESOURCE;
     }
 
@@ -32,38 +32,44 @@ public class ResourceCard extends PlayableCard {
     }
 
     @Override
+    @NotNull
     public ImmutableMap<Color, Integer> getPlacingRequirements() {
         return PLACING_REQUIREMENTS;
     }
 
     @Override
-    public @NotNull PointsRequirementsType getPointsRequirements() {
+    @NotNull
+    public PointsRequirementsType getPointsRequirements() {
         return PointsRequirementsType.CLASSIC;
     }
 
     @Override
-    public @Nullable CornerContainer checkItemCorner(@NotNull Corner corner) {
+    @NotNull
+    public CornerContainer checkItemCorner(@NotNull Corner corner) {
         return availableCornerOrItem.get(corner);
     }
 
     @Override
-    public @NotNull Optional<Symbol> getSymbolToCollect() {
+    @NotNull
+    public Optional<Symbol> getSymbolToCollect() {
         return Optional.empty();
     }
 
     public static class Builder extends PlayableCard.Builder {
-        private final @NotNull EnumMap<Corner, CornerContainer> availableCornerOrItem;
+        private final EnumMap<Corner, CornerContainer> availableCornerOrItem;
 
         public Builder(int cardPoints, @NotNull Color cardPrimaryColor) throws IllegalBuildException {
             super(cardPoints, cardPrimaryColor);
             this.availableCornerOrItem = EnumMapUtils.defaultInit(Corner.class, Availability.NOT_USABLE);
         }
 
-        public @NotNull ResourceCard build() {
+        @NotNull
+        public ResourceCard build() {
             return new ResourceCard(this);
         }
 
-        public @NotNull Builder hasItemIn(@NotNull Corner corner, CornerContainer cornerContainer) {
+        @NotNull
+        public Builder hasItemIn(@NotNull Corner corner, CornerContainer cornerContainer) {
             availableCornerOrItem.put(corner, cornerContainer);
             return this;
         }

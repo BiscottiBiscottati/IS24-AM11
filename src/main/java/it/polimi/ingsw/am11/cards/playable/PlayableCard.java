@@ -5,7 +5,6 @@ import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -33,16 +32,21 @@ public abstract class PlayableCard {
         return color;
     }
 
+    @NotNull
     public abstract PlayableCardType getType();
 
     public abstract boolean isAvailable(@NotNull Corner corner);
 
+    @NotNull
     public abstract ImmutableMap<Color, Integer> getPlacingRequirements();
 
+    @NotNull
     public abstract PointsRequirementsType getPointsRequirements();
 
-    public abstract @Nullable CornerContainer checkItemCorner(@NotNull Corner corner);
+    @NotNull
+    public abstract CornerContainer checkItemCorner(@NotNull Corner corner);
 
+    @NotNull
     public abstract Optional<Symbol> getSymbolToCollect();
 
     public abstract static class Builder {
