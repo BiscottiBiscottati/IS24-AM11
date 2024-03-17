@@ -4,10 +4,12 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
+@Getter
 public abstract class PlayableCard {
     private static final ImmutableMap<Corner, Availability> retroCorners = Maps.immutableEnumMap(
             EnumMapUtils.Init(Corner.class, Availability.USABLE)
@@ -22,14 +24,6 @@ public abstract class PlayableCard {
 
     public static boolean isRetroAvailable(@NotNull Corner corner) {
         return retroCorners.get(corner).isAvailable();
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public Color getColor() {
-        return color;
     }
 
     @NotNull

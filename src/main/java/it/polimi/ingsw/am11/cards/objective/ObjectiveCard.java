@@ -5,8 +5,10 @@ import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.Color;
 import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.Symbol;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
+@Getter
 public abstract class ObjectiveCard {
     private final int points;
 
@@ -19,10 +21,6 @@ public abstract class ObjectiveCard {
 
     @NotNull
     public abstract ImmutableMap<Color, Integer> getColorRequirements();
-
-    public int getPoints() {
-        return points;
-    }
 
     @NotNull
     public abstract ObjectiveCardType getType();

@@ -13,6 +13,7 @@ module it.polimi.ingsw.am11 {
     requires org.jetbrains.annotations;
     requires com.google.common;
 
+    requires lombok;
     requires java.sql;
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
