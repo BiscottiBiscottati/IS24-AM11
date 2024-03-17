@@ -2,13 +2,13 @@ package it.polimi.ingsw.am11.cards.utils;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.EnumMap;
+import java.util.Map;
 
 public final class Validator {
     private Validator() {
     }
 
-    public static <K extends Enum<K>> boolean nonNegativeValues(@NotNull EnumMap<K, Integer> map) {
+    public static <K> boolean nonNegativeValues(@NotNull Map<K, Integer> map) {
         return map.values().stream().noneMatch(value -> value < 0);
     }
 }

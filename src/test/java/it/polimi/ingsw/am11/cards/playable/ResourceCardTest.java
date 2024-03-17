@@ -3,18 +3,18 @@ package it.polimi.ingsw.am11.cards.playable;
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ResourceCardTest {
 
-    private PlayableCard playable;
-    private ResourceCard resource;
-    private PlayableCard playable2;
+    private static PlayableCard playable;
+    private static ResourceCard resource;
+    private static PlayableCard playable2;
 
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
         try {
             playable = new ResourceCard.Builder(1, Color.RED)
                     .hasItemIn(Corner.TOP_LX, Color.RED)

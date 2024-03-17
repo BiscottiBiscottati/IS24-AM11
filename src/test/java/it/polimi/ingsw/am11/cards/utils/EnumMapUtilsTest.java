@@ -13,8 +13,8 @@ class EnumMapUtilsTest {
 
     @BeforeAll
     static void beforeAll() {
-        toTest = EnumMapUtils.defaultInit(Symbol.class, 0);
-        toTest2 = EnumMapUtils.defaultInit(Color.class, Symbol.FEATHER);
+        toTest = EnumMapUtils.Init(Symbol.class, 0);
+        toTest2 = EnumMapUtils.Init(Color.class, Symbol.FEATHER);
     }
 
     @Test

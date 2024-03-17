@@ -3,16 +3,16 @@ package it.polimi.ingsw.am11.cards.playable;
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class GoldCardTest {
 
-    private GoldCard goldClassic;
-    private PlayableCard goldSymbols;
+    private static GoldCard goldClassic;
+    private static PlayableCard goldSymbols;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void beforeAll() {
         try {
             goldClassic = new GoldCard.Builder(3, Color.RED)
                     .hasCorner(Corner.TOP_LX)
@@ -31,7 +31,9 @@ class GoldCardTest {
         } catch (IllegalBuildException e) {
             throw new RuntimeException(e);
         }
+
     }
+
 
     @Test
     void getType() {

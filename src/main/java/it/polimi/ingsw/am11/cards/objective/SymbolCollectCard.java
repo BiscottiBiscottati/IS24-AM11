@@ -12,7 +12,7 @@ public class SymbolCollectCard extends CollectingCard {
 
 
     private static final ImmutableMap<Color, Integer> COLOR_TO_COLLECT = Maps.immutableEnumMap(
-            EnumMapUtils.defaultInit(Color.class, 0)
+            EnumMapUtils.Init(Color.class, 0)
     );
     private final ImmutableMap<Symbol, Integer> symbolToCollect;
 
@@ -45,7 +45,7 @@ public class SymbolCollectCard extends CollectingCard {
 
         public Builder(int points) throws IllegalArgumentException {
             super(points);
-            symbolToCollect = new EnumMap<>(Symbol.class);
+            symbolToCollect = EnumMapUtils.Init(Symbol.class, 0);
         }
 
         public @NotNull Builder hasSymbol(@NotNull Symbol symbol, int quantity) {
@@ -54,7 +54,7 @@ public class SymbolCollectCard extends CollectingCard {
         }
 
         public @NotNull Builder hasSymbol(@NotNull Symbol symbol) {
-            this.symbolToCollect.put(symbol, 1);
+            this.symbolToCollect.compute(symbol, (key, value) -> value + 1);
             return this;
         }
 

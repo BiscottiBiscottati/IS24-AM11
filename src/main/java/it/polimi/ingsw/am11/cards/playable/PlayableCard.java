@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public abstract class PlayableCard {
     private static final ImmutableMap<Corner, Availability> retroCorners = Maps.immutableEnumMap(
-            EnumMapUtils.defaultInit(Corner.class, Availability.USABLE)
+            EnumMapUtils.Init(Corner.class, Availability.USABLE)
     );
     private final Color color;
     private final int points;

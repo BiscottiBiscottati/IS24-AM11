@@ -4,19 +4,19 @@ import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.Color;
 import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
 class ColorCollectCardTest {
 
-    private ColorCollectCard card;
-    private ObjectiveCard card2;
-    private ColorCollectCard card3;
+    private static ColorCollectCard card;
+    private static ObjectiveCard card2;
+    private static ColorCollectCard card3;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
         try {
             card = new ColorCollectCard.Builder(2)
                     .hasColor(Color.BLUE)

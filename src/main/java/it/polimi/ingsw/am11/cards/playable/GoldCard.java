@@ -70,8 +70,8 @@ public class GoldCard extends PlayableCard {
 
         public Builder(int points, @NotNull Color primaryColor) throws IllegalBuildException {
             super(points, primaryColor);
-            this.availableCorners = EnumMapUtils.defaultInit(Corner.class, Availability.NOT_USABLE);
-            this.colorPlacingRequirements = EnumMapUtils.defaultInit(Color.class, 0);
+            this.availableCorners = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
+            this.colorPlacingRequirements = EnumMapUtils.Init(Color.class, 0);
             this.symbolToCollect = null;
 
         }

@@ -47,7 +47,7 @@ public class StarterCard {
         private final EnumSet<Color> centerColors;
 
         public Builder() {
-            availableCornersFront = EnumMapUtils.defaultInit(Corner.class, Availability.NOT_USABLE);
+            availableCornersFront = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
             availableColorCornerBack = new EnumMap<>(Corner.class);
             centerColors = EnumSet.noneOf(Color.class);
         }
