@@ -8,6 +8,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class EnumMapUtils {
+    private EnumMapUtils() {
+    }
+
     @NotNull
     public static <K extends Enum<K>, V> EnumMap<K, V> Init(
             @NotNull Class<K> keyType,
