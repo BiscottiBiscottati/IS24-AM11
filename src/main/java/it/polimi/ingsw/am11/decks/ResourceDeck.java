@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am11.decks;
 
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
+import it.polimi.ingsw.am11.decks.utils.DeckType;
+import it.polimi.ingsw.am11.decks.utils.PlayableDeckType;
 
 import java.util.ArrayList;
 
