@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.cards.objective;
 
 import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.cards.utils.CardPattern;
 import it.polimi.ingsw.am11.cards.utils.Color;
 import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.Symbol;
@@ -9,6 +10,7 @@ import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.Position;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -35,6 +37,11 @@ public abstract class ObjectiveCard {
             Map<Color, Integer> colorOccurrences,
             Map<Color, Integer> cardColorOccurrences
     );
+
+    @Nullable
+    public CardPattern getPattern() {
+        return null;
+    }
 
     public static abstract class Builder {
         private final int points;

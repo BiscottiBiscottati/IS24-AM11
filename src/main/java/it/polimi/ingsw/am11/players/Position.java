@@ -1,13 +1,11 @@
 package it.polimi.ingsw.am11.players;
 
-import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
-@EqualsAndHashCode
-public class Position {
-    private final int x, y;
-
-    public Position(int x, int y) {
-        this.x = x;
-        this.y = y;
+public record Position(int x, int y) {
+    @Contract("_, _ -> new")
+    public static @NotNull Position of(int x, int y) {
+        return new Position(x, y);
     }
 }

@@ -16,17 +16,12 @@ public abstract class PositioningCard extends ObjectiveCard {
                     Symbol.PAPER, 0
             )
     );
-    // temporary data structure until we find a good algo for pattern matching
-    private final @NotNull ImmutableMap<Color, Integer> colorsOfPattern;
 
-    protected PositioningCard(@NotNull Builder builder) {
+    private final ImmutableMap<Color, Integer> colorRequirements;
+
+    protected PositioningCard(@NotNull Builder builder, EnumMap<Color, Integer> colorRequirements) {
         super(builder);
-        this.colorsOfPattern = Maps.immutableEnumMap(builder.colorsOfPattern);
-    }
-
-    @Override
-    public @NotNull ImmutableMap<Color, Integer> getColorRequirements() {
-        return colorsOfPattern;
+        this.colorRequirements = Maps.immutableEnumMap(colorRequirements);
     }
 
     @Override
@@ -36,16 +31,8 @@ public abstract class PositioningCard extends ObjectiveCard {
 
     public static abstract class Builder extends ObjectiveCard.Builder {
 
-        private final @NotNull EnumMap<Color, Integer> colorsOfPattern;
-
         protected Builder(int points) {
             super(points);
-            colorsOfPattern = new EnumMap<>(Color.class);
-        }
-
-        public @NotNull Builder hasColor(@NotNull Color color, int number) {
-            colorsOfPattern.put(color, number);
-            return this;
         }
     }
 }
