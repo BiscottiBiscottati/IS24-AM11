@@ -4,9 +4,13 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.players.CardContainer;
+import it.polimi.ingsw.am11.players.Position;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.Map;
 
 public class SymbolCollectCard extends CollectingCard {
 
@@ -37,6 +41,22 @@ public class SymbolCollectCard extends CollectingCard {
     @NotNull
     public ObjectiveCardType getType() {
         return ObjectiveCardType.OBJECT_COLLECT;
+    }
+
+    @Override
+    public int countPoints(
+            Map<Position, CardContainer> field,
+            Map<Symbol, Integer> symbolOccurrences,
+            Map<Color, Integer> colorOccurrences,
+            Map<Color, Integer> cardColorOccurrences
+    ) {
+        return Arrays.stream(Symbol.values())
+                     .filter(symbol -> symbolToCollect.get(symbol) != 0)
+                     .map(symbol -> symbolOccurrences.get(symbol) / symbolToCollect.get(symbol))
+                     .map(integer -> integer < 0 ? 0 : integer)
+                     .mapToInt(Integer::intValue)
+                     .min()
+                     .orElse(0) * this.getPoints();
     }
 
     public static class Builder extends CollectingCard.Builder {
