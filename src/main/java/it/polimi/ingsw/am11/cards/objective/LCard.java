@@ -41,6 +41,8 @@ public class LCard extends PositioningCard {
         return 0;
     }
 
+    // TODO: need pattern creation logic
+
 
     public static class Builder extends PositioningCard.Builder {
 
