@@ -47,7 +47,8 @@ public class SymbolCollectCard extends CollectingCard {
             PlayerField playerField) {
         return Arrays.stream(Symbol.values())
                      .filter(symbol -> Objects.requireNonNull(symbolToCollect.get(symbol)) != 0)
-                     .map(symbol -> playerField.getNumberOf(symbol) / Objects.requireNonNull(symbolToCollect.get(symbol)))
+                     .map(symbol -> playerField.getNumberOf(symbol) /
+                             Objects.requireNonNull(symbolToCollect.get(symbol)))
                      .map(integer -> integer < 0 ? 0 : integer)
                      .mapToInt(Integer::intValue)
                      .min()
