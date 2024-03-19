@@ -7,17 +7,31 @@ import it.polimi.ingsw.am11.players.Position;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 public class TripletCard extends PositioningCard {
     private final boolean flippedFlag;
     private final Color colorOfPattern;
 
+    private final CardPattern pattern;
+
     private TripletCard(@NotNull Builder builder) {
         super(builder, builder.colorRequirements);
         this.flippedFlag = builder.flippedFlag;
         this.colorOfPattern = builder.colorOfPattern;
+        this.pattern = new CardPattern(retrievePattern());
+    }
+
+    private Color[][] retrievePattern() {
+        Color[][] temp = new Color[3][3];
+        Arrays.stream(temp).forEach(colors -> Arrays.fill(colors, null));
+        ObjectiveCardType.TRIPLET.getPositions(this.flippedFlag, false)
+                                 .orElse(List.of())
+                                 .forEach(position -> temp[position.x()][position.y()] = this.colorOfPattern);
+        return temp;
     }
 
     @Override
@@ -43,7 +57,7 @@ public class TripletCard extends PositioningCard {
     @Nullable
     @Override
     public CardPattern getPattern() {
-        return null;
+        return this.pattern;
     }
 
     public static class Builder extends PositioningCard.Builder {

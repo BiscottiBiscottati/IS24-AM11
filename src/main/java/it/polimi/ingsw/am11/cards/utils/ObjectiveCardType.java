@@ -26,7 +26,11 @@ public enum ObjectiveCardType {
         this.positions = positions;
     }
 
-    public Optional<List<Position>> getPositions() {
-        return Optional.ofNullable(positions);
+    public Optional<List<Position>> getPositions(boolean flipped, boolean rotated) {
+        List<Position> result = this.positions;
+        if (positions != null) {
+            // TODO: create function for rotating and flipping the positions
+        }
+        return Optional.ofNullable(result);
     }
 }
