@@ -8,18 +8,22 @@ import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.Symbol;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.Position;
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-@Getter
+
 public abstract class ObjectiveCard {
     private final int points;
 
+
     protected ObjectiveCard(@NotNull Builder builder) {
         this.points = builder.points;
+    }
+
+    public int getPoints() {
+        return points;
     }
 
     @NotNull
