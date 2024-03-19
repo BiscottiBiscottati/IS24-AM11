@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
 import it.polimi.ingsw.am11.players.CardContainer;
@@ -19,11 +18,6 @@ public class TripletCard extends PositioningCard {
         super(builder, builder.colorRequirements);
         this.flippedFlag = builder.flippedFlag;
         this.colorOfPattern = builder.colorOfPattern;
-    }
-
-    @Override
-    public @NotNull ImmutableMap<Color, Integer> getColorRequirements() {
-        return null;
     }
 
     @Override

@@ -25,6 +25,11 @@ public abstract class PositioningCard extends ObjectiveCard {
     }
 
     @Override
+    public @NotNull ImmutableMap<Color, Integer> getColorRequirements() {
+        return colorRequirements;
+    }
+
+    @Override
     public @NotNull ImmutableMap<Symbol, Integer> getSymbolRequirements() {
         return SYMBOL_REQUIREMENTS;
     }

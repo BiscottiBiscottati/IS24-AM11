@@ -1,7 +1,5 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.utils.Color;
 import it.polimi.ingsw.am11.cards.utils.EnumMapUtils;
 import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
@@ -26,11 +24,6 @@ public class LCard extends PositioningCard {
         this.isRotatedFlag = builder.isRotatedFlag;
         this.primaryColor = builder.primaryColor;
         this.secondaryColor = builder.secondaryColor;
-    }
-
-    @Override
-    public @NotNull ImmutableMap<Color, Integer> getColorRequirements() {
-        return Maps.immutableEnumMap(EnumMapUtils.Init(Color.class, 0));
     }
 
     @Override
