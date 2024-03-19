@@ -8,10 +8,7 @@ import it.polimi.ingsw.am11.cards.utils.*;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 public final class StarterCard implements FieldCard {
     private final ImmutableMap<Corner, Availability> availableCornersFront;
@@ -25,12 +22,12 @@ public final class StarterCard implements FieldCard {
     }
 
     public boolean isFrontCornerAvail(@NotNull Corner corner) {
-        return availableCornersFront.get(corner).isAvailable();
+        return Objects.requireNonNull(availableCornersFront.get(corner)).isAvailable();
     }
 
     @NotNull
     public Color getRetroColorIn(@NotNull Corner corner) {
-        return availableColorCornerBack.get(corner);
+        return Objects.requireNonNull(availableColorCornerBack.get(corner));
     }
 
     @NotNull

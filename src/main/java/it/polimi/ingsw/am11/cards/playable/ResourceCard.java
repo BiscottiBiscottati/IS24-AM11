@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class ResourceCard extends PlayableCard {
@@ -28,7 +29,8 @@ public final class ResourceCard extends PlayableCard {
 
     @Override
     public boolean isAvailable(@NotNull Corner corner) {
-        return availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE).isAvailable();
+        return Objects.requireNonNull(availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE))
+                      .isAvailable();
     }
 
     @Override
@@ -46,7 +48,7 @@ public final class ResourceCard extends PlayableCard {
     @Override
     @NotNull
     public CornerContainer checkItemCorner(@NotNull Corner corner) {
-        return availableCornerOrItem.get(corner);
+        return Objects.requireNonNull(availableCornerOrItem.get(corner));
     }
 
     @Override

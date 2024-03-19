@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.cards.utils.*;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -22,7 +23,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     }
 
     public static boolean isRetroAvailable(@NotNull Corner corner) {
-        return retroCorners.get(corner).isAvailable();
+        return Objects.requireNonNull(retroCorners.get(corner)).isAvailable();
     }
 
     public int getPoints() {

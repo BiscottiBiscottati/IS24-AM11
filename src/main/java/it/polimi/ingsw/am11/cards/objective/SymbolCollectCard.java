@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.Objects;
 
 public class SymbolCollectCard extends CollectingCard {
 
@@ -45,8 +46,8 @@ public class SymbolCollectCard extends CollectingCard {
     public int countPoints(
             PlayerField playerField) {
         return Arrays.stream(Symbol.values())
-                     .filter(symbol -> symbolToCollect.get(symbol) != 0)
-                     .map(symbol -> playerField.getNumberOf(symbol) / symbolToCollect.get(symbol))
+                     .filter(symbol -> Objects.requireNonNull(symbolToCollect.get(symbol)) != 0)
+                     .map(symbol -> playerField.getNumberOf(symbol) / Objects.requireNonNull(symbolToCollect.get(symbol)))
                      .map(integer -> integer < 0 ? 0 : integer)
                      .mapToInt(Integer::intValue)
                      .min()
@@ -68,7 +69,7 @@ public class SymbolCollectCard extends CollectingCard {
         }
 
         public @NotNull Builder hasSymbol(@NotNull Symbol symbol) {
-            this.symbolToCollect.compute(symbol, (key, value) -> value + 1);
+            this.symbolToCollect.compute(symbol, (key, value) -> value == null ? 0 : value + 1);
             return this;
         }
 

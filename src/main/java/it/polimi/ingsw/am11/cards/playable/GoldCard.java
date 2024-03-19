@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class GoldCard extends PlayableCard {
@@ -33,7 +34,7 @@ public final class GoldCard extends PlayableCard {
 
     @Override
     public boolean isAvailable(@NotNull Corner corner) {
-        return availableCorners.get(corner).isAvailable();
+        return Objects.requireNonNull(availableCorners.get(corner)).isAvailable();
     }
 
     @Override
@@ -57,7 +58,7 @@ public final class GoldCard extends PlayableCard {
     @Override
     @NotNull
     public CornerContainer checkItemCorner(@NotNull Corner corner) {
-        return availableCorners.get(corner);
+        return Objects.requireNonNull(availableCorners.get(corner));
     }
 
     public static class Builder extends PlayableCard.Builder {
