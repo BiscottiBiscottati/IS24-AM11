@@ -4,11 +4,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
-import it.polimi.ingsw.am11.cards.utils.Availability;
-import it.polimi.ingsw.am11.cards.utils.Color;
-import it.polimi.ingsw.am11.cards.utils.Corner;
-import it.polimi.ingsw.am11.cards.utils.EnumMapUtils;
+import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -16,7 +13,7 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Set;
 
-public class StarterCard {
+public final class StarterCard implements FieldCard {
     private final ImmutableMap<Corner, Availability> availableCornersFront;
     private final ImmutableMap<Corner, Color> availableColorCornerBack;
     private final ImmutableSet<Color> centerColorsFront;

@@ -2,14 +2,14 @@ package it.polimi.ingsw.am11.cards.playable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
 import java.util.Optional;
 
-public class ResourceCard extends PlayableCard {
+public final class ResourceCard extends PlayableCard {
     private final static ImmutableMap<Color, Integer> PLACING_REQUIREMENTS = Maps.immutableEnumMap(
             EnumMapUtils.Init(Color.class, 0)
     );

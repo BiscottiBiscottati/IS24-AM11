@@ -1,22 +1,21 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
+import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.CardContainer;
+import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TripletCard extends PositioningCard {
     private final boolean flippedFlag;
     private final Color colorOfPattern;
-
     private final CardPattern pattern;
+    private Set<Position> seenPositions;
 
     private TripletCard(@NotNull Builder builder) {
         super(builder, builder.colorRequirements);
@@ -25,6 +24,7 @@ public class TripletCard extends PositioningCard {
         this.pattern = new CardPattern(retrievePattern());
     }
 
+    @NotNull
     private Color[][] retrievePattern() {
         Color[][] temp = new Color[3][3];
         Arrays.stream(temp).forEach(colors -> Arrays.fill(colors, null));
@@ -32,6 +32,15 @@ public class TripletCard extends PositioningCard {
                                  .orElse(List.of())
                                  .forEach(position -> temp[position.x()][position.y()] = this.colorOfPattern);
         return temp;
+    }
+
+    private int calculatePatterns(
+            Map<Position, CardContainer> field,
+            Position position) {
+
+        ImmutableMap<Corner, Boolean> coveredCorners = field.get(position).getCoveredCorners();
+        return 0;
+
     }
 
     @Override
@@ -42,11 +51,10 @@ public class TripletCard extends PositioningCard {
 
     @Override
     public int countPoints(
-            Map<Position, CardContainer> field,
-            Map<Symbol, Integer> symbolOccurrences,
-            Map<Color, Integer> colorOccurrences,
-            Map<Color, Integer> cardColorOccurrences
-    ) {
+            PlayerField playerField) {
+//        if (cardColorOccurrences.get(this.colorOfPattern) < 3) return 0;
+//        seenPositions = new HashSet<>(16);
+//        return this.calculatePatterns(playerField);
         return 0;
     }
 

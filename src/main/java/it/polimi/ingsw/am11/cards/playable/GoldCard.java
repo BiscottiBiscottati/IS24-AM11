@@ -2,15 +2,15 @@ package it.polimi.ingsw.am11.cards.playable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Optional;
 
-public class GoldCard extends PlayableCard {
+public final class GoldCard extends PlayableCard {
 
     private final ImmutableMap<Corner, Availability> availableCorners;
     private final ImmutableMap<Color, Integer> colorPlacingRequirements;
