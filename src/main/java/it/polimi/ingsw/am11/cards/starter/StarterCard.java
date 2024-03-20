@@ -35,6 +35,11 @@ public final class StarterCard implements FieldCard {
         return centerColorsFront;
     }
 
+    @Override
+    public boolean isColorEqual(Color color) {
+        return false;
+    }
+
     public static class Builder {
         private final EnumMap<Corner, Availability> availableCornersFront;
         private final EnumMap<Corner, Color> availableColorCornerBack;

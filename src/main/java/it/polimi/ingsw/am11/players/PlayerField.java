@@ -26,7 +26,7 @@ public class PlayerField {
     }
 
     @Contract("_, _ -> new")
-    private static @NotNull Position getPositionIn(@NotNull Corner corner, @NotNull Position position) {
+    public static @NotNull Position getPositionIn(@NotNull Corner corner, @NotNull Position position) {
         int tempX = position.x();
         int tempY = position.y();
         switch (corner) {

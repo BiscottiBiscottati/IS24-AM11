@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.utils.*;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.CardContainer;
@@ -16,6 +15,7 @@ public class TripletCard extends PositioningCard {
     private final Color colorOfPattern;
     private final CardPattern pattern;
     private Set<Position> seenPositions;
+    private int numberOfPatterns;
 
     private TripletCard(@NotNull Builder builder) {
         super(builder, builder.colorRequirements);
@@ -34,12 +34,28 @@ public class TripletCard extends PositioningCard {
         return temp;
     }
 
-    private int calculatePatterns(
-            Map<Position, CardContainer> field,
-            Position position) {
-
-        ImmutableMap<Corner, Boolean> coveredCorners = field.get(position).getCoveredCorners();
-        return 0;
+    private void countPatterns(Map<Position, CardContainer> field, Position position, int numberSeen) {
+        Position downLX = PlayerField.getPositionIn(Corner.DOWN_LX, position);
+        Position downRX = PlayerField.getPositionIn(Corner.DOWN_RX, position);
+        Position upLX = PlayerField.getPositionIn(Corner.TOP_LX, position);
+        Position upRX = PlayerField.getPositionIn(Corner.TOP_RX, position);
+        int updatedNumber;
+        if (field.get(position).getCard().isColorEqual(this.colorOfPattern)) updatedNumber = numberSeen + 1;
+        else {
+            updatedNumber = 0;
+        }
+        seenPositions.stream()
+                     .filter(position1 -> position1 == downLX)
+                     .findAny()
+                     .ifPresentOrElse(
+                             position1 -> countPatterns(field, upRX, updatedNumber),
+                             () -> {
+                                 if (field.containsKey(downRX)) {
+                                     countPatterns(field, downRX, 0);
+                                 } else {
+                                     countPatterns(field, upRX, updatedNumber);
+                                 }
+                             });
 
     }
 
@@ -52,8 +68,9 @@ public class TripletCard extends PositioningCard {
     @Override
     public int countPoints(
             PlayerField playerField) {
-//        if (cardColorOccurrences.get(this.colorOfPattern) < 3) return 0;
-//        seenPositions = new HashSet<>(16);
+        if (playerField.getPlacedCardColours().get(this.colorOfPattern) < 3) return 0;
+        seenPositions = new HashSet<>(16);
+        numberOfPatterns = 0;
 //        return this.calculatePatterns(playerField);
         return 0;
     }

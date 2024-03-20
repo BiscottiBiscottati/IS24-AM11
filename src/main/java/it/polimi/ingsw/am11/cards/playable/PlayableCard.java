@@ -51,6 +51,11 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     @NotNull
     public abstract Optional<Symbol> getSymbolToCollect();
 
+    @Override
+    public boolean isColorEqual(Color color) {
+        return this.color == color;
+    }
+
     public abstract static class Builder {
         private final int cardPoints;
         private final @NotNull Color primaryColor;
