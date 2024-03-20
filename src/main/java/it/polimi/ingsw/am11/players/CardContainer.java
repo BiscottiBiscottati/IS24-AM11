@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.players;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import it.polimi.ingsw.am11.cards.utils.Color;
 import it.polimi.ingsw.am11.cards.utils.Corner;
 import it.polimi.ingsw.am11.cards.utils.EnumMapUtils;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
@@ -35,6 +36,10 @@ public class CardContainer {
 
     public void cover(@NotNull Corner corner) {
         this.coveredCorners.put(corner, true);
+    }
+
+    public boolean equals(Color color) {
+        return this.card.equals(color);
     }
 
     public boolean isCornerCovered(@NotNull Corner corner) {

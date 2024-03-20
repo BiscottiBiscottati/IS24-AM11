@@ -14,6 +14,7 @@ public class TripletCard extends PositioningCard {
     private final boolean flippedFlag;
     private final Color colorOfPattern;
     private final CardPattern pattern;
+    private final Map<PatternPurpose, Corner> cornersPurpose;
     private Set<Position> seenPositions;
     private int numberOfPatterns;
 
@@ -22,6 +23,35 @@ public class TripletCard extends PositioningCard {
         this.flippedFlag = builder.flippedFlag;
         this.colorOfPattern = builder.colorOfPattern;
         this.pattern = new CardPattern(retrievePattern());
+        this.cornersPurpose = new EnumMap<>(PatternPurpose.class);
+        for (PatternPurpose purpose : PatternPurpose.values()) {
+            switch (purpose) {
+                case UP_CHECK -> {
+                    cornersPurpose.put(
+                            purpose,
+                            flippedFlag ? Corner.TOP_RX : Corner.TOP_LX
+                    );
+                }
+                case DOWN_CHECK -> {
+                    cornersPurpose.put(
+                            purpose,
+                            flippedFlag ? Corner.DOWN_LX : Corner.DOWN_RX
+                    );
+                }
+                case ADJACENT_LX -> {
+                    cornersPurpose.put(
+                            purpose,
+                            flippedFlag ? Corner.TOP_LX : Corner.TOP_RX
+                    );
+                }
+                case ADJACENT_RX -> {
+                    cornersPurpose.put(
+                            purpose,
+                            flippedFlag ? Corner.DOWN_RX : Corner.DOWN_LX
+                    );
+                }
+            }
+        }
     }
 
     @NotNull
@@ -34,28 +64,48 @@ public class TripletCard extends PositioningCard {
         return temp;
     }
 
-    private void countPatterns(Map<Position, CardContainer> field, Position position, int numberSeen) {
-        Position downLX = PlayerField.getPositionIn(Corner.DOWN_LX, position);
-        Position downRX = PlayerField.getPositionIn(Corner.DOWN_RX, position);
-        Position upLX = PlayerField.getPositionIn(Corner.TOP_LX, position);
-        Position upRX = PlayerField.getPositionIn(Corner.TOP_RX, position);
+    private void countPatterns(@NotNull Map<Position, CardContainer> field, Position position, int numberSeen) {
+        Position nextPatternPosition = PlayerField.getPositionIn(
+                cornersPurpose.get(PatternPurpose.UP_CHECK),
+                position
+        );
+        Position previousPatternPosition = PlayerField.getPositionIn(
+                cornersPurpose.get(PatternPurpose.DOWN_CHECK),
+                position
+        );
+        Position adjacentLX = PlayerField.getPositionIn(
+                cornersPurpose.get(PatternPurpose.ADJACENT_LX),
+                position
+        );
+        Position adjacentRX = PlayerField.getPositionIn(
+                cornersPurpose.get(PatternPurpose.ADJACENT_RX),
+                position
+        );
         int updatedNumber;
-        if (field.get(position).getCard().isColorEqual(this.colorOfPattern)) updatedNumber = numberSeen + 1;
-        else {
+
+        if (field.getOrDefault(previousPatternPosition, null) != null
+                && !seenPositions.contains(previousPatternPosition)) {
+            countPatterns(field, previousPatternPosition, 0);
+            return;
+        }
+
+        if (field.get(position).equals(this.colorOfPattern)) updatedNumber = numberSeen + 1;
+        else updatedNumber = 0;
+        if (updatedNumber == 3) {
+            numberOfPatterns += 1;
             updatedNumber = 0;
         }
-        seenPositions.stream()
-                     .filter(position1 -> position1 == downLX)
-                     .findAny()
-                     .ifPresentOrElse(
-                             position1 -> countPatterns(field, upRX, updatedNumber),
-                             () -> {
-                                 if (field.containsKey(downRX)) {
-                                     countPatterns(field, downRX, 0);
-                                 } else {
-                                     countPatterns(field, upRX, updatedNumber);
-                                 }
-                             });
+        seenPositions.add(position);
+        if (field.getOrDefault(nextPatternPosition, null) != null) {
+            countPatterns(field, nextPatternPosition, updatedNumber);
+        }
+        if (field.getOrDefault(adjacentLX, null) != null) {
+            countPatterns(field, adjacentLX, 0);
+        }
+        if (field.getOrDefault(adjacentRX, null) != null) {
+            countPatterns(field, adjacentRX, 0);
+        }
+
 
     }
 
@@ -67,12 +117,13 @@ public class TripletCard extends PositioningCard {
 
     @Override
     public int countPoints(
-            PlayerField playerField) {
+            @NotNull PlayerField playerField) {
         if (playerField.getPlacedCardColours().get(this.colorOfPattern) < 3) return 0;
         seenPositions = new HashSet<>(16);
         numberOfPatterns = 0;
-//        return this.calculatePatterns(playerField);
-        return 0;
+        this.countPatterns(playerField.getCardsPositioned(), Position.of(0, 0), 0);
+        return numberOfPatterns * this.getPoints();
+
     }
 
     public boolean isFlipped() {
@@ -83,6 +134,13 @@ public class TripletCard extends PositioningCard {
     @Override
     public CardPattern getPattern() {
         return this.pattern;
+    }
+
+    private enum PatternPurpose {
+        UP_CHECK,
+        DOWN_CHECK,
+        ADJACENT_LX,
+        ADJACENT_RX
     }
 
     public static class Builder extends PositioningCard.Builder {
