@@ -17,17 +17,17 @@ class ResourceCardTest {
     static void setUp() {
         try {
             playable = new ResourceCard.Builder(1, Color.RED)
-                    .hasItemIn(Corner.TOP_LX, Color.RED)
-                    .hasItemIn(Corner.TOP_RX, Color.RED)
+                    .hasIn(Corner.TOP_LX, Color.RED)
+                    .hasIn(Corner.TOP_RX, Color.RED)
                     .build();
 
             resource = new ResourceCard.Builder(1, Color.RED)
-                    .hasItemIn(Corner.TOP_LX, Color.RED)
-                    .hasItemIn(Corner.TOP_RX, Color.RED)
+                    .hasIn(Corner.TOP_LX, Color.RED)
+                    .hasIn(Corner.TOP_RX, Color.RED)
                     .build();
 
             playable2 = new ResourceCard.Builder(0, Color.GREEN)
-                    .hasItemIn(Corner.DOWN_LX, Color.PURPLE)
+                    .hasIn(Corner.DOWN_LX, Color.PURPLE)
                     .build();
         } catch (IllegalBuildException e) {
             throw new RuntimeException(e);
@@ -129,7 +129,7 @@ class ResourceCardTest {
                                 () -> new ResourceCard.Builder(10, null).build());
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> new ResourceCard.Builder(10, Color.RED)
-                                        .hasItemIn(null, Color.RED)
+                                        .hasIn(null, Color.RED)
                                         .build()
         );
     }

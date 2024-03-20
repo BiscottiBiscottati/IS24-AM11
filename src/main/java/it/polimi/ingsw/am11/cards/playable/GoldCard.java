@@ -18,6 +18,9 @@ public final class GoldCard extends PlayableCard {
     private final PointsRequirementsType pointsRequirements;
     private final Symbol symbolToCollect;
 
+    /**
+     * @param builder The builder for creation of a new instance
+     */
     private GoldCard(@NotNull Builder builder) {
         super(builder);
         this.availableCorners = Maps.immutableEnumMap(builder.availableCorners);
@@ -69,6 +72,11 @@ public final class GoldCard extends PlayableCard {
         private @Nullable Symbol symbolToCollect;
 
 
+        /**
+         * @param points       The points value of the card
+         * @param primaryColor The color of the card
+         * @throws IllegalBuildException if points are negative
+         */
         public Builder(int points, @NotNull Color primaryColor) throws IllegalBuildException {
             super(points, primaryColor);
             this.availableCorners = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
@@ -77,33 +85,61 @@ public final class GoldCard extends PlayableCard {
 
         }
 
+        /**
+         * @param corner    The corner to set
+         * @param available if the corner should be available to cover
+         * @return The modified builder
+         */
         public Builder hasCorner(@NotNull Corner corner, boolean available) {
             availableCorners.put(corner, available ? Availability.USABLE : Availability.NOT_USABLE);
             return this;
         }
 
+        /**
+         * @param corner The corner to set as available to cover
+         * @return The modified builder
+         */
         public Builder hasCorner(@NotNull Corner corner) {
             availableCorners.put(corner, Availability.USABLE);
             return this;
         }
 
+        /**
+         * @param color  The color requirement to place
+         * @param number The number of color to have in field
+         * @return The modified builder
+         */
         public Builder hasRequirements(@NotNull Color color, Integer number) {
             colorPlacingRequirements.put(color, number);
             return this;
         }
 
+        /**
+         * @param type Set how to get points if placed
+         * @return The modified builder
+         * @see PointsRequirementsType
+         */
         public Builder hasPointsRequirements(@NotNull PointsRequirementsType type) {
             this.pointsRequirements = type;
             if (!(type == PointsRequirementsType.SYMBOLS)) this.symbolToCollect = null;
             return this;
         }
 
-        public Builder hasSymbolToCollect(@NotNull Symbol symbol) {
+        /**
+         * @param symbol if not null sets a symbol to collect for scoring points otherwise does nothing
+         * @return The builder with its values set or the same previous builder
+         */
+        public Builder hasSymbolToCollect(Symbol symbol) {
+            if (symbol == null) return this;
             this.pointsRequirements = PointsRequirementsType.SYMBOLS;
             this.symbolToCollect = symbol;
             return this;
         }
 
+        /**
+         * @return The new GoldCard created with builder's values set previously
+         * @throws IllegalBuildException if placement requirements to place have a negative value
+         */
         @Override
         @NotNull
         public GoldCard build() throws IllegalBuildException {

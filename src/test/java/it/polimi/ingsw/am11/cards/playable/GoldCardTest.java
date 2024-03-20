@@ -118,11 +118,6 @@ class GoldCardTest {
         );
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> new GoldCard.Builder(10, Color.RED)
-                                        .hasSymbolToCollect(null)
-                                        .build()
-        );
-        Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new GoldCard.Builder(10, Color.RED)
                                         .hasRequirements(null, 10)
                                         .build()
         );

@@ -16,6 +16,9 @@ public final class ResourceCard extends PlayableCard {
     );
     private final ImmutableMap<Corner, CornerContainer> availableCornerOrItem;
 
+    /**
+     * @param builder The builder used for creation of this instance
+     */
     private ResourceCard(@NotNull Builder builder) {
         super(builder);
         this.availableCornerOrItem = Maps.immutableEnumMap(builder.availableCornerOrItem);
@@ -60,21 +63,36 @@ public final class ResourceCard extends PlayableCard {
     public static class Builder extends PlayableCard.Builder {
         private final EnumMap<Corner, CornerContainer> availableCornerOrItem;
 
+        /**
+         * @param cardPoints       The points value of the card
+         * @param cardPrimaryColor The color of the card
+         * @throws IllegalBuildException if points are negative
+         */
         public Builder(int cardPoints, @NotNull Color cardPrimaryColor) throws IllegalBuildException {
             super(cardPoints, cardPrimaryColor);
             this.availableCornerOrItem = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
         }
 
+        /**
+         * @param corner          The corner to set
+         * @param cornerContainer The option to put on the corner can contain an item or be empty or not usable
+         * @return The modified builder
+         * @see CornerContainer
+         */
+        @NotNull
+        public Builder hasIn(@NotNull Corner corner, @NotNull CornerContainer cornerContainer) {
+            availableCornerOrItem.put(corner, cornerContainer);
+            return this;
+        }
+
+        /**
+         * @return The new instance of ResourceCard based on the builder
+         */
         @NotNull
         public ResourceCard build() {
             return new ResourceCard(this);
         }
 
-        @NotNull
-        public Builder hasItemIn(@NotNull Corner corner, CornerContainer cornerContainer) {
-            availableCornerOrItem.put(corner, cornerContainer);
-            return this;
-        }
 
     }
 }

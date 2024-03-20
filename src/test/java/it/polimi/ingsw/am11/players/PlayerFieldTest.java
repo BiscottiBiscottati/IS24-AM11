@@ -16,8 +16,18 @@ class PlayerFieldTest {
 
     @Test
     void getPositionIn() {
-        Assertions.assertSame(
+        Assertions.assertEquals(
                 Position.of(1, 1),
                 PlayerField.getPositionIn(Corner.TOP_RX, position));
+        Assertions.assertEquals(
+                Position.of(-1, 1),
+                PlayerField.getPositionIn(Corner.TOP_LX, position));
+        Assertions.assertEquals(
+                Position.of(1, -1),
+                PlayerField.getPositionIn(Corner.DOWN_RX, position));
+        Assertions.assertEquals(
+                Position.of(-1, -1),
+                PlayerField.getPositionIn(Corner.DOWN_LX, position));
+
     }
 }
