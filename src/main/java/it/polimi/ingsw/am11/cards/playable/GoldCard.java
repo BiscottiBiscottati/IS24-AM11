@@ -129,7 +129,7 @@ public final class GoldCard extends PlayableCard {
          * @param symbol if not null sets a symbol to collect for scoring points otherwise does nothing
          * @return The builder with its values set or the same previous builder
          */
-        public Builder hasSymbolToCollect(Symbol symbol) {
+        public Builder hasSymbolToCollect(@Nullable Symbol symbol) {
             if (symbol == null) return this;
             this.pointsRequirements = PointsRequirementsType.SYMBOLS;
             this.symbolToCollect = symbol;

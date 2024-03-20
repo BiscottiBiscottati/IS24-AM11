@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.utils.*;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -32,6 +33,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     /**
      * @return points value of the card
      */
+    @Contract(pure = true)
     public int getPoints() {
         return points;
     }
@@ -39,6 +41,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     /**
      * @return color of the card
      */
+    @Contract(pure = true)
     public Color getColor() {
         return color;
     }
@@ -47,6 +50,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
      * @return the type of playable card
      * @see PlayableCardType
      */
+    @Contract(pure = true)
     @NotNull
     public abstract PlayableCardType getType();
 
@@ -54,11 +58,13 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
      * @param corner The corner to check
      * @return true if available false otherwise
      */
+    @Contract(pure = true)
     public abstract boolean isAvailable(@NotNull Corner corner);
 
     /**
      * @return A Map of keys colors and as values their requirements to place on the field in int
      */
+    @Contract(pure = true)
     @NotNull
     public abstract ImmutableMap<Color, Integer> getPlacingRequirements();
 
@@ -66,6 +72,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
      * @return type of requirement needed to place
      * @see PointsRequirementsType
      */
+    @Contract(pure = true)
     @NotNull
     public abstract PointsRequirementsType getPointsRequirements();
 
@@ -74,12 +81,14 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
      * @return an item if there's one otherwise gives its Availability
      * @see CornerContainer
      */
+    @Contract(pure = true)
     @NotNull
     public abstract CornerContainer checkItemCorner(@NotNull Corner corner);
 
     /**
      * @return a symbol if the cards permits a symbol to collect otherwise empty optional
      */
+    @Contract(pure = true)
     @NotNull
     public abstract Optional<Symbol> getSymbolToCollect();
 
@@ -87,6 +96,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
      * @param color The color to check
      * @return true if this card's color is equal to color param otherwise false
      */
+    @Contract(pure = true)
     @Override
     public boolean isColorEqual(Color color) {
         return this.color == color;

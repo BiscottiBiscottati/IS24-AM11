@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.utils.*;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -31,6 +32,7 @@ public final class ResourceCard extends PlayableCard {
     }
 
     @Override
+    @Contract(pure = true)
     public boolean isAvailable(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE))
                       .isAvailable();
@@ -50,6 +52,7 @@ public final class ResourceCard extends PlayableCard {
 
     @Override
     @NotNull
+    @Contract(pure = true)
     public CornerContainer checkItemCorner(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornerOrItem.get(corner));
     }
