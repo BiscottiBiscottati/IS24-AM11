@@ -39,7 +39,7 @@ public class SymbolCollectCard extends CollectingCard {
     @Override
     @NotNull
     public ObjectiveCardType getType() {
-        return ObjectiveCardType.OBJECT_COLLECT;
+        return ObjectiveCardType.SYMBOL_COLLECT;
     }
 
     @Override

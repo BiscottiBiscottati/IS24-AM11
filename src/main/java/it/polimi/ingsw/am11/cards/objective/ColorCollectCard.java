@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.Objects;
 
 public class ColorCollectCard extends CollectingCard {
     private static final ImmutableMap<Symbol, Integer> SYMBOL_TO_COLLECT = Maps.immutableEnumMap(
@@ -43,8 +44,9 @@ public class ColorCollectCard extends CollectingCard {
     public int countPoints(
             PlayerField playerField) {
         return Arrays.stream(Color.values())
-                     .filter(color -> colorToCollect.get(color) != 0)
-                     .map(color -> playerField.getNumberOf(color) / colorToCollect.get(color))
+                     .filter(color -> Objects.requireNonNull(colorToCollect.get(color)) != 0)
+                     .map(color -> playerField.getNumberOf(color) /
+                             Objects.requireNonNull(colorToCollect.get(color)))
                      .map(integer -> integer < 0 ? 0 : integer)
                      .mapToInt(Integer::intValue)
                      .min()

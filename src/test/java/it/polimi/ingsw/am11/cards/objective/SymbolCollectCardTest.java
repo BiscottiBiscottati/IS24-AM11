@@ -92,8 +92,8 @@ class SymbolCollectCardTest {
 
     @Test
     void getType() {
-        Assertions.assertSame(ObjectiveCardType.OBJECT_COLLECT, card.getType());
-        Assertions.assertSame(ObjectiveCardType.OBJECT_COLLECT, card2.getType());
+        Assertions.assertSame(ObjectiveCardType.SYMBOL_COLLECT, card.getType());
+        Assertions.assertSame(ObjectiveCardType.SYMBOL_COLLECT, card2.getType());
     }
 
     @Test

@@ -29,7 +29,7 @@ public class TripletCard extends PositioningCard {
         Color[][] temp = new Color[3][3];
         Arrays.stream(temp).forEach(colors -> Arrays.fill(colors, null));
         ObjectiveCardType.TRIPLET.getPositions(this.flippedFlag, false)
-                                 .orElse(List.of())
+                                 .orElse(Set.of())
                                  .forEach(position -> temp[position.x()][position.y()] = this.colorOfPattern);
         return temp;
     }
