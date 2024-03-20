@@ -41,8 +41,9 @@ public final class StarterCard implements FieldCard {
     }
 
     @Override
-    public boolean equals(Color color) {
-        return false;
+    public boolean equals(Object color) {
+        if (color instanceof Color) return false;
+        else return super.equals(color);
     }
 
     public static class Builder {

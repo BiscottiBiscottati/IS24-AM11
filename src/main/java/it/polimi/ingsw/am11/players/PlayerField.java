@@ -31,23 +31,23 @@ public class PlayerField {
         int tempY = position.y();
         switch (corner) {
             case TOP_RX -> {
-                return new Position(tempX % 2 == 0 ? tempX + 1 : tempX, tempY + 1);
+                return new Position(tempX + 1, tempY + 1);
             }
             case TOP_LX -> {
-                return new Position(tempX % 2 == 0 ? tempX : tempX - 1, tempY + 1);
+                return new Position(tempX - 1, tempY + 1);
             }
             case DOWN_RX -> {
-                return new Position(tempX % 2 == 0 ? tempX + 1 : tempX, tempY - 1);
+                return new Position(tempX + 1, tempY - 1);
             }
             case DOWN_LX -> {
-                return new Position(tempX % 2 == 0 ? tempX : tempX - 1, tempY - 1);
+                return new Position(tempX - 1, tempY - 1);
             }
             default -> throw new EnumConstantNotPresentException(Corner.class, "Qualcosa non va con lo switch enum!");
 
         }
     }
 
-    public HashMap<Position, CardContainer> getCardsPositioned() {
+    public Map<Position, CardContainer> getCardsPositioned() {
         return cardsPositioned;
     }
 

@@ -26,30 +26,22 @@ public class TripletCard extends PositioningCard {
         this.cornersPurpose = new EnumMap<>(PatternPurpose.class);
         for (PatternPurpose purpose : PatternPurpose.values()) {
             switch (purpose) {
-                case UP_CHECK -> {
-                    cornersPurpose.put(
-                            purpose,
-                            flippedFlag ? Corner.TOP_RX : Corner.TOP_LX
-                    );
-                }
-                case DOWN_CHECK -> {
-                    cornersPurpose.put(
-                            purpose,
-                            flippedFlag ? Corner.DOWN_LX : Corner.DOWN_RX
-                    );
-                }
-                case ADJACENT_LX -> {
-                    cornersPurpose.put(
-                            purpose,
-                            flippedFlag ? Corner.TOP_LX : Corner.TOP_RX
-                    );
-                }
-                case ADJACENT_RX -> {
-                    cornersPurpose.put(
-                            purpose,
-                            flippedFlag ? Corner.DOWN_RX : Corner.DOWN_LX
-                    );
-                }
+                case UP_CHECK -> cornersPurpose.put(
+                        purpose,
+                        flippedFlag ? Corner.TOP_RX : Corner.TOP_LX
+                );
+                case DOWN_CHECK -> cornersPurpose.put(
+                        purpose,
+                        flippedFlag ? Corner.DOWN_LX : Corner.DOWN_RX
+                );
+                case ADJACENT_LX -> cornersPurpose.put(
+                        purpose,
+                        flippedFlag ? Corner.TOP_LX : Corner.TOP_RX
+                );
+                case ADJACENT_RX -> cornersPurpose.put(
+                        purpose,
+                        flippedFlag ? Corner.DOWN_RX : Corner.DOWN_LX
+                );
             }
         }
     }
@@ -89,20 +81,23 @@ public class TripletCard extends PositioningCard {
             return;
         }
 
-        if (field.get(position).equals(this.colorOfPattern)) updatedNumber = numberSeen + 1;
+        if (field.get(position).colorEquals(this.colorOfPattern)) updatedNumber = numberSeen + 1;
         else updatedNumber = 0;
         if (updatedNumber == 3) {
             numberOfPatterns += 1;
             updatedNumber = 0;
         }
         seenPositions.add(position);
-        if (field.getOrDefault(nextPatternPosition, null) != null) {
+        if (field.getOrDefault(nextPatternPosition, null) != null
+                && !seenPositions.contains(nextPatternPosition)) {
             countPatterns(field, nextPatternPosition, updatedNumber);
         }
-        if (field.getOrDefault(adjacentLX, null) != null) {
+        if (field.getOrDefault(adjacentLX, null) != null
+                && !seenPositions.contains(adjacentLX)) {
             countPatterns(field, adjacentLX, 0);
         }
-        if (field.getOrDefault(adjacentRX, null) != null) {
+        if (field.getOrDefault(adjacentRX, null) != null
+                && !seenPositions.contains(adjacentRX)) {
             countPatterns(field, adjacentRX, 0);
         }
 

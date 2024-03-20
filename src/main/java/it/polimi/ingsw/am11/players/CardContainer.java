@@ -38,8 +38,9 @@ public class CardContainer {
         this.coveredCorners.put(corner, true);
     }
 
-    public boolean equals(Color color) {
-        return this.card.equals(color);
+    public boolean colorEquals(Color color) {
+        if (color != null) return this.card.isColorEqual(color);
+        return false;
     }
 
     public boolean isCornerCovered(@NotNull Corner corner) {
