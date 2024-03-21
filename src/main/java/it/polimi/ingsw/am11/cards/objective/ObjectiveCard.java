@@ -15,7 +15,7 @@ public abstract class ObjectiveCard {
     private final int points;
 
 
-    protected ObjectiveCard(@NotNull Builder builder) {
+    protected ObjectiveCard(@NotNull Builder<?> builder) {
         this.points = builder.points;
     }
 
@@ -40,7 +40,7 @@ public abstract class ObjectiveCard {
         return null;
     }
 
-    public static abstract class Builder {
+    public static abstract class Builder<T extends ObjectiveCard> {
         private final int points;
 
         protected Builder(int points) throws IllegalArgumentException {
@@ -48,7 +48,7 @@ public abstract class ObjectiveCard {
             else throw new IllegalArgumentException("points cannot be less than 0!");
         }
 
-        public abstract ObjectiveCard build() throws IllegalBuildException;
+        public abstract T build() throws IllegalBuildException;
     }
 
 }

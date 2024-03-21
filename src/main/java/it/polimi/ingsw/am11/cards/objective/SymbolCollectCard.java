@@ -55,7 +55,7 @@ public class SymbolCollectCard extends CollectingCard {
                      .orElse(0) * this.getPoints();
     }
 
-    public static class Builder extends CollectingCard.Builder {
+    public static class Builder extends CollectingCard.Builder<SymbolCollectCard> {
 
         private final EnumMap<Symbol, Integer> symbolToCollect;
 

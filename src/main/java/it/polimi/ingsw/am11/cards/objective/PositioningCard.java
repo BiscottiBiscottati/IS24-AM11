@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.utils.Color;
 import it.polimi.ingsw.am11.cards.utils.Symbol;
+import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -19,7 +20,7 @@ public abstract class PositioningCard extends ObjectiveCard {
 
     private final ImmutableMap<Color, Integer> colorRequirements;
 
-    protected PositioningCard(@NotNull Builder builder, EnumMap<Color, Integer> colorRequirements) {
+    protected PositioningCard(@NotNull Builder<?> builder, EnumMap<Color, Integer> colorRequirements) {
         super(builder);
         this.colorRequirements = Maps.immutableEnumMap(colorRequirements);
     }
@@ -34,10 +35,14 @@ public abstract class PositioningCard extends ObjectiveCard {
         return SYMBOL_REQUIREMENTS;
     }
 
-    public static abstract class Builder extends ObjectiveCard.Builder {
+    public static abstract class Builder<T extends PositioningCard>
+            extends ObjectiveCard.Builder<PositioningCard> {
 
         protected Builder(int points) {
             super(points);
         }
+
+        @Override
+        public abstract T build() throws IllegalBuildException;
     }
 }

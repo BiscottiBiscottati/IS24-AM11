@@ -40,12 +40,6 @@ public final class StarterCard implements FieldCard {
         return false;
     }
 
-    @Override
-    public boolean equals(Object color) {
-        if (color instanceof Color) return false;
-        else return super.equals(color);
-    }
-
     public static class Builder {
         private final EnumMap<Corner, Availability> availableCornersFront;
         private final EnumMap<Corner, Color> availableColorCornerBack;

@@ -54,7 +54,7 @@ public class ColorCollectCard extends CollectingCard {
 
     }
 
-    public static class Builder extends CollectingCard.Builder {
+    public static class Builder extends CollectingCard.Builder<ColorCollectCard> {
 
         private final @NotNull EnumMap<Color, Integer> colorToCollect;
 

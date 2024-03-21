@@ -138,7 +138,7 @@ public class TripletCard extends PositioningCard {
         ADJACENT_RX
     }
 
-    public static class Builder extends PositioningCard.Builder {
+    public static class Builder extends PositioningCard.Builder<TripletCard> {
 
         protected EnumMap<Color, Integer> colorRequirements;
         private boolean flippedFlag;

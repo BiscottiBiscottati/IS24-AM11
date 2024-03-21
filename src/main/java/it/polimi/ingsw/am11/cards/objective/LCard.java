@@ -37,7 +37,7 @@ public class LCard extends PositioningCard {
     // TODO: need pattern creation logic
 
 
-    public static class Builder extends PositioningCard.Builder {
+    public static class Builder extends PositioningCard.Builder<LCard> {
 
         private boolean isFlippedFlag;
         private boolean isRotatedFlag;
