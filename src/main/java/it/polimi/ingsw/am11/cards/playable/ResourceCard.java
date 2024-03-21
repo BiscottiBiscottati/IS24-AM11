@@ -11,6 +11,14 @@ import java.util.EnumMap;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * This class represents a resource card.
+ * <p>
+ * Each attribute is immutable.
+ * <p>
+ * The class can only be instantiated through the static inner builder
+ * {@link ResourceCard.Builder}.
+ */
 public final class ResourceCard extends PlayableCard {
     private final static ImmutableMap<Color, Integer> PLACING_REQUIREMENTS = Maps.immutableEnumMap(
             EnumMapUtils.Init(Color.class, 0)
@@ -63,7 +71,12 @@ public final class ResourceCard extends PlayableCard {
         return Optional.empty();
     }
 
-    public static class Builder extends PlayableCard.Builder {
+    /**
+     * Builder class for creating instances of {@link ResourceCard}.
+     * This builder provides methods to set the required attributes
+     * for the target object.
+     */
+    public static class Builder extends PlayableCard.Builder<ResourceCard> {
         private final EnumMap<Corner, CornerContainer> availableCornerOrItem;
 
         /**
@@ -89,7 +102,10 @@ public final class ResourceCard extends PlayableCard {
         }
 
         /**
-         * @return The new instance of ResourceCard based on the builder
+         * Constructs a new instance of <code>ResourceCard</code> using the
+         * parameters set by the builder's methods.
+         *
+         * @return A fully constructed instance of <code>ResourceCard</code>.
          */
         @NotNull
         public ResourceCard build() {

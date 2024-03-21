@@ -11,6 +11,14 @@ import java.util.EnumMap;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * This class represents a gold card.
+ * <p>
+ * Each attribute is immutable.
+ * <p>
+ * The class can only be instantiated through the static inner builder
+ * {@link GoldCard.Builder}.
+ */
 public final class GoldCard extends PlayableCard {
 
     private final ImmutableMap<Corner, Availability> availableCorners;
@@ -19,7 +27,9 @@ public final class GoldCard extends PlayableCard {
     private final Symbol symbolToCollect;
 
     /**
-     * @param builder The builder for creation of a new instance
+     * Constructor called from build method of <code>GoldCard.Builder</code>.
+     *
+     * @param builder the builder for creation of a new instance
      */
     private GoldCard(@NotNull Builder builder) {
         super(builder);
@@ -64,7 +74,12 @@ public final class GoldCard extends PlayableCard {
         return Objects.requireNonNull(availableCorners.get(corner));
     }
 
-    public static class Builder extends PlayableCard.Builder {
+    /**
+     * Builder class for creating instances of {@link GoldCard}.
+     * This builder provides methods to set the required attributes
+     * for the target object.
+     */
+    public static class Builder extends PlayableCard.Builder<GoldCard> {
 
         private final EnumMap<Corner, Availability> availableCorners;
         private final EnumMap<Color, Integer> colorPlacingRequirements;
@@ -73,8 +88,10 @@ public final class GoldCard extends PlayableCard {
 
 
         /**
-         * @param points       The point value of the card
-         * @param primaryColor The color of the card
+         * Constructor for <code>Builder</code> that's needed for creation of a <code>GoldCard</code>.
+         *
+         * @param points       the point value of the card
+         * @param primaryColor the color of the card
          * @throws IllegalBuildException if points are negative
          */
         public Builder(int points, @NotNull Color primaryColor) throws IllegalBuildException {
@@ -86,9 +103,11 @@ public final class GoldCard extends PlayableCard {
         }
 
         /**
-         * @param corner    The corner to set
+         * Sets if a corner can be covered by another card.
+         *
+         * @param corner    the corner to set
          * @param available if the corner should be available to cover
-         * @return The modified builder
+         * @return the modified builder
          */
         public Builder hasCorner(@NotNull Corner corner, boolean available) {
             availableCorners.put(corner, available ? Availability.USABLE : Availability.NOT_USABLE);
@@ -96,6 +115,8 @@ public final class GoldCard extends PlayableCard {
         }
 
         /**
+         * Sets the corner as available to be covered.
+         *
          * @param corner The corner to set as available to cover
          * @return The modified builder
          */
@@ -105,8 +126,10 @@ public final class GoldCard extends PlayableCard {
         }
 
         /**
-         * @param color  The color requirement to place
-         * @param number The number of colors to have in field
+         * Specifies the color requirement for placing this card on the field.
+         *
+         * @param color  The color required for placement
+         * @param number The number of the specified color needed on the field
          * @return The modified builder
          */
         public Builder hasRequirements(@NotNull Color color, Integer number) {
@@ -115,7 +138,9 @@ public final class GoldCard extends PlayableCard {
         }
 
         /**
-         * @param type Set how to get points if placed
+         * Specifies the <code>PointsRequirementsType</code> of the card.
+         *
+         * @param type The type of requirements to set
          * @return The modified builder
          * @see PointsRequirementsType
          */
@@ -126,6 +151,10 @@ public final class GoldCard extends PlayableCard {
         }
 
         /**
+         * Specifies a symbol to collect and sets the card as a <code>PointsRequirementsType.SYMBOL</code>.
+         * <p>
+         * If the provided argument is null, the method does nothing and returns the Builder.
+         *
          * @param symbol if not null sets a symbol to collect for scoring points otherwise does nothing
          * @return The builder with its values set or the same previous builder
          */
@@ -137,7 +166,10 @@ public final class GoldCard extends PlayableCard {
         }
 
         /**
-         * @return The new GoldCard created with builder's values set previously
+         * Constructs a new instance of <code>GoldCard</code> using the
+         * parameters set by the builder's methods.
+         *
+         * @return A fully constructed instance of <code>GoldCard</code>.
          * @throws IllegalBuildException if placement requirements to place have a negative value
          */
         @Override

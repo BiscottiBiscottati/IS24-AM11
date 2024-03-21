@@ -11,6 +11,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 
+/**
+ * Abstract class representing a playable card in the field.
+ * <p>
+ * Subclasses must be constructed using the provided {@link PlayableCard.Builder}
+ * inner class to ensure consistent object creation.
+ */
 public abstract sealed class PlayableCard implements FieldCard permits GoldCard, ResourceCard {
     private static final ImmutableMap<Corner, Availability> retroCorners = Maps.immutableEnumMap(
             EnumMapUtils.Init(Corner.class, Availability.USABLE)
@@ -21,11 +27,12 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     /**
      * The constructor for <code>PlayableCard</code> need to be called
      * from its subclasses to set color and point value.
+     * <p>
      * Uses an inner static class <code>Builder</code> to get a new instance of the card
      *
      * @param builder A builder of its subclasses to set color and points values
      */
-    protected PlayableCard(@NotNull Builder builder) {
+    protected PlayableCard(@NotNull Builder<?> builder) {
         this.color = builder.primaryColor;
         this.points = builder.cardPoints;
     }
@@ -75,6 +82,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
 
     /**
      * Gets the number of colors in the field needed to place the card.
+     * <p>
      * For <code>ResourceCard</code> all color requirements will be 0 as they have
      * no requirements to place.
      *
@@ -86,8 +94,9 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
 
     /**
      * Gets the method needed to score this card points value.
+     * <p>
      * If the card does not give points it will return <code>PointsRequirementsType.CLASSIC</code>
-     * as the card points value would be 0
+     * as the card points value would be 0.
      *
      * @return type of requirement needed to score points
      * @see PointsRequirementsType
@@ -98,7 +107,8 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
 
     /**
      * Check if there is an item in a corner.
-     * If it is empty or not available, returns its <code>Availability</code>
+     * <p>
+     * If it is empty or not available, returns its <code>Availability</code>.
      *
      * @param corner the corner to check
      * @return an item if there is one otherwise gives its <code>Availability</code>
@@ -133,7 +143,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     /**
      * The builder for creating Playable cards needs to be inherited to subclasses.
      */
-    public abstract static class Builder {
+    public abstract static class Builder<T extends PlayableCard> {
         private final int cardPoints;
         private final @NotNull Color primaryColor;
 
@@ -151,12 +161,13 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
         }
 
         /**
-         * Method that needs to be called to finalize the build after setting all its values
+         * Constructs a new instance of a subclass of <code>PlayableCard</code> using the
+         * parameters set by the builder's methods.
          *
-         * @return A new instance of PlayableCard
+         * @return A fully constructed instance of a subclass of <code>PlayableCard</code>
          * @throws IllegalBuildException if the build is incomplete or impossible
          */
-        public abstract PlayableCard build() throws IllegalBuildException;
+        public abstract T build() throws IllegalBuildException;
     }
 
 
