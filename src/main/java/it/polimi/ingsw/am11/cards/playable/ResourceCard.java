@@ -18,7 +18,7 @@ public final class ResourceCard extends PlayableCard {
     private final ImmutableMap<Corner, CornerContainer> availableCornerOrItem;
 
     /**
-     * @param builder The builder used for creation of this instance
+     * @param builder The builder used for the creation of this instance
      */
     private ResourceCard(@NotNull Builder builder) {
         super(builder);
@@ -67,8 +67,8 @@ public final class ResourceCard extends PlayableCard {
         private final EnumMap<Corner, CornerContainer> availableCornerOrItem;
 
         /**
-         * @param cardPoints       The points value of the card
-         * @param cardPrimaryColor The color of the card
+         * @param cardPoints       the point value of the card
+         * @param cardPrimaryColor the color of the card
          * @throws IllegalBuildException if points are negative
          */
         public Builder(int cardPoints, @NotNull Color cardPrimaryColor) throws IllegalBuildException {

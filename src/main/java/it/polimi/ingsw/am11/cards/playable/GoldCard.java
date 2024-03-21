@@ -73,7 +73,7 @@ public final class GoldCard extends PlayableCard {
 
 
         /**
-         * @param points       The points value of the card
+         * @param points       The point value of the card
          * @param primaryColor The color of the card
          * @throws IllegalBuildException if points are negative
          */
@@ -106,7 +106,7 @@ public final class GoldCard extends PlayableCard {
 
         /**
          * @param color  The color requirement to place
-         * @param number The number of color to have in field
+         * @param number The number of colors to have in field
          * @return The modified builder
          */
         public Builder hasRequirements(@NotNull Color color, Integer number) {
@@ -119,7 +119,7 @@ public final class GoldCard extends PlayableCard {
          * @return The modified builder
          * @see PointsRequirementsType
          */
-        public Builder hasPointsRequirements(@NotNull PointsRequirementsType type) {
+        public Builder hasPointRequirements(@NotNull PointsRequirementsType type) {
             this.pointsRequirements = type;
             if (!(type == PointsRequirementsType.SYMBOLS)) this.symbolToCollect = null;
             return this;

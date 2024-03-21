@@ -20,7 +20,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
 
     /**
      * The constructor for <code>PlayableCard</code> need to be called
-     * from its subclasses to set color and points value.
+     * from its subclasses to set color and point value.
      * Uses an inner static class <code>Builder</code> to get a new instance of the card
      *
      * @param builder A builder of its subclasses to set color and points values
@@ -35,7 +35,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     }
 
     /**
-     * Gets the points value of this card
+     * Gets the point value of this card
      *
      * @return points value of the card
      */
@@ -86,7 +86,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
 
     /**
      * Gets the method needed to score this card points value.
-     * If the card doesn't give points it will return <code>PointsRequirementsType.CLASSIC</code>
+     * If the card does not give points it will return <code>PointsRequirementsType.CLASSIC</code>
      * as the card points value would be 0
      *
      * @return type of requirement needed to score points
@@ -97,11 +97,11 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     public abstract PointsRequirementsType getPointsRequirements();
 
     /**
-     * Check if there's an item in a corner.
-     * If it's empty or not available returns its <code>Availability</code>
+     * Check if there is an item in a corner.
+     * If it is empty or not available, returns its <code>Availability</code>
      *
      * @param corner the corner to check
-     * @return an item if there's one otherwise gives its <code>Availability</code>
+     * @return an item if there is one otherwise gives its <code>Availability</code>
      * @see CornerContainer
      * @see Availability
      */
@@ -110,7 +110,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     public abstract CornerContainer checkItemCorner(@NotNull Corner corner);
 
     /**
-     * Getter method for the symbol to collect if there's any
+     * Getter method for the symbol to collect if there is any
      *
      * @return a symbol if the cards permits a symbol to collect otherwise an empty <code>Optional</code>
      */
@@ -128,17 +128,6 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     @Override
     public boolean isColorEqual(Color color) {
         return this.color == color;
-    }
-
-    @Override
-    public boolean equals(Object color) {
-        if (color instanceof Color) return this.color == color;
-        else return super.equals(color);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.color, this.points);
     }
 
     /**

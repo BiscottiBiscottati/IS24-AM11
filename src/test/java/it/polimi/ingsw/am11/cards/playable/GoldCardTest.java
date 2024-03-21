@@ -17,7 +17,7 @@ class GoldCardTest {
             goldClassic = new GoldCard.Builder(3, Color.RED)
                     .hasCorner(Corner.TOP_LX)
                     .hasCorner(Corner.TOP_RX, true)
-                    .hasPointsRequirements(PointsRequirementsType.CLASSIC)
+                    .hasPointRequirements(PointsRequirementsType.CLASSIC)
                     .hasRequirements(Color.RED, 3)
                     .hasRequirements(Color.GREEN, 1)
                     .build();
@@ -25,7 +25,7 @@ class GoldCardTest {
                     .hasCorner(Corner.TOP_LX)
                     .hasCorner(Corner.TOP_RX)
                     .hasCorner(Corner.DOWN_LX, false)
-                    .hasPointsRequirements(PointsRequirementsType.SYMBOLS)
+                    .hasPointRequirements(PointsRequirementsType.SYMBOLS)
                     .hasSymbolToCollect(Symbol.FEATHER)
                     .build();
         } catch (IllegalBuildException e) {
@@ -123,7 +123,7 @@ class GoldCardTest {
         );
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> new GoldCard.Builder(10, Color.RED)
-                                        .hasPointsRequirements(null)
+                                        .hasPointRequirements(null)
                                         .build()
         );
     }
