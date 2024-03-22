@@ -1,8 +1,12 @@
 package it.polimi.ingsw.am11.cards.utils;
 
+/**
+ * Represent the four corners of a card.
+ */
 public enum Corner {
-    TOP_RX,
-    TOP_LX,
+    DOWN_LX,
     DOWN_RX,
-    DOWN_LX
+    TOP_LX,
+    TOP_RX
+
 }
