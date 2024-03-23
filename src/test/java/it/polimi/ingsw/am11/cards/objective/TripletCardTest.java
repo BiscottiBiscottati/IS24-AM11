@@ -17,17 +17,22 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
+@SuppressWarnings("ClassWithTooManyFields")
 @ExtendWith(MockitoExtension.class)
 class TripletCardTest {
 
     static CardPattern standardTripletMatrix = CardPattern.of(
-            // the matrix is flipped on its y-axis for our cartesian reference
+            List.of(
+                    Arrays.asList(null, null, Color.GREEN),
+                    Arrays.asList(null, Color.GREEN, null),
+                    Arrays.asList(Color.GREEN, null, null)
+            )
+    );
+    static CardPattern reversedTripletMatrix = CardPattern.of(
+            // the matrix is flipped on its y-axis for the cartesian reference
             List.of(
                     Arrays.asList(Color.GREEN, null, null),
                     Arrays.asList(null, Color.GREEN, null),
@@ -35,25 +40,38 @@ class TripletCardTest {
             )
     );
     @InjectMocks
-    static TripletCard tripletCard;
-    static ResourceCard testFieldCardRes;
-    static StarterCard testFieldCardStart;
+    static TripletCard tripletCardForGreens;
+    @InjectMocks
+    static TripletCard tripletCardRevForGreens;
+    static ResourceCard greenCard;
+    static ResourceCard blueCard;
+    static StarterCard starterCard;
     @Mock
     PlayerField playerField;
-    Map<Position, CardContainer> positionedCardTest;
+    Map<Position, CardContainer> posCardSmall;
+    Map<Position, CardContainer> posCardLargest;
+
+    Map<Position, CardContainer> posCardNoMatch;
+
+    Map<Position, CardContainer> posCardLarge;
 
 
     @BeforeAll
     static void beforeAll() {
         try {
-            tripletCard = new TripletCard.Builder(2)
+            tripletCardForGreens = new TripletCard.Builder(2)
                     .hasColor(Color.GREEN)
                     .isFlipped(true)
                     .build();
+            tripletCardRevForGreens = new TripletCard.Builder(2)
+                    .hasColor(Color.GREEN)
+                    .isFlipped(false)
+                    .build();
             StarterCard.Builder builder = new StarterCard.Builder();
             Arrays.stream(Corner.values()).forEach(corner -> builder.hasColorBackIn(corner, Color.PURPLE));
-            testFieldCardStart = builder.build();
-            testFieldCardRes = new ResourceCard.Builder(0, Color.GREEN).build();
+            starterCard = builder.build();
+            greenCard = new ResourceCard.Builder(0, Color.GREEN).build();
+            blueCard = new ResourceCard.Builder(0, Color.BLUE).build();
         } catch (IllegalBuildException e) {
             throw new RuntimeException(e);
         }
@@ -62,55 +80,196 @@ class TripletCardTest {
 
     @BeforeEach
     void setUp() {
-        positionedCardTest = Map.of(
-                Position.of(0, 0), new CardContainer(testFieldCardStart),
-                Position.of(1, 1), new CardContainer(testFieldCardRes),
-                Position.of(2, 0), new CardContainer(testFieldCardRes),
-                Position.of(3, 1), new CardContainer(testFieldCardRes),
-                Position.of(1, -1), new CardContainer(testFieldCardRes),
-                Position.of(-1, -1), new CardContainer(testFieldCardRes),
-                Position.of(0, -2), new CardContainer(testFieldCardRes),
-                Position.of(-1, -3), new CardContainer(testFieldCardRes),
-                Position.of(-2, -4), new CardContainer(testFieldCardRes)
+        posCardSmall = Map.of(
+                Position.of(0, 0), new CardContainer(starterCard),
+                Position.of(1, 1), new CardContainer(greenCard),
+                Position.of(2, 0), new CardContainer(greenCard),
+                Position.of(3, 1), new CardContainer(greenCard),
+                Position.of(1, -1), new CardContainer(greenCard),
+                Position.of(-1, -1), new CardContainer(greenCard),
+                Position.of(0, -2), new CardContainer(greenCard),
+                Position.of(-1, -3), new CardContainer(greenCard),
+                Position.of(-2, -4), new CardContainer(greenCard)
         );
+        posCardLargest = new HashMap<>(64);
+        posCardLargest.put(Position.of(0, 0), new CardContainer(starterCard));
+        List<Position> testCardPositions = List.of(
+                Position.of(1, 1),
+                Position.of(2, 2),
+                Position.of(1, 3),
+                Position.of(3, 1),
+                Position.of(4, 0),
+                Position.of(2, 0),
+                Position.of(5, -1),
+                Position.of(1, -1),
+                Position.of(3, -3),
+                Position.of(2, -4),
+                Position.of(1, -3),
+                Position.of(-2, 2),
+                Position.of(-3, 1),
+                Position.of(-4, 0),
+                Position.of(-3, -1),
+                Position.of(-4, -2),
+                Position.of(-5, -3),
+                Position.of(-4, -4),
+                Position.of(-3, -5),
+                Position.of(0, -4),
+                Position.of(-1, -1),
+                Position.of(-2, -2)
+        );
+        testCardPositions.forEach(
+                position -> posCardLargest.put(position, new CardContainer(greenCard))
+        );
+        List<Position> testCardPositionsFalse = List.of(
+                Position.of(0, 2),
+                Position.of(2, -2),
+                Position.of(4, -2),
+                Position.of(-1, 3),
+                Position.of(-1, -5),
+                Position.of(-2, -4),
+                Position.of(-4, 2),
+                Position.of(-3, 3)
+        );
+        testCardPositionsFalse.forEach(
+                position -> posCardLargest.put(position, new CardContainer(blueCard))
+        );
+
+        posCardNoMatch = Map.of(
+                Position.of(0, 0), new CardContainer(starterCard),
+                Position.of(1, 1), new CardContainer(greenCard),
+                Position.of(2, 0), new CardContainer(blueCard),
+                Position.of(3, 1), new CardContainer(greenCard),
+                Position.of(1, -1), new CardContainer(greenCard),
+                Position.of(-1, -1), new CardContainer(greenCard),
+                Position.of(0, -2), new CardContainer(blueCard),
+                Position.of(-1, -3), new CardContainer(greenCard),
+                Position.of(-2, -4), new CardContainer(greenCard)
+        );
+
+        posCardLarge = new HashMap<>(32);
+        posCardLarge.put(Position.of(0, 0), new CardContainer(starterCard));
+        testCardPositions = List.of(
+                Position.of(1, 1),
+                Position.of(2, 2),
+                Position.of(1, 3),
+                Position.of(-2, 2),
+                Position.of(-3, 1),
+                Position.of(-4, 0),
+                Position.of(-1, -1),
+                Position.of(-2, -2),
+                Position.of(-3, -1),
+                Position.of(-4, -2),
+                Position.of(-3, -5),
+                Position.of(-4, -4),
+                Position.of(-5, -3)
+        );
+        testCardPositions.forEach(
+                position -> posCardLarge.put(position, new CardContainer(greenCard))
+        );
+        testCardPositionsFalse = List.of(
+                Position.of(0, 2),
+                Position.of(-1, 3),
+                Position.of(-3, 3),
+                Position.of(-4, 2),
+                Position.of(-2, -4)
+        );
+        testCardPositionsFalse.forEach(
+                position -> posCardLarge.put(position, new CardContainer(blueCard))
+        );
+
     }
 
     @Test
     void getType() {
-        Assertions.assertSame(ObjectiveCardType.TRIPLET, tripletCard.getType());
+        Assertions.assertSame(ObjectiveCardType.TRIPLET, tripletCardForGreens.getType());
     }
 
     @Test
     void countPoints() {
+        // Test for a simple map.
         Mockito.when(playerField.getCardsPositioned())
-               .thenReturn(positionedCardTest);
+               .thenReturn(posCardSmall);
         EnumMap<Color, Integer> placedCardNumber = EnumMapUtils.Init(Color.class, 0);
         placedCardNumber.put(Color.GREEN, 7);
         Mockito.when(playerField.getPlacedCardColours())
                .thenReturn(placedCardNumber);
 
-        Assertions.assertEquals(4, tripletCard.countPoints(playerField));
+        Assertions.assertEquals(4, tripletCardForGreens.countPoints(playerField));
+        Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
+
+        // Test if color placed are less than 3.
         placedCardNumber = EnumMapUtils.Init(Color.class, 0);
         placedCardNumber.put(Color.GREEN, 2);
         Mockito.when(playerField.getPlacedCardColours())
                .thenReturn(placedCardNumber);
 
-        Assertions.assertEquals(0, tripletCard.countPoints(playerField));
+        Assertions.assertEquals(0, tripletCardForGreens.countPoints(playerField));
+        Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
+
+        // Test a simple map but there are no matching pattern
+        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber.put(Color.GREEN, 6);
+        placedCardNumber.put(Color.BLUE, 2);
+        Mockito.when(playerField.getPlacedCardColours())
+               .thenReturn(placedCardNumber);
+        Mockito.when(playerField.getCardsPositioned())
+               .thenReturn(posCardNoMatch);
+
+        Assertions.assertEquals(0, tripletCardForGreens.countPoints(playerField));
+        Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
+
+        // Test for a larger map.
+        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber.put(Color.GREEN, 13);
+        placedCardNumber.put(Color.BLUE, 5);
+        Mockito.when(playerField.getPlacedCardColours())
+               .thenReturn(placedCardNumber);
+        Mockito.when(playerField.getCardsPositioned())
+               .thenReturn(posCardLarge);
+
+        Assertions.assertEquals(4, tripletCardForGreens.countPoints(playerField));
+        Assertions.assertEquals(4, tripletCardRevForGreens.countPoints(playerField));
+
+        // Test for an even larger map.
+        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber.put(Color.GREEN, 22);
+        placedCardNumber.put(Color.BLUE, 8);
+        Mockito.when(playerField.getPlacedCardColours())
+               .thenReturn(placedCardNumber);
+        Mockito.when(playerField.getCardsPositioned())
+               .thenReturn(posCardLargest);
+
+        Assertions.assertEquals(6, tripletCardForGreens.countPoints(playerField));
+        Assertions.assertEquals(6, tripletCardRevForGreens.countPoints(playerField));
     }
 
     @Test
     void isFlipped() {
-        Assertions.assertTrue(tripletCard.isFlipped());
+        Assertions.assertTrue(tripletCardForGreens.isFlipped());
+        Assertions.assertFalse(tripletCardRevForGreens.isFlipped());
     }
 
     @Test
     void getPattern() {
         IntStream.range(0, 3)
                  .forEach(value ->
-                                  Assertions.assertArrayEquals(
-                                          standardTripletMatrix.pattern()[value],
-                                          tripletCard.getPattern().pattern()[value]
-                                  )
+                          {
+                              assert tripletCardForGreens.getPattern() != null;
+                              Assertions.assertArrayEquals(
+                                      reversedTripletMatrix.pattern()[value],
+                                      tripletCardForGreens.getPattern().pattern()[value]
+                              );
+                          }
+                 );
+
+        IntStream.range(0, 3)
+                 .forEach(value -> {
+                              assert tripletCardRevForGreens.getPattern() != null;
+                              Assertions.assertArrayEquals(
+                                      standardTripletMatrix.pattern()[value],
+                                      tripletCardRevForGreens.getPattern().pattern()[value]
+                              );
+                          }
                  );
     }
 }

@@ -36,11 +36,11 @@ public class TripletCard extends PositioningCard {
                 );
                 case ADJACENT_LX -> cornersPurpose.put(
                         purpose,
-                        flippedFlag ? Corner.TOP_LX : Corner.TOP_RX
+                        flippedFlag ? Corner.TOP_LX : Corner.DOWN_LX
                 );
                 case ADJACENT_RX -> cornersPurpose.put(
                         purpose,
-                        flippedFlag ? Corner.DOWN_RX : Corner.DOWN_LX
+                        flippedFlag ? Corner.DOWN_RX : Corner.TOP_RX
                 );
             }
         }
@@ -74,6 +74,8 @@ public class TripletCard extends PositioningCard {
                 position
         );
         int updatedNumber;
+
+        if (field.getOrDefault(position, null) == null) return;
 
         if (field.getOrDefault(previousPatternPosition, null) != null
                 && !seenPositions.contains(previousPatternPosition)) {

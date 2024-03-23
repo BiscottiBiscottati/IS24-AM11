@@ -95,7 +95,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     /**
      * Gets the method needed to score this card points value.
      * <p>
-     * If the card does not give points it will return <code>PointsRequirementsType.CLASSIC</code>
+     * If the card doesn't give points it will return <code>PointsRequirementsType.CLASSIC</code>
      * as the card points value would be 0.
      *
      * @return type of requirement needed to score points
