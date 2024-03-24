@@ -6,16 +6,20 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import it.polimi.ingsw.am11.cards.utils.*;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public final class StarterCard implements FieldCard {
+public final class StarterCard implements FieldCard, CardIdentity {
+
+    private final int id;
     private final ImmutableMap<Corner, Availability> availableCornersFront;
     private final ImmutableMap<Corner, Color> availableColorCornerBack;
     private final ImmutableSet<Color> centerColorsFront;
 
     private StarterCard(@NotNull Builder builder) {
+        this.id = builder.id;
         this.availableCornersFront = Maps.immutableEnumMap(builder.availableCornersFront);
         this.availableColorCornerBack = Maps.immutableEnumMap(builder.availableColorCornerBack);
         this.centerColorsFront = Sets.immutableEnumSet(builder.centerColors);
@@ -40,15 +44,23 @@ public final class StarterCard implements FieldCard {
         return false;
     }
 
+    @Contract(pure = true)
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
     public static class Builder {
+        private final int id;
         private final EnumMap<Corner, Availability> availableCornersFront;
         private final EnumMap<Corner, Color> availableColorCornerBack;
         private final EnumSet<Color> centerColors;
 
-        public Builder() {
-            availableCornersFront = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
-            availableColorCornerBack = new EnumMap<>(Corner.class);
-            centerColors = EnumSet.noneOf(Color.class);
+        public Builder(int id) {
+            this.id = id;
+            this.availableCornersFront = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
+            this.availableColorCornerBack = new EnumMap<>(Corner.class);
+            this.centerColors = EnumSet.noneOf(Color.class);
         }
 
         private boolean checkAllBackCornerCovered() {

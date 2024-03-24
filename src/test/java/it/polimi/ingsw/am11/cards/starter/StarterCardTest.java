@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Set;
 
 class StarterCardTest {
@@ -15,7 +16,7 @@ class StarterCardTest {
 
     @BeforeEach
     void setUp() throws IllegalBuildException {
-        starter = new StarterCard.Builder()
+        starter = new StarterCard.Builder(1)
                 .hasCenterColors(Set.of(Color.RED, Color.BLUE))
                 .hasCenterColor(Color.BLUE)
                 .hasCenterColor(Color.GREEN)
@@ -130,5 +131,17 @@ class StarterCardTest {
                 IllegalArgumentException.class,
                 () -> starter.isFrontCornerAvail(null)
         );
+    }
+
+    @Test
+    void isColorEqual() {
+        Arrays.stream(Color.values()).forEach(
+                color -> Assertions.assertFalse(starter.isColorEqual(color))
+        );
+    }
+
+    @Test
+    void getId() {
+        Assertions.assertEquals(1, starter.getId());
     }
 }
