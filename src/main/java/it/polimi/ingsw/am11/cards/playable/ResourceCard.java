@@ -84,8 +84,8 @@ public final class ResourceCard extends PlayableCard {
          * @param cardPrimaryColor the color of the card
          * @throws IllegalBuildException if points are negative
          */
-        public Builder(int cardPoints, @NotNull Color cardPrimaryColor) throws IllegalBuildException {
-            super(cardPoints, cardPrimaryColor);
+        public Builder(int id, int cardPoints, @NotNull Color cardPrimaryColor) throws IllegalBuildException {
+            super(id, cardPoints, cardPrimaryColor);
             this.availableCornerOrItem = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
         }
 

@@ -59,19 +59,19 @@ class TripletCardTest {
     @BeforeAll
     static void beforeAll() {
         try {
-            tripletCardForGreens = new TripletCard.Builder(2)
+            tripletCardForGreens = new TripletCard.Builder(4, 2)
                     .hasColor(Color.GREEN)
                     .isFlipped(true)
                     .build();
-            tripletCardRevForGreens = new TripletCard.Builder(2)
+            tripletCardRevForGreens = new TripletCard.Builder(3, 2)
                     .hasColor(Color.GREEN)
                     .isFlipped(false)
                     .build();
-            StarterCard.Builder builder = new StarterCard.Builder();
+            StarterCard.Builder builder = new StarterCard.Builder(1);
             Arrays.stream(Corner.values()).forEach(corner -> builder.hasColorBackIn(corner, Color.PURPLE));
             starterCard = builder.build();
-            greenCard = new ResourceCard.Builder(0, Color.GREEN).build();
-            blueCard = new ResourceCard.Builder(0, Color.BLUE).build();
+            greenCard = new ResourceCard.Builder(1, 0, Color.GREEN).build();
+            blueCard = new ResourceCard.Builder(2, 0, Color.BLUE).build();
         } catch (IllegalBuildException e) {
             throw new RuntimeException(e);
         }

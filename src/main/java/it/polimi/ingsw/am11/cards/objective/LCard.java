@@ -46,8 +46,8 @@ public class LCard extends PositioningCard {
 
         private EnumMap<Color, Integer> colorRequirements;
 
-        public Builder(int points) {
-            super(points);
+        public Builder(int id, int points) {
+            super(id, points);
         }
 
         public @NotNull Builder isFlipped(boolean flippedFlag) {

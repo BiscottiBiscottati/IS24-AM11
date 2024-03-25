@@ -16,17 +16,17 @@ class ResourceCardTest {
     @BeforeAll
     static void setUp() {
         try {
-            playable = new ResourceCard.Builder(1, Color.RED)
+            playable = new ResourceCard.Builder(1, 1, Color.RED)
                     .hasIn(Corner.TOP_LX, Color.RED)
                     .hasIn(Corner.TOP_RX, Color.RED)
                     .build();
 
-            resource = new ResourceCard.Builder(1, Color.RED)
+            resource = new ResourceCard.Builder(2, 1, Color.RED)
                     .hasIn(Corner.TOP_LX, Color.RED)
                     .hasIn(Corner.TOP_RX, Color.RED)
                     .build();
 
-            playable2 = new ResourceCard.Builder(0, Color.GREEN)
+            playable2 = new ResourceCard.Builder(3, 0, Color.GREEN)
                     .hasIn(Corner.DOWN_LX, Color.PURPLE)
                     .build();
         } catch (IllegalBuildException e) {
@@ -126,9 +126,9 @@ class ResourceCardTest {
     @Test
     void checkBuilderNulls() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new ResourceCard.Builder(10, null).build());
+                                () -> new ResourceCard.Builder(5, 10, null).build());
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new ResourceCard.Builder(10, Color.RED)
+                                () -> new ResourceCard.Builder(4, 10, Color.RED)
                                         .hasIn(null, Color.RED)
                                         .build()
         );

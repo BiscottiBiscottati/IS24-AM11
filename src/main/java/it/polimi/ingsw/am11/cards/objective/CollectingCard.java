@@ -11,8 +11,8 @@ public abstract class CollectingCard extends ObjectiveCard {
 
     public static abstract class Builder<T extends CollectingCard>
             extends ObjectiveCard.Builder<CollectingCard> {
-        protected Builder(int points) throws IllegalArgumentException {
-            super(points);
+        protected Builder(int id, int points) throws IllegalArgumentException {
+            super(id, points);
         }
 
         @Override

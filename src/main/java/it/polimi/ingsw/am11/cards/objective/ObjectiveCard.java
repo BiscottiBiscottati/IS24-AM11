@@ -1,22 +1,26 @@
 package it.polimi.ingsw.am11.cards.objective;
 
 import com.google.common.collect.ImmutableMap;
-import it.polimi.ingsw.am11.cards.utils.CardPattern;
-import it.polimi.ingsw.am11.cards.utils.Color;
-import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
-import it.polimi.ingsw.am11.cards.utils.Symbol;
+import it.polimi.ingsw.am11.cards.utils.*;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
-public abstract class ObjectiveCard {
+public abstract class ObjectiveCard implements CardIdentity {
     private final int points;
 
+    private final int id;
 
     protected ObjectiveCard(@NotNull Builder<?> builder) {
         this.points = builder.points;
+        this.id = builder.id;
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
     }
 
     public int getPoints() {
@@ -43,9 +47,12 @@ public abstract class ObjectiveCard {
     public static abstract class Builder<T extends ObjectiveCard> {
         private final int points;
 
-        protected Builder(int points) throws IllegalArgumentException {
+        private final int id;
+
+        protected Builder(int id, int points) throws IllegalArgumentException {
             if (points > 0) this.points = points;
             else throw new IllegalArgumentException("points cannot be less than 0!");
+            this.id = id;
         }
 
         public abstract T build() throws IllegalBuildException;

@@ -146,8 +146,8 @@ public class TripletCard extends PositioningCard {
         private boolean flippedFlag;
         private Color colorOfPattern;
 
-        public Builder(int points) {
-            super(points);
+        public Builder(int id, int points) {
+            super(id, points);
             flippedFlag = false;
             colorOfPattern = null;
         }

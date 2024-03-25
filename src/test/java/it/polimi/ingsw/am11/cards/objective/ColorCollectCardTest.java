@@ -36,22 +36,22 @@ class ColorCollectCardTest {
     static void setUp() {
 
         try {
-            card = new ColorCollectCard.Builder(2)
+            card = new ColorCollectCard.Builder(1, 2)
                     .hasColor(Color.BLUE)
                     .hasColor(Color.BLUE)
                     .hasColor(Color.BLUE)
                     .build();
 
-            card2 = new ColorCollectCard.Builder(2)
+            card2 = new ColorCollectCard.Builder(2, 2)
                     .hasColor(Color.BLUE, 3)
                     .build();
 
-            card3 = new ColorCollectCard.Builder(2)
+            card3 = new ColorCollectCard.Builder(3, 2)
                     .hasColor(Color.BLUE, 3)
                     .hasColor(Color.BLUE)
                     .build();
 
-            cardWithMixedColors = new ColorCollectCard.Builder(2)
+            cardWithMixedColors = new ColorCollectCard.Builder(4, 2)
                     .hasColor(Color.BLUE)
                     .hasColor(Color.GREEN)
                     .hasColor(Color.RED)

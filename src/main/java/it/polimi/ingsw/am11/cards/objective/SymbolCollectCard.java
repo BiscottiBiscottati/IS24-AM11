@@ -59,8 +59,8 @@ public class SymbolCollectCard extends CollectingCard {
 
         private final EnumMap<Symbol, Integer> symbolToCollect;
 
-        public Builder(int points) throws IllegalArgumentException {
-            super(points);
+        public Builder(int id, int points) throws IllegalArgumentException {
+            super(id, points);
             symbolToCollect = EnumMapUtils.Init(Symbol.class, 0);
         }
 

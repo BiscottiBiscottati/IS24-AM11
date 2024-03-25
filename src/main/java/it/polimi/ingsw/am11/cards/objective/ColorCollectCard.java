@@ -58,8 +58,8 @@ public class ColorCollectCard extends CollectingCard {
 
         private final @NotNull EnumMap<Color, Integer> colorToCollect;
 
-        public Builder(int points) {
-            super(points);
+        public Builder(int id, int points) {
+            super(id, points);
             this.colorToCollect = EnumMapUtils.Init(Color.class, 0);
         }
 

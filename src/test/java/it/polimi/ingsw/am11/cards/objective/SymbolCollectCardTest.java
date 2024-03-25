@@ -42,13 +42,13 @@ class SymbolCollectCardTest {
 
 
         try {
-            card = new SymbolCollectCard.Builder(2)
+            card = new SymbolCollectCard.Builder(1, 2)
                     .hasSymbol(Symbol.FEATHER)
                     .hasSymbol(Symbol.GLASS, 1)
                     .hasSymbol(Symbol.PAPER, 1)
                     .build();
 
-            card2 = new SymbolCollectCard.Builder(2)
+            card2 = new SymbolCollectCard.Builder(2, 2)
                     .hasSymbol(Symbol.FEATHER)
                     .hasSymbol(Symbol.FEATHER)
                     .build();
@@ -106,7 +106,7 @@ class SymbolCollectCardTest {
     void checkIllegalBuild() {
         Assertions.assertThrows(
                 IllegalBuildException.class,
-                () -> new SymbolCollectCard.Builder(2)
+                () -> new SymbolCollectCard.Builder(3, 2)
                         .hasSymbol(Symbol.FEATHER)
                         .hasSymbol(Symbol.GLASS, -1)
                         .build()

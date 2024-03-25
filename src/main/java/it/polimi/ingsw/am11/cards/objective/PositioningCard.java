@@ -38,8 +38,8 @@ public abstract class PositioningCard extends ObjectiveCard {
     public static abstract class Builder<T extends PositioningCard>
             extends ObjectiveCard.Builder<PositioningCard> {
 
-        protected Builder(int points) {
-            super(points);
+        protected Builder(int id, int points) {
+            super(id, points);
         }
 
         @Override

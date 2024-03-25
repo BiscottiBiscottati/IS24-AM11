@@ -17,12 +17,14 @@ import java.util.Optional;
  * Subclasses must be constructed using the provided {@link PlayableCard.Builder}
  * inner class to ensure consistent object creation.
  */
-public abstract sealed class PlayableCard implements FieldCard permits GoldCard, ResourceCard {
+public abstract sealed class PlayableCard implements CardIdentity, FieldCard permits GoldCard, ResourceCard {
     private static final ImmutableMap<Corner, Availability> retroCorners = Maps.immutableEnumMap(
             EnumMapUtils.Init(Corner.class, Availability.USABLE)
     );
     private final Color color;
     private final int points;
+
+    private final int id;
 
     /**
      * The constructor for <code>PlayableCard</code> need to be called
@@ -35,6 +37,7 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     protected PlayableCard(@NotNull Builder<?> builder) {
         this.color = builder.primaryColor;
         this.points = builder.cardPoints;
+        this.id = builder.id;
     }
 
     public static boolean isRetroAvailable(@NotNull Corner corner) {
@@ -141,23 +144,39 @@ public abstract sealed class PlayableCard implements FieldCard permits GoldCard,
     }
 
     /**
+     * Getter for card's id.
+     * Each card should have a unique id.
+     *
+     * @return the id of the card
+     */
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+
+    /**
      * The builder for creating Playable cards needs to be inherited to subclasses.
      */
     public abstract static class Builder<T extends PlayableCard> {
         private final int cardPoints;
         private final @NotNull Color primaryColor;
 
+        private final int id;
+
         /**
-         * The constructor for <code>PlayableCard.Builder</code> it sets as final its color and points
+         * The constructor for <code>PlayableCard.Builder</code> it sets as final its color, points and id.
          *
+         * @param id           The id of the card unique from others
          * @param cardPoints   Points value of the card to create
          * @param primaryColor Color of the card to create
          * @throws IllegalBuildException if cardPoints are negative
          */
-        protected Builder(int cardPoints, @NotNull Color primaryColor) throws IllegalBuildException {
+        protected Builder(int id, int cardPoints, @NotNull Color primaryColor) throws IllegalBuildException {
             if (cardPoints < 0) throw new IllegalBuildException("Points cannot be less than 0!");
             this.cardPoints = cardPoints;
             this.primaryColor = primaryColor;
+            this.id = id;
         }
 
         /**

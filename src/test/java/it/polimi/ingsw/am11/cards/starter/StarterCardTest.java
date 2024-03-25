@@ -57,7 +57,7 @@ class StarterCardTest {
 
         Assertions.assertThrows(
                 IllegalBuildException.class,
-                () -> new StarterCard.Builder()
+                () -> new StarterCard.Builder(54)
                         .hasCenterColors(Set.of(Color.RED, Color.BLUE))
                         .hasAvailableFrontCorner(Corner.DOWN_LX)
                         .hasAvailableFrontCorner(Corner.TOP_LX)
@@ -71,7 +71,7 @@ class StarterCardTest {
     void checkBuilderNulls() {
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> new StarterCard.Builder()
+                () -> new StarterCard.Builder(1)
                         .hasCenterColor(null)
                         .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
                         .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
@@ -81,7 +81,7 @@ class StarterCardTest {
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> new StarterCard.Builder()
+                () -> new StarterCard.Builder(1)
                         .hasAvailableFrontCorner(null)
                         .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
                         .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
@@ -91,7 +91,7 @@ class StarterCardTest {
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> new StarterCard.Builder()
+                () -> new StarterCard.Builder(2)
                         .hasCenterColors(null)
                         .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
                         .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
@@ -101,7 +101,7 @@ class StarterCardTest {
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> new StarterCard.Builder()
+                () -> new StarterCard.Builder(3)
                         .hasColorBackIn(null, Color.BLUE)
                         .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
                         .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
@@ -111,7 +111,7 @@ class StarterCardTest {
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> new StarterCard.Builder()
+                () -> new StarterCard.Builder(4)
                         .hasColorBackIn(Corner.TOP_LX, null)
                         .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
                         .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
