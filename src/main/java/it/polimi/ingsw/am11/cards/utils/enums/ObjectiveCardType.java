@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.utils;
+package it.polimi.ingsw.am11.cards.utils.enums;
 
 import com.google.common.collect.ImmutableSet;
 import it.polimi.ingsw.am11.players.Position;

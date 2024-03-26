@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.cards.utils;
 
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
 
 /**
  * A common interface for representing all cards that can be positioned on the field.

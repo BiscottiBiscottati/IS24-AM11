@@ -2,10 +2,10 @@ package it.polimi.ingsw.am11.players;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.utils.Color;
-import it.polimi.ingsw.am11.cards.utils.Corner;
-import it.polimi.ingsw.am11.cards.utils.EnumMapUtils;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

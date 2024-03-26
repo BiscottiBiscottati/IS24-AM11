@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.players;
 
-import it.polimi.ingsw.am11.cards.utils.Corner;
+import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

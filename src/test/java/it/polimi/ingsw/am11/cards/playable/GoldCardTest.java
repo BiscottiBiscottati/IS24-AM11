@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.cards.playable;
 
-import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

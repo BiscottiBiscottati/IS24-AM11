@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.utils;
+package it.polimi.ingsw.am11.cards.utils.enums;
 
 /**
  * Type of <code>PlayableCard</code> except starter.

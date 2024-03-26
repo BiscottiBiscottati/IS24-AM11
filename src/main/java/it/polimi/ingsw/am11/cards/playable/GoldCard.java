@@ -2,8 +2,12 @@ package it.polimi.ingsw.am11.cards.playable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.cards.utils.enums.*;
+import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,9 +31,16 @@ public final class GoldCard extends PlayableCard {
     private final Symbol symbolToCollect;
 
     /**
-     * Constructor called from build method of <code>GoldCard.Builder</code>.
+     * Private constructor for creating a new instance of the <code>GoldCard</code> class.
+     * <p>
+     * This constructor is called from the <code>build</code> method of
+     * the <code>GoldCard.Builder</code> class.
+     * It initializes the <code>availableCorners</code>, <code>colorPlacingRequirements</code>,
+     * <code>pointsRequirements</code>, and <code>symbolToCollect</code> attributes of
+     * the <code>GoldCard</code> instance.
      *
-     * @param builder the builder for creation of a new instance
+     * @param builder the <code>GoldCard.Builder</code> instance that provides
+     *                the attribute values for the new <code>GoldCard</code>
      */
     private GoldCard(@NotNull Builder builder) {
         super(builder);
@@ -39,35 +50,100 @@ public final class GoldCard extends PlayableCard {
         this.symbolToCollect = builder.symbolToCollect;
     }
 
+    /**
+     * Returns the type of this <code>GoldCard</code>.
+     * <p>
+     * This method overrides the <code>getType</code> method in the superclass <code>PlayableCard</code>.
+     * For GoldCard, this method will always return <code>PlayableCardType.GOLD</code>.
+     *
+     * @return <code>PlayableCardType.GOLD</code>
+     */
     @Override
     @NotNull
+    @Contract(pure = true)
     public PlayableCardType getType() {
         return PlayableCardType.GOLD;
     }
 
+    /**
+     * Checks whether a corner can be covered or not in this <code>GoldCard</code>.
+     * <p>
+     * This method overrides the <code>isAvailable</code> method in the superclass <code>PlayableCard</code>.
+     * The availability of a corner in a <code>GoldCard</code> is determined by
+     * the <code>availableCorners</code> attribute.
+     *
+     * @param corner the corner to check
+     * @return true if the corner can be covered, false otherwise
+     */
     @Override
     public boolean isAvailable(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCorners.get(corner)).isAvailable();
     }
 
+    /**
+     * Gets the color requirements for placing this <code>GoldCard</code> on the field.
+     * <p>
+     * This method overrides the <code>getPlacingRequirements()</code> method in
+     * the superclass <code>PlayableCard</code>.
+     * The color requirements for a <code>GoldCard</code> are determined by
+     * the <code>colorPlacingRequirements</code> attribute.
+     *
+     * @return a <code>Map</code> of keys colors and as values their requirements to
+     * place on the field in int
+     */
     @Override
     @NotNull
     public ImmutableMap<Color, Integer> getPlacingRequirements() {
         return colorPlacingRequirements;
     }
 
+    /**
+     * Gets the method needed to score this <code>GoldCard</code> points value.
+     * <p>
+     * This method overrides the <code>getPointsRequirements()</code> method in
+     * the superclass <code>PlayableCard</code>.
+     * The point requirements for a <code>GoldCard</code> are determined by
+     * the <code>pointsRequirements</code> attribute.
+     *
+     * @return type of requirement needed to score points
+     * @see PointsRequirementsType
+     */
     @Override
     @NotNull
     public PointsRequirementsType getPointsRequirements() {
         return pointsRequirements;
     }
 
+    /**
+     * Gets the symbol to collect for scoring points with this <code>GoldCard</code>.
+     * <p>
+     * This method overrides the <code>getSymbolToCollect()</code> method in
+     * the superclass <code>PlayableCard</code>.
+     * If the <code>GoldCard</code> doesn't allow a symbol to collect,
+     * it will return an empty <code>Optional</code>.
+     *
+     * @return an <code>Optional</code> containing the symbol to collect if there is any,
+     * otherwise an empty <code>Optional</code>
+     */
     @Override
     @NotNull
     public Optional<Symbol> getSymbolToCollect() {
         return Optional.ofNullable(symbolToCollect);
     }
 
+    /**
+     * Checks if there is an item in a corner of this <code>GoldCard</code>.
+     * <p>
+     * This method overrides the <code>checkItemCorner</code> method in
+     * the superclass <code>PlayableCard</code>.
+     * If the corner is empty or not available, it returns its <code>Availability</code>.
+     *
+     * @param corner the corner to check
+     * @return a <code>CornerContainer</code> if there is an item,
+     * otherwise it gives its <code>Availability</code>
+     * @see CornerContainer
+     * @see Availability
+     */
     @Override
     @NotNull
     public CornerContainer checkItemCorner(@NotNull Corner corner) {

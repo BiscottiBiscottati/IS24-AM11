@@ -1,4 +1,6 @@
-package it.polimi.ingsw.am11.cards.utils;
+package it.polimi.ingsw.am11.cards.utils.enums;
+
+import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 
 /**
  * Represents whether another card can cover a corner of a card.

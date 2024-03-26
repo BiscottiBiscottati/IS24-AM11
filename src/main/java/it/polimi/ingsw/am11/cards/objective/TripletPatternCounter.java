@@ -1,9 +1,9 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import it.polimi.ingsw.am11.cards.utils.Color;
-import it.polimi.ingsw.am11.cards.utils.Corner;
 import it.polimi.ingsw.am11.cards.utils.PatternCounter;
-import it.polimi.ingsw.am11.cards.utils.PatternPurpose;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;

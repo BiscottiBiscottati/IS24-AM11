@@ -1,6 +1,7 @@
-package it.polimi.ingsw.am11.decks;
+package it.polimi.ingsw.am11.decks.objective;
 
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.decks.utils.UtilitiesDeckType;
 
