@@ -24,11 +24,11 @@ public class TripletCard extends PositioningCard {
         EnumMap<PatternPurpose, Corner> cornersPurpose = new EnumMap<>(PatternPurpose.class);
         for (PatternPurpose purpose : PatternPurpose.values()) {
             switch (purpose) {
-                case UP_CHECK -> cornersPurpose.put(
+                case NEXT_CHECK -> cornersPurpose.put(
                         purpose,
                         flippedFlag ? Corner.TOP_RX : Corner.TOP_LX
                 );
-                case DOWN_CHECK -> cornersPurpose.put(
+                case PREVIOUS_CHECK -> cornersPurpose.put(
                         purpose,
                         flippedFlag ? Corner.DOWN_LX : Corner.DOWN_RX
                 );

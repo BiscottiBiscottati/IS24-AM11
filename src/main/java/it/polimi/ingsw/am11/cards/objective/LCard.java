@@ -1,12 +1,11 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import it.polimi.ingsw.am11.cards.utils.Color;
-import it.polimi.ingsw.am11.cards.utils.EnumMapUtils;
-import it.polimi.ingsw.am11.cards.utils.ObjectiveCardType;
+import it.polimi.ingsw.am11.cards.utils.*;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.List;
 
 public class LCard extends PositioningCard {
 
@@ -15,12 +14,36 @@ public class LCard extends PositioningCard {
     private final Color primaryColor;
     private final Color secondaryColor;
 
+    private final LPatternCounter counter;
+
     private LCard(@NotNull Builder builder) {
         super(builder, builder.colorRequirements);
         this.isFlippedFlag = builder.isFlippedFlag;
         this.isRotatedFlag = builder.isRotatedFlag;
         this.primaryColor = builder.primaryColor;
         this.secondaryColor = builder.secondaryColor;
+
+        EnumMap<PatternPurpose, List<Corner>> cornersPurpose = new EnumMap<>(PatternPurpose.class);
+        List<Corner> cornersToGetToTop = List.of(Corner.TOP_LX, Corner.TOP_RX);
+        List<Corner> cornersToGetToBottom = List.of(Corner.DOWN_LX, Corner.DOWN_RX);
+
+        for (PatternPurpose purpose : PatternPurpose.values()) {
+            switch (purpose) {
+                case NEXT_CHECK -> cornersPurpose.put(
+                        purpose,
+                        this.isRotatedFlag ? cornersToGetToTop : cornersToGetToBottom
+                );
+                case PREVIOUS_CHECK -> cornersPurpose.put(
+                        purpose,
+                        this.isRotatedFlag ? cornersToGetToBottom : cornersToGetToTop
+                );
+                case ADJACENT_RX, ADJACENT_LX -> cornersPurpose.put(
+                        purpose,
+                        null
+                );
+            }
+        }
+        this.counter = new LPatternCounter(this.primaryColor, this.secondaryColor, cornersPurpose);
     }
 
     @Override
