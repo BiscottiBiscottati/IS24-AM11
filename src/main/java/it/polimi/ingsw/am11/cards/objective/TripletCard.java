@@ -1,6 +1,12 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.cards.utils.CardPattern;
+import it.polimi.ingsw.am11.cards.utils.PatternCounter;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
+import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
+import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;

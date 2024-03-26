@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.utils;
+package it.polimi.ingsw.am11.cards.utils.enums;
 
 public enum PatternPurpose {
     ADJACENT_LX,

@@ -2,7 +2,11 @@ package it.polimi.ingsw.am11.cards.playable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.cards.utils.CardIdentity;
+import it.polimi.ingsw.am11.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.cards.utils.FieldCard;
+import it.polimi.ingsw.am11.cards.utils.enums.*;
+import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +20,14 @@ import java.util.Optional;
  * <p>
  * Subclasses must be constructed using the provided {@link PlayableCard.Builder}
  * inner class to ensure consistent object creation.
+ * <p>
+ * This class contains methods to get the card's color, points, type,
+ * placing requirements, points requirements, symbol to collect, and id.
+ * <p>
+ * It also contains methods to check if a corner is available
+ * if there is an item in a corner, and if the card's color is equal to a given color.
+ * <p>
+ * The class also contains a nested Builder class for creating instances of PlayableCard.
  */
 public abstract sealed class PlayableCard implements CardIdentity, FieldCard permits GoldCard, ResourceCard {
     private static final ImmutableMap<Corner, Availability> retroCorners = Maps.immutableEnumMap(

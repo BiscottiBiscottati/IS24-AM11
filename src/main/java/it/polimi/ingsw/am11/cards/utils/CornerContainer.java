@@ -1,5 +1,9 @@
 package it.polimi.ingsw.am11.cards.utils;
 
+import it.polimi.ingsw.am11.cards.utils.enums.Availability;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
+
 /**
  * A common interface for representing what is contained inside a corner.
  * <p>

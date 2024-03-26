@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.cards.utils;
 
+import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.players.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

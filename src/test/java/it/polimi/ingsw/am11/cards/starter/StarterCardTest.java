@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.cards.starter;
 
-import it.polimi.ingsw.am11.cards.utils.Color;
-import it.polimi.ingsw.am11.cards.utils.Corner;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

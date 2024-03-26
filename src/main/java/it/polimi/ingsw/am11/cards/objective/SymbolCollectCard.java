@@ -2,7 +2,11 @@ package it.polimi.ingsw.am11.cards.objective;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
+import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
+import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;

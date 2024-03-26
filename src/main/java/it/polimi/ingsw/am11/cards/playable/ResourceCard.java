@@ -2,7 +2,9 @@ package it.polimi.ingsw.am11.cards.playable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.utils.*;
+import it.polimi.ingsw.am11.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.cards.utils.enums.*;
+import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
