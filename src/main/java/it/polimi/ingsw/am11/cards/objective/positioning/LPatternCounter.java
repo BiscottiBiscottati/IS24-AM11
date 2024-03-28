@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective;
+package it.polimi.ingsw.am11.cards.objective.positioning;
 
 import it.polimi.ingsw.am11.cards.utils.PatternCounter;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -49,6 +49,27 @@ public class LPatternCounter implements PatternCounter {
                 currentPosition,
                 this.cornersPurpose.get(PatternPurpose.PREVIOUS_CHECK)
         );
+        Position toCompleteLPosition = getMovementOfPositions(
+                currentPosition,
+                this.cornersPurpose.get(PatternPurpose.TO_COMPLETE)
+        );
+        int updated_number;
+
+        if (field.getOrDefault(currentPosition, null) == null) return;
+
+        if (field.getOrDefault(previousPatternPosition, null) != null) {
+            countNumberOfPatterns(field, previousPatternPosition, 0);
+            return;
+        }
+
+        if (field.get(currentPosition).colorEquals(this.primaryColor)) {
+            updated_number = numberSeen + 1;
+        } else {
+            updated_number = 0;
+        }
+        if (updated_number == 2) {
+            field.getOrDefault(toCompleteLPosition,null).colorEquals(this.secondaryColor);
+        }
     }
 
     @Override

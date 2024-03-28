@@ -1,5 +1,6 @@
-package it.polimi.ingsw.am11.cards.objective;
+package it.polimi.ingsw.am11.cards.objective.positioning;
 
+import it.polimi.ingsw.am11.cards.objective.PositioningCard;
 import it.polimi.ingsw.am11.cards.utils.CardPattern;
 import it.polimi.ingsw.am11.cards.utils.PatternCounter;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -46,6 +47,7 @@ public class TripletCard extends PositioningCard {
                         purpose,
                         flippedFlag ? Corner.DOWN_RX : Corner.TOP_RX
                 );
+                default -> cornersPurpose.put(purpose, null);
             }
         }
         this.counter = new TripletPatternCounter(this.colorOfPattern, cornersPurpose);

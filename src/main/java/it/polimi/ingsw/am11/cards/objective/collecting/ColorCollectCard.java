@@ -1,7 +1,8 @@
-package it.polimi.ingsw.am11.cards.objective;
+package it.polimi.ingsw.am11.cards.objective.collecting;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import it.polimi.ingsw.am11.cards.objective.CollectingCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;

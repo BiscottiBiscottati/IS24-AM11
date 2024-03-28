@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.cards.objective;
 
+import it.polimi.ingsw.am11.cards.objective.positioning.TripletCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.CardPattern;

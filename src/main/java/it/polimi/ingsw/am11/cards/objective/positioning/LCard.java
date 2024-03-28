@@ -1,5 +1,6 @@
-package it.polimi.ingsw.am11.cards.objective;
+package it.polimi.ingsw.am11.cards.objective.positioning;
 
+import it.polimi.ingsw.am11.cards.objective.PositioningCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -41,6 +43,24 @@ public class LCard extends PositioningCard {
                         purpose,
                         this.isRotatedFlag ? cornersToGetToBottom : cornersToGetToTop
                 );
+                case TO_COMPLETE -> {
+                    Arrays.stream(Corner.values())
+                          .filter(corner -> {
+                              if (this.isRotatedFlag) {
+                                  return corner == Corner.TOP_LX || corner == Corner.TOP_RX;
+                              } else {
+                                  return corner == Corner.DOWN_LX || corner == Corner.DOWN_RX;
+                              }
+                          })
+                          .filter(corner -> {
+                              if (this.isFlippedFlag) {
+                                  return corner == Corner.TOP_LX || corner == Corner.DOWN_LX;
+                              } else {
+                                  return corner == Corner.TOP_RX || corner == Corner.DOWN_RX;
+                              }
+                          })
+                          .forEach(corner -> cornersPurpose.put(purpose, List.of(corner)));
+                }
                 case ADJACENT_RX, ADJACENT_LX -> cornersPurpose.put(
                         purpose,
                         null
