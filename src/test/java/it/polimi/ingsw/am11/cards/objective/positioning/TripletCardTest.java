@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective;
+package it.polimi.ingsw.am11.cards.objective.positioning;
 
 import it.polimi.ingsw.am11.cards.objective.positioning.TripletCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;

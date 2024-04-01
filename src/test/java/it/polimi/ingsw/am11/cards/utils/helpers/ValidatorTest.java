@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.utils;
+package it.polimi.ingsw.am11.cards.utils.helpers;
 
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;

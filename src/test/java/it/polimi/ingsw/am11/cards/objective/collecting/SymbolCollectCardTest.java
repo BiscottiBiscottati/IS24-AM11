@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective;
+package it.polimi.ingsw.am11.cards.objective.collecting;
 
 import it.polimi.ingsw.am11.cards.objective.collecting.SymbolCollectCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
