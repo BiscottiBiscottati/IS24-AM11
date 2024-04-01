@@ -7,12 +7,13 @@ import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
+import javafx.geometry.Pos;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiFunction;
+
+import static it.polimi.ingsw.am11.players.PlayerField.getMovementOfPositions;
 
 public class LPatternCounter implements PatternCounter {
 
@@ -22,23 +23,22 @@ public class LPatternCounter implements PatternCounter {
 
     private final EnumMap<PatternPurpose, List<Corner>> cornersPurpose;
 
+    private final Set<Position> seenPositions;
+
+    private int numberOfPatterns;
+
     public LPatternCounter(Color primaryColor,
                            Color secondaryColor,
                            EnumMap<PatternPurpose, List<Corner>> cornersPurpose) {
         this.primaryColor = primaryColor;
         this.secondaryColor = secondaryColor;
         this.cornersPurpose = cornersPurpose;
-    }
-
-    private static Position getMovementOfPositions(Position currentPosition, @NotNull List<Corner> corners) {
-        BiFunction<Position, Corner, Position> translationBiFunction =
-                ((position, corner) -> PlayerField.getPositionIn(corner, position));
-
-        return corners.stream().reduce(currentPosition, translationBiFunction, (a, b) -> b);
+        this.seenPositions = new HashSet<>(16);
+        this.numberOfPatterns = 0;
     }
 
     private void countNumberOfPatterns(
-            Map<Position, CardContainer> field,
+            @NotNull Map<Position, CardContainer> field,
             Position currentPosition,
             int numberSeen) {
         Position nextPatternPosition = getMovementOfPositions(
@@ -57,7 +57,8 @@ public class LPatternCounter implements PatternCounter {
 
         if (field.getOrDefault(currentPosition, null) == null) return;
 
-        if (field.getOrDefault(previousPatternPosition, null) != null) {
+        if (field.getOrDefault(previousPatternPosition, null) != null
+                && !seenPositions.contains(previousPatternPosition)) {
             countNumberOfPatterns(field, previousPatternPosition, 0);
             return;
         }
@@ -68,12 +69,36 @@ public class LPatternCounter implements PatternCounter {
             updated_number = 0;
         }
         if (updated_number == 2) {
-            field.getOrDefault(toCompleteLPosition,null).colorEquals(this.secondaryColor);
+            CardContainer toCompleteL = field.getOrDefault(toCompleteLPosition, null);
+            if (toCompleteL != null && toCompleteL.colorEquals(this.secondaryColor)) {
+                numberOfPatterns += 1;
+                updated_number = 0;
+            } else {
+                updated_number = 1;
+            }
+        }
+
+        seenPositions.add(currentPosition);
+
+        if (field.getOrDefault(nextPatternPosition, null) != null
+                && !seenPositions.contains(nextPatternPosition)) {
+            countNumberOfPatterns(field, nextPatternPosition, updated_number);
+        }
+
+        for (Corner corner : Corner.values()){
+            Position adjacentPosition = getMovementOfPositions(currentPosition, Collections.singletonList(corner));
+            if (field.getOrDefault(adjacentPosition, null) != null
+                    && !seenPositions.contains(adjacentPosition)) {
+                countNumberOfPatterns(field, adjacentPosition, 0);
+            }
         }
     }
 
     @Override
     public int count(PlayerField playerField) {
-        return 0;
+        this.seenPositions.clear();
+        this.numberOfPatterns = 0;
+        this.countNumberOfPatterns(playerField.getCardsPositioned(), new Position(0, 0), 0);
+        return this.numberOfPatterns;
     }
 }

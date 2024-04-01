@@ -77,11 +77,11 @@ public class LCard extends PositioningCard {
     }
 
     @Override
-    public int countPoints(PlayerField playerField) {
-        return 0;
+    public int countPoints(@NotNull PlayerField playerField) {
+        if (playerField.getNumberOf(this.primaryColor) < 2) return 0;
+        if (playerField.getNumberOf(this.secondaryColor) < 1) return 0;
+        return this.counter.count(playerField) * this.getPoints();
     }
-
-    // TODO: need pattern creation logic
 
 
     public static class Builder extends PositioningCard.Builder<LCard> {

@@ -33,20 +33,16 @@ public class TripletPatternCounter implements PatternCounter {
             Position currentPosition,
             int numberSeen) {
         Position nextPatternPosition = PlayerField.getPositionIn(
-                cornersPurpose.get(PatternPurpose.NEXT_CHECK),
-                currentPosition
+                currentPosition, cornersPurpose.get(PatternPurpose.NEXT_CHECK)
         );
         Position previousPatternPosition = PlayerField.getPositionIn(
-                cornersPurpose.get(PatternPurpose.PREVIOUS_CHECK),
-                currentPosition
+                currentPosition, cornersPurpose.get(PatternPurpose.PREVIOUS_CHECK)
         );
         Position adjacentLX = PlayerField.getPositionIn(
-                cornersPurpose.get(PatternPurpose.ADJACENT_LX),
-                currentPosition
+                currentPosition, cornersPurpose.get(PatternPurpose.ADJACENT_LX)
         );
         Position adjacentRX = PlayerField.getPositionIn(
-                cornersPurpose.get(PatternPurpose.ADJACENT_RX),
-                currentPosition
+                currentPosition, cornersPurpose.get(PatternPurpose.ADJACENT_RX)
         );
         int updatedNumber;
 

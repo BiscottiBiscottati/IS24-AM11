@@ -30,7 +30,7 @@ public class PlayerField {
     }
 
     @Contract("_, _ -> new")
-    public static @NotNull Position getPositionIn(@NotNull Corner corner, @NotNull Position position) {
+    public static @NotNull Position getPositionIn(@NotNull Position position, @NotNull Corner corner) {
         int tempX = position.x();
         int tempY = position.y();
         switch (corner) {
@@ -49,6 +49,10 @@ public class PlayerField {
             default -> throw new EnumConstantNotPresentException(Corner.class, "Qualcosa non va con lo switch enum!");
 
         }
+    }
+
+    public static Position getMovementOfPositions(Position currentPosition, @NotNull List<Corner> corners) {
+        return corners.stream().reduce(currentPosition, PlayerField::getPositionIn, (a, b) -> b);
     }
 
     public Map<Position, CardContainer> getCardsPositioned() {
@@ -86,7 +90,7 @@ public class PlayerField {
             this.cardsPositioned.put(Position.of(0, 0), new CardContainer(firstCard));
             availablePositions.addAll(
                     Arrays.stream(Corner.values())
-                          .map(corner -> PlayerField.getPositionIn(corner, Position.of(0, 0)))
+                          .map(corner -> PlayerField.getPositionIn(Position.of(0, 0), corner))
                           .toList()
             );
         } else throw new IllegalPositioningException("Cannot place another starter!");
@@ -99,7 +103,7 @@ public class PlayerField {
             this.availablePositions.addAll(
                     Arrays.stream(Corner.values())
                           .filter(card::isAvailable)
-                          .map(corner -> PlayerField.getPositionIn(corner, position))
+                          .map(corner -> PlayerField.getPositionIn(position, corner))
                           .toList());
         } else throw new IllegalPositioningException("Posizione non disponibile!");
     }
