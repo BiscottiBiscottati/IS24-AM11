@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Set;
 
 public class TripletCard extends PositioningCard {
@@ -54,13 +55,13 @@ public class TripletCard extends PositioningCard {
     }
 
     @NotNull
-    private Color[][] retrievePattern() {
+    private List<List<Color>> retrievePattern() {
         Color[][] temp = new Color[3][3];
         Arrays.stream(temp).forEach(colors -> Arrays.fill(colors, null));
         ObjectiveCardType.TRIPLET.getPositions(this.flippedFlag, false)
                                  .orElse(Set.of())
                                  .forEach(position -> temp[position.x()][position.y()] = this.colorOfPattern);
-        return temp;
+        return Arrays.stream(temp).map(Arrays::asList).toList();
     }
 
     @Override

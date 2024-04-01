@@ -24,20 +24,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 @SuppressWarnings("ClassWithTooManyFields")
 @ExtendWith(MockitoExtension.class)
 class TripletCardTest {
 
-    static CardPattern standardTripletMatrix = CardPattern.of(
+    static CardPattern standardTripletMatrix = new CardPattern(
             List.of(
                     Arrays.asList(null, null, Color.GREEN),
                     Arrays.asList(null, Color.GREEN, null),
                     Arrays.asList(Color.GREEN, null, null)
             )
     );
-    static CardPattern reversedTripletMatrix = CardPattern.of(
+    static CardPattern reversedTripletMatrix = new CardPattern(
             // the matrix is flipped on its y-axis for the cartesian reference
             List.of(
                     Arrays.asList(Color.GREEN, null, null),
@@ -244,25 +243,19 @@ class TripletCardTest {
 
     @Test
     void getPattern() {
-        IntStream.range(0, 3)
-                 .forEach(value ->
-                          {
-                              assert tripletCardForGreens.getPattern() != null;
-                              Assertions.assertArrayEquals(
-                                      reversedTripletMatrix.pattern()[value],
-                                      tripletCardForGreens.getPattern().pattern()[value]
-                              );
-                          }
-                 );
 
-        IntStream.range(0, 3)
-                 .forEach(value -> {
-                              assert tripletCardRevForGreens.getPattern() != null;
-                              Assertions.assertArrayEquals(
-                                      standardTripletMatrix.pattern()[value],
-                                      tripletCardRevForGreens.getPattern().pattern()[value]
-                              );
-                          }
-                 );
+        assert tripletCardForGreens.getPattern() != null;
+        Assertions.assertEquals(
+                reversedTripletMatrix.pattern(),
+                tripletCardForGreens.getPattern().pattern()
+        );
+
+
+        assert tripletCardRevForGreens.getPattern() != null;
+        Assertions.assertEquals(
+                standardTripletMatrix.pattern(),
+                tripletCardRevForGreens.getPattern().pattern()
+        );
     }
+
 }

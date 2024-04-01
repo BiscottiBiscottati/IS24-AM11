@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
@@ -19,6 +20,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,6 +37,10 @@ class LCardTest {
     PlayerField playerField;
 
     Map<Position, CardContainer> field;
+
+    Map<Position, CardContainer> largeField;
+
+    Map<Position, CardContainer> noField;
 
     @BeforeAll
     static void beforeAll() {
@@ -65,10 +72,39 @@ class LCardTest {
                 new Position(1, -1), new CardContainer(redCard),
                 new Position(2, -2), new CardContainer(blueCard)
         );
+
+        noField = Map.of(
+                new Position(0, 0), new CardContainer(starterCard),
+                new Position(1, 1), new CardContainer(purpleCard),
+                new Position(1, -1), new CardContainer(redCard),
+                new Position(2, -2), new CardContainer(blueCard)
+        );
+
+        largeField = new HashMap<>(16);
+        largeField.put(Position.of(0, 0), new CardContainer(starterCard));
+
+        List<Position> redsPositions = List.of(
+                Position.of(1, 1),
+                Position.of(1, -1),
+                Position.of(-1, 1),
+                Position.of(-1, -1),
+                Position.of(1, 3),
+                Position.of(1, 5)
+        );
+        redsPositions.forEach(position -> largeField.put(position, new CardContainer(redCard)));
+
+        List<Position> bluesPositions = List.of(
+                Position.of(0, -2),
+                Position.of(2, -2),
+                Position.of(2, 2)
+        );
+        bluesPositions.forEach(position -> largeField.put(position, new CardContainer(blueCard)));
+
     }
 
     @Test
     void getType() {
+        Assertions.assertEquals(ObjectiveCardType.L_SHAPE, lCardStandard.getType());
     }
 
     @Test
@@ -76,7 +112,31 @@ class LCardTest {
         Mockito.when(playerField.getCardsPositioned()).thenReturn(field);
         Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(2);
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(1);
-
         Assertions.assertEquals(2, lCardStandard.countPoints(playerField));
+
+        Mockito.when(playerField.getCardsPositioned()).thenReturn(largeField);
+        Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(6);
+        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(3);
+        Assertions.assertEquals(6, lCardStandard.countPoints(playerField));
+
+        Mockito.when(playerField.getCardsPositioned()).thenReturn(noField);
+        Assertions.assertEquals(0, lCardStandard.countPoints(playerField));
+
+        Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(1);
+        Assertions.assertEquals(0, lCardStandard.countPoints(playerField));
+
+        Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(3);
+        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(0);
+        Assertions.assertEquals(0, lCardStandard.countPoints(playerField));
+    }
+
+    @Test
+    void isFlipped() {
+        Assertions.assertFalse(lCardStandard.isFlipped());
+    }
+
+    @Test
+    void isRotated() {
+        Assertions.assertFalse(lCardStandard.isRotated());
     }
 }

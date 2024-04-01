@@ -85,6 +85,13 @@ public class LCard extends PositioningCard {
         return this.counter.count(playerField) * this.getPoints();
     }
 
+    public boolean isFlipped() {
+        return isFlippedFlag;
+    }
+
+    public boolean isRotated() {
+        return isRotatedFlag;
+    }
 
     public static class Builder extends PositioningCard.Builder<LCard> {
 

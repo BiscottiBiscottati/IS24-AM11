@@ -6,28 +6,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * A record to save patterns for <code>PositioningCard</code>
  *
- * @param pattern a matrix made of arrays with the pattern
+ * @param pattern a matrix made of Lists with the pattern
  */
-public record CardPattern(Color[][] pattern) {
+public record CardPattern(List<List<Color>> pattern) {
     /**
-     * A static method for creating a new <code>CardPattern</code> from a List of Lists
+     * A static method for creating a new <code>CardPattern</code> from a array of arrays
      *
      * @param matrix the matrix used to create <code>CardPattern</code>
      * @return a new instance of <code>CardPattern</code>
      */
     @Contract("_ -> new")
-    public static @NotNull CardPattern of(List<List<Color>> matrix) {
-        Color[][] temp = new Color[3][3];
-        IntStream.range(0, 3).forEach(
-                x -> IntStream.range(0, 3).forEach(
-                        y -> temp[x][y] = matrix.get(x).get(y)
-                )
-        );
+    public static @NotNull CardPattern of(Color[][] matrix) {
+        List<List<Color>> temp = Arrays.stream(matrix)
+                                       .map(Arrays::asList)
+                                       .toList();
         return new CardPattern(temp);
     }
 
@@ -39,12 +35,7 @@ public record CardPattern(Color[][] pattern) {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof CardPattern) {
-            return IntStream.range(0, 3)
-                            .filter(
-                                    value -> !Arrays.equals(this.pattern[value], ((CardPattern) obj).pattern()[value])
-                            )
-                            .findAny()
-                            .isEmpty();
+            return this.pattern.equals(((CardPattern) obj).pattern);
         } else return false;
     }
 
@@ -53,10 +44,6 @@ public record CardPattern(Color[][] pattern) {
      */
     @Override
     public int hashCode() {
-        return Arrays.deepHashCode(
-                Arrays.stream(pattern)
-                      .map(Arrays::deepHashCode)
-                      .toArray()
-        );
+        return this.pattern.hashCode();
     }
 }
