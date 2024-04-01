@@ -7,13 +7,9 @@ import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
-import javafx.geometry.Pos;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.function.BiFunction;
-
-import static it.polimi.ingsw.am11.players.PlayerField.getMovementOfPositions;
 
 public class LPatternCounter implements PatternCounter {
 
@@ -41,15 +37,15 @@ public class LPatternCounter implements PatternCounter {
             @NotNull Map<Position, CardContainer> field,
             Position currentPosition,
             int numberSeen) {
-        Position nextPatternPosition = getMovementOfPositions(
+        Position nextPatternPosition = PlayerField.getMovementOfPositions(
                 currentPosition,
                 this.cornersPurpose.get(PatternPurpose.NEXT_CHECK)
         );
-        Position previousPatternPosition = getMovementOfPositions(
+        Position previousPatternPosition = PlayerField.getMovementOfPositions(
                 currentPosition,
                 this.cornersPurpose.get(PatternPurpose.PREVIOUS_CHECK)
         );
-        Position toCompleteLPosition = getMovementOfPositions(
+        Position toCompleteLPosition = PlayerField.getMovementOfPositions(
                 currentPosition,
                 this.cornersPurpose.get(PatternPurpose.TO_COMPLETE)
         );
@@ -85,8 +81,8 @@ public class LPatternCounter implements PatternCounter {
             countNumberOfPatterns(field, nextPatternPosition, updated_number);
         }
 
-        for (Corner corner : Corner.values()){
-            Position adjacentPosition = getMovementOfPositions(currentPosition, Collections.singletonList(corner));
+        for (Corner corner : Corner.values()) {
+            Position adjacentPosition = PlayerField.getMovementOfPositions(currentPosition, Collections.singletonList(corner));
             if (field.getOrDefault(adjacentPosition, null) != null
                     && !seenPositions.contains(adjacentPosition)) {
                 countNumberOfPatterns(field, adjacentPosition, 0);
@@ -95,7 +91,7 @@ public class LPatternCounter implements PatternCounter {
     }
 
     @Override
-    public int count(PlayerField playerField) {
+    public int count(@NotNull PlayerField playerField) {
         this.seenPositions.clear();
         this.numberOfPatterns = 0;
         this.countNumberOfPatterns(playerField.getCardsPositioned(), new Position(0, 0), 0);
