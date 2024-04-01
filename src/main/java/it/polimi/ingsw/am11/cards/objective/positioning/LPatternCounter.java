@@ -82,7 +82,9 @@ public class LPatternCounter implements PatternCounter {
         }
 
         for (Corner corner : Corner.values()) {
-            Position adjacentPosition = PlayerField.getMovementOfPositions(currentPosition, Collections.singletonList(corner));
+            Position adjacentPosition = PlayerField.getMovementOfPositions(
+                    currentPosition,
+                    corner.toSingletonList());
             if (field.getOrDefault(adjacentPosition, null) != null
                     && !seenPositions.contains(adjacentPosition)) {
                 countNumberOfPatterns(field, adjacentPosition, 0);
