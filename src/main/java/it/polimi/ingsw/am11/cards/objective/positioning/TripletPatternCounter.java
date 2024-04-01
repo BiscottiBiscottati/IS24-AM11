@@ -76,7 +76,7 @@ public class TripletPatternCounter implements PatternCounter {
     }
 
     @Override
-    public int count(PlayerField playerField) {
+    public int count(@NotNull PlayerField playerField) {
         this.seenPositions.clear();
         this.numberOfPatterns = 0;
         this.countNumberOfPatterns(playerField.getCardsPositioned(), Position.of(0, 0), 0);

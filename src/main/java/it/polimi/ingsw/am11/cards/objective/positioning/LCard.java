@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 
@@ -59,7 +60,8 @@ public class LCard extends PositioningCard {
                                   return corner == Corner.TOP_RX || corner == Corner.DOWN_RX;
                               }
                           })
-                          .forEach(corner -> cornersPurpose.put(purpose, List.of(corner)));
+                          .limit(1)
+                          .forEach(corner -> cornersPurpose.put(purpose, corner.toSingletonList()));
                 }
                 case ADJACENT_RX, ADJACENT_LX -> cornersPurpose.put(
                         purpose,
@@ -86,22 +88,23 @@ public class LCard extends PositioningCard {
 
     public static class Builder extends PositioningCard.Builder<LCard> {
 
+        private final EnumMap<Color, Integer> colorRequirements;
         private boolean isFlippedFlag;
         private boolean isRotatedFlag;
         private Color primaryColor;
         private Color secondaryColor;
 
-        private EnumMap<Color, Integer> colorRequirements;
-
         public Builder(int id, int points) {
             super(id, points);
+            this.primaryColor = null;
+            this.secondaryColor = null;
+            this.colorRequirements = EnumMapUtils.Init(Color.class, 0);
+            this.isFlippedFlag = false;
+            this.isRotatedFlag = false;
         }
 
         public @NotNull Builder isFlipped(boolean flippedFlag) {
             this.isFlippedFlag = flippedFlag;
-            this.primaryColor = null;
-            this.secondaryColor = null;
-            this.colorRequirements = EnumMapUtils.Init(Color.class, 0);
             return this;
         }
 
@@ -125,7 +128,10 @@ public class LCard extends PositioningCard {
         }
 
         @Override
-        public @NotNull LCard build() {
+        public @NotNull LCard build() throws IllegalBuildException {
+            if (this.primaryColor == null || this.secondaryColor == null) {
+                throw new IllegalBuildException("Pattern needs two colors!");
+            }
             return new LCard(this);
         }
     }

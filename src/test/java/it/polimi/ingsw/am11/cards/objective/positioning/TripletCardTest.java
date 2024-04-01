@@ -6,7 +6,6 @@ import it.polimi.ingsw.am11.cards.utils.CardPattern;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
@@ -21,7 +20,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 @SuppressWarnings("ClassWithTooManyFields")
@@ -193,29 +195,22 @@ class TripletCardTest {
         // Test for a simple map.
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardSmall);
-        EnumMap<Color, Integer> placedCardNumber = EnumMapUtils.Init(Color.class, 0);
-        placedCardNumber.put(Color.GREEN, 7);
-        Mockito.when(playerField.getPlacedCardColours())
-               .thenReturn(placedCardNumber);
+        Mockito.when(playerField.getNumberOf(Color.GREEN))
+               .thenReturn(7);
 
         Assertions.assertEquals(4, tripletCardForGreens.countPoints(playerField));
         Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test if color placed are less than 3.
-        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
-        placedCardNumber.put(Color.GREEN, 2);
-        Mockito.when(playerField.getPlacedCardColours())
-               .thenReturn(placedCardNumber);
+        Mockito.when(playerField.getNumberOf(Color.GREEN))
+               .thenReturn(2);
 
         Assertions.assertEquals(0, tripletCardForGreens.countPoints(playerField));
         Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test a simple map but there are no matching pattern
-        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
-        placedCardNumber.put(Color.GREEN, 6);
-        placedCardNumber.put(Color.BLUE, 2);
-        Mockito.when(playerField.getPlacedCardColours())
-               .thenReturn(placedCardNumber);
+        Mockito.when(playerField.getNumberOf(Color.GREEN))
+               .thenReturn(6);
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardNoMatch);
 
@@ -223,11 +218,8 @@ class TripletCardTest {
         Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test for a larger map.
-        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
-        placedCardNumber.put(Color.GREEN, 13);
-        placedCardNumber.put(Color.BLUE, 5);
-        Mockito.when(playerField.getPlacedCardColours())
-               .thenReturn(placedCardNumber);
+        Mockito.when(playerField.getNumberOf(Color.GREEN))
+               .thenReturn(13);
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardLarge);
 
@@ -235,11 +227,8 @@ class TripletCardTest {
         Assertions.assertEquals(4, tripletCardRevForGreens.countPoints(playerField));
 
         // Test for an even larger map.
-        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
-        placedCardNumber.put(Color.GREEN, 22);
-        placedCardNumber.put(Color.BLUE, 8);
-        Mockito.when(playerField.getPlacedCardColours())
-               .thenReturn(placedCardNumber);
+        Mockito.when(playerField.getNumberOf(Color.GREEN))
+               .thenReturn(22);
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardLargest);
 

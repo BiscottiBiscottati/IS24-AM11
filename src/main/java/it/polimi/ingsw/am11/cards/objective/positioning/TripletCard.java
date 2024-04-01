@@ -72,7 +72,7 @@ public class TripletCard extends PositioningCard {
     @Override
     public int countPoints(
             @NotNull PlayerField playerField) {
-        if (playerField.getPlacedCardColours().get(this.colorOfPattern) < 3) return 0;
+        if (playerField.getNumberOf(this.colorOfPattern) < 3) return 0;
         else return this.counter.count(playerField) * this.getPoints();
 
     }
