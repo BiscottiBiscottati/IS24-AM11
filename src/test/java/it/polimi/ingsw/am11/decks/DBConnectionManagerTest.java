@@ -16,7 +16,7 @@ class DBConnectionManagerTest {
 
     @Test
     void getCards() {
-        int result = mng.selectType(PlayableDeckType.GOLD);
-        System.out.println(result);
+        mng.selectType(PlayableDeckType.GOLD);
+        
     }
 }

@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("CallToDriverManagerGetConnection")
 public class DBConnectionManager implements AutoCloseable {
     private final static String sqlitePrefix = "jdbc:sqlite:";
     private final Connection connection;
@@ -19,22 +20,20 @@ public class DBConnectionManager implements AutoCloseable {
     private ResultSet result;
 
     public DBConnectionManager() {
-
         try {
-            URL dbStream = getClass().getResource("/db/cards.sqlite");
+            URL dbStream = this.getClass().getResource("/db/cards.sqlite");
             if (dbStream == null) {
                 throw new RuntimeException("Database not found!");
             }
             this.connection = DriverManager.getConnection(sqlitePrefix + dbStream);
             this.statement = this.connection.createStatement();
-
         } catch (SQLException e) {
             throw new RuntimeException("Connection failed!");
         }
         tablesToQuery = new ArrayList<>(2);
     }
 
-    public int selectType(@NotNull DeckType deckType) {
+    public void selectType(@NotNull DeckType deckType) {
         tablesToQuery.clear();
         switch (deckType) {
             case PlayableDeckType.GOLD:
@@ -47,11 +46,16 @@ public class DBConnectionManager implements AutoCloseable {
             case UtilitiesDeckType.STARTER:
                 tablesToQuery.add("starter_cards");
         }
-        return 0;
     }
 
     @Override
     public void close() throws Exception {
+        if (result != null) {
+            result.close();
+        }
+        if (statement != null) {
+            statement.close();
+        }
         if (connection != null) {
             connection.close();
         }
