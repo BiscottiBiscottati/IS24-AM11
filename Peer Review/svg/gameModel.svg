@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentStyleType="text/css"
+     height="219px" preserveAspectRatio="none" style="width:150px;height:219px;background:#FFFFFF;" version="1.1"
+     viewBox="0 0 150 219" width="150px" zoomAndPan="magnify">
+    <defs/>
+    <g><!--class GameModel-->
+        <g id="elem_GameModel">
+            <rect codeLine="1" fill="#F1F1F1" height="80.5938" id="GameModel" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="136" x="7" y="7"/>
+            <ellipse cx="30.1" cy="23" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M31.0531,19.7813 L32.7719,19.7813 C33.1625,19.7813 33.35,19.75 33.475,19.6719 C33.7406,19.5156 33.8813,19.2344 33.8813,18.9375 C33.8813,18.6719 33.7719,18.4063 33.5375,18.2344 C33.3656,18.125 33.225,18.0938 32.7719,18.0938 L27.6313,18.0938 C27.1938,18.0938 27.0688,18.1094 26.9125,18.2031 C26.6625,18.3594 26.5063,18.6563 26.5063,18.9375 C26.5063,19.2188 26.6469,19.4688 26.8656,19.6406 C27.0219,19.75 27.2094,19.7813 27.6313,19.7813 L29.35,19.7813 L29.35,26.2969 L27.6313,26.2969 C27.1938,26.2969 27.0688,26.3125 26.9125,26.4219 C26.6625,26.5781 26.5063,26.8594 26.5063,27.1563 C26.5063,27.4063 26.6469,27.6719 26.8656,27.8281 C27.0219,27.9531 27.225,28 27.6313,28 L32.7719,28 C33.5219,28 33.8813,27.7188 33.8813,27.1563 C33.8813,26.875 33.7719,26.625 33.5375,26.4531 C33.3656,26.3281 33.225,26.2969 32.7719,26.2969 L31.0531,26.2969 L31.0531,19.7813 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing"
+                  textLength="86" x="45.9" y="27.8467">GameModel
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="142" y1="39" y2="39"/>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="142" y1="47" y2="47"/>
+            <ellipse cx="18" cy="60.6484" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="110" x="27"
+                  y="63.9951">initDeck(): void
+            </text>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15" x="27"
+                  y="80.292">...
+            </text>
+        </g><!--class Game-->
+        <g id="elem_Game">
+            <rect codeLine="5" fill="#F1F1F1" height="64.2969" id="Game" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="74" x="38" y="148"/>
+            <ellipse cx="53" cy="164" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M55.3438,159.6719 C54.4063,159.2344 53.8125,159.0938 52.9375,159.0938 C50.3125,159.0938 48.3125,161.1719 48.3125,163.8906 L48.3125,165.0156 C48.3125,167.5938 50.4219,169.4844 53.3125,169.4844 C54.5313,169.4844 55.6875,169.1875 56.4375,168.6406 C57.0156,168.2344 57.3438,167.7813 57.3438,167.3906 C57.3438,166.9375 56.9531,166.5469 56.4844,166.5469 C56.2656,166.5469 56.0625,166.625 55.875,166.8125 C55.4219,167.2969 55.4219,167.2969 55.2344,167.3906 C54.8125,167.6563 54.125,167.7813 53.3594,167.7813 C51.3125,167.7813 50.0156,166.6875 50.0156,164.9844 L50.0156,163.8906 C50.0156,162.1094 51.2656,160.7969 53,160.7969 C53.5781,160.7969 54.1875,160.9531 54.6563,161.2031 C55.1406,161.4844 55.3125,161.7031 55.4063,162.1094 C55.4688,162.5156 55.5,162.6406 55.6406,162.7656 C55.7813,162.9063 56.0156,163.0156 56.2344,163.0156 C56.5,163.0156 56.7656,162.875 56.9375,162.6563 C57.0469,162.5 57.0781,162.3125 57.0781,161.8906 L57.0781,160.4688 C57.0781,160.0313 57.0625,159.9063 56.9688,159.75 C56.8125,159.4844 56.5313,159.3438 56.2344,159.3438 C55.9375,159.3438 55.7344,159.4375 55.5156,159.75 L55.3438,159.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="67"
+                  y="168.8467">Game
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="39" x2="111" y1="180" y2="180"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15" x="44"
+                  y="196.9951">...
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="39" x2="111" y1="204.2969" y2="204.2969"/>
+        </g><!--reverse link GameModel to Game-->
+        <g id="link_GameModel_Game">
+            <path d="M75,106.008 C75,125.213 75,129.9611 75,147.9078 " fill="none" id="GameModel-backto-Game"
+                  style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/>
+            <polygon fill="none" points="75,88.008,69,106.008,81,106.008,75,88.008"
+                     style="stroke:#181818;stroke-width:1.0;"/>
+        </g><!--SRC=[oymhIIrAIqnELN1Fp4trpKz9pQdcKW02xSoyp1ANrEHi3KqhXRByp1ImQ7LkQab6VagjWfwU7bSjLt9EOd4nMAT2Pcv1JcfkQbv9CR99O6K0]-->
+    </g>
+</svg>

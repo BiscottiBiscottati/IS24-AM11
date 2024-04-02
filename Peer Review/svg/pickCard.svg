@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentStyleType="text/css"
+     height="134px" preserveAspectRatio="none" style="width:288px;height:134px;background:#FFFFFF;" version="1.1"
+     viewBox="0 0 288 134" width="288px" zoomAndPan="magnify">
+    <defs/>
+    <g><!--class Game-->
+        <g id="elem_Game">
+            <rect codeLine="1" fill="#F1F1F1" height="113.1875" id="Game" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="267" x="7" y="7"/>
+            <ellipse cx="115.25" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M117.5938,18.6719 C116.6563,18.2344 116.0625,18.0938 115.1875,18.0938 C112.5625,18.0938 110.5625,20.1719 110.5625,22.8906 L110.5625,24.0156 C110.5625,26.5938 112.6719,28.4844 115.5625,28.4844 C116.7813,28.4844 117.9375,28.1875 118.6875,27.6406 C119.2656,27.2344 119.5938,26.7813 119.5938,26.3906 C119.5938,25.9375 119.2031,25.5469 118.7344,25.5469 C118.5156,25.5469 118.3125,25.625 118.125,25.8125 C117.6719,26.2969 117.6719,26.2969 117.4844,26.3906 C117.0625,26.6563 116.375,26.7813 115.6094,26.7813 C113.5625,26.7813 112.2656,25.6875 112.2656,23.9844 L112.2656,22.8906 C112.2656,21.1094 113.5156,19.7969 115.25,19.7969 C115.8281,19.7969 116.4375,19.9531 116.9063,20.2031 C117.3906,20.4844 117.5625,20.7031 117.6563,21.1094 C117.7188,21.5156 117.75,21.6406 117.8906,21.7656 C118.0313,21.9063 118.2656,22.0156 118.4844,22.0156 C118.75,22.0156 119.0156,21.875 119.1875,21.6563 C119.2969,21.5 119.3281,21.3125 119.3281,20.8906 L119.3281,19.4688 C119.3281,19.0313 119.3125,18.9063 119.2188,18.75 C119.0625,18.4844 118.7813,18.3438 118.4844,18.3438 C118.1875,18.3438 117.9844,18.4375 117.7656,18.75 L117.5938,18.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42"
+                  x="135.75" y="27.8467">Game
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="273" y1="39" y2="39"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15" x="13"
+                  y="55.9951">...
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="273" y1="63.2969" y2="63.2969"/>
+            <ellipse cx="18" cy="76.9453" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="241" x="27"
+                  y="80.292">pickCard(deckType: int): boolean
+            </text>
+            <ellipse cx="18" cy="93.2422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="214" x="27"
+                  y="96.5889">pickCard(cardId: int): boolean
+            </text>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15" x="27"
+                  y="112.8857">...
+            </text>
+        </g><!--SRC=[Iyv9B2vMS4_CJQtcKW02FJqzCArTa9cSxPnObAAHafgS7L9Pa6gba9bNeccba9IVdvEQc8UcAXb8UAPWKrETcrgIaPzI2pQw5W00]-->
+    </g>
+</svg>
