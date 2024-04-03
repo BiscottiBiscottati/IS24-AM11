@@ -12,16 +12,15 @@ import java.util.LinkedList;
 
 public class GameLogic implements GameModel {
 
+    private final RuleSet ruleSet = new BasicRuleset();
     private final LinkedList<Player> playerQueue;
-    private final int numOfPlayers; // where does it come from?
     private Player firstPlayer;
     private Plateau gamePlateau;
     private PickablesTable gameTable;
     private Player currentPlaying;
 
-    public GameLogic(int numOfPlayers) {
+    public GameLogic() {
         this.playerQueue = new LinkedList<Player>();
-        this.numOfPlayers = numOfPlayers;
     }
 
     //get launched after all players are ready:
@@ -35,7 +34,7 @@ public class GameLogic implements GameModel {
 
     @Override
     public void addPlayerToTable(String nickname, PlayerColor colour) {
-        if (playerQueue.size() < numOfPlayers) {
+        if (playerQueue.size() < ruleSet.getMaxPlayers()) {
             PlayerField newField = new PlayerField();
             //TODO: PersonalSpace need to pass the handSize, it should come from the BasicRuleset
             PersonalSpace newSpace = new PersonalSpace(3, 1);
