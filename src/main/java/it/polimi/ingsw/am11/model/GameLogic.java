@@ -13,16 +13,21 @@ import java.util.LinkedList;
 public class GameLogic implements GameModel {
 
     private final LinkedList<Player> playerQueue;
-    private int numOfPlayers;
+    private final int numOfPlayers; // where does it come from?
     private Player firstPlayer;
     private Plateau gamePlateau;
     private PickablesTable gameTable;
     private Player currentPlaying;
 
-    public GameLogic() {
+    public GameLogic(int numOfPlayers) {
         this.playerQueue = new LinkedList<Player>();
+        this.numOfPlayers = numOfPlayers;
     }
 
+    //get launched after all players are ready:
+    //- prepare player fields;
+    //- prepare decks;
+    //-
     @Override
     public void initGame() {
 
@@ -32,9 +37,11 @@ public class GameLogic implements GameModel {
     public void addPlayerToTable(String nickname, PlayerColor colour) {
         if (playerQueue.size() < numOfPlayers) {
             PlayerField newField = new PlayerField();
-            PersonalSpace newSpace = new PersonalSpace();
+            //TODO: PersonalSpace need to pass the handSize, it should come from the BasicRuleset
+            PersonalSpace newSpace = new PersonalSpace(3, 1);
 
             Player newPlayer = new Player(nickname, colour, newSpace, newField);
+            playerQueue.add(newPlayer);
         } else {
             //NOTE: it should throw a SetPlayersLimitReachedException
         }
@@ -43,7 +50,6 @@ public class GameLogic implements GameModel {
     @Override
     public void shufflePlayers() {
         Collections.shuffle(playerQueue);
-
     }
 
     @Override

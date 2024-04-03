@@ -7,11 +7,16 @@ import java.util.ArrayList;
 
 public class PersonalSpace {
 
-    private final ArrayList playerHand;
+    private final ArrayList<PlayableCard> playerHand;
+    private final int sizeofHand;
+    private final int maxObjectives;
     private ObjectiveCard playerObjective;
 
-    public PersonalSpace() {
-        playerHand = new ArrayList();
+    public PersonalSpace(int sizeofHand, int maxObjectives) {
+        //TODO: checking if sizeofHand is legal
+        this.sizeofHand = sizeofHand;
+        this.maxObjectives = maxObjectives;
+        playerHand = new ArrayList<>(sizeofHand);
     }
 
     public ArrayList getPlayerHand() {
