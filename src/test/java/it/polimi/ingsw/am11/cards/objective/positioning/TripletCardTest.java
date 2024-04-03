@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.cards.utils.CardPattern;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
@@ -77,7 +77,7 @@ class TripletCardTest {
             starterCard = builder.build();
             greenCard = new ResourceCard.Builder(1, 0, Color.GREEN).build();
             blueCard = new ResourceCard.Builder(2, 0, Color.BLUE).build();
-        } catch (IllegalBuildException e) {
+        } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
 

@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -168,9 +168,9 @@ public final class GoldCard extends PlayableCard {
          *
          * @param points       the point value of the card
          * @param primaryColor the color of the card
-         * @throws IllegalBuildException if points are negative
+         * @throws IllegalCardBuildException if points are negative
          */
-        public Builder(int id, int points, @NotNull Color primaryColor) throws IllegalBuildException {
+        public Builder(int id, int points, @NotNull Color primaryColor) throws IllegalCardBuildException {
             super(id, points, primaryColor);
             this.availableCorners = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
             this.colorPlacingRequirements = EnumMapUtils.Init(Color.class, 0);
@@ -246,13 +246,13 @@ public final class GoldCard extends PlayableCard {
          * parameters set by the builder's methods.
          *
          * @return A fully constructed instance of <code>GoldCard</code>.
-         * @throws IllegalBuildException if placement requirements to place have a negative value
+         * @throws IllegalCardBuildException if placement requirements to place have a negative value
          */
         @Override
         @NotNull
-        public GoldCard build() throws IllegalBuildException {
+        public GoldCard build() throws IllegalCardBuildException {
             if (Validator.nonNegativeValues(colorPlacingRequirements)) return new GoldCard(this);
-            throw new IllegalBuildException("Placing requirements cannot be less than 0!");
+            throw new IllegalCardBuildException("Placing requirements cannot be less than 0!");
         }
     }
 }

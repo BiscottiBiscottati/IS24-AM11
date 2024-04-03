@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class CollectingCard extends ObjectiveCard {
@@ -16,6 +16,6 @@ public abstract class CollectingCard extends ObjectiveCard {
         }
 
         @Override
-        public abstract T build() throws IllegalBuildException;
+        public abstract T build() throws IllegalCardBuildException;
     }
 }

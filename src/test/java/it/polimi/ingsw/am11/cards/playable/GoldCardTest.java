@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.cards.playable;
 
 import it.polimi.ingsw.am11.cards.utils.enums.*;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class GoldCardTest {
                     .hasPointRequirements(PointsRequirementsType.SYMBOLS)
                     .hasSymbolToCollect(Symbol.FEATHER)
                     .build();
-        } catch (IllegalBuildException e) {
+        } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
 
@@ -130,7 +130,7 @@ class GoldCardTest {
 
     @Test
     void checkNegativePlacingRequirements() {
-        Assertions.assertThrows(IllegalBuildException.class,
+        Assertions.assertThrows(IllegalCardBuildException.class,
                                 () -> new GoldCard.Builder(18, 3, Color.GREEN)
                                         .hasRequirements(Color.BLUE, -1)
                                         .build()
@@ -140,7 +140,7 @@ class GoldCardTest {
     @Test
     void checkNegativePoints() {
         Assertions.assertThrows(
-                IllegalBuildException.class,
+                IllegalCardBuildException.class,
                 () -> new GoldCard.Builder(190, -1, Color.PURPLE)
                         .build()
         );

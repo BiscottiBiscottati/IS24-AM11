@@ -8,7 +8,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 
@@ -79,9 +79,9 @@ public class ColorCollectCard extends CollectingCard {
         }
 
         @Override
-        public @NotNull ColorCollectCard build() throws IllegalBuildException {
+        public @NotNull ColorCollectCard build() throws IllegalCardBuildException {
             if (Validator.nonNegativeValues(colorToCollect)) return new ColorCollectCard(this);
-            else throw new IllegalBuildException("Colors to collect cannot be less than 0!");
+            else throw new IllegalCardBuildException("Colors to collect cannot be less than 0!");
         }
     }
 }

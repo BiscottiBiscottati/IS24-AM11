@@ -8,7 +8,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -114,8 +114,8 @@ public class TripletCard extends PositioningCard {
         }
 
         @Override
-        public @NotNull TripletCard build() throws IllegalBuildException {
-            if (colorOfPattern == null) throw new IllegalBuildException("Pattern need a color!");
+        public @NotNull TripletCard build() throws IllegalCardBuildException {
+            if (colorOfPattern == null) throw new IllegalCardBuildException("Pattern need a color!");
             else return new TripletCard(this);
         }
     }

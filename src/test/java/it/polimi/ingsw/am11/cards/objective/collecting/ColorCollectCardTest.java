@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -58,7 +58,7 @@ class ColorCollectCardTest {
                     .hasColor(Color.RED)
                     .hasColor(Color.PURPLE)
                     .build();
-        } catch (IllegalBuildException e) {
+        } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
     }

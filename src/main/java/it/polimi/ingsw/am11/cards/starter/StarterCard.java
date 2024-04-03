@@ -10,7 +10,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.Availability;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -96,9 +96,9 @@ public final class StarterCard implements FieldCard, CardIdentity {
         }
 
         @NotNull
-        public StarterCard build() throws IllegalBuildException {
+        public StarterCard build() throws IllegalCardBuildException {
             if (checkAllBackCornerCovered()) return new StarterCard(this);
-            else throw new IllegalBuildException("Not all Corners Covered");
+            else throw new IllegalCardBuildException("Not all Corners Covered");
         }
     }
 }

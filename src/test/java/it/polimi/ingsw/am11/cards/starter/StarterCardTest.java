@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.cards.starter;
 
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class StarterCardTest {
     private StarterCard starter;
 
     @BeforeEach
-    void setUp() throws IllegalBuildException {
+    void setUp() throws IllegalCardBuildException {
         starter = new StarterCard.Builder(1)
                 .hasCenterColors(Set.of(Color.RED, Color.BLUE))
                 .hasCenterColor(Color.BLUE)
@@ -56,7 +56,7 @@ class StarterCardTest {
     void checkIllegalBuild() {
 
         Assertions.assertThrows(
-                IllegalBuildException.class,
+                IllegalCardBuildException.class,
                 () -> new StarterCard.Builder(54)
                         .hasCenterColors(Set.of(Color.RED, Color.BLUE))
                         .hasAvailableFrontCorner(Corner.DOWN_LX)

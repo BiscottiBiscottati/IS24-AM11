@@ -5,7 +5,7 @@ import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
@@ -59,7 +59,7 @@ class LCardTest {
             blueCard = new ResourceCard.Builder(2, 0, Color.BLUE).build();
             purpleCard = new ResourceCard.Builder(3, 0, Color.PURPLE).build();
 
-        } catch (IllegalBuildException e) {
+        } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
     }

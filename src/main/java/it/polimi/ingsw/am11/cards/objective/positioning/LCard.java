@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 
@@ -135,9 +135,9 @@ public class LCard extends PositioningCard {
         }
 
         @Override
-        public @NotNull LCard build() throws IllegalBuildException {
+        public @NotNull LCard build() throws IllegalCardBuildException {
             if (this.primaryColor == null || this.secondaryColor == null) {
-                throw new IllegalBuildException("Pattern needs two colors!");
+                throw new IllegalCardBuildException("Pattern needs two colors!");
             }
             return new LCard(this);
         }

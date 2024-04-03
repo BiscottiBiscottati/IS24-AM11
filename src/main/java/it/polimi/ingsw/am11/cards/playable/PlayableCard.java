@@ -7,7 +7,7 @@ import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -182,10 +182,10 @@ public abstract sealed class PlayableCard implements CardIdentity, FieldCard per
          * @param id           The id of the card unique from others
          * @param cardPoints   Points value of the card to create
          * @param primaryColor Color of the card to create
-         * @throws IllegalBuildException if cardPoints are negative
+         * @throws IllegalCardBuildException if cardPoints are negative
          */
-        protected Builder(int id, int cardPoints, @NotNull Color primaryColor) throws IllegalBuildException {
-            if (cardPoints < 0) throw new IllegalBuildException("Points cannot be less than 0!");
+        protected Builder(int id, int cardPoints, @NotNull Color primaryColor) throws IllegalCardBuildException {
+            if (cardPoints < 0) throw new IllegalCardBuildException("Points cannot be less than 0!");
             this.cardPoints = cardPoints;
             this.primaryColor = primaryColor;
             this.id = id;
@@ -196,9 +196,9 @@ public abstract sealed class PlayableCard implements CardIdentity, FieldCard per
          * parameters set by the builder's methods.
          *
          * @return A fully constructed instance of a subclass of <code>PlayableCard</code>
-         * @throws IllegalBuildException if the build is incomplete or impossible
+         * @throws IllegalCardBuildException if the build is incomplete or impossible
          */
-        public abstract T build() throws IllegalBuildException;
+        public abstract T build() throws IllegalCardBuildException;
     }
 
 
