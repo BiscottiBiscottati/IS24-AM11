@@ -1,4 +1,8 @@
 package it.polimi.ingsw.am11.decks.utils;
 
-public sealed interface DeckType permits PlayableDeckType, UtilitiesDeckType {
+public enum DeckType {
+    GOLD,
+    RESOURCE,
+    STARTER,
+    OBJECTIVE
 }

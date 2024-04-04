@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
-import it.polimi.ingsw.am11.decks.utils.PlayableDeckType;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -40,7 +39,7 @@ public class GoldDeck implements Deck<GoldCard> {
 
     @Override
     public DeckType getDeckType() {
-        return PlayableDeckType.GOLD;
+        return DeckType.GOLD;
     }
 
     @Override

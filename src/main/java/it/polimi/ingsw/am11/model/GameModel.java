@@ -1,11 +1,15 @@
 package it.polimi.ingsw.am11.model;
 
+import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
+import it.polimi.ingsw.am11.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.players.PlayerColor;
+
+import java.util.List;
 
 public interface GameModel {
     void initGame();
 
-    void addPlayerToTable(String nickname, PlayerColor colour);
+    void addPlayerToTable(String nickname, PlayerColor colour) throws PlayerInitException;
 
     void shufflePlayers();
 
@@ -19,11 +23,11 @@ public interface GameModel {
 
     void getExposedCards();
 
-    void getPlayerHand();
+    List<Integer> getPlayerHand(String nickname);
 
-    void getPlayerObjective();
+    List<Integer> getPlayerObjective(String nickname);
 
-    void getPlateau();
+    int getPlayerPoints(String nickname) throws IllegalPlateauActionException;
 
     void getPlayerInfo();
 

@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
-import it.polimi.ingsw.am11.decks.utils.UtilitiesDeckType;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -41,7 +40,7 @@ public class StarterDeck implements Deck<StarterCard> {
 
     @Override
     public DeckType getDeckType() {
-        return UtilitiesDeckType.STARTER;
+        return DeckType.STARTER;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.model;
 
+import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
+import it.polimi.ingsw.am11.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.players.PersonalSpace;
 import it.polimi.ingsw.am11.players.Player;
 import it.polimi.ingsw.am11.players.PlayerColor;
@@ -7,20 +9,27 @@ import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.table.PickablesTable;
 import it.polimi.ingsw.am11.table.Plateau;
 
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.*;
 
 public class GameLogic implements GameModel {
 
     private final RuleSet ruleSet = new BasicRuleset();
-    private final LinkedList<Player> playerQueue;
+    private final Map<String, Player> players;
+    private final LinkedList<Player> playersQueue;
+    private final PickablesTable pickablesTable;
+    private final Plateau plateau;
     private Player firstPlayer;
     private Plateau gamePlateau;
     private PickablesTable gameTable;
     private Player currentPlaying;
 
+
     public GameLogic() {
-        this.playerQueue = new LinkedList<Player>();
+        this.players = new HashMap<>(8);
+        this.playersQueue = new LinkedList<Player>();
+        this.pickablesTable = new PickablesTable(ruleSet.getNumOfCommonObjectives(),
+                                                 ruleSet.getMaxRevealedCardsPerType());
+        this.plateau = new Plateau(ruleSet.getPointsToArmageddon());
     }
 
     //get launched after all players are ready:
@@ -33,34 +42,45 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void addPlayerToTable(String nickname, PlayerColor colour) {
-        if (playerQueue.size() < ruleSet.getMaxPlayers()) {
-            PlayerField newField = new PlayerField();
-            //TODO: PersonalSpace need to pass the handSize, it should come from the BasicRuleset
-            PersonalSpace newSpace = new PersonalSpace(3, 1);
-
-            Player newPlayer = new Player(nickname, colour, newSpace, newField);
-            playerQueue.add(newPlayer);
+    public void addPlayerToTable(String nickname, PlayerColor colour) throws PlayerInitException {
+        if (players.containsKey(nickname)) {
+            throw new PlayerInitException(nickname + " is already in use");
+        } else if (players.values()
+                          .stream()
+                          .map(Player::getColor)
+                          .anyMatch(playerColor -> playerColor.equals(colour))) {
+            throw new PlayerInitException(
+                    "Colour already in use: " + colour
+            );
+        } else if (players.size() < ruleSet.getMaxPlayers()) {
+            throw new PlayerInitException(
+                    "You are trying to add too many players, the limit is " + ruleSet.getMaxPlayers()
+            );
         } else {
-            //NOTE: it should throw a SetPlayersLimitReachedException
+            PlayerField newField = new PlayerField();
+            PersonalSpace newSpace = new PersonalSpace(ruleSet.getHandSize(), ruleSet.getNumOfPersonalObjective());
+            Player newPlayer = new Player(nickname, colour, newSpace, newField);
+            players.put(nickname, newPlayer);
+            playersQueue.add(newPlayer);
+            plateau.addPlayer(newPlayer);
         }
     }
 
     @Override
     public void shufflePlayers() {
-        Collections.shuffle(playerQueue);
+        Collections.shuffle(playersQueue);
     }
 
     @Override
     public void setStartingPlayer() {
-        firstPlayer = playerQueue.getFirst();
-        currentPlaying = playerQueue.removeFirst();
+        firstPlayer = playersQueue.getFirst();
+        currentPlaying = playersQueue.removeFirst();
     }
 
     @Override
     public void goNextTurn() {
-        playerQueue.addLast(currentPlaying);
-        currentPlaying = playerQueue.removeFirst();
+        playersQueue.addLast(currentPlaying);
+        currentPlaying = playersQueue.removeFirst();
     }
 
     @Override
@@ -79,20 +99,30 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void getPlayerHand() {
-
-
+    public List<Integer> getPlayerHand(String nickname) {
+        return players.get(nickname)
+                      .getSpace()
+                      .getPlayerHand()
+                      .stream()
+                      .map(p -> p.getId())
+                      .toList();
     }
 
     @Override
-    public void getPlayerObjective() {
-
+    public List<Integer> getPlayerObjective(String nickname) {
+        return players.get(nickname)
+                      .getSpace()
+                      .getPlayerObjective()
+                      .stream()
+                      .map(p -> p.getId())
+                      .toList();
     }
 
     @Override
-    public void getPlateau() {
-
+    public int getPlayerPoints(String nickname) throws IllegalPlateauActionException {
+        return plateau.getPlayerPoints(players.get(nickname));
     }
+
 
     @Override
     public void getPlayerInfo() {

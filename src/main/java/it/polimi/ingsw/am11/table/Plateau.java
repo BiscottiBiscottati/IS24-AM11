@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.table;
 
 import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
-import it.polimi.ingsw.am11.exceptions.IllegalPlateauSetupException;
 import it.polimi.ingsw.am11.players.Player;
 
 import java.util.HashMap;
@@ -10,23 +9,11 @@ import java.util.Map;
 public class Plateau {
     private final Map<Player, Integer> playerPoints;
     private final int armageddonTime;
-    private final int numOfPlayers;
     private boolean isArmageddonTime;
 
-    public Plateau(int armageddonTime, int numOfPlayers) throws IllegalPlateauSetupException {
+    public Plateau(int armageddonTime) {
         this.playerPoints = new HashMap<>(8);
-        if (armageddonTime <= 0) {
-            throw new IllegalPlateauSetupException(
-                    "Illegal value for number of points to start the final phase, passed value is " + armageddonTime
-            );
-        } else this.armageddonTime = armageddonTime;
-
-        if (numOfPlayers <= 1) {
-            throw new IllegalPlateauSetupException(
-                    "Illegal value for numOfPlayers, passed value is " + numOfPlayers
-            );
-        } else this.numOfPlayers = numOfPlayers;
-
+        this.armageddonTime = armageddonTime;
         this.isArmageddonTime = false;
     }
 
@@ -37,12 +24,8 @@ public class Plateau {
                     );
     }
 
-    public void addPlayer(Player newPlayer) throws IllegalPlateauSetupException {
-        if (playerPoints.size() < numOfPlayers) {
-            playerPoints.put(newPlayer, 0);
-        } else {
-            throw new IllegalPlateauSetupException("Reached number of players limit!");
-        }
+    public void addPlayer(Player newPlayer) {
+        playerPoints.put(newPlayer, 0);
     }
 
     public void addPlayerPoints(Player playerName, int points) throws IllegalPlateauActionException {
@@ -64,6 +47,8 @@ public class Plateau {
             throw new IllegalPlateauActionException("Player not found");
         } else return temp;
     }
+
+
 
     /*public List<Player> getLeadingPlayer() {
         return

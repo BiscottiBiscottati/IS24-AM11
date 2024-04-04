@@ -10,7 +10,7 @@ public class PersonalSpace {
     private final ArrayList<PlayableCard> playerHand;
     private final int sizeofHand;
     private final int maxObjectives;
-    private ObjectiveCard playerObjective;
+    private ArrayList<ObjectiveCard> playerObjective;
 
     public PersonalSpace(int sizeofHand, int maxObjectives) {
         //TODO: checking if sizeofHand is legal
@@ -19,11 +19,11 @@ public class PersonalSpace {
         playerHand = new ArrayList<>(sizeofHand);
     }
 
-    public ArrayList getPlayerHand() {
+    public ArrayList<PlayableCard> getPlayerHand() {
         return playerHand;
     }
 
-    public ObjectiveCard getPlayerObjective() {
+    public ArrayList<ObjectiveCard> getPlayerObjective() {
         return playerObjective;
     }
 

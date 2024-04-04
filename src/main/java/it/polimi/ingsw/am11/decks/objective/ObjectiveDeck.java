@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
-import it.polimi.ingsw.am11.decks.utils.UtilitiesDeckType;
 
 import java.util.Optional;
 import java.util.Stack;
@@ -40,7 +39,7 @@ public class ObjectiveDeck implements Deck<ObjectiveCard> {
 
     @Override
     public DeckType getDeckType() {
-        return UtilitiesDeckType.OBJECTIVE;
+        return DeckType.OBJECTIVE;
     }
 
     @Override
