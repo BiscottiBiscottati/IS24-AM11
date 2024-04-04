@@ -1,11 +1,11 @@
 package it.polimi.ingsw.am11.model;
 
+import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
-import it.polimi.ingsw.am11.players.PersonalSpace;
-import it.polimi.ingsw.am11.players.Player;
-import it.polimi.ingsw.am11.players.PlayerColor;
-import it.polimi.ingsw.am11.players.PlayerField;
+import it.polimi.ingsw.am11.players.*;
 import it.polimi.ingsw.am11.table.PickablesTable;
 import it.polimi.ingsw.am11.table.Plateau;
 
@@ -19,11 +19,9 @@ public class GameLogic implements GameModel {
     private final PickablesTable pickablesTable;
     private final Plateau plateau;
     private Player firstPlayer;
-    private Plateau gamePlateau;
-    private PickablesTable gameTable;
     private Player currentPlaying;
 
-
+    //region Constructor
     public GameLogic() {
         this.players = new HashMap<>(8);
         this.playersQueue = new LinkedList<Player>();
@@ -31,6 +29,116 @@ public class GameLogic implements GameModel {
                                                  ruleSet.getMaxRevealedCardsPerType());
         this.plateau = new Plateau(ruleSet.getPointsToArmageddon());
     }
+    //endregion
+
+    //region GetterGameStatus DONE
+    @Override //DONE
+    public List<String> getPlayerListInOrder() {
+        return players.values().stream()
+                      .map(Player::getNickname)
+                      .toList();
+    }
+
+    @Override //DONE
+    public String getCurrentTurnPlayer() {
+        return currentPlaying.getNickname();
+    }
+
+    @Override //DONE
+    public String getFirstPlayer() {
+        return firstPlayer.getNickname();
+    }
+
+    //endregion
+
+    //region GettersPlayer
+    @Override //DONE
+    public List<Integer> getPlayerHand(String nickname) {
+        return players.get(nickname)
+                      .getSpace()
+                      .getPlayerHand()
+                      .stream()
+                      .map(PlayableCard::getId)
+                      .toList();
+    }
+
+    @Override //DONE
+    public List<Integer> getPlayerObjective(String nickname) {
+        return players.get(nickname)
+                      .getSpace()
+                      .getPlayerObjective()
+                      .stream()
+                      .map(ObjectiveCard::getId)
+                      .toList();
+    }
+
+    @Override //DONE
+    public PlayerColor getPlayerColor(String nickname) {
+        return players.get(nickname).getColor();
+    }
+
+    @Override //FIXME
+    public Map<Position, CardContainer> getPositionedCard(String nickname) {
+        return null;
+    }
+
+    @Override //DONE
+    public Set<Position> getAvailablePositions(String nickname) {
+        return players.get(nickname).getField().getAvailablePositions();
+    }
+    //endregion
+
+    //region GettersPickableTable DONE
+    @Override //DONE
+    public List<Integer> getCommonObjectives() {
+        return pickablesTable.getCommonObjectives()
+                             .stream()
+                             .map(ObjectiveCard::getId)
+                             .toList();
+    }
+
+    @Override //DONE
+    public List<Integer> getExposedCards() {
+        return pickablesTable.getShownCards().stream()
+                             .map(PlayableCard::getId)
+                             .toList();
+    }
+
+    @Override //DONE
+    public Color getResourceDeckTop() {
+        return pickablesTable.getResourceDeckTop();
+    }
+
+    @Override //DONE
+    public Color getGoldDeckTop() {
+        return pickablesTable.getGoldDeckTop();
+    }
+
+    //endregion
+
+    //region GettersPlateau DONE
+    @Override //DONE
+    public int getPlayerPoints(String nickname) throws IllegalPlateauActionException {
+        return plateau.getPlayerPoints(players.get(nickname));
+    }
+
+    @Override //DONE
+    public boolean getIsArmageddonTime() {
+        return plateau.isArmageddonTime();
+    }
+
+    @Override //DONE
+    public int getPlayerFinishingPosition(String nickname) {
+        return plateau.getPlayerFinihingPosition(players.get(nickname));
+    }
+
+    @Override //DONE
+    public List<String> getWinner() {
+        return plateau.getWinners().stream().map(Player::getNickname).toList();
+    }
+    //endregion
+
+    //region GameInitialization
 
     //get launched after all players are ready:
     //- prepare player fields;
@@ -71,12 +179,16 @@ public class GameLogic implements GameModel {
         Collections.shuffle(playersQueue);
     }
 
+
     @Override
     public void setStartingPlayer() {
         firstPlayer = playersQueue.getFirst();
         currentPlaying = playersQueue.removeFirst();
     }
 
+    //endregion
+
+    //region TurnsActions
     @Override
     public void goNextTurn() {
         playersQueue.addLast(currentPlaying);
@@ -92,65 +204,5 @@ public class GameLogic implements GameModel {
     public void drawCardFrom() {
 
     }
-
-    @Override
-    public void getExposedCards() {
-
-    }
-
-    @Override
-    public List<Integer> getPlayerHand(String nickname) {
-        return players.get(nickname)
-                      .getSpace()
-                      .getPlayerHand()
-                      .stream()
-                      .map(p -> p.getId())
-                      .toList();
-    }
-
-    @Override
-    public List<Integer> getPlayerObjective(String nickname) {
-        return players.get(nickname)
-                      .getSpace()
-                      .getPlayerObjective()
-                      .stream()
-                      .map(p -> p.getId())
-                      .toList();
-    }
-
-    @Override
-    public int getPlayerPoints(String nickname) throws IllegalPlateauActionException {
-        return plateau.getPlayerPoints(players.get(nickname));
-    }
-
-
-    @Override
-    public void getPlayerInfo() {
-
-    }
-
-    @Override
-    public void getCurrentTurnPlayer() {
-
-    }
-
-    @Override
-    public void getCommonObjectives() {
-
-    }
-
-    @Override
-    public void isFinished() {
-
-    }
-
-    @Override
-    public void getResults() {
-
-    }
-
-    @Override
-    public void getWinner() {
-
-    }
+    //endregion
 }

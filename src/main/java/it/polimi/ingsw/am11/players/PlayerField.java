@@ -108,6 +108,11 @@ public class PlayerField {
         } else throw new IllegalPositioningException("Posizione non disponibile!");
     }
 
+    public Set<Position> getAvailablePositions() {
+        //TODO
+        return null;
+    }
+
     public boolean isPositionAvailable(Position position) {
         return this.availablePositions.contains(position);
     }

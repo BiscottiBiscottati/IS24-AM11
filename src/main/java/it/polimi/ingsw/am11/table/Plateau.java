@@ -4,17 +4,24 @@ import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.players.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Plateau {
     private final Map<Player, Integer> playerPoints;
     private final int armageddonTime;
+    private final Map<Player, Integer> finalLeatherboard;
     private boolean isArmageddonTime;
 
     public Plateau(int armageddonTime) {
         this.playerPoints = new HashMap<>(8);
         this.armageddonTime = armageddonTime;
         this.isArmageddonTime = false;
+        this.finalLeatherboard = new HashMap<>(8);
+    }
+
+    public boolean isArmageddonTime() {
+        return isArmageddonTime;
     }
 
     public void reset() {
@@ -49,8 +56,13 @@ public class Plateau {
     }
 
 
+    public int getPlayerFinihingPosition(Player player) {
+        //TODO: need to implement this method
+        return -1;
+    }
 
-    /*public List<Player> getLeadingPlayer() {
-        return
-    }*/
+    public List<Player> getWinners() {
+        //TODO: need to implement this method, remember that there could be more winners.
+        return null;
+    }
 }
