@@ -1,12 +1,111 @@
 package it.polimi.ingsw.am11.decks.playable;
 
 import it.polimi.ingsw.am11.cards.playable.GoldCard;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
+import it.polimi.ingsw.am11.decks.DatabaseConstants;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.DeckFactory;
+import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import org.jetbrains.annotations.NotNull;
+
+import java.sql.*;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class GoldDeckFactory implements DeckFactory<GoldCard> {
+
+    public static final String queryStatement = "SELECT * FROM playable_cards WHERE card_type = 'GOLD'";
+    public static final String PLACING_REQ_QUERY = "SELECT * FROM placing_requirements WHERE id = ?";
+
+
+    public GoldDeck deck;
+
+    public GoldDeckFactory() {
+        this.deck = new GoldDeck();
+    }
+
+    private static boolean isCornerAvailable(
+            @NotNull Corner corner,
+            @NotNull ResultSet result) {
+        try {
+            return !Objects.equals(result.getString("front_" + corner.getColumnName()), "NOT_USABLE");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void setFrontCorners(GoldCard.Builder cardBuilder, ResultSet result) {
+        Arrays.stream(Corner.values())
+              .forEach(corner -> {
+                  cardBuilder.hasCorner(corner, isCornerAvailable(corner, result));
+              });
+    }
+
+    private static void setPlacingRequirements(GoldCard.Builder cardBuilder, @NotNull ResultSet result) {
+        try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
+             PreparedStatement supportStatement = connection.prepareStatement(PLACING_REQ_QUERY)) {
+            supportStatement.setInt(1, result.getInt("id"));
+            try (ResultSet placingResult = supportStatement.executeQuery()) {
+                placingResult.next();
+                Arrays.stream(Color.values())
+                      .forEach(placingRequirementConsumer(cardBuilder, placingResult));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @NotNull
+    private static Consumer<Color> placingRequirementConsumer(GoldCard.Builder cardBuilder, ResultSet placingResult) {
+        return color -> {
+            try {
+                cardBuilder.hasRequirements(
+                        color,
+                        placingResult.getInt(color.getColumnName())
+                );
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    public static void setPointsRequirements(GoldCard.Builder cardBuilder, @NotNull ResultSet result) {
+        try {
+            String symbolToCollect = result.getString("symbol_to_collect");
+            if (symbolToCollect == null) {
+                cardBuilder.hasSymbolToCollect(null);
+            } else {
+                cardBuilder.hasSymbolToCollect(Symbol.valueOf(symbolToCollect));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     @Override
     public Deck<GoldCard> createDeck() {
-        return null;
+        try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
+             PreparedStatement statement = connection.prepareStatement(queryStatement);
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                GoldCard.Builder cardBuilder = new GoldCard.Builder(
+                        resultSet.getInt("global_id"),
+                        resultSet.getInt("points"),
+                        Color.valueOf(resultSet.getString("card_color")));
+                setFrontCorners(cardBuilder, resultSet);
+                setPlacingRequirements(cardBuilder, resultSet);
+                setPointsRequirements(cardBuilder, resultSet);
+                deck.addCard(cardBuilder.build());
+            }
+            return deck;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalBuildException e) {
+            throw new RuntimeException("Error while building the card!");
+        }
     }
 }
