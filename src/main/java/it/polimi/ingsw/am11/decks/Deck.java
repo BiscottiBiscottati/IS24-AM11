@@ -12,4 +12,8 @@ public interface Deck<T> {
     void addCard(T card);
 
     DeckType getDeckType();
+
+    void reset();
+
+    T getCardbyId(int id);
 }
