@@ -2,6 +2,8 @@ package it.polimi.ingsw.am11.decks;
 
 import it.polimi.ingsw.am11.decks.utils.DeckType;
 
+import java.util.Optional;
+
 public interface Deck<T> {
     Deck<T> shuffle();
 
@@ -15,5 +17,5 @@ public interface Deck<T> {
 
     void reset();
 
-    T getCardbyId(int id);
+    Optional<T> getCardById(int id);
 }
