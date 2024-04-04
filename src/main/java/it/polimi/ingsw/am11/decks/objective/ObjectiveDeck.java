@@ -1,15 +1,22 @@
 package it.polimi.ingsw.am11.decks.objective;
 
+import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.decks.utils.UtilitiesDeckType;
 
-import java.util.ArrayList;
+import java.util.Optional;
+import java.util.Stack;
 
 public class ObjectiveDeck implements Deck<ObjectiveCard> {
 
-    private ArrayList<ObjectiveCard> objectiveDeck;
+    private final ImmutableMap<Integer, ObjectiveCard> mappingIdToCard;
+    private Stack<ObjectiveCard> objectiveDeck;
+
+    public ObjectiveDeck(ImmutableMap<Integer, ObjectiveCard> mappingIdToCard) {
+        this.mappingIdToCard = mappingIdToCard;
+    }
 
     @Override
     public Deck<ObjectiveCard> shuffle() {
@@ -34,5 +41,15 @@ public class ObjectiveDeck implements Deck<ObjectiveCard> {
     @Override
     public DeckType getDeckType() {
         return UtilitiesDeckType.OBJECTIVE;
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
+    @Override
+    public Optional<ObjectiveCard> getCardById(int id) {
+        return Optional.ofNullable(mappingIdToCard.getOrDefault(id, null));
     }
 }
