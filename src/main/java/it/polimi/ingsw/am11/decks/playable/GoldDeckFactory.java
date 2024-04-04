@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.decks.playable;
 
+import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
@@ -20,11 +21,7 @@ public class GoldDeckFactory implements DeckFactory<GoldCard> {
     public static final String queryStatement = "SELECT * FROM playable_cards WHERE card_type = 'GOLD'";
     public static final String PLACING_REQ_QUERY = "SELECT * FROM placing_requirements WHERE id = ?";
 
-
-    public GoldDeck deck;
-
     public GoldDeckFactory() {
-        this.deck = new GoldDeck();
     }
 
     private static boolean isCornerAvailable(
@@ -88,20 +85,22 @@ public class GoldDeckFactory implements DeckFactory<GoldCard> {
 
     @Override
     public Deck<GoldCard> createDeck() {
+        ImmutableMap.Builder<Integer, GoldCard> builder = ImmutableMap.builder();
         try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
              PreparedStatement statement = connection.prepareStatement(queryStatement);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
+                int id = resultSet.getInt("global_id");
                 GoldCard.Builder cardBuilder = new GoldCard.Builder(
-                        resultSet.getInt("global_id"),
+                        id,
                         resultSet.getInt("points"),
                         Color.valueOf(resultSet.getString("card_color")));
                 setFrontCorners(cardBuilder, resultSet);
                 setPlacingRequirements(cardBuilder, resultSet);
                 setPointsRequirements(cardBuilder, resultSet);
-                deck.addCard(cardBuilder.build());
+                builder.put(id, cardBuilder.build());
             }
-            return deck;
+            return new GoldDeck(builder.build());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (IllegalBuildException e) {
