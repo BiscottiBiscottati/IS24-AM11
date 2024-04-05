@@ -25,7 +25,7 @@ import java.util.Optional;
  */
 public final class GoldCard extends PlayableCard {
 
-    private final ImmutableMap<Corner, Availability> availableCorners;
+    private final ImmutableMap<Corner, CornerContainer> availableCorners;
     private final ImmutableMap<Color, Integer> colorPlacingRequirements;
     private final PointsRequirementsType pointsRequirements;
     private final Symbol symbolToCollect;
@@ -157,7 +157,7 @@ public final class GoldCard extends PlayableCard {
      */
     public static class Builder extends PlayableCard.Builder<GoldCard> {
 
-        private final EnumMap<Corner, Availability> availableCorners;
+        private final EnumMap<Corner, CornerContainer> availableCorners;
         private final EnumMap<Color, Integer> colorPlacingRequirements;
         private PointsRequirementsType pointsRequirements;
         private @Nullable Symbol symbolToCollect;
@@ -198,6 +198,11 @@ public final class GoldCard extends PlayableCard {
          */
         public Builder hasCorner(@NotNull Corner corner) {
             availableCorners.put(corner, Availability.USABLE);
+            return this;
+        }
+
+        public Builder hasIn(Corner corner, CornerContainer cornerContainer) {
+            availableCorners.put(corner, cornerContainer);
             return this;
         }
 
