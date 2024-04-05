@@ -7,8 +7,6 @@ import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,7 +24,7 @@ import java.util.Optional;
  */
 public final class GoldCard extends PlayableCard {
 
-    private final ImmutableMap<Corner, Availability> availableCorners;
+    private final ImmutableMap<Corner, CornerContainer> availableCorners;
     private final ImmutableMap<Color, Integer> colorPlacingRequirements;
     private final PointsRequirementsType pointsRequirements;
     private final Symbol symbolToCollect;
@@ -86,7 +84,7 @@ public final class GoldCard extends PlayableCard {
      */
     public static class Builder extends PlayableCard.Builder<GoldCard> {
 
-        private final EnumMap<Corner, Availability> availableCorners;
+        private final EnumMap<Corner, CornerContainer> availableCorners;
         private final EnumMap<Color, Integer> colorPlacingRequirements;
         private PointsRequirementsType pointsRequirements;
         private @Nullable Symbol symbolToCollect;
@@ -97,9 +95,9 @@ public final class GoldCard extends PlayableCard {
          *
          * @param points       the point value of the card
          * @param primaryColor the color of the card
-         * @throws IllegalBuildException if points are negative
+         * @throws IllegalCardBuildException if points are negative
          */
-        public Builder(int id, int points, @NotNull Color primaryColor) throws IllegalBuildException {
+        public Builder(int id, int points, @NotNull Color primaryColor) throws IllegalCardBuildException {
             super(id, points, primaryColor);
             this.availableCorners = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
             this.colorPlacingRequirements = EnumMapUtils.Init(Color.class, 0);
@@ -127,6 +125,11 @@ public final class GoldCard extends PlayableCard {
          */
         public Builder hasCorner(@NotNull Corner corner) {
             availableCorners.put(corner, Availability.USABLE);
+            return this;
+        }
+
+        public Builder hasIn(Corner corner, CornerContainer item) {
+            availableCorners.put(corner, item);
             return this;
         }
 
@@ -175,12 +178,12 @@ public final class GoldCard extends PlayableCard {
          * parameters set by the builder's methods.
          *
          * @return A fully constructed instance of <code>GoldCard</code>.
-         * @throws IllegalBuildException if placement requirements to place have a negative value
+         * @throws IllegalCardBuildException if placement requirements to place have a negative value
          */
         @Override
         @NotNull
         public GoldCard build() throws IllegalCardBuildException {
-            if (this.pointsRequirements == null) throw new IllegalBuildException("No points requirements!");
+            if (this.pointsRequirements == null) throw new IllegalCardBuildException("No points requirements!");
             if (!Validator.nonNegativeValues(colorPlacingRequirements))
                 throw new IllegalCardBuildException("Placing requirements cannot be less than 0!");
             return new GoldCard(this);

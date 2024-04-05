@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective;
+package it.polimi.ingsw.am11.cards.objective.positioning;
 
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
@@ -6,13 +6,8 @@ import it.polimi.ingsw.am11.cards.utils.CardPattern;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.cards.utils.CardPattern;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
@@ -33,14 +28,14 @@ import java.util.stream.IntStream;
 @ExtendWith(MockitoExtension.class)
 class TripletCardTest {
 
-    static CardPattern standardTripletMatrix = CardPattern.of(
+    static CardPattern standardTripletMatrix = new CardPattern(
             List.of(
                     Arrays.asList(null, null, Color.GREEN),
                     Arrays.asList(null, Color.GREEN, null),
                     Arrays.asList(Color.GREEN, null, null)
             )
     );
-    static CardPattern reversedTripletMatrix = CardPattern.of(
+    static CardPattern reversedTripletMatrix = new CardPattern(
             // the matrix is flipped on its y-axis for the cartesian reference
             List.of(
                     Arrays.asList(Color.GREEN, null, null),
@@ -81,7 +76,7 @@ class TripletCardTest {
             starterCard = builder.build();
             greenCard = new ResourceCard.Builder(1, 0, Color.GREEN).build();
             blueCard = new ResourceCard.Builder(2, 0, Color.BLUE).build();
-        } catch (IllegalBuildException e) {
+        } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
 
@@ -264,9 +259,9 @@ class TripletCardTest {
                  .forEach(value ->
                           {
                               assert tripletCardForGreens.getPattern() != null;
-                              Assertions.assertArrayEquals(
-                                      reversedTripletMatrix.pattern()[value],
-                                      tripletCardForGreens.getPattern().pattern()[value]
+                              Assertions.assertEquals(
+                                      reversedTripletMatrix.pattern(),
+                                      tripletCardForGreens.getPattern().pattern()
                               );
                           }
                  );
@@ -274,9 +269,9 @@ class TripletCardTest {
         IntStream.range(0, 3)
                  .forEach(value -> {
                               assert tripletCardRevForGreens.getPattern() != null;
-                              Assertions.assertArrayEquals(
-                                      standardTripletMatrix.pattern()[value],
-                                      tripletCardRevForGreens.getPattern().pattern()[value]
+                              Assertions.assertEquals(
+                                      standardTripletMatrix.pattern(),
+                                      tripletCardRevForGreens.getPattern().pattern()
                               );
                           }
                  );

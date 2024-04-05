@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
-import it.polimi.ingsw.am11.decks.utils.UtilitiesDeckType;
 
 import java.util.Collections;
 import java.util.Optional;

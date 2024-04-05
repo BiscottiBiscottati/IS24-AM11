@@ -43,6 +43,6 @@ public abstract class PositioningCard extends ObjectiveCard {
         }
 
         @Override
-        public abstract T build() throws IllegalBuildException;
+        public abstract T build() throws IllegalCardBuildException;
     }
 }

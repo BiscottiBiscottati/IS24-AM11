@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective;
+package it.polimi.ingsw.am11.cards.objective.collecting;
 
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
@@ -52,7 +52,7 @@ class SymbolCollectCardTest {
                     .hasSymbol(Symbol.FEATHER)
                     .hasSymbol(Symbol.FEATHER)
                     .build();
-        } catch (IllegalBuildException e) {
+        } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
     }
@@ -105,7 +105,7 @@ class SymbolCollectCardTest {
     @Test
     void checkIllegalBuild() {
         Assertions.assertThrows(
-                IllegalBuildException.class,
+                IllegalCardBuildException.class,
                 () -> new SymbolCollectCard.Builder(3, 2)
                         .hasSymbol(Symbol.FEATHER)
                         .hasSymbol(Symbol.GLASS, -1)

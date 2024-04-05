@@ -96,9 +96,9 @@ public final class StarterCard implements FieldCard, CardIdentity {
         }
 
         @NotNull
-        public StarterCard build() throws IllegalBuildException {
+        public StarterCard build() throws IllegalCardBuildException {
             if (checkAllBackCornerCovered()) return new StarterCard(this);
-            else throw new IllegalBuildException("Not all Corners Covered");
+            else throw new IllegalCardBuildException("Not all Corners Covered");
         }
     }
 }

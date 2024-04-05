@@ -59,7 +59,7 @@ public abstract class ObjectiveCard implements CardIdentity {
             this.id = id;
         }
 
-        public abstract T build() throws IllegalBuildException;
+        public abstract T build() throws IllegalCardBuildException;
     }
 
 }

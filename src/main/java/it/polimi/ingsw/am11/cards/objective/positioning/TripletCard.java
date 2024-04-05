@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective;
+package it.polimi.ingsw.am11.cards.objective.positioning;
 
 import it.polimi.ingsw.am11.cards.objective.PositioningCard;
 import it.polimi.ingsw.am11.cards.utils.CardPattern;
@@ -9,20 +9,13 @@ import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.cards.utils.CardPattern;
-import it.polimi.ingsw.am11.cards.utils.PatternCounter;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
-import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Set;
 
 public class TripletCard extends PositioningCard {
@@ -61,13 +54,13 @@ public class TripletCard extends PositioningCard {
     }
 
     @NotNull
-    private Color[][] retrievePattern() {
+    private List<List<Color>> retrievePattern() {
         Color[][] temp = new Color[3][3];
         Arrays.stream(temp).forEach(colors -> Arrays.fill(colors, null));
         ObjectiveCardType.TRIPLET.getPositions(this.flippedFlag, false)
                                  .orElse(Set.of())
                                  .forEach(position -> temp[position.x()][position.y()] = this.colorOfPattern);
-        return temp;
+        return Arrays.stream(temp).map(Arrays::asList).toList();
     }
 
     @Override
@@ -120,8 +113,8 @@ public class TripletCard extends PositioningCard {
         }
 
         @Override
-        public @NotNull TripletCard build() throws IllegalBuildException {
-            if (colorOfPattern == null) throw new IllegalBuildException("Pattern need a color!");
+        public @NotNull TripletCard build() throws IllegalCardBuildException {
+            if (colorOfPattern == null) throw new IllegalCardBuildException("Pattern need a color!");
             else return new TripletCard(this);
         }
     }

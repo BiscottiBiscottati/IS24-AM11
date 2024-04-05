@@ -2,12 +2,6 @@ package it.polimi.ingsw.am11.cards.objective.collecting;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
-import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.cards.objective.CollectingCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;

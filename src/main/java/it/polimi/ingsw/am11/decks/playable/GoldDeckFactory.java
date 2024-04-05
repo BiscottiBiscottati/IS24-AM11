@@ -10,7 +10,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.decks.DatabaseConstants;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.DeckFactory;
-import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
@@ -89,7 +89,7 @@ public class GoldDeckFactory implements DeckFactory<GoldCard> {
                 builder.put(id, cardBuilder.build());
             }
             return new GoldDeck(builder.build());
-        } catch (SQLException | IllegalBuildException e) {
+        } catch (SQLException | IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
     }
