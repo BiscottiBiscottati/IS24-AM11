@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.decks.utils.UtilitiesDeckType;
 
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Stack;
 
@@ -20,22 +21,23 @@ public class ObjectiveDeck implements Deck<ObjectiveCard> {
 
     @Override
     public Deck<ObjectiveCard> shuffle() {
-        return null;
+        Collections.shuffle(this.objectiveDeck);
+        return this;
     }
 
     @Override
     public ObjectiveCard drawCard() {
-        return null;
+        return this.objectiveDeck.pop();
     }
 
     @Override
     public int getRemainingCards() {
-        return 0;
+        return this.objectiveDeck.size();
     }
 
     @Override
     public void addCard(ObjectiveCard card) {
-
+        this.objectiveDeck.push(card);
     }
 
     @Override
@@ -45,7 +47,8 @@ public class ObjectiveDeck implements Deck<ObjectiveCard> {
 
     @Override
     public void reset() {
-
+        this.objectiveDeck.clear();
+        this.objectiveDeck.addAll(mappingIdToCard.values());
     }
 
     @Override
