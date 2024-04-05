@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.cards.utils;
 
+import com.google.common.base.Enums;
 import it.polimi.ingsw.am11.cards.utils.enums.Availability;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
@@ -18,6 +19,18 @@ import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
  */
 public sealed interface CornerContainer permits Availability, Color, Symbol {
 
+
+    static CornerContainer of(String name) {
+        if (Enums.getIfPresent(Availability.class, name).isPresent()) {
+            return Availability.valueOf(name);
+        } else if (Enums.getIfPresent(Color.class, name).isPresent()) {
+            return Color.valueOf(name);
+        } else if (Enums.getIfPresent(Symbol.class, name).isPresent()) {
+            return Symbol.valueOf(name);
+        } else {
+            throw new IllegalArgumentException("Invalid corner container name");
+        }
+    }
 
     /**
      * Checks whether the corner is available to cover or not
