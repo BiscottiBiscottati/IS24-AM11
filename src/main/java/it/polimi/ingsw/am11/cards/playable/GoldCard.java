@@ -251,8 +251,10 @@ public final class GoldCard extends PlayableCard {
         @Override
         @NotNull
         public GoldCard build() throws IllegalBuildException {
-            if (Validator.nonNegativeValues(colorPlacingRequirements)) return new GoldCard(this);
-            throw new IllegalBuildException("Placing requirements cannot be less than 0!");
+            if (this.pointsRequirements == null) throw new IllegalBuildException("No points requirements!");
+            if (!Validator.nonNegativeValues(colorPlacingRequirements))
+                throw new IllegalBuildException("Placing requirements cannot be less than 0!");
+            return new GoldCard(this);
         }
     }
 }
