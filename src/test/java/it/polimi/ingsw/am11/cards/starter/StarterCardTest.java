@@ -15,7 +15,7 @@ class StarterCardTest {
     private StarterCard starter;
 
     @BeforeEach
-    void setUp() throws IllegalCardBuildException {
+    void setUp() throws IllegalBuildException {
         starter = new StarterCard.Builder(1)
                 .hasCenterColors(Set.of(Color.RED, Color.BLUE))
                 .hasCenterColor(Color.BLUE)
@@ -56,7 +56,7 @@ class StarterCardTest {
     void checkIllegalBuild() {
 
         Assertions.assertThrows(
-                IllegalCardBuildException.class,
+                IllegalBuildException.class,
                 () -> new StarterCard.Builder(54)
                         .hasCenterColors(Set.of(Color.RED, Color.BLUE))
                         .hasAvailableFrontCorner(Corner.DOWN_LX)

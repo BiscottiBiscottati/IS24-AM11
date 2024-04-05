@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective.collecting;
+package it.polimi.ingsw.am11.cards.objective;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -9,6 +9,12 @@ import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
+import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
+import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
+import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 
@@ -80,9 +86,9 @@ public class SymbolCollectCard extends CollectingCard {
         }
 
         @Override
-        public @NotNull SymbolCollectCard build() throws IllegalCardBuildException {
+        public @NotNull SymbolCollectCard build() throws IllegalBuildException {
             if (Validator.nonNegativeValues(symbolToCollect)) return new SymbolCollectCard(this);
-            throw new IllegalCardBuildException("Symbols to collect cannot be less than 0!");
+            throw new IllegalBuildException("Symbols to collect cannot be less than 0!");
         }
     }
 }

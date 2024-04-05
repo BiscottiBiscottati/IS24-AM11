@@ -4,37 +4,41 @@ import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
+import it.polimi.ingsw.am11.decks.utils.PlayableDeckType;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
+import java.util.Stack;
 
 public class ResourceDeck implements Deck<ResourceCard> {
 
     private final ImmutableMap<Integer, ResourceCard> mappingIdToCard;
-    private ArrayList<ResourceCard> resourceDeck;
+    private final Stack<ResourceCard> resourceDeck;
 
     public ResourceDeck(ImmutableMap<Integer, ResourceCard> mappingIdToCard) {
         this.mappingIdToCard = mappingIdToCard;
+        this.resourceDeck = new Stack<>();
     }
 
     @Override
     public Deck<ResourceCard> shuffle() {
-        return null;
+        Collections.shuffle(this.resourceDeck);
+        return this;
     }
 
     @Override
     public ResourceCard drawCard() {
-        return null;
+        return resourceDeck.pop();
     }
 
     @Override
     public int getRemainingCards() {
-        return 0;
+        return resourceDeck.size();
     }
 
     @Override
     public void addCard(ResourceCard card) {
-
+        resourceDeck.push(card);
     }
 
     @Override
@@ -44,7 +48,8 @@ public class ResourceDeck implements Deck<ResourceCard> {
 
     @Override
     public void reset() {
-
+        resourceDeck.clear();
+        resourceDeck.addAll(mappingIdToCard.values());
     }
 
     @Override

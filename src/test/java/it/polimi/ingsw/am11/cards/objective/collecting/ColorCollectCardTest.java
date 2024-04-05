@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective.collecting;
+package it.polimi.ingsw.am11.cards.objective;
 
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -58,7 +58,7 @@ class ColorCollectCardTest {
                     .hasColor(Color.RED)
                     .hasColor(Color.PURPLE)
                     .build();
-        } catch (IllegalCardBuildException e) {
+        } catch (IllegalBuildException e) {
             throw new RuntimeException(e);
         }
     }

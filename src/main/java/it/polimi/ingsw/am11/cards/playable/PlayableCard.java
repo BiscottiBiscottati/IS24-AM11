@@ -182,10 +182,10 @@ public abstract sealed class PlayableCard implements CardIdentity, FieldCard per
          * @param id           The id of the card unique from others
          * @param cardPoints   Points value of the card to create
          * @param primaryColor Color of the card to create
-         * @throws IllegalCardBuildException if cardPoints are negative
+         * @throws IllegalBuildException if cardPoints are negative
          */
-        protected Builder(int id, int cardPoints, @NotNull Color primaryColor) throws IllegalCardBuildException {
-            if (cardPoints < 0) throw new IllegalCardBuildException("Points cannot be less than 0!");
+        protected Builder(int id, int cardPoints, @NotNull Color primaryColor) throws IllegalBuildException {
+            if (cardPoints < 0) throw new IllegalBuildException("Points cannot be less than 0!");
             this.cardPoints = cardPoints;
             this.primaryColor = primaryColor;
             this.id = id;
@@ -196,9 +196,9 @@ public abstract sealed class PlayableCard implements CardIdentity, FieldCard per
          * parameters set by the builder's methods.
          *
          * @return A fully constructed instance of a subclass of <code>PlayableCard</code>
-         * @throws IllegalCardBuildException if the build is incomplete or impossible
+         * @throws IllegalBuildException if the build is incomplete or impossible
          */
-        public abstract T build() throws IllegalCardBuildException;
+        public abstract T build() throws IllegalBuildException;
     }
 
 

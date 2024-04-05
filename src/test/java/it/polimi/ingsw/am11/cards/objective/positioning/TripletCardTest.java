@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective.positioning;
+package it.polimi.ingsw.am11.cards.objective;
 
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
@@ -7,6 +7,12 @@ import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.cards.utils.CardPattern;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
+import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.exceptions.IllegalBuildException;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
@@ -20,23 +26,21 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.IntStream;
 
 @SuppressWarnings("ClassWithTooManyFields")
 @ExtendWith(MockitoExtension.class)
 class TripletCardTest {
 
-    static CardPattern standardTripletMatrix = new CardPattern(
+    static CardPattern standardTripletMatrix = CardPattern.of(
             List.of(
                     Arrays.asList(null, null, Color.GREEN),
                     Arrays.asList(null, Color.GREEN, null),
                     Arrays.asList(Color.GREEN, null, null)
             )
     );
-    static CardPattern reversedTripletMatrix = new CardPattern(
+    static CardPattern reversedTripletMatrix = CardPattern.of(
             // the matrix is flipped on its y-axis for the cartesian reference
             List.of(
                     Arrays.asList(Color.GREEN, null, null),
@@ -77,7 +81,7 @@ class TripletCardTest {
             starterCard = builder.build();
             greenCard = new ResourceCard.Builder(1, 0, Color.GREEN).build();
             blueCard = new ResourceCard.Builder(2, 0, Color.BLUE).build();
-        } catch (IllegalCardBuildException e) {
+        } catch (IllegalBuildException e) {
             throw new RuntimeException(e);
         }
 
@@ -194,22 +198,29 @@ class TripletCardTest {
         // Test for a simple map.
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardSmall);
-        Mockito.when(playerField.getNumberOf(Color.GREEN))
-               .thenReturn(7);
+        EnumMap<Color, Integer> placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber.put(Color.GREEN, 7);
+        Mockito.when(playerField.getPlacedCardColours())
+               .thenReturn(placedCardNumber);
 
         Assertions.assertEquals(4, tripletCardForGreens.countPoints(playerField));
         Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test if color placed are less than 3.
-        Mockito.when(playerField.getNumberOf(Color.GREEN))
-               .thenReturn(2);
+        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber.put(Color.GREEN, 2);
+        Mockito.when(playerField.getPlacedCardColours())
+               .thenReturn(placedCardNumber);
 
         Assertions.assertEquals(0, tripletCardForGreens.countPoints(playerField));
         Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test a simple map but there are no matching pattern
-        Mockito.when(playerField.getNumberOf(Color.GREEN))
-               .thenReturn(6);
+        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber.put(Color.GREEN, 6);
+        placedCardNumber.put(Color.BLUE, 2);
+        Mockito.when(playerField.getPlacedCardColours())
+               .thenReturn(placedCardNumber);
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardNoMatch);
 
@@ -217,8 +228,11 @@ class TripletCardTest {
         Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test for a larger map.
-        Mockito.when(playerField.getNumberOf(Color.GREEN))
-               .thenReturn(13);
+        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber.put(Color.GREEN, 13);
+        placedCardNumber.put(Color.BLUE, 5);
+        Mockito.when(playerField.getPlacedCardColours())
+               .thenReturn(placedCardNumber);
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardLarge);
 
@@ -226,8 +240,11 @@ class TripletCardTest {
         Assertions.assertEquals(4, tripletCardRevForGreens.countPoints(playerField));
 
         // Test for an even larger map.
-        Mockito.when(playerField.getNumberOf(Color.GREEN))
-               .thenReturn(22);
+        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber.put(Color.GREEN, 22);
+        placedCardNumber.put(Color.BLUE, 8);
+        Mockito.when(playerField.getPlacedCardColours())
+               .thenReturn(placedCardNumber);
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardLargest);
 
@@ -243,19 +260,25 @@ class TripletCardTest {
 
     @Test
     void getPattern() {
+        IntStream.range(0, 3)
+                 .forEach(value ->
+                          {
+                              assert tripletCardForGreens.getPattern() != null;
+                              Assertions.assertArrayEquals(
+                                      reversedTripletMatrix.pattern()[value],
+                                      tripletCardForGreens.getPattern().pattern()[value]
+                              );
+                          }
+                 );
 
-        assert tripletCardForGreens.getPattern() != null;
-        Assertions.assertEquals(
-                reversedTripletMatrix.pattern(),
-                tripletCardForGreens.getPattern().pattern()
-        );
-
-
-        assert tripletCardRevForGreens.getPattern() != null;
-        Assertions.assertEquals(
-                standardTripletMatrix.pattern(),
-                tripletCardRevForGreens.getPattern().pattern()
-        );
+        IntStream.range(0, 3)
+                 .forEach(value -> {
+                              assert tripletCardRevForGreens.getPattern() != null;
+                              Assertions.assertArrayEquals(
+                                      standardTripletMatrix.pattern()[value],
+                                      tripletCardRevForGreens.getPattern().pattern()[value]
+                              );
+                          }
+                 );
     }
-
 }

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.cards.objective.positioning;
+package it.polimi.ingsw.am11.cards.objective;
 
 import it.polimi.ingsw.am11.cards.objective.PositioningCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -10,7 +10,6 @@ import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -44,25 +43,6 @@ public class LCard extends PositioningCard {
                         purpose,
                         this.isRotatedFlag ? cornersToGetToBottom : cornersToGetToTop
                 );
-                case TO_COMPLETE -> {
-                    Arrays.stream(Corner.values())
-                          .filter(corner -> {
-                              if (this.isRotatedFlag) {
-                                  return corner == Corner.TOP_LX || corner == Corner.TOP_RX;
-                              } else {
-                                  return corner == Corner.DOWN_LX || corner == Corner.DOWN_RX;
-                              }
-                          })
-                          .filter(corner -> {
-                              if (this.isFlippedFlag) {
-                                  return corner == Corner.TOP_LX || corner == Corner.DOWN_LX;
-                              } else {
-                                  return corner == Corner.TOP_RX || corner == Corner.DOWN_RX;
-                              }
-                          })
-                          .limit(1)
-                          .forEach(corner -> cornersPurpose.put(purpose, corner.toSingletonList()));
-                }
                 case ADJACENT_RX, ADJACENT_LX -> cornersPurpose.put(
                         purpose,
                         null
@@ -79,39 +59,31 @@ public class LCard extends PositioningCard {
     }
 
     @Override
-    public int countPoints(@NotNull PlayerField playerField) {
-        if (playerField.getNumberOf(this.primaryColor) < 2) return 0;
-        if (playerField.getNumberOf(this.secondaryColor) < 1) return 0;
-        return this.counter.count(playerField) * this.getPoints();
+    public int countPoints(PlayerField playerField) {
+        return 0;
     }
 
-    public boolean isFlipped() {
-        return isFlippedFlag;
-    }
+    // TODO: need pattern creation logic
 
-    public boolean isRotated() {
-        return isRotatedFlag;
-    }
 
     public static class Builder extends PositioningCard.Builder<LCard> {
 
-        private final EnumMap<Color, Integer> colorRequirements;
         private boolean isFlippedFlag;
         private boolean isRotatedFlag;
         private Color primaryColor;
         private Color secondaryColor;
 
+        private EnumMap<Color, Integer> colorRequirements;
+
         public Builder(int id, int points) {
             super(id, points);
-            this.primaryColor = null;
-            this.secondaryColor = null;
-            this.colorRequirements = EnumMapUtils.Init(Color.class, 0);
-            this.isFlippedFlag = false;
-            this.isRotatedFlag = false;
         }
 
         public @NotNull Builder isFlipped(boolean flippedFlag) {
             this.isFlippedFlag = flippedFlag;
+            this.primaryColor = null;
+            this.secondaryColor = null;
+            this.colorRequirements = EnumMapUtils.Init(Color.class, 0);
             return this;
         }
 
@@ -135,10 +107,7 @@ public class LCard extends PositioningCard {
         }
 
         @Override
-        public @NotNull LCard build() throws IllegalCardBuildException {
-            if (this.primaryColor == null || this.secondaryColor == null) {
-                throw new IllegalCardBuildException("Pattern needs two colors!");
-            }
+        public @NotNull LCard build() {
             return new LCard(this);
         }
     }

@@ -28,7 +28,7 @@ class GoldCardTest {
                     .hasPointRequirements(PointsRequirementsType.SYMBOLS)
                     .hasSymbolToCollect(Symbol.FEATHER)
                     .build();
-        } catch (IllegalCardBuildException e) {
+        } catch (IllegalBuildException e) {
             throw new RuntimeException(e);
         }
 
@@ -130,7 +130,7 @@ class GoldCardTest {
 
     @Test
     void checkNegativePlacingRequirements() {
-        Assertions.assertThrows(IllegalCardBuildException.class,
+        Assertions.assertThrows(IllegalBuildException.class,
                                 () -> new GoldCard.Builder(18, 3, Color.GREEN)
                                         .hasRequirements(Color.BLUE, -1)
                                         .build()
@@ -140,7 +140,7 @@ class GoldCardTest {
     @Test
     void checkNegativePoints() {
         Assertions.assertThrows(
-                IllegalCardBuildException.class,
+                IllegalBuildException.class,
                 () -> new GoldCard.Builder(190, -1, Color.PURPLE)
                         .build()
         );

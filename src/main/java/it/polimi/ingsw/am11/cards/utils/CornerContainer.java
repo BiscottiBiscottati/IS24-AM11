@@ -1,5 +1,10 @@
 package it.polimi.ingsw.am11.cards.utils;
 
+import com.google.common.base.Enums;
+import it.polimi.ingsw.am11.cards.utils.enums.Availability;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
+
 import it.polimi.ingsw.am11.cards.utils.enums.Availability;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;

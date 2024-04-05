@@ -1,5 +1,8 @@
-package it.polimi.ingsw.am11.cards.utils.helpers;
+package it.polimi.ingsw.am11.cards.utils;
 
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
+import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import org.junit.jupiter.api.Assertions;

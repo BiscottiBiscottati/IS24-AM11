@@ -29,7 +29,7 @@ class ResourceCardTest {
             playable2 = new ResourceCard.Builder(3, 0, Color.GREEN)
                     .hasIn(Corner.DOWN_LX, Color.PURPLE)
                     .build();
-        } catch (IllegalCardBuildException e) {
+        } catch (IllegalBuildException e) {
             throw new RuntimeException(e);
         }
     }
