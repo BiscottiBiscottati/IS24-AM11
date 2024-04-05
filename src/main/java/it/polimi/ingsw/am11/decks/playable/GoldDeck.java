@@ -5,37 +5,42 @@ import it.polimi.ingsw.am11.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.decks.utils.PlayableDeckType;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
+import java.util.Stack;
 
 public class GoldDeck implements Deck<GoldCard> {
 
     private final ImmutableMap<Integer, GoldCard> mappingIdToCard;
-    private ArrayList<GoldCard> goldDeck;
+    private final Stack<GoldCard> goldDeck;
 
-    public GoldDeck(ImmutableMap<Integer, GoldCard> mappingIdToCard) {
+    public GoldDeck(@NotNull ImmutableMap<Integer, GoldCard> mappingIdToCard) {
         this.mappingIdToCard = mappingIdToCard;
+        this.goldDeck = new Stack<>();
+        this.goldDeck.addAll(mappingIdToCard.values());
     }
 
     @Override
     public Deck<GoldCard> shuffle() {
-        return null;
+        Collections.shuffle(goldDeck);
+        return this;
     }
 
     @Override
     public GoldCard drawCard() {
-        return null;
+        return goldDeck.pop();
     }
 
     @Override
     public int getRemainingCards() {
-        return 0;
+        return goldDeck.size();
     }
 
     @Override
     public void addCard(GoldCard card) {
-
+        goldDeck.push(card);
     }
 
     @Override
@@ -45,7 +50,8 @@ public class GoldDeck implements Deck<GoldCard> {
 
     @Override
     public void reset() {
-
+        goldDeck.clear();
+        goldDeck.addAll(mappingIdToCard.values());
     }
 
     @Override
