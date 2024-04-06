@@ -36,7 +36,13 @@ public class GoldDeckFactory implements DeckFactory<GoldCard> {
 
     private static void setFrontCorners(GoldCard.Builder cardBuilder, ResultSet result) {
         Arrays.stream(Corner.values())
-              .forEach(corner -> cardBuilder.hasIn(corner, getCornerContainer(corner, result)));
+              .forEach(corner -> {
+                  try {
+                      cardBuilder.hasIn(corner, getCornerContainer(corner, result));
+                  } catch (IllegalCardBuildException e) {
+                      throw new RuntimeException(e);
+                  }
+              });
     }
 
     private static void setPlacingRequirements(GoldCard.Builder cardBuilder, @NotNull ResultSet result) {
