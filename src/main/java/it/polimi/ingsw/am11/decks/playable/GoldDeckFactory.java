@@ -28,6 +28,9 @@ public class GoldDeckFactory implements DeckFactory<GoldCard> {
             @NotNull Corner corner,
             @NotNull ResultSet result) {
         try {
+            if (result.isClosed()) {
+                throw new RuntimeException("Result set is closed");
+            }
             return CornerContainer.of(result.getString(corner.getColumnName()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
