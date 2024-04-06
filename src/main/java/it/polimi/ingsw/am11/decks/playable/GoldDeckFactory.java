@@ -94,9 +94,9 @@ public class GoldDeckFactory implements DeckFactory<GoldCard> {
                 setPointsRequirements(cardBuilder, resultSet);
                 builder.put(id, cardBuilder.build());
             }
-            return new GoldDeck(builder.build());
         } catch (SQLException | IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
+        return new GoldDeck(builder.build());
     }
 }
