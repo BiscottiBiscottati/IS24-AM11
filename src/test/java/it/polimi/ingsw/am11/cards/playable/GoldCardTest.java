@@ -145,4 +145,13 @@ class GoldCardTest {
                         .build()
         );
     }
+
+    @Test
+    void checkNoPointsRequirements() {
+        Assertions.assertThrows(
+                IllegalCardBuildException.class,
+                () -> new GoldCard.Builder(191, 3, Color.PURPLE)
+                        .build()
+        );
+    }
 }
