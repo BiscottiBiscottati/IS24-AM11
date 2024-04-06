@@ -60,6 +60,6 @@ public class ResourceDeckFactory {
             throw new RuntimeException(e);
         }
 
-        return new ResourceDeck(builder.build());
+        return new Deck<>(builder.build());
     }
 }

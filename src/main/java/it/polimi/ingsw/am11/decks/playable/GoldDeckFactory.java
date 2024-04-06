@@ -100,6 +100,6 @@ public class GoldDeckFactory {
         } catch (SQLException | IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
-        return new GoldDeck(builder.build());
+        return new Deck<>(builder.build());
     }
 }

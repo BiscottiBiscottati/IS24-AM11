@@ -1,21 +1,47 @@
 package it.polimi.ingsw.am11.decks;
 
-import it.polimi.ingsw.am11.decks.utils.DeckType;
+import com.google.common.collect.ImmutableMap;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.Optional;
+import java.util.Stack;
 
-public interface Deck<T> {
-    Deck<T> shuffle();
+public class Deck<T> {
+    private final ImmutableMap<Integer, T> mappingIdToCard;
 
-    T drawCard();
+    private final Stack<T> deck;
 
-    int getRemainingCards();
+    public Deck(@NotNull ImmutableMap<Integer, T> mappingIdToCard) {
+        this.mappingIdToCard = mappingIdToCard;
+        this.deck = new Stack<>();
+        this.deck.addAll(mappingIdToCard.values());
+    }
 
-    void addCard(T card);
 
-    DeckType getDeckType();
+    public Deck<T> shuffle() {
+        Collections.shuffle(this.deck);
+        return this;
+    }
 
-    void reset();
+    public T drawCard() {
+        return this.deck.pop();
+    }
 
-    Optional<T> getCardById(int id);
+    public int getRemainingCards() {
+        return this.deck.size();
+    }
+
+    public void addCard(T card) {
+        this.deck.push(card);
+    }
+
+    public void reset() {
+        this.deck.clear();
+        this.deck.addAll(mappingIdToCard.values());
+    }
+
+    Optional<T> getCardById(int id) {
+        return Optional.ofNullable(mappingIdToCard.getOrDefault(id, null));
+    }
 }
