@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.decks.playable;
 
-import it.polimi.ingsw.am11.cards.playable.GoldCard;
+import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.enums.Availability;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -17,63 +17,53 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
-class GoldDeckFactoryTest {
+class ResourceDeckFactoryTest {
 
-    GoldDeckFactory factory;
+    ResourceDeckFactory factory;
+
     Connection connection;
-
     PreparedStatement idQuery;
 
-    PreparedStatement placingReqQuery;
-
-    @AfterEach
-    void tearDown() {
+    @BeforeEach
+    void setUp() {
+        factory = new ResourceDeckFactory();
         try {
-            if (idQuery != null && !idQuery.isClosed()) idQuery.close();
-            if (connection != null && !connection.isClosed()) connection.close();
+            connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
+            idQuery = connection.prepareStatement("SELECT * FROM playable_cards WHERE global_id = ?");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @BeforeEach
-    void setUp() {
-        factory = new GoldDeckFactory();
-        try {
-            connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
-            idQuery = connection.prepareStatement("SELECT * FROM playable_cards WHERE global_id = ?");
-            placingReqQuery = connection.prepareStatement("SELECT * FROM placing_requirements WHERE id = ?");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    @AfterEach
+    void tearDown() {
     }
 
     @Test
     void createDeck() {
-        Deck<GoldCard> deck = factory.createDeck();
+        Deck<ResourceCard> deck = factory.createDeck();
 
-        // Testing the creation of a GoldDeck
+        // Testing the creation of a ResourceDeck
         Assertions.assertNotNull(deck);
 
         // Testing size of the deck
         Assertions.assertEquals(40, deck.getRemainingCards());
 
-        Set<Integer> uniqueId = new HashSet<>(40);
+        Set<Integer> uniqueIds = new HashSet<>(40);
 
-        // Testing the card's properties correctness and uniqueness in database
+        // Testing the uniqueness of the cards
         for (int i = 0; i < 40; i++) {
-            GoldCard card = deck.drawCard();
+            ResourceCard card = deck.drawCard();
 
-            // Testing the card not null
             Assertions.assertNotNull(card);
 
-            // Testing uniqueness of the id
             int tempId = card.getId();
-            Assertions.assertFalse(uniqueId.contains(tempId));
-            uniqueId.add(tempId);
+            Assertions.assertFalse(uniqueIds.contains(tempId));
+            uniqueIds.add(tempId);
 
             try {
                 idQuery.setInt(1, tempId);
+
                 try (ResultSet result = idQuery.executeQuery()) {
                     result.next();
 
@@ -86,30 +76,6 @@ class GoldDeckFactoryTest {
                     // Testing the card symbol
                     Assertions.assertEquals(result.getInt("points"), card.getPoints());
 
-                    // Testing the card symbol to collect
-                    Assertions.assertEquals(
-                            result.getString("symbol_to_collect"),
-                            card.getSymbolToCollect().isEmpty() ? null : card.getSymbolToCollect().get().name()
-                    );
-
-                    // Testing the card placing requirements
-                    Assertions.assertNotNull(card.getPlacingRequirements());
-                    int placingRequirementsId = result.getInt("placing_requirements_id");
-                    placingReqQuery.setInt(1, placingRequirementsId);
-                    try (ResultSet placingResult = placingReqQuery.executeQuery()) {
-                        placingResult.next();
-                        for (Color color : Color.values()) {
-                            Assertions.assertEquals(placingResult.getInt(color.getColumnName()),
-                                                    card.getPlacingRequirements().get(color));
-                        }
-                    }
-
-                    // Testing the card points requirements
-                    Assertions.assertNotNull(card.getPointsRequirements());
-                    Assertions.assertEquals(result.getString("points_requirements"),
-                                            card.getPointsRequirements().name());
-
-                    // Testing the card front corners availability
                     for (Corner corner : Corner.values()) {
                         switch (CornerContainer.of(result.getString(corner.getColumnName()))) {
                             case Availability.NOT_USABLE -> {
@@ -124,15 +90,19 @@ class GoldDeckFactoryTest {
                                 Assertions.assertTrue(card.isFrontAvailable(corner));
                                 Assertions.assertEquals(symbol, card.checkItemCorner(corner));
                             }
+                            case Color color -> {
+                                Assertions.assertTrue(card.isFrontAvailable(corner));
+                                Assertions.assertEquals(color, card.checkItemCorner(corner));
+                            }
                             default -> throw new IllegalStateException("Unexpected value!");
                         }
                     }
                 }
+
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-
         }
     }
-
 }
