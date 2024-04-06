@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.cards.objective;
 import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.cards.utils.CardPattern;
+import it.polimi.ingsw.am11.cards.utils.PointsCountable;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
-public abstract class ObjectiveCard implements CardIdentity {
+public abstract class ObjectiveCard implements CardIdentity, PointsCountable {
     private final int points;
 
     private final int id;

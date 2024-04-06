@@ -5,9 +5,11 @@ import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
+import it.polimi.ingsw.am11.cards.utils.PointsCountable;
 import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +31,9 @@ import java.util.Optional;
  * <p>
  * The class also contains a nested Builder class for creating instances of PlayableCard.
  */
-public abstract sealed class PlayableCard implements CardIdentity, FieldCard permits GoldCard, ResourceCard {
+public abstract sealed class PlayableCard implements CardIdentity,
+                                                     PointsCountable,
+                                                     FieldCard permits GoldCard, ResourceCard {
     private static final ImmutableMap<Corner, Availability> retroCorners = Maps.immutableEnumMap(
             EnumMapUtils.Init(Corner.class, Availability.USABLE)
     );
@@ -164,6 +168,11 @@ public abstract sealed class PlayableCard implements CardIdentity, FieldCard per
     @Override
     public int getId() {
         return this.id;
+    }
+
+
+    public int countPoints(@NotNull PlayerField playerField) {
+        return this.points;
     }
 
 

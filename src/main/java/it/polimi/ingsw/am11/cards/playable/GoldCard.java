@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +25,7 @@ import java.util.Optional;
  */
 public final class GoldCard extends PlayableCard {
 
-    private final ImmutableMap<Corner, CornerContainer> availableCorners;
+    private final ImmutableMap<Corner, CornerContainer> availableCornersOrSymbol;
     private final ImmutableMap<Color, Integer> colorPlacingRequirements;
     private final PointsRequirementsType pointsRequirements;
     private final Symbol symbolToCollect;
@@ -36,7 +37,7 @@ public final class GoldCard extends PlayableCard {
      */
     private GoldCard(@NotNull Builder builder) {
         super(builder);
-        this.availableCorners = Maps.immutableEnumMap(builder.availableCorners);
+        this.availableCornersOrSymbol = Maps.immutableEnumMap(builder.availableCorners);
         this.colorPlacingRequirements = Maps.immutableEnumMap(builder.colorPlacingRequirements);
         this.pointsRequirements = builder.pointsRequirements;
         this.symbolToCollect = builder.symbolToCollect;
@@ -50,7 +51,7 @@ public final class GoldCard extends PlayableCard {
 
     @Override
     public boolean isAvailable(@NotNull Corner corner) {
-        return Objects.requireNonNull(availableCorners.get(corner)).isAvailable();
+        return Objects.requireNonNull(availableCornersOrSymbol.get(corner)).isAvailable();
     }
 
     @Override
@@ -74,7 +75,23 @@ public final class GoldCard extends PlayableCard {
     @Override
     @NotNull
     public CornerContainer checkItemCorner(@NotNull Corner corner) {
-        return Objects.requireNonNull(availableCorners.get(corner));
+        return Objects.requireNonNull(availableCornersOrSymbol.get(corner));
+    }
+
+    @Override
+    public int countPoints(@NotNull PlayerField playerField) {
+        switch (this.pointsRequirements) {
+            case CLASSIC -> {
+                return super.countPoints(playerField);
+            }
+            case SYMBOLS -> {
+                return playerField.getNumberOf(this.symbolToCollect) * this.getPoints();
+            }
+            case COVERING_CORNERS -> {
+                return 0; //TODO : not done yet
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + this.pointsRequirements);
+        }
     }
 
     /**
@@ -128,8 +145,12 @@ public final class GoldCard extends PlayableCard {
             return this;
         }
 
-        public Builder hasIn(Corner corner, CornerContainer item) {
-            availableCorners.put(corner, item);
+        public Builder hasIn(Corner corner, @NotNull CornerContainer item) throws IllegalCardBuildException {
+            switch (item) {
+                case Availability ignored -> availableCorners.put(corner, item);
+                case Symbol ignored -> availableCorners.put(corner, item);
+                default -> throw new IllegalCardBuildException("Invalid corner container for GoldCard!");
+            }
             return this;
         }
 
