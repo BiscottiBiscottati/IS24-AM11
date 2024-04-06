@@ -27,7 +27,7 @@ public sealed interface CornerContainer permits Availability, Color, Symbol {
         } else if (Enums.getIfPresent(Symbol.class, name).isPresent()) {
             return Symbol.valueOf(name);
         } else {
-            throw new IllegalArgumentException("Invalid corner container name");
+            throw new IllegalArgumentException("Invalid corner container name: " + name);
         }
     }
 
