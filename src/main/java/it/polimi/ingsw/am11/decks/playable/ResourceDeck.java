@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -14,9 +15,10 @@ public class ResourceDeck implements Deck<ResourceCard> {
     private final ImmutableMap<Integer, ResourceCard> mappingIdToCard;
     private final Stack<ResourceCard> resourceDeck;
 
-    public ResourceDeck(ImmutableMap<Integer, ResourceCard> mappingIdToCard) {
+    public ResourceDeck(@NotNull ImmutableMap<Integer, ResourceCard> mappingIdToCard) {
         this.mappingIdToCard = mappingIdToCard;
         this.resourceDeck = new Stack<>();
+        this.resourceDeck.addAll(mappingIdToCard.values());
     }
 
     @Override
