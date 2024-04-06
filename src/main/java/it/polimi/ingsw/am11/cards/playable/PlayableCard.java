@@ -200,6 +200,9 @@ public abstract sealed class PlayableCard implements CardIdentity,
             this.id = id;
         }
 
+        public abstract Builder<T> hasIn(@NotNull Corner corner, @NotNull CornerContainer cornerContainer)
+                throws IllegalCardBuildException;
+
         /**
          * Constructs a new instance of a subclass of <code>PlayableCard</code> using the
          * parameters set by the builder's methods.

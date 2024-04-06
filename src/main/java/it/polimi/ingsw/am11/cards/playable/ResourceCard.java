@@ -97,6 +97,7 @@ public final class ResourceCard extends PlayableCard {
          * @return The modified builder
          * @see CornerContainer
          */
+        @Override
         @NotNull
         public Builder hasIn(@NotNull Corner corner, @NotNull CornerContainer cornerContainer) {
             availableCornerOrItem.put(corner, cornerContainer);
