@@ -25,6 +25,7 @@ class GoldCardTest {
                     .hasCorner(Corner.TOP_LX)
                     .hasCorner(Corner.TOP_RX)
                     .hasCorner(Corner.DOWN_LX, false)
+                    .hasIn(Corner.DOWN_RX, Symbol.FEATHER)
                     .hasPointRequirements(PointsRequirementsType.SYMBOLS)
                     .hasSymbolToCollect(Symbol.FEATHER)
                     .build();
@@ -50,7 +51,7 @@ class GoldCardTest {
         Assertions.assertFalse(goldClassic.isFrontAvailable(Corner.DOWN_LX));
         Assertions.assertFalse(goldClassic.isFrontAvailable(Corner.DOWN_RX));
         Assertions.assertFalse(goldSymbols.isFrontAvailable(Corner.DOWN_LX));
-        Assertions.assertFalse(goldSymbols.isFrontAvailable(Corner.DOWN_RX));
+        Assertions.assertTrue(goldSymbols.isFrontAvailable(Corner.DOWN_RX));
     }
 
     @Test
@@ -89,7 +90,7 @@ class GoldCardTest {
         Assertions.assertSame(Availability.USABLE, goldClassic.checkItemCorner(Corner.TOP_LX));
         Assertions.assertSame(Availability.USABLE, goldSymbols.checkItemCorner(Corner.TOP_LX));
         Assertions.assertSame(Availability.NOT_USABLE, goldClassic.checkItemCorner(Corner.DOWN_LX));
-        Assertions.assertSame(Availability.NOT_USABLE, goldSymbols.checkItemCorner(Corner.DOWN_RX));
+        Assertions.assertSame(Symbol.FEATHER, goldSymbols.checkItemCorner(Corner.DOWN_RX));
     }
 
     @Test
