@@ -20,7 +20,7 @@ public class LCard extends PositioningCard {
     private final Color primaryColor;
     private final Color secondaryColor;
 
-    private final LPatternCounter counter;
+    private final PatternCounter counter;
 
     private LCard(@NotNull Builder builder) {
         super(builder, builder.colorRequirements);
