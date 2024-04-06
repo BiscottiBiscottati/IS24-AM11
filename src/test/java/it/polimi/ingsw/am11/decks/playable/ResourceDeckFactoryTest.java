@@ -19,14 +19,11 @@ import java.util.Set;
 
 class ResourceDeckFactoryTest {
 
-    ResourceDeckFactory factory;
-
     Connection connection;
     PreparedStatement idQuery;
 
     @BeforeEach
     void setUp() {
-        factory = new ResourceDeckFactory();
         try {
             connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
             idQuery = connection.prepareStatement("SELECT * FROM playable_cards WHERE global_id = ?");
@@ -37,11 +34,17 @@ class ResourceDeckFactoryTest {
 
     @AfterEach
     void tearDown() {
+        try {
+            if (idQuery != null && !idQuery.isClosed()) idQuery.close();
+            if (connection != null && !connection.isClosed()) connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void createDeck() {
-        Deck<ResourceCard> deck = factory.createDeck();
+        Deck<ResourceCard> deck = ResourceDeckFactory.createDeck();
 
         // Testing the creation of a ResourceDeck
         Assertions.assertNotNull(deck);

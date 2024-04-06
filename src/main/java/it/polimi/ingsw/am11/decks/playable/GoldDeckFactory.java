@@ -9,14 +9,14 @@ import it.polimi.ingsw.am11.cards.utils.enums.PointsRequirementsType;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.decks.DatabaseConstants;
 import it.polimi.ingsw.am11.decks.Deck;
-import it.polimi.ingsw.am11.decks.DeckFactory;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.Arrays;
 
-public class GoldDeckFactory implements DeckFactory<GoldCard> {
+public class GoldDeckFactory {
 
     public static final String queryStatement = "SELECT * FROM playable_cards WHERE card_type = 'GOLD'";
     public static final String PLACING_REQ_QUERY = "SELECT * FROM placing_requirements WHERE id = ?";
@@ -80,8 +80,8 @@ public class GoldDeckFactory implements DeckFactory<GoldCard> {
     }
 
 
-    @Override
-    public Deck<GoldCard> createDeck() {
+    @Contract(" -> new")
+    public static @NotNull Deck<GoldCard> createDeck() {
         ImmutableMap.Builder<Integer, GoldCard> builder = ImmutableMap.builder();
         try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
              PreparedStatement statement = connection.prepareStatement(queryStatement);

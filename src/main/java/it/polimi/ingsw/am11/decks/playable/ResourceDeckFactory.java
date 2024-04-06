@@ -7,15 +7,15 @@ import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.decks.DatabaseConstants;
 import it.polimi.ingsw.am11.decks.Deck;
-import it.polimi.ingsw.am11.decks.DeckFactory;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.Arrays;
 
 
-public class ResourceDeckFactory implements DeckFactory<ResourceCard> {
+public class ResourceDeckFactory {
 
     public static final String queryStatement = "SELECT * FROM playable_cards WHERE card_type = 'RESOURCE'";
 
@@ -39,8 +39,8 @@ public class ResourceDeckFactory implements DeckFactory<ResourceCard> {
               });
     }
 
-    @Override
-    public Deck<ResourceCard> createDeck() {
+    @Contract(" -> new")
+    public static @NotNull Deck<ResourceCard> createDeck() {
         ImmutableMap.Builder<Integer, ResourceCard> builder = new ImmutableMap.Builder<>();
 
         try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);

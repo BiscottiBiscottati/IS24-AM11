@@ -19,7 +19,6 @@ import java.util.Set;
 
 class GoldDeckFactoryTest {
 
-    GoldDeckFactory factory;
     Connection connection;
 
     PreparedStatement idQuery;
@@ -38,7 +37,6 @@ class GoldDeckFactoryTest {
 
     @BeforeEach
     void setUp() {
-        factory = new GoldDeckFactory();
         try {
             connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
             idQuery = connection.prepareStatement("SELECT * FROM playable_cards WHERE global_id = ?");
@@ -50,7 +48,7 @@ class GoldDeckFactoryTest {
 
     @Test
     void createDeck() {
-        Deck<GoldCard> deck = factory.createDeck();
+        Deck<GoldCard> deck = GoldDeckFactory.createDeck();
 
         // Testing the creation of a GoldDeck
         Assertions.assertNotNull(deck);
