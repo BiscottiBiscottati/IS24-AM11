@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import it.polimi.ingsw.am11.cards.utils.CardIdentity;
+import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Availability;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -19,7 +20,7 @@ import java.util.*;
 public final class StarterCard implements FieldCard, CardIdentity {
 
     private final int id;
-    private final ImmutableMap<Corner, Availability> availableCornersFront;
+    private final ImmutableMap<Corner, CornerContainer> availableCornersFront;
     private final ImmutableMap<Corner, Color> availableColorCornerBack;
     private final ImmutableSet<Color> centerColorsFront;
 
@@ -30,8 +31,12 @@ public final class StarterCard implements FieldCard, CardIdentity {
         this.centerColorsFront = Sets.immutableEnumSet(builder.centerColors);
     }
 
-    public boolean isFrontCornerAvail(@NotNull Corner corner) {
+    public boolean isFrontAvail(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornersFront.get(corner)).isAvailable();
+    }
+
+    public CornerContainer getFront(@NotNull Corner corner) {
+        return Objects.requireNonNull(availableCornersFront.get(corner));
     }
 
     @NotNull
@@ -57,7 +62,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
 
     public static class Builder {
         private final int id;
-        private final EnumMap<Corner, Availability> availableCornersFront;
+        private final EnumMap<Corner, CornerContainer> availableCornersFront;
         private final EnumMap<Corner, Color> availableColorCornerBack;
         private final EnumSet<Color> centerColors;
 
@@ -74,8 +79,13 @@ public final class StarterCard implements FieldCard, CardIdentity {
                          .noneMatch(e -> true);
         }
 
-        public @NotNull Builder hasAvailableFrontCorner(@NotNull Corner corner) {
-            availableCornersFront.put(corner, Availability.USABLE);
+        public @NotNull Builder hasItemFrontIn(@NotNull Corner corner, @NotNull CornerContainer item)
+                throws IllegalCardBuildException {
+            switch (item) {
+                case Availability availability -> availableCornersFront.put(corner, availability);
+                case Color color -> availableCornersFront.put(corner, color);
+                default -> throw new IllegalCardBuildException("Illegal Item for starter:" + item);
+            }
             return this;
         }
 

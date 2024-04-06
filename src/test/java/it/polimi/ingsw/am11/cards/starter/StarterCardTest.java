@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am11.cards.starter;
 
+import it.polimi.ingsw.am11.cards.utils.enums.Availability;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +22,8 @@ class StarterCardTest {
                 .hasCenterColors(Set.of(Color.RED, Color.BLUE))
                 .hasCenterColor(Color.BLUE)
                 .hasCenterColor(Color.GREEN)
-                .hasAvailableFrontCorner(Corner.TOP_LX)
-                .hasAvailableFrontCorner(Corner.TOP_RX)
+                .hasItemFrontIn(Corner.TOP_LX, Availability.USABLE)
+                .hasItemFrontIn(Corner.TOP_RX, Color.RED)
                 .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
                 .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
                 .hasColorBackIn(Corner.DOWN_RX, Color.RED)
@@ -31,11 +33,11 @@ class StarterCardTest {
     }
 
     @Test
-    void isFrontCornerAvail() {
-        Assertions.assertTrue(starter.isFrontCornerAvail(Corner.TOP_RX));
-        Assertions.assertTrue(starter.isFrontCornerAvail(Corner.TOP_LX));
-        Assertions.assertFalse(starter.isFrontCornerAvail(Corner.DOWN_RX));
-        Assertions.assertFalse(starter.isFrontCornerAvail(Corner.DOWN_LX));
+    void isFrontAvail() {
+        Assertions.assertTrue(starter.isFrontAvail(Corner.TOP_RX));
+        Assertions.assertTrue(starter.isFrontAvail(Corner.TOP_LX));
+        Assertions.assertFalse(starter.isFrontAvail(Corner.DOWN_RX));
+        Assertions.assertFalse(starter.isFrontAvail(Corner.DOWN_LX));
     }
 
     @Test
@@ -59,8 +61,17 @@ class StarterCardTest {
                 IllegalCardBuildException.class,
                 () -> new StarterCard.Builder(54)
                         .hasCenterColors(Set.of(Color.RED, Color.BLUE))
-                        .hasAvailableFrontCorner(Corner.DOWN_LX)
-                        .hasAvailableFrontCorner(Corner.TOP_LX)
+                        .hasItemFrontIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasItemFrontIn(Corner.TOP_LX, Color.RED)
+                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
+                        .build()
+        );
+        Assertions.assertThrows(
+                IllegalCardBuildException.class,
+                () -> new StarterCard.Builder(100)
+                        .hasCenterColors(Set.of(Color.RED, Color.BLUE))
+                        .hasItemFrontIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasItemFrontIn(Corner.TOP_LX, Symbol.FEATHER)
                         .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
                         .build()
         );
@@ -82,7 +93,7 @@ class StarterCardTest {
         Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> new StarterCard.Builder(1)
-                        .hasAvailableFrontCorner(null)
+                        .hasItemFrontIn(null, Color.BLUE)
                         .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
                         .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
                         .hasColorBackIn(Corner.DOWN_RX, Color.RED)
@@ -129,7 +140,7 @@ class StarterCardTest {
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> starter.isFrontCornerAvail(null)
+                () -> starter.isFrontAvail(null)
         );
     }
 
@@ -143,5 +154,13 @@ class StarterCardTest {
     @Test
     void getId() {
         Assertions.assertEquals(1, starter.getId());
+    }
+
+    @Test
+    void getFront() {
+        Assertions.assertEquals(Color.RED, starter.getFront(Corner.TOP_RX));
+        Assertions.assertEquals(Availability.USABLE, starter.getFront(Corner.TOP_LX));
+        Assertions.assertEquals(Availability.NOT_USABLE, starter.getFront(Corner.DOWN_RX));
+        Assertions.assertEquals(Availability.NOT_USABLE, starter.getFront(Corner.DOWN_LX));
     }
 }
