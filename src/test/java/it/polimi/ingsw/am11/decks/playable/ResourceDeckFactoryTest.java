@@ -64,6 +64,7 @@ class ResourceDeckFactoryTest {
             Assertions.assertFalse(uniqueIds.contains(tempId));
             uniqueIds.add(tempId);
 
+            // Testing card contents
             try {
                 idQuery.setInt(1, tempId);
 

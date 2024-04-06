@@ -70,6 +70,7 @@ class GoldDeckFactoryTest {
             Assertions.assertFalse(uniqueId.contains(tempId));
             uniqueId.add(tempId);
 
+            // Testing card contents
             try {
                 idQuery.setInt(1, tempId);
                 try (ResultSet result = idQuery.executeQuery()) {
