@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
+@SuppressWarnings("ObjectAllocationInLoop")
 public class LCard extends PositioningCard {
 
     private final boolean isFlippedFlag;
@@ -43,24 +44,15 @@ public class LCard extends PositioningCard {
                         purpose,
                         this.isRotatedFlag ? cornersToGetToBottom : cornersToGetToTop
                 );
-                case TO_COMPLETE -> {
-                    Arrays.stream(Corner.values())
-                          .filter(corner -> {
-                              if (this.isRotatedFlag) {
-                                  return corner == Corner.TOP_LX || corner == Corner.TOP_RX;
-                              } else {
-                                  return corner == Corner.DOWN_LX || corner == Corner.DOWN_RX;
-                              }
-                          })
-                          .filter(corner -> {
-                              if (this.isFlippedFlag) {
-                                  return corner == Corner.TOP_LX || corner == Corner.DOWN_LX;
-                              } else {
-                                  return corner == Corner.TOP_RX || corner == Corner.DOWN_RX;
-                              }
-                          })
-                          .forEach(corner -> cornersPurpose.put(purpose, List.of(corner)));
-                }
+                case TO_COMPLETE -> Arrays.stream(Corner.values())
+                                          .filter(corner -> isRotatedFlag
+                                                  ? (corner == Corner.TOP_LX || corner == Corner.TOP_RX)
+                                                  : (corner == Corner.DOWN_LX || corner == Corner.DOWN_RX))
+                                          .filter(corner -> isFlippedFlag
+                                                  ? (corner == Corner.TOP_LX || corner == Corner.DOWN_LX)
+                                                  : (corner == Corner.TOP_RX || corner == Corner.DOWN_RX)
+                                          )
+                                          .forEach(corner -> cornersPurpose.put(purpose, corner.toSingletonList()));
                 case ADJACENT_RX, ADJACENT_LX -> cornersPurpose.put(
                         purpose,
                         null
