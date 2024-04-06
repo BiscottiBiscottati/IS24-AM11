@@ -43,14 +43,14 @@ class GoldCardTest {
 
     @Test
     void isCornerAvail() {
-        Assertions.assertTrue(goldClassic.isAvailable(Corner.TOP_LX));
-        Assertions.assertTrue(goldClassic.isAvailable(Corner.TOP_RX));
-        Assertions.assertTrue(goldSymbols.isAvailable(Corner.TOP_LX));
-        Assertions.assertTrue(goldSymbols.isAvailable(Corner.TOP_RX));
-        Assertions.assertFalse(goldClassic.isAvailable(Corner.DOWN_LX));
-        Assertions.assertFalse(goldClassic.isAvailable(Corner.DOWN_RX));
-        Assertions.assertFalse(goldSymbols.isAvailable(Corner.DOWN_LX));
-        Assertions.assertFalse(goldSymbols.isAvailable(Corner.DOWN_RX));
+        Assertions.assertTrue(goldClassic.isFrontAvailable(Corner.TOP_LX));
+        Assertions.assertTrue(goldClassic.isFrontAvailable(Corner.TOP_RX));
+        Assertions.assertTrue(goldSymbols.isFrontAvailable(Corner.TOP_LX));
+        Assertions.assertTrue(goldSymbols.isFrontAvailable(Corner.TOP_RX));
+        Assertions.assertFalse(goldClassic.isFrontAvailable(Corner.DOWN_LX));
+        Assertions.assertFalse(goldClassic.isFrontAvailable(Corner.DOWN_RX));
+        Assertions.assertFalse(goldSymbols.isFrontAvailable(Corner.DOWN_LX));
+        Assertions.assertFalse(goldSymbols.isFrontAvailable(Corner.DOWN_RX));
     }
 
     @Test
@@ -95,9 +95,9 @@ class GoldCardTest {
     @Test
     void checkNulls() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> goldClassic.checkItemCorner(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> goldSymbols.isAvailable(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> goldSymbols.isFrontAvailable(null));
         Assertions.assertThrows(IllegalArgumentException.class, () -> goldClassic.checkItemCorner(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> goldSymbols.isAvailable(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> goldSymbols.isFrontAvailable(null));
     }
 
     @Test

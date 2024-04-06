@@ -113,15 +113,15 @@ class GoldDeckFactoryTest {
                     for (Corner corner : Corner.values()) {
                         switch (CornerContainer.of(result.getString(corner.getColumnName()))) {
                             case Availability.NOT_USABLE -> {
-                                Assertions.assertFalse(card.isAvailable(corner));
+                                Assertions.assertFalse(card.isFrontAvailable(corner));
                                 Assertions.assertEquals(Availability.NOT_USABLE, card.checkItemCorner(corner));
                             }
                             case Availability.USABLE -> {
-                                Assertions.assertTrue(card.isAvailable(corner));
+                                Assertions.assertTrue(card.isFrontAvailable(corner));
                                 Assertions.assertEquals(Availability.USABLE, card.checkItemCorner(corner));
                             }
                             case Symbol symbol -> {
-                                Assertions.assertTrue(card.isAvailable(corner));
+                                Assertions.assertTrue(card.isFrontAvailable(corner));
                                 Assertions.assertEquals(symbol, card.checkItemCorner(corner));
                             }
                             default -> throw new IllegalStateException("Unexpected value!");

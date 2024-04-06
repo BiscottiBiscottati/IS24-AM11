@@ -43,7 +43,7 @@ public final class ResourceCard extends PlayableCard {
 
     @Override
     @Contract(pure = true)
-    public boolean isAvailable(@NotNull Corner corner) {
+    public boolean isFrontAvailable(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE))
                       .isAvailable();
     }

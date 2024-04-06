@@ -50,7 +50,7 @@ public final class GoldCard extends PlayableCard {
     }
 
     @Override
-    public boolean isAvailable(@NotNull Corner corner) {
+    public boolean isFrontAvailable(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornersOrSymbol.get(corner)).isAvailable();
     }
 

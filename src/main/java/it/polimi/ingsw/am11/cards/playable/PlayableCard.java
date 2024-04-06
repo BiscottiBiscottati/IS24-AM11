@@ -97,7 +97,7 @@ public abstract sealed class PlayableCard implements CardIdentity,
      * @return true if available false otherwise
      */
     @Contract(pure = true)
-    public abstract boolean isAvailable(@NotNull Corner corner);
+    public abstract boolean isFrontAvailable(@NotNull Corner corner);
 
     /**
      * Gets the number of colors in the field needed to place the card.

@@ -102,7 +102,7 @@ public class PlayerField {
             this.availablePositions.remove(position);
             this.availablePositions.addAll(
                     Arrays.stream(Corner.values())
-                          .filter(card::isAvailable)
+                          .filter(card::isFrontAvailable)
                           .map(corner -> PlayerField.getPositionIn(position, corner))
                           .toList());
         } else throw new IllegalPositioningException("Posizione non disponibile!");
