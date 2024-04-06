@@ -14,10 +14,12 @@ import java.util.stream.Collectors;
  * Can be of collecting symbols or colors or a pattern of card.
  */
 public enum ObjectiveCardType {
+    // TODO: we need to discuss if the pattern is really needed
+
     COLOR_COLLECT(null),
     L_SHAPE(Set.of(
             Position.of(1, 1),
-            Position.of(1, 2),
+            Position.of(1, 3),
             Position.of(2, 0)
     )),
     SYMBOL_COLLECT(null),
