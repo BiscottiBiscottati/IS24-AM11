@@ -89,7 +89,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
             return this;
         }
 
-        public @NotNull Builder hasColorBackIn(@NotNull Corner corner, @NotNull Color color) {
+        public @NotNull Builder hasColorRetroIn(@NotNull Corner corner, @NotNull Color color) {
             availableColorCornerBack.put(corner, color);
             return this;
         }

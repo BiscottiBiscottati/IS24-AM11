@@ -24,10 +24,10 @@ class StarterCardTest {
                 .hasCenterColor(Color.GREEN)
                 .hasItemFrontIn(Corner.TOP_LX, Availability.USABLE)
                 .hasItemFrontIn(Corner.TOP_RX, Color.RED)
-                .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
-                .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
-                .hasColorBackIn(Corner.DOWN_RX, Color.RED)
-                .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
+                .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
+                .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
+                .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
                 .build();
 
     }
@@ -63,7 +63,7 @@ class StarterCardTest {
                         .hasCenterColors(Set.of(Color.RED, Color.BLUE))
                         .hasItemFrontIn(Corner.DOWN_LX, Color.PURPLE)
                         .hasItemFrontIn(Corner.TOP_LX, Color.RED)
-                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
                         .build()
         );
         Assertions.assertThrows(
@@ -72,7 +72,7 @@ class StarterCardTest {
                         .hasCenterColors(Set.of(Color.RED, Color.BLUE))
                         .hasItemFrontIn(Corner.DOWN_LX, Color.PURPLE)
                         .hasItemFrontIn(Corner.TOP_LX, Symbol.FEATHER)
-                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
                         .build()
         );
 
@@ -84,50 +84,50 @@ class StarterCardTest {
                 IllegalArgumentException.class,
                 () -> new StarterCard.Builder(1)
                         .hasCenterColor(null)
-                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
-                        .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
-                        .hasColorBackIn(Corner.DOWN_RX, Color.RED)
-                        .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
+                        .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
+                        .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
                         .build()
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> new StarterCard.Builder(1)
                         .hasItemFrontIn(null, Color.BLUE)
-                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
-                        .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
-                        .hasColorBackIn(Corner.DOWN_RX, Color.RED)
-                        .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
+                        .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
+                        .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
                         .build()
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> new StarterCard.Builder(2)
                         .hasCenterColors(null)
-                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
-                        .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
-                        .hasColorBackIn(Corner.DOWN_RX, Color.RED)
-                        .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
+                        .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
+                        .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
                         .build()
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> new StarterCard.Builder(3)
-                        .hasColorBackIn(null, Color.BLUE)
-                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
-                        .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
-                        .hasColorBackIn(Corner.DOWN_RX, Color.RED)
-                        .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasColorRetroIn(null, Color.BLUE)
+                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
+                        .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
+                        .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
                         .build()
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> new StarterCard.Builder(4)
-                        .hasColorBackIn(Corner.TOP_LX, null)
-                        .hasColorBackIn(Corner.TOP_RX, Color.BLUE)
-                        .hasColorBackIn(Corner.TOP_LX, Color.GREEN)
-                        .hasColorBackIn(Corner.DOWN_RX, Color.RED)
-                        .hasColorBackIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasColorRetroIn(Corner.TOP_LX, null)
+                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
+                        .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
+                        .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
                         .build()
         );
     }
