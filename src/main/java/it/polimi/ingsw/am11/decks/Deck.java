@@ -33,10 +33,6 @@ public class Deck<T extends CardIdentity> {
         return this.deck.size();
     }
 
-    public void addCard(T card) {
-        this.deck.push(card);
-    }
-
     public void reset() {
         this.deck.clear();
         this.deck.addAll(mappingIdToCard.values());
