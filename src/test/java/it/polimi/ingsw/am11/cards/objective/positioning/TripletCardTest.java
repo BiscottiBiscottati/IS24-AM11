@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.cards.objective.positioning;
 
+import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.CardPattern;
@@ -44,11 +46,11 @@ class TripletCardTest {
             )
     );
     @InjectMocks
-    static TripletCard tripletCardForGreens;
+    static ObjectiveCard tripletCardForGreens;
     @InjectMocks
-    static TripletCard tripletCardRevForGreens;
-    static ResourceCard greenCard;
-    static ResourceCard blueCard;
+    static ObjectiveCard tripletCardRevForGreens;
+    static PlayableCard greenCard;
+    static PlayableCard blueCard;
     static StarterCard starterCard;
     @Mock
     PlayerField playerField;
@@ -249,8 +251,13 @@ class TripletCardTest {
 
     @Test
     void isFlipped() {
-        Assertions.assertTrue(tripletCardForGreens.isFlipped());
-        Assertions.assertFalse(tripletCardRevForGreens.isFlipped());
+
+        // internal check
+        TripletCard tempCard = (TripletCard) tripletCardForGreens;
+        Assertions.assertTrue(tempCard.isFlipped());
+
+        tempCard = (TripletCard) tripletCardRevForGreens;
+        Assertions.assertFalse(tempCard.isFlipped());
     }
 
     @Test

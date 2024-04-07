@@ -3,7 +3,6 @@ package it.polimi.ingsw.am11.cards.objective.collecting;
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.junit.jupiter.api.Assertions;
@@ -16,20 +15,16 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
 
 @ExtendWith(MockitoExtension.class)
 class ColorCollectCardTest {
 
-    private static final Map<Color, Integer> colors = new EnumMap<>(Color.class);
-    private static final Map<Symbol, Integer> symbols = new EnumMap<>(Symbol.class);
     @InjectMocks
-    private static ColorCollectCard card;
+    private static ObjectiveCard card;
     private static ObjectiveCard card2;
     private static ColorCollectCard card3;
     @InjectMocks
-    private static ColorCollectCard cardWithMixedColors;
+    private static ObjectiveCard cardWithMixedColors;
     @Mock
     PlayerField playerField;
 

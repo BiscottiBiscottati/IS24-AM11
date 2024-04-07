@@ -1,9 +1,8 @@
 package it.polimi.ingsw.am11.cards.objective.collecting;
 
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.junit.jupiter.api.Assertions;
@@ -16,31 +15,19 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.Objects;
 
 @ExtendWith(MockitoExtension.class)
 class SymbolCollectCardTest {
 
-    private static final Map<Color, Integer> colors = new EnumMap<>(Color.class);
-    private static final Map<Symbol, Integer> symbols = new EnumMap<>(Symbol.class);
-    private static final Map<Color, Integer> cardColors = EnumMapUtils.Init(Color.class, 0);
     @Mock
     private static PlayerField playerField;
     @InjectMocks
-    private static SymbolCollectCard card;
-    private static SymbolCollectCard card2;
+    private static ObjectiveCard card;
+    private static ObjectiveCard card2;
 
     @BeforeAll
     static void setUp() {
-
-        Random generator = new Random();
-
-        Arrays.stream(Color.values()).forEach(color -> colors.put(color, generator.nextInt(100)));
-        Arrays.stream(Symbol.values()).forEach(symbol -> symbols.put(symbol, generator.nextInt(100)));
-
-
         try {
             card = new SymbolCollectCard.Builder(1, 2)
                     .hasSymbol(Symbol.FEATHER)
@@ -69,7 +56,7 @@ class SymbolCollectCardTest {
                 Arrays.stream(Symbol.values())
                       .filter(symbol -> symbol != Symbol.FEATHER)
                       .map(symbol -> card2.getSymbolRequirements().get(symbol))
-                      .allMatch(integer -> integer == 0)
+                      .allMatch(integer -> Objects.requireNonNull(integer) == 0)
         );
         Assertions.assertEquals(2, card2.getSymbolRequirements().get(Symbol.FEATHER));
     }

@@ -147,7 +147,7 @@ public final class GoldCard extends PlayableCard {
 
         @Override
         @NotNull
-        public Builder hasIn(Corner corner, @NotNull CornerContainer item) throws IllegalCardBuildException {
+        public Builder hasIn(@NotNull Corner corner, @NotNull CornerContainer item) throws IllegalCardBuildException {
             switch (item) {
                 case Availability ignored -> availableCorners.put(corner, item);
                 case Symbol ignored -> availableCorners.put(corner, item);

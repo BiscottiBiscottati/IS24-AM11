@@ -13,7 +13,6 @@ import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
 import java.util.Optional;
 
 
@@ -34,12 +33,11 @@ import java.util.Optional;
 public abstract sealed class PlayableCard implements CardIdentity,
                                                      PointsCountable,
                                                      FieldCard permits GoldCard, ResourceCard {
-    private static final ImmutableMap<Corner, Availability> retroCorners = Maps.immutableEnumMap(
+    private static final ImmutableMap<Corner, Availability> retroCornerAvailability = Maps.immutableEnumMap(
             EnumMapUtils.Init(Corner.class, Availability.USABLE)
     );
     private final Color color;
     private final int points;
-
     private final int id;
 
     /**
@@ -56,8 +54,16 @@ public abstract sealed class PlayableCard implements CardIdentity,
         this.id = builder.id;
     }
 
+    /**
+     * Checks retro corners availability.
+     * <p>
+     * As the physical game makes all <code>PlayableCard</code> retro corners available; it will always return true.
+     *
+     * @param corner the corner to check
+     * @return always true
+     */
     public static boolean isRetroAvailable(@NotNull Corner corner) {
-        return Objects.requireNonNull(retroCorners.get(corner)).isAvailable();
+        return retroCornerAvailability.get(corner) == Availability.USABLE;
     }
 
     /**
@@ -171,6 +177,12 @@ public abstract sealed class PlayableCard implements CardIdentity,
     }
 
 
+    /**
+     * Counts the points obtained from placing the card on the field.
+     *
+     * @param playerField the player field to count points from
+     * @return the points obtained
+     */
     public int countPoints(@NotNull PlayerField playerField) {
         return this.points;
     }

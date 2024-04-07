@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.cards.objective.positioning;
 
+import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -28,7 +29,8 @@ import java.util.Map;
 class LCardTest {
 
     @InjectMocks
-    static LCard lCardStandard;
+    static ObjectiveCard lCardStandard;
+    static LCard lCard;
     static StarterCard starterCard;
     static ResourceCard redCard;
     static ResourceCard blueCard;
@@ -51,6 +53,7 @@ class LCardTest {
                     .isFlipped(false)
                     .isRotated(false)
                     .build();
+            lCard = (LCard) lCardStandard;
 
             StarterCard.Builder builder = new StarterCard.Builder(1);
             Arrays.stream(Corner.values()).forEach(corner -> builder.hasColorRetroIn(corner, Color.PURPLE));
@@ -132,11 +135,11 @@ class LCardTest {
 
     @Test
     void isFlipped() {
-        Assertions.assertFalse(lCardStandard.isFlipped());
+        Assertions.assertFalse(lCard.isFlipped());
     }
 
     @Test
     void isRotated() {
-        Assertions.assertFalse(lCardStandard.isRotated());
+        Assertions.assertFalse(lCard.isRotated());
     }
 }
