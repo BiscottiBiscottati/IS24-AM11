@@ -5,11 +5,13 @@ import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
+@Disabled("This test is used to measure the time needed to create a deck, not needed for normal testing")
 public class TimingFactoryTest {
 
     NumberFormat formatter;
