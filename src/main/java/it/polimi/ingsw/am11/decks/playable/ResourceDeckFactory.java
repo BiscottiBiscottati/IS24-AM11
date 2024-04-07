@@ -5,8 +5,8 @@ import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.decks.DatabaseConstants;
 import it.polimi.ingsw.am11.decks.Deck;
+import it.polimi.ingsw.am11.decks.utils.DatabaseConstants;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -34,9 +34,7 @@ public class ResourceDeckFactory {
 
     private static void setFrontCorners(ResourceCard.Builder cardBuilder, ResultSet result) {
         Arrays.stream(Corner.values())
-              .forEach(corner -> {
-                  cardBuilder.hasIn(corner, getCornerContainer(corner, result));
-              });
+              .forEach(corner -> cardBuilder.hasIn(corner, getCornerContainer(corner, result)));
     }
 
     @Contract(" -> new")
