@@ -64,8 +64,7 @@ class StarterDeckFactoryTest {
 
             // Testing uniqueness of the id
             int tempId = card.getId();
-            Assertions.assertFalse(uniqueIds.contains(tempId));
-            uniqueIds.add(tempId);
+            Assertions.assertTrue(uniqueIds.add(tempId));
 
             // Testing card contents
             try {

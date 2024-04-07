@@ -67,8 +67,7 @@ class GoldDeckFactoryTest {
 
             // Testing uniqueness of the id
             int tempId = card.getId();
-            Assertions.assertFalse(uniqueId.contains(tempId));
-            uniqueId.add(tempId);
+            Assertions.assertTrue(uniqueId.add(tempId));
 
             // Testing card contents
             try {
