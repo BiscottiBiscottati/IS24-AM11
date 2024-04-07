@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.objective.PositioningCard;
 import it.polimi.ingsw.am11.cards.objective.positioning.LCard;
 import it.polimi.ingsw.am11.cards.objective.positioning.TripletCard;
+import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.decks.Deck;
@@ -19,11 +20,16 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 class ObjectiveDeckFactoryTest {
     Connection connection;
     PreparedStatement collectingStatement;
     PreparedStatement positioningStatement;
+
+    private static @NotNull Stream<Item> getItems() {
+        return Stream.concat(Arrays.stream(Color.values()), Arrays.stream(Symbol.values()));
+    }
 
     private void checkPositioning(@NotNull PositioningCard positioningCard)
             throws SQLException {
@@ -37,13 +43,8 @@ class ObjectiveDeckFactoryTest {
                         Assertions.assertEquals(triplet.isFlipped(), resultSet.getBoolean("is_flipped"));
                         Color colorToCheck = Color.valueOf(resultSet.getString("primary_color"));
                         Assertions.assertEquals(3, triplet.hasItemRequirements(colorToCheck));
-                        Arrays.stream(Color.values()).filter(color -> color != colorToCheck)
-                              .forEach(color -> {
-                                  Assertions.assertEquals(0, triplet.hasItemRequirements(color));
-                              });
-                        Arrays.stream(Symbol.values()).forEach(symbol -> {
-                            Assertions.assertEquals(0, triplet.hasItemRequirements(symbol));
-                        });
+                        getItems().filter(item -> item != colorToCheck)
+                                  .forEach(item -> Assertions.assertEquals(0, triplet.hasItemRequirements(item)));
                     }
                     case LCard lCard -> {
                         Assertions.assertEquals(lCard.isFlipped(), resultSet.getBoolean("is_flipped"));
@@ -52,14 +53,8 @@ class ObjectiveDeckFactoryTest {
                         Color secondColorToCheck = Color.valueOf(resultSet.getString("secondary_color"));
                         Assertions.assertEquals(2, lCard.hasItemRequirements(colorToCheck));
                         Assertions.assertEquals(1, lCard.hasItemRequirements(secondColorToCheck));
-                        Arrays.stream(Color.values()).filter(color -> color != colorToCheck && color != secondColorToCheck)
-                              .forEach(color -> {
-                                  Assertions.assertEquals(0, lCard.hasItemRequirements(color));
-                              });
-                        Arrays.stream(Symbol.values())
-                              .forEach(symbol -> {
-                                  Assertions.assertEquals(0, lCard.hasItemRequirements(symbol));
-                              });
+                        getItems().filter(item -> item != colorToCheck && item != secondColorToCheck)
+                                  .forEach(item -> Assertions.assertEquals(0, lCard.hasItemRequirements(item)));
                     }
                     default -> throw new IllegalStateException("Unexpected value: " + positioningCard);
                 }
