@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
-@SuppressWarnings("ObjectAllocationInLoop")
 public class LCard extends PositioningCard {
 
     private final boolean isFlippedFlag;
