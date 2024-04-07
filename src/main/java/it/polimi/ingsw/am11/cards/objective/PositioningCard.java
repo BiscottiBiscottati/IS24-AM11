@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.Map;
 
 public abstract class PositioningCard extends ObjectiveCard {
     private static final ImmutableMap<Symbol, Integer> SYMBOL_REQUIREMENTS = Maps.immutableEnumMap(
@@ -26,12 +27,12 @@ public abstract class PositioningCard extends ObjectiveCard {
     }
 
     @Override
-    public @NotNull ImmutableMap<Color, Integer> getColorRequirements() {
+    public @NotNull Map<Color, Integer> getColorRequirements() {
         return colorRequirements;
     }
 
     @Override
-    public @NotNull ImmutableMap<Symbol, Integer> getSymbolRequirements() {
+    public @NotNull Map<Symbol, Integer> getSymbolRequirements() {
         return SYMBOL_REQUIREMENTS;
     }
 

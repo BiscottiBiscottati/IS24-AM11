@@ -28,7 +28,7 @@ import java.util.Optional;
  * It also contains methods to check if a corner is available
  * if there is an item in a corner, and if the card's color is equal to a given color.
  * <p>
- * The class also contains a nested Builder class for creating instances of PlayableCard.
+ * The class also contains a nested <code>Builder</code> class for creating instances of <code>PlayableCard</code>.
  */
 public abstract sealed class PlayableCard implements CardIdentity,
                                                      PointsCountable,
@@ -187,9 +187,27 @@ public abstract sealed class PlayableCard implements CardIdentity,
         return this.points;
     }
 
-
     /**
-     * The builder for creating Playable cards needs to be inherited to subclasses.
+     * This is an abstract <code>Builder</code> class for creating instances of <code>PlayableCard</code>.
+     * <p>
+     * The <code>Builder</code> follows the "Builder" design pattern.
+     * It provides a way to construct a complex object step by step.
+     * This <code>Builder</code> is abstract
+     * and is meant
+     * to be subclassed by concrete <code>Builder</code> classes for specific types of <code>PlayableCard</code>.
+     * <p>
+     * The <code>Builder</code> takes the id, points,
+     * and primary color of the <code>PlayableCard</code> as parameters in its constructor.
+     * These values are then used
+     * to set the corresponding fields of the <code>PlayableCard</code> when the <code>build</code> method is called.
+     * <p>
+     * The <code>build</code> method is abstract and must be implemented by subclasses of this <code>Builder</code>.
+     * It is responsible for creating the <code>PlayableCard</code> and ensuring that it is in a valid state.
+     * <p>
+     * The type parameter <code>T extends PlayableCard</code>,
+     * meaning the <code>Builder</code> can be used to create any type of <code>PlayableCard</code>.
+     *
+     * @param <T> The specific type of <code>PlayableCard</code> that this <code>Builder</code> builds.
      */
     public abstract static class Builder<T extends PlayableCard> {
         private final int cardPoints;

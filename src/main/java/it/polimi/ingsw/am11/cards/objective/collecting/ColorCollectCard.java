@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class ColorCollectCard extends CollectingCard {
@@ -31,12 +32,12 @@ public class ColorCollectCard extends CollectingCard {
     }
 
     @Override
-    public @NotNull ImmutableMap<Symbol, Integer> getSymbolRequirements() {
+    public @NotNull Map<Symbol, Integer> getSymbolRequirements() {
         return SYMBOL_TO_COLLECT;
     }
 
     @Override
-    public @NotNull ImmutableMap<Color, Integer> getColorRequirements() {
+    public @NotNull Map<Color, Integer> getColorRequirements() {
         return this.colorToCollect;
     }
 

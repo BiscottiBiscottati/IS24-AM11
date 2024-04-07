@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.cards.utils.CardPattern;
 import it.polimi.ingsw.am11.cards.utils.Item;
@@ -12,6 +11,7 @@ import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -94,10 +94,9 @@ public abstract class ObjectiveCard implements CardIdentity,
      * <p>
      * The symbol requirements are set when the card is created and cannot be changed afterward.
      *
-     * @return An <code>ImmutableMap</code> of the symbol requirements of this <code>ObjectiveCard</code>.
+     * @return A <code>Map</code> of the symbol requirements of this <code>ObjectiveCard</code>.
      */
-    @NotNull
-    public abstract ImmutableMap<Symbol, Integer> getSymbolRequirements();
+    public abstract @NotNull Map<Symbol, Integer> getSymbolRequirements();
 
     /**
      * Retrieves the color requirements of this <code>ObjectiveCard</code>.
@@ -110,10 +109,9 @@ public abstract class ObjectiveCard implements CardIdentity,
      * <p>
      * The color requirements are set when the card is created and cannot be changed afterward.
      *
-     * @return An <code>ImmutableMap</code> of the color requirements of this <code>ObjectiveCard</code>.
+     * @return A <code>Map</code> of the color requirements of this <code>ObjectiveCard</code>.
      */
-    @NotNull
-    public abstract ImmutableMap<Color, Integer> getColorRequirements();
+    public abstract @NotNull Map<Color, Integer> getColorRequirements();
 
     /**
      * Checks if the provided item meets the requirements of this <code>ObjectiveCard</code>.
