@@ -1,13 +1,14 @@
 package it.polimi.ingsw.am11.decks;
 
 import com.google.common.collect.ImmutableMap;
+import it.polimi.ingsw.am11.cards.utils.CardIdentity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Stack;
 
-public class Deck<T> {
+public class Deck<T extends CardIdentity> {
     private final ImmutableMap<Integer, T> mappingIdToCard;
 
     private final Stack<T> deck;
