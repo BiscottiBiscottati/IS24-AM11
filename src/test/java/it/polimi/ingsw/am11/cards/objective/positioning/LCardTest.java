@@ -25,9 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("ClassWithTooManyFields")
 @ExtendWith(MockitoExtension.class)
 class LCardTest {
 
+    static ObjectiveCard lCardRotated;
     @InjectMocks
     static ObjectiveCard lCardStandard;
     static LCard lCard;
@@ -53,6 +55,13 @@ class LCardTest {
                     .isFlipped(false)
                     .isRotated(false)
                     .build();
+            lCardRotated = new LCard.Builder(2, 2)
+                    .hasPrimaryColor(Color.RED)
+                    .hasSecondaryColor(Color.BLUE)
+                    .isRotated(true)
+                    .isFlipped(false)
+                    .build();
+
             lCard = (LCard) lCardStandard;
 
             StarterCard.Builder builder = new StarterCard.Builder(1);
@@ -73,6 +82,7 @@ class LCardTest {
                 new Position(0, 0), new CardContainer(starterCard),
                 new Position(1, 1), new CardContainer(redCard),
                 new Position(1, -1), new CardContainer(redCard),
+                new Position(0, 2), new CardContainer(blueCard),
                 new Position(2, -2), new CardContainer(blueCard)
         );
 
@@ -87,19 +97,22 @@ class LCardTest {
         largeField.put(Position.of(0, 0), new CardContainer(starterCard));
 
         List<Position> redsPositions = List.of(
+                Position.of(1, 5),
+                Position.of(1, 3),
                 Position.of(1, 1),
                 Position.of(1, -1),
                 Position.of(-1, 1),
-                Position.of(-1, -1),
-                Position.of(1, 3),
-                Position.of(1, 5)
+                Position.of(-1, -1)
         );
         redsPositions.forEach(position -> largeField.put(position, new CardContainer(redCard)));
 
         List<Position> bluesPositions = List.of(
-                Position.of(0, -2),
+                Position.of(2, 2),
+                Position.of(2, 0),
                 Position.of(2, -2),
-                Position.of(2, 2)
+                Position.of(0, -2),
+                Position.of(0, 2),
+                Position.of(0, 4)
         );
         bluesPositions.forEach(position -> largeField.put(position, new CardContainer(blueCard)));
 
@@ -112,25 +125,36 @@ class LCardTest {
 
     @Test
     void countPoints() {
+
+        // Test for a simple field
         Mockito.when(playerField.getCardsPositioned()).thenReturn(field);
         Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(2);
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(1);
         Assertions.assertEquals(2, lCardStandard.countPoints(playerField));
+        Assertions.assertEquals(2, lCardRotated.countPoints(playerField));
 
+        // Test on a larger field
         Mockito.when(playerField.getCardsPositioned()).thenReturn(largeField);
         Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(6);
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(3);
         Assertions.assertEquals(6, lCardStandard.countPoints(playerField));
+        Assertions.assertEquals(2, lCardRotated.countPoints(playerField));
 
+        // Test on a field with no matching cards
         Mockito.when(playerField.getCardsPositioned()).thenReturn(noField);
         Assertions.assertEquals(0, lCardStandard.countPoints(playerField));
+        Assertions.assertEquals(0, lCardRotated.countPoints(playerField));
 
+        // Test on not enough cards of primary color
         Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(1);
         Assertions.assertEquals(0, lCardStandard.countPoints(playerField));
+        Assertions.assertEquals(0, lCardRotated.countPoints(playerField));
 
+        // Test on not enough cards of secondary color
         Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(3);
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(0);
         Assertions.assertEquals(0, lCardStandard.countPoints(playerField));
+        Assertions.assertEquals(0, lCardRotated.countPoints(playerField));
     }
 
     @Test

@@ -48,8 +48,8 @@ public class LCard extends PositioningCard {
                                                   ? (corner == Corner.TOP_LX || corner == Corner.TOP_RX)
                                                   : (corner == Corner.DOWN_LX || corner == Corner.DOWN_RX))
                                           .filter(corner -> isFlippedFlag
-                                                  ? (corner == Corner.TOP_LX || corner == Corner.DOWN_LX)
-                                                  : (corner == Corner.TOP_RX || corner == Corner.DOWN_RX)
+                                                  ? (corner == Corner.TOP_RX || corner == Corner.DOWN_LX)
+                                                  : (corner == Corner.TOP_LX || corner == Corner.DOWN_RX)
                                           )
                                           .forEach(corner -> cornersPurpose.put(purpose, corner.toSingletonList()));
                 case ADJACENT_RX, ADJACENT_LX -> cornersPurpose.put(
