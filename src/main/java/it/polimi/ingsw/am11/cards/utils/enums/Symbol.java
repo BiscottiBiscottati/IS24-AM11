@@ -5,6 +5,8 @@ import it.polimi.ingsw.am11.cards.utils.Item;
 
 /**
  * Represents the uncolored symbols contained in the corners of a card.
+ * <p>
+ * Can be <code>FEATHER</code>, <code>GLASS</code> or <code>PAPER</code>.
  */
 public enum Symbol implements CornerContainer, Item {
     FEATHER("feather"),

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * The type of objective card.
  * <p>
- * Can be of collecting symbols or colors or a pattern of card.
+ * Can be <code>COLOR_COLLECT</code>, <code>L_SHAPE</code>, <code>SYMBOL_COLLECT</code> or <code>TRIPLET</code>.
  */
 public enum ObjectiveCardType {
     // TODO: we need to discuss if the pattern is really needed

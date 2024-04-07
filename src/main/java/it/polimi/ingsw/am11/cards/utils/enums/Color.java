@@ -7,6 +7,8 @@ import it.polimi.ingsw.am11.cards.utils.Item;
 /**
  * Can represent either the color of a card or
  * the colored symbols contained in a corner or center of a card.
+ * <p>
+ * Can be <code>RED</code>, <code>BLUE</code>, <code>GREEN</code> or <code>PURPLE</code>.
  */
 public enum Color implements CornerContainer, Item, DatabaseSearchable {
     RED("red"),

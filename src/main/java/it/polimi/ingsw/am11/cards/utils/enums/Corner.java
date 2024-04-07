@@ -9,6 +9,8 @@ import java.util.Map;
 
 /**
  * Represent the four corners of a card.
+ * <p>
+ * Can be <code>DOWN_LX</code>, <code>DOWN_RX</code>, <code>TOP_LX</code> or <code>TOP_RX</code>.
  */
 public enum Corner implements DatabaseSearchable {
     DOWN_LX("down_lx"),
