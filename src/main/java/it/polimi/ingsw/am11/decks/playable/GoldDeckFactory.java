@@ -70,6 +70,11 @@ public class GoldDeckFactory {
     }
 
 
+    /**
+     * Creates a deck of Gold Cards based on the SQLite database.
+     *
+     * @return A deck of Gold Cards.
+     */
     @Contract(" -> new")
     public static @NotNull Deck<GoldCard> createDeck() {
         ImmutableMap.Builder<Integer, GoldCard> builder = ImmutableMap.builder();
