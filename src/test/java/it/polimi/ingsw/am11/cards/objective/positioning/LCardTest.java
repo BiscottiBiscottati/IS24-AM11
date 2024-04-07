@@ -29,9 +29,12 @@ import java.util.Map;
 @ExtendWith(MockitoExtension.class)
 class LCardTest {
 
-    static ObjectiveCard lCardRotated;
     @InjectMocks
     static ObjectiveCard lCardStandard;
+    @InjectMocks
+    static ObjectiveCard lCardRotated;
+    @InjectMocks
+    static ObjectiveCard lCardFlipped;
     static LCard lCard;
     static StarterCard starterCard;
     static ResourceCard redCard;
@@ -61,6 +64,12 @@ class LCardTest {
                     .isRotated(true)
                     .isFlipped(false)
                     .build();
+            lCardFlipped = new LCard.Builder(3, 2)
+                    .hasPrimaryColor(Color.RED)
+                    .hasSecondaryColor(Color.BLUE)
+                    .isFlipped(true)
+                    .isRotated(false)
+                    .build();
 
             lCard = (LCard) lCardStandard;
 
@@ -83,7 +92,8 @@ class LCardTest {
                 new Position(1, 1), new CardContainer(redCard),
                 new Position(1, -1), new CardContainer(redCard),
                 new Position(0, 2), new CardContainer(blueCard),
-                new Position(2, -2), new CardContainer(blueCard)
+                new Position(2, -2), new CardContainer(blueCard),
+                new Position(0, -2), new CardContainer(blueCard)
         );
 
         noField = Map.of(
@@ -132,6 +142,7 @@ class LCardTest {
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(1);
         Assertions.assertEquals(2, lCardStandard.countPoints(playerField));
         Assertions.assertEquals(2, lCardRotated.countPoints(playerField));
+        Assertions.assertEquals(2, lCardFlipped.countPoints(playerField));
 
         // Test on a larger field
         Mockito.when(playerField.getCardsPositioned()).thenReturn(largeField);
@@ -139,6 +150,7 @@ class LCardTest {
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(3);
         Assertions.assertEquals(6, lCardStandard.countPoints(playerField));
         Assertions.assertEquals(2, lCardRotated.countPoints(playerField));
+        Assertions.assertEquals(4, lCardFlipped.countPoints(playerField));
 
         // Test on a field with no matching cards
         Mockito.when(playerField.getCardsPositioned()).thenReturn(noField);
