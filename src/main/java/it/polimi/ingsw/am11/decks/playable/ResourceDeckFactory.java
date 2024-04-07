@@ -19,7 +19,7 @@ public class ResourceDeckFactory {
 
     public static final String queryStatement = "SELECT * FROM playable_cards WHERE card_type = 'RESOURCE'";
 
-    public ResourceDeckFactory() {
+    private ResourceDeckFactory() {
     }
 
     private static CornerContainer getCornerContainer(

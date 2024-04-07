@@ -18,29 +18,7 @@ public class StarterDeckFactory {
     private static final String queryStatement = "SELECT * FROM starter_cards";
     private static final String CENTER_QUERY = "SELECT * FROM center_colors WHERE id = ?";
 
-    @Contract(" -> new")
-    public static @NotNull Deck<StarterCard> createDeck() {
-        ImmutableMap.Builder<Integer, StarterCard> builder = ImmutableMap.builder();
-
-        try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
-             PreparedStatement statement = connection.prepareStatement(queryStatement);
-             ResultSet result = statement.executeQuery();
-             PreparedStatement centerStatement = connection.prepareStatement(CENTER_QUERY)) {
-            while (result.next()) {
-                int id = result.getInt("global_id");
-                StarterCard.Builder cardBuilder = new StarterCard.Builder(id);
-
-                setFrontRetroCorners(cardBuilder, result);
-                setCenterColors(centerStatement, result, cardBuilder);
-
-                builder.put(id, cardBuilder.build());
-            }
-
-        } catch (SQLException | IllegalCardBuildException e) {
-            throw new RuntimeException(e);
-        }
-
-        return new Deck<>(builder.build());
+    private StarterDeckFactory() {
     }
 
     private static void setCenterColors(@NotNull PreparedStatement centerStatement,
@@ -70,4 +48,30 @@ public class StarterDeckFactory {
                     Color.valueOf(result.getString("retro_" + corner.getColumnName())));
         }
     }
+
+    @Contract(" -> new")
+    public static @NotNull Deck<StarterCard> createDeck() {
+        ImmutableMap.Builder<Integer, StarterCard> builder = ImmutableMap.builder();
+
+        try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
+             PreparedStatement statement = connection.prepareStatement(queryStatement);
+             ResultSet result = statement.executeQuery();
+             PreparedStatement centerStatement = connection.prepareStatement(CENTER_QUERY)) {
+            while (result.next()) {
+                int id = result.getInt("global_id");
+                StarterCard.Builder cardBuilder = new StarterCard.Builder(id);
+
+                setFrontRetroCorners(cardBuilder, result);
+                setCenterColors(centerStatement, result, cardBuilder);
+
+                builder.put(id, cardBuilder.build());
+            }
+
+        } catch (SQLException | IllegalCardBuildException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new Deck<>(builder.build());
+    }
+
 }

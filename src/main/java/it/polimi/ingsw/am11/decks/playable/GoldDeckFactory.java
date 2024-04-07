@@ -21,7 +21,7 @@ public class GoldDeckFactory {
     public static final String queryStatement = "SELECT * FROM playable_cards WHERE card_type = 'GOLD'";
     public static final String PLACING_REQ_QUERY = "SELECT * FROM placing_requirements WHERE id = ?";
 
-    public GoldDeckFactory() {
+    private GoldDeckFactory() {
     }
 
     private static CornerContainer getCornerContainer(
