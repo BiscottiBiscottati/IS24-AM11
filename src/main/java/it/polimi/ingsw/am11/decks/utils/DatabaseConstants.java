@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.decks.utils;
 
 /**
- * Constants for the database such as the URL.
+ * This class contains constants that are used for database operations.
  */
 public class DatabaseConstants {
     /**

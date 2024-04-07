@@ -49,28 +49,60 @@ public class StarterDeckFactory {
         }
     }
 
+    /**
+     * Creates a deck of <code>StarterCard</code> based on the SQLite database.
+     * <p>
+     * This method retrieves data from the SQLite database and uses it to create a deck of <code>StarterCard</code>.
+     * It first establishes a connection to the database and prepares two statements to execute queries.
+     * <p>
+     * The first query retrieves all the data needed to create a <code>StarterCard</code>.
+     * <p>
+     * The second query retrieves the center colors of the card.
+     * <p>
+     * For each row in the result set of the first query, it creates a new <code>StarterCard</code>
+     * and adds it to the deck.
+     * It sets the front and retro corners of the card and the center colors.
+     * <p>
+     * If an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown during this process,
+     * it is caught and wrapped in a <code>RuntimeException</code>.
+     *
+     * @return A deck of Starter Cards.
+     * @throws RuntimeException if an <code>SQLException</code> or <code>IllegalCardBuildException</code>
+     *                          is thrown during the creation of the deck.
+     * @see SQLException
+     * @see IllegalCardBuildException
+     */
     @Contract(" -> new")
     public static @NotNull Deck<StarterCard> createDeck() {
+        // Builder for the ImmutableMap that will hold the Starter Cards
         ImmutableMap.Builder<Integer, StarterCard> builder = ImmutableMap.builder();
 
+        // Try-with-resources block to manage the database connection and statements
         try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
              PreparedStatement statement = connection.prepareStatement(queryStatement);
              ResultSet result = statement.executeQuery();
              PreparedStatement centerStatement = connection.prepareStatement(CENTER_QUERY)) {
+
+            // Loop over the result set
             while (result.next()) {
+                // Get the data needed to create a Starter Card
                 int id = result.getInt("global_id");
                 StarterCard.Builder cardBuilder = new StarterCard.Builder(id);
 
+                // Set the front and retro corners and the center colors of the card
                 setFrontRetroCorners(cardBuilder, result);
                 setCenterColors(centerStatement, result, cardBuilder);
 
+                // Add the card to the builder
                 builder.put(id, cardBuilder.build());
             }
 
         } catch (SQLException | IllegalCardBuildException e) {
+            // If an exception is thrown, wrap it in a RuntimeException and rethrow it
             throw new RuntimeException(e);
         }
 
+        // Return a new Deck containing the Starter Cards
         return new Deck<>(builder.build());
     }
 

@@ -24,24 +24,6 @@ public class ObjectiveDeckFactory {
     private ObjectiveDeckFactory() {
     }
 
-    @Contract(" -> new")
-    public static @NotNull Deck<ObjectiveCard> createDeck() {
-        ImmutableMap.Builder<Integer, ObjectiveCard> builder = new ImmutableMap.Builder<>();
-
-        try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
-             PreparedStatement collectingStatement = connection.prepareStatement(
-                     ObjectiveDeckFactory.collectingStatement);
-             PreparedStatement positioningStatement = connection.prepareStatement(
-                     ObjectiveDeckFactory.positioningStatement)) {
-            setCollectingCards(collectingStatement, builder);
-            setPositioningCards(positioningStatement, builder);
-
-        } catch (SQLException | IllegalCardBuildException e) {
-            throw new RuntimeException(e);
-        }
-
-        return new Deck<>(builder.build());
-    }
 
     private static void setPositioningCards(@NotNull PreparedStatement positioningStatement,
                                             ImmutableMap.Builder<Integer, ObjectiveCard> builder)
@@ -111,4 +93,51 @@ public class ObjectiveDeckFactory {
         }
     }
 
+    /**
+     * Creates a deck of <code>ObjectiveCard</code> based on the SQLite database.
+     * <p>
+     * This method retrieves data from the SQLite database and uses it to create a deck of <code>ObjectiveCard</code>.
+     * It first establishes a connection to the database and prepares two statements to execute queries.
+     * <p>
+     * The first query retrieves all the data needed to create a <code>CollectingCard</code>.
+     * <p>
+     * The second query retrieves all the data needed to create a <code>PositioningCard</code>.
+     * <p>
+     * For each row in the result set of each query, it creates a new <code>ObjectiveCard</code>
+     * and adds it to the deck.
+     * It sets the collecting cards and positioning cards of the deck.
+     * <p>
+     * If an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown during this process,
+     * it is caught and wrapped in a <code>RuntimeException</code>.
+     *
+     * @return A deck of Objective Cards.
+     * @throws RuntimeException if an <code>SQLException</code> or <code>IllegalCardBuildException</code>
+     *                          is thrown during the creation of the deck.
+     * @see SQLException
+     * @see IllegalCardBuildException
+     */
+    @Contract(" -> new")
+    public static @NotNull Deck<ObjectiveCard> createDeck() {
+        // Builder for the ImmutableMap that will hold the Objective Cards
+        ImmutableMap.Builder<Integer, ObjectiveCard> builder = new ImmutableMap.Builder<>();
+
+        // Try-with-resources block to manage the database connection and statements
+        try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
+             PreparedStatement collectingStatement = connection.prepareStatement(
+                     ObjectiveDeckFactory.collectingStatement);
+             PreparedStatement positioningStatement = connection.prepareStatement(
+                     ObjectiveDeckFactory.positioningStatement)) {
+
+            // Set the collecting cards and positioning cards of the deck
+            setCollectingCards(collectingStatement, builder);
+            setPositioningCards(positioningStatement, builder);
+
+        } catch (SQLException | IllegalCardBuildException e) {
+            // If an exception is thrown, wrap it in a RuntimeException and rethrow it
+            throw new RuntimeException(e);
+        }
+
+        // Return a new Deck containing the Objective Cards
+        return new Deck<>(builder.build());
+    }
 }

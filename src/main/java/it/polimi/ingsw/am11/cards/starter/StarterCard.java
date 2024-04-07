@@ -24,6 +24,22 @@ public final class StarterCard implements FieldCard, CardIdentity {
     private final ImmutableMap<Corner, Color> availableColorCornerBack;
     private final ImmutableSet<Color> centerColorsFront;
 
+    /**
+     * Constructor for the <code>StarterCard</code> class.
+     * <p>
+     * This constructor takes a <code>Builder</code> object
+     * and uses it to set the properties of the <code>StarterCard</code>.
+     * <p>
+     * It sets the id of the card, the available corners on the front of the card,
+     * the available color corners on the back of the card,
+     * and the center colors on the front of the card.
+     * <p>
+     * The available corners and color corners are set using <code>ImmutableEnumMaps</code>,
+     * and the center colors are set using an <code>ImmutableEnumSet</code>.
+     *
+     * @param builder The <code>Builder</code> object containing
+     *                the properties to be set on the <code>StarterCard</code>.
+     */
     private StarterCard(@NotNull Builder builder) {
         this.id = builder.id;
         this.availableCornersFront = Maps.immutableEnumMap(builder.availableCornersFront);

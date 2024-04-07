@@ -14,16 +14,21 @@ import java.util.Stack;
  * @param <T> The type of card that the deck contains.
  */
 public class Deck<T extends CardIdentity> {
+
     private final ImmutableMap<Integer, T> mappingIdToCard;
 
     private final Stack<T> deck;
 
+    /**
+     * Constructor for the Deck class.
+     *
+     * @param mappingIdToCard An <code>ImmutableMap</code> that maps card IDs to their corresponding card objects
+     */
     public Deck(@NotNull ImmutableMap<Integer, T> mappingIdToCard) {
         this.mappingIdToCard = mappingIdToCard;
         this.deck = new Stack<>();
         this.deck.addAll(mappingIdToCard.values());
     }
-
 
     /**
      * Shuffles the deck and returns it.
@@ -37,7 +42,6 @@ public class Deck<T extends CardIdentity> {
 
     /**
      * Method to draw a card from the deck.
-     * <p>
      * The card is removed from the deck.
      *
      * @return The card on top of the deck.
