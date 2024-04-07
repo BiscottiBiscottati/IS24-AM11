@@ -83,16 +83,23 @@ public abstract class ObjectiveCard implements CardIdentity,
         return points;
     }
 
+
+    // TODO: We can delete getSymbolRequirements and get ColorRequirements and use hasItemRequirements instead
+
     /**
      * Retrieves the symbol requirements of this <code>ObjectiveCard</code>.
      * <p>
-     * This method returns an <code>ImmutableMap</code> where the keys are <code>Symbols</code>
+     * This method returns an <code>Map</code>
+     * where the keys are <code>Symbols</code>
      * and the values are <code>Integers</code>.
      * <p>
      * Each entry in the map represents a requirement for a specific symbol,
      * and the associated integer is the quantity of that symbol required.
      * <p>
      * The symbol requirements are set when the card is created and cannot be changed afterward.
+     * <p>
+     * Note: the returned <code>Map</code> is implemented
+     * with {@link com.google.common.collect.ImmutableMap ImmutableMap}.
      *
      * @return A <code>Map</code> of the symbol requirements of this <code>ObjectiveCard</code>.
      */
@@ -101,13 +108,17 @@ public abstract class ObjectiveCard implements CardIdentity,
     /**
      * Retrieves the color requirements of this <code>ObjectiveCard</code>.
      * <p>
-     * This method returns an <code>ImmutableMap</code> where the keys are <code>Colors</code>
+     * This method returns an <code>Map</code>
+     * where the keys are <code>Colors</code>
      * and the values are <code>Integers</code>.
      * <p>
      * Each entry in the map represents a requirement for a specific color,
      * and the associated integer is the quantity of that color required.
      * <p>
      * The color requirements are set when the card is created and cannot be changed afterward.
+     * <p>
+     * Note: the returned <code>Map</code> is implemented
+     * with {@link com.google.common.collect.ImmutableMap ImmutableMap}.
      *
      * @return A <code>Map</code> of the color requirements of this <code>ObjectiveCard</code>.
      */
