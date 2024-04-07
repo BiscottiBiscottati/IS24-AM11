@@ -14,7 +14,7 @@ import java.util.List;
  */
 public record CardPattern(List<List<Color>> pattern) {
     /**
-     * A static method for creating a new <code>CardPattern</code> from a array of arrays
+     * A static method for creating a new <code>CardPattern</code> from an array of arrays
      *
      * @param matrix the matrix used to create <code>CardPattern</code>
      * @return a new instance of <code>CardPattern</code>

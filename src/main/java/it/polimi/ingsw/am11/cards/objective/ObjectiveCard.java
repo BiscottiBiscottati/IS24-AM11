@@ -9,7 +9,6 @@ import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,9 +53,6 @@ public abstract class ObjectiveCard implements CardIdentity, PointsCountable {
 
     @NotNull
     public abstract ObjectiveCardType getType();
-
-    public abstract int countPoints(
-            PlayerField playerField);
 
     @Nullable
     public CardPattern getPattern() {
