@@ -14,7 +14,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
-import java.util.Arrays;
 
 public class GoldDeckFactory {
 
@@ -24,31 +23,26 @@ public class GoldDeckFactory {
     private GoldDeckFactory() {
     }
 
-    private static CornerContainer getCornerContainer(
-            @NotNull Corner corner,
-            @NotNull ResultSet result) {
-        try {
-            if (result.isClosed()) {
-                throw new RuntimeException("Result set is closed");
-            }
-            return CornerContainer.of(result.getString(corner.getColumnName()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    private static CornerContainer getCornerContainer(@NotNull Corner corner,
+                                                      @NotNull ResultSet result)
+            throws SQLException {
+        if (result.isClosed()) {
+            throw new RuntimeException("Result set is closed");
+        }
+        return CornerContainer.of(result.getString(corner.getColumnName()));
+    }
+
+    private static void setFrontCorners(GoldCard.Builder cardBuilder,
+                                        ResultSet result)
+            throws IllegalCardBuildException, SQLException {
+        for (Corner corner : Corner.values()) {
+            cardBuilder.hasIn(corner, getCornerContainer(corner, result));
         }
     }
 
-    private static void setFrontCorners(GoldCard.Builder cardBuilder, ResultSet result) {
-        Arrays.stream(Corner.values())
-              .forEach(corner -> {
-                  try {
-                      cardBuilder.hasIn(corner, getCornerContainer(corner, result));
-                  } catch (IllegalCardBuildException e) {
-                      throw new RuntimeException(e);
-                  }
-              });
-    }
-
-    private static void setPlacingRequirements(GoldCard.Builder cardBuilder, @NotNull ResultSet result) {
+    private static void setPlacingRequirements(GoldCard.Builder cardBuilder,
+                                               @NotNull ResultSet result)
+            throws SQLException {
         try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
              PreparedStatement supportStatement = connection.prepareStatement(PLACING_REQ_QUERY)) {
             supportStatement.setInt(1, result.getInt("placing_requirements_id"));
@@ -58,24 +52,20 @@ public class GoldDeckFactory {
                     cardBuilder.hasRequirements(color, placingResult.getInt(color.getColumnName()));
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
 
-    private static void setPointsRequirements(@NotNull GoldCard.Builder cardBuilder, @NotNull ResultSet result) {
-        try {
-            String symbolToCollect = result.getString("symbol_to_collect");
-            String resultString = result.getString("points_requirements");
-            cardBuilder.hasPointRequirements(PointsRequirementsType.valueOf(resultString));
-            if (symbolToCollect == null) {
-                cardBuilder.hasSymbolToCollect(null);
-            } else {
-                cardBuilder.hasSymbolToCollect(Symbol.valueOf(symbolToCollect));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    private static void setPointsRequirements(@NotNull GoldCard.Builder cardBuilder,
+                                              @NotNull ResultSet result)
+            throws SQLException {
+        String symbolToCollect = result.getString("symbol_to_collect");
+        String resultString = result.getString("points_requirements");
+        cardBuilder.hasPointRequirements(PointsRequirementsType.valueOf(resultString));
+        if (symbolToCollect == null) {
+            cardBuilder.hasSymbolToCollect(null);
+        } else {
+            cardBuilder.hasSymbolToCollect(Symbol.valueOf(symbolToCollect));
         }
     }
 

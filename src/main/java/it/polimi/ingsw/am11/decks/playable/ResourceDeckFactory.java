@@ -12,7 +12,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
-import java.util.Arrays;
 
 
 public class ResourceDeckFactory {
@@ -22,19 +21,16 @@ public class ResourceDeckFactory {
     private ResourceDeckFactory() {
     }
 
-    private static CornerContainer getCornerContainer(
-            @NotNull Corner corner,
-            @NotNull ResultSet result) {
-        try {
-            return CornerContainer.of(result.getString(corner.getColumnName()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    private static CornerContainer getCornerContainer(@NotNull Corner corner,
+                                                      @NotNull ResultSet result)
+            throws SQLException {
+        return CornerContainer.of(result.getString(corner.getColumnName()));
     }
 
-    private static void setFrontCorners(ResourceCard.Builder cardBuilder, ResultSet result) {
-        Arrays.stream(Corner.values())
-              .forEach(corner -> cardBuilder.hasIn(corner, getCornerContainer(corner, result)));
+    private static void setFrontCorners(ResourceCard.Builder cardBuilder, ResultSet result) throws SQLException {
+        for (Corner corner : Corner.values()) {
+            cardBuilder.hasIn(corner, getCornerContainer(corner, result));
+        }
     }
 
     @Contract(" -> new")
