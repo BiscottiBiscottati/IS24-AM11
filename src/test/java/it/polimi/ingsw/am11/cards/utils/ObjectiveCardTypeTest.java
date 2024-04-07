@@ -22,25 +22,25 @@ class ObjectiveCardTypeTest {
     );
 
     static Set<Position> LShape = Set.of(
-            Position.of(1, 2),
+            Position.of(1, 3),
             Position.of(1, 1),
             Position.of(2, 0)
     );
 
     static Set<Position> flippedL = Set.of(
-            Position.of(1, 2),
+            Position.of(1, 3),
             Position.of(1, 1),
             Position.of(0, 0)
     );
 
     static Set<Position> rotatedL = Set.of(
-            Position.of(1, 0),
+            Position.of(1, -1),
             Position.of(1, 1),
             Position.of(0, 2)
     );
 
     static Set<Position> rotatedFlippedL = Set.of(
-            Position.of(1, 0),
+            Position.of(1, -1),
             Position.of(1, 1),
             Position.of(2, 2)
     );
