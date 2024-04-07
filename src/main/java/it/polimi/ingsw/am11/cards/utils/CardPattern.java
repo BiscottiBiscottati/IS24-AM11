@@ -28,6 +28,10 @@ public record CardPattern(List<List<Color>> pattern) {
     }
 
     /**
+     * Override of the equals method to compare two <code>CardPattern</code> objects.
+     * <p>
+     * Ensures deep equality of the matrix elements.
+     *
      * @param obj the reference object with which to compare.
      * @return true if each element of pattern is equal otherwise false
      */
@@ -40,6 +44,10 @@ public record CardPattern(List<List<Color>> pattern) {
     }
 
     /**
+     * Override of the hashCode method.
+     * <p>
+     * Ensures that the hash is based on each element of a matrix.
+     *
      * @return the hash based on each element of a matrix
      */
     @Override

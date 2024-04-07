@@ -19,6 +19,14 @@ import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
  */
 public sealed interface CornerContainer permits Availability, Color, Symbol {
 
+    /**
+     * A method to get the corner container with the given name.
+     * <p>
+     * Used for querying the corner container by name in the SQLite database.
+     *
+     * @param name The name of the corner container
+     * @return The corner container with the given name
+     */
     static CornerContainer of(String name) {
         if (Enums.getIfPresent(Availability.class, name).isPresent()) {
             return Availability.valueOf(name);

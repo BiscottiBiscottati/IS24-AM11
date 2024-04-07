@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.cards.utils.enums;
 
 import it.polimi.ingsw.am11.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.cards.utils.DatabaseSearchable;
 import it.polimi.ingsw.am11.cards.utils.Item;
-import it.polimi.ingsw.am11.decks.DatabaseSearchable;
 
 /**
  * Can represent either the color of a card or
