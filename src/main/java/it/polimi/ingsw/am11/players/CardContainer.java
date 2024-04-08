@@ -11,27 +11,64 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
 
+/**
+ * The <code>CardContainer</code> class represents a container for a {@link FieldCard} in the game.
+ * <p>
+ * This class is used to store a <code>FieldCard</code> and keep track of which corners of the card are covered.
+ * It provides methods to get the card, get the covered corners, cover a corner,
+ * check if a corner is covered, and check if the card's color equals a specified color.
+ * <p>
+ * If a corner is covered, the corresponding Boolean value in the EnumMap is true; otherwise, it is false.
+ * <p>
+ * The <code>CardContainer</code> class provides a static factory method
+ * <code>of</code> for creating a new <code>CardContainer</code> object.
+ * This method takes a <code>FieldCard</code> object as a parameter
+ * and returns a new <code>CardContainer</code> object with the specified card and all corners uncovered.
+ * <p>
+ * The <code>CardContainer</code> class also provides methods to get the card, get the covered corners,
+ * cover a corner, check if a corner is covered, and check if the card's color equals a specified color.
+ * These methods are used to interact with the card and the covered corners in the container.
+ */
 public class CardContainer {
 
     private final FieldCard card;
     private final EnumMap<Corner, Boolean> coveredCorners;
 
+    /**
+     * Constructs a new instance of <code>CardContainer</code> with the specified {@link FieldCard}.
+     * <p>
+     * This constructor takes a <code>FieldCard</code> object as a parameter
+     * and initializes the card field with the specified card.
+     * It also initializes all corners as uncovered.
+     *
+     * @param card The <code>FieldCard</code> to be stored in the <code>CardContainer</code>.
+     */
     public CardContainer(FieldCard card) {
         this.card = card;
         coveredCorners = EnumMapUtils.Init(Corner.class, false);
     }
 
+    // TODO this may be redundant but can be used if preferred to constructor
     @Contract("_ -> new")
     public static @NotNull CardContainer of(FieldCard card) {
         return new CardContainer(card);
     }
 
+    /**
+     * Returns the <code>FieldCard</code> object stored in this <code>CardContainer</code>.
+     *
+     * @return The <code>FieldCard</code> object stored in this <code>CardContainer</code>.
+     */
     public FieldCard getCard() {
         return card;
     }
 
     public ImmutableMap<Corner, Boolean> getCoveredCorners() {
         return Maps.immutableEnumMap(this.coveredCorners);
+    }
+
+    public boolean isCornerCovered(@NotNull Corner corner) {
+        return this.coveredCorners.get(corner);
     }
 
     public void cover(@NotNull Corner corner) {
@@ -43,8 +80,5 @@ public class CardContainer {
         return false;
     }
 
-    public boolean isCornerCovered(@NotNull Corner corner) {
-        return this.coveredCorners.get(corner);
-    }
 
 }
