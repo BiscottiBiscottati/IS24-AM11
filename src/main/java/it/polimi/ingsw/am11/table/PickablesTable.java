@@ -22,7 +22,7 @@ public class PickablesTable {
         this.numOfShownPerType = numOfShownPerType;
         //TODO: initialize decks
         this.decks = new EnumMap<>(DeckType.class);
-        this.commonObjectives = new ArrayList<ObjectiveCard>();
+        this.commonObjectives = new ArrayList<>(2);
     }
 
     public List<ObjectiveCard> getCommonObjectives() {

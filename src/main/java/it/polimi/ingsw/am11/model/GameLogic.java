@@ -36,18 +36,18 @@ public class GameLogic implements GameModel {
     public List<String> getPlayerListInOrder() {
         return players.values()
                       .stream()
-                      .map(Player::getNickname)
+                      .map(Player::nickname)
                       .toList();
     }
 
     @Override //DONE
     public String getCurrentTurnPlayer() {
-        return currentPlaying.getNickname();
+        return currentPlaying.nickname();
     }
 
     @Override //DONE
     public String getFirstPlayer() {
-        return firstPlayer.getNickname();
+        return firstPlayer.nickname();
     }
 
     //endregion
@@ -56,7 +56,7 @@ public class GameLogic implements GameModel {
     @Override //DONE
     public List<Integer> getPlayerHand(String nickname) {
         return players.get(nickname)
-                      .getSpace()
+                      .space()
                       .getPlayerHand()
                       .stream()
                       .map(PlayableCard::getId)
@@ -66,7 +66,7 @@ public class GameLogic implements GameModel {
     @Override //DONE
     public List<Integer> getPlayerObjective(String nickname) {
         return players.get(nickname)
-                      .getSpace()
+                      .space()
                       .getPlayerObjective()
                       .stream()
                       .map(ObjectiveCard::getId)
@@ -75,7 +75,7 @@ public class GameLogic implements GameModel {
 
     @Override //DONE
     public PlayerColor getPlayerColor(String nickname) {
-        return players.get(nickname).getColor();
+        return players.get(nickname).color();
     }
 
     @Override //FIXME
@@ -85,7 +85,7 @@ public class GameLogic implements GameModel {
 
     @Override //DONE
     public Set<Position> getAvailablePositions(String nickname) {
-        return players.get(nickname).getField().getAvailablePositions();
+        return players.get(nickname).field().getAvailablePositions();
     }
     //endregion
 
@@ -105,6 +105,7 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
+    // TODO getResourceDeckTop and getGoldDeckTop can be combined into one method with argument the deckType to look
     @Override //DONE
     public Color getResourceDeckTop() {
         return pickablesTable.getResourceDeckTop();
@@ -117,12 +118,14 @@ public class GameLogic implements GameModel {
 
     //endregion
 
+    // TODO the check for null can be done inside here may save time
     //region GettersPlateau DONE
     @Override //DONE
     public int getPlayerPoints(String nickname) throws IllegalPlateauActionException {
         return plateau.getPlayerPoints(players.get(nickname));
     }
 
+    // TODO can be renamed into isArmageddonTime same as plateau to be less verbose
     @Override //DONE
     public boolean getIsArmageddonTime() {
         return plateau.isArmageddonTime();
@@ -135,7 +138,10 @@ public class GameLogic implements GameModel {
 
     @Override //DONE
     public List<String> getWinner() {
-        return plateau.getWinners().stream().map(Player::getNickname).toList();
+        return plateau.getWinners()
+                      .stream()
+                      .map(Player::nickname)
+                      .toList();
     }
     //endregion
 
@@ -150,13 +156,16 @@ public class GameLogic implements GameModel {
 
     }
 
+    // TODO I believe that the assignment of colors of each player
+    //  can be done internally without the player having to choose.
+    //  We could also make Player initialize automatically the field and the space when creating a instance of Player
     @Override
     public void addPlayerToTable(String nickname, PlayerColor colour) throws PlayerInitException {
         if (players.containsKey(nickname)) {
             throw new PlayerInitException(nickname + " is already in use");
         } else if (players.values()
                           .stream()
-                          .map(Player::getColor)
+                          .map(Player::color)
                           .anyMatch(playerColor -> playerColor.equals(colour))) {
             throw new PlayerInitException(
                     "Colour already in use: " + colour

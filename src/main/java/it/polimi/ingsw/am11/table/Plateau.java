@@ -10,14 +10,15 @@ import java.util.Map;
 public class Plateau {
     private final Map<Player, Integer> playerPoints;
     private final int armageddonTime;
-    private final Map<Player, Integer> finalLeatherboard;
+    private final Map<Player, Integer> finalLeaderboard;
     private boolean isArmageddonTime;
 
+    // TODO why is there a finalLeaderboard and playerPoints? Are they the same thing?
     public Plateau(int armageddonTime) {
         this.playerPoints = new HashMap<>(8);
         this.armageddonTime = armageddonTime;
         this.isArmageddonTime = false;
-        this.finalLeatherboard = new HashMap<>(8);
+        this.finalLeaderboard = new HashMap<>(8);
     }
 
     public boolean isArmageddonTime() {
