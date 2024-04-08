@@ -22,6 +22,7 @@ import java.util.Optional;
  * The class can only be instantiated through the static inner builder
  * {@link ResourceCard.Builder}.
  */
+@SuppressWarnings("DataFlowIssue")
 public final class ResourceCard extends PlayableCard {
     private final static ImmutableMap<Color, Integer> PLACING_REQUIREMENTS = Maps.immutableEnumMap(
             EnumMapUtils.Init(Color.class, 0)
@@ -50,6 +51,12 @@ public final class ResourceCard extends PlayableCard {
     }
 
     @Override
+    public boolean isAvailable(@NotNull Corner corner, boolean isRetro) {
+        if (isRetro) return true;
+        else return availableCornerOrItem.get(corner).isAvailable();
+    }
+
+    @Override
     public @NotNull Map<Color, Integer> getPlacingRequirements() {
         return PLACING_REQUIREMENTS;
     }
@@ -65,6 +72,12 @@ public final class ResourceCard extends PlayableCard {
     @Contract(pure = true)
     public CornerContainer checkItemCorner(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornerOrItem.get(corner));
+    }
+
+    @Override
+    public CornerContainer checkItemCorner(@NotNull Corner corner, boolean isRetro) {
+        if (isRetro) return Availability.USABLE;
+        else return availableCornerOrItem.get(corner);
     }
 
     @Override

@@ -40,7 +40,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
 
     private final int id;
     private final ImmutableMap<Corner, CornerContainer> availableCornersFront;
-    private final ImmutableMap<Corner, Color> availableColorCornerBack;
+    private final ImmutableMap<Corner, Color> availableColorCornerRetro;
     private final ImmutableSet<Color> centerColorsFront;
 
     /**
@@ -62,7 +62,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
     private StarterCard(@NotNull Builder builder) {
         this.id = builder.id;
         this.availableCornersFront = Maps.immutableEnumMap(builder.availableCornersFront);
-        this.availableColorCornerBack = Maps.immutableEnumMap(builder.availableColorCornerBack);
+        this.availableColorCornerRetro = Maps.immutableEnumMap(builder.availableColorCornerBack);
         this.centerColorsFront = Sets.immutableEnumSet(builder.centerColors);
     }
 
@@ -106,7 +106,12 @@ public final class StarterCard implements FieldCard, CardIdentity {
      */
     @NotNull
     public Color getRetroColorIn(@NotNull Corner corner) {
-        return Objects.requireNonNull(availableColorCornerBack.get(corner));
+        return Objects.requireNonNull(availableColorCornerRetro.get(corner));
+    }
+
+    public CornerContainer get(@NotNull Corner corner, boolean isRetro) {
+        if (isRetro) return availableColorCornerRetro.get(corner);
+        else return availableCornersFront.get(corner);
     }
 
     /**
@@ -122,6 +127,11 @@ public final class StarterCard implements FieldCard, CardIdentity {
     @NotNull
     public Set<Color> getCenterColorsFront() {
         return centerColorsFront;
+    }
+
+    public Set<Color> getCenter(boolean isRetro) {
+        if (isRetro) return EnumSet.noneOf(Color.class);
+        else return centerColorsFront;
     }
 
     @Override

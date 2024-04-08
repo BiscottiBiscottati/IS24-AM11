@@ -1,13 +1,10 @@
 package it.polimi.ingsw.am11.cards.playable;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.PointsCountable;
 import it.polimi.ingsw.am11.cards.utils.enums.*;
-import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.Contract;
@@ -15,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 
 /**
@@ -34,9 +32,6 @@ import java.util.Optional;
 public abstract sealed class PlayableCard implements CardIdentity,
                                                      PointsCountable,
                                                      FieldCard permits GoldCard, ResourceCard {
-    private static final ImmutableMap<Corner, Availability> retroCornerAvailability = Maps.immutableEnumMap(
-            EnumMapUtils.Init(Corner.class, Availability.USABLE)
-    );
     private final Color color;
     private final int points;
     private final int id;
@@ -62,17 +57,14 @@ public abstract sealed class PlayableCard implements CardIdentity,
     }
 
     /**
-     * Checks the availability of a given corner on the retro side of a PlayableCard.
-     * <p>
-     * In the physical game, all corners on the retro side of a PlayableCard are always available.
-     * Therefore, this method always returns true, regardless of the specific corner provided as an argument.
+     * Getter for card's id.
+     * Each card must have a unique id.
      *
-     * @param corner The corner to check for availability.
-     * @return true, indicating that the given corner is available
-     * on the retro side of a <code>PlayableCard</code>.
+     * @return the id of the card
      */
-    public static boolean isRetroAvailable(@NotNull Corner corner) {
-        return retroCornerAvailability.get(corner) == Availability.USABLE;
+    @Override
+    public int getId() {
+        return this.id;
     }
 
     /**
@@ -95,6 +87,11 @@ public abstract sealed class PlayableCard implements CardIdentity,
         return color;
     }
 
+    public Set<Color> getCenter(boolean isRetro) {
+        if (isRetro) return Set.of(this.color);
+        else return Set.of();
+    }
+
     /**
      * Gets the type of this <code>PlayableCard</code>.
      *
@@ -112,6 +109,8 @@ public abstract sealed class PlayableCard implements CardIdentity,
      */
     @Contract(pure = true)
     public abstract boolean isFrontAvailable(@NotNull Corner corner);
+
+    public abstract boolean isAvailable(@NotNull Corner corner, boolean isRetro);
 
     /**
      * Gets the number of colors in the field needed to place the card.
@@ -153,6 +152,8 @@ public abstract sealed class PlayableCard implements CardIdentity,
     @NotNull
     public abstract CornerContainer checkItemCorner(@NotNull Corner corner);
 
+    public abstract CornerContainer checkItemCorner(@NotNull Corner corner, boolean isRetro);
+
     /**
      * Getter method for the symbol to collect if there is any
      * <p>
@@ -175,17 +176,6 @@ public abstract sealed class PlayableCard implements CardIdentity,
     @Override
     public boolean isColorEqual(Color color) {
         return this.color == color;
-    }
-
-    /**
-     * Getter for card's id.
-     * Each card must have a unique id.
-     *
-     * @return the id of the card
-     */
-    @Override
-    public int getId() {
-        return this.id;
     }
 
 

@@ -24,6 +24,7 @@ import java.util.Optional;
  * The class can only be instantiated through the static inner builder
  * {@link GoldCard.Builder}.
  */
+@SuppressWarnings("DataFlowIssue")
 public final class GoldCard extends PlayableCard {
 
     private final ImmutableMap<Corner, CornerContainer> availableCornersOrSymbol;
@@ -56,6 +57,12 @@ public final class GoldCard extends PlayableCard {
     }
 
     @Override
+    public boolean isAvailable(@NotNull Corner corner, boolean isRetro) {
+        if (isRetro) return true;
+        else return availableCornersOrSymbol.get(corner).isAvailable();
+    }
+
+    @Override
     public @NotNull Map<Color, Integer> getPlacingRequirements() {
         return colorPlacingRequirements;
     }
@@ -76,6 +83,12 @@ public final class GoldCard extends PlayableCard {
     @NotNull
     public CornerContainer checkItemCorner(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornersOrSymbol.get(corner));
+    }
+
+    @Override
+    public CornerContainer checkItemCorner(@NotNull Corner corner, boolean isRetro) {
+        if (isRetro) return Availability.USABLE;
+        else return availableCornersOrSymbol.get(corner);
     }
 
     @Override
