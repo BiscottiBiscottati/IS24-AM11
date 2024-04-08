@@ -28,6 +28,8 @@ public class PersonalSpace {
     }
 
     public void addCardToHand(PlayableCard newCard) {
+        // TODO this has been commented out because it does not let the compiler compile
+
 //        if (playerHand.size() < maxHandCards) {
 //            playerHand.add(newCard);
 //        } else {

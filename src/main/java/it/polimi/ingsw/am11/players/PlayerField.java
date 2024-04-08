@@ -29,6 +29,24 @@ public class PlayerField {
 
     }
 
+    /**
+     * Returns a new {@link Position Position} object
+     * that represents the position in a specified corner relative to a given position.
+     * <p>
+     * This method is static and can be called without creating an instance of the <code>PlayerField</code> class.
+     * It takes a <code>Position</code> object and a <code>Corner</code> enum as parameters
+     * and calculates the new position based on the specified corner.
+     * <p>
+     * The method uses a switch statement to determine the new position based on the specified corner.
+     * If the specified corner is not a valid <code>Corner</code> enum,
+     * the method throws an <code>EnumConstantNotPresentException</code>.
+     *
+     * @param position The original position.
+     * @param corner   The corner relative to the original position.
+     * @return A new <code>Position</code> object that represents the position in
+     * the specified corner relative to the original position.
+     * @throws EnumConstantNotPresentException if the specified corner is not a valid Corner enum.
+     */
     @Contract("_, _ -> new")
     public static @NotNull Position getPositionIn(@NotNull Position position, @NotNull Corner corner) {
         int tempX = position.x();
@@ -51,7 +69,25 @@ public class PlayerField {
         }
     }
 
-    public static Position getMovementOfPositions(Position currentPosition, @NotNull List<Corner> corners) {
+    /**
+     * Returns a new {@link Position Position} object
+     * that represents the final position after moving from a given position through a list of corners.
+     * <p>
+     * This method is static and can be called without creating an instance of the <code>PlayerField</code> class.
+     * It takes a <code>Position</code> object and a <code>List</code> of <code>Corner</code> enums as parameters
+     * and calculates the new position based on the specified corners.
+     * <p>
+     * The final position is the result of moving from the original position through all the corners in the list.
+     * <p>
+     * Note: The list is processed in order,
+     * so the final position is the result of moving through the corners in the order they appear in the list.
+     *
+     * @param currentPosition The original position.
+     * @param corners         The list of corners to move through.
+     * @return A new Position object that represents the final position after moving through all the corners.
+     */
+    @Contract("_, _ -> new")
+    public static Position getMovementOfPositions(@NotNull Position currentPosition, @NotNull List<Corner> corners) {
         return corners.stream().reduce(currentPosition, PlayerField::getPositionIn, (a, b) -> b);
     }
 
@@ -105,7 +141,7 @@ public class PlayerField {
                           .filter(card::isFrontAvailable)
                           .map(corner -> PlayerField.getPositionIn(position, corner))
                           .toList());
-        } else throw new IllegalPositioningException("Posizione non disponibile!");
+        } else throw new IllegalPositioningException("Cannot place card in that position!");
     }
 
     public Set<Position> getAvailablePositions() {
