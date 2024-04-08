@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.players;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -10,6 +9,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * The <code>CardContainer</code> class represents a container for a {@link FieldCard} in the game.
@@ -71,7 +71,7 @@ public class CardContainer {
         return card;
     }
 
-    public ImmutableMap<Corner, Boolean> getCoveredCorners() {
+    public Map<Corner, Boolean> getCoveredCorners() {
         return Maps.immutableEnumMap(this.coveredCorners);
     }
 
@@ -91,5 +91,4 @@ public class CardContainer {
     public boolean isRetro() {
         return isRetro;
     }
-    
 }

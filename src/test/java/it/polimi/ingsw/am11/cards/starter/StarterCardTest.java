@@ -41,11 +41,11 @@ class StarterCardTest {
     }
 
     @Test
-    void getRetroColorIn() {
-        Assertions.assertSame(Color.BLUE, starter.getRetroColorIn(Corner.TOP_RX));
-        Assertions.assertSame(Color.GREEN, starter.getRetroColorIn(Corner.TOP_LX));
-        Assertions.assertSame(Color.RED, starter.getRetroColorIn(Corner.DOWN_RX));
-        Assertions.assertSame(Color.PURPLE, starter.getRetroColorIn(Corner.DOWN_LX));
+    void checkRetroColorIn() {
+        Assertions.assertSame(Color.BLUE, starter.checkRetroColorIn(Corner.TOP_RX));
+        Assertions.assertSame(Color.GREEN, starter.checkRetroColorIn(Corner.TOP_LX));
+        Assertions.assertSame(Color.RED, starter.checkRetroColorIn(Corner.DOWN_RX));
+        Assertions.assertSame(Color.PURPLE, starter.checkRetroColorIn(Corner.DOWN_LX));
 
     }
 
@@ -136,7 +136,7 @@ class StarterCardTest {
     void checkNulls() {
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> starter.getRetroColorIn(null)
+                () -> starter.checkRetroColorIn(null)
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
@@ -157,10 +157,10 @@ class StarterCardTest {
     }
 
     @Test
-    void getFront() {
-        Assertions.assertEquals(Color.RED, starter.getFront(Corner.TOP_RX));
-        Assertions.assertEquals(Availability.USABLE, starter.getFront(Corner.TOP_LX));
-        Assertions.assertEquals(Availability.NOT_USABLE, starter.getFront(Corner.DOWN_RX));
-        Assertions.assertEquals(Availability.NOT_USABLE, starter.getFront(Corner.DOWN_LX));
+    void checkFront() {
+        Assertions.assertEquals(Color.RED, starter.checkFront(Corner.TOP_RX));
+        Assertions.assertEquals(Availability.USABLE, starter.checkFront(Corner.TOP_LX));
+        Assertions.assertEquals(Availability.NOT_USABLE, starter.checkFront(Corner.DOWN_RX));
+        Assertions.assertEquals(Availability.NOT_USABLE, starter.checkFront(Corner.DOWN_LX));
     }
 }

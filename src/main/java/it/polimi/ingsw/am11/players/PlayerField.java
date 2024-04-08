@@ -119,17 +119,20 @@ public class PlayerField {
         }
     }
 
+    // TODO needs to do the logic to add exposed colors and symbol and placed card colors
     public void placeStartingCard(StarterCard firstCard, boolean isRetro) throws IllegalPositioningException {
         if (this.cardsPositioned.getOrDefault(Position.of(0, 0), null) == null) {
             this.cardsPositioned.put(Position.of(0, 0), new CardContainer(firstCard, isRetro));
             availablePositions.addAll(
                     Arrays.stream(Corner.values())
+                          .filter(firstCard::isFrontAvail)
                           .map(corner -> PlayerField.getPositionIn(Position.of(0, 0), corner))
                           .toList()
             );
         } else throw new IllegalPositioningException("Cannot place another starter!");
     }
 
+    // TODO needs to do the logic to add exposed colors and symbol and placed card colors
     public void place(PlayableCard card, Position position, boolean isRetro) throws IllegalPositioningException {
         if (this.availablePositions.contains(position)) {
             this.cardsPositioned.put(position, new CardContainer(card));

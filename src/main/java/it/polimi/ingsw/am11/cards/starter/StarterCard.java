@@ -91,7 +91,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
      * @param corner The corner for which to retrieve the <code>CornerContainer</code>.
      * @return The <code>CornerContainer</code> corresponding to the given corner.
      */
-    public CornerContainer getFront(@NotNull Corner corner) {
+    public CornerContainer checkFront(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornersFront.get(corner));
     }
 
@@ -105,11 +105,11 @@ public final class StarterCard implements FieldCard, CardIdentity {
      * @return The <code>Color</code> corresponding to the given corner.
      */
     @NotNull
-    public Color getRetroColorIn(@NotNull Corner corner) {
+    public Color checkRetroColorIn(@NotNull Corner corner) {
         return Objects.requireNonNull(availableColorCornerRetro.get(corner));
     }
 
-    public CornerContainer get(@NotNull Corner corner, boolean isRetro) {
+    public CornerContainer checkItemCorner(@NotNull Corner corner, boolean isRetro) {
         if (isRetro) return availableColorCornerRetro.get(corner);
         else return availableCornersFront.get(corner);
     }

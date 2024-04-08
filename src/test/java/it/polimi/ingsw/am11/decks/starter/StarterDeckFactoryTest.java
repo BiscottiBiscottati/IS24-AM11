@@ -76,10 +76,10 @@ class StarterDeckFactoryTest {
                     for (Corner corner : Corner.values()) {
                         Assertions.assertEquals(
                                 result.getString("front_" + corner.getColumnName()),
-                                card.getFront(corner).toString());
+                                card.checkFront(corner).toString());
                         Assertions.assertEquals(
                                 result.getString("retro_" + corner.getColumnName()),
-                                card.getRetroColorIn(corner).toString());
+                                card.checkRetroColorIn(corner).toString());
                     }
 
                     // Setting the center colors
