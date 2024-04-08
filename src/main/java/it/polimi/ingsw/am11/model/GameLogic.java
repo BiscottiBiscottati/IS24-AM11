@@ -15,7 +15,7 @@ public class GameLogic implements GameModel {
 
     private final RuleSet ruleSet = new BasicRuleset();
     private final Map<String, Player> players;
-    private final LinkedList<Player> playersQueue;
+    private final LinkedList<Player> playerQueue;
     private final PickablesTable pickablesTable;
     private final Plateau plateau;
     private Player firstPlayer;
@@ -24,7 +24,7 @@ public class GameLogic implements GameModel {
     //region Constructor
     public GameLogic() {
         this.players = new HashMap<>(8);
-        this.playersQueue = new LinkedList<Player>();
+        this.playerQueue = new LinkedList<Player>();
         this.pickablesTable = new PickablesTable(ruleSet.getNumOfCommonObjectives(),
                                                  ruleSet.getMaxRevealedCardsPerType());
         this.plateau = new Plateau(ruleSet.getPointsToArmageddon());
@@ -34,7 +34,8 @@ public class GameLogic implements GameModel {
     //region GetterGameStatus DONE
     @Override //DONE
     public List<String> getPlayerListInOrder() {
-        return players.values().stream()
+        return players.values()
+                      .stream()
                       .map(Player::getNickname)
                       .toList();
     }
@@ -169,21 +170,21 @@ public class GameLogic implements GameModel {
             PersonalSpace newSpace = new PersonalSpace(ruleSet.getHandSize(), ruleSet.getNumOfPersonalObjective());
             Player newPlayer = new Player(nickname, colour, newSpace, newField);
             players.put(nickname, newPlayer);
-            playersQueue.add(newPlayer);
+            playerQueue.add(newPlayer);
             plateau.addPlayer(newPlayer);
         }
     }
 
     @Override
     public void shufflePlayers() {
-        Collections.shuffle(playersQueue);
+        Collections.shuffle(playerQueue);
     }
 
 
     @Override
     public void setStartingPlayer() {
-        firstPlayer = playersQueue.getFirst();
-        currentPlaying = playersQueue.removeFirst();
+        firstPlayer = playerQueue.getFirst();
+        currentPlaying = playerQueue.removeFirst();
     }
 
     //endregion
@@ -191,8 +192,8 @@ public class GameLogic implements GameModel {
     //region TurnsActions
     @Override
     public void goNextTurn() {
-        playersQueue.addLast(currentPlaying);
-        currentPlaying = playersQueue.removeFirst();
+        playerQueue.addLast(currentPlaying);
+        currentPlaying = playerQueue.removeFirst();
     }
 
     @Override
