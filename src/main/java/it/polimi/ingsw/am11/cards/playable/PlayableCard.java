@@ -20,7 +20,7 @@ import java.util.Optional;
 /**
  * Abstract class representing a playable card in the field.
  * <p>
- * Subclasses must be constructed using the provided {@link PlayableCard.Builder}
+ * Subclasses must be constructed using the provided {@link PlayableCard.Builder Builder}
  * inner class to ensure consistent object creation.
  * <p>
  * This class contains methods to get the card's color, points, type,

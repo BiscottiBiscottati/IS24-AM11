@@ -17,6 +17,25 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+/**
+ * The <code>StarterCard</code> class represents a type of card played at the start of the game.
+ * <p>
+ * It implements the <code>FieldCard</code> and <code>CardIdentity</code> interfaces,
+ * indicating that it can be used as a field card in the game and has a unique identity.
+ * <p>
+ * A <code>StarterCard</code> has several properties including an id,
+ * available corners on the front and back of the card, and center colors on the front of the card.
+ * These properties are set during the construction of the <code>StarterCard</code> object using the Builder pattern.
+ * <p>
+ * The <code>StarterCard</code> class provides methods
+ * to check if a corner on the front of the card is available,
+ * retrieve the <code>CornerContainer</code> for a given corner on the front of the card,
+ * retrieve the color for a given corner on the back of the card,
+ * retrieve the set of center colors on the front of the card, and retrieve the ID of the card.
+ * <p>
+ * The <code>StarterCard</code> class also includes a nested <code>Builder</code> class
+ * for constructing a <code>StarterCard</code> object.
+ */
 public final class StarterCard implements FieldCard, CardIdentity {
 
     private final int id;
@@ -135,11 +154,11 @@ public final class StarterCard implements FieldCard, CardIdentity {
      * <p>
      * Example usage:
      * {@snippet id = 'StarterCardBuilderExample' lang = 'java':
-     * StarterCard card = new StarterCard.Builder(id)
-     *                                   .hasItemFrontIn(corner,item)
-     *                                   .hasColorRetroIn(corner,color)
-     *                                   .hasCenterColors(colors)
-     *                                   .build();
+     * StarterCard card = new StarterCard.Builder(3)
+     *        .hasItemFrontIn(Corner.DOWN_LX , Availability.USABLE)
+     *        .hasColorRetroIn(Corner.TOP_RX , Color.GREEN)
+     *        .hasCenterColors(Color.PURPLE)
+     *        .build();
      *}
      */
     public static class Builder {
@@ -266,7 +285,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
          * If not all corners are covered, it throws an <code>IllegalCardBuildException</code>.
          *
          * @return A new <code>StarterCard</code> object with the current state of the <code>Builder</code>.
-         * @throws IllegalCardBuildException If not all corners on the back of the card are covered.
+         * @throws IllegalCardBuildException If not, all corners on the back of the card are covered.
          */
         @NotNull
         public StarterCard build() throws IllegalCardBuildException {
