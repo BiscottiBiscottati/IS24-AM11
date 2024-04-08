@@ -10,6 +10,19 @@ import java.util.Stack;
 
 /**
  * Represents a deck of cards.
+ * <p>
+ * Can be shuffled and cards can be drawn from it.
+ * <p>
+ * For each type of <code>Deck</code> you need
+ * to use the specific static method <code>createDeck</code> of the factory class.
+ * <p>
+ * The available factories are:
+ * <pre>
+ * GOLD: {@link it.polimi.ingsw.am11.decks.playable.GoldDeckFactory GoldDeckFactory}
+ * RESOURCE: {@link it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory ResourceDeckFactory}
+ * STARTER: {@link it.polimi.ingsw.am11.decks.starter.StarterDeckFactory StarterDeckFactory}
+ * OBJECTIVE: {@link it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory ObjectiveDeckFactory}
+ * </pre>
  *
  * @param <T> The type of card that the deck contains.
  */

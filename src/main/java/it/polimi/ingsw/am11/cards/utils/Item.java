@@ -10,5 +10,4 @@ import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
  * @see Symbol
  */
 public sealed interface Item permits Color, Symbol {
-
 }
