@@ -33,6 +33,7 @@ public class CardContainer {
 
     private final FieldCard card;
     private final EnumMap<Corner, Boolean> coveredCorners;
+    private final boolean isRetro;
 
     /**
      * Constructs a new instance of <code>CardContainer</code> with the specified {@link FieldCard}.
@@ -46,12 +47,19 @@ public class CardContainer {
     public CardContainer(FieldCard card) {
         this.card = card;
         coveredCorners = EnumMapUtils.Init(Corner.class, false);
+        isRetro = false;
+    }
+
+    public CardContainer(FieldCard card, boolean isRetro) {
+        this.card = card;
+        coveredCorners = EnumMapUtils.Init(Corner.class, false);
+        this.isRetro = isRetro;
     }
 
     // TODO this may be redundant but can be used if preferred to constructor
     @Contract("_ -> new")
-    public static @NotNull CardContainer of(FieldCard card) {
-        return new CardContainer(card);
+    public static @NotNull CardContainer of(FieldCard card, boolean isRetro) {
+        return new CardContainer(card, isRetro);
     }
 
     /**
@@ -80,5 +88,8 @@ public class CardContainer {
         return false;
     }
 
-
+    public boolean isRetro() {
+        return isRetro;
+    }
+    
 }

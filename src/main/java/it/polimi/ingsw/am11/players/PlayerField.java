@@ -19,14 +19,14 @@ public class PlayerField {
     private final EnumMap<Symbol, Integer> exposedSymbols;
     private final EnumMap<Color, Integer> placedCardColors;
     private final Set<Position> availablePositions;
-    private HashMap<Position, CardContainer> cardsPositioned;
+    private final Map<Position, CardContainer> cardsPositioned;
 
     public PlayerField() {
         this.exposedColors = EnumMapUtils.Init(Color.class, 0);
         this.exposedSymbols = EnumMapUtils.Init(Symbol.class, 0);
         this.placedCardColors = EnumMapUtils.Init(Color.class, 0);
         this.availablePositions = new HashSet<>(16);
-
+        this.cardsPositioned = new HashMap<>(40);
     }
 
     /**
@@ -107,7 +107,7 @@ public class PlayerField {
         return placedCardColors;
     }
 
-    public int getNumberOf(Item item) {
+    public int getNumberOf(@NotNull Item item) {
         switch (item) {
             case Color color -> {
                 return this.exposedColors.get(color);
@@ -115,15 +115,13 @@ public class PlayerField {
             case Symbol symbol -> {
                 return this.exposedSymbols.get(symbol);
             }
-            case null, default -> {
-                return 0;
-            }
+            default -> throw new IllegalArgumentException("Item not recognized!");
         }
     }
 
-    public void placeStartingCard(StarterCard firstCard) throws IllegalPositioningException {
+    public void placeStartingCard(StarterCard firstCard, boolean isRetro) throws IllegalPositioningException {
         if (this.cardsPositioned.getOrDefault(Position.of(0, 0), null) == null) {
-            this.cardsPositioned.put(Position.of(0, 0), new CardContainer(firstCard));
+            this.cardsPositioned.put(Position.of(0, 0), new CardContainer(firstCard, isRetro));
             availablePositions.addAll(
                     Arrays.stream(Corner.values())
                           .map(corner -> PlayerField.getPositionIn(Position.of(0, 0), corner))
@@ -132,7 +130,7 @@ public class PlayerField {
         } else throw new IllegalPositioningException("Cannot place another starter!");
     }
 
-    public void place(PlayableCard card, Position position) throws IllegalPositioningException {
+    public void place(PlayableCard card, Position position, boolean isRetro) throws IllegalPositioningException {
         if (this.availablePositions.contains(position)) {
             this.cardsPositioned.put(position, new CardContainer(card));
             this.availablePositions.remove(position);
@@ -145,11 +143,10 @@ public class PlayerField {
     }
 
     public Set<Position> getAvailablePositions() {
-        //TODO
-        return null;
+        return availablePositions;
     }
 
     public boolean isPositionAvailable(Position position) {
-        return this.availablePositions.contains(position);
+        return availablePositions.contains(position);
     }
 }
