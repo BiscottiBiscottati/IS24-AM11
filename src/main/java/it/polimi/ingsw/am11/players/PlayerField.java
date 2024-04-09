@@ -2,6 +2,8 @@ package it.polimi.ingsw.am11.players;
 
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
@@ -19,6 +21,7 @@ public class PlayerField {
     private final EnumMap<Symbol, Integer> exposedSymbols;
     private final EnumMap<Color, Integer> placedCardColors;
     private final Set<Position> availablePositions;
+    private final Set<Position> closedPositions;
     private final Map<Position, CardContainer> cardsPositioned;
 
     public PlayerField() {
@@ -26,6 +29,8 @@ public class PlayerField {
         this.exposedSymbols = EnumMapUtils.Init(Symbol.class, 0);
         this.placedCardColors = EnumMapUtils.Init(Color.class, 0);
         this.availablePositions = new HashSet<>(16);
+        this.availablePositions.add(Position.of(0, 0));
+        this.closedPositions = new HashSet<>(32);
         this.cardsPositioned = new HashMap<>(40);
     }
 
@@ -91,6 +96,17 @@ public class PlayerField {
         return corners.stream().reduce(currentPosition, PlayerField::getPositionIn, (a, b) -> b);
     }
 
+    public static Optional<Corner> getCornerFromPositions(@NotNull Position firstPos,
+                                                          @NotNull Position secondPos) {
+        int deltaX = secondPos.x() - firstPos.x();
+        int deltaY = secondPos.y() - firstPos.y();
+        if (deltaX == 1 && deltaY == 1) return Optional.of(Corner.TOP_RX);
+        if (deltaX == -1 && deltaY == 1) return Optional.of(Corner.TOP_LX);
+        if (deltaX == 1 && deltaY == -1) return Optional.of(Corner.DOWN_RX);
+        if (deltaX == -1 && deltaY == -1) return Optional.of(Corner.DOWN_LX);
+        return Optional.empty();
+    }
+
     public Map<Position, CardContainer> getCardsPositioned() {
         return cardsPositioned;
     }
@@ -119,29 +135,58 @@ public class PlayerField {
         }
     }
 
-    // TODO needs to do the logic to add exposed colors and symbol and placed card colors
+    private void addNumberOf(@NotNull CornerContainer cornerContainer, int number) {
+        switch (cornerContainer) {
+            case Color color -> this.exposedColors.put(color, number);
+            case Symbol symbol -> this.exposedSymbols.put(symbol, number);
+            default -> {
+            }
+        }
+    }
+
+    private void updatePositions(FieldCard card, boolean isRetro) {
+        Arrays.stream(Corner.values())
+              .filter(corner -> !card.isAvailable(corner, isRetro))
+              .map(corner -> PlayerField.getPositionIn(Position.of(0, 0), corner))
+              .forEach(this.closedPositions::add);
+        Arrays.stream(Corner.values())
+              .filter(corner -> card.isAvailable(corner, isRetro))
+              .map(corner -> PlayerField.getPositionIn(Position.of(0, 0), corner))
+              .forEach(this.availablePositions::add);
+        this.availablePositions.removeAll(this.closedPositions);
+    }
+
+    // TODO needs to do the logic to add placed card colors and maps CardContainers
     public void placeStartingCard(StarterCard firstCard, boolean isRetro) throws IllegalPositioningException {
         if (this.cardsPositioned.getOrDefault(Position.of(0, 0), null) == null) {
             this.cardsPositioned.put(Position.of(0, 0), new CardContainer(firstCard, isRetro));
-            availablePositions.addAll(
-                    Arrays.stream(Corner.values())
-                          .filter(firstCard::isFrontAvail)
-                          .map(corner -> PlayerField.getPositionIn(Position.of(0, 0), corner))
-                          .toList()
-            );
+            this.availablePositions.remove(Position.of(0, 0));
+
+            Arrays.stream(Corner.values())
+                  .map(corner -> firstCard.checkItemCorner(corner, isRetro))
+                  .forEach(cornerContainer -> addNumberOf(cornerContainer, 1));
+
+            updatePositions(firstCard, isRetro);
+
+
         } else throw new IllegalPositioningException("Cannot place another starter!");
     }
 
-    // TODO needs to do the logic to add exposed colors and symbol and placed card colors
+
+    // TODO needs to do the logic to add placed card colors and update maps CardContainers
     public void place(PlayableCard card, Position position, boolean isRetro) throws IllegalPositioningException {
         if (this.availablePositions.contains(position)) {
-            this.cardsPositioned.put(position, new CardContainer(card));
+            CardContainer temp = new CardContainer(card, isRetro);
+            this.cardsPositioned.put(position, temp);
             this.availablePositions.remove(position);
-            this.availablePositions.addAll(
-                    Arrays.stream(Corner.values())
-                          .filter(card::isFrontAvailable)
-                          .map(corner -> PlayerField.getPositionIn(position, corner))
-                          .toList());
+
+
+            Arrays.stream(Corner.values())
+                  .map(corner -> card.checkItemCorner(corner, isRetro))
+                  .forEach(cornerContainer -> addNumberOf(cornerContainer, 1));
+
+
+            updatePositions(card, isRetro);
         } else throw new IllegalPositioningException("Cannot place card in that position!");
     }
 
