@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("DataFlowIssue")
 class ResourceCardTest {
 
     private static PlayableCard playable;
@@ -126,11 +127,10 @@ class ResourceCardTest {
     @Test
     void checkBuilderNulls() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new ResourceCard.Builder(5, 10, null).build());
+                                () -> new ResourceCard.Builder(5, 10, null));
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> new ResourceCard.Builder(4, 10, Color.RED)
                                         .hasIn(null, Color.RED)
-                                        .build()
         );
     }
 }

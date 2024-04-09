@@ -132,7 +132,6 @@ public final class GoldCard extends PlayableCard {
             this.availableCorners = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
             this.colorPlacingRequirements = EnumMapUtils.Init(Color.class, 0);
             this.symbolToCollect = null;
-
         }
 
         /**

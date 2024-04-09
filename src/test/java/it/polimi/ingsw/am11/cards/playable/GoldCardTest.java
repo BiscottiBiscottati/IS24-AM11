@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("DataFlowIssue")
 class GoldCardTest {
 
     private static GoldCard goldClassic;
@@ -104,28 +105,24 @@ class GoldCardTest {
     @Test
     void checkBuilderNulls() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new GoldCard.Builder(12, 10, null).build());
+                                () -> new GoldCard.Builder(12, 10, null));
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> new GoldCard.Builder(13, 10, Color.RED)
                                         .hasCorner(null)
-                                        .build()
         );
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new GoldCard.Builder(14, 10, null).build());
+                                () -> new GoldCard.Builder(14, 10, null));
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> new GoldCard.Builder(15, 10, Color.RED)
                                         .hasCorner(null, true)
-                                        .build()
         );
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> new GoldCard.Builder(16, 10, Color.RED)
                                         .hasRequirements(null, 10)
-                                        .build()
         );
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> new GoldCard.Builder(17, 10, Color.RED)
                                         .hasPointRequirements(null)
-                                        .build()
         );
     }
 

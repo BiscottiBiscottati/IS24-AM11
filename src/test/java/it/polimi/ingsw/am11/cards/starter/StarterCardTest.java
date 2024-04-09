@@ -80,6 +80,7 @@ class StarterCardTest {
 
     @Test
     void checkBuilderNulls() {
+        // if JetBrain Annotator is not set, it will throw NullPointerException
         Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> new StarterCard.Builder(1)
@@ -88,7 +89,6 @@ class StarterCardTest {
                         .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
                         .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
                         .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
-                        .build()
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
@@ -98,7 +98,6 @@ class StarterCardTest {
                         .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
                         .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
                         .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
-                        .build()
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
@@ -108,7 +107,6 @@ class StarterCardTest {
                         .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
                         .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
                         .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
-                        .build()
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
@@ -118,7 +116,6 @@ class StarterCardTest {
                         .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
                         .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
                         .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
-                        .build()
         );
         Assertions.assertThrows(
                 IllegalArgumentException.class,
@@ -128,12 +125,12 @@ class StarterCardTest {
                         .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
                         .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
                         .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
-                        .build()
         );
     }
 
     @Test
     void checkNulls() {
+        // if JetBrain Annotator is not set, it will throw NullPointerException
         Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> starter.checkRetroColorIn(null)

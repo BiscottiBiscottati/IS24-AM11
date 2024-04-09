@@ -113,7 +113,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
      */
     @NotNull
     public Color checkRetroColorIn(@NotNull Corner corner) {
-        return Objects.requireNonNull(availableColorCornerRetro.get(corner));
+        return availableColorCornerRetro.get(corner);
     }
 
     public CornerContainer checkItemCorner(@NotNull Corner corner, boolean isRetro) {
