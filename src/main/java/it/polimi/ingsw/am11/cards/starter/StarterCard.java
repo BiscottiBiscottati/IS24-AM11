@@ -36,6 +36,7 @@ import java.util.*;
  * The <code>StarterCard</code> class also includes a nested <code>Builder</code> class
  * for constructing a <code>StarterCard</code> object.
  */
+@SuppressWarnings("DataFlowIssue")
 public final class StarterCard implements FieldCard, CardIdentity {
 
     private final int id;
@@ -80,6 +81,12 @@ public final class StarterCard implements FieldCard, CardIdentity {
      */
     public boolean isFrontAvail(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornersFront.get(corner)).isAvailable();
+    }
+
+    @Override
+    public boolean isAvailable(Corner corner, boolean isRetro) {
+        if (isRetro) return true;
+        else return availableCornersFront.get(corner).isAvailable();
     }
 
     /**
@@ -129,6 +136,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
         return centerColorsFront;
     }
 
+    // TODO may need cleanup of methods
     public Set<Color> getCenter(boolean isRetro) {
         if (isRetro) return EnumSet.noneOf(Color.class);
         else return centerColorsFront;

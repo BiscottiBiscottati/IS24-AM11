@@ -36,6 +36,8 @@ public abstract sealed class PlayableCard implements CardIdentity,
     private final int points;
     private final int id;
 
+    //TODO may need cleanup of methods
+
     /**
      * Constructs a new instance of <code>PlayableCard</code> using the provided <code>Builder</code>.
      * <p>
@@ -110,6 +112,7 @@ public abstract sealed class PlayableCard implements CardIdentity,
     @Contract(pure = true)
     public abstract boolean isFrontAvailable(@NotNull Corner corner);
 
+    @Override
     public abstract boolean isAvailable(@NotNull Corner corner, boolean isRetro);
 
     /**
