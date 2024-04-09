@@ -150,46 +150,44 @@ public class PlayerField {
               .map(corner -> PlayerField.getPositionIn(position, corner))
               .filter(this.cardsPositioned::containsKey)
               .forEach(tempPos -> {
-                  Corner cornerToCover = PlayerField.getCornerFromPositions(position, tempPos).orElseThrow();
+                  Corner cornerToCover = PlayerField.getCornerFromPositions(position, tempPos)
+                                                    .orElseThrow();
                   this.cardsPositioned.get(tempPos).cover(cornerToCover);
               });
     }
 
-
-    // TODO needs to do the logic to maps CardContainers
-    public void placeStartingCard(StarterCard firstCard, boolean isRetro) throws IllegalPositioningException {
+    public int placeStartingCard(StarterCard firstCard, boolean isRetro) throws IllegalPositioningException {
         Position starterPos = Position.of(0, 0);
         if (this.cardsPositioned.getOrDefault(starterPos, null) == null) {
             this.cardsPositioned.put(starterPos, new CardContainer(firstCard, isRetro));
             this.availablePositions.remove(starterPos);
 
-            Arrays.stream(Corner.values())
-                  .map(corner -> firstCard.checkItemCorner(corner, isRetro))
-                  .forEach(this::addToExposed);
-
-            updatePositions(starterPos, firstCard, isRetro);
-
-
         } else throw new IllegalPositioningException("Cannot place another starter!");
+
+        Arrays.stream(Corner.values())
+              .map(corner -> firstCard.checkItemCorner(corner, isRetro))
+              .forEach(this::addToExposed);
+
+        updatePositions(starterPos, firstCard, isRetro);
+        return 0;
     }
 
-
-    // TODO needs to do the logic to add placed card colors and update maps CardContainers
-    public void place(PlayableCard card, Position position, boolean isRetro) throws IllegalPositioningException {
+    public int place(PlayableCard card, Position position, boolean isRetro) throws IllegalPositioningException {
         if (this.availablePositions.contains(position)) {
             CardContainer temp = new CardContainer(card, isRetro);
             this.cardsPositioned.put(position, temp);
             this.availablePositions.remove(position);
-
-
-            this.placedCardColors.merge(card.getColor(), 1, Integer::sum);
-
-            Arrays.stream(Corner.values())
-                  .map(corner -> card.checkItemCorner(corner, isRetro))
-                  .forEach(this::addToExposed);
-
-            updatePositions(position, card, isRetro);
         } else throw new IllegalPositioningException("Cannot place card in that position!");
+
+        this.placedCardColors.merge(card.getColor(), 1, Integer::sum);
+
+        Arrays.stream(Corner.values())
+              .map(corner -> card.checkItemCorner(corner, isRetro))
+              .forEach(this::addToExposed);
+
+        updatePositions(position, card, isRetro);
+        updateMap(position);
+        return card.countPoints(this, position);
     }
 
     public Set<Position> getAvailablePositions() {
