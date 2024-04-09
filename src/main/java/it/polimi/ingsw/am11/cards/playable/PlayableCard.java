@@ -186,7 +186,7 @@ public abstract sealed class PlayableCard implements CardIdentity,
      * Counts the points obtained from placing the card on the field.
      *
      * @param playerField    the player field to count points from
-     * @param positionOfCard
+     * @param positionOfCard the position of the card to be placed on the field
      * @return the points obtained
      */
     public int countPoints(@NotNull PlayerField playerField, Position positionOfCard) {
