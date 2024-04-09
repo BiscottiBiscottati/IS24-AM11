@@ -3,7 +3,6 @@ package it.polimi.ingsw.am11.cards.playable;
 import it.polimi.ingsw.am11.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
-import it.polimi.ingsw.am11.cards.utils.PointsCountable;
 import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
@@ -30,7 +29,6 @@ import java.util.Set;
  * The class also contains a nested <code>Builder</code> class for creating instances of <code>PlayableCard</code>.
  */
 public abstract sealed class PlayableCard implements CardIdentity,
-                                                     PointsCountable,
                                                      FieldCard permits GoldCard, ResourceCard {
     private final Color color;
     private final int points;
@@ -85,6 +83,7 @@ public abstract sealed class PlayableCard implements CardIdentity,
      * @return color of the <code>PlayableCard</code>
      */
     @Contract(pure = true)
+    @NotNull
     public Color getColor() {
         return color;
     }

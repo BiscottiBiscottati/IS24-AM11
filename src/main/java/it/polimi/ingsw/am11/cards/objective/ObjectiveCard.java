@@ -3,11 +3,11 @@ package it.polimi.ingsw.am11.cards.objective;
 import it.polimi.ingsw.am11.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.cards.utils.CardPattern;
 import it.polimi.ingsw.am11.cards.utils.Item;
-import it.polimi.ingsw.am11.cards.utils.PointsCountable;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.players.PlayerField;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,8 +28,7 @@ import java.util.Objects;
  * The actual implementation of the card's functionality is left to subclasses.
  * These subclasses must provide implementations for the abstract methods defined in this class.
  */
-public abstract class ObjectiveCard implements CardIdentity,
-                                               PointsCountable {
+public abstract class ObjectiveCard implements CardIdentity {
     private final int points;
 
     private final int id;
@@ -164,6 +163,8 @@ public abstract class ObjectiveCard implements CardIdentity,
      */
     @NotNull
     public abstract ObjectiveCardType getType();
+
+    public abstract int countPoints(PlayerField playerField);
 
     // TODO: up for discussion if to use this
     @Nullable
