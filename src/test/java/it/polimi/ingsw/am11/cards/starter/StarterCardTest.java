@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Set;
 
+@SuppressWarnings("DataFlowIssue")
 class StarterCardTest {
 
     private StarterCard starter;
