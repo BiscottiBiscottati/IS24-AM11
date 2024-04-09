@@ -96,10 +96,10 @@ public class PlayerField {
         return corners.stream().reduce(currentPosition, PlayerField::getPositionIn, (a, b) -> b);
     }
 
-    public static Optional<Corner> getCornerFromPositions(@NotNull Position firstPos,
-                                                          @NotNull Position secondPos) {
-        int deltaX = secondPos.x() - firstPos.x();
-        int deltaY = secondPos.y() - firstPos.y();
+    public static Optional<Corner> getCornerFromPositions(@NotNull Position posToCheck,
+                                                          @NotNull Position posTarget) {
+        int deltaX = posTarget.x() - posToCheck.x();
+        int deltaY = posTarget.y() - posToCheck.y();
         if (deltaX == 1 && deltaY == 1) return Optional.of(Corner.TOP_RX);
         if (deltaX == -1 && deltaY == 1) return Optional.of(Corner.TOP_LX);
         if (deltaX == 1 && deltaY == -1) return Optional.of(Corner.DOWN_RX);
@@ -150,13 +150,15 @@ public class PlayerField {
               .map(corner -> PlayerField.getPositionIn(position, corner))
               .filter(this.cardsPositioned::containsKey)
               .forEach(tempPos -> {
-                  Corner cornerToCover = PlayerField.getCornerFromPositions(position, tempPos)
+                  Corner cornerToCover = PlayerField.getCornerFromPositions(tempPos, position)
                                                     .orElseThrow();
                   this.cardsPositioned.get(tempPos).cover(cornerToCover);
               });
     }
 
-    public int placeStartingCard(StarterCard firstCard, boolean isRetro) throws IllegalPositioningException {
+    public int placeStartingCard(StarterCard firstCard,
+                                 boolean isRetro)
+            throws IllegalPositioningException {
         Position starterPos = Position.of(0, 0);
         if (this.cardsPositioned.getOrDefault(starterPos, null) == null) {
             this.cardsPositioned.put(starterPos, new CardContainer(firstCard, isRetro));
@@ -172,7 +174,12 @@ public class PlayerField {
         return 0;
     }
 
-    public int place(PlayableCard card, Position position, boolean isRetro) throws IllegalPositioningException {
+    public int place(PlayableCard card,
+                     Position position,
+                     boolean isRetro)
+            throws IllegalPositioningException {
+        if (Objects.equals(position, Position.of(0, 0)))
+            throw new IllegalPositioningException("Cannot place PlayableCard in starter position!");
         if (this.availablePositions.contains(position)) {
             CardContainer temp = new CardContainer(card, isRetro);
             this.cardsPositioned.put(position, temp);
@@ -194,7 +201,7 @@ public class PlayerField {
         return availablePositions;
     }
 
-    public boolean isPositionAvailable(Position position) {
+    public boolean isAvailable(Position position) {
         return availablePositions.contains(position);
     }
 
