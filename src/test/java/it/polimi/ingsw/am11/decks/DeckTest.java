@@ -26,23 +26,23 @@ class DeckTest {
     }
 
     @Test
-    void drawCard() {
+    void draw() {
         int remainingCards = resourceDeck.getRemainingCards();
-        Assertions.assertNotNull(resourceDeck.drawCard());
+        Assertions.assertNotNull(resourceDeck.draw());
         Assertions.assertEquals(remainingCards - 1, resourceDeck.getRemainingCards());
 
         remainingCards = goldDeck.getRemainingCards();
-        Assertions.assertNotNull(goldDeck.drawCard());
+        Assertions.assertNotNull(goldDeck.draw());
         Assertions.assertEquals(remainingCards - 1, goldDeck.getRemainingCards());
     }
 
     @Test
     void reset() {
-        resourceDeck.drawCard();
+        resourceDeck.draw();
         resourceDeck.reset();
         Assertions.assertEquals(40, resourceDeck.getRemainingCards());
 
-        goldDeck.drawCard();
+        goldDeck.draw();
         goldDeck.reset();
         Assertions.assertEquals(40, goldDeck.getRemainingCards());
     }

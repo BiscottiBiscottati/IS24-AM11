@@ -120,7 +120,7 @@ class ObjectiveDeckFactoryTest {
 
         // Testing uniqueness of the cards
         for (int i = 0; i < 16; i++) {
-            ObjectiveCard card = deck.drawCard();
+            ObjectiveCard card = deck.draw();
 
             // Testing the card not null
             Assertions.assertNotNull(card);

@@ -60,7 +60,7 @@ class GoldDeckFactoryTest {
 
         // Testing the card's properties correctness and uniqueness in database
         for (int i = 0; i < 40; i++) {
-            GoldCard card = deck.drawCard();
+            GoldCard card = deck.draw();
 
             // Testing the card not null
             Assertions.assertNotNull(card);

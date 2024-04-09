@@ -57,7 +57,7 @@ class StarterDeckFactoryTest {
 
         // Testing the presence of unique ids
         for (int i = 0; i < 6; i++) {
-            StarterCard card = deck.drawCard();
+            StarterCard card = deck.draw();
 
             // Testing the card not null
             Assertions.assertNotNull(card);

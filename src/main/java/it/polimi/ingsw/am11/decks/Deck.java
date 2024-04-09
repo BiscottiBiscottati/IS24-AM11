@@ -59,7 +59,7 @@ public class Deck<T extends CardIdentity> {
      *
      * @return The card on top of the deck.
      */
-    public T drawCard() {
+    public T draw() {
         return this.deck.pop();
     }
 

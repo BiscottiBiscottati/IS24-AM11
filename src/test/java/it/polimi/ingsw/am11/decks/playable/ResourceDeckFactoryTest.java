@@ -56,7 +56,7 @@ class ResourceDeckFactoryTest {
 
         // Testing the uniqueness of the cards
         for (int i = 0; i < 40; i++) {
-            ResourceCard card = deck.drawCard();
+            ResourceCard card = deck.draw();
 
             Assertions.assertNotNull(card);
 
