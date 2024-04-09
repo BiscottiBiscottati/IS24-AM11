@@ -8,13 +8,11 @@ import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
+import it.polimi.ingsw.am11.players.Position;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * This class represents a gold card.
@@ -92,16 +90,19 @@ public final class GoldCard extends PlayableCard {
     }
 
     @Override
-    public int countPoints(@NotNull PlayerField playerField) {
+    public int countPoints(@NotNull PlayerField playerField, Position positionOfCard) {
         switch (this.pointsRequirements) {
             case CLASSIC -> {
-                return super.countPoints(playerField);
+                return super.countPoints(playerField, positionOfCard);
             }
             case SYMBOLS -> {
                 return playerField.getNumberOf(this.symbolToCollect) * this.getPoints();
             }
             case COVERING_CORNERS -> {
-                return 0; //TODO : not done yet
+                return (int) (Arrays.stream(Corner.values())
+                                    .map(corner -> PlayerField.getPositionIn(positionOfCard, corner))
+                                    .filter(playerField.getCardsPositioned()::containsKey)
+                                    .count() * this.getPoints());
             }
             default -> throw new IllegalStateException("Unexpected value: " + this.pointsRequirements);
         }

@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
+import it.polimi.ingsw.am11.players.Position;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -184,10 +185,11 @@ public abstract sealed class PlayableCard implements CardIdentity,
     /**
      * Counts the points obtained from placing the card on the field.
      *
-     * @param playerField the player field to count points from
+     * @param playerField    the player field to count points from
+     * @param positionOfCard
      * @return the points obtained
      */
-    public int countPoints(@NotNull PlayerField playerField) {
+    public int countPoints(@NotNull PlayerField playerField, Position positionOfCard) {
         return this.points;
     }
 
