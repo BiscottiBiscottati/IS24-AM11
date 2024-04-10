@@ -107,23 +107,6 @@ public class PlayerField {
         return Optional.empty();
     }
 
-    public Map<Position, CardContainer> getCardsPositioned() {
-        return cardsPositioned;
-    }
-
-    public EnumMap<Color, Integer> getExposedColours() {
-        return exposedColors;
-    }
-
-    public EnumMap<Symbol, Integer> getExposedSymbols() {
-        return exposedSymbols;
-    }
-
-    public EnumMap<Color, Integer> getPlacedCardColours() {
-        return placedCardColors;
-    }
-
-
     private void addToExposed(@NotNull CornerContainer cornerContainer) {
         switch (cornerContainer) {
             case Color color -> this.exposedColors.merge(color, 1, Integer::sum);
@@ -133,7 +116,9 @@ public class PlayerField {
         }
     }
 
-    private void updatePositions(Position position, FieldCard card, boolean isRetro) {
+    private void updatePositions(Position position,
+                                 FieldCard card,
+                                 boolean isRetro) {
         Arrays.stream(Corner.values())
               .filter(corner -> !card.isAvailable(corner, isRetro))
               .map(corner -> PlayerField.getPositionIn(position, corner))
@@ -156,7 +141,7 @@ public class PlayerField {
               });
     }
 
-    public int placeStartingCard(StarterCard firstCard,
+    public int placeStartingCard(@NotNull StarterCard firstCard,
                                  boolean isRetro)
             throws IllegalPositioningException {
         Position starterPos = Position.of(0, 0);
@@ -174,8 +159,8 @@ public class PlayerField {
         return 0;
     }
 
-    public int place(PlayableCard card,
-                     Position position,
+    public int place(@NotNull PlayableCard card,
+                     @NotNull Position position,
                      boolean isRetro)
             throws IllegalPositioningException {
         if (Objects.equals(position, Position.of(0, 0)))
@@ -198,10 +183,10 @@ public class PlayerField {
     }
 
     public Set<Position> getAvailablePositions() {
-        return availablePositions;
+        return Collections.unmodifiableSet(availablePositions);
     }
 
-    public boolean isAvailable(Position position) {
+    public boolean isAvailable(@NotNull Position position) {
         return availablePositions.contains(position);
     }
 
@@ -215,5 +200,20 @@ public class PlayerField {
             }
             default -> throw new IllegalArgumentException("Item not recognized!");
         }
+    }
+
+    public boolean containsCard(@NotNull FieldCard card) {
+        return this.cardsPositioned.values()
+                                   .stream()
+                                   .map(CardContainer::getCard)
+                                   .anyMatch(card::equals);
+    }
+
+    public Map<Position, CardContainer> getCardsPositioned() {
+        return Collections.unmodifiableMap(cardsPositioned);
+    }
+
+    public EnumMap<Color, Integer> getPlacedCardColours() {
+        return (EnumMap<Color, Integer>) Collections.unmodifiableMap(placedCardColors);
     }
 }
