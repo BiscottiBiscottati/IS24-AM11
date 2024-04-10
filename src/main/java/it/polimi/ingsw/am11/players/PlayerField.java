@@ -126,6 +126,7 @@ public class PlayerField {
         Arrays.stream(Corner.values())
               .filter(corner -> card.isAvailable(corner, isRetro))
               .map(corner -> PlayerField.getPositionIn(position, corner))
+              .filter(availablePos -> !this.cardsPositioned.containsKey(availablePos))
               .forEach(this.availablePositions::add);
         this.availablePositions.removeAll(this.closedPositions);
     }
