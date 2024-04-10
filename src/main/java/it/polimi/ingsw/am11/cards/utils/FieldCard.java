@@ -5,6 +5,8 @@ import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 
+import java.util.Set;
+
 /**
  * A common interface for representing all cards that can be positioned on the field.
  * <p>
@@ -23,4 +25,8 @@ public sealed interface FieldCard permits PlayableCard, StarterCard {
     boolean isColorEqual(Color color);
 
     boolean isAvailable(Corner corner, boolean isRetro);
+
+    CornerContainer getItemCorner(Corner corner, boolean isRetro);
+
+    Set<Color> getCenter(boolean isRetro);
 }

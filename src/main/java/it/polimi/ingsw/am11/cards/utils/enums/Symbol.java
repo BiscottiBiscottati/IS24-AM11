@@ -2,6 +2,10 @@ package it.polimi.ingsw.am11.cards.utils.enums;
 
 import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.Item;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * Represents the uncolored symbols contained in the corners of a card.
@@ -27,4 +31,12 @@ public enum Symbol implements CornerContainer, Item {
     public boolean isAvailable() {
         return true;
     }
+
+    @Contract(value = " -> new", pure = true)
+    @Override
+    public @NotNull Optional<Item> getItem() {
+        return Optional.of(this);
+    }
+
+
 }

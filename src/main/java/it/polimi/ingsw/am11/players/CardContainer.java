@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.players;
 
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
+import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * The <code>CardContainer</code> class represents a container for a {@link FieldCard} in the game.
@@ -57,7 +59,7 @@ public class CardContainer {
     }
 
     // TODO this may be redundant but can be used if preferred to constructor
-    @Contract("_ -> new")
+    @Contract("_, _ -> new")
     public static @NotNull CardContainer of(FieldCard card, boolean isRetro) {
         return new CardContainer(card, isRetro);
     }
@@ -83,12 +85,21 @@ public class CardContainer {
         this.coveredCorners.put(corner, true);
     }
 
-    public boolean colorEquals(Color color) {
+    public boolean isColorEquals(Color color) {
         if (color != null) return this.card.isColorEqual(color);
+        return false;
+    }
+
+    public boolean isCardEquals(FieldCard card) {
+        if (card != null) return this.card.equals(card);
         return false;
     }
 
     public boolean isRetro() {
         return isRetro;
+    }
+
+    public Optional<Item> getItemOn(Corner corner) {
+        return this.card.getItemCorner(corner, isRetro).getItem();
     }
 }
