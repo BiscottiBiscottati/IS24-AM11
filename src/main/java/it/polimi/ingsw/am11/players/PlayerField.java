@@ -217,4 +217,8 @@ public class PlayerField {
     public EnumMap<Color, Integer> getPlacedCardColours() {
         return (EnumMap<Color, Integer>) Collections.unmodifiableMap(placedCardColors);
     }
+
+    public void clearAll() {
+        //TODO
+    }
 }
