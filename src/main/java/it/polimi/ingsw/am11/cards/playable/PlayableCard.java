@@ -167,10 +167,10 @@ public abstract sealed class PlayableCard implements CardIdentity,
      */
     @Contract(pure = true)
     @NotNull
-    public abstract CornerContainer checkItemCorner(@NotNull Corner corner);
+    public abstract CornerContainer getItemCorner(@NotNull Corner corner);
 
     // TODO we could return Item instead and eliminate Availability since it can be substituted by isAvailable method
-    public abstract CornerContainer checkItemCorner(@NotNull Corner corner, boolean isRetro);
+    public abstract CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro);
 
     /**
      * Getter method for the symbol to collect if there is any

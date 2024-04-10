@@ -75,22 +75,22 @@ class ResourceCardTest {
     }
 
     @Test
-    void checkItemCorner() {
+    void getItemCorner() {
         for (Corner corner : Corner.values()) {
             switch (corner) {
                 case TOP_LX, TOP_RX -> {
-                    Assertions.assertSame(playable.checkItemCorner(corner), Color.RED);
-                    Assertions.assertSame(resource.checkItemCorner(corner), Color.RED);
+                    Assertions.assertSame(playable.getItemCorner(corner), Color.RED);
+                    Assertions.assertSame(resource.getItemCorner(corner), Color.RED);
                 }
                 default -> {
-                    Assertions.assertSame(Availability.NOT_USABLE, playable.checkItemCorner(corner));
-                    Assertions.assertSame(Availability.NOT_USABLE, resource.checkItemCorner(corner));
+                    Assertions.assertSame(Availability.NOT_USABLE, playable.getItemCorner(corner));
+                    Assertions.assertSame(Availability.NOT_USABLE, resource.getItemCorner(corner));
                 }
             }
             if (corner == Corner.DOWN_LX) {
-                Assertions.assertSame(playable2.checkItemCorner(corner), Color.PURPLE);
+                Assertions.assertSame(playable2.getItemCorner(corner), Color.PURPLE);
             } else {
-                Assertions.assertSame(Availability.NOT_USABLE, playable2.checkItemCorner(corner));
+                Assertions.assertSame(Availability.NOT_USABLE, playable2.getItemCorner(corner));
 
             }
         }
@@ -118,9 +118,9 @@ class ResourceCardTest {
 
     @Test
     void checkNulls() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> playable.checkItemCorner(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> playable.getItemCorner(null));
         Assertions.assertThrows(IllegalArgumentException.class, () -> playable.isFrontAvailable(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> resource.checkItemCorner(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> resource.getItemCorner(null));
         Assertions.assertThrows(IllegalArgumentException.class, () -> resource.isFrontAvailable(null));
     }
 

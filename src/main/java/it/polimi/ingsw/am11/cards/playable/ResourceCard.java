@@ -70,12 +70,12 @@ public final class ResourceCard extends PlayableCard {
     @Override
     @NotNull
     @Contract(pure = true)
-    public CornerContainer checkItemCorner(@NotNull Corner corner) {
+    public CornerContainer getItemCorner(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornerOrItem.get(corner));
     }
 
     @Override
-    public CornerContainer checkItemCorner(@NotNull Corner corner, boolean isRetro) {
+    public CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
         if (isRetro) return Availability.USABLE;
         else return availableCornerOrItem.get(corner);
     }
