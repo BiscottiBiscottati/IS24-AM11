@@ -155,6 +155,8 @@ public class PlayerField {
         Arrays.stream(Corner.values())
               .map(corner -> firstCard.checkItemCorner(corner, isRetro))
               .forEach(this::addToExposed);
+        firstCard.getCenter(isRetro)
+                 .forEach(color -> this.exposedColors.merge(color, 1, Integer::sum));
 
         updatePositions(starterPos, firstCard, isRetro);
         return 0;
@@ -177,6 +179,8 @@ public class PlayerField {
         Arrays.stream(Corner.values())
               .map(corner -> card.checkItemCorner(corner, isRetro))
               .forEach(this::addToExposed);
+
+        // TODO update symbols and colors exposed
 
         updatePositions(position, card, isRetro);
         updateMap(position);
