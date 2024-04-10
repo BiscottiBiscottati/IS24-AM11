@@ -173,6 +173,11 @@ public abstract class ObjectiveCard implements CardIdentity {
         return this.id == ((ObjectiveCard) obj).id;
     }
 
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(this.id);
+    }
+
     public abstract int countPoints(PlayerField playerField);
 
     // TODO: up for discussion if to use this

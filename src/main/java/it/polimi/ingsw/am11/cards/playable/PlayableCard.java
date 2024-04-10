@@ -112,6 +112,11 @@ public abstract sealed class PlayableCard implements CardIdentity,
         return this.id == ((PlayableCard) obj).id;
     }
 
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(this.id);
+    }
+
     /**
      * Checks whether a corner on the front side of a <code>PlayableCard</code> can be covered or not.
      *

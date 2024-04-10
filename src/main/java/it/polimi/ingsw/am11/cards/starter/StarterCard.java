@@ -169,6 +169,11 @@ public final class StarterCard implements FieldCard, CardIdentity {
         return this.id == ((StarterCard) obj).id;
     }
 
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(this.id);
+    }
+
     /**
      * Builder class for the StarterCard.
      * <p>
