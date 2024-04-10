@@ -160,6 +160,15 @@ public final class StarterCard implements FieldCard, CardIdentity {
         return this.id;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (super.equals(obj)) return true;
+
+        if (getClass() != obj.getClass()) return false;
+
+        return this.id == ((StarterCard) obj).id;
+    }
+
     /**
      * Builder class for the StarterCard.
      * <p>

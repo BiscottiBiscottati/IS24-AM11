@@ -164,6 +164,15 @@ public abstract class ObjectiveCard implements CardIdentity {
     @NotNull
     public abstract ObjectiveCardType getType();
 
+    @Override
+    public boolean equals(Object obj) {
+        if (super.equals(obj)) return true;
+
+        if (getClass() != obj.getClass()) return false;
+
+        return this.id == ((ObjectiveCard) obj).id;
+    }
+
     public abstract int countPoints(PlayerField playerField);
 
     // TODO: up for discussion if to use this

@@ -103,6 +103,15 @@ public abstract sealed class PlayableCard implements CardIdentity,
     @NotNull
     public abstract PlayableCardType getType();
 
+    @Override
+    public boolean equals(Object obj) {
+        if (super.equals(obj)) return true;
+
+        if (getClass() != obj.getClass()) return false;
+
+        return this.id == ((PlayableCard) obj).id;
+    }
+
     /**
      * Checks whether a corner on the front side of a <code>PlayableCard</code> can be covered or not.
      *
