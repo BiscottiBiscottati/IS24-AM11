@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.players;
 
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
@@ -21,12 +22,14 @@ import java.util.stream.Stream;
 class PlayerFieldTest {
     static Deck<ResourceCard> resourceDeck;
     static Deck<StarterCard> starterDeck;
+    static Random gen;
     PlayerField playerField;
 
     @BeforeAll
     static void beforeAll() {
         resourceDeck = ResourceDeckFactory.createDeck();
         starterDeck = StarterDeckFactory.createDeck();
+        gen = new Random();
     }
 
     @BeforeEach
@@ -105,12 +108,13 @@ class PlayerFieldTest {
 
         firstPos = Position.of(0, 0);
         for (int i = 0; i < 100; i++) {
-            Random random = new Random();
-            secondPos = Position.of(random.nextInt(2, 100), random.nextInt(2, 100));
+            secondPos = Position.of(gen.nextInt(2, 100), gen.nextInt(2, 100));
             Assertions.assertEquals(Optional.empty(),
                                     PlayerField.getCornerFromPositions(firstPos, secondPos));
 
-            secondPos = Position.of(random.nextInt(-100, -2), random.nextInt(-100, -2));
+            secondPos = Position.of(gen.nextInt(-100, -2), gen.nextInt(-100, -2));
+            Assertions.assertEquals(Optional.empty(),
+                                    PlayerField.getCornerFromPositions(firstPos, secondPos));
         }
     }
 
@@ -118,24 +122,55 @@ class PlayerFieldTest {
     void getCardsPositioned() {
         Map<Position, CardContainer> positionedCards = playerField.getCardsPositioned();
         Assertions.assertTrue(positionedCards.isEmpty());
+
+        StarterCard starter = starterDeck.draw();
+        Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(starter, true));
+        Assertions.assertEquals(1, positionedCards.size());
+        Assertions.assertTrue(positionedCards.containsKey(Position.of(0, 0)));
+        Assertions.assertTrue(playerField.containsCard(starter));
+
+        ResourceCard resource = resourceDeck.draw();
+        Assertions.assertDoesNotThrow(() -> playerField.place(resource, Position.of(1, 1), false));
+        Assertions.assertEquals(2, positionedCards.size());
+        Assertions.assertTrue(positionedCards.containsKey(Position.of(1, 1)));
+        Assertions.assertTrue(positionedCards.containsKey(Position.of(0, 0)));
+        Assertions.assertTrue(playerField.containsCard(resource));
+        Assertions.assertTrue(playerField.containsCard(starter));
     }
 
     @Test
     void getPlacedCardColours() {
         EnumMap<Color, Integer> placedCardColors = playerField.getPlacedCardColours();
         placedCardColors.forEach((color, integer) -> Assertions.assertEquals(0, integer));
+
+        StarterCard starter = starterDeck.draw();
+        Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(starter, true));
+        placedCardColors.forEach((color, integer) -> Assertions.assertEquals(0, integer));
+
+        ResourceCard resourceCard = resourceDeck.draw();
+        Color colorOfCard = resourceCard.getColor();
+        Assertions.assertDoesNotThrow(() -> playerField.place(resourceCard, Position.of(1, 1), false));
+        Assertions.assertEquals(1, placedCardColors.get(colorOfCard));
     }
 
     @Test
     void placeStartingCard() {
         StarterCard starterCard = starterDeck.draw();
         AtomicInteger actual = new AtomicInteger();
-        Assertions.assertDoesNotThrow(() -> {
-            actual.set(playerField.placeStartingCard(starterCard, true));
-        });
+
+        // Testing placing a StarterCard on its retro
+        Assertions.assertDoesNotThrow(() -> actual.set(
+                playerField.placeStartingCard(starterCard, true))
+        );
+
+        // Checking that the card gives 0 points
         Assertions.assertEquals(0, actual.get());
 
+        // Checking that the card is placed and the position is not available
         Assertions.assertFalse(playerField.isAvailable(Position.of(0, 0)));
+        Assertions.assertTrue(playerField.containsCard(starterCard));
+
+        // Testing illegal positioning of another starter
         StarterCard secondStarter = starterDeck.draw();
         Assertions.assertThrows(IllegalPositioningException.class,
                                 () -> playerField.placeStartingCard(secondStarter, false));
@@ -143,19 +178,86 @@ class PlayerFieldTest {
 
     @Test
     void place() {
+        Set<FieldCard> placedCards = new HashSet<>(40);
+        Set<Position> placedPos = new HashSet<>(40);
         ResourceCard resourceCard = resourceDeck.draw();
+        Set<Position> availablePos = playerField.getAvailablePositions();
+        AtomicInteger pointsGiven = new AtomicInteger();
+        int pointsExpected;
+
+        // Testing placing a card on the starter position
+        Assertions.assertThrows(IllegalPositioningException.class,
+                                () -> pointsGiven.set(
+                                        playerField.place(resourceCard,
+                                                          Position.of(0, 0),
+                                                          false)));
+
+        // Checking that no points have been given
+        Assertions.assertEquals(0, pointsGiven.get());
+
+        // Placing a StarterCard on its retro
+        StarterCard starter = starterDeck.draw();
+        placedCards.add(starter);
+        Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(starter, true));
+        placedPos.add(Position.of(0, 0));
+
+        // Placing a ResourceCard on (1, 1)
+        Assertions.assertDoesNotThrow(() -> pointsGiven.set(
+                playerField.place(resourceCard, Position.of(1, 1), false))
+        );
+        placedCards.add(resourceCard);
+        placedPos.add(Position.of(1, 1));
+
+        // Checking that the card gives the expected points
+        pointsExpected = resourceCard.getPoints();
+        Assertions.assertEquals(pointsExpected, pointsGiven.get());
+
+        // Checking that the cards are placed and the positions are not available
+        placedPos.forEach(pos -> Assertions.assertFalse(playerField.isAvailable(pos)));
+        placedCards.forEach(card -> Assertions.assertTrue(playerField.containsCard(card)));
+
+        // Testing illegal positioning to same position
+        Assertions.assertThrows(IllegalPositioningException.class,
+                                () -> playerField.place(resourceCard,
+                                                        Position.of(1, 1),
+                                                        false));
+
+        // Testing illegal positioning to starter position
         Assertions.assertThrows(IllegalPositioningException.class,
                                 () -> playerField.place(resourceCard,
                                                         Position.of(0, 0),
                                                         false));
 
-        Assertions.assertDoesNotThrow(() -> {
-            playerField.placeStartingCard(starterDeck.draw(), true);
-        });
-        Assertions.assertDoesNotThrow(() -> {
-            playerField.place(resourceCard, Position.of(1, 1), false);
-        });
-        Assertions.assertFalse(playerField.isAvailable(Position.of(1, 1)));
+        // Checking nothing has changed from the previous state
+        placedCards.forEach(card -> Assertions.assertTrue(playerField.containsCard(card)));
+        placedPos.forEach(pos -> Assertions.assertFalse(playerField.isAvailable(pos)));
+
+        // Testing random placements on its retro
+        for (int i = 0; i < 4; i++) {
+
+            // Getting a random subset of available positions
+            List<Position> posToPlace = availablePos.stream()
+                                                    .filter(pos -> gen.nextBoolean())
+                                                    .toList();
+            // Placing the cards
+            for (Position position : posToPlace) {
+                ResourceCard card = resourceDeck.draw();
+                placedCards.add(card);
+                Assertions.assertDoesNotThrow(() -> pointsGiven.set(
+                        playerField.place(card, position, true))
+                );
+                placedPos.add(position);
+
+                // Checking that the card gives the expected points
+                pointsExpected = card.getPoints();
+                Assertions.assertEquals(pointsExpected, pointsGiven.get());
+            }
+
+            // Checking that the cards are placed and the positions are not available
+            placedCards.forEach(card -> Assertions.assertTrue(playerField.containsCard(card)));
+            placedPos.forEach(pos -> Assertions.assertFalse(playerField.isAvailable(pos)));
+
+        }
     }
 
     @Test
@@ -196,5 +298,26 @@ class PlayerFieldTest {
         Stream.concat(Stream.of(Color.values()),
                       Stream.of(Symbol.values()))
               .forEach(item -> Assertions.assertEquals(0, playerField.getNumberOf(item)));
+
+        // Place a StarterCard on its retro
+        StarterCard starterCard = starterDeck.draw();
+        Assertions.assertDoesNotThrow(() -> {
+            playerField.placeStartingCard(starterCard, true);
+        });
+
+        // Checking that colors have been updated and symbol are 0 because of StarterCard retro
+        Stream.of(Color.values())
+              .forEach(color -> Assertions.assertEquals(1, playerField.getNumberOf(color)));
+        Stream.of(Symbol.values())
+              .forEach(symbol -> Assertions.assertEquals(0, playerField.getNumberOf(symbol)));
+
+        // Place a ResourceCard on (1, 1)
+        ResourceCard resourceCard = resourceDeck.draw();
+        Assertions.assertDoesNotThrow(() -> {
+            playerField.place(resourceCard, Position.of(1, 1), false);
+        });
+
+        // TODO to complete
+
     }
 }

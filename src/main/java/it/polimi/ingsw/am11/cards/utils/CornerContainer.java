@@ -19,6 +19,8 @@ import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
  */
 public sealed interface CornerContainer permits Availability, Color, Symbol {
 
+    // TODO may be deleted as it does not seem to have a use
+
     /**
      * A method to get the corner container with the given name.
      * <p>

@@ -169,6 +169,7 @@ public abstract sealed class PlayableCard implements CardIdentity,
     @NotNull
     public abstract CornerContainer checkItemCorner(@NotNull Corner corner);
 
+    // TODO we could return Item instead and eliminate Availability since it can be substituted by isAvailable method
     public abstract CornerContainer checkItemCorner(@NotNull Corner corner, boolean isRetro);
 
     /**
