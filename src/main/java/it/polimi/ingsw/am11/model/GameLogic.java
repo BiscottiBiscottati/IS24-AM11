@@ -299,25 +299,34 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public int drawFromGoldDeck(String nickname) {
+    public int drawFromGoldDeck(String nickname) throws GameBreakingException {
         try {
-            int cardID = pickablesTable.pickCardFrom(DeckType.GOLD).getId();
-            PlayableCard card = pickablesTable.getPlayableByID(cardID).orElseThrow();
-            players.get(nickname).space().addCardToHand(card);
-            return cardID;
+            if (players.get(nickname).space().availableSpaceInHand() >= 1) {
+                int cardID = pickablesTable.pickCardFrom(DeckType.GOLD).getId();
+                PlayableCard card = pickablesTable.getPlayableByID(cardID).orElseThrow();
+                players.get(nickname).space().addCardToHand(card);
+                return cardID;
+            } else {
+                throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
+            }
         } catch (Exception e) {
-            //TODO handle this exception
+            throw new GameBreakingException(
+                    "We have lost a card due to picking it from the deck and not being able to put it anywere"
+            );
         }
-        return -1; //TODO what should i do?
     }
 
     @Override
     public int drawFromResourceDeck(String nickname) {
         try {
-            int cardID = pickablesTable.pickCardFrom(DeckType.GOLD).getId();
-            PlayableCard card = pickablesTable.getPlayableByID(cardID).orElseThrow();
-            players.get(nickname).space().addCardToHand(card);
-            return cardID;
+            if (players.get(nickname).space().availableSpaceInHand() >= 1) {
+                int cardID = pickablesTable.pickCardFrom(DeckType.GOLD).getId();
+                PlayableCard card = pickablesTable.getPlayableByID(cardID).orElseThrow();
+                players.get(nickname).space().addCardToHand(card);
+                return cardID;
+            } else {
+                
+            }
         } catch (Exception e) {
             //TODO handle this exception
         }
