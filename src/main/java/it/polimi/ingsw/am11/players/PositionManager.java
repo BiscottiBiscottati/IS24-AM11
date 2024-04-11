@@ -60,6 +60,13 @@ public class PositionManager {
         return Optional.empty();
     }
 
+    void reset() {
+        this.availablePositions.clear();
+        this.availablePositions.add(Position.of(0, 0));
+        this.closedPositions.clear();
+        this.cardsPositioned.clear();
+    }
+
     List<Item> placeCard(@NotNull FieldCard card,
                          @NotNull Position position,
                          boolean isRetro)

@@ -19,32 +19,38 @@ public class ExposedItemManager {
     private final EnumMap<Symbol, Integer> exposedSymbols;
     private final EnumMap<Color, Integer> placedCardColors;
 
-    protected ExposedItemManager() {
+    ExposedItemManager() {
         exposedColors = EnumMapUtils.Init(Color.class, 0);
         exposedSymbols = EnumMapUtils.Init(Symbol.class, 0);
         placedCardColors = EnumMapUtils.Init(Color.class, 0);
     }
 
-    protected void addToExposed(@NotNull Item item) {
+    void reset() {
+        exposedColors.replaceAll((color, count) -> 0);
+        exposedSymbols.replaceAll((symbol, count) -> 0);
+        placedCardColors.replaceAll((color, count) -> 0);
+    }
+
+    void addToExposed(@NotNull Item item) {
         switch (item) {
             case Color color -> this.exposedColors.merge(color, 1, Integer::sum);
             case Symbol symbol -> this.exposedSymbols.merge(symbol, 1, Integer::sum);
         }
     }
 
-    protected void subToExposed(@NotNull Item item) {
+    void subToExposed(@NotNull Item item) {
         switch (item) {
             case Color color -> this.exposedColors.merge(color, -1, Integer::sum);
             case Symbol symbol -> this.exposedSymbols.merge(symbol, -1, Integer::sum);
         }
     }
 
-    protected void addCardColor(@NotNull Color color) {
+    void addCardColor(@NotNull Color color) {
         this.placedCardColors.merge(color, 1, Integer::sum);
     }
 
-    protected void addExposedItemOn(@NotNull FieldCard card,
-                                    boolean isRetro) {
+    void addExposedItemOn(@NotNull FieldCard card,
+                          boolean isRetro) {
         // add card's corner items to exposed counter
         Stream.of(Corner.values())
               .map(corner -> card.getItemCorner(corner, isRetro).getItem())

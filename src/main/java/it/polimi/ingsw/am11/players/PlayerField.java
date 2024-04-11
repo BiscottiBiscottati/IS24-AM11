@@ -22,6 +22,11 @@ public class PlayerField {
         this.positionManager = new PositionManager();
     }
 
+    public void clearAll() {
+        this.itemManager.reset();
+        this.positionManager.reset();
+    }
+
     public int placeStartingCard(@NotNull StarterCard firstCard,
                                  boolean isRetro)
             throws IllegalPositioningException {
@@ -82,7 +87,4 @@ public class PlayerField {
         return this.itemManager.getNumberPlacedCardOf(color);
     }
 
-    public void clearAll() {
-        //TODO
-    }
 }
