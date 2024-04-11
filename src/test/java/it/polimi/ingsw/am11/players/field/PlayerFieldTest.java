@@ -1,12 +1,16 @@
 package it.polimi.ingsw.am11.players.field;
 
+import it.polimi.ingsw.am11.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
+import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.decks.Deck;
+import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
@@ -24,6 +28,7 @@ import java.util.stream.Stream;
 class PlayerFieldTest {
     static Deck<ResourceCard> resourceDeck;
     static Deck<StarterCard> starterDeck;
+    static Deck<GoldCard> goldDeck;
     static Random gen;
     PlayerField playerField;
 
@@ -31,6 +36,7 @@ class PlayerFieldTest {
     static void beforeAll() {
         resourceDeck = ResourceDeckFactory.createDeck();
         starterDeck = StarterDeckFactory.createDeck();
+        goldDeck = GoldDeckFactory.createDeck();
         gen = new Random();
     }
 
@@ -221,9 +227,13 @@ class PlayerFieldTest {
 
     @Test
     void getNumberOf() {
+        Map<Item, Integer> itemCount = new HashMap<>(16);
         Stream.concat(Stream.of(Color.values()),
                       Stream.of(Symbol.values()))
-              .forEach(item -> Assertions.assertEquals(0, playerField.getNumberOf(item)));
+              .forEach(item -> {
+                  Assertions.assertEquals(0, playerField.getNumberOf(item));
+                  itemCount.put(item, 0);
+              });
 
         // Place a StarterCard on its retro
         StarterCard starterCard = starterDeck.draw();
@@ -233,7 +243,10 @@ class PlayerFieldTest {
 
         // Checking that colors have been updated and symbol are 0 because of StarterCard retro
         Stream.of(Color.values())
-              .forEach(color -> Assertions.assertEquals(1, playerField.getNumberOf(color)));
+              .forEach(color -> {
+                  Assertions.assertEquals(1, playerField.getNumberOf(color));
+                  itemCount.put(color, 1);
+              });
         Stream.of(Symbol.values())
               .forEach(symbol -> Assertions.assertEquals(0, playerField.getNumberOf(symbol)));
 
@@ -243,7 +256,22 @@ class PlayerFieldTest {
             playerField.place(resourceCard, Position.of(1, 1), false);
         });
 
-        // TODO to complete
+        starterCard.getItemCorner(Corner.TOP_RX, true)
+                   .getItem()
+                   .ifPresent(item -> {
+                       itemCount.merge(item, -1, Integer::sum);
+                   });
+        Stream.of(Corner.values())
+              .map(corner -> resourceCard.getItemCorner(corner, false))
+              .map(CornerContainer::getItem)
+              .filter(Optional::isPresent)
+              .map(Optional::get)
+              .forEach(item -> {
+                  itemCount.merge(item, 1, Integer::sum);
+              });
+
+        Stream.concat(Stream.of(Color.values()), Stream.of(Symbol.values()))
+              .forEach(item -> Assertions.assertEquals(itemCount.get(item), playerField.getNumberOf(item)));
 
     }
 
@@ -263,6 +291,14 @@ class PlayerFieldTest {
 
     @Test
     void containsCard() {
+        StarterCard card = starterDeck.draw();
+        Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(card, true));
+        Assertions.assertTrue(playerField.containsCard(card));
+
+        ResourceCard resourceCard = resourceDeck.draw();
+        Assertions.assertDoesNotThrow(() -> playerField.place(resourceCard, Position.of(1, 1), true));
+        Assertions.assertTrue(playerField.containsCard(resourceCard));
+        Assertions.assertFalse(playerField.containsCard(resourceDeck.draw()));
     }
 
     @Test
@@ -271,10 +307,19 @@ class PlayerFieldTest {
         Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(card, true));
         Stream.of(Color.values())
               .forEach(color -> Assertions.assertEquals(0, playerField.getNumberOfPositionedColor(color)));
+
         ResourceCard resourceCard = resourceDeck.draw();
         Assertions.assertDoesNotThrow(() -> playerField.place(resourceCard,
                                                               Position.of(1, 1),
                                                               true));
+        Assertions.assertEquals(1, playerField.getNumberOfPositionedColor(resourceCard.getColor()));
+    }
 
+    @Test
+    void isRequirementMet() {
+        StarterCard card = starterDeck.draw();
+        Assertions.assertTrue(playerField.isRequirementMet(card));
+        Assertions.assertTrue(playerField.isRequirementMet(resourceDeck.draw()));
+        Assertions.assertFalse(playerField.isRequirementMet(goldDeck.draw()));
     }
 }
