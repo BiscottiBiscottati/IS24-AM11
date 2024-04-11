@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.*;
+import it.polimi.ingsw.am11.players.field.PlayerField;
 import it.polimi.ingsw.am11.table.PickablesTable;
 import it.polimi.ingsw.am11.table.Plateau;
 

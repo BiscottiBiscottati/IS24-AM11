@@ -1,11 +1,17 @@
-package it.polimi.ingsw.am11.players;
+package it.polimi.ingsw.am11.players.field;
 
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
+<<<<<<< HEAD:src/main/java/it/polimi/ingsw/am11/players/PlayerField.java
 import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
+=======
+import it.polimi.ingsw.am11.exceptions.IllegalPositioningException;
+import it.polimi.ingsw.am11.players.CardContainer;
+import it.polimi.ingsw.am11.players.Position;
+>>>>>>> e7bd3f1727b2ce1303b77f6696d2800a512bd464:src/main/java/it/polimi/ingsw/am11/players/field/PlayerField.java
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
