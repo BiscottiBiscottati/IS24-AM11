@@ -258,17 +258,13 @@ class PlayerFieldTest {
 
         starterCard.getItemCorner(Corner.TOP_RX, true)
                    .getItem()
-                   .ifPresent(item -> {
-                       itemCount.merge(item, -1, Integer::sum);
-                   });
+                   .ifPresent(item -> itemCount.merge(item, -1, Integer::sum));
         Stream.of(Corner.values())
               .map(corner -> resourceCard.getItemCorner(corner, false))
               .map(CornerContainer::getItem)
               .filter(Optional::isPresent)
               .map(Optional::get)
-              .forEach(item -> {
-                  itemCount.merge(item, 1, Integer::sum);
-              });
+              .forEach(item -> itemCount.merge(item, 1, Integer::sum));
 
         Stream.concat(Stream.of(Color.values()), Stream.of(Symbol.values()))
               .forEach(item -> Assertions.assertEquals(itemCount.get(item), playerField.getNumberOf(item)));

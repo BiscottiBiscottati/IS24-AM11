@@ -51,11 +51,10 @@ public class PlayerField {
         // Check if starter position is available and position the card
         if (Objects.equals(position, Position.of(0, 0)))
             throw new IllegalCardPlacingException("Cannot place PlayableCard in starter position!");
+
+        // Position and update exposed items
         this.positionManager.placeCard(card, position, isRetro)
                             .forEach(this.itemManager::subToExposed);
-
-        // Update exposed items
-        // FIXME does it remove covered colors and items?
         this.itemManager.addCardColor(card.getColor());
         this.itemManager.addExposedItemOn(card, isRetro);
 
