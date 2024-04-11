@@ -90,7 +90,7 @@ public class Deck<T extends CardIdentity> {
         return Optional.ofNullable(mappingIdToCard.getOrDefault(id, null));
     }
 
-    public Optional<T> getTopCard() {
+    public Optional<T> peekTopCard() {
         return Optional.ofNullable(deck.peek());
     }
 }
