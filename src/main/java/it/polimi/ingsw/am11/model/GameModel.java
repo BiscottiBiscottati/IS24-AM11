@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
+import it.polimi.ingsw.am11.exceptions.IllegalPositioningException;
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerColor;
@@ -41,7 +42,9 @@ public interface GameModel {
 
     List<Integer> getCommonObjectives();
 
-    List<Integer> getExposedCards();
+    List<Integer> getExposedGoldsCrd();
+
+    List<Integer> getExposedResourcesCrd();
     //endregion
 
     //region GetterPlateau
@@ -63,6 +66,12 @@ public interface GameModel {
     void shufflePlayers();
 
     void setStartingPlayer();
+
+    int pickStarter();
+
+    int pickObjective();
+
+    void setStarterFor(String nickname, int cardID, boolean isRetro) throws IllegalPositioningException;
     //endregion
 
     //region TurnsActions
@@ -72,6 +81,10 @@ public interface GameModel {
     void placeCard();
 
     void drawCardFrom();
+
+    void drawVisibleGold(String nickname, int ID);
+
+    void drawVisibleResource(String nickname, int ID);
     //endregion
 
 }

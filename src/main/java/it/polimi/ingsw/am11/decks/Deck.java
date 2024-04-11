@@ -86,7 +86,8 @@ public class Deck<T extends CardIdentity> {
      * @param id The id of the card to get.
      * @return The card with the given id, if present.
      */
-    Optional<T> getCardById(int id) {
+    public Optional<T> getCardById(int id) {
         return Optional.ofNullable(mappingIdToCard.getOrDefault(id, null));
     }
+
 }

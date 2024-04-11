@@ -21,6 +21,7 @@ public class Plateau {
         this.finalLeaderboard = new HashMap<>(8);
     }
 
+
     public boolean isArmageddonTime() {
         return isArmageddonTime;
     }
@@ -30,6 +31,10 @@ public class Plateau {
                     .forEach(
                             player -> playerPoints.put(player, 0)
                     );
+        finalLeaderboard.keySet()
+                        .forEach(
+                                player -> finalLeaderboard.put(player, null)
+                        );
     }
 
     public void addPlayer(Player newPlayer) {

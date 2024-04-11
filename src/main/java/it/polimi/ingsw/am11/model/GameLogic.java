@@ -2,8 +2,11 @@ package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
+import it.polimi.ingsw.am11.exceptions.IllegalPositioningException;
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.players.*;
 import it.polimi.ingsw.am11.table.PickablesTable;
@@ -98,12 +101,20 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
-    @Override //DONE
-    public List<Integer> getExposedCards() {
-        return pickablesTable.getShownCards().stream()
+    @Override
+    public List<Integer> getExposedGoldsCrd() {
+        return pickablesTable.getShownGold().stream()
                              .map(PlayableCard::getId)
                              .toList();
     }
+
+    @Override
+    public List<Integer> getExposedResourcesCrd() {
+        return pickablesTable.getShownResources().stream()
+                             .map(PlayableCard::getId)
+                             .toList();
+    }
+
 
     // TODO getResourceDeckTop and getGoldDeckTop can be combined into one method with argument the deckType to look
     @Override //DONE
@@ -153,6 +164,27 @@ public class GameLogic implements GameModel {
     //-
     @Override
     public void initGame() {
+        shufflePlayers();
+        setStartingPlayer();
+        players.values().stream()
+               .map(Player::space)
+               .forEach(PersonalSpace::clearAll);
+        players.values().stream()
+               .map(Player::field)
+               .forEach(PlayerField::clearAll);
+        plateau.reset();
+        pickablesTable.resetToInitialCondition();
+        pickablesTable.shuffleAllDecks();
+        pickablesTable.pickCommonObjectives();
+        for (int i = 0; i < ruleSet.getMaxRevealedCardsPerType(); i++) {
+            try {
+                pickablesTable.supplyGoldVisibles();
+            } catch (Exception e) {
+                System.out.println(e);
+                //TODO this exception should be handled in a better way
+            }
+
+        }
 
     }
 
@@ -184,22 +216,50 @@ public class GameLogic implements GameModel {
         }
     }
 
-    @Override
+    @Override //DONE
     public void shufflePlayers() {
         Collections.shuffle(playerQueue);
     }
 
 
-    @Override
+    @Override //DONE
     public void setStartingPlayer() {
         firstPlayer = playerQueue.getFirst();
         currentPlaying = playerQueue.removeFirst();
     }
 
+    @Override //DONE
+    public int pickStarter() {
+        return pickablesTable.pickCardFrom(DeckType.STARTER).getId();
+    }
+
+    @Override //DONE
+    public void setStarterFor(String nickname, int cardID, boolean isRetro) throws IllegalPositioningException {
+        StarterCard starterCard = pickablesTable.getStarterByID(cardID).orElseThrow();
+        players.get(nickname).field().placeStartingCard(starterCard, isRetro);
+    }
+
+    @Override //DONE
+    public int pickObjective() {
+        return pickablesTable.pickCardFrom(DeckType.OBJECTIVE).getId();
+    }
+
+    public void setObjectiveFor(String nickname, int cardID) {
+        //The rules book says that unused objectives have to be returned to the deck, but it seems like
+        //a useless action
+        ObjectiveCard objectiveCard = pickablesTable.getObjectiveByID(cardID).orElseThrow();
+        try {
+            players.get(nickname).space().addObjective(objectiveCard);
+        } catch (Exception e) {
+            System.out.println(e);
+            //TODO this exception should be handled in a better way
+        }
+    }
+
     //endregion
 
     //region TurnsActions
-    @Override
+    @Override //DONE
     public void goNextTurn() {
         playerQueue.addLast(currentPlaying);
         currentPlaying = playerQueue.removeFirst();
@@ -214,5 +274,28 @@ public class GameLogic implements GameModel {
     public void drawCardFrom() {
 
     }
+
+    @Override
+    public void drawVisibleGold(String nickname, int ID) {
+        try {
+            PlayableCard card = pickablesTable.pickGoldVisible(ID);
+            players.get(nickname).space().addCardToHand(card);
+        } catch (Exception e) {
+            //TODO handle this exception
+        }
+
+    }
+
+    @Override
+    public void drawVisibleResource(String nickname, int ID) {
+        try {
+            PlayableCard card = pickablesTable.pickResourceVisibles(ID);
+            players.get(nickname).space().addCardToHand(card);
+        } catch (Exception e) {
+            //TODO handle this exception
+        }
+
+    }
+
     //endregion
 }
