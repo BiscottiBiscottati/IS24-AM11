@@ -43,14 +43,14 @@ public class PersonalSpace {
 //        playerObjective = newObjective;
 //    }
 //
-//    public void pickCard(PlayableCard cardToPick) {
-//        if (playerHand.contains(cardToPick)) {
-//            playerHand.remove(cardToPick);
-//        } else {
-//            //throw not card in hand exception
-//        }
-//    }
-//
+    public void pickCard(PlayableCard cardToPick) {
+        if (playerHand.contains(cardToPick)) {
+            playerHand.remove(cardToPick);
+        } else {
+            //throw not card in hand exception
+        }
+    }
+
     //clear both hand and objective
     public void addObjective(ObjectiveCard newObjective) throws IllegalPlayerSpaceActionException {
         if (playerObjective.size() < maxObjectives) {

@@ -72,15 +72,19 @@ public interface GameModel {
     int pickObjective();
 
     void setStarterFor(String nickname, int cardID, boolean isRetro) throws IllegalPositioningException;
+
+    void setObjectiveFor(String nickname, int cardID);
     //endregion
 
     //region TurnsActions
 
     void goNextTurn();
 
-    void placeCard();
+    void placeCard(String Nickname, int ID, Position position, boolean isRetro) throws IllegalPositioningException;
 
-    void drawCardFrom();
+    int drawFromGoldDeck(String nickname);
+
+    int drawFromResourceDeck(String nickname);
 
     void drawVisibleGold(String nickname, int ID);
 

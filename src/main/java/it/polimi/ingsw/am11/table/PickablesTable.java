@@ -59,6 +59,15 @@ public class PickablesTable {
         return null;
     }
 
+    public Optional<PlayableCard> getPlayableByID(int id) {
+        Optional<PlayableCard> temp = decks.get(DeckType.RESOURCE).getCardById(id);
+        if (temp.isPresent()) {
+            return temp;
+        } else {
+            return decks.get(DeckType.GOLD).getCardById(id);
+        }
+    }
+
     public Optional<StarterCard> getStarterByID(int id) {
         return decks.get(DeckType.STARTER).getCardById(id);
     }

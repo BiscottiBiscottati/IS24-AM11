@@ -41,13 +41,13 @@ public class Plateau {
         playerPoints.put(newPlayer, 0);
     }
 
-    public void addPlayerPoints(Player playerName, int points) throws IllegalPlateauActionException {
-        Integer temp = playerPoints.getOrDefault(playerName, null);
+    public void addPlayerPoints(Player player, int points) throws IllegalPlateauActionException {
+        Integer temp = playerPoints.getOrDefault(player, null);
         if (temp == null) {
             throw new IllegalPlateauActionException("Player not found");
         } else {
             temp += points;
-            playerPoints.put(playerName, temp);
+            playerPoints.put(player, temp);
         }
         if (temp >= armageddonTime) {
             isArmageddonTime = true;

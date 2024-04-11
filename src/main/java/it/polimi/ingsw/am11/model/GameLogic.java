@@ -266,13 +266,46 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void placeCard() {
-
+    public void placeCard(String nickname, int ID, Position position, boolean isRetro) throws IllegalPositioningException {
+        Player player = players.get(nickname);
+        PlayableCard card = pickablesTable.getPlayableByID(ID).orElseThrow();
+        if (player.field().isAvailable(position)) {
+            try {
+                int points = player.field().place(card, position, isRetro);
+                player.space().pickCard(card);
+                plateau.addPlayerPoints(player, points);
+            } catch (Exception e) {
+                //TODO
+            }
+        } else {
+            throw new IllegalPositioningException("Chosen position is not available");
+        }
     }
 
     @Override
-    public void drawCardFrom() {
+    public int drawFromGoldDeck(String nickname) {
+        try {
+            int cardID = pickablesTable.pickCardFrom(DeckType.GOLD).getId();
+            PlayableCard card = pickablesTable.getPlayableByID(cardID).orElseThrow();
+            players.get(nickname).space().addCardToHand(card);
+            return cardID;
+        } catch (Exception e) {
+            //TODO handle this exception
+        }
+        return -1; //TODO what should i do?
+    }
 
+    @Override
+    public int drawFromResourceDeck(String nickname) {
+        try {
+            int cardID = pickablesTable.pickCardFrom(DeckType.GOLD).getId();
+            PlayableCard card = pickablesTable.getPlayableByID(cardID).orElseThrow();
+            players.get(nickname).space().addCardToHand(card);
+            return cardID;
+        } catch (Exception e) {
+            //TODO handle this exception
+        }
+        return -1; //TODO what should i do?
     }
 
     @Override
