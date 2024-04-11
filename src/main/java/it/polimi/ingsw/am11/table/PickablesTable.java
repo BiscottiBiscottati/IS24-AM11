@@ -47,25 +47,25 @@ public class PickablesTable {
     }
 
     public List<PlayableCard> getShownGold() {
-        //TODO
-        return null;
+        ArrayList<PlayableCard> playableCards = new ArrayList<>(shownGold);
+        return playableCards;
+
     }
 
     public List<PlayableCard> getShownResources() {
-        //TODO
-        return null;
+        ArrayList<PlayableCard> playableCards = new ArrayList<>(shownResources);
+        return playableCards;
     }
 
     public Color getResourceDeckTop() {
-        //TODO
+        //return decks.get(DeckType.RESOURCE).peekTopCard().map(PlayableCard::getColor).orElse(null);
         return null;
     }
+
 
     public Color getGoldDeckTop() {
-        //TODO
         return null;
     }
-
     public Optional<PlayableCard> getPlayableByID(int id) {
         Optional<PlayableCard> temp = decks.get(DeckType.RESOURCE).getCardById(id);
         if (temp.isPresent()) {

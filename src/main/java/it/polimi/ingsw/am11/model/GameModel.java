@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.model;
 
+import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.CardContainer;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.am11.players.Position;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public interface GameModel {
@@ -34,7 +36,7 @@ public interface GameModel {
     //endregion
 
     //region GetterPickableTable
-    Color getResourceDeckTop();
+    Optional<PlayableCard> getResourceDeckTop();
 
     Color getGoldDeckTop();
 

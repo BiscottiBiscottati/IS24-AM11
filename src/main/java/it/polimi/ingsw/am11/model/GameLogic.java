@@ -117,7 +117,7 @@ public class GameLogic implements GameModel {
 
     // TODO getResourceDeckTop and getGoldDeckTop can be combined into one method with argument the deckType to look
     @Override //DONE
-    public Color getResourceDeckTop() {
+    public Optional<PlayableCard> getResourceDeckTop() {
         return pickablesTable.getResourceDeckTop();
     }
 
