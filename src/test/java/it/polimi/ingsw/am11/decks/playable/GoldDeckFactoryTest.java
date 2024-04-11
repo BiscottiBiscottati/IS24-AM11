@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 class GoldDeckFactoryTest {
@@ -53,18 +54,19 @@ class GoldDeckFactoryTest {
         // Testing the creation of a GoldDeck
         Assertions.assertNotNull(deck);
 
-        // Testing size of the deck
+        // Testing the size of the deck
         Assertions.assertEquals(40, deck.getRemainingCards());
 
         Set<Integer> uniqueId = new HashSet<>(40);
 
-        // Testing the card's properties correctness and uniqueness in database
+        // Testing the card's property correctness and uniqueness in a database
         for (int i = 0; i < 40; i++) {
-            GoldCard card = deck.draw();
+            Optional<GoldCard> optCard = deck.draw();
 
             // Testing the card not null
-            Assertions.assertNotNull(card);
+            Assertions.assertFalse(optCard.isEmpty());
 
+            GoldCard card = optCard.get();
             // Testing uniqueness of the id
             int tempId = card.getId();
             Assertions.assertTrue(uniqueId.add(tempId));

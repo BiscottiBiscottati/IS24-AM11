@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -113,17 +114,19 @@ class ObjectiveDeckFactoryTest {
         // Testing the creation of an ObjectiveDeck
         Assertions.assertNotNull(deck);
 
-        // Testing size of the deck
+        // Testing the size of the deck
         Assertions.assertEquals(16, deck.getRemainingCards());
 
         Set<Integer> uniqueId = new HashSet<>(16);
 
-        // Testing uniqueness of the cards
+        // Testing the uniqueness of the cards
         for (int i = 0; i < 16; i++) {
-            ObjectiveCard card = deck.draw();
+            Optional<ObjectiveCard> optCard = deck.draw();
 
-            // Testing the card not null
-            Assertions.assertNotNull(card);
+            // Testing the card not empty
+            Assertions.assertFalse(optCard.isEmpty());
+
+            ObjectiveCard card = optCard.get();
 
             // Testing uniqueness of the id
             int tempId = card.getId();

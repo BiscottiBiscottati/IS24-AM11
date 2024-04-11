@@ -59,8 +59,10 @@ public class Deck<T extends CardIdentity> {
      *
      * @return The card on top of the deck.
      */
-    public T draw() {
-        return this.deck.pop();
+    @NotNull
+    public Optional<T> draw() {
+        if (this.deck.isEmpty()) return Optional.empty();
+        return Optional.of(this.deck.pop());
     }
 
     /**
@@ -90,6 +92,11 @@ public class Deck<T extends CardIdentity> {
         return Optional.ofNullable(mappingIdToCard.getOrDefault(id, null));
     }
 
+    /**
+     * Method to peek at the top card of the deck without removing it.
+     *
+     * @return An Optional containing the top card of the deck, if present.
+     */
     public Optional<T> peekTopCard() {
         return Optional.ofNullable(deck.peek());
     }
