@@ -90,8 +90,11 @@ public class PlayerField {
         return this.itemManager.getNumberPlacedCardOf(color);
     }
 
-    public boolean isRequirementMet(PlayableCard card) {
-        return this.itemManager.isRequirementsMet(card);
+    public boolean isRequirementMet(@NotNull FieldCard card) {
+        return switch (card) {
+            case StarterCard ignored -> true;
+            case PlayableCard playableCard -> this.itemManager.isRequirementsMet(playableCard);
+        };
     }
 
 }
