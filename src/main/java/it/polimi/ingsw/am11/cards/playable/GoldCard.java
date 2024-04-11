@@ -79,12 +79,12 @@ public final class GoldCard extends PlayableCard {
 
     @Override
     @NotNull
-    public CornerContainer checkItemCorner(@NotNull Corner corner) {
+    public CornerContainer getItemCorner(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornersOrSymbol.get(corner));
     }
 
     @Override
-    public CornerContainer checkItemCorner(@NotNull Corner corner, boolean isRetro) {
+    public CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
         if (isRetro) return Availability.USABLE;
         else return availableCornersOrSymbol.get(corner);
     }

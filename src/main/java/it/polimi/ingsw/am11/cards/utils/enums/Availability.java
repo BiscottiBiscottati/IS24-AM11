@@ -1,6 +1,9 @@
 package it.polimi.ingsw.am11.cards.utils.enums;
 
 import it.polimi.ingsw.am11.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.cards.utils.Item;
+
+import java.util.Optional;
 
 /**
  * Represents whether another card can cover a corner of a card.
@@ -21,4 +24,11 @@ public enum Availability implements CornerContainer {
     public boolean isAvailable() {
         return isAvailable;
     }
+
+    @Override
+    public Optional<Item> getItem() {
+        return Optional.empty();
+    }
+
+
 }

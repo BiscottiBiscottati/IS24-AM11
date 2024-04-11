@@ -58,14 +58,14 @@ public class LPatternCounter implements PatternCounter {
             return;
         }
 
-        if (field.get(currentPosition).colorEquals(this.primaryColor)) {
+        if (field.get(currentPosition).isColorEquals(this.primaryColor)) {
             updated_number = numberSeen + 1;
         } else {
             updated_number = 0;
         }
         if (updated_number == 2) {
             CardContainer toCompleteL = field.getOrDefault(toCompleteLPosition, null);
-            if (toCompleteL != null && toCompleteL.colorEquals(this.secondaryColor)) {
+            if (toCompleteL != null && toCompleteL.isColorEquals(this.secondaryColor)) {
                 numberOfPatterns += 1;
                 updated_number = 0;
             } else {

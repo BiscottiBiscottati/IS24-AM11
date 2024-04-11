@@ -5,6 +5,8 @@ import it.polimi.ingsw.am11.cards.utils.enums.Availability;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 
+import java.util.Optional;
+
 /**
  * A common interface for representing what is contained inside a corner.
  * <p>
@@ -45,4 +47,6 @@ public sealed interface CornerContainer permits Availability, Color, Symbol {
      * @return <code>true</code> if available, <code>false</code> otherwise
      */
     boolean isAvailable();
+
+    Optional<Item> getItem();
 }

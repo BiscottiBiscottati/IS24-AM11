@@ -3,6 +3,10 @@ package it.polimi.ingsw.am11.cards.utils.enums;
 import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.DatabaseSearchable;
 import it.polimi.ingsw.am11.cards.utils.Item;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * Can represent either the color of a card or
@@ -27,8 +31,16 @@ public enum Color implements CornerContainer, Item, DatabaseSearchable {
         return true;
     }
 
+    @Contract(value = " -> new", pure = true)
+    @Override
+    public @NotNull Optional<Item> getItem() {
+        return Optional.of(this);
+    }
+
     @Override
     public String getColumnName() {
         return this.columnName;
     }
+
+
 }

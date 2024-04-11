@@ -87,18 +87,18 @@ class GoldCardTest {
     }
 
     @Test
-    void checkItemCorner() {
-        Assertions.assertSame(Availability.USABLE, goldClassic.checkItemCorner(Corner.TOP_LX));
-        Assertions.assertSame(Availability.USABLE, goldSymbols.checkItemCorner(Corner.TOP_LX));
-        Assertions.assertSame(Availability.NOT_USABLE, goldClassic.checkItemCorner(Corner.DOWN_LX));
-        Assertions.assertSame(Symbol.FEATHER, goldSymbols.checkItemCorner(Corner.DOWN_RX));
+    void getItemCorner() {
+        Assertions.assertSame(Availability.USABLE, goldClassic.getItemCorner(Corner.TOP_LX));
+        Assertions.assertSame(Availability.USABLE, goldSymbols.getItemCorner(Corner.TOP_LX));
+        Assertions.assertSame(Availability.NOT_USABLE, goldClassic.getItemCorner(Corner.DOWN_LX));
+        Assertions.assertSame(Symbol.FEATHER, goldSymbols.getItemCorner(Corner.DOWN_RX));
     }
 
     @Test
     void checkNulls() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> goldClassic.checkItemCorner(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> goldClassic.getItemCorner(null));
         Assertions.assertThrows(IllegalArgumentException.class, () -> goldSymbols.isFrontAvailable(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> goldClassic.checkItemCorner(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> goldClassic.getItemCorner(null));
         Assertions.assertThrows(IllegalArgumentException.class, () -> goldSymbols.isFrontAvailable(null));
     }
 
