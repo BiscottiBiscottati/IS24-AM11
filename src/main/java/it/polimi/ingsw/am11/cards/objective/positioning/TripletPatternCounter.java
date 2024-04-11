@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.PositionManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -31,16 +32,16 @@ public class TripletPatternCounter implements PatternCounter {
             @NotNull Map<Position, CardContainer> field,
             Position currentPosition,
             int numberSeen) {
-        Position nextPatternPosition = PlayerField.getPositionIn(
+        Position nextPatternPosition = PositionManager.getPositionIn(
                 currentPosition, cornersPurpose.get(PatternPurpose.NEXT_CHECK)
         );
-        Position previousPatternPosition = PlayerField.getPositionIn(
+        Position previousPatternPosition = PositionManager.getPositionIn(
                 currentPosition, cornersPurpose.get(PatternPurpose.PREVIOUS_CHECK)
         );
-        Position adjacentLX = PlayerField.getPositionIn(
+        Position adjacentLX = PositionManager.getPositionIn(
                 currentPosition, cornersPurpose.get(PatternPurpose.ADJACENT_LX)
         );
-        Position adjacentRX = PlayerField.getPositionIn(
+        Position adjacentRX = PositionManager.getPositionIn(
                 currentPosition, cornersPurpose.get(PatternPurpose.ADJACENT_RX)
         );
         int updatedNumber;

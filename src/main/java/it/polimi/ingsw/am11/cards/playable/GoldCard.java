@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.PositionManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -100,7 +101,7 @@ public final class GoldCard extends PlayableCard {
             }
             case COVERING_CORNERS -> {
                 return (int) (Arrays.stream(Corner.values())
-                                    .map(corner -> PlayerField.getPositionIn(positionOfCard, corner))
+                                    .map(corner -> PositionManager.getPositionIn(positionOfCard, corner))
                                     .filter(playerField.getCardsPositioned()::containsKey)
                                     .count() * this.getPoints());
             }
