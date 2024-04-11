@@ -6,6 +6,9 @@ import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.decks.Deck;
+import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
+import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
+import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
 
@@ -31,6 +34,10 @@ public class PickablesTable {
         this.commonObjectives = new ArrayList<>(2);
         this.shownGold = new ArrayList<>(2);
         this.shownResources = new ArrayList<>(2);
+        this.decks.put(DeckType.OBJECTIVE, ObjectiveDeckFactory.createDeck());
+        this.decks.put(DeckType.GOLD, GoldDeckFactory.createDeck());
+        this.decks.put(DeckType.RESOURCE, GoldDeckFactory.createDeck());
+        this.decks.put(DeckType.STARTER, StarterDeckFactory.createDeck());
     }
 
     //region Getters
