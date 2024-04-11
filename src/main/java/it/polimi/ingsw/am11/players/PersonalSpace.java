@@ -29,7 +29,12 @@ public class PersonalSpace {
         return playerObjective;
     }
 
+    public int availableSpaceInHand() {
+        return sizeofHand - playerHand.size();
+    }
+
     public void addCardToHand(PlayableCard newCard) {
+
         // TODO this has been commented out because it does not let the compiler compile
 
 //        if (playerHand.size() < maxHandCards) {
@@ -39,10 +44,6 @@ public class PersonalSpace {
 //        }
     }
 
-    //    public void addObjectiveToHand(ObjectiveCard newObjective) {
-//        playerObjective = newObjective;
-//    }
-//
     public void pickCard(PlayableCard cardToPick) {
         if (playerHand.contains(cardToPick)) {
             playerHand.remove(cardToPick);
@@ -51,7 +52,6 @@ public class PersonalSpace {
         }
     }
 
-    //clear both hand and objective
     public void addObjective(ObjectiveCard newObjective) throws IllegalPlayerSpaceActionException {
         if (playerObjective.size() < maxObjectives) {
             playerObjective.add(newObjective);

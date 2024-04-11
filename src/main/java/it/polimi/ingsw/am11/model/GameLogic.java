@@ -275,8 +275,8 @@ public class GameLogic implements GameModel {
         currentPlaying = playerQueue.removeFirst();
     }
 
-    @Override
-    public void placeCard(String nickname, int ID, Position position, boolean isRetro) throws IllegalCardPlacingException, TurnsOrderException {
+    @Override //DONE
+    public void placeCard(String nickname, int ID, Position position, boolean isRetro) throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException {
         Player player = players.get(nickname);
         if (currentPlaying != player) {
             throw new TurnsOrderException(
@@ -286,12 +286,13 @@ public class GameLogic implements GameModel {
         PlayableCard card = pickablesTable.getPlayableByID(ID).orElseThrow();
         if (player.field().isAvailable(position)) {
             try {
-
-                int points = player.field().place(card, position, isRetro);
-                player.space().pickCard(card);
-                plateau.addPlayerPoints(player, points);
-            } catch (Exception e) {
-                //TODO
+                if (player.field().isRequirementMet(card)) {
+                    int points = player.field().place(card, position, isRetro);
+                    player.space().pickCard(card);
+                    plateau.addPlayerPoints(player, points);
+                }
+            } catch (IllegalPlateauActionException | IllegalCardPlacingException ex) {
+                throw ex;
             }
         } else {
             throw new IllegalCardPlacingException("Chosen position is not available");
