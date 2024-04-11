@@ -140,6 +140,9 @@ public abstract sealed class PlayableCard implements CardIdentity,
     @Contract(pure = true)
     public abstract @NotNull Map<Color, Integer> getPlacingRequirements();
 
+    @Contract(pure = true)
+    public abstract int getPlacingRequirementsOf(Color color);
+
     /**
      * Gets the method needed to score this card points value.
      * <p>

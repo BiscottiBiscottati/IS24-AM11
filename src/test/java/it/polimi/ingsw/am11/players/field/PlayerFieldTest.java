@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.players;
+package it.polimi.ingsw.am11.players.field;
 
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
@@ -10,8 +10,8 @@ import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
-import it.polimi.ingsw.am11.players.field.PlayerField;
-import it.polimi.ingsw.am11.players.field.PositionManager;
+import it.polimi.ingsw.am11.players.CardContainer;
+import it.polimi.ingsw.am11.players.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,85 +39,6 @@ class PlayerFieldTest {
         playerField = new PlayerField();
         resourceDeck.reset();
         starterDeck.reset();
-    }
-
-    @Test
-    void getPositionIn() {
-        Position position = Position.of(0, 0);
-        Assertions.assertEquals(
-                Position.of(1, 1),
-                PositionManager.getPositionIn(position, Corner.TOP_RX));
-        Assertions.assertEquals(
-                Position.of(-1, 1),
-                PositionManager.getPositionIn(position, Corner.TOP_LX));
-        Assertions.assertEquals(
-                Position.of(1, -1),
-                PositionManager.getPositionIn(position, Corner.DOWN_RX));
-        Assertions.assertEquals(
-                Position.of(-1, -1),
-                PositionManager.getPositionIn(position, Corner.DOWN_LX));
-
-    }
-
-    @Test
-    void getMovementOfPositions() {
-        Position position = Position.of(0, 0);
-        Assertions.assertEquals(
-                Position.of(1, 1),
-                PositionManager.getMovementOfPositions(position, Collections.singletonList(Corner.TOP_RX)));
-        Assertions.assertEquals(
-                Position.of(-1, 1),
-                PositionManager.getMovementOfPositions(position, List.of(Corner.TOP_LX)));
-        Assertions.assertEquals(
-                Position.of(0, 2),
-                PositionManager.getMovementOfPositions(position, List.of(Corner.TOP_RX, Corner.TOP_LX)));
-        Assertions.assertEquals(
-                Position.of(2, -2),
-                PositionManager.getMovementOfPositions(position, List.of(Corner.DOWN_RX, Corner.DOWN_RX)));
-    }
-
-    @Test
-    void getCornerFromPositions() {
-        Position firstPos = Position.of(0, 0);
-        Position secondPos = Position.of(-1, 1);
-        Assertions.assertEquals(Optional.of(Corner.TOP_LX),
-                                PositionManager.getCornerFromPositions(firstPos, secondPos));
-
-        firstPos = Position.of(0, 0);
-        secondPos = Position.of(1, 1);
-        Assertions.assertEquals(Optional.of(Corner.TOP_RX),
-                                PositionManager.getCornerFromPositions(firstPos, secondPos));
-
-        firstPos = Position.of(0, 0);
-        secondPos = Position.of(1, -1);
-        Assertions.assertEquals(Optional.of(Corner.DOWN_RX),
-                                PositionManager.getCornerFromPositions(firstPos, secondPos));
-
-        firstPos = Position.of(3, 3);
-        secondPos = Position.of(2, 2);
-        Assertions.assertEquals(Optional.of(Corner.DOWN_LX),
-                                PositionManager.getCornerFromPositions(firstPos, secondPos));
-
-        firstPos = Position.of(0, 0);
-        secondPos = Position.of(0, 0);
-        Assertions.assertEquals(Optional.empty(),
-                                PositionManager.getCornerFromPositions(firstPos, secondPos));
-
-        firstPos = Position.of(0, 0);
-        secondPos = Position.of(0, 1);
-        Assertions.assertEquals(Optional.empty(),
-                                PositionManager.getCornerFromPositions(firstPos, secondPos));
-
-        firstPos = Position.of(0, 0);
-        for (int i = 0; i < 100; i++) {
-            secondPos = Position.of(gen.nextInt(2, 100), gen.nextInt(2, 100));
-            Assertions.assertEquals(Optional.empty(),
-                                    PositionManager.getCornerFromPositions(firstPos, secondPos));
-
-            secondPos = Position.of(gen.nextInt(-100, -2), gen.nextInt(-100, -2));
-            Assertions.assertEquals(Optional.empty(),
-                                    PositionManager.getCornerFromPositions(firstPos, secondPos));
-        }
     }
 
     @Test
@@ -323,6 +244,37 @@ class PlayerFieldTest {
         });
 
         // TODO to complete
+
+    }
+
+    @Test
+    void clearAll() {
+        StarterCard card = starterDeck.draw();
+        Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(card, true));
+        playerField.clearAll();
+        Assertions.assertTrue(playerField.isAvailable(Position.of(0, 0)));
+        Assertions.assertFalse(playerField.containsCard(card));
+
+        Stream.concat(Stream.of(Color.values()), Stream.of(Symbol.values()))
+              .forEach(item -> Assertions.assertEquals(0, playerField.getNumberOf(item)));
+        Stream.of(Color.values())
+              .forEach(color -> Assertions.assertEquals(0, playerField.getNumberOfPositionedColor(color)));
+    }
+
+    @Test
+    void containsCard() {
+    }
+
+    @Test
+    void getNumberOfPositionedColor() {
+        StarterCard card = starterDeck.draw();
+        Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(card, true));
+        Stream.of(Color.values())
+              .forEach(color -> Assertions.assertEquals(0, playerField.getNumberOfPositionedColor(color)));
+        ResourceCard resourceCard = resourceDeck.draw();
+        Assertions.assertDoesNotThrow(() -> playerField.place(resourceCard,
+                                                              Position.of(1, 1),
+                                                              true));
 
     }
 }

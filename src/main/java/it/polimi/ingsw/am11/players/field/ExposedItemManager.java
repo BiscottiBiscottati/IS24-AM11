@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.players.field;
 
+import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -76,6 +77,11 @@ public class ExposedItemManager {
 
     public Map<Color, Integer> getPlacedCardColors() {
         return Map.copyOf(this.placedCardColors);
+    }
+
+    public boolean isRequirementsMet(PlayableCard card) {
+        return Stream.of(Color.values())
+                     .allMatch(color -> card.getPlacingRequirementsOf(color) <= this.getExposedItem(color));
     }
 
 }

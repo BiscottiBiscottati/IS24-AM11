@@ -90,4 +90,8 @@ public class PlayerField {
         return this.itemManager.getNumberPlacedCardOf(color);
     }
 
+    public boolean isRequirementMet(PlayableCard card) {
+        return this.itemManager.isRequirementsMet(card);
+    }
+
 }

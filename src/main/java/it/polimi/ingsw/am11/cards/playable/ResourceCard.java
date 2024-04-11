@@ -62,6 +62,11 @@ public final class ResourceCard extends PlayableCard {
     }
 
     @Override
+    public int getPlacingRequirementsOf(Color color) {
+        return PLACING_REQUIREMENTS.get(color);
+    }
+
+    @Override
     @NotNull
     public PointsRequirementsType getPointsRequirements() {
         return PointsRequirementsType.CLASSIC;
