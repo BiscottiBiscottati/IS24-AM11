@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.players;
+package it.polimi.ingsw.am11.players.field;
 
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.Item;

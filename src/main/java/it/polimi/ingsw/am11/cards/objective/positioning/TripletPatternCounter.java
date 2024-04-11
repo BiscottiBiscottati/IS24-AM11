@@ -4,9 +4,9 @@ import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.players.CardContainer;
-import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
-import it.polimi.ingsw.am11.players.PositionManager;
+import it.polimi.ingsw.am11.players.field.PlayerField;
+import it.polimi.ingsw.am11.players.field.PositionManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;

@@ -10,6 +10,8 @@ import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.exceptions.IllegalPositioningException;
+import it.polimi.ingsw.am11.players.field.PlayerField;
+import it.polimi.ingsw.am11.players.field.PositionManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

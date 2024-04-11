@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.players;
+package it.polimi.ingsw.am11.players.field;
 
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
@@ -6,6 +6,8 @@ import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.exceptions.IllegalPositioningException;
+import it.polimi.ingsw.am11.players.CardContainer;
+import it.polimi.ingsw.am11.players.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
