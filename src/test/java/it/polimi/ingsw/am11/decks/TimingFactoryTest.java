@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-@Disabled("This test is used to measure the time needed to create a deck, not needed for normal testing")
+@Disabled("TimingFactoryTest is used to measure the time needed to create a deck, not needed for normal testing")
 public class TimingFactoryTest {
 
     NumberFormat formatter;
