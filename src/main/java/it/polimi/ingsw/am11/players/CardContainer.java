@@ -81,8 +81,9 @@ public class CardContainer {
         return this.coveredCorners.get(corner);
     }
 
-    public void cover(@NotNull Corner corner) {
+    public Optional<Item> cover(@NotNull Corner corner) {
         this.coveredCorners.put(corner, true);
+        return this.card.getItemCorner(corner, isRetro).getItem();
     }
 
     public boolean isColorEquals(Color color) {

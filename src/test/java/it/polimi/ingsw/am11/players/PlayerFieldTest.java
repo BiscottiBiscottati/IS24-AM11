@@ -44,16 +44,16 @@ class PlayerFieldTest {
         Position position = Position.of(0, 0);
         Assertions.assertEquals(
                 Position.of(1, 1),
-                PlayerField.getPositionIn(position, Corner.TOP_RX));
+                PositionManager.getPositionIn(position, Corner.TOP_RX));
         Assertions.assertEquals(
                 Position.of(-1, 1),
-                PlayerField.getPositionIn(position, Corner.TOP_LX));
+                PositionManager.getPositionIn(position, Corner.TOP_LX));
         Assertions.assertEquals(
                 Position.of(1, -1),
-                PlayerField.getPositionIn(position, Corner.DOWN_RX));
+                PositionManager.getPositionIn(position, Corner.DOWN_RX));
         Assertions.assertEquals(
                 Position.of(-1, -1),
-                PlayerField.getPositionIn(position, Corner.DOWN_LX));
+                PositionManager.getPositionIn(position, Corner.DOWN_LX));
 
     }
 
@@ -62,16 +62,16 @@ class PlayerFieldTest {
         Position position = Position.of(0, 0);
         Assertions.assertEquals(
                 Position.of(1, 1),
-                PlayerField.getMovementOfPositions(position, Collections.singletonList(Corner.TOP_RX)));
+                PositionManager.getMovementOfPositions(position, Collections.singletonList(Corner.TOP_RX)));
         Assertions.assertEquals(
                 Position.of(-1, 1),
-                PlayerField.getMovementOfPositions(position, List.of(Corner.TOP_LX)));
+                PositionManager.getMovementOfPositions(position, List.of(Corner.TOP_LX)));
         Assertions.assertEquals(
                 Position.of(0, 2),
-                PlayerField.getMovementOfPositions(position, List.of(Corner.TOP_RX, Corner.TOP_LX)));
+                PositionManager.getMovementOfPositions(position, List.of(Corner.TOP_RX, Corner.TOP_LX)));
         Assertions.assertEquals(
                 Position.of(2, -2),
-                PlayerField.getMovementOfPositions(position, List.of(Corner.DOWN_RX, Corner.DOWN_RX)));
+                PositionManager.getMovementOfPositions(position, List.of(Corner.DOWN_RX, Corner.DOWN_RX)));
     }
 
     @Test
@@ -79,42 +79,42 @@ class PlayerFieldTest {
         Position firstPos = Position.of(0, 0);
         Position secondPos = Position.of(-1, 1);
         Assertions.assertEquals(Optional.of(Corner.TOP_LX),
-                                PlayerField.getCornerFromPositions(firstPos, secondPos));
+                                PositionManager.getCornerFromPositions(firstPos, secondPos));
 
         firstPos = Position.of(0, 0);
         secondPos = Position.of(1, 1);
         Assertions.assertEquals(Optional.of(Corner.TOP_RX),
-                                PlayerField.getCornerFromPositions(firstPos, secondPos));
+                                PositionManager.getCornerFromPositions(firstPos, secondPos));
 
         firstPos = Position.of(0, 0);
         secondPos = Position.of(1, -1);
         Assertions.assertEquals(Optional.of(Corner.DOWN_RX),
-                                PlayerField.getCornerFromPositions(firstPos, secondPos));
+                                PositionManager.getCornerFromPositions(firstPos, secondPos));
 
         firstPos = Position.of(3, 3);
         secondPos = Position.of(2, 2);
         Assertions.assertEquals(Optional.of(Corner.DOWN_LX),
-                                PlayerField.getCornerFromPositions(firstPos, secondPos));
+                                PositionManager.getCornerFromPositions(firstPos, secondPos));
 
         firstPos = Position.of(0, 0);
         secondPos = Position.of(0, 0);
         Assertions.assertEquals(Optional.empty(),
-                                PlayerField.getCornerFromPositions(firstPos, secondPos));
+                                PositionManager.getCornerFromPositions(firstPos, secondPos));
 
         firstPos = Position.of(0, 0);
         secondPos = Position.of(0, 1);
         Assertions.assertEquals(Optional.empty(),
-                                PlayerField.getCornerFromPositions(firstPos, secondPos));
+                                PositionManager.getCornerFromPositions(firstPos, secondPos));
 
         firstPos = Position.of(0, 0);
         for (int i = 0; i < 100; i++) {
             secondPos = Position.of(gen.nextInt(2, 100), gen.nextInt(2, 100));
             Assertions.assertEquals(Optional.empty(),
-                                    PlayerField.getCornerFromPositions(firstPos, secondPos));
+                                    PositionManager.getCornerFromPositions(firstPos, secondPos));
 
             secondPos = Position.of(gen.nextInt(-100, -2), gen.nextInt(-100, -2));
             Assertions.assertEquals(Optional.empty(),
-                                    PlayerField.getCornerFromPositions(firstPos, secondPos));
+                                    PositionManager.getCornerFromPositions(firstPos, secondPos));
         }
     }
 
@@ -125,12 +125,14 @@ class PlayerFieldTest {
 
         StarterCard starter = starterDeck.draw();
         Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(starter, true));
+        positionedCards = playerField.getCardsPositioned();
         Assertions.assertEquals(1, positionedCards.size());
         Assertions.assertTrue(positionedCards.containsKey(Position.of(0, 0)));
         Assertions.assertTrue(playerField.containsCard(starter));
 
         ResourceCard resource = resourceDeck.draw();
         Assertions.assertDoesNotThrow(() -> playerField.place(resource, Position.of(1, 1), false));
+        positionedCards = playerField.getCardsPositioned();
         Assertions.assertEquals(2, positionedCards.size());
         Assertions.assertTrue(positionedCards.containsKey(Position.of(1, 1)));
         Assertions.assertTrue(positionedCards.containsKey(Position.of(0, 0)));
@@ -140,17 +142,18 @@ class PlayerFieldTest {
 
     @Test
     void getPlacedCardColours() {
-        EnumMap<Color, Integer> placedCardColors = playerField.getPlacedCardColours();
-        placedCardColors.forEach((color, integer) -> Assertions.assertEquals(0, integer));
+        playerField.getPlacedCardColours()
+                   .forEach((color, integer) -> Assertions.assertEquals(0, integer));
 
         StarterCard starter = starterDeck.draw();
         Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(starter, true));
-        placedCardColors.forEach((color, integer) -> Assertions.assertEquals(0, integer));
+        playerField.getPlacedCardColours()
+                   .forEach((color, integer) -> Assertions.assertEquals(0, integer));
 
         ResourceCard resourceCard = resourceDeck.draw();
         Color colorOfCard = resourceCard.getColor();
         Assertions.assertDoesNotThrow(() -> playerField.place(resourceCard, Position.of(1, 1), false));
-        Assertions.assertEquals(1, placedCardColors.get(colorOfCard));
+        Assertions.assertEquals(1, playerField.getPlacedCardColours().get(colorOfCard));
     }
 
     @Test
@@ -181,7 +184,6 @@ class PlayerFieldTest {
         Set<FieldCard> placedCards = new HashSet<>(40);
         Set<Position> placedPos = new HashSet<>(40);
         ResourceCard resourceCard = resourceDeck.draw();
-        Set<Position> availablePos = playerField.getAvailablePositions();
         AtomicInteger pointsGiven = new AtomicInteger();
         int pointsExpected;
 
@@ -236,9 +238,10 @@ class PlayerFieldTest {
         for (int i = 0; i < 4; i++) {
 
             // Getting a random subset of available positions
-            List<Position> posToPlace = availablePos.stream()
-                                                    .filter(pos -> gen.nextBoolean())
-                                                    .toList();
+            List<Position> posToPlace = playerField.getAvailablePositions()
+                                                   .stream()
+                                                   .filter(pos -> gen.nextBoolean())
+                                                   .toList();
             // Placing the cards
             for (Position position : posToPlace) {
                 ResourceCard card = resourceDeck.draw();
@@ -273,7 +276,7 @@ class PlayerFieldTest {
 
         Set<Position> availablePosAfterStarter = playerField.getAvailablePositions();
         Stream.of(Corner.values())
-              .map(corner -> PlayerField.getPositionIn(Position.of(0, 0), corner))
+              .map(corner -> PositionManager.getPositionIn(Position.of(0, 0), corner))
               .map(availablePosAfterStarter::contains)
               .forEach(Assertions::assertTrue);
     }
@@ -289,7 +292,7 @@ class PlayerFieldTest {
         });
         // Check that all corners are available
         Stream.of(Corner.values())
-              .map(corner -> PlayerField.getPositionIn(Position.of(0, 0), corner))
+              .map(corner -> PositionManager.getPositionIn(Position.of(0, 0), corner))
               .forEach(position -> Assertions.assertTrue(playerField.isAvailable(position)));
     }
 

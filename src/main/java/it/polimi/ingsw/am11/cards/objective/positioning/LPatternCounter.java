@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerField;
 import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.PositionManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -36,15 +37,15 @@ public class LPatternCounter implements PatternCounter {
             @NotNull Map<Position, CardContainer> field,
             Position currentPosition,
             int numberSeen) {
-        Position nextPatternPosition = PlayerField.getMovementOfPositions(
+        Position nextPatternPosition = PositionManager.getMovementOfPositions(
                 currentPosition,
                 this.cornersPurpose.get(PatternPurpose.NEXT_CHECK)
         );
-        Position previousPatternPosition = PlayerField.getMovementOfPositions(
+        Position previousPatternPosition = PositionManager.getMovementOfPositions(
                 currentPosition,
                 this.cornersPurpose.get(PatternPurpose.PREVIOUS_CHECK)
         );
-        Position toCompleteLPosition = PlayerField.getMovementOfPositions(
+        Position toCompleteLPosition = PositionManager.getMovementOfPositions(
                 currentPosition,
                 this.cornersPurpose.get(PatternPurpose.TO_COMPLETE)
         );
@@ -81,7 +82,7 @@ public class LPatternCounter implements PatternCounter {
         }
 
         for (Corner corner : Corner.values()) {
-            Position adjacentPosition = PlayerField.getMovementOfPositions(
+            Position adjacentPosition = PositionManager.getMovementOfPositions(
                     currentPosition,
                     corner.toSingletonList());
             if (field.getOrDefault(adjacentPosition, null) != null
