@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.players;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.exceptions.IllegalPositioningException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -70,14 +70,14 @@ public class PositionManager {
     List<Item> placeCard(@NotNull FieldCard card,
                          @NotNull Position position,
                          boolean isRetro)
-            throws IllegalPositioningException {
+            throws IllegalCardPlacingException {
 
         // Check if the position is available and position the card
         if (availablePositions.contains(position)) {
             availablePositions.remove(position);
             cardsPositioned.put(position, new CardContainer(card, isRetro));
         } else {
-            throw new IllegalPositioningException("Cannot position: " + card
+            throw new IllegalCardPlacingException("Cannot position: " + card
                                                           + " in position: " + position
                                                           + " because it is not available.");
         }

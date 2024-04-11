@@ -9,7 +9,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
-import it.polimi.ingsw.am11.exceptions.IllegalPositioningException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -175,7 +175,7 @@ class PlayerFieldTest {
 
         // Testing illegal positioning of another starter
         StarterCard secondStarter = starterDeck.draw();
-        Assertions.assertThrows(IllegalPositioningException.class,
+        Assertions.assertThrows(IllegalCardPlacingException.class,
                                 () -> playerField.placeStartingCard(secondStarter, false));
     }
 
@@ -188,7 +188,7 @@ class PlayerFieldTest {
         int pointsExpected;
 
         // Testing placing a card on the starter position
-        Assertions.assertThrows(IllegalPositioningException.class,
+        Assertions.assertThrows(IllegalCardPlacingException.class,
                                 () -> pointsGiven.set(
                                         playerField.place(resourceCard,
                                                           Position.of(0, 0),
@@ -219,13 +219,13 @@ class PlayerFieldTest {
         placedCards.forEach(card -> Assertions.assertTrue(playerField.containsCard(card)));
 
         // Testing illegal positioning to same position
-        Assertions.assertThrows(IllegalPositioningException.class,
+        Assertions.assertThrows(IllegalCardPlacingException.class,
                                 () -> playerField.place(resourceCard,
                                                         Position.of(1, 1),
                                                         false));
 
         // Testing illegal positioning to starter position
-        Assertions.assertThrows(IllegalPositioningException.class,
+        Assertions.assertThrows(IllegalCardPlacingException.class,
                                 () -> playerField.place(resourceCard,
                                                         Position.of(0, 0),
                                                         false));

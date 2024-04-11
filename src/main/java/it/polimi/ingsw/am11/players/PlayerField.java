@@ -5,7 +5,7 @@ import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.exceptions.IllegalPositioningException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -29,7 +29,7 @@ public class PlayerField {
 
     public int placeStartingCard(@NotNull StarterCard firstCard,
                                  boolean isRetro)
-            throws IllegalPositioningException {
+            throws IllegalCardPlacingException {
         Position starterPos = Position.of(0, 0);
 
         // Position the card
@@ -44,15 +44,16 @@ public class PlayerField {
     public int place(@NotNull PlayableCard card,
                      @NotNull Position position,
                      boolean isRetro)
-            throws IllegalPositioningException {
+            throws IllegalCardPlacingException {
 
         // Check if starter position is available and position the card
         if (Objects.equals(position, Position.of(0, 0)))
-            throw new IllegalPositioningException("Cannot place PlayableCard in starter position!");
+            throw new IllegalCardPlacingException("Cannot place PlayableCard in starter position!");
         this.positionManager.placeCard(card, position, isRetro)
                             .forEach(this.itemManager::subToExposed);
 
         // Update exposed items
+        // FIXME does it remove covered colors and items?
         this.itemManager.addCardColor(card.getColor());
         this.itemManager.addExposedItemOn(card, isRetro);
 

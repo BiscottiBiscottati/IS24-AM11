@@ -1,9 +1,7 @@
 package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
-import it.polimi.ingsw.am11.exceptions.IllegalPositioningException;
-import it.polimi.ingsw.am11.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerColor;
 import it.polimi.ingsw.am11.players.Position;
@@ -59,7 +57,7 @@ public interface GameModel {
     //endregion
 
     //region GameInitialization
-    void initGame();
+    void initGame() throws IllegalNumOfPlayersException;
 
     void addPlayerToTable(String nickname, PlayerColor colour) throws PlayerInitException;
 
@@ -71,16 +69,16 @@ public interface GameModel {
 
     int pickObjective();
 
-    void setStarterFor(String nickname, int cardID, boolean isRetro) throws IllegalPositioningException;
+    void setStarterFor(String nickname, int cardID, boolean isRetro) throws IllegalCardPlacingException;
 
-    void setObjectiveFor(String nickname, int cardID);
+    void setObjectiveFor(String nickname, int cardID) throws IllegalPlayerSpaceActionException;
     //endregion
 
     //region TurnsActions
 
     void goNextTurn();
 
-    void placeCard(String Nickname, int ID, Position position, boolean isRetro) throws IllegalPositioningException;
+    void placeCard(String Nickname, int ID, Position position, boolean isRetro) throws IllegalCardPlacingException, TurnsOrderException;
 
     int drawFromGoldDeck(String nickname);
 

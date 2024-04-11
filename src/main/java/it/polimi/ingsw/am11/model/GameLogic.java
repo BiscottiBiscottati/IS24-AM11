@@ -5,9 +5,7 @@ import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
-import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
-import it.polimi.ingsw.am11.exceptions.IllegalPositioningException;
-import it.polimi.ingsw.am11.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.*;
 import it.polimi.ingsw.am11.table.PickablesTable;
 import it.polimi.ingsw.am11.table.Plateau;
@@ -157,13 +155,13 @@ public class GameLogic implements GameModel {
     //endregion
 
     //region GameInitialization
-
-    //get launched after all players are ready:
-    //- prepare player fields;
-    //- prepare decks;
-    //-
-    @Override
-    public void initGame() {
+    @Override //DONE
+    public void initGame() throws IllegalNumOfPlayersException {
+        if (players.size() < 2) {
+            throw new IllegalNumOfPlayersException(
+                    "You need at least 2 players to play this game, the current number is: " + players.size()
+            );
+        }
         shufflePlayers();
         setStartingPlayer();
         players.values().stream()
@@ -178,10 +176,15 @@ public class GameLogic implements GameModel {
         pickablesTable.pickCommonObjectives();
         for (int i = 0; i < ruleSet.getMaxRevealedCardsPerType(); i++) {
             try {
-                pickablesTable.supplyGoldVisibles();
+                if (pickablesTable.supplyGoldVisibles().isEmpty()) {
+                    plateau.setGoldDeckEmptyness(true);
+                }
+                if (pickablesTable.supplyResourceVisibles().isEmpty()) {
+                    plateau.setResourceDeckEmptyness(true);
+                }
             } catch (Exception e) {
                 System.out.println(e);
-                //TODO this exception should be handled in a better way
+                break;
             }
 
         }
@@ -190,7 +193,13 @@ public class GameLogic implements GameModel {
 
     // TODO I believe that the assignment of colors of each player
     //  can be done internally without the player having to choose.
-    //  We could also make Player initialize automatically the field and the space when creating a instance of Player
+    //  We could also make Player initialize automatically the field and the space when creating a instance of Player.
+
+    // RESPONCE 1: I think that the possibility to chose his preferred color is a right
+    // that every player should have, isn't this a free country?
+
+    // RESPONCE 2: It is true that the player could initialize his own field and space,
+    // if you want we can change, but this still works fine.
     @Override
     public void addPlayerToTable(String nickname, PlayerColor colour) throws PlayerInitException {
         if (players.containsKey(nickname)) {
@@ -234,7 +243,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public void setStarterFor(String nickname, int cardID, boolean isRetro) throws IllegalPositioningException {
+    public void setStarterFor(String nickname, int cardID, boolean isRetro) throws IllegalCardPlacingException {
         StarterCard starterCard = pickablesTable.getStarterByID(cardID).orElseThrow();
         players.get(nickname).field().placeStartingCard(starterCard, isRetro);
     }
@@ -244,15 +253,15 @@ public class GameLogic implements GameModel {
         return pickablesTable.pickCardFrom(DeckType.OBJECTIVE).getId();
     }
 
-    public void setObjectiveFor(String nickname, int cardID) {
+    @Override //DONE
+    public void setObjectiveFor(String nickname, int cardID) throws IllegalPlayerSpaceActionException {
         //The rules book says that unused objectives have to be returned to the deck, but it seems like
         //a useless action
         ObjectiveCard objectiveCard = pickablesTable.getObjectiveByID(cardID).orElseThrow();
         try {
             players.get(nickname).space().addObjective(objectiveCard);
-        } catch (Exception e) {
-            System.out.println(e);
-            //TODO this exception should be handled in a better way
+        } catch (IllegalPlayerSpaceActionException e) {
+            throw e;
         }
     }
 
@@ -266,11 +275,17 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void placeCard(String nickname, int ID, Position position, boolean isRetro) throws IllegalPositioningException {
+    public void placeCard(String nickname, int ID, Position position, boolean isRetro) throws IllegalCardPlacingException, TurnsOrderException {
         Player player = players.get(nickname);
+        if (currentPlaying != player) {
+            throw new TurnsOrderException(
+                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
+            );
+        }
         PlayableCard card = pickablesTable.getPlayableByID(ID).orElseThrow();
         if (player.field().isAvailable(position)) {
             try {
+
                 int points = player.field().place(card, position, isRetro);
                 player.space().pickCard(card);
                 plateau.addPlayerPoints(player, points);
@@ -278,7 +293,7 @@ public class GameLogic implements GameModel {
                 //TODO
             }
         } else {
-            throw new IllegalPositioningException("Chosen position is not available");
+            throw new IllegalCardPlacingException("Chosen position is not available");
         }
     }
 

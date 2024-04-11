@@ -63,6 +63,10 @@ public final class GoldCard extends PlayableCard {
 
     @Override
     public @NotNull Map<Color, Integer> getPlacingRequirements() {
+        //FIXME you shouldn’t be returning the underlying Collection via the getter.
+        // That would leave the caller with a direct reference to colorPlacingRequirements.
+        // To remedy this you could return a “defensive copy”.
+        // This is not a one-off, that's the reason I didn't change it myself.
         return colorPlacingRequirements;
     }
 
