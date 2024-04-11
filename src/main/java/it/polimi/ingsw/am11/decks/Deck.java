@@ -56,8 +56,10 @@ public class Deck<T extends CardIdentity> {
     /**
      * Method to draw a card from the deck.
      * The card is removed from the deck.
+     * <p>
+     * If the deck is empty, it will return an empty Optional.
      *
-     * @return The card on top of the deck.
+     * @return The card on top of the deck as an <code>Optional</code>.
      */
     @NotNull
     public Optional<T> draw() {
@@ -95,7 +97,7 @@ public class Deck<T extends CardIdentity> {
     /**
      * Method to peek at the top card of the deck without removing it.
      *
-     * @return An Optional containing the top card of the deck, if present.
+     * @return An <code>Optional</code> containing the top card of the deck, if present.
      */
     public Optional<T> peekTopCard() {
         return Optional.ofNullable(deck.peek());

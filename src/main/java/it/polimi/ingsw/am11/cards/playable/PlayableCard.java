@@ -89,6 +89,15 @@ public abstract sealed class PlayableCard implements CardIdentity,
         return color;
     }
 
+    /**
+     * Retrieves the center color of this <code>PlayableCard</code>.
+     * If the card is in retro mode, it returns a <code>Set</code> containing the color of the card.
+     * If the card is not in retro mode, it returns an empty <code>Set</code>.
+     *
+     * @param isRetro A boolean indicating whether the card is in retro mode.
+     * @return A <code>Set</code> of <code>Color</code> representing the center color of the card.
+     */
+    @NotNull
     public Set<Color> getCenter(boolean isRetro) {
         if (isRetro) return Set.of(this.color);
         else return Set.of();
@@ -103,6 +112,21 @@ public abstract sealed class PlayableCard implements CardIdentity,
     @NotNull
     public abstract PlayableCardType getType();
 
+    /**
+     * Overrides the equals method for the <code>PlayableCard</code> class.
+     * <p>
+     * This method first checks
+     * if the passed object is equal to the current object using the superclasses equal method.
+     * If they’re equal, it returns true.
+     * <p>
+     * If the passed object is not of the same class as the current object, it returns false.
+     * <p>
+     * Finally, it checks if the id of the passed object is equal to the id of the current object.
+     * If they’re equal, it returns true.
+     *
+     * @param obj The object to be compared with the current object.
+     * @return true if the passed object is equal to the current object, false otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (super.equals(obj)) return true;
@@ -112,6 +136,17 @@ public abstract sealed class PlayableCard implements CardIdentity,
         return this.id == ((PlayableCard) obj).id;
     }
 
+    /**
+     * Overrides the hashCode method for the <code>PlayableCard</code> class.
+     * <p>
+     * This method uses the Integer's hashCode method
+     * to generate a hash code for the id of the <code>PlayableCard</code>.
+     * <p>
+     * The id of a <code>PlayableCard</code> is unique,
+     * so this method ensures that different <code>PlayableCards</code> will have different hash codes.
+     *
+     * @return A hash code value for this PlayableCard.
+     */
     @Override
     public int hashCode() {
         return Integer.hashCode(this.id);
@@ -140,6 +175,12 @@ public abstract sealed class PlayableCard implements CardIdentity,
     @Contract(pure = true)
     public abstract @NotNull Map<Color, Integer> getPlacingRequirements();
 
+    /**
+     * Retrieves the number of the given color required to place this card on the field.
+     *
+     * @param color The color for which the placing requirements are to be retrieved.
+     * @return The number of colors required to place this card on the field.
+     */
     @Contract(pure = true)
     public abstract int getPlacingRequirementsOf(Color color);
 
