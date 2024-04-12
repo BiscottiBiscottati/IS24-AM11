@@ -53,6 +53,15 @@ public class GameLogic implements GameModel {
         return firstPlayer.nickname();
     }
 
+    @Override //DONE
+    public boolean isArmageddonTime() {
+        boolean isArmageddonTime = (plateau.isArmageddonTime() ||
+                (pickablesTable.getGoldDeckTop().isPresent() &&
+                        pickablesTable.getResourceDeckTop().isPresent()));
+        plateau.activateArmageddon();
+        return isArmageddonTime;
+    }
+
     //endregion
 
     //region GettersPlayer DONE
@@ -118,12 +127,14 @@ public class GameLogic implements GameModel {
 
     @Override //DONE
     public Optional<Color> getResourceDeckTop() {
-        return pickablesTable.getResourceDeckTop();
+        Optional<Color> topColor = pickablesTable.getResourceDeckTop();
+        return topColor;
     }
 
     @Override //DONE
     public Optional<Color> getGoldDeckTop() {
-        return pickablesTable.getGoldDeckTop();
+        Optional<Color> topColor = pickablesTable.getGoldDeckTop();
+        return topColor;
     }
 
     //endregion
@@ -132,11 +143,6 @@ public class GameLogic implements GameModel {
     @Override //DONE
     public int getPlayerPoints(@NotNull String nickname) throws IllegalPlateauActionException {
         return plateau.getPlayerPoints(players.get(nickname));
-    }
-
-    @Override //DONE
-    public boolean isArmageddonTime() {
-        return plateau.isArmageddonTime();
     }
 
     @Override //DONE
@@ -293,7 +299,6 @@ public class GameLogic implements GameModel {
                     "We have lost a card due to picking it from the deck and not being able to put it anywhere"
             );
         } catch (EmptyDeckException ex) {
-            plateau.setGoldDeckEmptyness(true);
             throw ex;
         }
     }
@@ -317,7 +322,6 @@ public class GameLogic implements GameModel {
                     "We have lost a card due to picking it from the deck and not being able to put it anywhere"
             );
         } catch (EmptyDeckException ex) {
-            plateau.setResourceDeckEmptyness(true);
             throw ex;
         }
     }
