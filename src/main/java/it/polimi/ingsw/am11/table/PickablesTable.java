@@ -134,6 +134,24 @@ public class PickablesTable {
         }
     }
 
+    public void initialize() throws EmptyDeckException {
+        pickCommonObjectives();
+        resetToInitialCondition();
+        shuffleAllDecks();
+        for (int i = 0; i < numOfShownPerType; i++) {
+            if (goldDeck.draw().isPresent()) {
+                shownGold.add(goldDeck.draw().get());
+            } else {
+                throw new EmptyDeckException("Gold deck is empty!");
+            }
+            if (resourceDeck.draw().isPresent()) {
+                shownResources.add(resourceDeck.draw().get());
+            } else {
+                throw new EmptyDeckException("Resource deck is empty!");
+            }
+        }
+    }
+
     public void resetToInitialCondition() {
         goldDeck.reset();
         resourceDeck.reset();
