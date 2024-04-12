@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.players.*;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import it.polimi.ingsw.am11.table.PickablesTable;
 import it.polimi.ingsw.am11.table.Plateau;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -55,7 +56,7 @@ public class GameLogic implements GameModel {
 
     //region GettersPlayer
     @Override //DONE
-    public List<Integer> getPlayerHand(String nickname) {
+    public List<Integer> getPlayerHand(@NotNull String nickname) {
         return players.get(nickname)
                       .space()
                       .getPlayerHand()
@@ -65,7 +66,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public List<Integer> getPlayerObjective(String nickname) {
+    public List<Integer> getPlayerObjective(@NotNull String nickname) {
         return players.get(nickname)
                       .space()
                       .getPlayerObjective()
@@ -75,17 +76,17 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public PlayerColor getPlayerColor(String nickname) {
+    public PlayerColor getPlayerColor(@NotNull String nickname) {
         return players.get(nickname).color();
     }
 
     @Override //FIXME
-    public Map<Position, CardContainer> getPositionedCard(String nickname) {
-        return null;
+    public Map<Position, CardContainer> getPositionedCard(@NotNull String nickname) {
+        return players.get(nickname).field().getCardsPositioned();
     }
 
     @Override //DONE
-    public Set<Position> getAvailablePositions(String nickname) {
+    public Set<Position> getAvailablePositions(@NotNull String nickname) {
         return players.get(nickname).field().getAvailablePositions();
     }
     //endregion
@@ -130,7 +131,7 @@ public class GameLogic implements GameModel {
     // TODO the check for null can be done inside here may save time
     //region GettersPlateau DONE
     @Override //DONE
-    public int getPlayerPoints(String nickname) throws IllegalPlateauActionException {
+    public int getPlayerPoints(@NotNull String nickname) throws IllegalPlateauActionException {
         return plateau.getPlayerPoints(players.get(nickname));
     }
 
@@ -141,7 +142,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public int getPlayerFinishingPosition(String nickname) {
+    public int getPlayerFinishingPosition(@NotNull String nickname) {
         return plateau.getPlayerFinihingPosition(players.get(nickname));
     }
 
@@ -171,37 +172,11 @@ public class GameLogic implements GameModel {
                .map(Player::field)
                .forEach(PlayerField::clearAll);
         plateau.reset();
-        pickablesTable.resetToInitialCondition();
-        pickablesTable.shuffleAllDecks();
-        pickablesTable.pickCommonObjectives();
-        for (int i = 0; i < ruleSet.getMaxRevealedCardsPerType(); i++) {
-            try {
-                if (pickablesTable.supplyGoldVisibles().isEmpty()) {
-                    plateau.setGoldDeckEmptyness(true);
-                }
-                if (pickablesTable.supplyResourceVisibles().isEmpty()) {
-                    plateau.setResourceDeckEmptyness(true);
-                }
-            } catch (IllegalPickActionException e) {
-                System.out.println(e);
-                break;
-            }
-
-        }
-
+        pickablesTable.initialize();
     }
 
-    // TODO I believe that the assignment of colors of each player
-    //  can be done internally without the player having to choose.
-    //  We could also make Player initialize automatically the field and the space when creating a instance of Player.
-
-    // RESPONCE 1: I think that the possibility to chose his preferred color is a right
-    // that every player should have, isn't this a free country?
-
-    // RESPONCE 2: It is true that the player could initialize his own field and space,
-    // if you want we can change, but this still works fine.
-    @Override
-    public void addPlayerToTable(String nickname, PlayerColor colour) throws PlayerInitException {
+    @Override //DONE
+    public void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour) throws PlayerInitException {
         if (players.containsKey(nickname)) {
             throw new PlayerInitException(nickname + " is already in use");
         } else if (players.values()
@@ -247,7 +222,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public void setStarterFor(String nickname, int cardID, boolean isRetro) throws IllegalCardPlacingException {
+    public void setStarterFor(@NotNull String nickname, int cardID, boolean isRetro) throws IllegalCardPlacingException {
         StarterCard starterCard = pickablesTable.getStarterByID(cardID).orElseThrow();
         players.get(nickname).field().placeStartingCard(starterCard, isRetro);
     }
@@ -258,7 +233,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public void setObjectiveFor(String nickname, int cardID) throws IllegalPlayerSpaceActionException {
+    public void setObjectiveFor(@NotNull String nickname, int cardID) throws IllegalPlayerSpaceActionException {
         //The rules book says that unused objectives have to be returned to the deck, but it seems like
         //a useless action
         ObjectiveCard objectiveCard = pickablesTable.getObjectiveByID(cardID).orElseThrow();
@@ -279,7 +254,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public void placeCard(String nickname, int ID, Position position, boolean isRetro) throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException {
+    public void placeCard(@NotNull String nickname, int ID, @NotNull Position position, boolean isRetro) throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException {
         Player player = players.get(nickname);
         if (currentPlaying != player) {
             throw new TurnsOrderException(
@@ -303,7 +278,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public int drawFromGoldDeck(String nickname)
+    public int drawFromGoldDeck(@NotNull String nickname)
             throws GameBreakingException,
                    EmptyDeckException,
                    IllegalPlayerSpaceActionException {
@@ -326,7 +301,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public int drawFromResourceDeck(String nickname)
+    public int drawFromResourceDeck(@NotNull String nickname)
             throws
             GameBreakingException,
             EmptyDeckException,
@@ -344,13 +319,13 @@ public class GameLogic implements GameModel {
                     "We have lost a card due to picking it from the deck and not being able to put it anywhere"
             );
         } catch (EmptyDeckException ex) {
-            plateau.setGoldDeckEmptyness(true);
+            plateau.setResourceDeckEmptyness(true);
             throw ex;
         }
     }
 
     @Override //DONE
-    public void drawVisibleGold(String nickname, int ID)
+    public void drawVisibleGold(@NotNull String nickname, int ID)
             throws GameBreakingException,
                    IllegalPickActionException,
                    IllegalPlayerSpaceActionException {
@@ -372,7 +347,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public void drawVisibleResource(String nickname, int ID)
+    public void drawVisibleResource(@NotNull String nickname, int ID)
             throws GameBreakingException,
                    IllegalPickActionException,
                    IllegalPlayerSpaceActionException {

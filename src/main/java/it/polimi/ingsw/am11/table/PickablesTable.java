@@ -17,7 +17,10 @@ import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 public class PickablesTable {
 
@@ -97,6 +100,10 @@ public class PickablesTable {
 
     //endregion
     public void addDeck(DeckType type, Deck deck) {
+
+    }
+
+    public void initialize() {
 
     }
 
