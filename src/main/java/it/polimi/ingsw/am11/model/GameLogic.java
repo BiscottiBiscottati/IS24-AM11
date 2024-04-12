@@ -156,7 +156,7 @@ public class GameLogic implements GameModel {
 
     //region GameInitialization
     @Override //DONE
-    public void initGame() throws IllegalNumOfPlayersException {
+    public void initGame() throws IllegalNumOfPlayersException, EmptyDeckException {
         if (players.size() < 2) {
             throw new IllegalNumOfPlayersException(
                     "You need at least 2 players to play this game, the current number is: " + players.size()

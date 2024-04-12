@@ -124,9 +124,13 @@ public class PickablesTable {
 
     }
 
-    public void pickCommonObjectives() {
+    public void pickCommonObjectives() throws EmptyDeckException {
         for (int i = 0; i < numOfObjectives; i++) {
-            commonObjectives.add(objectiveDeck.draw().get());
+            if (objectiveDeck.draw().isPresent()) {
+                commonObjectives.add(objectiveDeck.draw().get());
+            } else {
+                throw new EmptyDeckException("Objective deck is empty!");
+            }
         }
     }
 
