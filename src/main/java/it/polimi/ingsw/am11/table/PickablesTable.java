@@ -143,6 +143,7 @@ public class PickablesTable {
         for (PlayableCard card : shownGold) {
             if (card.getId() == ID) {
                 shownGold.remove(card);
+                supplyGoldVisibles();
                 return card;
             }
         }
@@ -153,6 +154,7 @@ public class PickablesTable {
         for (PlayableCard card : shownResources) {
             if (card.getId() == ID) {
                 shownResources.remove(card);
+                supplyResourceVisibles();
                 return card;
             }
         }
@@ -160,15 +162,29 @@ public class PickablesTable {
     }
 
     public Optional<PlayableCard> supplyGoldVisibles() throws IllegalPickActionException {
-        //TODO, it should return null when the deck is empty, while if there are already enough shown cards it
-        //trows an exception
-        return null;
+        if (shownGold.size() >= numOfShownPerType) {
+            throw new IllegalPickActionException("There are already enough shown gold cards!");
+        }
+        Optional<GoldCard> drawnCard = goldDeck.draw();
+        if (drawnCard.isPresent()) {
+            shownGold.add(drawnCard.get());
+            return Optional.of(drawnCard.get());
+        } else {
+            return Optional.empty();
+        }
     }
 
     public Optional<PlayableCard> supplyResourceVisibles() throws IllegalPickActionException {
-        //TODO, it should return null when the deck is empty, while if there are already enough shown cards it
-        //trows an exception
-        return null;
+        if (shownResources.size() >= numOfShownPerType) {
+            throw new IllegalPickActionException("There are already enough shown resource cards!");
+        }
+        Optional<ResourceCard> drawnCard = resourceDeck.draw();
+        if (drawnCard.isPresent()) {
+            shownResources.add(drawnCard.get());
+            return Optional.of(drawnCard.get());
+        } else {
+            return Optional.empty();
+        }
     }
 
 }
