@@ -13,6 +13,7 @@ import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
+import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
 import org.jetbrains.annotations.NotNull;
 
@@ -88,30 +89,39 @@ public class PickablesTable {
 
     //endregion
     public void addDeck(DeckType type, Deck deck) {
-        //TODO
+
     }
 
     public void shuffleAllDecks() {
-        //TODO
+        goldDeck.shuffle();
+        resourceDeck.shuffle();
+        objectiveDeck.shuffle();
+        starterDeck.shuffle();
     }
 
-    public Optional<PlayableCard> pickPlayableCardFrom(PlayableCardType type) {
-        if (type == PlayableCardType.GOLD) {
-            Optional<GoldCard> card = goldDeck.draw();
-            return card.map(PlayableCard.class::cast);
-        } else {
-            Optional<ResourceCard> card = resourceDeck.draw();
-            return card.map(PlayableCard.class::cast);
+    public PlayableCard pickPlayableCardFrom(PlayableCardType type) throws EmptyDeckException {
+        switch (type) {
+            case GOLD:
+                return goldDeck.draw().orElseThrow(() -> new EmptyDeckException("Gold deck is empty!"));
+            case RESOURCE:
+                return resourceDeck.draw().orElseThrow(() -> new EmptyDeckException("Resource deck is empty!"));
+            default:
+                return null;
         }
     }
 
-    public Optional<StarterCard> pickStarterCard() {
-        return starterDeck.draw();
+    public StarterCard pickStarterCard()
+            throws EmptyDeckException {
+        return starterDeck.draw()
+                          .orElseThrow(() -> new EmptyDeckException("Starter deck is empty!"));
     }
 
-    public Optional<ObjectiveCard> pickObjectiveCard() {
-        return objectiveDeck.draw();
+    public ObjectiveCard pickObjectiveCard() throws EmptyDeckException {
+        return objectiveDeck.draw()
+                            .orElseThrow(() -> new EmptyDeckException("Objective deck is empty!"));
+
     }
+
     public void pickCommonObjectives() {
         for (int i = 0; i < numOfObjectives; i++) {
             commonObjectives.add(objectiveDeck.draw().get());
