@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerColor;
@@ -38,7 +37,7 @@ public interface GameModel {
     //region GetterPickableTable
     Optional<PlayableCard> getResourceDeckTop();
 
-    Color getGoldDeckTop();
+    Optional getGoldDeckTop();
 
     List<Integer> getCommonObjectives();
 

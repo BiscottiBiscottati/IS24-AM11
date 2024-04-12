@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.cards.utils;
 
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
+
 /**
  * A common interface for all cards that can be identified by a unique integer id.
  * <p>
@@ -8,4 +10,6 @@ package it.polimi.ingsw.am11.cards.utils;
  */
 public interface CardIdentity {
     int getId();
+
+    Color getColor();
 }

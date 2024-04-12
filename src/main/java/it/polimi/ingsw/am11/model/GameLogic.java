@@ -3,7 +3,6 @@ package it.polimi.ingsw.am11.model;
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.*;
@@ -117,12 +116,12 @@ public class GameLogic implements GameModel {
 
     // TODO getResourceDeckTop and getGoldDeckTop can be combined into one method with argument the deckType to look
     @Override //DONE
-    public Optional<PlayableCard> getResourceDeckTop() {
+    public Optional getResourceDeckTop() {
         return pickablesTable.getResourceDeckTop();
     }
 
     @Override //DONE
-    public Color getGoldDeckTop() {
+    public Optional getGoldDeckTop() {
         return pickablesTable.getGoldDeckTop();
     }
 
