@@ -10,8 +10,6 @@ public class Plateau {
     private final Map<Player, Integer> playerPoints;
     private final int armageddonTime;
     private final Map<Player, Integer> finalLeaderboard;
-    private boolean GoldDeckEmpty;
-    private boolean ResourceDeckEmpty;
     private boolean isArmageddonTime;
 
     // TODO why is there a finalLeaderboard and playerPoints? Are they the same thing?
@@ -20,32 +18,15 @@ public class Plateau {
         this.armageddonTime = armageddonTime;
         this.isArmageddonTime = false;
         this.finalLeaderboard = new HashMap<>(8);
-        this.GoldDeckEmpty = false;
-        this.ResourceDeckEmpty = false;
-    }
-
-    public boolean isGoldDeckEmpty() {
-        return GoldDeckEmpty;
-    }
-
-    public boolean isResourceDeckEmpty() {
-        return ResourceDeckEmpty;
     }
 
 
     public boolean isArmageddonTime() {
-        if (GoldDeckEmpty && ResourceDeckEmpty) {
-            isArmageddonTime = true;
-        }
         return isArmageddonTime;
     }
 
-    public void setGoldDeckEmptyness(boolean empty) {
-        GoldDeckEmpty = empty;
-    }
-
-    public void setResourceDeckEmptyness(boolean empty) {
-        ResourceDeckEmpty = empty;
+    public void activateArmageddon() {
+        isArmageddonTime = true;
     }
 
     public void reset() {
@@ -57,8 +38,7 @@ public class Plateau {
                         .forEach(
                                 player -> finalLeaderboard.put(player, null)
                         );
-        this.GoldDeckEmpty = false;
-        this.ResourceDeckEmpty = false;
+        isArmageddonTime = false;
     }
 
     public void addPlayer(Player newPlayer) {
