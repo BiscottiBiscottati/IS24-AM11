@@ -2,9 +2,10 @@ package it.polimi.ingsw.am11.cards.playable;
 
 import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("DataFlowIssue")
 class GoldCardTest {
@@ -39,36 +40,36 @@ class GoldCardTest {
 
     @Test
     void getType() {
-        Assertions.assertSame(PlayableCardType.GOLD, goldClassic.getType());
-        Assertions.assertSame(PlayableCardType.GOLD, goldSymbols.getType());
+        assertSame(PlayableCardType.GOLD, goldClassic.getType());
+        assertSame(PlayableCardType.GOLD, goldSymbols.getType());
     }
 
     @Test
     void isCornerAvail() {
-        Assertions.assertTrue(goldClassic.isFrontAvailable(Corner.TOP_LX));
-        Assertions.assertTrue(goldClassic.isFrontAvailable(Corner.TOP_RX));
-        Assertions.assertTrue(goldSymbols.isFrontAvailable(Corner.TOP_LX));
-        Assertions.assertTrue(goldSymbols.isFrontAvailable(Corner.TOP_RX));
-        Assertions.assertFalse(goldClassic.isFrontAvailable(Corner.DOWN_LX));
-        Assertions.assertFalse(goldClassic.isFrontAvailable(Corner.DOWN_RX));
-        Assertions.assertFalse(goldSymbols.isFrontAvailable(Corner.DOWN_LX));
-        Assertions.assertTrue(goldSymbols.isFrontAvailable(Corner.DOWN_RX));
+        assertTrue(goldClassic.isFrontAvailable(Corner.TOP_LX));
+        assertTrue(goldClassic.isFrontAvailable(Corner.TOP_RX));
+        assertTrue(goldSymbols.isFrontAvailable(Corner.TOP_LX));
+        assertTrue(goldSymbols.isFrontAvailable(Corner.TOP_RX));
+        assertFalse(goldClassic.isFrontAvailable(Corner.DOWN_LX));
+        assertFalse(goldClassic.isFrontAvailable(Corner.DOWN_RX));
+        assertFalse(goldSymbols.isFrontAvailable(Corner.DOWN_LX));
+        assertTrue(goldSymbols.isFrontAvailable(Corner.DOWN_RX));
     }
 
     @Test
     void getPlacingRequirements() {
         for (Color color : Color.values()) {
-            Assertions.assertEquals(
+            assertEquals(
                     0,
                     goldSymbols.getPlacingRequirements()
                                .getOrDefault(color, 0)
             );
         }
-        Assertions.assertEquals(
+        assertEquals(
                 3,
                 goldClassic.getPlacingRequirements().get(Color.RED)
         );
-        Assertions.assertEquals(
+        assertEquals(
                 1,
                 goldClassic.getPlacingRequirements().get(Color.GREEN)
         );
@@ -76,68 +77,68 @@ class GoldCardTest {
 
     @Test
     void getPointsRequirements() {
-        Assertions.assertSame(PointsRequirementsType.CLASSIC, goldClassic.getPointsRequirements());
-        Assertions.assertSame(PointsRequirementsType.SYMBOLS, goldSymbols.getPointsRequirements());
+        assertSame(PointsRequirementsType.CLASSIC, goldClassic.getPointsRequirements());
+        assertSame(PointsRequirementsType.SYMBOLS, goldSymbols.getPointsRequirements());
     }
 
     @Test
     void getSymbolToCollect() {
-        Assertions.assertSame(Symbol.FEATHER, goldSymbols.getSymbolToCollect().orElseThrow());
-        Assertions.assertTrue(goldClassic.getSymbolToCollect().isEmpty());
+        assertSame(Symbol.FEATHER, goldSymbols.getSymbolToCollect().orElseThrow());
+        assertTrue(goldClassic.getSymbolToCollect().isEmpty());
     }
 
     @Test
     void getItemCorner() {
-        Assertions.assertSame(Availability.USABLE, goldClassic.getItemCorner(Corner.TOP_LX));
-        Assertions.assertSame(Availability.USABLE, goldSymbols.getItemCorner(Corner.TOP_LX));
-        Assertions.assertSame(Availability.NOT_USABLE, goldClassic.getItemCorner(Corner.DOWN_LX));
-        Assertions.assertSame(Symbol.FEATHER, goldSymbols.getItemCorner(Corner.DOWN_RX));
+        assertSame(Availability.USABLE, goldClassic.getItemCorner(Corner.TOP_LX));
+        assertSame(Availability.USABLE, goldSymbols.getItemCorner(Corner.TOP_LX));
+        assertSame(Availability.NOT_USABLE, goldClassic.getItemCorner(Corner.DOWN_LX));
+        assertSame(Symbol.FEATHER, goldSymbols.getItemCorner(Corner.DOWN_RX));
     }
 
     @Test
     void checkNulls() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> goldClassic.getItemCorner(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> goldSymbols.isFrontAvailable(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> goldClassic.getItemCorner(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> goldSymbols.isFrontAvailable(null));
+        assertThrows(IllegalArgumentException.class, () -> goldClassic.getItemCorner(null));
+        assertThrows(IllegalArgumentException.class, () -> goldSymbols.isFrontAvailable(null));
+        assertThrows(IllegalArgumentException.class, () -> goldClassic.getItemCorner(null));
+        assertThrows(IllegalArgumentException.class, () -> goldSymbols.isFrontAvailable(null));
     }
 
     @Test
     void checkBuilderNulls() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new GoldCard.Builder(12, 10, null));
-        Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new GoldCard.Builder(13, 10, Color.RED)
-                                        .hasCorner(null)
+        assertThrows(IllegalArgumentException.class,
+                     () -> new GoldCard.Builder(12, 10, null));
+        assertThrows(IllegalArgumentException.class,
+                     () -> new GoldCard.Builder(13, 10, Color.RED)
+                             .hasCorner(null)
         );
-        Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new GoldCard.Builder(14, 10, null));
-        Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new GoldCard.Builder(15, 10, Color.RED)
-                                        .hasCorner(null, true)
+        assertThrows(IllegalArgumentException.class,
+                     () -> new GoldCard.Builder(14, 10, null));
+        assertThrows(IllegalArgumentException.class,
+                     () -> new GoldCard.Builder(15, 10, Color.RED)
+                             .hasCorner(null, true)
         );
-        Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new GoldCard.Builder(16, 10, Color.RED)
-                                        .hasRequirements(null, 10)
+        assertThrows(IllegalArgumentException.class,
+                     () -> new GoldCard.Builder(16, 10, Color.RED)
+                             .hasRequirements(null, 10)
         );
-        Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new GoldCard.Builder(17, 10, Color.RED)
-                                        .hasPointRequirements(null)
+        assertThrows(IllegalArgumentException.class,
+                     () -> new GoldCard.Builder(17, 10, Color.RED)
+                             .hasPointRequirements(null)
         );
     }
 
     @Test
     void checkNegativePlacingRequirements() {
-        Assertions.assertThrows(IllegalCardBuildException.class,
-                                () -> new GoldCard.Builder(18, 3, Color.GREEN)
-                                        .hasRequirements(Color.BLUE, -1)
-                                        .build()
+        assertThrows(IllegalCardBuildException.class,
+                     () -> new GoldCard.Builder(18, 3, Color.GREEN)
+                             .hasRequirements(Color.BLUE, -1)
+                             .build()
         );
     }
 
     @Test
     void checkNegativePoints() {
-        Assertions.assertThrows(
+        assertThrows(
                 IllegalCardBuildException.class,
                 () -> new GoldCard.Builder(190, -1, Color.PURPLE)
                         .build()
@@ -146,7 +147,7 @@ class GoldCardTest {
 
     @Test
     void checkNoPointsRequirements() {
-        Assertions.assertThrows(
+        assertThrows(
                 IllegalCardBuildException.class,
                 () -> new GoldCard.Builder(191, 3, Color.PURPLE)
                         .build()

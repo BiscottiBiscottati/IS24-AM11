@@ -1,11 +1,7 @@
-package it.polimi.ingsw.am11.cards.utils;
+package it.polimi.ingsw.am11.cards.utils.helpers;
 
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +9,9 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ValidatorTest {
 
@@ -33,7 +32,7 @@ class ValidatorTest {
 
     @Test
     void nonNegativeValues() {
-        Assertions.assertTrue(Validator.nonNegativeValues(testMap));
-        Assertions.assertFalse(Validator.nonNegativeValues(testMap2));
+        assertTrue(Validator.nonNegativeValues(testMap));
+        assertFalse(Validator.nonNegativeValues(testMap2));
     }
 }

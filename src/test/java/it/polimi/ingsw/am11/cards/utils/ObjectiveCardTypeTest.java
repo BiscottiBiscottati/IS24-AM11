@@ -2,10 +2,11 @@ package it.polimi.ingsw.am11.cards.utils;
 
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.players.Position;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ObjectiveCardTypeTest {
 
@@ -49,35 +50,35 @@ class ObjectiveCardTypeTest {
     @Test
     void getPositions() {
 
-        Assertions.assertEquals(
+        assertEquals(
                 standardTriplet,
                 ObjectiveCardType.TRIPLET.getPositions(false, false).orElse(Set.of())
         );
-        Assertions.assertEquals(
+        assertEquals(
                 standardTriplet,
                 ObjectiveCardType.TRIPLET.getPositions(false, true).orElse(Set.of())
         );
-        Assertions.assertEquals(
+        assertEquals(
                 flippedTriplet,
                 ObjectiveCardType.TRIPLET.getPositions(true, false).orElse(Set.of())
         );
-        Assertions.assertEquals(
+        assertEquals(
                 flippedTriplet,
                 ObjectiveCardType.TRIPLET.getPositions(true, true).orElse(Set.of())
         );
-        Assertions.assertEquals(
+        assertEquals(
                 LShape,
                 ObjectiveCardType.L_SHAPE.getPositions(false, false).orElse(Set.of())
         );
-        Assertions.assertEquals(
+        assertEquals(
                 flippedL,
                 ObjectiveCardType.L_SHAPE.getPositions(true, false).orElse(Set.of())
         );
-        Assertions.assertEquals(
+        assertEquals(
                 rotatedL,
                 ObjectiveCardType.L_SHAPE.getPositions(false, true).orElse(Set.of())
         );
-        Assertions.assertEquals(
+        assertEquals(
                 rotatedFlippedL,
                 ObjectiveCardType.L_SHAPE.getPositions(true, true).orElse(Set.of())
         );

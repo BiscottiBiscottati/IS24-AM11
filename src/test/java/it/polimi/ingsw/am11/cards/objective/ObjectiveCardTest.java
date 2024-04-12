@@ -7,12 +7,13 @@ import it.polimi.ingsw.am11.cards.objective.positioning.TripletCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ObjectiveCardTest {
 
@@ -44,25 +45,25 @@ class ObjectiveCardTest {
 
     @Test
     void hasItemRequirements() {
-        Assertions.assertEquals(3, colorCollectCard.hasItemRequirements(Color.RED));
+        assertEquals(3, colorCollectCard.hasItemRequirements(Color.RED));
         Stream.concat(Arrays.stream(Color.values()), Arrays.stream(Symbol.values()))
               .filter(item -> item != Color.RED)
-              .forEach(item -> Assertions.assertEquals(0, colorCollectCard.hasItemRequirements(item)));
+              .forEach(item -> assertEquals(0, colorCollectCard.hasItemRequirements(item)));
 
-        Assertions.assertEquals(2, symbolCollectCard.hasItemRequirements(Symbol.GLASS));
+        assertEquals(2, symbolCollectCard.hasItemRequirements(Symbol.GLASS));
         Stream.concat(Arrays.stream(Color.values()), Arrays.stream(Symbol.values()))
               .filter(item -> item != Symbol.GLASS)
-              .forEach(item -> Assertions.assertEquals(0, symbolCollectCard.hasItemRequirements(item)));
+              .forEach(item -> assertEquals(0, symbolCollectCard.hasItemRequirements(item)));
 
-        Assertions.assertEquals(3, triplet.hasItemRequirements(Color.GREEN));
+        assertEquals(3, triplet.hasItemRequirements(Color.GREEN));
         Stream.concat(Arrays.stream(Color.values()), Arrays.stream(Symbol.values()))
               .filter(item -> item != Color.GREEN)
-              .forEach(item -> Assertions.assertEquals(0, triplet.hasItemRequirements(item)));
+              .forEach(item -> assertEquals(0, triplet.hasItemRequirements(item)));
 
-        Assertions.assertEquals(2, lCard.hasItemRequirements(Color.GREEN));
-        Assertions.assertEquals(1, lCard.hasItemRequirements(Color.RED));
+        assertEquals(2, lCard.hasItemRequirements(Color.GREEN));
+        assertEquals(1, lCard.hasItemRequirements(Color.RED));
         Stream.concat(Arrays.stream(Color.values()), Arrays.stream(Symbol.values()))
               .filter(item -> item != Color.GREEN && item != Color.RED)
-              .forEach(item -> Assertions.assertEquals(0, lCard.hasItemRequirements(item)));
+              .forEach(item -> assertEquals(0, lCard.hasItemRequirements(item)));
     }
 }

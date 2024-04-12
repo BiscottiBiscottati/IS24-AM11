@@ -2,14 +2,13 @@ package it.polimi.ingsw.am11.cards.utils.helpers;
 
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 class EnumMapUtilsTest {
 
@@ -25,10 +24,10 @@ class EnumMapUtilsTest {
     @Test
     void defaultInit() {
         for (Symbol symbol : Symbol.values()) {
-            Assertions.assertEquals(0, toTest.get(symbol));
+            assertEquals(0, toTest.get(symbol));
         }
         for (Color color : Color.values()) {
-            Assertions.assertSame(Symbol.FEATHER, toTest2.get(color));
+            assertSame(Symbol.FEATHER, toTest2.get(color));
         }
     }
 }

@@ -10,7 +10,6 @@ import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.Position;
 import it.polimi.ingsw.am11.players.field.PlayerField;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +23,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SuppressWarnings("ClassWithTooManyFields")
 @ExtendWith(MockitoExtension.class)
@@ -106,7 +108,7 @@ class LCardTest {
         largeField = new HashMap<>(16);
         largeField.put(Position.of(0, 0), new CardContainer(starterCard));
 
-        List<Position> redsPositions = List.of(
+        List<Position> redPositions = List.of(
                 Position.of(1, 5),
                 Position.of(1, 3),
                 Position.of(1, 1),
@@ -114,7 +116,7 @@ class LCardTest {
                 Position.of(-1, 1),
                 Position.of(-1, -1)
         );
-        redsPositions.forEach(position -> largeField.put(position, new CardContainer(redCard)));
+        redPositions.forEach(position -> largeField.put(position, new CardContainer(redCard)));
 
         List<Position> bluesPositions = List.of(
                 Position.of(2, 2),
@@ -130,7 +132,7 @@ class LCardTest {
 
     @Test
     void getType() {
-        Assertions.assertEquals(ObjectiveCardType.L_SHAPE, lCardStandard.getType());
+        assertEquals(ObjectiveCardType.L_SHAPE, lCardStandard.getType());
     }
 
     @Test
@@ -140,42 +142,42 @@ class LCardTest {
         Mockito.when(playerField.getCardsPositioned()).thenReturn(field);
         Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(2);
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(1);
-        Assertions.assertEquals(2, lCardStandard.countPoints(playerField));
-        Assertions.assertEquals(2, lCardRotated.countPoints(playerField));
-        Assertions.assertEquals(2, lCardFlipped.countPoints(playerField));
+        assertEquals(2, lCardStandard.countPoints(playerField));
+        assertEquals(2, lCardRotated.countPoints(playerField));
+        assertEquals(2, lCardFlipped.countPoints(playerField));
 
         // Test on a larger field
         Mockito.when(playerField.getCardsPositioned()).thenReturn(largeField);
         Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(6);
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(3);
-        Assertions.assertEquals(6, lCardStandard.countPoints(playerField));
-        Assertions.assertEquals(2, lCardRotated.countPoints(playerField));
-        Assertions.assertEquals(4, lCardFlipped.countPoints(playerField));
+        assertEquals(6, lCardStandard.countPoints(playerField));
+        assertEquals(2, lCardRotated.countPoints(playerField));
+        assertEquals(4, lCardFlipped.countPoints(playerField));
 
         // Test on a field with no matching cards
         Mockito.when(playerField.getCardsPositioned()).thenReturn(noField);
-        Assertions.assertEquals(0, lCardStandard.countPoints(playerField));
-        Assertions.assertEquals(0, lCardRotated.countPoints(playerField));
+        assertEquals(0, lCardStandard.countPoints(playerField));
+        assertEquals(0, lCardRotated.countPoints(playerField));
 
         // Test on not enough cards of primary color
         Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(1);
-        Assertions.assertEquals(0, lCardStandard.countPoints(playerField));
-        Assertions.assertEquals(0, lCardRotated.countPoints(playerField));
+        assertEquals(0, lCardStandard.countPoints(playerField));
+        assertEquals(0, lCardRotated.countPoints(playerField));
 
         // Test on not enough cards of secondary color
         Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(3);
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(0);
-        Assertions.assertEquals(0, lCardStandard.countPoints(playerField));
-        Assertions.assertEquals(0, lCardRotated.countPoints(playerField));
+        assertEquals(0, lCardStandard.countPoints(playerField));
+        assertEquals(0, lCardRotated.countPoints(playerField));
     }
 
     @Test
     void isFlipped() {
-        Assertions.assertFalse(lCard.isFlipped());
+        assertFalse(lCard.isFlipped());
     }
 
     @Test
     void isRotated() {
-        Assertions.assertFalse(lCard.isRotated());
+        assertFalse(lCard.isRotated());
     }
 }

@@ -2,9 +2,10 @@ package it.polimi.ingsw.am11.cards.playable;
 
 import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("DataFlowIssue")
 class ResourceCardTest {
@@ -38,8 +39,8 @@ class ResourceCardTest {
 
     @Test
     void getType() {
-        Assertions.assertSame(playable.getType(), PlayableCardType.RESOURCE);
-        Assertions.assertSame(resource.getType(), PlayableCardType.RESOURCE);
+        assertSame(playable.getType(), PlayableCardType.RESOURCE);
+        assertSame(resource.getType(), PlayableCardType.RESOURCE);
     }
 
     @Test
@@ -47,14 +48,14 @@ class ResourceCardTest {
         for (Corner corner : Corner.values()) {
             switch (corner) {
                 case TOP_LX -> {
-                    Assertions.assertTrue(playable.isFrontAvailable(corner));
-                    Assertions.assertTrue(resource.isFrontAvailable(corner));
+                    assertTrue(playable.isFrontAvailable(corner));
+                    assertTrue(resource.isFrontAvailable(corner));
                 }
                 case TOP_RX -> {
-                    Assertions.assertTrue(playable.isFrontAvailable(corner));
-                    Assertions.assertTrue(playable.isFrontAvailable(corner));
+                    assertTrue(playable.isFrontAvailable(corner));
+                    assertTrue(playable.isFrontAvailable(corner));
                 }
-                default -> Assertions.assertFalse(playable.isFrontAvailable(corner));
+                default -> assertFalse(playable.isFrontAvailable(corner));
             }
         }
     }
@@ -62,16 +63,16 @@ class ResourceCardTest {
     @Test
     void getPlacingRequirements() {
         for (Color color : Color.values()) {
-            Assertions.assertEquals(playable.getPlacingRequirements().get(color), 0);
-            Assertions.assertEquals(resource.getPlacingRequirements().get(color), 0);
+            assertEquals(playable.getPlacingRequirements().get(color), 0);
+            assertEquals(resource.getPlacingRequirements().get(color), 0);
         }
     }
 
     @Test
     void getPointsRequirements() {
-        Assertions.assertSame(playable.getPointsRequirements(), PointsRequirementsType.CLASSIC);
-        Assertions.assertSame(resource.getPointsRequirements(), PointsRequirementsType.CLASSIC);
-        Assertions.assertSame(playable2.getPointsRequirements(), PointsRequirementsType.CLASSIC);
+        assertSame(playable.getPointsRequirements(), PointsRequirementsType.CLASSIC);
+        assertSame(resource.getPointsRequirements(), PointsRequirementsType.CLASSIC);
+        assertSame(playable2.getPointsRequirements(), PointsRequirementsType.CLASSIC);
     }
 
     @Test
@@ -79,18 +80,18 @@ class ResourceCardTest {
         for (Corner corner : Corner.values()) {
             switch (corner) {
                 case TOP_LX, TOP_RX -> {
-                    Assertions.assertSame(playable.getItemCorner(corner), Color.RED);
-                    Assertions.assertSame(resource.getItemCorner(corner), Color.RED);
+                    assertSame(playable.getItemCorner(corner), Color.RED);
+                    assertSame(resource.getItemCorner(corner), Color.RED);
                 }
                 default -> {
-                    Assertions.assertSame(Availability.NOT_USABLE, playable.getItemCorner(corner));
-                    Assertions.assertSame(Availability.NOT_USABLE, resource.getItemCorner(corner));
+                    assertSame(Availability.NOT_USABLE, playable.getItemCorner(corner));
+                    assertSame(Availability.NOT_USABLE, resource.getItemCorner(corner));
                 }
             }
             if (corner == Corner.DOWN_LX) {
-                Assertions.assertSame(playable2.getItemCorner(corner), Color.PURPLE);
+                assertSame(playable2.getItemCorner(corner), Color.PURPLE);
             } else {
-                Assertions.assertSame(Availability.NOT_USABLE, playable2.getItemCorner(corner));
+                assertSame(Availability.NOT_USABLE, playable2.getItemCorner(corner));
 
             }
         }
@@ -98,39 +99,39 @@ class ResourceCardTest {
 
     @Test
     void getSymbolToCollect() {
-        Assertions.assertTrue(playable.getSymbolToCollect().isEmpty());
-        Assertions.assertTrue(resource.getSymbolToCollect().isEmpty());
+        assertTrue(playable.getSymbolToCollect().isEmpty());
+        assertTrue(resource.getSymbolToCollect().isEmpty());
     }
 
     @Test
     void getColor() {
-        Assertions.assertSame(playable.getColor(), Color.RED);
-        Assertions.assertSame(resource.getColor(), Color.RED);
-        Assertions.assertSame(playable2.getColor(), Color.GREEN);
+        assertSame(playable.getColor(), Color.RED);
+        assertSame(resource.getColor(), Color.RED);
+        assertSame(playable2.getColor(), Color.GREEN);
     }
 
     @Test
     void getPoints() {
-        Assertions.assertEquals(playable.getPoints(), 1);
-        Assertions.assertEquals(resource.getPoints(), 1);
-        Assertions.assertEquals(playable2.getPoints(), 0);
+        assertEquals(playable.getPoints(), 1);
+        assertEquals(resource.getPoints(), 1);
+        assertEquals(playable2.getPoints(), 0);
     }
 
     @Test
     void checkNulls() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> playable.getItemCorner(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> playable.isFrontAvailable(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> resource.getItemCorner(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> resource.isFrontAvailable(null));
+        assertThrows(IllegalArgumentException.class, () -> playable.getItemCorner(null));
+        assertThrows(IllegalArgumentException.class, () -> playable.isFrontAvailable(null));
+        assertThrows(IllegalArgumentException.class, () -> resource.getItemCorner(null));
+        assertThrows(IllegalArgumentException.class, () -> resource.isFrontAvailable(null));
     }
 
     @Test
     void checkBuilderNulls() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new ResourceCard.Builder(5, 10, null));
-        Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> new ResourceCard.Builder(4, 10, Color.RED)
-                                        .hasIn(null, Color.RED)
+        assertThrows(IllegalArgumentException.class,
+                     () -> new ResourceCard.Builder(5, 10, null));
+        assertThrows(IllegalArgumentException.class,
+                     () -> new ResourceCard.Builder(4, 10, Color.RED)
+                             .hasIn(null, Color.RED)
         );
     }
 }

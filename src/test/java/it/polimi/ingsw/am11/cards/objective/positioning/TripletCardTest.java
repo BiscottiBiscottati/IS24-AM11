@@ -12,7 +12,6 @@ import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.Position;
 import it.polimi.ingsw.am11.players.field.PlayerField;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
-@SuppressWarnings("ClassWithTooManyFields")
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 class TripletCardTest {
     @InjectMocks
@@ -169,7 +169,7 @@ class TripletCardTest {
 
     @Test
     void getType() {
-        Assertions.assertSame(ObjectiveCardType.TRIPLET, tripletCardForGreens.getType());
+        assertSame(ObjectiveCardType.TRIPLET, tripletCardForGreens.getType());
     }
 
     @Test
@@ -182,8 +182,8 @@ class TripletCardTest {
         Mockito.when(playerField.getPlacedCardColours())
                .thenReturn(placedCardNumber);
 
-        Assertions.assertEquals(4, tripletCardForGreens.countPoints(playerField));
-        Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
+        assertEquals(4, tripletCardForGreens.countPoints(playerField));
+        assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test if color placed are less than 3.
         placedCardNumber = EnumMapUtils.Init(Color.class, 0);
@@ -191,8 +191,8 @@ class TripletCardTest {
         Mockito.when(playerField.getPlacedCardColours())
                .thenReturn(placedCardNumber);
 
-        Assertions.assertEquals(0, tripletCardForGreens.countPoints(playerField));
-        Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
+        assertEquals(0, tripletCardForGreens.countPoints(playerField));
+        assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test a simple map but there are no matching pattern
         placedCardNumber = EnumMapUtils.Init(Color.class, 0);
@@ -203,8 +203,8 @@ class TripletCardTest {
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardNoMatch);
 
-        Assertions.assertEquals(0, tripletCardForGreens.countPoints(playerField));
-        Assertions.assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
+        assertEquals(0, tripletCardForGreens.countPoints(playerField));
+        assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test for a larger map.
         placedCardNumber = EnumMapUtils.Init(Color.class, 0);
@@ -215,8 +215,8 @@ class TripletCardTest {
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardLarge);
 
-        Assertions.assertEquals(4, tripletCardForGreens.countPoints(playerField));
-        Assertions.assertEquals(4, tripletCardRevForGreens.countPoints(playerField));
+        assertEquals(4, tripletCardForGreens.countPoints(playerField));
+        assertEquals(4, tripletCardRevForGreens.countPoints(playerField));
 
         // Test for an even larger map.
         placedCardNumber = EnumMapUtils.Init(Color.class, 0);
@@ -227,8 +227,8 @@ class TripletCardTest {
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardLargest);
 
-        Assertions.assertEquals(6, tripletCardForGreens.countPoints(playerField));
-        Assertions.assertEquals(6, tripletCardRevForGreens.countPoints(playerField));
+        assertEquals(6, tripletCardForGreens.countPoints(playerField));
+        assertEquals(6, tripletCardRevForGreens.countPoints(playerField));
     }
 
     @Test
@@ -236,10 +236,10 @@ class TripletCardTest {
 
         // internal check
         TripletCard tempCard = (TripletCard) tripletCardForGreens;
-        Assertions.assertTrue(tempCard.isFlipped());
+        assertTrue(tempCard.isFlipped());
 
         tempCard = (TripletCard) tripletCardRevForGreens;
-        Assertions.assertFalse(tempCard.isFlipped());
+        assertFalse(tempCard.isFlipped());
     }
 
 

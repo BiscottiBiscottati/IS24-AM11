@@ -5,7 +5,6 @@ import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.field.PlayerField;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class SymbolCollectCardTest {
@@ -46,30 +47,30 @@ class SymbolCollectCardTest {
 
     @Test
     void getSymbolRequirements() {
-        Assertions.assertTrue(
+        assertTrue(
                 card.getSymbolRequirements()
                     .values()
                     .stream()
                     .allMatch(value -> value == 1)
         );
-        Assertions.assertTrue(
+        assertTrue(
                 Arrays.stream(Symbol.values())
                       .filter(symbol -> symbol != Symbol.FEATHER)
                       .map(symbol -> card2.getSymbolRequirements().get(symbol))
                       .allMatch(integer -> Objects.requireNonNull(integer) == 0)
         );
-        Assertions.assertEquals(2, card2.getSymbolRequirements().get(Symbol.FEATHER));
+        assertEquals(2, card2.getSymbolRequirements().get(Symbol.FEATHER));
     }
 
     @Test
     void getColorRequirements() {
-        Assertions.assertTrue(
+        assertTrue(
                 card.getColorRequirements()
                     .values()
                     .stream()
                     .allMatch(value -> value == 0)
         );
-        Assertions.assertTrue(
+        assertTrue(
                 card2.getColorRequirements()
                      .values()
                      .stream()
@@ -79,19 +80,19 @@ class SymbolCollectCardTest {
 
     @Test
     void getType() {
-        Assertions.assertSame(ObjectiveCardType.SYMBOL_COLLECT, card.getType());
-        Assertions.assertSame(ObjectiveCardType.SYMBOL_COLLECT, card2.getType());
+        assertSame(ObjectiveCardType.SYMBOL_COLLECT, card.getType());
+        assertSame(ObjectiveCardType.SYMBOL_COLLECT, card2.getType());
     }
 
     @Test
     void getPoints() {
-        Assertions.assertEquals(2, card.getPoints());
-        Assertions.assertEquals(2, card2.getPoints());
+        assertEquals(2, card.getPoints());
+        assertEquals(2, card2.getPoints());
     }
 
     @Test
     void checkIllegalBuild() {
-        Assertions.assertThrows(
+        assertThrows(
                 IllegalCardBuildException.class,
                 () -> new SymbolCollectCard.Builder(3, 2)
                         .hasSymbol(Symbol.FEATHER)
@@ -105,25 +106,25 @@ class SymbolCollectCardTest {
         Arrays.stream(Symbol.values()).forEach(
                 symbol -> Mockito.when(playerField.getNumberOf(symbol)).thenReturn(1)
         );
-        Assertions.assertEquals(2, card.countPoints(playerField));
+        assertEquals(2, card.countPoints(playerField));
 
         Arrays.stream(Symbol.values()).forEach(
                 symbol -> Mockito.when(playerField.getNumberOf(symbol)).thenReturn(2)
         );
-        Assertions.assertEquals(4, card.countPoints(playerField));
+        assertEquals(4, card.countPoints(playerField));
 
         Mockito.when(playerField.getNumberOf(Symbol.GLASS)).thenReturn(3);
         Mockito.when(playerField.getNumberOf(Symbol.FEATHER)).thenReturn(30);
         Mockito.when(playerField.getNumberOf(Symbol.PAPER)).thenReturn(4);
-        Assertions.assertEquals(6, card.countPoints(playerField));
+        assertEquals(6, card.countPoints(playerField));
 
 
         Mockito.when(playerField.getNumberOf(Symbol.PAPER)).thenReturn(-1);
-        Assertions.assertEquals(0, card.countPoints(playerField));
+        assertEquals(0, card.countPoints(playerField));
 
         Arrays.stream(Symbol.values()).forEach(
                 symbol -> Mockito.when(playerField.getNumberOf(symbol)).thenReturn(-1)
         );
-        Assertions.assertEquals(0, card.countPoints(playerField));
+        assertEquals(0, card.countPoints(playerField));
     }
 }
