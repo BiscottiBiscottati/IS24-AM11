@@ -83,11 +83,11 @@ public interface GameModel {
 
     int drawFromGoldDeck(String nickname) throws GameBreakingException;
 
-    int drawFromResourceDeck(String nickname);
+    int drawFromResourceDeck(String nickname) throws GameBreakingException;
 
-    void drawVisibleGold(String nickname, int ID);
+    void drawVisibleGold(String nickname, int ID) throws GameBreakingException;
 
-    void drawVisibleResource(String nickname, int ID);
+    void drawVisibleResource(String nickname, int ID) throws GameBreakingException;
     //endregion
 
 }

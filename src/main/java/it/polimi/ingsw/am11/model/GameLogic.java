@@ -22,7 +22,7 @@ public class GameLogic implements GameModel {
     private Player firstPlayer;
     private Player currentPlaying;
 
-    //region Constructor
+    //region Constructor DONE
     public GameLogic() {
         this.players = new HashMap<>(8);
         this.playerQueue = new LinkedList<Player>();
@@ -267,7 +267,7 @@ public class GameLogic implements GameModel {
 
     //endregion
 
-    //region TurnsActions
+    //region TurnsActions DONE
     @Override //DONE
     public void goNextTurn() {
         playerQueue.addLast(currentPlaying);
@@ -298,7 +298,7 @@ public class GameLogic implements GameModel {
         }
     }
 
-    @Override
+    @Override //DONE
     public int drawFromGoldDeck(String nickname) throws GameBreakingException {
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
@@ -311,13 +311,13 @@ public class GameLogic implements GameModel {
             }
         } catch (Exception e) {
             throw new GameBreakingException(
-                    "We have lost a card due to picking it from the deck and not being able to put it anywere"
+                    "We have lost a card due to picking it from the deck and not being able to put it anywhere"
             );
         }
     }
 
-    @Override
-    public int drawFromResourceDeck(String nickname) {
+    @Override //DONE
+    public int drawFromResourceDeck(String nickname) throws GameBreakingException {
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 int cardID = pickablesTable.pickCardFrom(DeckType.GOLD).getId();
@@ -325,33 +325,47 @@ public class GameLogic implements GameModel {
                 players.get(nickname).space().addCardToHand(card);
                 return cardID;
             } else {
-                
+                throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
             }
         } catch (Exception e) {
-            //TODO handle this exception
+            throw new GameBreakingException(
+                    "We have lost a card due to picking it from the deck and not being able to put it anywhere"
+            );
         }
-        return -1; //TODO what should i do?
     }
 
-    @Override
-    public void drawVisibleGold(String nickname, int ID) {
+    @Override //DONE
+    public void drawVisibleGold(String nickname, int ID) throws GameBreakingException {
         try {
-            PlayableCard card = pickablesTable.pickGoldVisible(ID);
-            players.get(nickname).space().addCardToHand(card);
+            if (players.get(nickname).space().availableSpaceInHand() >= 1) {
+                PlayableCard card = pickablesTable.pickGoldVisible(ID);
+                players.get(nickname).space().addCardToHand(card);
+            } else {
+                throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
+            }
         } catch (Exception e) {
-            //TODO handle this exception
+            throw new GameBreakingException(
+                    "We have lost a card due to picking it from the visibles and not being able to put it anywhere"
+            );
         }
 
     }
 
-    @Override
-    public void drawVisibleResource(String nickname, int ID) {
+    @Override //DONE
+    public void drawVisibleResource(String nickname, int ID) throws GameBreakingException {
         try {
-            PlayableCard card = pickablesTable.pickResourceVisibles(ID);
-            players.get(nickname).space().addCardToHand(card);
+            if (players.get(nickname).space().availableSpaceInHand() >= 1) {
+                PlayableCard card = pickablesTable.pickResourceVisibles(ID);
+                players.get(nickname).space().addCardToHand(card);
+            } else {
+                throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
+            }
         } catch (Exception e) {
-            //TODO handle this exception
+            throw new GameBreakingException(
+                    "We have lost a card due to picking it from the visibles and not being able to put it anywhere"
+            );
         }
+
 
     }
 
