@@ -31,9 +31,9 @@ public class PickablesTable {
         this.numOfShownPerType = numOfShownPerType;
         //TODO: initialize decks
         this.decks = new EnumMap<>(DeckType.class);
-        this.commonObjectives = new ArrayList<>(2);
-        this.shownGold = new ArrayList<>(2);
-        this.shownResources = new ArrayList<>(2);
+        this.commonObjectives = new ArrayList<>(2); // FIXME should use numOfObjectives instead of 2
+        this.shownGold = new ArrayList<>(2); // FIXME should use numOfShownPerType instead of 2
+        this.shownResources = new ArrayList<>(2); // FIXME should use numOfShownPerType instead of 2
         this.decks.put(DeckType.OBJECTIVE, ObjectiveDeckFactory.createDeck());
         this.decks.put(DeckType.GOLD, GoldDeckFactory.createDeck());
         this.decks.put(DeckType.RESOURCE, GoldDeckFactory.createDeck());
@@ -94,7 +94,7 @@ public class PickablesTable {
     }
 
     public void pickCommonObjectives() {
-        //TODO, it has to check that the number is equal to numOFOBjectives
+        //TODO, it has to check that the number is equal to numOfObjectives
     }
 
     public void resetToInitialCondition() {

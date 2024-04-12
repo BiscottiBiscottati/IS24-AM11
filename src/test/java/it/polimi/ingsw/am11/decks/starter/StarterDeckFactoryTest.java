@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 class StarterDeckFactoryTest {
@@ -50,17 +51,19 @@ class StarterDeckFactoryTest {
         // Testing the creation of a StarterDeck
         Assertions.assertNotNull(deck);
 
-        // Testing size of the deck
+        // Testing the size of the deck
         Assertions.assertEquals(6, deck.getRemainingCards());
 
         Set<Integer> uniqueIds = new HashSet<>(6);
 
         // Testing the presence of unique ids
         for (int i = 0; i < 6; i++) {
-            StarterCard card = deck.draw();
+            Optional<StarterCard> optCard = deck.draw();
 
             // Testing the card not null
-            Assertions.assertNotNull(card);
+            Assertions.assertFalse(optCard.isEmpty());
+
+            StarterCard card = optCard.get();
 
             // Testing uniqueness of the id
             int tempId = card.getId();

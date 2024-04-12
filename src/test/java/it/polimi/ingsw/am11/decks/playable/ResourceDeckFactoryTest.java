@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 class ResourceDeckFactoryTest {
@@ -56,9 +57,11 @@ class ResourceDeckFactoryTest {
 
         // Testing the uniqueness of the cards
         for (int i = 0; i < 40; i++) {
-            ResourceCard card = deck.draw();
+            Optional<ResourceCard> optCard = deck.draw();
 
-            Assertions.assertNotNull(card);
+            Assertions.assertFalse(optCard.isEmpty());
+
+            ResourceCard card = optCard.get();
 
             int tempId = card.getId();
             Assertions.assertTrue(uniqueIds.add(tempId));

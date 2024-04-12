@@ -57,11 +57,15 @@ public class Deck<T extends CardIdentity> {
     /**
      * Method to draw a card from the deck.
      * The card is removed from the deck.
+     * <p>
+     * If the deck is empty, it will return an empty Optional.
      *
-     * @return The card on top of the deck.
+     * @return The card on top of the deck as an <code>Optional</code>.
      */
-    public T draw() {
-        return this.deck.pop();
+    @NotNull
+    public Optional<T> draw() {
+        if (this.deck.isEmpty()) return Optional.empty();
+        return Optional.of(this.deck.pop());
     }
 
     /**

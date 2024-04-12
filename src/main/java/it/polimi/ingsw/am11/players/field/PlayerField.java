@@ -58,6 +58,7 @@ public class PlayerField {
         this.itemManager.addCardColor(card.getColor());
         this.itemManager.addExposedItemOn(card, isRetro);
 
+        // returns the points gained from placing the card
         return card.countPoints(this, position);
     }
 
