@@ -91,12 +91,7 @@ class PlayerFieldTest {
         AtomicInteger actual = new AtomicInteger();
 
         // Testing placing a StarterCard on its retro
-        Assertions.assertDoesNotThrow(() -> actual.set(
-                playerField.placeStartingCard(starterCard, true))
-        );
-
-        // Checking that the card gives 0 points
-        Assertions.assertEquals(0, actual.get());
+        Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(starterCard, true));
 
         // Checking that the card is placed and the position is not available
         Assertions.assertFalse(playerField.isAvailable(Position.of(0, 0)));
