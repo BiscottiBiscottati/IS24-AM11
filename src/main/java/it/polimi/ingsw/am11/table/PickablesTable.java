@@ -12,7 +12,6 @@ import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
-import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
 import org.jetbrains.annotations.Nullable;
@@ -98,15 +97,6 @@ public class PickablesTable {
         return objectiveDeck.getCardById(id);
     }
 
-    //endregion
-    public void addDeck(DeckType type, Deck deck) {
-
-    }
-
-    public void initialize() {
-
-    }
-
     public void shuffleAllDecks() {
         goldDeck.shuffle();
         resourceDeck.shuffle();
@@ -134,16 +124,40 @@ public class PickablesTable {
 
     }
 
-    public void pickCommonObjectives() {
+    public void pickCommonObjectives() throws EmptyDeckException {
         for (int i = 0; i < numOfObjectives; i++) {
-            commonObjectives.add(objectiveDeck.draw().get());
+            if (objectiveDeck.draw().isPresent()) {
+                commonObjectives.add(objectiveDeck.draw().get());
+            } else {
+                throw new EmptyDeckException("Objective deck is empty!");
+            }
         }
     }
 
+    public void initialize() throws EmptyDeckException {
+        resetToInitialCondition();
+        shuffleAllDecks();
+        pickCommonObjectives();
+        for (int i = 0; i < numOfShownPerType; i++) {
+            if (goldDeck.draw().isPresent()) {
+                shownGold.add(goldDeck.draw().get());
+            } else {
+                throw new EmptyDeckException("Gold deck is empty!");
+            }
+            if (resourceDeck.draw().isPresent()) {
+                shownResources.add(resourceDeck.draw().get());
+            } else {
+                throw new EmptyDeckException("Resource deck is empty!");
+            }
+        }
+    }
+
+
     public void resetToInitialCondition() {
-        //TODO
-        //It has to prepare the table for a new game, so it has to make sure that each
-        //deck is complete.
+        goldDeck.reset();
+        resourceDeck.reset();
+        objectiveDeck.reset();
+        starterDeck.reset();
     }
 
     public PlayableCard pickGoldVisible(int ID) throws IllegalPickActionException {

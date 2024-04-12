@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.model;
 
-import it.polimi.ingsw.am11.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerColor;
@@ -35,9 +35,9 @@ public interface GameModel {
     //endregion
 
     //region GetterPickableTable
-    Optional<PlayableCard> getResourceDeckTop();
+    Optional<Color> getResourceDeckTop();
 
-    Optional getGoldDeckTop();
+    Optional<Color> getGoldDeckTop();
 
     List<Integer> getCommonObjectives();
 
@@ -49,7 +49,7 @@ public interface GameModel {
     //region GetterPlateau
     int getPlayerPoints(String nickname) throws IllegalPlateauActionException;
 
-    boolean getIsArmageddonTime();
+    boolean isArmageddonTime();
 
     int getPlayerFinishingPosition(String nickname);
 
@@ -58,7 +58,7 @@ public interface GameModel {
     //endregion
 
     //region GameInitialization
-    void initGame() throws IllegalNumOfPlayersException;
+    void initGame() throws IllegalNumOfPlayersException, EmptyDeckException;
 
     void addPlayerToTable(String nickname, PlayerColor colour) throws PlayerInitException;
 

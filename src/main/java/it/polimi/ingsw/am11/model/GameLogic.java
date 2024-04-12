@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.model;
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.*;
@@ -54,7 +55,7 @@ public class GameLogic implements GameModel {
 
     //endregion
 
-    //region GettersPlayer
+    //region GettersPlayer DONE
     @Override //DONE
     public List<Integer> getPlayerHand(@NotNull String nickname) {
         return players.get(nickname)
@@ -80,7 +81,7 @@ public class GameLogic implements GameModel {
         return players.get(nickname).color();
     }
 
-    @Override //FIXME
+    @Override //DONE
     public Map<Position, CardContainer> getPositionedCard(@NotNull String nickname) {
         return players.get(nickname).field().getCardsPositioned();
     }
@@ -100,14 +101,14 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
-    @Override
+    @Override //DONE
     public List<Integer> getExposedGoldsCrd() {
         return pickablesTable.getShownGold().stream()
                              .map(PlayableCard::getId)
                              .toList();
     }
 
-    @Override
+    @Override //DONE
     public List<Integer> getExposedResourcesCrd() {
         return pickablesTable.getShownResources().stream()
                              .map(PlayableCard::getId)
@@ -115,29 +116,26 @@ public class GameLogic implements GameModel {
     }
 
 
-    // TODO getResourceDeckTop and getGoldDeckTop can be combined into one method with argument the deckType to look
     @Override //DONE
-    public Optional getResourceDeckTop() {
+    public Optional<Color> getResourceDeckTop() {
         return pickablesTable.getResourceDeckTop();
     }
 
     @Override //DONE
-    public Optional getGoldDeckTop() {
+    public Optional<Color> getGoldDeckTop() {
         return pickablesTable.getGoldDeckTop();
     }
 
     //endregion
 
-    // TODO the check for null can be done inside here may save time
     //region GettersPlateau DONE
     @Override //DONE
     public int getPlayerPoints(@NotNull String nickname) throws IllegalPlateauActionException {
         return plateau.getPlayerPoints(players.get(nickname));
     }
 
-    // TODO can be renamed into isArmageddonTime same as plateau to be less verbose
     @Override //DONE
-    public boolean getIsArmageddonTime() {
+    public boolean isArmageddonTime() {
         return plateau.isArmageddonTime();
     }
 
@@ -155,9 +153,9 @@ public class GameLogic implements GameModel {
     }
     //endregion
 
-    //region GameInitialization
+    //region GameInitialization DONE
     @Override //DONE
-    public void initGame() throws IllegalNumOfPlayersException {
+    public void initGame() throws IllegalNumOfPlayersException, EmptyDeckException {
         if (players.size() < 2) {
             throw new IllegalNumOfPlayersException(
                     "You need at least 2 players to play this game, the current number is: " + players.size()
