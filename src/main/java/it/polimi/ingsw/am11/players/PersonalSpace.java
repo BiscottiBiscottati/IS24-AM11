@@ -3,21 +3,23 @@ package it.polimi.ingsw.am11.players;
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.exceptions.IllegalPlayerSpaceActionException;
+import it.polimi.ingsw.am11.exceptions.MaxHandSizeException;
 
 import java.util.ArrayList;
+
 
 public class PersonalSpace {
 
     private final ArrayList<PlayableCard> playerHand;
-    private final int sizeofHand;
+    private final int maxSizeofHand;
     private final int maxObjectives;
     private final ArrayList<ObjectiveCard> playerObjective;
 
-    public PersonalSpace(int sizeofHand, int maxObjectives) {
+    public PersonalSpace(int maxSizeofHand, int maxObjectives) {
         //TODO: checking if sizeofHand is legal
-        this.sizeofHand = sizeofHand;
+        this.maxSizeofHand = maxSizeofHand;
         this.maxObjectives = maxObjectives;
-        playerHand = new ArrayList<>(sizeofHand);
+        playerHand = new ArrayList<>(maxSizeofHand);
         playerObjective = new ArrayList<>(1);
     }
 
@@ -30,18 +32,16 @@ public class PersonalSpace {
     }
 
     public int availableSpaceInHand() {
-        return sizeofHand - playerHand.size();
+        return maxSizeofHand - playerHand.size();
     }
 
-    public void addCardToHand(PlayableCard newCard) {
-
-        // TODO this has been commented out because it does not let the compiler compile
-
-//        if (playerHand.size() < maxHandCards) {
-//            playerHand.add(newCard);
-//        } else {
-//            //throw alreadyMaxCardInHand
-//        }
+    public void addCardToHand(PlayableCard newCard) throws MaxHandSizeException {
+        //throw alreadyMaxCardInHand
+        if (playerHand.size() == maxSizeofHand) {
+            throw new MaxHandSizeException("already Max Card In Hand");
+        } else {
+            playerHand.add(newCard);
+        }
     }
 
     public void pickCard(PlayableCard cardToPick) {
