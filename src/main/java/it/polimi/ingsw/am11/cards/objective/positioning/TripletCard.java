@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.cards.objective.positioning;
 
 import it.polimi.ingsw.am11.cards.objective.PositioningCard;
-import it.polimi.ingsw.am11.cards.utils.CardPattern;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
@@ -10,24 +9,18 @@ import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.List;
-import java.util.Set;
 
 public class TripletCard extends PositioningCard {
     private final boolean flippedFlag;
     private final Color colorOfPattern;
-    private final CardPattern pattern;
     private final PatternCounter counter;
 
     private TripletCard(@NotNull Builder builder) {
         super(builder, builder.colorRequirements);
         this.flippedFlag = builder.flippedFlag;
         this.colorOfPattern = builder.colorOfPattern;
-        this.pattern = new CardPattern(retrievePattern());
         EnumMap<PatternPurpose, Corner> cornersPurpose = new EnumMap<>(PatternPurpose.class);
         for (PatternPurpose purpose : PatternPurpose.values()) {
             switch (purpose) {
@@ -52,16 +45,6 @@ public class TripletCard extends PositioningCard {
         this.counter = new TripletPatternCounter(this.colorOfPattern, cornersPurpose);
     }
 
-    @NotNull
-    private List<List<Color>> retrievePattern() {
-        Color[][] temp = new Color[3][3];
-        Arrays.stream(temp).forEach(colors -> Arrays.fill(colors, null));
-        ObjectiveCardType.TRIPLET.getPositions(this.flippedFlag, false)
-                                 .orElse(Set.of())
-                                 .forEach(position -> temp[position.x()][position.y()] = this.colorOfPattern);
-        return Arrays.stream(temp).map(Arrays::asList).toList();
-    }
-
     @Override
     @NotNull
     public ObjectiveCardType getType() {
@@ -79,13 +62,6 @@ public class TripletCard extends PositioningCard {
     public boolean isFlipped() {
         return flippedFlag;
     }
-
-    @Nullable
-    @Override
-    public CardPattern getPattern() {
-        return this.pattern;
-    }
-
 
     public static class Builder extends PositioningCard.Builder<TripletCard> {
 
