@@ -1,27 +1,38 @@
 package it.polimi.ingsw.am11.players.field;
 
+import it.polimi.ingsw.am11.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.decks.Deck;
+import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
+import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
 import it.polimi.ingsw.am11.players.Position;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PositionManagerTest {
 
+    static Deck<StarterCard> starterDeck;
     Random gen;
     PositionManager positionManager;
+
+    @BeforeAll
+    static void beforeAll() {
+        starterDeck = StarterDeckFactory.createDeck();
+    }
 
     @BeforeEach
     void setUp() {
         gen = new Random();
         positionManager = new PositionManager();
+        starterDeck.reset();
     }
 
     @Test
@@ -109,5 +120,62 @@ class PositionManagerTest {
         assertEquals(1, positionManager.getAvailablePositions().size());
         assertEquals(0, positionManager.getCardsPositioned().size());
         assertTrue(positionManager.isAvailable(Position.of(0, 0)));
+    }
+
+    @Test
+    void placeCard() {
+        StarterCard card = starterDeck.draw().orElseThrow();
+        AtomicReference<List<Item>> itemCovered = new AtomicReference<>();
+
+        assertDoesNotThrow(() -> itemCovered.set(
+                positionManager.placeCard(card, Position.of(0, 0), true)));
+        assertTrue(itemCovered.get().isEmpty());
+
+        assertThrows(IllegalCardPlacingException.class,
+                     () -> positionManager.placeCard(card, Position.of(0, 0), false));
+
+        try {
+            itemCovered.set(
+                    positionManager.placeCard(card, Position.of(1, 1), true)
+            );
+            assertEquals(List.of(card.getItemCorner(Corner.TOP_RX, true)), itemCovered.get());
+
+            itemCovered.set(
+                    positionManager.placeCard(card, Position.of(1, -1), true)
+            );
+            assertEquals(List.of(card.getItemCorner(Corner.DOWN_RX, true)), itemCovered.get());
+
+            List<CornerContainer> itemsToBeCovered = new ArrayList<>(4);
+            itemsToBeCovered.add(card.getItemCorner(Corner.DOWN_RX, true));
+            itemsToBeCovered.add(card.getItemCorner(Corner.TOP_RX, true));
+
+            itemCovered.set(
+                    positionManager.placeCard(card, Position.of(2, 0), true)
+            );
+            assertEquals(Set.copyOf(itemsToBeCovered), Set.copyOf(itemCovered.get()));
+
+        } catch (IllegalCardPlacingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void getCardsPositioned() {
+    }
+
+    @Test
+    void getAvailablePositions() {
+    }
+
+    @Test
+    void isAvailable() {
+    }
+
+    @Test
+    void getCardIfExists() {
+    }
+
+    @Test
+    void containsCard() {
     }
 }

@@ -123,8 +123,25 @@ class ExposedItemManagerTest {
 
             cardColorCount.merge(card.getColor(), 1, Integer::sum);
 
-            itemManager.addCardColor(card.getColor());
             cardColorCount.forEach((color, count) -> assertEquals(count, itemManager.getPlacedCardOf(color)));
+        }
+
+        resourceDeck.reset();
+
+        for (int i = 0; i < 40; i++) {
+            ResourceCard card = resourceDeck.draw().orElseThrow();
+
+            Stream.of(Corner.values())
+                  .map(corner -> card.getItemCorner(corner, true).getItem())
+                  .filter(Optional::isPresent)
+                  .map(Optional::get)
+                  .forEach(item -> itemCount.merge(item, 1, Integer::sum));
+
+            card.getCenter(true)
+                .forEach(color -> itemCount.merge(color, 1, Integer::sum));
+
+            itemManager.addExposedItemOn(card, true);
+            itemCount.forEach((item, count) -> assertEquals(count, itemManager.getExposedItem(item)));
         }
     }
 
@@ -160,7 +177,18 @@ class ExposedItemManagerTest {
 
     @Test
     void getPlacedCardColors() {
+        itemManager.addCardColor(Color.RED);
+        itemManager.addCardColor(Color.RED);
+        itemManager.addCardColor(Color.RED);
+        itemManager.addCardColor(Color.RED);
 
+        Map<Color, Integer> placedCardColors = itemManager.getPlacedCardColors();
+
+        assertEquals(4, placedCardColors.get(Color.RED));
+
+        Stream.of(Color.values())
+              .filter(color -> color != Color.RED)
+              .forEach(color -> assertEquals(0, placedCardColors.get(color)));
     }
 
     @Test
