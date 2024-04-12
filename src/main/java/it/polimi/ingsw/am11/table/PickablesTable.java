@@ -12,7 +12,6 @@ import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
-import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
 import org.jetbrains.annotations.Nullable;
@@ -96,11 +95,6 @@ public class PickablesTable {
 
     public Optional<ObjectiveCard> getObjectiveByID(int id) {
         return objectiveDeck.getCardById(id);
-    }
-
-    //endregion
-    public void addDeck(DeckType type, Deck deck) {
-
     }
 
     public void shuffleAllDecks() {
