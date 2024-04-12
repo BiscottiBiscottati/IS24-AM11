@@ -268,7 +268,7 @@ public class GameLogic implements GameModel {
         PlayableCard card = pickablesTable.getPlayableByID(ID).orElseThrow();
         if (player.field().isAvailable(position)) {
             try {
-                if (player.field().isRequirementMet(card)) {
+                if (player.field().isRequirementMet(card, isRetro)) {
                     int points = player.field().place(card, position, isRetro);
                     player.space().pickCard(card);
                     plateau.addPlayerPoints(player, points);

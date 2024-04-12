@@ -17,7 +17,7 @@ public class PositionManager {
     private final Set<Position> closedPositions;
     private final Map<Position, CardContainer> cardsPositioned;
 
-    public PositionManager() {
+    PositionManager() {
         this.availablePositions = new HashSet<>(32);
         this.availablePositions.add(Position.of(0, 0));
         this.closedPositions = new HashSet<>(32);
@@ -119,10 +119,6 @@ public class PositionManager {
 
     public boolean isAvailable(@NotNull Position position) {
         return availablePositions.contains(position);
-    }
-
-    public boolean isPositioned(@NotNull Position position) {
-        return cardsPositioned.containsKey(position);
     }
 
     public Optional<CardContainer> getCardIfExists(@NotNull Position position) {

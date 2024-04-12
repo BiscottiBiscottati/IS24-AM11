@@ -41,8 +41,9 @@ public class ExposedItemManager {
 
     void subToExposed(@NotNull Item item) {
         switch (item) {
-            case Color color -> this.exposedColors.merge(color, -1, Integer::sum);
-            case Symbol symbol -> this.exposedSymbols.merge(symbol, -1, Integer::sum);
+            case Color color -> this.exposedColors.computeIfPresent(color, (c, count) -> (count > 0) ? count - 1 : 0);
+            case Symbol symbol ->
+                    this.exposedSymbols.computeIfPresent(symbol, (s, count) -> (count > 0) ? count - 1 : 0);
         }
     }
 
@@ -62,6 +63,11 @@ public class ExposedItemManager {
         // add card center colors to exposed counter
         card.getCenter(isRetro)
             .forEach(this::addToExposed);
+
+        // add card color to placed card counter
+        if (card instanceof PlayableCard playableCard) {
+            this.addCardColor(playableCard.getColor());
+        }
     }
 
     public int getExposedItem(@NotNull Item item) {
@@ -71,7 +77,7 @@ public class ExposedItemManager {
         };
     }
 
-    public int getNumberPlacedCardOf(@NotNull Color color) {
+    public int getPlacedCardOf(@NotNull Color color) {
         return this.placedCardColors.get(color);
     }
 
@@ -79,7 +85,8 @@ public class ExposedItemManager {
         return Map.copyOf(this.placedCardColors);
     }
 
-    public boolean isRequirementsMet(PlayableCard card) {
+    public boolean isRequirementsMet(PlayableCard card, boolean isRetro) {
+        if (isRetro) return true;
         return Stream.of(Color.values())
                      .allMatch(color -> card.getPlacingRequirementsOf(color) <= this.getExposedItem(color));
     }

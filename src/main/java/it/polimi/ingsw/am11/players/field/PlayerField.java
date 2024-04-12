@@ -124,13 +124,13 @@ public class PlayerField {
     }
 
     public int getNumberOfPositionedColor(@NotNull Color color) {
-        return this.itemManager.getNumberPlacedCardOf(color);
+        return this.itemManager.getPlacedCardOf(color);
     }
 
-    public boolean isRequirementMet(@NotNull FieldCard card) {
+    public boolean isRequirementMet(@NotNull FieldCard card, boolean isRetro) {
         return switch (card) {
             case StarterCard ignored -> true;
-            case PlayableCard playableCard -> this.itemManager.isRequirementsMet(playableCard);
+            case PlayableCard playableCard -> this.itemManager.isRequirementsMet(playableCard, isRetro);
         };
     }
 

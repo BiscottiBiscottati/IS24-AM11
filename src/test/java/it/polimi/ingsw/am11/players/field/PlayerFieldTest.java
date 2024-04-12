@@ -304,8 +304,8 @@ class PlayerFieldTest {
     @Test
     void isRequirementMet() {
         StarterCard card = starterDeck.draw().orElseThrow();
-        assertTrue(playerField.isRequirementMet(card));
-        assertTrue(playerField.isRequirementMet(resourceDeck.draw().orElseThrow()));
-        assertFalse(playerField.isRequirementMet(goldDeck.draw().orElseThrow()));
+        assertTrue(playerField.isRequirementMet(card, false));
+        assertTrue(playerField.isRequirementMet(resourceDeck.draw().orElseThrow(), false));
+        assertFalse(playerField.isRequirementMet(goldDeck.draw().orElseThrow(), false));
     }
 }
