@@ -1,25 +1,29 @@
 package it.polimi.ingsw.am11.table;
 
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
+import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class PickablesTable {
 
-    private final EnumMap<DeckType, Deck> decks;
+    private final Deck<GoldCard> goldDeck;
+    private final Deck<ResourceCard> resourceDeck;
+    private final Deck<ObjectiveCard> objectiveDeck;
+    private final Deck<StarterCard> starterDeck;
     private final int numOfObjectives;
     private final int numOfShownPerType;
     private final List<ObjectiveCard> commonObjectives;
@@ -27,56 +31,59 @@ public class PickablesTable {
     private final List<PlayableCard> shownResources;
 
     public PickablesTable(int numOfObjectives, int numOfShownPerType) {
+        this.goldDeck = GoldDeckFactory.createDeck();
+        this.resourceDeck = ResourceDeckFactory.createDeck();
+        this.objectiveDeck = ObjectiveDeckFactory.createDeck();
+        this.starterDeck = StarterDeckFactory.createDeck();
         this.numOfObjectives = numOfObjectives;
         this.numOfShownPerType = numOfShownPerType;
-        //TODO: initialize decks
-        this.decks = new EnumMap<>(DeckType.class);
-        this.commonObjectives = new ArrayList<>(2); // FIXME should use numOfObjectives instead of 2
-        this.shownGold = new ArrayList<>(2); // FIXME should use numOfShownPerType instead of 2
-        this.shownResources = new ArrayList<>(2); // FIXME should use numOfShownPerType instead of 2
-        this.decks.put(DeckType.OBJECTIVE, ObjectiveDeckFactory.createDeck());
-        this.decks.put(DeckType.GOLD, GoldDeckFactory.createDeck());
-        this.decks.put(DeckType.RESOURCE, GoldDeckFactory.createDeck());
-        this.decks.put(DeckType.STARTER, StarterDeckFactory.createDeck());
+
+        this.commonObjectives = new ArrayList<>(numOfObjectives);
+        this.shownGold = new ArrayList<>(numOfShownPerType);
+        this.shownResources = new ArrayList<>(numOfShownPerType);
+
     }
 
     //region Getters
 
     public List<ObjectiveCard> getCommonObjectives() {
-        return commonObjectives;
+        return Collections.unmodifiableList(commonObjectives);
     }
 
     public List<PlayableCard> getShownGold() {
-        return new ArrayList<>(shownGold);
-
+        return Collections.unmodifiableList(shownGold);
     }
 
     public List<PlayableCard> getShownResources() {
-        return new ArrayList<>(shownResources);
+        return Collections.unmodifiableList(shownResources);
     }
 
-    public Optional getResourceDeckTop() {
-        return decks.get(DeckType.RESOURCE).peekTopCardColor();
+    public Optional<Color> getResourceDeckTop() {
+        return resourceDeck.peekTopCardColor();
     }
 
     public Optional getGoldDeckTop() {
-        return decks.get(DeckType.GOLD).peekTopCardColor();
+        return goldDeck.peekTopCardColor();
     }
+
     public Optional<PlayableCard> getPlayableByID(int id) {
-        Optional<PlayableCard> temp = decks.get(DeckType.RESOURCE).getCardById(id);
+        Optional<ResourceCard> temp = resourceDeck.getCardById(id);
         if (temp.isPresent()) {
-            return temp;
+            return Optional.of(temp.get());
+        } else if (goldDeck.getCardById(id).isPresent()) {
+            Optional<GoldCard> cardById = goldDeck.getCardById(id);
+            return Optional.of(cardById.get());
         } else {
-            return decks.get(DeckType.GOLD).getCardById(id);
+            return Optional.empty();
         }
     }
 
     public Optional<StarterCard> getStarterByID(int id) {
-        return decks.get(DeckType.STARTER).getCardById(id);
+        return starterDeck.getCardById(id);
     }
 
     public Optional<ObjectiveCard> getObjectiveByID(int id) {
-        return decks.get(DeckType.OBJECTIVE).getCardById(id);
+        return objectiveDeck.getCardById(id);
     }
 
     //endregion
@@ -88,13 +95,27 @@ public class PickablesTable {
         //TODO
     }
 
-    public CardIdentity pickCardFrom(DeckType deck) {
-        //TODO
-        return null;
+    public Optional<PlayableCard> pickPlayableCardFrom(PlayableCardType type) {
+        if (type == PlayableCardType.GOLD) {
+            Optional<GoldCard> card = goldDeck.draw();
+            return card.map(PlayableCard.class::cast);
+        } else {
+            Optional<ResourceCard> card = resourceDeck.draw();
+            return card.map(PlayableCard.class::cast);
+        }
     }
 
+    public Optional<StarterCard> pickStarterCard() {
+        return starterDeck.draw();
+    }
+
+    public Optional<ObjectiveCard> pickObjectiveCard() {
+        return objectiveDeck.draw();
+    }
     public void pickCommonObjectives() {
-        //TODO, it has to check that the number is equal to numOfObjectives
+        for (int i = 0; i < numOfObjectives; i++) {
+            commonObjectives.add(objectiveDeck.draw().get());
+        }
     }
 
     public void resetToInitialCondition() {
