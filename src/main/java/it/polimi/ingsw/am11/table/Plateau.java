@@ -3,9 +3,11 @@ package it.polimi.ingsw.am11.table;
 import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.players.Player;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Plateau {
     private final Map<Player, Integer> playerPoints;
@@ -86,11 +88,28 @@ public class Plateau {
         } else return temp;
     }
 
+    public void setFinalLeaderboard(Map<Player, Integer> playerPoints) {
+
+        AtomicInteger rank = new AtomicInteger(1);
+        AtomicInteger previousPoints = new AtomicInteger(-1);
+
+        playerPoints.entrySet()
+                    .stream()
+                    .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue())) // sort in descending order
+                    .forEach(entry -> {
+                        if (previousPoints.get() != entry.getValue()) {
+                            rank.incrementAndGet();
+                        }
+                        finalLeaderboard.put(entry.getKey(), rank.get());
+                        previousPoints.set(entry.getValue());
+                    });
+    }
 
     public int getPlayerFinihingPosition(Player player) {
-        
-        //TODO: need to implement this method
-        return -1;
+
+        int position = finalLeaderboard.getOrDefault(player, -1);
+
+        return position;
     }
 
     public List<Player> getWinners() {
