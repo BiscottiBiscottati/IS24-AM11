@@ -88,7 +88,6 @@ class PlayerFieldTest {
     @Test
     void placeStartingCard() {
         StarterCard starterCard = starterDeck.draw().orElseThrow();
-        AtomicInteger actual = new AtomicInteger();
 
         // Testing placing a StarterCard on its retro
         Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(starterCard, true));
@@ -194,9 +193,7 @@ class PlayerFieldTest {
         Assertions.assertEquals(1, availablePos.size());
 
         // Place a StarterCard on its retro as they always have all corners available
-        Assertions.assertDoesNotThrow(() -> {
-            playerField.placeStartingCard(starterDeck.draw().orElseThrow(), true);
-        });
+        Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(starterDeck.draw().orElseThrow(), true));
 
         Set<Position> availablePosAfterStarter = playerField.getAvailablePositions();
         Stream.of(Corner.values())
@@ -211,9 +208,7 @@ class PlayerFieldTest {
         Assertions.assertFalse(playerField.isAvailable(Position.of(1, 1)));
 
         // Place a StarterCard on its retro as they always have all corners available
-        Assertions.assertDoesNotThrow(() -> {
-            playerField.placeStartingCard(starterDeck.draw().orElseThrow(), true);
-        });
+        Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(starterDeck.draw().orElseThrow(), true));
         // Check that all corners are available
         Stream.of(Corner.values())
               .map(corner -> PositionManager.getPositionIn(Position.of(0, 0), corner))
@@ -232,9 +227,7 @@ class PlayerFieldTest {
 
         // Place a StarterCard on its retro
         StarterCard starterCard = starterDeck.draw().orElseThrow();
-        Assertions.assertDoesNotThrow(() -> {
-            playerField.placeStartingCard(starterCard, true);
-        });
+        Assertions.assertDoesNotThrow(() -> playerField.placeStartingCard(starterCard, true));
 
         // Checking that colors have been updated and symbol are 0 because of StarterCard retro
         Stream.of(Color.values())
