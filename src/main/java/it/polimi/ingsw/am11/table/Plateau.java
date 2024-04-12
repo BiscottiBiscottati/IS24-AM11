@@ -3,13 +3,16 @@ package it.polimi.ingsw.am11.table;
 import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.players.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Plateau {
-    private final Map<Player, Integer> playerPoints;
+    final Map<Player, Integer> playerPoints;
+    final Map<Player, Integer> finalLeaderboard;
     private final int armageddonTime;
-    private final Map<Player, Integer> finalLeaderboard;
     private boolean isArmageddonTime;
 
     // TODO why is there a finalLeaderboard and playerPoints? Are they the same thing?
@@ -67,7 +70,7 @@ public class Plateau {
 
     public void setFinalLeaderboard(Map<Player, Integer> playerPoints) {
 
-        AtomicInteger rank = new AtomicInteger(1);
+        AtomicInteger rank = new AtomicInteger(0);
         AtomicInteger previousPoints = new AtomicInteger(-1);
 
         playerPoints.entrySet()
