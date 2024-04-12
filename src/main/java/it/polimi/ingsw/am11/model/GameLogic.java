@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.model;
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.decks.utils.DeckType;
+import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.*;
 import it.polimi.ingsw.am11.players.field.PlayerField;
@@ -182,7 +182,7 @@ public class GameLogic implements GameModel {
                 if (pickablesTable.supplyResourceVisibles().isEmpty()) {
                     plateau.setResourceDeckEmptyness(true);
                 }
-            } catch (Exception e) {
+            } catch (IllegalPickActionException e) {
                 System.out.println(e);
                 break;
             }
@@ -238,8 +238,12 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public int pickStarter() {
-        return pickablesTable.pickCardFrom(DeckType.STARTER).getId();
+    public int pickStarter() throws EmptyDeckException {
+        try {
+            return pickablesTable.pickStarterCard().getId();
+        } catch (EmptyDeckException ex) {
+            throw ex;
+        }
     }
 
     @Override //DONE
@@ -249,8 +253,8 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public int pickObjective() {
-        return pickablesTable.pickCardFrom(DeckType.OBJECTIVE).getId();
+    public int pickObjective() throws EmptyDeckException {
+        return pickablesTable.pickObjectiveCard().getId();
     }
 
     @Override //DONE
@@ -299,43 +303,57 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public int drawFromGoldDeck(String nickname) throws GameBreakingException {
+    public int drawFromGoldDeck(String nickname)
+            throws GameBreakingException,
+                   EmptyDeckException,
+                   IllegalPlayerSpaceActionException {
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
-                int cardID = pickablesTable.pickCardFrom(DeckType.GOLD).getId();
-                PlayableCard card = pickablesTable.getPlayableByID(cardID).orElseThrow();
+                PlayableCard card = pickablesTable.pickPlayableCardFrom(PlayableCardType.GOLD);
                 players.get(nickname).space().addCardToHand(card);
-                return cardID;
+                return card.getId();
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
             }
-        } catch (Exception e) {
+        } catch (MaxHandSizeException ex) {
             throw new GameBreakingException(
                     "We have lost a card due to picking it from the deck and not being able to put it anywhere"
             );
+        } catch (EmptyDeckException ex) {
+            plateau.setGoldDeckEmptyness(true);
+            throw ex;
         }
     }
 
     @Override //DONE
-    public int drawFromResourceDeck(String nickname) throws GameBreakingException {
+    public int drawFromResourceDeck(String nickname)
+            throws
+            GameBreakingException,
+            EmptyDeckException,
+            IllegalPlayerSpaceActionException {
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
-                int cardID = pickablesTable.pickCardFrom(DeckType.GOLD).getId();
-                PlayableCard card = pickablesTable.getPlayableByID(cardID).orElseThrow();
+                PlayableCard card = pickablesTable.pickPlayableCardFrom(PlayableCardType.RESOURCE);
                 players.get(nickname).space().addCardToHand(card);
-                return cardID;
+                return card.getId();
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
             }
-        } catch (Exception e) {
+        } catch (MaxHandSizeException ex) {
             throw new GameBreakingException(
                     "We have lost a card due to picking it from the deck and not being able to put it anywhere"
             );
+        } catch (EmptyDeckException ex) {
+            plateau.setGoldDeckEmptyness(true);
+            throw ex;
         }
     }
 
     @Override //DONE
-    public void drawVisibleGold(String nickname, int ID) throws GameBreakingException {
+    public void drawVisibleGold(String nickname, int ID)
+            throws GameBreakingException,
+                   IllegalPickActionException,
+                   IllegalPlayerSpaceActionException {
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickGoldVisible(ID);
@@ -343,16 +361,21 @@ public class GameLogic implements GameModel {
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
             }
-        } catch (Exception e) {
+        } catch (MaxHandSizeException ex) {
             throw new GameBreakingException(
                     "We have lost a card due to picking it from the visibles and not being able to put it anywhere"
             );
+        } catch (IllegalPickActionException ex) {
+            throw ex;
         }
 
     }
 
     @Override //DONE
-    public void drawVisibleResource(String nickname, int ID) throws GameBreakingException {
+    public void drawVisibleResource(String nickname, int ID)
+            throws GameBreakingException,
+                   IllegalPickActionException,
+                   IllegalPlayerSpaceActionException {
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickResourceVisibles(ID);
@@ -360,10 +383,12 @@ public class GameLogic implements GameModel {
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
             }
-        } catch (Exception e) {
+        } catch (MaxHandSizeException ex) {
             throw new GameBreakingException(
                     "We have lost a card due to picking it from the visibles and not being able to put it anywhere"
             );
+        } catch (IllegalPickActionException ex) {
+            throw ex;
         }
 
 

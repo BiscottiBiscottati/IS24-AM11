@@ -66,9 +66,9 @@ public interface GameModel {
 
     void setStartingPlayer();
 
-    int pickStarter();
+    int pickStarter() throws EmptyDeckException;
 
-    int pickObjective();
+    int pickObjective() throws EmptyDeckException;
 
     void setStarterFor(String nickname, int cardID, boolean isRetro) throws IllegalCardPlacingException;
 
@@ -81,13 +81,13 @@ public interface GameModel {
 
     void placeCard(String Nickname, int ID, Position position, boolean isRetro) throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException;
 
-    int drawFromGoldDeck(String nickname) throws GameBreakingException;
+    int drawFromGoldDeck(String nickname) throws GameBreakingException, EmptyDeckException, IllegalPlayerSpaceActionException;
 
-    int drawFromResourceDeck(String nickname) throws GameBreakingException;
+    int drawFromResourceDeck(String nickname) throws GameBreakingException, EmptyDeckException, IllegalPlayerSpaceActionException;
 
-    void drawVisibleGold(String nickname, int ID) throws GameBreakingException;
+    void drawVisibleGold(String nickname, int ID) throws GameBreakingException, IllegalPickActionException, IllegalPlayerSpaceActionException;
 
-    void drawVisibleResource(String nickname, int ID) throws GameBreakingException;
+    void drawVisibleResource(String nickname, int ID) throws GameBreakingException, IllegalPickActionException, IllegalPlayerSpaceActionException;
     //endregion
 
 }
