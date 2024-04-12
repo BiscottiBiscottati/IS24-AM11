@@ -17,7 +17,10 @@ import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 public class PickablesTable {
 
@@ -134,9 +137,10 @@ public class PickablesTable {
     }
 
     public void resetToInitialCondition() {
-        //TODO
-        //It has to prepare the table for a new game, so it has to make sure that each
-        //deck is complete.
+        goldDeck.reset();
+        resourceDeck.reset();
+        objectiveDeck.reset();
+        starterDeck.reset();
     }
 
     public PlayableCard pickGoldVisible(int ID) throws IllegalPickActionException {
