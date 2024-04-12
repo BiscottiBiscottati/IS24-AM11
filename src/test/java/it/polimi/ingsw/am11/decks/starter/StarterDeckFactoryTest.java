@@ -6,7 +6,6 @@ import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DatabaseConstants;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +13,8 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class StarterDeckFactoryTest {
 
@@ -49,10 +50,10 @@ class StarterDeckFactoryTest {
         Deck<StarterCard> deck = StarterDeckFactory.createDeck();
 
         // Testing the creation of a StarterDeck
-        Assertions.assertNotNull(deck);
+        assertNotNull(deck);
 
         // Testing the size of the deck
-        Assertions.assertEquals(6, deck.getRemainingCards());
+        assertEquals(6, deck.getRemainingCards());
 
         Set<Integer> uniqueIds = new HashSet<>(6);
 
@@ -61,13 +62,13 @@ class StarterDeckFactoryTest {
             Optional<StarterCard> optCard = deck.draw();
 
             // Testing the card not null
-            Assertions.assertFalse(optCard.isEmpty());
+            assertFalse(optCard.isEmpty());
 
             StarterCard card = optCard.get();
 
             // Testing uniqueness of the id
             int tempId = card.getId();
-            Assertions.assertTrue(uniqueIds.add(tempId));
+            assertTrue(uniqueIds.add(tempId));
 
             // Testing card contents
             try {
@@ -77,10 +78,10 @@ class StarterDeckFactoryTest {
 
                     // Testing Card's front and retro Corner's content
                     for (Corner corner : Corner.values()) {
-                        Assertions.assertEquals(
+                        assertEquals(
                                 result.getString("front_" + corner.getColumnName()),
                                 card.checkFront(corner).toString());
-                        Assertions.assertEquals(
+                        assertEquals(
                                 result.getString("retro_" + corner.getColumnName()),
                                 card.checkRetroColorIn(corner).toString());
                     }
@@ -94,8 +95,8 @@ class StarterDeckFactoryTest {
                     centerResult.next();
                     for (Color color : Color.values()) {
                         if (centerResult.getBoolean(color.getColumnName())) {
-                            Assertions.assertTrue(card.getCenterColorsFront().contains(color));
-                        } else Assertions.assertFalse(card.getCenterColorsFront().contains(color));
+                            assertTrue(card.getCenterColorsFront().contains(color));
+                        } else assertFalse(card.getCenterColorsFront().contains(color));
                     }
                 }
             } catch (SQLException e) {

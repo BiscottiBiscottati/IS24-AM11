@@ -9,7 +9,6 @@ import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.utils.DatabaseConstants;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +16,8 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ResourceDeckFactoryTest {
 
@@ -48,10 +49,10 @@ class ResourceDeckFactoryTest {
         Deck<ResourceCard> deck = ResourceDeckFactory.createDeck();
 
         // Testing the creation of a ResourceDeck
-        Assertions.assertNotNull(deck);
+        assertNotNull(deck);
 
         // Testing size of the deck
-        Assertions.assertEquals(40, deck.getRemainingCards());
+        assertEquals(40, deck.getRemainingCards());
 
         Set<Integer> uniqueIds = new HashSet<>(40);
 
@@ -59,12 +60,12 @@ class ResourceDeckFactoryTest {
         for (int i = 0; i < 40; i++) {
             Optional<ResourceCard> optCard = deck.draw();
 
-            Assertions.assertFalse(optCard.isEmpty());
+            assertFalse(optCard.isEmpty());
 
             ResourceCard card = optCard.get();
 
             int tempId = card.getId();
-            Assertions.assertTrue(uniqueIds.add(tempId));
+            assertTrue(uniqueIds.add(tempId));
 
             // Testing card contents
             try {
@@ -74,31 +75,31 @@ class ResourceDeckFactoryTest {
                     result.next();
 
                     // Testing the card color
-                    Assertions.assertEquals(result.getString("card_color"), card.getColor().name());
+                    assertEquals(result.getString("card_color"), card.getColor().name());
 
                     // Testing the card value
-                    Assertions.assertEquals(result.getString("card_type"), card.getType().name());
+                    assertEquals(result.getString("card_type"), card.getType().name());
 
                     // Testing the card symbol
-                    Assertions.assertEquals(result.getInt("points"), card.getPoints());
+                    assertEquals(result.getInt("points"), card.getPoints());
 
                     for (Corner corner : Corner.values()) {
                         switch (CornerContainer.of(result.getString(corner.getColumnName()))) {
                             case Availability.NOT_USABLE -> {
-                                Assertions.assertFalse(card.isFrontAvailable(corner));
-                                Assertions.assertEquals(Availability.NOT_USABLE, card.getItemCorner(corner));
+                                assertFalse(card.isFrontAvailable(corner));
+                                assertEquals(Availability.NOT_USABLE, card.getItemCorner(corner));
                             }
                             case Availability.USABLE -> {
-                                Assertions.assertTrue(card.isFrontAvailable(corner));
-                                Assertions.assertEquals(Availability.USABLE, card.getItemCorner(corner));
+                                assertTrue(card.isFrontAvailable(corner));
+                                assertEquals(Availability.USABLE, card.getItemCorner(corner));
                             }
                             case Symbol symbol -> {
-                                Assertions.assertTrue(card.isFrontAvailable(corner));
-                                Assertions.assertEquals(symbol, card.getItemCorner(corner));
+                                assertTrue(card.isFrontAvailable(corner));
+                                assertEquals(symbol, card.getItemCorner(corner));
                             }
                             case Color color -> {
-                                Assertions.assertTrue(card.isFrontAvailable(corner));
-                                Assertions.assertEquals(color, card.getItemCorner(corner));
+                                assertTrue(card.isFrontAvailable(corner));
+                                assertEquals(color, card.getItemCorner(corner));
                             }
                             default -> throw new IllegalStateException("Unexpected value!");
                         }
