@@ -10,6 +10,4 @@ import it.polimi.ingsw.am11.cards.utils.enums.Color;
  */
 public interface CardIdentity {
     int getId();
-
-    Color getColor();
 }

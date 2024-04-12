@@ -2,7 +2,6 @@ package it.polimi.ingsw.am11.decks;
 
 import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.cards.utils.CardIdentity;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -95,7 +94,8 @@ public class Deck<T extends CardIdentity> {
         return Optional.ofNullable(mappingIdToCard.getOrDefault(id, null));
     }
 
-    public Optional<Color> peekTopCardColor() {
-        return Optional.ofNullable(deck.peek()).map(CardIdentity::getColor);
+    public Optional<T> peekTop() {
+        if (deck.isEmpty()) return Optional.empty();
+        return Optional.of(deck.peek());
     }
 }

@@ -15,7 +15,7 @@ import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.decks.utils.DeckType;
 import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -60,11 +60,19 @@ public class PickablesTable {
     }
 
     public Optional<Color> getResourceDeckTop() {
-        return resourceDeck.peekTopCardColor();
+        if (resourceDeck.peekTop().isPresent()) {
+            return Optional.of(resourceDeck.peekTop().get().getColor());
+        } else {
+            return Optional.empty();
+        }
     }
 
-    public Optional getGoldDeckTop() {
-        return goldDeck.peekTopCardColor();
+    public Optional<Color> getGoldDeckTop() {
+        if (goldDeck.peekTop().isPresent()) {
+            return Optional.of(goldDeck.peekTop().get().getColor());
+        } else {
+            return Optional.empty();
+        }
     }
 
     public Optional<PlayableCard> getPlayableByID(int id) {
@@ -99,15 +107,12 @@ public class PickablesTable {
         starterDeck.shuffle();
     }
 
-    public PlayableCard pickPlayableCardFrom(PlayableCardType type) throws EmptyDeckException {
-        switch (type) {
-            case GOLD:
-                return goldDeck.draw().orElseThrow(() -> new EmptyDeckException("Gold deck is empty!"));
-            case RESOURCE:
-                return resourceDeck.draw().orElseThrow(() -> new EmptyDeckException("Resource deck is empty!"));
-            default:
-                return null;
-        }
+    public @Nullable PlayableCard pickPlayableCardFrom(PlayableCardType type) throws EmptyDeckException {
+        return switch (type) {
+            case GOLD -> goldDeck.draw().orElseThrow(() -> new EmptyDeckException("Gold deck is empty!"));
+            case RESOURCE -> resourceDeck.draw().orElseThrow(() -> new EmptyDeckException("Resource deck is empty!"));
+            default -> null;
+        };
     }
 
     public StarterCard pickStarterCard()
@@ -135,13 +140,23 @@ public class PickablesTable {
     }
 
     public PlayableCard pickGoldVisible(int ID) throws IllegalPickActionException {
-        //TODO
-        return null;
+        for (PlayableCard card : shownGold) {
+            if (card.getId() == ID) {
+                shownGold.remove(card);
+                return card;
+            }
+        }
+        throw new IllegalPickActionException("Gold card with ID " + ID + " is not visible!");
     }
 
     public PlayableCard pickResourceVisibles(int ID) throws IllegalPickActionException {
-        //TODO
-        return null;
+        for (PlayableCard card : shownResources) {
+            if (card.getId() == ID) {
+                shownResources.remove(card);
+                return card;
+            }
+        }
+        throw new IllegalPickActionException("Resource card with ID " + ID + " is not visible!");
     }
 
     public Optional<PlayableCard> supplyGoldVisibles() throws IllegalPickActionException {
