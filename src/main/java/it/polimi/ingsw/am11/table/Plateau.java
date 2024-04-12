@@ -3,10 +3,7 @@ package it.polimi.ingsw.am11.table;
 import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.players.Player;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Plateau {
@@ -112,9 +109,15 @@ public class Plateau {
         return position;
     }
 
-    public List<Player> getWinners() {
 
-        //TODO: need to implement this method, remember that there could be more winners.
-        return null;
+    public List<Player> getWinners() {
+        List<Player> winners = new ArrayList<>();
+        for (Map.Entry<Player, Integer> entry : finalLeaderboard.entrySet()) {
+            if (entry.getValue() == 1) {
+                winners.add(entry.getKey());
+            }
+        }
+        return winners;
     }
+
 }
