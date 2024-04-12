@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.cards.objective;
 
 import it.polimi.ingsw.am11.cards.utils.CardIdentity;
-import it.polimi.ingsw.am11.cards.utils.CardPattern;
 import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
@@ -9,7 +8,6 @@ import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Objects;
@@ -179,12 +177,6 @@ public abstract class ObjectiveCard implements CardIdentity {
     }
 
     public abstract int countPoints(PlayerField playerField);
-
-    // TODO: up for discussion if to use this
-    @Nullable
-    public CardPattern getPattern() {
-        return null;
-    }
 
     /**
      * This is an abstract <code>Builder</code> class for creating instances of <code>ObjectiveCard</code>.

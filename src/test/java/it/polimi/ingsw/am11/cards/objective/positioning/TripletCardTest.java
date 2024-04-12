@@ -4,7 +4,6 @@ import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.cards.utils.CardPattern;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
@@ -24,27 +23,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 @SuppressWarnings("ClassWithTooManyFields")
 @ExtendWith(MockitoExtension.class)
 class TripletCardTest {
-
-    static CardPattern standardTripletMatrix = new CardPattern(
-            List.of(
-                    Arrays.asList(null, null, Color.GREEN),
-                    Arrays.asList(null, Color.GREEN, null),
-                    Arrays.asList(Color.GREEN, null, null)
-            )
-    );
-    static CardPattern reversedTripletMatrix = new CardPattern(
-            // the matrix is flipped on its y-axis for the cartesian reference
-            List.of(
-                    Arrays.asList(Color.GREEN, null, null),
-                    Arrays.asList(null, Color.GREEN, null),
-                    Arrays.asList(null, null, Color.GREEN)
-            )
-    );
     @InjectMocks
     static ObjectiveCard tripletCardForGreens;
     @InjectMocks
@@ -260,27 +242,5 @@ class TripletCardTest {
         Assertions.assertFalse(tempCard.isFlipped());
     }
 
-    @Test
-    void getPattern() {
-        IntStream.range(0, 3)
-                 .forEach(value ->
-                          {
-                              assert tripletCardForGreens.getPattern() != null;
-                              Assertions.assertEquals(
-                                      reversedTripletMatrix.pattern(),
-                                      tripletCardForGreens.getPattern().pattern()
-                              );
-                          }
-                 );
 
-        IntStream.range(0, 3)
-                 .forEach(value -> {
-                              assert tripletCardRevForGreens.getPattern() != null;
-                              Assertions.assertEquals(
-                                      standardTripletMatrix.pattern(),
-                                      tripletCardRevForGreens.getPattern().pattern()
-                              );
-                          }
-                 );
-    }
 }

@@ -60,11 +60,6 @@ public class ColorCollectCard extends CollectingCard {
 
     }
 
-    @Override
-    public Color getColor() {
-        return null;
-    }
-
     public static class Builder extends CollectingCard.Builder<ColorCollectCard> {
 
         private final @NotNull EnumMap<Color, Integer> colorToCollect;
