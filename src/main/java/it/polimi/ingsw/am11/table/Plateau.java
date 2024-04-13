@@ -7,19 +7,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Plateau {
     private final Map<Player, Integer> playerPoints;
     private final Map<Player, Integer> counterObjective;
     private final Map<Player, Integer> finalLeaderboard;
     private final int armageddonTime;
-    GameStatus status;
+    private GameStatus status;
 
-    // TODO why is there a finalLeaderboard and playerPoints? Are they the same thing?
+
     public Plateau(int armageddonTime) {
         this.playerPoints = new HashMap<>(8);
-        this.counterObjective = new HashMap<>(8);
+        this.counterObjective = new HashMap<>(3);
         this.armageddonTime = armageddonTime;
         this.status = GameStatus.ONGOING;
         this.finalLeaderboard = new HashMap<>(8);
@@ -76,12 +75,12 @@ public class Plateau {
         }
     }
 
-    public void addCounterObjective(Player player) throws IllegalPlateauActionException {
+    public void addCounterObjective(Player player, int objectives) throws IllegalPlateauActionException {
         Integer temp = counterObjective.getOrDefault(player, null);
         if (temp == null) {
             throw new IllegalPlateauActionException("Player not found");
         } else {
-            temp += 1;
+            temp += objectives;
             counterObjective.put(player, temp);
         }
         if (temp >= 3) {
@@ -96,7 +95,7 @@ public class Plateau {
         } else return temp;
     }
 
-    public int getCountObjective(Player player) throws IllegalPlateauActionException {
+    public int getCounterObjective(Player player) throws IllegalPlateauActionException {
         Integer temp = counterObjective.getOrDefault(player, null);
         if (temp == null) {
             throw new IllegalPlateauActionException("Player not found");
@@ -104,35 +103,31 @@ public class Plateau {
     }
 
     public void setFinalLeaderboard() {
+        List<Map.Entry<Player, Integer>> entries = new ArrayList<>(playerPoints.entrySet());
 
-        AtomicInteger rank = new AtomicInteger(0);
-        AtomicInteger previousPoints = new AtomicInteger(- 1);
-        AtomicInteger previousObjective = new AtomicInteger(- 1);
+        entries.sort((e1, e2) -> {
+            int pointsComparison = e2.getValue().compareTo(e1.getValue());
+            if (pointsComparison != 0) {
+                return pointsComparison;
+            } else {
+                return counterObjective.get(e2.getKey()).compareTo(counterObjective.get(e1.getKey()));
+            }
+        });
 
-        playerPoints.entrySet()
-                    .stream()
-                    .sorted((e1, e2) -> e2.getValue().compareTo(
-                            e1.getValue())) // sort in descending order
-                    .forEach(entry -> {
-                        if (entry.getValue() == previousPoints.get()) {
-                            if (counterObjective.get(entry.getKey()) > previousObjective.get()) {
-                                finalLeaderboard.put(entry.getKey(), rank.get());
-                                previousObjective.set(counterObjective.get(entry.getKey()));
-                            } else {
-                                finalLeaderboard.put(entry.getKey(), rank.get() + 1);
-                            }
-                        } else {
-                            rank.getAndIncrement();
-                            finalLeaderboard.put(entry.getKey(), rank.get());
-                            previousPoints.set(entry.getValue());
-                            previousObjective.set(counterObjective.get(entry.getKey()));
-                        }
-                    });
+        int rank = 1;
+        for (int i = 0; i < entries.size(); i++) {
+            if (i > 0 && entries.get(i).getValue().equals(entries.get(i - 1).getValue())
+                    && counterObjective.get(entries.get(i).getKey()).equals(counterObjective.get(entries.get(i - 1).getKey()))) {
+                finalLeaderboard.put(entries.get(i).getKey(), finalLeaderboard.get(entries.get(i - 1).getKey()));
+            } else {
+                finalLeaderboard.put(entries.get(i).getKey(), rank++);
+            }
+        }
     }
 
     public int getPlayerFinishingPosition(Player player) {
 
-        return finalLeaderboard.getOrDefault(player, - 1);
+        return finalLeaderboard.getOrDefault(player, -1);
     }
 
 

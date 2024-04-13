@@ -28,14 +28,11 @@ class PlateauTest {
             plateau.addPlayerPoints(player, 1);
         }
 
+        Assertions.assertTrue(plateau.isArmageddonTime());
 
-        // Add points to the player, so they exceed the armageddon time
-        plateau.addPlayerPoints(player, 1);
-
-        // Reset the plateau
         plateau.reset();
 
-        // Assert that isArmageddonTime now returns false
+        Assertions.assertFalse(plateau.isArmageddonTime());
 
     }
 
@@ -46,9 +43,12 @@ class PlateauTest {
                                    PlayerColor.BLUE);
         plateau.addPlayer(player);
         plateau.addPlayerPoints(player, 1);
+        plateau.addCounterObjective(player, 1);
         Assertions.assertEquals(1, plateau.getPlayerPoints(player));
+        Assertions.assertEquals(1, plateau.getCounterObjective(player));
         plateau.reset();
         Assertions.assertEquals(0, plateau.getPlayerPoints(player));
+        Assertions.assertEquals(0, plateau.getCounterObjective(player));
 
 
     }
@@ -60,6 +60,7 @@ class PlateauTest {
                                    PlayerColor.BLUE);
         plateau.addPlayer(player);
         Assertions.assertEquals(0, plateau.getPlayerPoints(player));
+        Assertions.assertEquals(0, plateau.getCounterObjective(player));
 
     }
 
@@ -91,21 +92,31 @@ class PlateauTest {
 
         Player player1 = new Player("Test Player1",
                                     PlayerColor.BLUE);
+        plateau.addPlayer(player1);
         plateau.addPlayerPoints(player1, 5);
+        plateau.addCounterObjective(player1, 2);
         Player player2 = new Player("Test Player2",
                                     PlayerColor.RED);
+        plateau.addPlayer(player2);
         plateau.addPlayerPoints(player2, 5);
+        plateau.addCounterObjective(player2, 1);
         Player player3 = new Player("Test Player3",
                                     PlayerColor.YELLOW);
+        plateau.addPlayer(player3);
         plateau.addPlayerPoints(player3, 4);
+        plateau.addCounterObjective(player3, 1);
         Player player4 = new Player("Test Player4",
                                     PlayerColor.GREEN);
+        plateau.addPlayer(player4);
         plateau.addPlayerPoints(player4, 3);
+        plateau.addCounterObjective(player4, 0);
 
         plateau.setFinalLeaderboard();
 
-        //FIXME should be a method to get the final leaderboard
         Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player1));
+        Assertions.assertEquals(2, plateau.getPlayerFinishingPosition(player2));
+        Assertions.assertEquals(3, plateau.getPlayerFinishingPosition(player3));
+        Assertions.assertEquals(4, plateau.getPlayerFinishingPosition(player4));
 
     }
 
@@ -147,5 +158,21 @@ class PlateauTest {
     @Test
     void activateArmageddon() {
         plateau.activateArmageddon();
+    }
+
+    @Test
+    void getStatus() {
+    }
+
+    @Test
+    void setStatus() {
+    }
+
+    @Test
+    void addCounterObjective() {
+    }
+
+    @Test
+    void getCountObjective() {
     }
 }
