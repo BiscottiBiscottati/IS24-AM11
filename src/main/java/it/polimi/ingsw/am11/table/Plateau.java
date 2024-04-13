@@ -30,7 +30,7 @@ public class Plateau {
     }
 
     public void setStatus(GameStatus status) {
-        status = status;
+        this.status = status;
     }
 
     public boolean isArmageddonTime() {
@@ -50,11 +50,17 @@ public class Plateau {
                         .forEach(
                                 player -> finalLeaderboard.put(player, null)
                         );
+        counterObjective.keySet()
+                        .forEach(
+                                player -> counterObjective.put(player, 0)
+                        );
         status = GameStatus.ONGOING;
     }
 
     public void addPlayer(Player newPlayer) {
+
         playerPoints.put(newPlayer, 0);
+        counterObjective.put(newPlayer, 0);
     }
 
     public void addPlayerPoints(Player player, int points) throws IllegalPlateauActionException {
@@ -67,6 +73,19 @@ public class Plateau {
         }
         if (temp >= armageddonTime) {
             status = GameStatus.ARMAGEDDON;
+        }
+    }
+
+    public void addCounterObjective(Player player) throws IllegalPlateauActionException {
+        Integer temp = counterObjective.getOrDefault(player, null);
+        if (temp == null) {
+            throw new IllegalPlateauActionException("Player not found");
+        } else {
+            temp += 1;
+            counterObjective.put(player, temp);
+        }
+        if (temp >= 3) {
+            throw new IllegalPlateauActionException("Player has already completed 3 objectives");
         }
     }
 
