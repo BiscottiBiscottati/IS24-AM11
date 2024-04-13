@@ -127,31 +127,41 @@ class PositionManagerTest {
         StarterCard card = starterDeck.draw().orElseThrow();
         AtomicReference<List<Item>> itemCovered = new AtomicReference<>();
 
+        // Test placing a card in the starter position
         assertDoesNotThrow(() -> itemCovered.set(
                 positionManager.placeCard(card, Position.of(0, 0), true)));
+        // The card should not cover any other card as it's the first card placed
         assertTrue(itemCovered.get().isEmpty());
 
+        // Test placing a card in an unavailable position
         assertThrows(IllegalCardPlacingException.class,
                      () -> positionManager.placeCard(card, Position.of(0, 0), false));
 
         try {
+            // Test placing a card in a valid position
             itemCovered.set(
                     positionManager.placeCard(card, Position.of(1, 1), true)
             );
+            // The card should cover the card in the starter position
             assertEquals(List.of(card.getItemCorner(Corner.TOP_RX, true)), itemCovered.get());
 
+            // Test placing a card in a valid position
             itemCovered.set(
                     positionManager.placeCard(card, Position.of(1, -1), true)
             );
+            // The card should cover the card in the starter position
             assertEquals(List.of(card.getItemCorner(Corner.DOWN_RX, true)), itemCovered.get());
 
+            // Getting the items in the corners of both (1, 1) and (1, -1)
             List<CornerContainer> itemsToBeCovered = new ArrayList<>(4);
             itemsToBeCovered.add(card.getItemCorner(Corner.DOWN_RX, true));
             itemsToBeCovered.add(card.getItemCorner(Corner.TOP_RX, true));
 
+            // Test placing a card in (2, 0) that covers two cards
             itemCovered.set(
                     positionManager.placeCard(card, Position.of(2, 0), true)
             );
+            // The card should cover the items in both (1, 1) and (1, -1)
             assertEquals(Set.copyOf(itemsToBeCovered), Set.copyOf(itemCovered.get()));
 
         } catch (IllegalCardPlacingException e) {
@@ -161,6 +171,15 @@ class PositionManagerTest {
 
     @Test
     void getCardsPositioned() {
+        assertTrue(positionManager.getCardsPositioned().isEmpty());
+
+        StarterCard card = starterDeck.draw().orElseThrow();
+
+        assertDoesNotThrow(() -> positionManager.placeCard(card, Position.of(0, 0), true));
+
+        assertEquals(1, positionManager.getCardsPositioned().size());
+        assertTrue(positionManager.getCardsPositioned().containsKey(Position.of(0, 0)));
+        assertEquals(card, positionManager.getCardsPositioned().get(Position.of(0, 0)).getCard());
     }
 
     @Test
