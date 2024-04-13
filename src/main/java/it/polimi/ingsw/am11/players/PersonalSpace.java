@@ -49,6 +49,7 @@ public class PersonalSpace {
             playerHand.remove(cardToPick);
         } else {
             //throw not card in hand exception
+            // TODO: implement exception
         }
     }
 

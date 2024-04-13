@@ -48,13 +48,13 @@ public class CardContainer {
      *
      * @param card The <code>FieldCard</code> to be stored in the <code>CardContainer</code>.
      */
-    public CardContainer(FieldCard card) {
+    public CardContainer(@NotNull FieldCard card) {
         this.card = card;
         coveredCorners = EnumMapUtils.Init(Corner.class, false);
         isRetro = false;
     }
 
-    public CardContainer(FieldCard card, boolean isRetro) {
+    public CardContainer(@NotNull FieldCard card, boolean isRetro) {
         this.card = card;
         coveredCorners = EnumMapUtils.Init(Corner.class, false);
         this.isRetro = isRetro;
@@ -62,7 +62,7 @@ public class CardContainer {
 
     // TODO this may be redundant but can be used if preferred to constructor
     @Contract("_, _ -> new")
-    public static @NotNull CardContainer of(FieldCard card, boolean isRetro) {
+    public static @NotNull CardContainer of(@NotNull FieldCard card, boolean isRetro) {
         return new CardContainer(card, isRetro);
     }
 
