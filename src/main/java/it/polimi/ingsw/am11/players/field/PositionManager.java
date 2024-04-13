@@ -80,8 +80,8 @@ public class PositionManager {
             cardsPositioned.put(position, new CardContainer(card, isRetro));
         } else {
             throw new IllegalCardPlacingException("Cannot position: " + card
-                                                          + " in position: " + position
-                                                          + " because it is not available.");
+                                                  + " in position: " + position
+                                                  + " because it is not available.");
         }
 
         // Update available and closed positions

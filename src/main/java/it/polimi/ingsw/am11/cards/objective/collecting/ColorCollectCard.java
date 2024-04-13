@@ -52,7 +52,7 @@ public class ColorCollectCard extends CollectingCard {
         return Arrays.stream(Color.values())
                      .filter(color -> Objects.requireNonNull(colorToCollect.get(color)) != 0)
                      .map(color -> playerField.getNumberOf(color) /
-                             Objects.requireNonNull(colorToCollect.get(color)))
+                                   Objects.requireNonNull(colorToCollect.get(color)))
                      .map(integer -> integer < 0 ? 0 : integer)
                      .mapToInt(Integer::intValue)
                      .min()

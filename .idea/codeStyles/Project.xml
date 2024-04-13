@@ -7,11 +7,25 @@
     <codeStyleSettings language="JAVA">
       <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
       <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
+      <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
+      <option name="ALIGN_MULTILINE_TERNARY_OPERATION" value="true" />
       <option name="ALIGN_MULTILINE_THROWS_LIST" value="true" />
       <option name="ALIGN_THROWS_KEYWORD" value="true" />
       <option name="ALIGN_MULTILINE_EXTENDS_LIST" value="true" />
       <option name="SPACE_AROUND_UNARY_OPERATOR" value="true" />
+      <option name="CALL_PARAMETERS_WRAP" value="1" />
+      <option name="METHOD_PARAMETERS_WRAP" value="1" />
+      <option name="RESOURCE_LIST_WRAP" value="1" />
+      <option name="EXTENDS_LIST_WRAP" value="1" />
+      <option name="THROWS_LIST_WRAP" value="1" />
+      <option name="EXTENDS_KEYWORD_WRAP" value="1" />
+      <option name="THROWS_KEYWORD_WRAP" value="1" />
       <option name="BINARY_OPERATION_WRAP" value="1" />
+      <option name="TERNARY_OPERATION_WRAP" value="1" />
+      <option name="TERNARY_OPERATION_SIGNS_ON_NEXT_LINE" value="true" />
+      <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true" />
+      <option name="KEEP_SIMPLE_LAMBDAS_IN_ONE_LINE" value="true" />
+      <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="true" />
       <option name="WRAP_COMMENTS" value="true" />
       <option name="BUILDER_METHODS" value="Builder" />
       <option name="KEEP_BUILDER_METHODS_INDENTS" value="true" />

@@ -226,7 +226,8 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public void setStarterFor(@NotNull String nickname, int cardID, boolean isRetro) throws IllegalCardPlacingException {
+    public void setStarterFor(@NotNull String nickname, int cardID, boolean isRetro)
+    throws IllegalCardPlacingException {
         StarterCard starterCard = pickablesTable.getStarterByID(cardID).orElseThrow();
         players.get(nickname).field().placeStartingCard(starterCard, isRetro);
     }
@@ -249,8 +250,8 @@ public class GameLogic implements GameModel {
     //region TurnsActions DONE
     @Override //DONE
     public void goNextTurn() {
-        if (pickablesTable.getGoldDeckTop().isPresent()
-                && pickablesTable.getResourceDeckTop().isPresent()) {
+        if (pickablesTable.getGoldDeckTop().isPresent() &&
+            pickablesTable.getResourceDeckTop().isPresent()) {
             plateau.activateArmageddon();
         }
         playerQueue.addLast(currentPlaying);
@@ -263,7 +264,8 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void placeCard(@NotNull String nickname, int ID, @NotNull Position position, boolean isRetro) throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException {
+    public void placeCard(@NotNull String nickname, int ID, @NotNull Position position, boolean isRetro)
+    throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException {
         Player player = players.get(nickname);
         if (currentPlaying != player) {
             throw new TurnsOrderException(
@@ -288,9 +290,9 @@ public class GameLogic implements GameModel {
 
     @Override
     public int drawFromGoldDeck(@NotNull String nickname)
-            throws GameBreakingException,
-                   EmptyDeckException,
-                   IllegalPlayerSpaceActionException {
+    throws GameBreakingException,
+           EmptyDeckException,
+           IllegalPlayerSpaceActionException {
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableCardFrom(PlayableCardType.GOLD);
@@ -308,10 +310,10 @@ public class GameLogic implements GameModel {
 
     @Override
     public int drawFromResourceDeck(@NotNull String nickname)
-            throws
-            GameBreakingException,
-            EmptyDeckException,
-            IllegalPlayerSpaceActionException {
+    throws
+    GameBreakingException,
+    EmptyDeckException,
+    IllegalPlayerSpaceActionException {
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableCardFrom(PlayableCardType.RESOURCE);
@@ -329,9 +331,9 @@ public class GameLogic implements GameModel {
 
     @Override
     public void drawVisibleGold(@NotNull String nickname, int ID)
-            throws GameBreakingException,
-                   IllegalPickActionException,
-                   IllegalPlayerSpaceActionException {
+    throws GameBreakingException,
+           IllegalPickActionException,
+           IllegalPlayerSpaceActionException {
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickGoldVisible(ID);
@@ -349,9 +351,9 @@ public class GameLogic implements GameModel {
 
     @Override
     public void drawVisibleResource(@NotNull String nickname, int ID)
-            throws GameBreakingException,
-                   IllegalPickActionException,
-                   IllegalPlayerSpaceActionException {
+    throws GameBreakingException,
+           IllegalPickActionException,
+           IllegalPlayerSpaceActionException {
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickResourceVisibles(ID);
