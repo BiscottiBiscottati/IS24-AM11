@@ -13,7 +13,10 @@ import it.polimi.ingsw.am11.players.field.PositionManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * This class represents a gold card.
@@ -51,7 +54,7 @@ public final class GoldCard extends PlayableCard {
 
     @Override
     public boolean isFrontAvailable(@NotNull Corner corner) {
-        return Objects.requireNonNull(availableCornersOrSymbol.get(corner)).isAvailable();
+        return availableCornersOrSymbol.get(corner).isAvailable();
     }
 
     @Override
@@ -73,7 +76,7 @@ public final class GoldCard extends PlayableCard {
     @Override
     @NotNull
     public CornerContainer getItemCorner(@NotNull Corner corner) {
-        return Objects.requireNonNull(availableCornersOrSymbol.get(corner));
+        return availableCornersOrSymbol.get(corner);
     }
 
     @Override
@@ -89,7 +92,7 @@ public final class GoldCard extends PlayableCard {
     }
 
     @Override
-    public @Nullable CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
+    public @NotNull CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
         if (isRetro) return Availability.USABLE;
         else return availableCornersOrSymbol.get(corner);
     }

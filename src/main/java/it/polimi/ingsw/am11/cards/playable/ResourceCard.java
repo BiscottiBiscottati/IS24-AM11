@@ -8,7 +8,6 @@ import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -88,7 +87,7 @@ public final class ResourceCard extends PlayableCard {
     }
 
     @Override
-    public @Nullable CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
+    public @NotNull CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
         if (isRetro) return Availability.USABLE;
         else return availableCornerOrItem.get(corner);
     }

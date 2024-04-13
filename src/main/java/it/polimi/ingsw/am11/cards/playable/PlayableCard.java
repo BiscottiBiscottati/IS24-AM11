@@ -9,7 +9,6 @@ import it.polimi.ingsw.am11.players.Position;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Optional;
@@ -237,8 +236,8 @@ public abstract sealed class PlayableCard implements CardIdentity,
 
     // TODO we could return Item instead and eliminate Availability since it can be substituted
     //  by isAvailable method
-    public abstract @Nullable CornerContainer getItemCorner(@NotNull Corner corner,
-                                                            boolean isRetro);
+    public abstract @NotNull CornerContainer getItemCorner(@NotNull Corner corner,
+                                                           boolean isRetro);
 
     /**
      * Retrieves the center color of this <code>PlayableCard</code>. If the card is in retro mode,

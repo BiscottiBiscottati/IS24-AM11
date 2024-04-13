@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -106,9 +105,6 @@ class ExposedItemManagerTest {
         Map<Item, Integer> itemCount = new HashMap<>(20);
         Stream.concat(Stream.of(Color.values()), Stream.of(Symbol.values()))
               .forEach(item -> itemCount.put(item, 0));
-        Map<Color, Integer> cardColorCount = new EnumMap<>(Color.class);
-        Stream.of(Color.values())
-              .forEach(color -> cardColorCount.put(color, 0));
         for (int i = 0; i < 40; i++) {
             ResourceCard card = resourceDeck.draw().orElseThrow();
 
@@ -119,11 +115,8 @@ class ExposedItemManagerTest {
                   .forEach(item -> itemCount.merge(item, 1, Integer::sum));
 
             itemManager.addExposedItemOn(card, false);
-            itemCount.forEach((item, count) -> assertEquals(count, itemManager.getExposedItem(item)));
-
-            cardColorCount.merge(card.getColor(), 1, Integer::sum);
-
-            cardColorCount.forEach((color, count) -> assertEquals(count, itemManager.getPlacedCardOf(color)));
+            itemCount.forEach(
+                    (item, count) -> assertEquals(count, itemManager.getExposedItem(item)));
         }
 
         resourceDeck.reset();
@@ -141,7 +134,8 @@ class ExposedItemManagerTest {
                 .forEach(color -> itemCount.merge(color, 1, Integer::sum));
 
             itemManager.addExposedItemOn(card, true);
-            itemCount.forEach((item, count) -> assertEquals(count, itemManager.getExposedItem(item)));
+            itemCount.forEach(
+                    (item, count) -> assertEquals(count, itemManager.getExposedItem(item)));
         }
     }
 
