@@ -385,7 +385,7 @@ public class GameLogic implements GameModel {
         }
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
-                PlayableCard card = pickablesTable.pickResourceVisibles(ID);
+                PlayableCard card = pickablesTable.pickResourceVisible(ID);
                 players.get(nickname).space().addCardToHand(card);
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
