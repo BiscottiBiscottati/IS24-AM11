@@ -106,6 +106,9 @@ public interface GameModel {
     throws GameBreakingException,
            IllegalPickActionException,
            IllegalPlayerSpaceActionException;
+
+    //TODO add possibility of signaling how many objectives a player has completed
+    void countObjectivesPoints() throws IllegalPlateauActionException;
     //endregion
 
 }
