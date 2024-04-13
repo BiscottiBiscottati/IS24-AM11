@@ -49,7 +49,7 @@ public class TripletPatternCounter implements PatternCounter {
         if (field.getOrDefault(currentPosition, null) == null) return;
 
         if (field.getOrDefault(previousPatternPosition, null) != null
-                && !seenPositions.contains(previousPatternPosition)) {
+                && ! seenPositions.contains(previousPatternPosition)) {
             countNumberOfPatterns(field, previousPatternPosition, 0);
             return;
         }
@@ -62,15 +62,15 @@ public class TripletPatternCounter implements PatternCounter {
         }
         seenPositions.add(currentPosition);
         if (field.getOrDefault(nextPatternPosition, null) != null
-                && !seenPositions.contains(nextPatternPosition)) {
+                && ! seenPositions.contains(nextPatternPosition)) {
             countNumberOfPatterns(field, nextPatternPosition, updatedNumber);
         }
         if (field.getOrDefault(adjacentLX, null) != null
-                && !seenPositions.contains(adjacentLX)) {
+                && ! seenPositions.contains(adjacentLX)) {
             countNumberOfPatterns(field, adjacentLX, 0);
         }
         if (field.getOrDefault(adjacentRX, null) != null
-                && !seenPositions.contains(adjacentRX)) {
+                && ! seenPositions.contains(adjacentRX)) {
             countNumberOfPatterns(field, adjacentRX, 0);
         }
     }

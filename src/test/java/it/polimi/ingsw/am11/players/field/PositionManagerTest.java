@@ -42,13 +42,13 @@ class PositionManagerTest {
                 Position.of(1, 1),
                 PositionManager.getPositionIn(position, Corner.TOP_RX));
         assertEquals(
-                Position.of(-1, 1),
+                Position.of(- 1, 1),
                 PositionManager.getPositionIn(position, Corner.TOP_LX));
         assertEquals(
-                Position.of(1, -1),
+                Position.of(1, - 1),
                 PositionManager.getPositionIn(position, Corner.DOWN_RX));
         assertEquals(
-                Position.of(-1, -1),
+                Position.of(- 1, - 1),
                 PositionManager.getPositionIn(position, Corner.DOWN_LX));
 
     }
@@ -60,20 +60,20 @@ class PositionManagerTest {
                 Position.of(1, 1),
                 PositionManager.getMovementOfPositions(position, Collections.singletonList(Corner.TOP_RX)));
         assertEquals(
-                Position.of(-1, 1),
+                Position.of(- 1, 1),
                 PositionManager.getMovementOfPositions(position, List.of(Corner.TOP_LX)));
         assertEquals(
                 Position.of(0, 2),
                 PositionManager.getMovementOfPositions(position, List.of(Corner.TOP_RX, Corner.TOP_LX)));
         assertEquals(
-                Position.of(2, -2),
+                Position.of(2, - 2),
                 PositionManager.getMovementOfPositions(position, List.of(Corner.DOWN_RX, Corner.DOWN_RX)));
     }
 
     @Test
     void getCornerFromPositions() {
         Position firstPos = Position.of(0, 0);
-        Position secondPos = Position.of(-1, 1);
+        Position secondPos = Position.of(- 1, 1);
         assertEquals(Optional.of(Corner.TOP_LX),
                      PositionManager.getCornerFromPositions(firstPos, secondPos));
 
@@ -83,7 +83,7 @@ class PositionManagerTest {
                      PositionManager.getCornerFromPositions(firstPos, secondPos));
 
         firstPos = Position.of(0, 0);
-        secondPos = Position.of(1, -1);
+        secondPos = Position.of(1, - 1);
         assertEquals(Optional.of(Corner.DOWN_RX),
                      PositionManager.getCornerFromPositions(firstPos, secondPos));
 
@@ -108,7 +108,7 @@ class PositionManagerTest {
             assertEquals(Optional.empty(),
                          PositionManager.getCornerFromPositions(firstPos, secondPos));
 
-            secondPos = Position.of(gen.nextInt(-100, -2), gen.nextInt(-100, -2));
+            secondPos = Position.of(gen.nextInt(- 100, - 2), gen.nextInt(- 100, - 2));
             assertEquals(Optional.empty(),
                          PositionManager.getCornerFromPositions(firstPos, secondPos));
         }
@@ -147,7 +147,7 @@ class PositionManagerTest {
 
             // Test placing a card in a valid position
             itemCovered.set(
-                    positionManager.placeCard(card, Position.of(1, -1), true)
+                    positionManager.placeCard(card, Position.of(1, - 1), true)
             );
             // The card should cover the card in the starter position
             assertEquals(List.of(card.getItemCorner(Corner.DOWN_RX, true)), itemCovered.get());

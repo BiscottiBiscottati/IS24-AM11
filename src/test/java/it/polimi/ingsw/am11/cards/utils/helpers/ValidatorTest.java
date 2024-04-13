@@ -27,7 +27,7 @@ class ValidatorTest {
 
         testMap2 = new EnumMap<>(Symbol.class);
         Arrays.stream(Symbol.values())
-              .forEach(symbol -> testMap2.put(symbol, random.nextInt(-10, 0)));
+              .forEach(symbol -> testMap2.put(symbol, random.nextInt(- 10, 0)));
     }
 
     @Test

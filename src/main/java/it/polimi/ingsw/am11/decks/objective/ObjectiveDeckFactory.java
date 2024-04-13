@@ -27,7 +27,7 @@ public class ObjectiveDeckFactory {
 
     private static void setPositioningCards(@NotNull PreparedStatement positioningStatement,
                                             ImmutableMap.Builder<Integer, ObjectiveCard> builder)
-            throws SQLException, IllegalCardBuildException {
+    throws SQLException, IllegalCardBuildException {
         positioningStatement.setString(1, "L_SHAPE");
         try (ResultSet resultSet = positioningStatement.executeQuery()) {
             while (resultSet.next()) {
@@ -60,7 +60,7 @@ public class ObjectiveDeckFactory {
 
     private static void setCollectingCards(@NotNull PreparedStatement collectingStatement,
                                            ImmutableMap.Builder<Integer, ObjectiveCard> builder)
-            throws SQLException, IllegalCardBuildException {
+    throws SQLException, IllegalCardBuildException {
         collectingStatement.setString(1, "COLOR_COLLECT");
         try (ResultSet resultSet = collectingStatement.executeQuery()) {
             while (resultSet.next()) {
@@ -103,16 +103,15 @@ public class ObjectiveDeckFactory {
      * <p>
      * The second query retrieves all the data needed to create a <code>PositioningCard</code>.
      * <p>
-     * For each row in the result set of each query, it creates a new <code>ObjectiveCard</code>
-     * and adds it to the deck.
-     * It sets the collecting cards and positioning cards of the deck.
+     * For each row in the result set of each query, it creates a new <code>ObjectiveCard</code> and adds it to the
+     * deck. It sets the collecting cards and positioning cards of the deck.
      * <p>
-     * If an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown during this process,
-     * it is caught and wrapped in a <code>RuntimeException</code>.
+     * If an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown during this process, it is
+     * caught and wrapped in a <code>RuntimeException</code>.
      *
      * @return A deck of Objective Cards.
-     * @throws RuntimeException if an <code>SQLException</code> or <code>IllegalCardBuildException</code>
-     *                          is thrown during the creation of the deck.
+     * @throws RuntimeException if an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown
+     *                          during the creation of the deck.
      * @see SQLException
      * @see IllegalCardBuildException
      */

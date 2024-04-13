@@ -64,8 +64,7 @@ public enum ObjectiveCardType {
     /**
      * Specifies a set of positions x and y where given a 3x3 matrix create the pattern of the card.
      * <p>
-     * If the objective card way to score points is not pattern matching,
-     * then returns an empty <code>Optional</code>
+     * If the objective card way to score points is not pattern matching, then returns an empty <code>Optional</code>
      *
      * @param flipped if the pattern is flipped on its y-axis
      * @param rotated if the pattern is rotated by 180 degrees

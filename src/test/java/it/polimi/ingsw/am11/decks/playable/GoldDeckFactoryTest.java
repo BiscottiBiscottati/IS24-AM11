@@ -30,8 +30,8 @@ class GoldDeckFactoryTest {
     @AfterEach
     void tearDown() {
         try {
-            if (idQuery != null && !idQuery.isClosed()) idQuery.close();
-            if (connection != null && !connection.isClosed()) connection.close();
+            if (idQuery != null && ! idQuery.isClosed()) idQuery.close();
+            if (connection != null && ! connection.isClosed()) connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

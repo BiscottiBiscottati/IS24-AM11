@@ -23,7 +23,7 @@ public class ResourceDeckFactory {
 
     private static CornerContainer getCornerContainer(@NotNull Corner corner,
                                                       @NotNull ResultSet result)
-            throws SQLException {
+    throws SQLException {
         return CornerContainer.of(result.getString(corner.getColumnName()));
     }
 
@@ -36,18 +36,18 @@ public class ResourceDeckFactory {
     /**
      * Creates a deck of <code>ResourceCard</code> based on the SQLite database.
      * <p>
-     * This method retrieves data from the SQLite database and uses it to create a deck of <code>ResourceCard</code>.
-     * It first establishes a connection to the database and prepares a statement to execute a query.
-     * The query retrieves all the data needed to create a <code>ResourceCard</code>.
+     * This method retrieves data from the SQLite database and uses it to create a deck of <code>ResourceCard</code>. It
+     * first establishes a connection to the database and prepares a statement to execute a query. The query retrieves
+     * all the data needed to create a <code>ResourceCard</code>.
      * <p>
      * For each row in the result set, it creates a new Resource Card and adds it to the deck.
      * <p>
-     * If an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown during this process,
-     * it is caught and wrapped in a <code>RuntimeException</code>.
+     * If an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown during this process, it is
+     * caught and wrapped in a <code>RuntimeException</code>.
      *
      * @return A deck of Resource Cards.
-     * @throws RuntimeException if an <code>SQLException</code> or <code>IllegalCardBuildException</code>
-     *                          is thrown during the creation of the deck.
+     * @throws RuntimeException if an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown
+     *                          during the creation of the deck.
      * @see SQLException
      * @see IllegalCardBuildException
      */

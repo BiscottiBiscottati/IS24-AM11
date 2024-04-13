@@ -110,7 +110,7 @@ class ColorCollectCardTest {
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(0);
         assertEquals(0, card.countPoints(playerField));
 
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(-1);
+        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(- 1);
         assertEquals(0, card.countPoints(playerField));
 
         Arrays.stream(Color.values()).forEach(
@@ -121,7 +121,7 @@ class ColorCollectCardTest {
         Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(30);
         assertEquals(2, cardWithMixedColors.countPoints(playerField));
 
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(-1);
+        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(- 1);
         assertEquals(0, cardWithMixedColors.countPoints(playerField));
     }
 

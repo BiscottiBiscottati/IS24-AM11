@@ -25,7 +25,7 @@ public class GoldDeckFactory {
 
     private static CornerContainer getCornerContainer(@NotNull Corner corner,
                                                       @NotNull ResultSet result)
-            throws SQLException {
+    throws SQLException {
         if (result.isClosed()) {
             throw new RuntimeException("Result set is closed");
         }
@@ -34,7 +34,7 @@ public class GoldDeckFactory {
 
     private static void setFrontCorners(GoldCard.Builder cardBuilder,
                                         ResultSet result)
-            throws IllegalCardBuildException, SQLException {
+    throws IllegalCardBuildException, SQLException {
         for (Corner corner : Corner.values()) {
             cardBuilder.hasIn(corner, getCornerContainer(corner, result));
         }
@@ -42,7 +42,7 @@ public class GoldDeckFactory {
 
     private static void setPlacingRequirements(GoldCard.Builder cardBuilder,
                                                @NotNull ResultSet result)
-            throws SQLException {
+    throws SQLException {
         try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
              PreparedStatement supportStatement = connection.prepareStatement(PLACING_REQ_QUERY)) {
             supportStatement.setInt(1, result.getInt("placing_requirements_id"));
@@ -58,7 +58,7 @@ public class GoldDeckFactory {
 
     private static void setPointsRequirements(@NotNull GoldCard.Builder cardBuilder,
                                               @NotNull ResultSet result)
-            throws SQLException {
+    throws SQLException {
         String symbolToCollect = result.getString("symbol_to_collect");
         String resultString = result.getString("points_requirements");
         cardBuilder.hasPointRequirements(PointsRequirementsType.valueOf(resultString));
@@ -73,18 +73,18 @@ public class GoldDeckFactory {
     /**
      * Creates a deck of <code>GoldCard</code> based on the SQLite database.
      * <p>
-     * This method retrieves data from the SQLite database and uses it to create a deck of <code>GoldCard</code>.
-     * It first establishes a connection to the database and prepares a statement to execute a query.
-     * The query retrieves all the data needed to create a <code>GoldCard</code>.
+     * This method retrieves data from the SQLite database and uses it to create a deck of <code>GoldCard</code>. It
+     * first establishes a connection to the database and prepares a statement to execute a query. The query retrieves
+     * all the data needed to create a <code>GoldCard</code>.
      * <p>
      * For each row in the result set, it creates a new <code>GoldCard</code> and adds it to the deck.
      * <p>
-     * If an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown during this process,
-     * it is caught and wrapped in a <code>RuntimeException</code>.
+     * If an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown during this process, it is
+     * caught and wrapped in a <code>RuntimeException</code>.
      *
      * @return A deck of Gold Cards.
-     * @throws RuntimeException if an <code>SQLException</code> or <code>IllegalCardBuildException</code>
-     *                          is thrown during the creation of the deck.
+     * @throws RuntimeException if an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown
+     *                          during the creation of the deck.
      * @see SQLException
      * @see IllegalCardBuildException
      */

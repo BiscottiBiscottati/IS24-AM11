@@ -13,8 +13,8 @@ import java.util.Stack;
  * <p>
  * Can be shuffled and cards can be drawn from it.
  * <p>
- * For each type of <code>Deck</code> you need
- * to use the specific static method <code>createDeck</code> of the factory class.
+ * For each type of <code>Deck</code> you need to use the specific static method <code>createDeck</code> of the factory
+ * class.
  * <p>
  * The available factories are:
  * <pre>
@@ -54,8 +54,7 @@ public class Deck<T extends CardIdentity> {
     }
 
     /**
-     * Method to draw a card from the deck.
-     * The card is removed from the deck.
+     * Method to draw a card from the deck. The card is removed from the deck.
      * <p>
      * If the deck is empty, it will return an empty Optional.
      *

@@ -96,7 +96,7 @@ class SymbolCollectCardTest {
                 IllegalCardBuildException.class,
                 () -> new SymbolCollectCard.Builder(3, 2)
                         .hasSymbol(Symbol.FEATHER)
-                        .hasSymbol(Symbol.GLASS, -1)
+                        .hasSymbol(Symbol.GLASS, - 1)
                         .build()
         );
     }
@@ -119,11 +119,11 @@ class SymbolCollectCardTest {
         assertEquals(6, card.countPoints(playerField));
 
 
-        Mockito.when(playerField.getNumberOf(Symbol.PAPER)).thenReturn(-1);
+        Mockito.when(playerField.getNumberOf(Symbol.PAPER)).thenReturn(- 1);
         assertEquals(0, card.countPoints(playerField));
 
         Arrays.stream(Symbol.values()).forEach(
-                symbol -> Mockito.when(playerField.getNumberOf(symbol)).thenReturn(-1)
+                symbol -> Mockito.when(playerField.getNumberOf(symbol)).thenReturn(- 1)
         );
         assertEquals(0, card.countPoints(playerField));
     }

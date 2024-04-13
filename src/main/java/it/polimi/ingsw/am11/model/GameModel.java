@@ -13,7 +13,7 @@ import java.util.Set;
 
 public interface GameModel {
     //region GetterGameStatus
-    List<String> getPlayerListInOrder();
+    List<String> getPlayers();
 
     String getCurrentTurnPlayer();
 
@@ -48,7 +48,7 @@ public interface GameModel {
 
     //region GetterPlateau
     int getPlayerPoints(String nickname)
-            throws IllegalPlateauActionException;
+    throws IllegalPlateauActionException;
 
     boolean isArmageddonTime();
 
@@ -72,10 +72,10 @@ public interface GameModel {
     int pickObjective() throws EmptyDeckException;
 
     void setStarterFor(String nickname, int cardID, boolean isRetro)
-            throws IllegalCardPlacingException;
+    throws IllegalCardPlacingException;
 
     void setObjectiveFor(String nickname, int cardID)
-            throws IllegalPlayerSpaceActionException;
+    throws IllegalPlayerSpaceActionException;
     //endregion
 
     //region TurnsActions
@@ -83,29 +83,29 @@ public interface GameModel {
     void goNextTurn();
 
     void placeCard(String Nickname, int ID, Position position, boolean isRetro)
-            throws IllegalCardPlacingException,
-                   TurnsOrderException,
-                   IllegalPlateauActionException;
+    throws IllegalCardPlacingException,
+           TurnsOrderException,
+           IllegalPlateauActionException;
 
     int drawFromGoldDeck(String nickname)
-            throws GameBreakingException,
-                   EmptyDeckException,
-                   IllegalPlayerSpaceActionException;
+    throws GameBreakingException,
+           EmptyDeckException,
+           IllegalPlayerSpaceActionException;
 
     int drawFromResourceDeck(String nickname)
-            throws GameBreakingException,
-                   EmptyDeckException,
-                   IllegalPlayerSpaceActionException;
+    throws GameBreakingException,
+           EmptyDeckException,
+           IllegalPlayerSpaceActionException;
 
     void drawVisibleGold(String nickname, int ID)
-            throws GameBreakingException,
-                   IllegalPickActionException,
-                   IllegalPlayerSpaceActionException;
+    throws GameBreakingException,
+           IllegalPickActionException,
+           IllegalPlayerSpaceActionException;
 
     void drawVisibleResource(String nickname, int ID)
-            throws GameBreakingException,
-                   IllegalPickActionException,
-                   IllegalPlayerSpaceActionException;
+    throws GameBreakingException,
+           IllegalPickActionException,
+           IllegalPlayerSpaceActionException;
     //endregion
 
 }

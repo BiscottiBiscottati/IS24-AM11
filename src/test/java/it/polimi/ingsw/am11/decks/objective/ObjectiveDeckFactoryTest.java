@@ -34,7 +34,7 @@ class ObjectiveDeckFactoryTest {
     }
 
     private void checkPositioning(@NotNull PositioningCard positioningCard)
-            throws SQLException {
+    throws SQLException {
         positioningStatement.setInt(1, positioningCard.getId());
         try (ResultSet resultSet = positioningStatement.executeQuery()) {
             if (resultSet.next()) {
@@ -89,9 +89,9 @@ class ObjectiveDeckFactoryTest {
     @AfterEach
     void tearDown() {
         try {
-            if (collectingStatement != null && !collectingStatement.isClosed()) collectingStatement.close();
-            if (positioningStatement != null && !positioningStatement.isClosed()) positioningStatement.close();
-            if (connection != null && !connection.isClosed()) connection.close();
+            if (collectingStatement != null && ! collectingStatement.isClosed()) collectingStatement.close();
+            if (positioningStatement != null && ! positioningStatement.isClosed()) positioningStatement.close();
+            if (connection != null && ! connection.isClosed()) connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

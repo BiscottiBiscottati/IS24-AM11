@@ -17,8 +17,7 @@ public class EnumMapUtils {
     }
 
     /**
-     * Creates a new <code>EnumMap</code> with a default value of type V for
-     * every key of <code>Enum</code> K.
+     * Creates a new <code>EnumMap</code> with a default value of type V for every key of <code>Enum</code> K.
      *
      * @param keyType      the class of subclass <code>Enum</code> to use as keys
      * @param defaultValue the value of the <code>EnumMap</code>

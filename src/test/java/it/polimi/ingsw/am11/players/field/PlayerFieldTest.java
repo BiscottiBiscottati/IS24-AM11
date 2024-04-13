@@ -248,7 +248,7 @@ class PlayerFieldTest {
 
         starterCard.getItemCorner(Corner.TOP_RX, true)
                    .getItem()
-                   .ifPresent(item -> itemCount.merge(item, -1, Integer::sum));
+                   .ifPresent(item -> itemCount.merge(item, - 1, Integer::sum));
         Stream.of(Corner.values())
               .map(corner -> resourceCard.getItemCorner(corner, false))
               .map(CornerContainer::getItem)

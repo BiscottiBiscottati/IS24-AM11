@@ -73,11 +73,11 @@ class TripletCardTest {
                 Position.of(1, 1), new CardContainer(greenCard),
                 Position.of(2, 0), new CardContainer(greenCard),
                 Position.of(3, 1), new CardContainer(greenCard),
-                Position.of(1, -1), new CardContainer(greenCard),
-                Position.of(-1, -1), new CardContainer(greenCard),
-                Position.of(0, -2), new CardContainer(greenCard),
-                Position.of(-1, -3), new CardContainer(greenCard),
-                Position.of(-2, -4), new CardContainer(greenCard)
+                Position.of(1, - 1), new CardContainer(greenCard),
+                Position.of(- 1, - 1), new CardContainer(greenCard),
+                Position.of(0, - 2), new CardContainer(greenCard),
+                Position.of(- 1, - 3), new CardContainer(greenCard),
+                Position.of(- 2, - 4), new CardContainer(greenCard)
         );
         posCardLargest = new HashMap<>(64);
         posCardLargest.put(Position.of(0, 0), new CardContainer(starterCard));
@@ -88,35 +88,35 @@ class TripletCardTest {
                 Position.of(3, 1),
                 Position.of(4, 0),
                 Position.of(2, 0),
-                Position.of(5, -1),
-                Position.of(1, -1),
-                Position.of(3, -3),
-                Position.of(2, -4),
-                Position.of(1, -3),
-                Position.of(-2, 2),
-                Position.of(-3, 1),
-                Position.of(-4, 0),
-                Position.of(-3, -1),
-                Position.of(-4, -2),
-                Position.of(-5, -3),
-                Position.of(-4, -4),
-                Position.of(-3, -5),
-                Position.of(0, -4),
-                Position.of(-1, -1),
-                Position.of(-2, -2)
+                Position.of(5, - 1),
+                Position.of(1, - 1),
+                Position.of(3, - 3),
+                Position.of(2, - 4),
+                Position.of(1, - 3),
+                Position.of(- 2, 2),
+                Position.of(- 3, 1),
+                Position.of(- 4, 0),
+                Position.of(- 3, - 1),
+                Position.of(- 4, - 2),
+                Position.of(- 5, - 3),
+                Position.of(- 4, - 4),
+                Position.of(- 3, - 5),
+                Position.of(0, - 4),
+                Position.of(- 1, - 1),
+                Position.of(- 2, - 2)
         );
         testCardPositions.forEach(
                 position -> posCardLargest.put(position, new CardContainer(greenCard))
         );
         List<Position> testCardPositionsFalse = List.of(
                 Position.of(0, 2),
-                Position.of(2, -2),
-                Position.of(4, -2),
-                Position.of(-1, 3),
-                Position.of(-1, -5),
-                Position.of(-2, -4),
-                Position.of(-4, 2),
-                Position.of(-3, 3)
+                Position.of(2, - 2),
+                Position.of(4, - 2),
+                Position.of(- 1, 3),
+                Position.of(- 1, - 5),
+                Position.of(- 2, - 4),
+                Position.of(- 4, 2),
+                Position.of(- 3, 3)
         );
         testCardPositionsFalse.forEach(
                 position -> posCardLargest.put(position, new CardContainer(blueCard))
@@ -127,11 +127,11 @@ class TripletCardTest {
                 Position.of(1, 1), new CardContainer(greenCard),
                 Position.of(2, 0), new CardContainer(blueCard),
                 Position.of(3, 1), new CardContainer(greenCard),
-                Position.of(1, -1), new CardContainer(greenCard),
-                Position.of(-1, -1), new CardContainer(greenCard),
-                Position.of(0, -2), new CardContainer(blueCard),
-                Position.of(-1, -3), new CardContainer(greenCard),
-                Position.of(-2, -4), new CardContainer(greenCard)
+                Position.of(1, - 1), new CardContainer(greenCard),
+                Position.of(- 1, - 1), new CardContainer(greenCard),
+                Position.of(0, - 2), new CardContainer(blueCard),
+                Position.of(- 1, - 3), new CardContainer(greenCard),
+                Position.of(- 2, - 4), new CardContainer(greenCard)
         );
 
         posCardLarge = new HashMap<>(32);
@@ -140,26 +140,26 @@ class TripletCardTest {
                 Position.of(1, 1),
                 Position.of(2, 2),
                 Position.of(1, 3),
-                Position.of(-2, 2),
-                Position.of(-3, 1),
-                Position.of(-4, 0),
-                Position.of(-1, -1),
-                Position.of(-2, -2),
-                Position.of(-3, -1),
-                Position.of(-4, -2),
-                Position.of(-3, -5),
-                Position.of(-4, -4),
-                Position.of(-5, -3)
+                Position.of(- 2, 2),
+                Position.of(- 3, 1),
+                Position.of(- 4, 0),
+                Position.of(- 1, - 1),
+                Position.of(- 2, - 2),
+                Position.of(- 3, - 1),
+                Position.of(- 4, - 2),
+                Position.of(- 3, - 5),
+                Position.of(- 4, - 4),
+                Position.of(- 5, - 3)
         );
         testCardPositions.forEach(
                 position -> posCardLarge.put(position, new CardContainer(greenCard))
         );
         testCardPositionsFalse = List.of(
                 Position.of(0, 2),
-                Position.of(-1, 3),
-                Position.of(-3, 3),
-                Position.of(-4, 2),
-                Position.of(-2, -4)
+                Position.of(- 1, 3),
+                Position.of(- 3, 3),
+                Position.of(- 4, 2),
+                Position.of(- 2, - 4)
         );
         testCardPositionsFalse.forEach(
                 position -> posCardLarge.put(position, new CardContainer(blueCard))

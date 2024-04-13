@@ -54,7 +54,7 @@ public class LPatternCounter implements PatternCounter {
         if (field.getOrDefault(currentPosition, null) == null) return;
 
         if (field.getOrDefault(previousPatternPosition, null) != null
-                && !seenPositions.contains(previousPatternPosition)) {
+                && ! seenPositions.contains(previousPatternPosition)) {
             countNumberOfPatterns(field, previousPatternPosition, 0);
             return;
         }
@@ -77,7 +77,7 @@ public class LPatternCounter implements PatternCounter {
         seenPositions.add(currentPosition);
 
         if (field.getOrDefault(nextPatternPosition, null) != null
-                && !seenPositions.contains(nextPatternPosition)) {
+                && ! seenPositions.contains(nextPatternPosition)) {
             countNumberOfPatterns(field, nextPatternPosition, updated_number);
         }
 
@@ -86,7 +86,7 @@ public class LPatternCounter implements PatternCounter {
                     currentPosition,
                     corner.toSingletonList());
             if (field.getOrDefault(adjacentPosition, null) != null
-                    && !seenPositions.contains(adjacentPosition)) {
+                    && ! seenPositions.contains(adjacentPosition)) {
                 countNumberOfPatterns(field, adjacentPosition, 0);
             }
         }

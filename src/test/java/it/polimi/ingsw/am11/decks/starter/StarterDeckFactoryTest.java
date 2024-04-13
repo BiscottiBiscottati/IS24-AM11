@@ -25,7 +25,7 @@ class StarterDeckFactoryTest {
     @AfterEach
     void tearDown() {
         try {
-            if (connection != null && !connection.isClosed()) connection.close();
+            if (connection != null && ! connection.isClosed()) connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -56,9 +56,9 @@ public class PositionManager {
         int deltaX = posTarget.x() - posToCheck.x();
         int deltaY = posTarget.y() - posToCheck.y();
         if (deltaX == 1 && deltaY == 1) return Optional.of(Corner.TOP_RX);
-        if (deltaX == -1 && deltaY == 1) return Optional.of(Corner.TOP_LX);
-        if (deltaX == 1 && deltaY == -1) return Optional.of(Corner.DOWN_RX);
-        if (deltaX == -1 && deltaY == -1) return Optional.of(Corner.DOWN_LX);
+        if (deltaX == - 1 && deltaY == 1) return Optional.of(Corner.TOP_LX);
+        if (deltaX == 1 && deltaY == - 1) return Optional.of(Corner.DOWN_RX);
+        if (deltaX == - 1 && deltaY == - 1) return Optional.of(Corner.DOWN_LX);
         return Optional.empty();
     }
 
@@ -72,7 +72,7 @@ public class PositionManager {
     List<Item> placeCard(@NotNull FieldCard card,
                          @NotNull Position position,
                          boolean isRetro)
-            throws IllegalCardPlacingException {
+    throws IllegalCardPlacingException {
 
         // Check if the position is available and position the card
         if (availablePositions.contains(position)) {
@@ -86,13 +86,13 @@ public class PositionManager {
 
         // Update available and closed positions
         Arrays.stream(Corner.values())
-              .filter(corner -> !card.isAvailable(corner, isRetro))
+              .filter(corner -> ! card.isAvailable(corner, isRetro))
               .map(corner -> PositionManager.getPositionIn(position, corner))
               .forEach(this.closedPositions::add);
         Arrays.stream(Corner.values())
               .filter(corner -> card.isAvailable(corner, isRetro))
               .map(corner -> PositionManager.getPositionIn(position, corner))
-              .filter(availablePos -> !this.cardsPositioned.containsKey(availablePos))
+              .filter(availablePos -> ! this.cardsPositioned.containsKey(availablePos))
               .forEach(this.availablePositions::add);
         this.availablePositions.removeAll(this.closedPositions);
 

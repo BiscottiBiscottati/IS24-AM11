@@ -18,14 +18,14 @@ import java.util.Set;
 /**
  * Abstract class representing a playable card in the field.
  * <p>
- * Subclasses must be constructed using the provided {@link PlayableCard.Builder Builder}
- * inner class to ensure consistent object creation.
+ * Subclasses must be constructed using the provided {@link PlayableCard.Builder Builder} inner class to ensure
+ * consistent object creation.
  * <p>
- * This class contains methods to get the card's color, points, type,
- * placing requirements, points requirements, symbol to collect, and id.
+ * This class contains methods to get the card's color, points, type, placing requirements, points requirements, symbol
+ * to collect, and id.
  * <p>
- * It also contains methods to check if a corner is available
- * if there is an item in a corner, and if the card's color is equal to a given color.
+ * It also contains methods to check if a corner is available if there is an item in a corner, and if the card's color
+ * is equal to a given color.
  * <p>
  * The class also contains a nested <code>Builder</code> class for creating instances of <code>PlayableCard</code>.
  */
@@ -40,16 +40,15 @@ public abstract sealed class PlayableCard implements CardIdentity,
     /**
      * Constructs a new instance of <code>PlayableCard</code> using the provided <code>Builder</code>.
      * <p>
-     * This constructor is protected.
-     * This is to ensure that <code>PlayableCard</code> instances are always created using a <code>Builder</code>.
+     * This constructor is protected. This is to ensure that <code>PlayableCard</code> instances are always created
+     * using a <code>Builder</code>.
      * <p>
-     * The constructor takes a <code>Builder</code> as a parameter and uses it to set the color,
-     * points, and id of the <code>PlayableCard</code>.
-     * These values are final and can’t be changed after the <code>PlayableCard</code> is constructed.
+     * The constructor takes a <code>Builder</code> as a parameter and uses it to set the color, points, and id of the
+     * <code>PlayableCard</code>. These values are final and can’t be changed after the <code>PlayableCard</code> is
+     * constructed.
      *
-     * @param builder The <code>Builder</code> used to construct the PlayableCard.
-     *                It must be a subclass of <code>Builder</code>
-     *                that is specific to the type of <code>PlayableCard</code> being created.
+     * @param builder The <code>Builder</code> used to construct the PlayableCard. It must be a subclass of
+     *                <code>Builder</code> that is specific to the type of <code>PlayableCard</code> being created.
      */
     protected PlayableCard(@NotNull Builder<?> builder) {
         this.color = builder.primaryColor;
@@ -58,8 +57,7 @@ public abstract sealed class PlayableCard implements CardIdentity,
     }
 
     /**
-     * Getter for card's id.
-     * Each card must have a unique id.
+     * Getter for card's id. Each card must have a unique id.
      *
      * @return the id of the card
      */
@@ -90,9 +88,9 @@ public abstract sealed class PlayableCard implements CardIdentity,
     }
 
     /**
-     * Retrieves the center color of this <code>PlayableCard</code>.
-     * If the card is in retro mode, it returns a <code>Set</code> containing the color of the card.
-     * If the card is not in retro mode, it returns an empty <code>Set</code>.
+     * Retrieves the center color of this <code>PlayableCard</code>. If the card is in retro mode, it returns a
+     * <code>Set</code> containing the color of the card. If the card is not in retro mode, it returns an empty
+     * <code>Set</code>.
      *
      * @param isRetro A boolean indicating whether the card is in retro mode.
      * @return A <code>Set</code> of <code>Color</code> representing the center color of the card.
@@ -115,14 +113,13 @@ public abstract sealed class PlayableCard implements CardIdentity,
     /**
      * Overrides the equals method for the <code>PlayableCard</code> class.
      * <p>
-     * This method first checks
-     * if the passed object is equal to the current object using the superclasses equal method.
+     * This method first checks if the passed object is equal to the current object using the superclasses equal method.
      * If they’re equal, it returns true.
      * <p>
      * If the passed object is not of the same class as the current object, it returns false.
      * <p>
-     * Finally, it checks if the id of the passed object is equal to the id of the current object.
-     * If they’re equal, it returns true.
+     * Finally, it checks if the id of the passed object is equal to the id of the current object. If they’re equal, it
+     * returns true.
      *
      * @param obj The object to be compared with the current object.
      * @return true if the passed object is equal to the current object, false otherwise.
@@ -139,11 +136,11 @@ public abstract sealed class PlayableCard implements CardIdentity,
     /**
      * Overrides the hashCode method for the <code>PlayableCard</code> class.
      * <p>
-     * This method uses the Integer's hashCode method
-     * to generate a hash code for the id of the <code>PlayableCard</code>.
+     * This method uses the Integer's hashCode method to generate a hash code for the id of the
+     * <code>PlayableCard</code>.
      * <p>
-     * The id of a <code>PlayableCard</code> is unique,
-     * so this method ensures that different <code>PlayableCards</code> will have different hash codes.
+     * The id of a <code>PlayableCard</code> is unique, so this method ensures that different <code>PlayableCards</code>
+     * will have different hash codes.
      *
      * @return A hash code value for this PlayableCard.
      */
@@ -167,8 +164,7 @@ public abstract sealed class PlayableCard implements CardIdentity,
     /**
      * Gets the number of colors in the field needed to place the card.
      * <p>
-     * For <code>ResourceCard</code> all color requirements will be 0 as they have
-     * no requirements to place.
+     * For <code>ResourceCard</code> all color requirements will be 0 as they have no requirements to place.
      *
      * @return a <code>Map</code> of keys colors and as values their requirements to place on the field in int
      */
@@ -187,8 +183,8 @@ public abstract sealed class PlayableCard implements CardIdentity,
     /**
      * Gets the method needed to score this card points value.
      * <p>
-     * If the card doesn't give points it will return <code>PointsRequirementsType.CLASSIC</code>
-     * as the card points value would be 0.
+     * If the card doesn't give points it will return <code>PointsRequirementsType.CLASSIC</code> as the card points
+     * value would be 0.
      *
      * @return type of requirement needed to score points
      * @see PointsRequirementsType
@@ -255,22 +251,19 @@ public abstract sealed class PlayableCard implements CardIdentity,
     /**
      * This is an abstract <code>Builder</code> class for creating instances of <code>PlayableCard</code>.
      * <p>
-     * The <code>Builder</code> follows the "Builder" design pattern.
-     * It provides a way to construct a complex object step by step.
-     * This <code>Builder</code> is abstract
-     * and is meant
-     * to be subclassed by concrete <code>Builder</code> classes for specific types of <code>PlayableCard</code>.
+     * The <code>Builder</code> follows the "Builder" design pattern. It provides a way to construct a complex object
+     * step by step. This <code>Builder</code> is abstract and is meant to be subclassed by concrete
+     * <code>Builder</code> classes for specific types of <code>PlayableCard</code>.
      * <p>
-     * The <code>Builder</code> takes the id, points,
-     * and primary color of the <code>PlayableCard</code> as parameters in its constructor.
-     * These values are then used
-     * to set the corresponding fields of the <code>PlayableCard</code> when the <code>build</code> method is called.
+     * The <code>Builder</code> takes the id, points, and primary color of the <code>PlayableCard</code> as parameters
+     * in its constructor. These values are then used to set the corresponding fields of the <code>PlayableCard</code>
+     * when the <code>build</code> method is called.
      * <p>
-     * The <code>build</code> method is abstract and must be implemented by subclasses of this <code>Builder</code>.
-     * It is responsible for creating the <code>PlayableCard</code> and ensuring that it is in a valid state.
+     * The <code>build</code> method is abstract and must be implemented by subclasses of this <code>Builder</code>. It
+     * is responsible for creating the <code>PlayableCard</code> and ensuring that it is in a valid state.
      * <p>
-     * The type parameter <code>T extends PlayableCard</code>,
-     * meaning the <code>Builder</code> can be used to create any type of <code>PlayableCard</code>.
+     * The type parameter <code>T extends PlayableCard</code>, meaning the <code>Builder</code> can be used to create
+     * any type of <code>PlayableCard</code>.
      *
      * @param <T> The specific type of <code>PlayableCard</code> that this <code>Builder</code> builds.
      */
@@ -300,8 +293,8 @@ public abstract sealed class PlayableCard implements CardIdentity,
          * <p>
          * This method is abstract and must be implemented by subclasses of <code>Builder</code>.
          * <p>
-         * If the specified corner can’t contain the provided item,
-         * the method throws an <code>IllegalCardBuildException</code>.
+         * If the specified corner can’t contain the provided item, the method throws an
+         * <code>IllegalCardBuildException</code>.
          *
          * @param corner          The corner where the item should be placed.
          * @param cornerContainer The item to be placed in the specified corner.
@@ -309,19 +302,18 @@ public abstract sealed class PlayableCard implements CardIdentity,
          * @throws IllegalCardBuildException if the item can’t be placed in the specified corner.
          */
         public abstract Builder<T> hasIn(@NotNull Corner corner, @NotNull CornerContainer cornerContainer)
-                throws IllegalCardBuildException;
+        throws IllegalCardBuildException;
 
         /**
-         * Constructs a new instance of a subclass of <code>PlayableCard</code> using the
-         * parameters set by the builder's methods.
+         * Constructs a new instance of a subclass of <code>PlayableCard</code> using the parameters set by the
+         * builder's methods.
          * <p>
-         * The method uses the parameters set by the builder's methods to construct the <code>PlayableCard</code>.
-         * These parameters include the color, points, id,
-         * and any items placed in the corners of the <code>PlayableCard</code>.
+         * The method uses the parameters set by the builder's methods to construct the <code>PlayableCard</code>. These
+         * parameters include the color, points, id, and any items placed in the corners of the
+         * <code>PlayableCard</code>.
          * <p>
-         * If the build is incomplete or impossible
-         * (for example, if an item is placed in a corner that can’t contain it),
-         * the method throws an <code>IllegalCardBuildException</code>.
+         * If the build is incomplete or impossible (for example, if an item is placed in a corner that can’t contain
+         * it), the method throws an <code>IllegalCardBuildException</code>.
          *
          * @return A fully constructed instance of a subclass of <code>PlayableCard</code>
          * @throws IllegalCardBuildException if the build is incomplete or impossible

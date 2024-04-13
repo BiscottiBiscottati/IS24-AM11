@@ -20,8 +20,7 @@ import java.util.*;
  * <p>
  * Each attribute is immutable.
  * <p>
- * The class can only be instantiated through the static inner builder
- * {@link GoldCard.Builder}.
+ * The class can only be instantiated through the static inner builder {@link GoldCard.Builder}.
  */
 @SuppressWarnings("DataFlowIssue")
 public final class GoldCard extends PlayableCard {
@@ -115,9 +114,8 @@ public final class GoldCard extends PlayableCard {
     }
 
     /**
-     * Builder class for creating instances of {@link GoldCard}.
-     * This builder provides methods to set the required attributes
-     * for the target object.
+     * Builder class for creating instances of {@link GoldCard}. This builder provides methods to set the required
+     * attributes for the target object.
      */
     public static class Builder extends PlayableCard.Builder<GoldCard> {
 
@@ -196,7 +194,7 @@ public final class GoldCard extends PlayableCard {
          */
         public Builder hasPointRequirements(@NotNull PointsRequirementsType type) {
             this.pointsRequirements = type;
-            if (!(type == PointsRequirementsType.SYMBOLS)) this.symbolToCollect = null;
+            if (! (type == PointsRequirementsType.SYMBOLS)) this.symbolToCollect = null;
             return this;
         }
 
@@ -216,8 +214,7 @@ public final class GoldCard extends PlayableCard {
         }
 
         /**
-         * Constructs a new instance of <code>GoldCard</code> using the
-         * parameters set by the builder's methods.
+         * Constructs a new instance of <code>GoldCard</code> using the parameters set by the builder's methods.
          *
          * @return A fully constructed instance of <code>GoldCard</code>.
          * @throws IllegalCardBuildException if placement requirements to place have a negative value
@@ -226,7 +223,7 @@ public final class GoldCard extends PlayableCard {
         @NotNull
         public GoldCard build() throws IllegalCardBuildException {
             if (this.pointsRequirements == null) throw new IllegalCardBuildException("No points requirements!");
-            if (!Validator.nonNegativeValues(colorPlacingRequirements))
+            if (! Validator.nonNegativeValues(colorPlacingRequirements))
                 throw new IllegalCardBuildException("Placing requirements cannot be less than 0!");
             return new GoldCard(this);
         }

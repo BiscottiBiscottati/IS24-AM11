@@ -113,7 +113,7 @@ public class PickablesTable {
     }
 
     public StarterCard pickStarterCard()
-            throws EmptyDeckException {
+    throws EmptyDeckException {
         return starterDeck.draw()
                           .orElseThrow(() -> new EmptyDeckException("Starter deck is empty!"));
     }

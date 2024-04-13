@@ -19,8 +19,7 @@ import java.util.Optional;
  * <p>
  * Each attribute is immutable.
  * <p>
- * The class can only be instantiated through the static inner builder
- * {@link ResourceCard.Builder}.
+ * The class can only be instantiated through the static inner builder {@link ResourceCard.Builder}.
  */
 @SuppressWarnings("DataFlowIssue")
 public final class ResourceCard extends PlayableCard {
@@ -92,9 +91,8 @@ public final class ResourceCard extends PlayableCard {
     }
 
     /**
-     * Builder class for creating instances of {@link ResourceCard}.
-     * This builder provides methods to set the required attributes
-     * for the target object.
+     * Builder class for creating instances of {@link ResourceCard}. This builder provides methods to set the required
+     * attributes for the target object.
      */
     public static class Builder extends PlayableCard.Builder<ResourceCard> {
         private final EnumMap<Corner, CornerContainer> availableCornerOrItem;
@@ -105,7 +103,7 @@ public final class ResourceCard extends PlayableCard {
          * @throws IllegalCardBuildException if points are negative
          */
         public Builder(int id, int cardPoints, @NotNull Color cardPrimaryColor)
-                throws IllegalCardBuildException {
+        throws IllegalCardBuildException {
             super(id, cardPoints, cardPrimaryColor);
             this.availableCornerOrItem = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
         }
@@ -124,8 +122,7 @@ public final class ResourceCard extends PlayableCard {
         }
 
         /**
-         * Constructs a new instance of <code>ResourceCard</code> using the
-         * parameters set by the builder's methods.
+         * Constructs a new instance of <code>ResourceCard</code> using the parameters set by the builder's methods.
          *
          * @return A fully constructed instance of <code>ResourceCard</code>.
          */

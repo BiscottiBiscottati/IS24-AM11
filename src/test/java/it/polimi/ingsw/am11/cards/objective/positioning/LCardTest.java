@@ -92,17 +92,17 @@ class LCardTest {
         field = Map.of(
                 new Position(0, 0), new CardContainer(starterCard),
                 new Position(1, 1), new CardContainer(redCard),
-                new Position(1, -1), new CardContainer(redCard),
+                new Position(1, - 1), new CardContainer(redCard),
                 new Position(0, 2), new CardContainer(blueCard),
-                new Position(2, -2), new CardContainer(blueCard),
-                new Position(0, -2), new CardContainer(blueCard)
+                new Position(2, - 2), new CardContainer(blueCard),
+                new Position(0, - 2), new CardContainer(blueCard)
         );
 
         noField = Map.of(
                 new Position(0, 0), new CardContainer(starterCard),
                 new Position(1, 1), new CardContainer(purpleCard),
-                new Position(1, -1), new CardContainer(redCard),
-                new Position(2, -2), new CardContainer(blueCard)
+                new Position(1, - 1), new CardContainer(redCard),
+                new Position(2, - 2), new CardContainer(blueCard)
         );
 
         largeField = new HashMap<>(16);
@@ -112,17 +112,17 @@ class LCardTest {
                 Position.of(1, 5),
                 Position.of(1, 3),
                 Position.of(1, 1),
-                Position.of(1, -1),
-                Position.of(-1, 1),
-                Position.of(-1, -1)
+                Position.of(1, - 1),
+                Position.of(- 1, 1),
+                Position.of(- 1, - 1)
         );
         redPositions.forEach(position -> largeField.put(position, new CardContainer(redCard)));
 
         List<Position> bluesPositions = List.of(
                 Position.of(2, 2),
                 Position.of(2, 0),
-                Position.of(2, -2),
-                Position.of(0, -2),
+                Position.of(2, - 2),
+                Position.of(0, - 2),
                 Position.of(0, 2),
                 Position.of(0, 4)
         );

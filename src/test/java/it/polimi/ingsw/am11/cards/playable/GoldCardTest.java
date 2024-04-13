@@ -131,7 +131,7 @@ class GoldCardTest {
     void checkNegativePlacingRequirements() {
         assertThrows(IllegalCardBuildException.class,
                      () -> new GoldCard.Builder(18, 3, Color.GREEN)
-                             .hasRequirements(Color.BLUE, -1)
+                             .hasRequirements(Color.BLUE, - 1)
                              .build()
         );
     }
@@ -140,7 +140,7 @@ class GoldCardTest {
     void checkNegativePoints() {
         assertThrows(
                 IllegalCardBuildException.class,
-                () -> new GoldCard.Builder(190, -1, Color.PURPLE)
+                () -> new GoldCard.Builder(190, - 1, Color.PURPLE)
                         .build()
         );
     }

@@ -12,8 +12,8 @@ import java.util.Optional;
  * <p>
  * Can be values of <code>Color</code>, <code>Symbol</code> or <code>Availability</code>.
  * <p>
- * If not available to cover will contain <code>Availability.NOT_USABLE</code>.
- * If available but not item inside will have <code>Availability.USABLE</code>
+ * If not available to cover will contain <code>Availability.NOT_USABLE</code>. If available but not item inside will
+ * have <code>Availability.USABLE</code>
  *
  * @see Availability
  * @see Color

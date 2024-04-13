@@ -20,21 +20,20 @@ import java.util.*;
 /**
  * The <code>StarterCard</code> class represents a type of card played at the start of the game.
  * <p>
- * It implements the <code>FieldCard</code> and <code>CardIdentity</code> interfaces,
- * indicating that it can be used as a field card in the game and has a unique identity.
+ * It implements the <code>FieldCard</code> and <code>CardIdentity</code> interfaces, indicating that it can be used as
+ * a field card in the game and has a unique identity.
  * <p>
- * A <code>StarterCard</code> has several properties including an id,
- * available corners on the front and back of the card, and center colors on the front of the card.
- * These properties are set during the construction of the <code>StarterCard</code> object using the Builder pattern.
+ * A <code>StarterCard</code> has several properties including an id, available corners on the front and back of the
+ * card, and center colors on the front of the card. These properties are set during the construction of the
+ * <code>StarterCard</code> object using the Builder pattern.
  * <p>
- * The <code>StarterCard</code> class provides methods
- * to check if a corner on the front of the card is available,
- * retrieve the <code>CornerContainer</code> for a given corner on the front of the card,
- * retrieve the color for a given corner on the back of the card,
- * retrieve the set of center colors on the front of the card, and retrieve the ID of the card.
+ * The <code>StarterCard</code> class provides methods to check if a corner on the front of the card is available,
+ * retrieve the <code>CornerContainer</code> for a given corner on the front of the card, retrieve the color for a given
+ * corner on the back of the card, retrieve the set of center colors on the front of the card, and retrieve the ID of
+ * the card.
  * <p>
- * The <code>StarterCard</code> class also includes a nested <code>Builder</code> class
- * for constructing a <code>StarterCard</code> object.
+ * The <code>StarterCard</code> class also includes a nested <code>Builder</code> class for constructing a
+ * <code>StarterCard</code> object.
  */
 @SuppressWarnings("DataFlowIssue")
 public final class StarterCard implements FieldCard, CardIdentity {
@@ -47,18 +46,17 @@ public final class StarterCard implements FieldCard, CardIdentity {
     /**
      * Constructor for the <code>StarterCard</code> class.
      * <p>
-     * This constructor takes a <code>Builder</code> object
-     * and uses it to set the properties of the <code>StarterCard</code>.
+     * This constructor takes a <code>Builder</code> object and uses it to set the properties of the
+     * <code>StarterCard</code>.
      * <p>
-     * It sets the id of the card, the available corners on the front of the card,
-     * the available color corners on the back of the card,
-     * and the center colors on the front of the card.
+     * It sets the id of the card, the available corners on the front of the card, the available color corners on the
+     * back of the card, and the center colors on the front of the card.
      * <p>
-     * The available corners and color corners are set using <code>ImmutableEnumMaps</code>,
-     * and the center colors are set using an <code>ImmutableEnumSet</code>.
+     * The available corners and color corners are set using <code>ImmutableEnumMaps</code>, and the center colors are
+     * set using an <code>ImmutableEnumSet</code>.
      *
-     * @param builder The <code>Builder</code> object containing
-     *                the properties to be set on the <code>StarterCard</code>.
+     * @param builder The <code>Builder</code> object containing the properties to be set on the
+     *                <code>StarterCard</code>.
      */
     private StarterCard(@NotNull Builder builder) {
         this.id = builder.id;
@@ -70,11 +68,11 @@ public final class StarterCard implements FieldCard, CardIdentity {
     /**
      * Checks if a corner on the front of the card is available.
      * <p>
-     * This method takes a <code>Corner</code> object as a parameter
-     * and uses it to retrieve the corresponding <code>CornerContainer</code>.
+     * This method takes a <code>Corner</code> object as a parameter and uses it to retrieve the corresponding
+     * <code>CornerContainer</code>.
      * <p>
-     * It then calls the <code>isAvailable</code> method on the <code>CornerContainer</code>
-     * to check if the corner is available.
+     * It then calls the <code>isAvailable</code> method on the <code>CornerContainer</code> to check if the corner is
+     * available.
      *
      * @param corner The corner to check.
      * @return true if the corner is available, false otherwise.
@@ -92,8 +90,8 @@ public final class StarterCard implements FieldCard, CardIdentity {
     /**
      * Retrieves the <code>CornerContainer</code> for a given corner on the front of the card.
      * <p>
-     * This method takes a <code>Corner</code> object as a parameter
-     * and uses it to retrieve the corresponding <code>CornerContainer</code>.
+     * This method takes a <code>Corner</code> object as a parameter and uses it to retrieve the corresponding
+     * <code>CornerContainer</code>.
      *
      * @param corner The corner for which to retrieve the <code>CornerContainer</code>.
      * @return The <code>CornerContainer</code> corresponding to the given corner.
@@ -105,8 +103,8 @@ public final class StarterCard implements FieldCard, CardIdentity {
     /**
      * Retrieves the color for a given corner on the back of the card.
      * <p>
-     * This method takes a <code>Corner</code> object as a parameter
-     * and uses it to retrieve the corresponding <code>Color</code>.
+     * This method takes a <code>Corner</code> object as a parameter and uses it to retrieve the corresponding
+     * <code>Color</code>.
      *
      * @param corner The corner for which to retrieve the <code>Color</code>.
      * @return The <code>Color</code> corresponding to the given corner.
@@ -128,8 +126,8 @@ public final class StarterCard implements FieldCard, CardIdentity {
      * <p>
      * The colors are represented as an <code>ImmutableSet</code> of <code>Color</code> enums.
      *
-     * @return An <code>ImmutableSet</code> of <code>Color</code> enums
-     * representing the center colors on the front of the card.
+     * @return An <code>ImmutableSet</code> of <code>Color</code> enums representing the center colors on the front of
+     * the card.
      */
     @NotNull
     public Set<Color> getCenterColorsFront() {
@@ -177,12 +175,12 @@ public final class StarterCard implements FieldCard, CardIdentity {
     /**
      * Builder class for the StarterCard.
      * <p>
-     * This class is used to construct a StarterCard object using the Builder pattern.
-     * It allows for the configuration of various properties of the StarterCard,
-     * such as its id, available corners on the front, available color corners on the back, and center colors.
+     * This class is used to construct a StarterCard object using the Builder pattern. It allows for the configuration
+     * of various properties of the StarterCard, such as its id, available corners on the front, available color corners
+     * on the back, and center colors.
      * <p>
-     * The Builder ensures that the StarterCard is in a valid state before it is constructed,
-     * throwing an <code>IllegalCardBuildException</code> if not all corners are covered.
+     * The Builder ensures that the StarterCard is in a valid state before it is constructed, throwing an
+     * <code>IllegalCardBuildException</code> if not all corners are covered.
      * <p>
      * Example usage:
      * {@snippet id = 'StarterCardBuilderExample' lang = 'java':
@@ -202,14 +200,14 @@ public final class StarterCard implements FieldCard, CardIdentity {
         /**
          * Constructor for the <code>Builder</code> class.
          * <p>
-         * This constructor initializes the Builder with a given id and sets up
-         * the initial state for the available corners on the front and back of the card, and the center colors.
+         * This constructor initializes the Builder with a given id and sets up the initial state for the available
+         * corners on the front and back of the card, and the center colors.
          * <p>
-         * The available corners on the front of the card are initialized with an <code>EnumMap</code>,
-         * with all corners set to <code>NOT_USABLE</code>.
+         * The available corners on the front of the card are initialized with an <code>EnumMap</code>, with all corners
+         * set to <code>NOT_USABLE</code>.
          * <p>
-         * The available color corners on the back of the card are initialized with an empty <code>EnumMap</code>.
-         * The center colors are initialized with an empty EnumSet.
+         * The available color corners on the back of the card are initialized with an empty <code>EnumMap</code>. The
+         * center colors are initialized with an empty EnumSet.
          *
          * @param id The id to be set for the <code>Builder</code>.
          */
@@ -222,31 +220,31 @@ public final class StarterCard implements FieldCard, CardIdentity {
 
         private boolean checkAllBackCornerCovered() {
             return Arrays.stream(Corner.values())
-                         .filter(key -> !availableColorCornerBack.containsKey(key))
+                         .filter(key -> ! availableColorCornerBack.containsKey(key))
                          .noneMatch(e -> true);
         }
 
         /**
          * Sets the item for a given corner on the front of the card.
          * <p>
-         * This method takes a <code>Corner</code> object and a <code>CornerContainer</code> object as parameters.
-         * It uses the <code>Corner</code> object to identify the corner on the front of the card,
-         * and the <code>CornerContainer</code> object to set the item for that corner.
+         * This method takes a <code>Corner</code> object and a <code>CornerContainer</code> object as parameters. It
+         * uses the <code>Corner</code> object to identify the corner on the front of the card, and the
+         * <code>CornerContainer</code> object to set the item for that corner.
          * <p>
-         * The item can be either an <code>Availability</code> or a <code>Color</code>.
-         * The item is set in the available corners on the front of the card.
+         * The item can be either an <code>Availability</code> or a <code>Color</code>. The item is set in the available
+         * corners on the front of the card.
          * <p>
-         * If the item is neither an <code>Availability</code> nor a <code>Color</code>,
-         * an <code>IllegalCardBuildException</code> is thrown.
+         * If the item is neither an <code>Availability</code> nor a <code>Color</code>, an
+         * <code>IllegalCardBuildException</code> is thrown.
          *
          * @param corner The corner on the front of the card for which to set the item.
          * @param item   The item to be set for the given corner.
          * @return This <code>Builder</code> instance (for chaining).
-         * @throws IllegalCardBuildException If the item is neither
-         *                                   an <code>Availability</code> nor a <code>Color</code>.
+         * @throws IllegalCardBuildException If the item is neither an <code>Availability</code> nor a
+         *                                   <code>Color</code>.
          */
         public @NotNull Builder hasItemFrontIn(@NotNull Corner corner, @NotNull CornerContainer item)
-                throws IllegalCardBuildException {
+        throws IllegalCardBuildException {
             switch (item) {
                 case Availability availability -> availableCornersFront.put(corner, availability);
                 case Color color -> availableCornersFront.put(corner, color);
@@ -258,9 +256,9 @@ public final class StarterCard implements FieldCard, CardIdentity {
         /**
          * Sets the color for a given corner on the back of the card.
          * <p>
-         * This method takes a <code>Corner</code> object and a <code>Color</code> object as parameters.
-         * It uses the <code>Corner</code> object to identify the corner on the back of the card,
-         * and the <code>Color</code> object to set the color for that corner.
+         * This method takes a <code>Corner</code> object and a <code>Color</code> object as parameters. It uses the
+         * <code>Corner</code> object to identify the corner on the back of the card, and the <code>Color</code> object
+         * to set the color for that corner.
          * <p>
          * The color is set in the available corner on the back of the card.
          *
@@ -276,8 +274,8 @@ public final class StarterCard implements FieldCard, CardIdentity {
         /**
          * Sets the center colors on the front of the card.
          * <p>
-         * This method takes a <code>Set</code> of <code>Color</code> objects as a parameter.
-         * It adds all the colors from the set to the center colors on the front of the card.
+         * This method takes a <code>Set</code> of <code>Color</code> objects as a parameter. It adds all the colors
+         * from the set to the center colors on the front of the card.
          * <p>
          * The colors are represented as an <code>EnumSet</code> of <code>Color</code> enums.
          *
@@ -293,8 +291,8 @@ public final class StarterCard implements FieldCard, CardIdentity {
         /**
          * Sets a center color on the front of the card.
          * <p>
-         * This method takes a <code>Color</code> object as a parameter.
-         * It adds the color to the center colors on the front of the card.
+         * This method takes a <code>Color</code> object as a parameter. It adds the color to the center colors on the
+         * front of the card.
          * <p>
          * The colors are represented as an <code>EnumSet</code> of <code>Color</code> enums.
          *
@@ -311,8 +309,8 @@ public final class StarterCard implements FieldCard, CardIdentity {
          * <p>
          * This method first checks if all corners on the back of the card are covered.
          * <p>
-         * If they are, it creates a new <code>StarterCard</code> object
-         * with the current state of the <code>Builder</code> and returns it.
+         * If they are, it creates a new <code>StarterCard</code> object with the current state of the
+         * <code>Builder</code> and returns it.
          * <p>
          * If not all corners are covered, it throws an <code>IllegalCardBuildException</code>.
          *

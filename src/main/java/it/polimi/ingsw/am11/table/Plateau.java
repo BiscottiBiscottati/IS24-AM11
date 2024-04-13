@@ -71,7 +71,7 @@ public class Plateau {
     public void setFinalLeaderboard(Map<Player, Integer> playerPoints) {
 
         AtomicInteger rank = new AtomicInteger(0);
-        AtomicInteger previousPoints = new AtomicInteger(-1);
+        AtomicInteger previousPoints = new AtomicInteger(- 1);
 
         playerPoints.entrySet()
                     .stream()
@@ -87,7 +87,7 @@ public class Plateau {
 
     public int getPlayerFinishingPosition(Player player) {
 
-        return finalLeaderboard.getOrDefault(player, -1);
+        return finalLeaderboard.getOrDefault(player, - 1);
     }
 
 
