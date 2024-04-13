@@ -11,32 +11,34 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Plateau {
     private final Map<Player, Integer> playerPoints;
+    private final Map<Player, Integer> counterObjective;
     private final Map<Player, Integer> finalLeaderboard;
     private final int armageddonTime;
-    GameStatus Status;
+    GameStatus status;
 
     // TODO why is there a finalLeaderboard and playerPoints? Are they the same thing?
     public Plateau(int armageddonTime) {
         this.playerPoints = new HashMap<>(8);
+        this.counterObjective = new HashMap<>(3);
         this.armageddonTime = armageddonTime;
-        this.Status = GameStatus.ONGOING;
+        this.status = GameStatus.ONGOING;
         this.finalLeaderboard = new HashMap<>(8);
     }
 
     public GameStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(GameStatus status) {
-        Status = status;
+        status = status;
     }
 
-    public GameStatus isArmageddonTime() {
-        return Status;
+    public boolean isArmageddonTime() {
+        return status == GameStatus.ARMAGEDDON;
     }
 
     public void activateArmageddon() {
-        Status = GameStatus.ARMAGEDDON;
+        status = GameStatus.ARMAGEDDON;
     }
 
     public void reset() {
@@ -48,7 +50,7 @@ public class Plateau {
                         .forEach(
                                 player -> finalLeaderboard.put(player, null)
                         );
-        Status = GameStatus.ONGOING;
+        status = GameStatus.ONGOING;
     }
 
     public void addPlayer(Player newPlayer) {
@@ -64,7 +66,7 @@ public class Plateau {
             playerPoints.put(player, temp);
         }
         if (temp >= armageddonTime) {
-            Status = GameStatus.ARMAGEDDON;
+            status = GameStatus.ARMAGEDDON;
         }
     }
 
@@ -78,7 +80,7 @@ public class Plateau {
     public void setFinalLeaderboard() {
 
         AtomicInteger rank = new AtomicInteger(0);
-        AtomicInteger previousPoints = new AtomicInteger(- 1);
+        AtomicInteger previousPoints = new AtomicInteger(-1);
 
         playerPoints.entrySet()
                     .stream()
@@ -94,7 +96,7 @@ public class Plateau {
 
     public int getPlayerFinishingPosition(Player player) {
 
-        return finalLeaderboard.getOrDefault(player, - 1);
+        return finalLeaderboard.getOrDefault(player, -1);
     }
 
 
