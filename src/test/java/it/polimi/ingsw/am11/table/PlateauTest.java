@@ -146,10 +146,10 @@ class PlateauTest {
 
         plateau.setFinalLeaderboard(plateau.playerPoints);
 
-        Assertions.assertEquals(1, plateau.getPlayerFinihingPosition(player1));
-        Assertions.assertEquals(1, plateau.getPlayerFinihingPosition(player2));
-        Assertions.assertEquals(2, plateau.getPlayerFinihingPosition(player3));
-        Assertions.assertEquals(3, plateau.getPlayerFinihingPosition(player4));
+        Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player1));
+        Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player2));
+        Assertions.assertEquals(2, plateau.getPlayerFinishingPosition(player3));
+        Assertions.assertEquals(3, plateau.getPlayerFinishingPosition(player4));
 
         Assertions.assertEquals(2, plateau.getWinners().size());
         Assertions.assertEquals(player1, plateau.getWinners().get(0));

@@ -85,16 +85,14 @@ public class Plateau {
                     });
     }
 
-    public int getPlayerFinihingPosition(Player player) {
+    public int getPlayerFinishingPosition(Player player) {
 
-        int position = finalLeaderboard.getOrDefault(player, -1);
-
-        return position;
+        return finalLeaderboard.getOrDefault(player, -1);
     }
 
 
     public List<Player> getWinners() {
-        List<Player> winners = new ArrayList<>();
+        List<Player> winners = new ArrayList<>(4);
         for (Map.Entry<Player, Integer> entry : finalLeaderboard.entrySet()) {
             if (entry.getValue() == 1) {
                 winners.add(entry.getKey());

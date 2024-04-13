@@ -147,7 +147,7 @@ public class GameLogic implements GameModel {
 
     @Override //DONE
     public int getPlayerFinishingPosition(@NotNull String nickname) {
-        return plateau.getPlayerFinihingPosition(players.get(nickname));
+        return plateau.getPlayerFinishingPosition(players.get(nickname));
     }
 
     @Override //DONE
