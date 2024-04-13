@@ -85,9 +85,11 @@ class PlateauTest {
         Player player = new Player("Test Player",
                                    PlayerColor.BLUE);
         plateau.addPlayer(player);
+        // FIXME you shouldn't be able to call directly playerPoints so null values are impossible
         // Directly put null as the player's points
         plateau.playerPoints.put(player, null);
 
+        // FIXME you should try to get not existent player not put a null directly into the map
         // Assert that getPlayerPoints throws an IllegalPlateauActionException
         Assertions.assertThrows(IllegalPlateauActionException.class, () -> plateau.getPlayerPoints(player));
     }
@@ -108,6 +110,7 @@ class PlateauTest {
                                     PlayerColor.GREEN);
         plateau.addPlayer(player4);
 
+        //FIXME should be a method to add points to a player to represent how it would be used
         plateau.playerPoints.put(player1, 5);
         plateau.playerPoints.put(player2, 5);
         plateau.playerPoints.put(player3, 3);
@@ -115,6 +118,7 @@ class PlateauTest {
 
         plateau.setFinalLeaderboard(plateau.playerPoints);
 
+        //FIXME should be a method to get the final leaderboard
         Assertions.assertEquals(1, plateau.finalLeaderboard.get(player2));
 
     }
@@ -139,6 +143,7 @@ class PlateauTest {
                                     PlayerColor.GREEN);
         plateau.addPlayer(player4);
 
+        //FIXME should be a method to add points to a player to represent how it would be used
         plateau.playerPoints.put(player1, 5);
         plateau.playerPoints.put(player2, 5);
         plateau.playerPoints.put(player3, 3);
