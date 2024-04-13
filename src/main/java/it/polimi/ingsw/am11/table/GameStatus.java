@@ -4,5 +4,5 @@ public enum GameStatus {
     ONGOING,
     ENDED,
     ARMAGEDDON,
-    LASTTURN
+    LAST_TURN
 }
