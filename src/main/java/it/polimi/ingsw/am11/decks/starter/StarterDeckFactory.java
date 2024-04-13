@@ -36,8 +36,8 @@ public class StarterDeckFactory {
         }
     }
 
-    private static void setFrontRetroCorners(StarterCard.Builder cardBuilder,
-                                             ResultSet result)
+    private static void setFrontRetroCorners(@NotNull StarterCard.Builder cardBuilder,
+                                             @NotNull ResultSet result)
     throws IllegalCardBuildException, SQLException {
         for (Corner corner : Corner.values()) {
             cardBuilder.hasItemFrontIn(

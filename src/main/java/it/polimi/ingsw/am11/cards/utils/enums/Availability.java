@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.cards.utils.enums;
 
 import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.Item;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public enum Availability implements CornerContainer {
     }
 
     @Override
-    public Optional<Item> getItem() {
+    public @NotNull Optional<Item> getItem() {
         return Optional.empty();
     }
 

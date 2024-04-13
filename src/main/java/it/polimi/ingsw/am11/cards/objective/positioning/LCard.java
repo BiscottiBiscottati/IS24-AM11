@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -20,7 +21,7 @@ public class LCard extends PositioningCard {
     private final Color primaryColor;
     private final Color secondaryColor;
 
-    private final PatternCounter counter;
+    private final @NotNull PatternCounter counter;
 
     private LCard(@NotNull Builder builder) {
         super(builder, builder.colorRequirements);
@@ -85,11 +86,11 @@ public class LCard extends PositioningCard {
 
     public static class Builder extends PositioningCard.Builder<LCard> {
 
-        private final EnumMap<Color, Integer> colorRequirements;
+        private final @NotNull EnumMap<Color, Integer> colorRequirements;
         private boolean isFlippedFlag;
         private boolean isRotatedFlag;
-        private Color primaryColor;
-        private Color secondaryColor;
+        private @Nullable Color primaryColor;
+        private @Nullable Color secondaryColor;
 
         public Builder(int id, int points) {
             super(id, points);
@@ -115,7 +116,7 @@ public class LCard extends PositioningCard {
             return this;
         }
 
-        public Builder hasSecondaryColor(@NotNull Color color) {
+        public @NotNull Builder hasSecondaryColor(@NotNull Color color) {
             if (this.secondaryColor != null) this.colorRequirements.put(this.secondaryColor, 0);
             this.secondaryColor = color;
             this.colorRequirements.put(color, 1);

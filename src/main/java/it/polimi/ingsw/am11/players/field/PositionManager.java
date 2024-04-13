@@ -13,9 +13,9 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class PositionManager {
-    private final Set<Position> availablePositions;
-    private final Set<Position> closedPositions;
-    private final Map<Position, CardContainer> cardsPositioned;
+    private final @NotNull Set<Position> availablePositions;
+    private final @NotNull Set<Position> closedPositions;
+    private final @NotNull Map<Position, CardContainer> cardsPositioned;
 
     PositionManager() {
         this.availablePositions = new HashSet<>(32);
@@ -51,8 +51,8 @@ public class PositionManager {
         return corners.stream().reduce(currentPosition, PositionManager::getPositionIn, (a, b) -> b);
     }
 
-    public static Optional<Corner> getCornerFromPositions(@NotNull Position posToCheck,
-                                                          @NotNull Position posTarget) {
+    public static @NotNull Optional<Corner> getCornerFromPositions(@NotNull Position posToCheck,
+                                                                   @NotNull Position posTarget) {
         int deltaX = posTarget.x() - posToCheck.x();
         int deltaY = posTarget.y() - posToCheck.y();
         if (deltaX == 1 && deltaY == 1) return Optional.of(Corner.TOP_RX);
@@ -69,6 +69,7 @@ public class PositionManager {
         this.cardsPositioned.clear();
     }
 
+    @NotNull
     List<Item> placeCard(@NotNull FieldCard card,
                          @NotNull Position position,
                          boolean isRetro)
@@ -121,7 +122,7 @@ public class PositionManager {
         return availablePositions.contains(position);
     }
 
-    public Optional<CardContainer> getCardIfExists(@NotNull Position position) {
+    public @NotNull Optional<CardContainer> getCardIfExists(@NotNull Position position) {
         return Optional.ofNullable(cardsPositioned.get(position));
     }
 

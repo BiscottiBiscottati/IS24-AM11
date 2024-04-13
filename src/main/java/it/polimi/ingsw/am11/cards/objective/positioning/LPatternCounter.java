@@ -19,7 +19,7 @@ public class LPatternCounter implements PatternCounter {
 
     private final EnumMap<PatternPurpose, List<Corner>> cornersPurpose;
 
-    private final Set<Position> seenPositions;
+    private final @NotNull Set<Position> seenPositions;
 
     private int numberOfPatterns;
 
@@ -35,7 +35,7 @@ public class LPatternCounter implements PatternCounter {
 
     private void countNumberOfPatterns(
             @NotNull Map<Position, CardContainer> field,
-            Position currentPosition,
+            @NotNull Position currentPosition,
             int numberSeen) {
         Position nextPatternPosition = PositionManager.getMovementOfPositions(
                 currentPosition,

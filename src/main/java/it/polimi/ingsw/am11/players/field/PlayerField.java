@@ -16,8 +16,8 @@ import java.util.Set;
 
 public class PlayerField {
 
-    private final ExposedItemManager itemManager;
-    private final PositionManager positionManager;
+    private final @NotNull ExposedItemManager itemManager;
+    private final @NotNull PositionManager positionManager;
 
     public PlayerField() {
         this.itemManager = new ExposedItemManager();

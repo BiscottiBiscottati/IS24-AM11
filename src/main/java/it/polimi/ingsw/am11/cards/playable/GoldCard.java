@@ -25,10 +25,10 @@ import java.util.*;
 @SuppressWarnings("DataFlowIssue")
 public final class GoldCard extends PlayableCard {
 
-    private final ImmutableMap<Corner, CornerContainer> availableCornersOrSymbol;
-    private final ImmutableMap<Color, Integer> colorPlacingRequirements;
+    private final @NotNull ImmutableMap<Corner, CornerContainer> availableCornersOrSymbol;
+    private final @NotNull ImmutableMap<Color, Integer> colorPlacingRequirements;
     private final PointsRequirementsType pointsRequirements;
-    private final Symbol symbolToCollect;
+    private final @Nullable Symbol symbolToCollect;
 
     /**
      * Constructor called from build method of <code>GoldCard.Builder</code>.
@@ -89,13 +89,13 @@ public final class GoldCard extends PlayableCard {
     }
 
     @Override
-    public CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
+    public @Nullable CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
         if (isRetro) return Availability.USABLE;
         else return availableCornersOrSymbol.get(corner);
     }
 
     @Override
-    public int countPoints(@NotNull PlayerField playerField, Position positionOfCard) {
+    public int countPoints(@NotNull PlayerField playerField, @NotNull Position positionOfCard) {
         switch (this.pointsRequirements) {
             case CLASSIC -> {
                 return super.countPoints(playerField, positionOfCard);
@@ -119,8 +119,8 @@ public final class GoldCard extends PlayableCard {
      */
     public static class Builder extends PlayableCard.Builder<GoldCard> {
 
-        private final EnumMap<Corner, CornerContainer> availableCorners;
-        private final EnumMap<Color, Integer> colorPlacingRequirements;
+        private final @NotNull EnumMap<Corner, CornerContainer> availableCorners;
+        private final @NotNull EnumMap<Color, Integer> colorPlacingRequirements;
         private PointsRequirementsType pointsRequirements;
         private @Nullable Symbol symbolToCollect;
 
@@ -146,7 +146,7 @@ public final class GoldCard extends PlayableCard {
          * @param available if the corner should be available to cover
          * @return the modified builder
          */
-        public Builder hasCorner(@NotNull Corner corner, boolean available) {
+        public @NotNull Builder hasCorner(@NotNull Corner corner, boolean available) {
             availableCorners.put(corner, available ? Availability.USABLE : Availability.NOT_USABLE);
             return this;
         }
@@ -157,7 +157,7 @@ public final class GoldCard extends PlayableCard {
          * @param corner The corner to set as available to cover
          * @return The modified builder
          */
-        public Builder hasCorner(@NotNull Corner corner) {
+        public @NotNull Builder hasCorner(@NotNull Corner corner) {
             availableCorners.put(corner, Availability.USABLE);
             return this;
         }
@@ -180,7 +180,7 @@ public final class GoldCard extends PlayableCard {
          * @param number The number of the specified color needed on the field
          * @return The modified builder
          */
-        public Builder hasRequirements(@NotNull Color color, Integer number) {
+        public @NotNull Builder hasRequirements(@NotNull Color color, Integer number) {
             colorPlacingRequirements.put(color, number);
             return this;
         }
@@ -192,7 +192,7 @@ public final class GoldCard extends PlayableCard {
          * @return The modified builder
          * @see PointsRequirementsType
          */
-        public Builder hasPointRequirements(@NotNull PointsRequirementsType type) {
+        public @NotNull Builder hasPointRequirements(@NotNull PointsRequirementsType type) {
             this.pointsRequirements = type;
             if (! (type == PointsRequirementsType.SYMBOLS)) this.symbolToCollect = null;
             return this;
@@ -206,7 +206,7 @@ public final class GoldCard extends PlayableCard {
          * @param symbol if not null sets a symbol to collect for scoring points otherwise does nothing
          * @return The builder with its values set or the same previous builder
          */
-        public Builder hasSymbolToCollect(@Nullable Symbol symbol) {
+        public @NotNull Builder hasSymbolToCollect(@Nullable Symbol symbol) {
             if (symbol == null) return this;
             this.pointsRequirements = PointsRequirementsType.SYMBOLS;
             this.symbolToCollect = symbol;

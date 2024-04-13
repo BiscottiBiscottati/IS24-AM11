@@ -18,7 +18,7 @@ public class TripletPatternCounter implements PatternCounter {
 
     private final Color tripletColor;
     private final EnumMap<PatternPurpose, Corner> cornersPurpose;
-    private final Set<Position> seenPositions;
+    private final @NotNull Set<Position> seenPositions;
     private int numberOfPatterns;
 
     protected TripletPatternCounter(Color color, EnumMap<PatternPurpose, Corner> cornersPurpose) {
@@ -30,7 +30,7 @@ public class TripletPatternCounter implements PatternCounter {
 
     private void countNumberOfPatterns(
             @NotNull Map<Position, CardContainer> field,
-            Position currentPosition,
+            @NotNull Position currentPosition,
             int numberSeen) {
         Position nextPatternPosition = PositionManager.getPositionIn(
                 currentPosition, cornersPurpose.get(PatternPurpose.NEXT_CHECK)

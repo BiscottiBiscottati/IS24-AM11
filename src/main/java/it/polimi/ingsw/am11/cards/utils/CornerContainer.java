@@ -4,6 +4,7 @@ import com.google.common.base.Enums;
 import it.polimi.ingsw.am11.cards.utils.enums.Availability;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public sealed interface CornerContainer permits Availability, Color, Symbol {
      * @param name The name of the corner container
      * @return The corner container with the given name
      */
-    static CornerContainer of(String name) {
+    static @NotNull CornerContainer of(@NotNull String name) {
         if (Enums.getIfPresent(Availability.class, name).isPresent()) {
             return Availability.valueOf(name);
         } else if (Enums.getIfPresent(Color.class, name).isPresent()) {

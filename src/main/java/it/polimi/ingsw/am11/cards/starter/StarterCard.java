@@ -14,6 +14,7 @@ import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -39,9 +40,9 @@ import java.util.*;
 public final class StarterCard implements FieldCard, CardIdentity {
 
     private final int id;
-    private final ImmutableMap<Corner, CornerContainer> availableCornersFront;
-    private final ImmutableMap<Corner, Color> availableColorCornerRetro;
-    private final ImmutableSet<Color> centerColorsFront;
+    private final @NotNull ImmutableMap<Corner, CornerContainer> availableCornersFront;
+    private final @NotNull ImmutableMap<Corner, Color> availableColorCornerRetro;
+    private final @NotNull ImmutableSet<Color> centerColorsFront;
 
     /**
      * Constructor for the <code>StarterCard</code> class.
@@ -96,7 +97,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
      * @param corner The corner for which to retrieve the <code>CornerContainer</code>.
      * @return The <code>CornerContainer</code> corresponding to the given corner.
      */
-    public CornerContainer checkFront(@NotNull Corner corner) {
+    public @NotNull CornerContainer checkFront(@NotNull Corner corner) {
         return Objects.requireNonNull(availableCornersFront.get(corner));
     }
 
@@ -114,7 +115,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
         return availableColorCornerRetro.get(corner);
     }
 
-    public CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
+    public @Nullable CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
         if (isRetro) return availableColorCornerRetro.get(corner);
         else return availableCornersFront.get(corner);
     }
@@ -159,7 +160,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@NotNull Object obj) {
         if (super.equals(obj)) return true;
 
         if (getClass() != obj.getClass()) return false;
@@ -193,9 +194,9 @@ public final class StarterCard implements FieldCard, CardIdentity {
      */
     public static class Builder {
         private final int id;
-        private final EnumMap<Corner, CornerContainer> availableCornersFront;
-        private final EnumMap<Corner, Color> availableColorCornerBack;
-        private final EnumSet<Color> centerColors;
+        private final @NotNull EnumMap<Corner, CornerContainer> availableCornersFront;
+        private final @NotNull EnumMap<Corner, Color> availableColorCornerBack;
+        private final @NotNull EnumSet<Color> centerColors;
 
         /**
          * Constructor for the <code>Builder</code> class.

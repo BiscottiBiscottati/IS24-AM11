@@ -159,7 +159,7 @@ public abstract class ObjectiveCard implements CardIdentity {
     public abstract ObjectiveCardType getType();
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@NotNull Object obj) {
         if (super.equals(obj)) return true;
 
         if (getClass() != obj.getClass()) return false;

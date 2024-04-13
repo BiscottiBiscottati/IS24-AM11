@@ -16,9 +16,9 @@ import java.util.stream.Stream;
 
 public class ExposedItemManager {
 
-    private final EnumMap<Color, Integer> exposedColors;
-    private final EnumMap<Symbol, Integer> exposedSymbols;
-    private final EnumMap<Color, Integer> placedCardColors;
+    private final @NotNull EnumMap<Color, Integer> exposedColors;
+    private final @NotNull EnumMap<Symbol, Integer> exposedSymbols;
+    private final @NotNull EnumMap<Color, Integer> placedCardColors;
 
     ExposedItemManager() {
         exposedColors = EnumMapUtils.Init(Color.class, 0);
@@ -80,7 +80,7 @@ public class ExposedItemManager {
         return Map.copyOf(this.placedCardColors);
     }
 
-    public boolean isRequirementsMet(PlayableCard card, boolean isRetro) {
+    public boolean isRequirementsMet(@NotNull PlayableCard card, boolean isRetro) {
         if (isRetro) return true;
         return Stream.of(Color.values())
                      .allMatch(color -> card.getPlacingRequirementsOf(color) <= this.getExposedItem(color));

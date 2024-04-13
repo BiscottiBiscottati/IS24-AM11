@@ -32,15 +32,15 @@ public class GoldDeckFactory {
         return CornerContainer.of(result.getString(corner.getColumnName()));
     }
 
-    private static void setFrontCorners(GoldCard.Builder cardBuilder,
-                                        ResultSet result)
+    private static void setFrontCorners(@NotNull GoldCard.Builder cardBuilder,
+                                        @NotNull ResultSet result)
     throws IllegalCardBuildException, SQLException {
         for (Corner corner : Corner.values()) {
             cardBuilder.hasIn(corner, getCornerContainer(corner, result));
         }
     }
 
-    private static void setPlacingRequirements(GoldCard.Builder cardBuilder,
+    private static void setPlacingRequirements(@NotNull GoldCard.Builder cardBuilder,
                                                @NotNull ResultSet result)
     throws SQLException {
         try (Connection connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);

@@ -9,13 +9,14 @@ import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 
 public class TripletCard extends PositioningCard {
     private final boolean flippedFlag;
     private final Color colorOfPattern;
-    private final PatternCounter counter;
+    private final @NotNull PatternCounter counter;
 
     private TripletCard(@NotNull Builder builder) {
         super(builder, builder.colorRequirements);
@@ -67,7 +68,7 @@ public class TripletCard extends PositioningCard {
 
         protected EnumMap<Color, Integer> colorRequirements;
         private boolean flippedFlag;
-        private Color colorOfPattern;
+        private @Nullable Color colorOfPattern;
 
         public Builder(int id, int points) {
             super(id, points);

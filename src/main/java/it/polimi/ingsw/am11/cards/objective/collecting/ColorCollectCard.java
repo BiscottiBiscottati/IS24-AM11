@@ -48,7 +48,7 @@ public class ColorCollectCard extends CollectingCard {
 
     @Override
     public int countPoints(
-            PlayerField playerField) {
+            @NotNull PlayerField playerField) {
         return Arrays.stream(Color.values())
                      .filter(color -> Objects.requireNonNull(colorToCollect.get(color)) != 0)
                      .map(color -> playerField.getNumberOf(color) /

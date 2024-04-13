@@ -43,7 +43,7 @@ public enum ObjectiveCardType {
      * @param positions The positions to flip
      * @return A new set of position flipped
      */
-    private static Set<Position> flipY(@NotNull Set<Position> positions) {
+    private static @NotNull Set<Position> flipY(@NotNull Set<Position> positions) {
         return positions.stream()
                         .map(position -> Position.of(position.x(), MAX_LENGTH - position.y() - 1))
                         .collect(Collectors.toSet());
@@ -55,7 +55,7 @@ public enum ObjectiveCardType {
      * @param positions The positions to flip
      * @return A new set of positions flipped
      */
-    private static Set<Position> flipX(@NotNull Set<Position> positions) {
+    private static @NotNull Set<Position> flipX(@NotNull Set<Position> positions) {
         return positions.stream()
                         .map(position -> Position.of(MAX_LENGTH - position.x() - 1, position.y()))
                         .collect(Collectors.toSet());
@@ -70,7 +70,7 @@ public enum ObjectiveCardType {
      * @param rotated if the pattern is rotated by 180 degrees
      * @return an <code>Optional</code> of a set of positions
      */
-    public Optional<Set<Position>> getPositions(boolean flipped, boolean rotated) {
+    public @NotNull Optional<Set<Position>> getPositions(boolean flipped, boolean rotated) {
         Set<Position> result = this.positions;
         if (result != null) {
             if (flipped) {

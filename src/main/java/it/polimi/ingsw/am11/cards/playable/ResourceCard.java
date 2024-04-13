@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -26,7 +27,7 @@ public final class ResourceCard extends PlayableCard {
     private final static ImmutableMap<Color, Integer> PLACING_REQUIREMENTS = Maps.immutableEnumMap(
             EnumMapUtils.Init(Color.class, 0)
     );
-    private final ImmutableMap<Corner, CornerContainer> availableCornerOrItem;
+    private final @NotNull ImmutableMap<Corner, CornerContainer> availableCornerOrItem;
 
     /**
      * @param builder The builder used for the creation of this instance
@@ -79,7 +80,7 @@ public final class ResourceCard extends PlayableCard {
     }
 
     @Override
-    public CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
+    public @Nullable CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
         if (isRetro) return Availability.USABLE;
         else return availableCornerOrItem.get(corner);
     }
@@ -95,7 +96,7 @@ public final class ResourceCard extends PlayableCard {
      * attributes for the target object.
      */
     public static class Builder extends PlayableCard.Builder<ResourceCard> {
-        private final EnumMap<Corner, CornerContainer> availableCornerOrItem;
+        private final @NotNull EnumMap<Corner, CornerContainer> availableCornerOrItem;
 
         /**
          * @param cardPoints       the point value of the card

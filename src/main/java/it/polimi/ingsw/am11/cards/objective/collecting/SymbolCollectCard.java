@@ -23,7 +23,7 @@ public class SymbolCollectCard extends CollectingCard {
     private static final ImmutableMap<Color, Integer> COLOR_TO_COLLECT = Maps.immutableEnumMap(
             EnumMapUtils.Init(Color.class, 0)
     );
-    private final ImmutableMap<Symbol, Integer> symbolToCollect;
+    private final @NotNull ImmutableMap<Symbol, Integer> symbolToCollect;
 
     private SymbolCollectCard(@NotNull Builder builder) {
         super(builder);
@@ -48,7 +48,7 @@ public class SymbolCollectCard extends CollectingCard {
 
     @Override
     public int countPoints(
-            PlayerField playerField) {
+            @NotNull PlayerField playerField) {
         return Arrays.stream(Symbol.values())
                      .filter(symbol -> Objects.requireNonNull(symbolToCollect.get(symbol)) != 0)
                      .map(symbol -> playerField.getNumberOf(symbol) /
@@ -61,7 +61,7 @@ public class SymbolCollectCard extends CollectingCard {
 
     public static class Builder extends CollectingCard.Builder<SymbolCollectCard> {
 
-        private final EnumMap<Symbol, Integer> symbolToCollect;
+        private final @NotNull EnumMap<Symbol, Integer> symbolToCollect;
 
         public Builder(int id, int points) throws IllegalArgumentException {
             super(id, points);

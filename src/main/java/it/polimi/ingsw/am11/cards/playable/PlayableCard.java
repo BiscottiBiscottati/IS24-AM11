@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.players.Position;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Optional;
@@ -31,7 +32,7 @@ import java.util.Set;
  */
 public abstract sealed class PlayableCard implements CardIdentity,
                                                      FieldCard permits GoldCard, ResourceCard {
-    private final Color color;
+    private final @NotNull Color color;
     private final int points;
     private final int id;
 
@@ -125,7 +126,7 @@ public abstract sealed class PlayableCard implements CardIdentity,
      * @return true if the passed object is equal to the current object, false otherwise.
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@NotNull Object obj) {
         if (super.equals(obj)) return true;
 
         if (getClass() != obj.getClass()) return false;
@@ -210,7 +211,7 @@ public abstract sealed class PlayableCard implements CardIdentity,
     public abstract CornerContainer getItemCorner(@NotNull Corner corner);
 
     // TODO we could return Item instead and eliminate Availability since it can be substituted by isAvailable method
-    public abstract CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro);
+    public abstract @Nullable CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro);
 
     /**
      * Getter method for the symbol to collect if there is any
