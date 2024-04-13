@@ -19,7 +19,7 @@ public class Plateau {
     // TODO why is there a finalLeaderboard and playerPoints? Are they the same thing?
     public Plateau(int armageddonTime) {
         this.playerPoints = new HashMap<>(8);
-        this.counterObjective = new HashMap<>(3);
+        this.counterObjective = new HashMap<>(8);
         this.armageddonTime = armageddonTime;
         this.status = GameStatus.ONGOING;
         this.finalLeaderboard = new HashMap<>(8);
@@ -30,7 +30,7 @@ public class Plateau {
     }
 
     public void setStatus(GameStatus status) {
-        status = status;
+        this.status = status;
     }
 
     public boolean isArmageddonTime() {
@@ -80,7 +80,7 @@ public class Plateau {
     public void setFinalLeaderboard() {
 
         AtomicInteger rank = new AtomicInteger(0);
-        AtomicInteger previousPoints = new AtomicInteger(-1);
+        AtomicInteger previousPoints = new AtomicInteger(- 1);
 
         playerPoints.entrySet()
                     .stream()
@@ -96,7 +96,7 @@ public class Plateau {
 
     public int getPlayerFinishingPosition(Player player) {
 
-        return finalLeaderboard.getOrDefault(player, -1);
+        return finalLeaderboard.getOrDefault(player, - 1);
     }
 
 

@@ -80,7 +80,7 @@ public interface GameModel {
 
     //region TurnsActions
 
-    void goNextTurn();
+    void goNextTurn() throws GameBreakingException;
 
     void placeCard(String Nickname, int ID, Position position, boolean isRetro)
     throws IllegalCardPlacingException,
@@ -90,22 +90,22 @@ public interface GameModel {
     int drawFromGoldDeck(String nickname)
     throws GameBreakingException,
            EmptyDeckException,
-           IllegalPlayerSpaceActionException;
+           IllegalPlayerSpaceActionException, TurnsOrderException;
 
     int drawFromResourceDeck(String nickname)
     throws GameBreakingException,
            EmptyDeckException,
-           IllegalPlayerSpaceActionException;
+           IllegalPlayerSpaceActionException, TurnsOrderException;
 
     void drawVisibleGold(String nickname, int ID)
     throws GameBreakingException,
            IllegalPickActionException,
-           IllegalPlayerSpaceActionException;
+           IllegalPlayerSpaceActionException, TurnsOrderException;
 
     void drawVisibleResource(String nickname, int ID)
     throws GameBreakingException,
            IllegalPickActionException,
-           IllegalPlayerSpaceActionException;
+           IllegalPlayerSpaceActionException, TurnsOrderException;
 
     //TODO add possibility of signaling how many objectives a player has completed
     void countObjectivesPoints() throws IllegalPlateauActionException;

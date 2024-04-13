@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.*;
 import it.polimi.ingsw.am11.players.field.PlayerField;
+import it.polimi.ingsw.am11.table.GameStatus;
 import it.polimi.ingsw.am11.table.PickablesTable;
 import it.polimi.ingsw.am11.table.Plateau;
 import org.jetbrains.annotations.NotNull;
@@ -17,22 +18,15 @@ import java.util.*;
 public class GameLogic implements GameModel {
 
     //TODO divede game logic in smaller classes like player manager and table manager turn manager
-    //
-    //TODO isfinished
-    //
-    //TODO check if action is in player turn
-    //
-    //
-    //TODO
 
     private final RuleSet ruleSet = new BasicRuleset();
     private final Map<String, Player> players;
     private final LinkedList<Player> playerQueue;
     private final PickablesTable pickablesTable;
     private final Plateau plateau;
+    private final boolean lastTurn;
     private Player firstPlayer;
     private Player currentPlaying;
-    private boolean lastTurn;
 
     //region Constructor DONE
     public GameLogic() {
@@ -249,7 +243,7 @@ public class GameLogic implements GameModel {
 
     //region TurnsActions DONE
     @Override //DONE
-    public void goNextTurn() {
+    public void goNextTurn() throws GameBreakingException {
         if (pickablesTable.getGoldDeckTop().isPresent() &&
             pickablesTable.getResourceDeckTop().isPresent()) {
             plateau.activateArmageddon();
@@ -257,9 +251,15 @@ public class GameLogic implements GameModel {
         playerQueue.addLast(currentPlaying);
         currentPlaying = playerQueue.removeFirst();
         if (lastTurn && currentPlaying == firstPlayer) {
-            //set gameStatus to ended
+            plateau.setStatus(GameStatus.ENDED);
+            try {
+                countObjectivesPoints();
+            } catch (IllegalPlateauActionException ex) {
+                throw new GameBreakingException("Players in game logic and plateau don't match");
+            }
+            plateau.setFinalLeaderboard(); //FIXME it may be wrong
         } else if (isArmageddonTime() && currentPlaying == firstPlayer) {
-            lastTurn = true;
+            plateau.setStatus(GameStatus.ARMAGEDDON);
         }
     }
 
@@ -292,7 +292,13 @@ public class GameLogic implements GameModel {
     public int drawFromGoldDeck(@NotNull String nickname)
     throws GameBreakingException,
            EmptyDeckException,
-           IllegalPlayerSpaceActionException {
+           IllegalPlayerSpaceActionException,
+           TurnsOrderException {
+        if (currentPlaying != players.get(nickname)) {
+            throw new TurnsOrderException(
+                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
+            );
+        }
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableCardFrom(PlayableCardType.GOLD);
@@ -313,7 +319,13 @@ public class GameLogic implements GameModel {
     throws
     GameBreakingException,
     EmptyDeckException,
-    IllegalPlayerSpaceActionException {
+    IllegalPlayerSpaceActionException, TurnsOrderException {
+
+        if (currentPlaying != players.get(nickname)) {
+            throw new TurnsOrderException(
+                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
+            );
+        }
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableCardFrom(PlayableCardType.RESOURCE);
@@ -333,7 +345,13 @@ public class GameLogic implements GameModel {
     public void drawVisibleGold(@NotNull String nickname, int ID)
     throws GameBreakingException,
            IllegalPickActionException,
-           IllegalPlayerSpaceActionException {
+           IllegalPlayerSpaceActionException, TurnsOrderException {
+
+        if (currentPlaying != players.get(nickname)) {
+            throw new TurnsOrderException(
+                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
+            );
+        }
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickGoldVisible(ID);
@@ -353,7 +371,13 @@ public class GameLogic implements GameModel {
     public void drawVisibleResource(@NotNull String nickname, int ID)
     throws GameBreakingException,
            IllegalPickActionException,
-           IllegalPlayerSpaceActionException {
+           IllegalPlayerSpaceActionException, TurnsOrderException {
+
+        if (currentPlaying != players.get(nickname)) {
+            throw new TurnsOrderException(
+                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
+            );
+        }
         try {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickResourceVisibles(ID);
