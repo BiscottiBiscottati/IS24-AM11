@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 /**
  * The type of objective card.
  * <p>
- * Can be <code>COLOR_COLLECT</code>, <code>L_SHAPE</code>, <code>SYMBOL_COLLECT</code> or <code>TRIPLET</code>.
+ * Can be <code>COLOR_COLLECT</code>, <code>L_SHAPE</code>, <code>SYMBOL_COLLECT</code> or
+ * <code>TRIPLET</code>.
  */
 public enum ObjectiveCardType {
     // TODO: we need to discuss if the pattern is really needed
@@ -38,33 +39,11 @@ public enum ObjectiveCardType {
     }
 
     /**
-     * Flips a set of positions in a 3x3 matrix on its y-axis
-     *
-     * @param positions The positions to flip
-     * @return A new set of position flipped
-     */
-    private static @NotNull Set<Position> flipY(@NotNull Set<Position> positions) {
-        return positions.stream()
-                        .map(position -> Position.of(position.x(), MAX_LENGTH - position.y() - 1))
-                        .collect(Collectors.toSet());
-    }
-
-    /**
-     * Flips a set of positions in a 3x3 matrix on its x-axis
-     *
-     * @param positions The positions to flip
-     * @return A new set of positions flipped
-     */
-    private static @NotNull Set<Position> flipX(@NotNull Set<Position> positions) {
-        return positions.stream()
-                        .map(position -> Position.of(MAX_LENGTH - position.x() - 1, position.y()))
-                        .collect(Collectors.toSet());
-    }
-
-    /**
-     * Specifies a set of positions x and y where given a 3x3 matrix create the pattern of the card.
+     * Specifies a set of positions x and y where given a 3x3 matrix create the pattern of the
+     * card.
      * <p>
-     * If the objective card way to score points is not pattern matching, then returns an empty <code>Optional</code>
+     * If the objective card way to score points is not pattern matching, then returns an empty
+     * <code>Optional</code>
      *
      * @param flipped if the pattern is flipped on its y-axis
      * @param rotated if the pattern is rotated by 180 degrees
@@ -83,5 +62,29 @@ public enum ObjectiveCardType {
             return Optional.of(ImmutableSet.copyOf(result));
         }
         return Optional.empty();
+    }
+
+    /**
+     * Flips a set of positions in a 3x3 matrix on its x-axis
+     *
+     * @param positions The positions to flip
+     * @return A new set of positions flipped
+     */
+    private static @NotNull Set<Position> flipX(@NotNull Set<Position> positions) {
+        return positions.stream()
+                        .map(position -> Position.of(MAX_LENGTH - position.x() - 1, position.y()))
+                        .collect(Collectors.toSet());
+    }
+
+    /**
+     * Flips a set of positions in a 3x3 matrix on its y-axis
+     *
+     * @param positions The positions to flip
+     * @return A new set of position flipped
+     */
+    private static @NotNull Set<Position> flipY(@NotNull Set<Position> positions) {
+        return positions.stream()
+                        .map(position -> Position.of(position.x(), MAX_LENGTH - position.y() - 1))
+                        .collect(Collectors.toSet());
     }
 }

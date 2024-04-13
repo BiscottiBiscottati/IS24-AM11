@@ -111,7 +111,8 @@ public class Plateau {
 
         playerPoints.entrySet()
                     .stream()
-                    .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue())) // sort in descending order
+                    .sorted((e1, e2) -> e2.getValue().compareTo(
+                            e1.getValue())) // sort in descending order
                     .forEach(entry -> {
                         if (entry.getValue() == previousPoints.get()) {
                             if (counterObjective.get(entry.getKey()) > previousObjective.get()) {

@@ -21,7 +21,8 @@ public abstract class PositioningCard extends ObjectiveCard {
 
     private final @NotNull ImmutableMap<Color, Integer> colorRequirements;
 
-    protected PositioningCard(@NotNull Builder<?> builder, @NotNull EnumMap<Color, Integer> colorRequirements) {
+    protected PositioningCard(@NotNull Builder<?> builder,
+                              @NotNull EnumMap<Color, Integer> colorRequirements) {
         super(builder);
         this.colorRequirements = Maps.immutableEnumMap(colorRequirements);
     }

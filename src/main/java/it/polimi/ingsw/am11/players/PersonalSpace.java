@@ -56,7 +56,8 @@ public class PersonalSpace {
         if (playerObjective.size() < maxObjectives) {
             playerObjective.add(newObjective);
         } else {
-            throw new IllegalPlayerSpaceActionException("You are trying to add too many personal objectives");
+            throw new IllegalPlayerSpaceActionException(
+                    "You are trying to add too many personal objectives");
         }
     }
 

@@ -17,7 +17,7 @@ import java.util.*;
 
 public class GameLogic implements GameModel {
 
-    //TODO divede game logic in smaller classes like player manager and table manager turn manager
+    //TODO divide game logic in smaller classes like player manager and table manager turn manager
 
     private final RuleSet ruleSet = new BasicRuleset();
     private final Map<String, Player> players;
@@ -31,7 +31,7 @@ public class GameLogic implements GameModel {
     //region Constructor DONE
     public GameLogic() {
         this.players = new HashMap<>(8);
-        this.playerQueue = new LinkedList<Player>();
+        this.playerQueue = new LinkedList<>();
         this.pickablesTable = new PickablesTable(ruleSet.getNumOfCommonObjectives(),
                                                  ruleSet.getMaxRevealedCardsPerType());
         this.plateau = new Plateau(ruleSet.getPointsToArmageddon());
@@ -58,13 +58,6 @@ public class GameLogic implements GameModel {
         return firstPlayer.nickname();
     }
 
-    @Override //DONE
-    public boolean isArmageddonTime() {
-        return plateau.isArmageddonTime();
-    }
-
-    //endregion
-
     //region GettersPlayer DONE
     @Override //DONE
     public List<Integer> getPlayerHand(@NotNull String nickname) {
@@ -75,6 +68,8 @@ public class GameLogic implements GameModel {
                       .map(PlayableCard::getId)
                       .toList();
     }
+
+    //endregion
 
     @Override //DONE
     public List<Integer> getPlayerObjective(@NotNull String nickname) {
@@ -100,7 +95,17 @@ public class GameLogic implements GameModel {
     public Set<Position> getAvailablePositions(@NotNull String nickname) {
         return players.get(nickname).field().getAvailablePositions();
     }
+
+    @Override //DONE
+    public Optional<Color> getResourceDeckTop() {
+        return pickablesTable.getResourceDeckTop();
+    }
     //endregion
+
+    @Override //DONE
+    public Optional<Color> getGoldDeckTop() {
+        return pickablesTable.getGoldDeckTop();
+    }
 
     //region GettersPickableTable DONE
     @Override //DONE
@@ -125,23 +130,17 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
-
-    @Override //DONE
-    public Optional<Color> getResourceDeckTop() {
-        return pickablesTable.getResourceDeckTop();
-    }
-
-    @Override //DONE
-    public Optional<Color> getGoldDeckTop() {
-        return pickablesTable.getGoldDeckTop();
-    }
-
-    //endregion
-
     //region GettersPlateau DONE
     @Override //DONE
     public int getPlayerPoints(@NotNull String nickname) throws IllegalPlateauActionException {
         return plateau.getPlayerPoints(players.get(nickname));
+    }
+
+    //endregion
+
+    @Override //DONE
+    public boolean isArmageddonTime() {
+        return plateau.isArmageddonTime();
     }
 
     @Override //DONE
@@ -160,10 +159,11 @@ public class GameLogic implements GameModel {
 
     //region GameInitialization DONE
     @Override //DONE
-    public void initGame() throws IllegalNumOfPlayersException, EmptyDeckException {
+    public void initGame() throws IllegalNumOfPlayersException {
         if (players.size() < 2) {
             throw new IllegalNumOfPlayersException(
-                    "You need at least 2 players to play this game, the current number is: " + players.size()
+                    "You need at least 2 players to play this game, the current number is: " +
+                    players.size()
             );
         }
         shufflePlayers();
@@ -179,7 +179,8 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour) throws PlayerInitException {
+    public void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
+    throws PlayerInitException {
         if (players.containsKey(nickname)) {
             throw new PlayerInitException(nickname + " is already in use");
         } else if (players.values()
@@ -191,10 +192,12 @@ public class GameLogic implements GameModel {
             );
         } else if (players.size() < ruleSet.getMaxPlayers()) {
             throw new PlayerInitException(
-                    "You are trying to add too many players, the limit is " + ruleSet.getMaxPlayers()
+                    "You are trying to add too many players, the limit is " +
+                    ruleSet.getMaxPlayers()
             );
         } else {
-            PersonalSpace newSpace = new PersonalSpace(ruleSet.getHandSize(), ruleSet.getNumOfPersonalObjective());
+            PersonalSpace newSpace = new PersonalSpace(ruleSet.getHandSize(),
+                                                       ruleSet.getNumOfPersonalObjective());
             Player newPlayer = new Player(nickname, colour, newSpace);
             players.put(nickname, newPlayer);
             playerQueue.add(newPlayer);
@@ -220,6 +223,11 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
+    public int pickObjective() throws EmptyDeckException {
+        return pickablesTable.pickObjectiveCard().getId();
+    }
+
+    @Override //DONE
     public void setStarterFor(@NotNull String nickname, int cardID, boolean isRetro)
     throws IllegalCardPlacingException {
         StarterCard starterCard = pickablesTable.getStarterByID(cardID).orElseThrow();
@@ -227,13 +235,10 @@ public class GameLogic implements GameModel {
     }
 
     @Override //DONE
-    public int pickObjective() throws EmptyDeckException {
-        return pickablesTable.pickObjectiveCard().getId();
-    }
-
-    @Override //DONE
-    public void setObjectiveFor(@NotNull String nickname, int cardID) throws IllegalPlayerSpaceActionException {
-        //The rules book says that unused objectives have to be returned to the deck, but it seems like
+    public void setObjectiveFor(@NotNull String nickname, int cardID)
+    throws IllegalPlayerSpaceActionException {
+        //The rule book says that unused objectives have to be returned to the deck, but it
+        // seems like
         //a useless action
         ObjectiveCard objectiveCard = pickablesTable.getObjectiveByID(cardID).orElseThrow();
         players.get(nickname).space().addObjective(objectiveCard);
@@ -264,7 +269,8 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void placeCard(@NotNull String nickname, int ID, @NotNull Position position, boolean isRetro)
+    public void placeCard(@NotNull String nickname, int ID, @NotNull Position position,
+                          boolean isRetro)
     throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException {
         Player player = players.get(nickname);
         if (currentPlaying != player) {
@@ -274,14 +280,10 @@ public class GameLogic implements GameModel {
         }
         PlayableCard card = pickablesTable.getPlayableByID(ID).orElseThrow();
         if (player.field().isAvailable(position)) {
-            try {
-                if (player.field().isRequirementMet(card, isRetro)) {
-                    int points = player.field().place(card, position, isRetro);
-                    player.space().pickCard(card);
-                    plateau.addPlayerPoints(player, points);
-                }
-            } catch (IllegalPlateauActionException | IllegalCardPlacingException ex) {
-                throw ex;
+            if (player.field().isRequirementMet(card, isRetro)) {
+                int points = player.field().place(card, position, isRetro);
+                player.space().pickCard(card);
+                plateau.addPlayerPoints(player, points);
             }
         } else {
             throw new IllegalCardPlacingException("Chosen position is not available");
@@ -309,7 +311,8 @@ public class GameLogic implements GameModel {
             }
         } catch (MaxHandSizeException ex) {
             throw new GameBreakingException(
-                    "We have lost a card due to picking it from the deck and not being able to put it anywhere"
+                    "We have lost a card due to picking it from the deck and not being able to " +
+                    "put it anywhere"
             );
         }
     }
@@ -336,7 +339,8 @@ public class GameLogic implements GameModel {
             }
         } catch (MaxHandSizeException ex) {
             throw new GameBreakingException(
-                    "We have lost a card due to picking it from the deck and not being able to put it anywhere"
+                    "We have lost a card due to picking it from the deck and not being able to " +
+                    "put it anywhere"
             );
         }
     }
@@ -361,7 +365,8 @@ public class GameLogic implements GameModel {
             }
         } catch (MaxHandSizeException ex) {
             throw new GameBreakingException(
-                    "We have lost a card due to picking it from the visibles and not being able to put it anywhere"
+                    "We have lost a card due to picking it from the visible and not being able " +
+                    "to put it anywhere"
             );
         }
 
@@ -387,7 +392,8 @@ public class GameLogic implements GameModel {
             }
         } catch (MaxHandSizeException ex) {
             throw new GameBreakingException(
-                    "We have lost a card due to picking it from the visibles and not being able to put it anywhere"
+                    "We have lost a card due to picking it from the visible and not being able " +
+                    "to put it anywhere"
             );
         }
 

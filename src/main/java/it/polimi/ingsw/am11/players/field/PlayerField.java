@@ -28,8 +28,9 @@ public class PlayerField {
      * Resets the <code>PlayerField</code> to its initial state.
      * <p>
      * This method calls the reset method on both the <code>ExposedItemManager</code> and the
-     * <code>PositionManager</code>. The itemManager's reset method clears all exposed items on the PlayerField. The
-     * positionManager's reset method clears all positioned cards on the PlayerField.
+     * <code>PositionManager</code>. The itemManager's reset method clears all exposed items on the
+     * PlayerField. The positionManager's reset method clears all positioned cards on the
+     * PlayerField.
      */
     public void clearAll() {
         this.itemManager.reset();
@@ -37,14 +38,16 @@ public class PlayerField {
     }
 
     /**
-     * Places a <code>StarterCard</code> on the <code>PlayerField</code> at the starter position (0,0).
+     * Places a <code>StarterCard</code> on the <code>PlayerField</code> at the starter position
+     * (0,0).
      * <p>
-     * This method first positions the card. Then, it updates the exposed items. The method does not return any points
-     * as the placement of a <code>StarterCard</code> does not yield any points.
+     * This method first positions the card. Then, it updates the exposed items. The method does not
+     * return any points as the placement of a <code>StarterCard</code> does not yield any points.
      *
      * @param firstCard The <code>StarterCard</code> to be placed on the <code>PlayerField</code>.
      * @param isRetro   A boolean indicating whether the card is placed in retro mode.
-     * @throws IllegalCardPlacingException If an attempt is made to place a <code>StarterCard</code> more than once.
+     * @throws IllegalCardPlacingException If an attempt is made to place a <code>StarterCard</code>
+     *                                     more than once.
      */
     public void placeStartingCard(@NotNull StarterCard firstCard,
                                   boolean isRetro)
@@ -63,18 +66,20 @@ public class PlayerField {
      * <p>
      * The starter position is defined as (0, 0).
      * <p>
-     * If the provided position matches the starter position, an <code>IllegalCardPlacingException</code> is thrown,
-     * indicating that a <code>PlayableCard</code> cannot be placed in the starter position.
+     * If the provided position matches the starter position, an
+     * <code>IllegalCardPlacingException</code> is thrown, indicating that a
+     * <code>PlayableCard</code> cannot be placed in the starter position.
      * <p>
-     * Then, it positions the card and updates the exposed items. Finally, it returns the points gained from placing the
-     * card.
+     * Then, it positions the card and updates the exposed items. Finally, it returns the points
+     * gained from placing the card.
      *
      * @param card     The <code>PlayableCard</code> to be placed on the <code>PlayerField</code>.
      * @param position The <code>Position</code> at which the card is to be placed.
      * @param isRetro  A boolean indicating whether the card is placed in retro mode.
      * @return The points gained from placing the card.
-     * @throws IllegalCardPlacingException If an attempt is made to place a <code>PlayableCard</code> in the starter
-     *                                     position or the position in unavailable.
+     * @throws IllegalCardPlacingException If an attempt is made to place a
+     *                                     <code>PlayableCard</code> in the starter position or the
+     *                                     position in unavailable.
      */
     public int place(@NotNull PlayableCard card,
                      @NotNull Position position,
@@ -126,7 +131,8 @@ public class PlayerField {
     public boolean isRequirementMet(@NotNull FieldCard card, boolean isRetro) {
         return switch (card) {
             case StarterCard ignored -> true;
-            case PlayableCard playableCard -> this.itemManager.isRequirementsMet(playableCard, isRetro);
+            case PlayableCard playableCard ->
+                    this.itemManager.isRequirementsMet(playableCard, isRetro);
         };
     }
 

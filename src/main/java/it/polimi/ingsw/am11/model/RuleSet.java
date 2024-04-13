@@ -8,14 +8,14 @@ public interface RuleSet {
     int getHandSize();
 
     /**
-     * A Revealed card is a card that is facing up on the PickableTable
+     * A Revealed card is a card facing up on the PickableTable
      *
-     * @return the number of revealed cards on the table per type (e.g. Resource, Gold)
+     * @return the number of revealed cards on the table per type (e.g., Resource, Gold)
      */
     int getMaxRevealedCardsPerType();
 
     /**
-     * @return the number of personal Objectives that a player have to receive
+     * @return the number of personal Objectives that a player has to receive
      */
     int getNumOfPersonalObjective();
 
@@ -30,7 +30,8 @@ public interface RuleSet {
     int getMaxPlayers();
 
     /**
-     * @return the minimum number of points that are needed for the beginning of the final phase of the game
+     * @return the minimum number of points that are needed for the beginning of the final phase of
+     * the game
      */
     int getPointsToArmageddon();
 }

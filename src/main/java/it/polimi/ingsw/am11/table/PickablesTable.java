@@ -97,18 +97,13 @@ public class PickablesTable {
         return objectiveDeck.getCardById(id);
     }
 
-    public void shuffleAllDecks() {
-        goldDeck.shuffle();
-        resourceDeck.shuffle();
-        objectiveDeck.shuffle();
-        starterDeck.shuffle();
-    }
-
-    public @Nullable PlayableCard pickPlayableCardFrom(PlayableCardType type) throws EmptyDeckException {
+    public @Nullable PlayableCard pickPlayableCardFrom(PlayableCardType type)
+    throws EmptyDeckException {
         return switch (type) {
-            case GOLD -> goldDeck.draw().orElseThrow(() -> new EmptyDeckException("Gold deck is empty!"));
-            case RESOURCE -> resourceDeck.draw().orElseThrow(() -> new EmptyDeckException("Resource deck is empty!"));
-            default -> null;
+            case GOLD -> goldDeck.draw().orElseThrow(
+                    () -> new EmptyDeckException("Gold deck is empty!"));
+            case RESOURCE -> resourceDeck.draw().orElseThrow(
+                    () -> new EmptyDeckException("Resource deck is empty!"));
         };
     }
 
@@ -122,16 +117,6 @@ public class PickablesTable {
         return objectiveDeck.draw()
                             .orElseThrow(() -> new EmptyDeckException("Objective deck is empty!"));
 
-    }
-
-    public void pickCommonObjectives() throws EmptyDeckException {
-        for (int i = 0; i < numOfObjectives; i++) {
-            if (objectiveDeck.draw().isPresent()) {
-                commonObjectives.add(objectiveDeck.draw().get());
-            } else {
-                throw new EmptyDeckException("Objective deck is empty!");
-            }
-        }
     }
 
     public void initialize() {
@@ -152,12 +137,28 @@ public class PickablesTable {
         }
     }
 
-
     public void resetToInitialCondition() {
         goldDeck.reset();
         resourceDeck.reset();
         objectiveDeck.reset();
         starterDeck.reset();
+    }
+
+    public void shuffleAllDecks() {
+        goldDeck.shuffle();
+        resourceDeck.shuffle();
+        objectiveDeck.shuffle();
+        starterDeck.shuffle();
+    }
+
+    public void pickCommonObjectives() throws EmptyDeckException {
+        for (int i = 0; i < numOfObjectives; i++) {
+            if (objectiveDeck.draw().isPresent()) {
+                commonObjectives.add(objectiveDeck.draw().get());
+            } else {
+                throw new EmptyDeckException("Objective deck is empty!");
+            }
+        }
     }
 
     public PlayableCard pickGoldVisible(int ID) throws IllegalPickActionException {
@@ -171,17 +172,6 @@ public class PickablesTable {
         throw new IllegalPickActionException("Gold card with ID " + ID + " is not visible!");
     }
 
-    public PlayableCard pickResourceVisibles(int ID) throws IllegalPickActionException {
-        for (PlayableCard card : shownResources) {
-            if (card.getId() == ID) {
-                shownResources.remove(card);
-                supplyResourceVisibles();
-                return card;
-            }
-        }
-        throw new IllegalPickActionException("Resource card with ID " + ID + " is not visible!");
-    }
-
     public Optional<PlayableCard> supplyGoldVisibles() throws IllegalPickActionException {
         if (shownGold.size() >= numOfShownPerType) {
             throw new IllegalPickActionException("There are already enough shown gold cards!");
@@ -193,6 +183,17 @@ public class PickablesTable {
         } else {
             return Optional.empty();
         }
+    }
+
+    public PlayableCard pickResourceVisibles(int ID) throws IllegalPickActionException {
+        for (PlayableCard card : shownResources) {
+            if (card.getId() == ID) {
+                shownResources.remove(card);
+                supplyResourceVisibles();
+                return card;
+            }
+        }
+        throw new IllegalPickActionException("Resource card with ID " + ID + " is not visible!");
     }
 
     public Optional<PlayableCard> supplyResourceVisibles() throws IllegalPickActionException {

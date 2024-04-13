@@ -13,8 +13,8 @@ import java.util.Stack;
  * <p>
  * Can be shuffled and cards can be drawn from it.
  * <p>
- * For each type of <code>Deck</code> you need to use the specific static method <code>createDeck</code> of the factory
- * class.
+ * For each type of <code>Deck</code> you need to use the specific static method
+ * <code>createDeck</code> of the factory class.
  * <p>
  * The available factories are:
  * <pre>
@@ -35,7 +35,8 @@ public class Deck<T extends CardIdentity> {
     /**
      * Constructor for the Deck class.
      *
-     * @param mappingIdToCard An <code>ImmutableMap</code> that maps card IDs to their corresponding card objects
+     * @param mappingIdToCard An <code>ImmutableMap</code> that maps card IDs to their corresponding
+     *                        card objects
      */
     public Deck(@NotNull ImmutableMap<Integer, T> mappingIdToCard) {
         this.mappingIdToCard = mappingIdToCard;

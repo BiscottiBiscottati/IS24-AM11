@@ -24,6 +24,12 @@ public class PositionManager {
         this.cardsPositioned = new HashMap<>(64);
     }
 
+    public static Position getMovementOfPositions(@NotNull Position currentPosition,
+                                                  @NotNull List<Corner> corners) {
+        return corners.stream().reduce(currentPosition, PositionManager::getPositionIn,
+                                       (a, b) -> b);
+    }
+
     @Contract("_, _ -> new")
     public static @NotNull Position getPositionIn(@NotNull Position position,
                                                   @NotNull Corner corner) {
@@ -42,24 +48,10 @@ public class PositionManager {
             case DOWN_LX -> {
                 return new Position(tempX - 1, tempY - 1);
             }
-            default -> throw new EnumConstantNotPresentException(Corner.class, "Qualcosa non va con lo switch enum!");
+            default -> throw new EnumConstantNotPresentException(Corner.class,
+                                                                 "Qualcosa non va con lo switch " +
+                                                                 "enum!");
         }
-    }
-
-    public static Position getMovementOfPositions(@NotNull Position currentPosition,
-                                                  @NotNull List<Corner> corners) {
-        return corners.stream().reduce(currentPosition, PositionManager::getPositionIn, (a, b) -> b);
-    }
-
-    public static @NotNull Optional<Corner> getCornerFromPositions(@NotNull Position posToCheck,
-                                                                   @NotNull Position posTarget) {
-        int deltaX = posTarget.x() - posToCheck.x();
-        int deltaY = posTarget.y() - posToCheck.y();
-        if (deltaX == 1 && deltaY == 1) return Optional.of(Corner.TOP_RX);
-        if (deltaX == - 1 && deltaY == 1) return Optional.of(Corner.TOP_LX);
-        if (deltaX == 1 && deltaY == - 1) return Optional.of(Corner.DOWN_RX);
-        if (deltaX == - 1 && deltaY == - 1) return Optional.of(Corner.DOWN_LX);
-        return Optional.empty();
     }
 
     void reset() {
@@ -97,17 +89,31 @@ public class PositionManager {
               .forEach(this.availablePositions::add);
         this.availablePositions.removeAll(this.closedPositions);
 
-        // Update the cards that are covered by the new card and return the List of Items being covered
+        // Update the cards that are covered by the new card and return the List of Items being
+        // covered
         return Stream.of(Corner.values())
                      .map(corner -> PositionManager.getPositionIn(position, corner))
                      .filter(this.cardsPositioned::containsKey)
                      .map(pos -> {
-                         Corner cornerToCover = PositionManager.getCornerFromPositions(pos, position).orElseThrow();
+                         Corner cornerToCover = PositionManager.getCornerFromPositions(
+                                 pos,
+                                 position).orElseThrow();
                          return this.cardsPositioned.get(pos).cover(cornerToCover);
                      })
                      .filter(Optional::isPresent)
                      .map(Optional::get)
                      .toList();
+    }
+
+    public static @NotNull Optional<Corner> getCornerFromPositions(@NotNull Position posToCheck,
+                                                                   @NotNull Position posTarget) {
+        int deltaX = posTarget.x() - posToCheck.x();
+        int deltaY = posTarget.y() - posToCheck.y();
+        if (deltaX == 1 && deltaY == 1) return Optional.of(Corner.TOP_RX);
+        if (deltaX == - 1 && deltaY == 1) return Optional.of(Corner.TOP_LX);
+        if (deltaX == 1 && deltaY == - 1) return Optional.of(Corner.DOWN_RX);
+        if (deltaX == - 1 && deltaY == - 1) return Optional.of(Corner.DOWN_LX);
+        return Optional.empty();
     }
 
     public Map<Position, CardContainer> getCardsPositioned() {

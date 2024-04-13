@@ -59,7 +59,7 @@ public interface GameModel {
     //endregion
 
     //region GameInitialization
-    void initGame() throws IllegalNumOfPlayersException, EmptyDeckException;
+    void initGame() throws IllegalNumOfPlayersException;
 
     void addPlayerToTable(String nickname, PlayerColor colour) throws PlayerInitException;
 
