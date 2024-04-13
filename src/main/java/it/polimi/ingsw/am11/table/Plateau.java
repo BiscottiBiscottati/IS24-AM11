@@ -61,8 +61,8 @@ public class Plateau {
         }
     }
 
-    public int getPlayerPoints(Player playerName) throws IllegalPlateauActionException {
-        Integer temp = playerPoints.getOrDefault(playerName, null);
+    public int getPlayerPoints(Player player) throws IllegalPlateauActionException {
+        Integer temp = playerPoints.getOrDefault(player, null);
         if (temp == null) {
             throw new IllegalPlateauActionException("Player not found");
         } else return temp;
