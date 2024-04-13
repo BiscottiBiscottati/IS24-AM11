@@ -96,20 +96,36 @@ public class Plateau {
         } else return temp;
     }
 
+    public int getCountObjective(Player player) throws IllegalPlateauActionException {
+        Integer temp = counterObjective.getOrDefault(player, null);
+        if (temp == null) {
+            throw new IllegalPlateauActionException("Player not found");
+        } else return temp;
+    }
+
     public void setFinalLeaderboard() {
 
         AtomicInteger rank = new AtomicInteger(0);
         AtomicInteger previousPoints = new AtomicInteger(-1);
+        AtomicInteger previousObjective = new AtomicInteger(-1);
 
         playerPoints.entrySet()
                     .stream()
                     .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue())) // sort in descending order
                     .forEach(entry -> {
-                        if (previousPoints.get() != entry.getValue()) {
-                            rank.incrementAndGet();
+                        if (entry.getValue() == previousPoints.get()) {
+                            if (counterObjective.get(entry.getKey()) > previousObjective.get()) {
+                                finalLeaderboard.put(entry.getKey(), rank.get());
+                                previousObjective.set(counterObjective.get(entry.getKey()));
+                            } else {
+                                finalLeaderboard.put(entry.getKey(), rank.get() + 1);
+                            }
+                        } else {
+                            rank.getAndIncrement();
+                            finalLeaderboard.put(entry.getKey(), rank.get());
+                            previousPoints.set(entry.getValue());
+                            previousObjective.set(counterObjective.get(entry.getKey()));
                         }
-                        finalLeaderboard.put(entry.getKey(), rank.get());
-                        previousPoints.set(entry.getValue());
                     });
     }
 
@@ -127,10 +143,6 @@ public class Plateau {
             }
         }
         return winners;
-    }
-
-    public Map<Player, Integer> getFinalLeaderboard() {
-        return finalLeaderboard;
     }
 
 }
