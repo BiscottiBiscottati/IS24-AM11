@@ -63,11 +63,6 @@ public class ExposedItemManager {
         // add card center colors to exposed counter
         card.getCenter(isRetro)
             .forEach(this::addToExposed);
-
-        // add card color to placed card counter
-        if (card instanceof PlayableCard playableCard) {
-            this.addCardColor(playableCard.getColor());
-        }
     }
 
     public int getExposedItem(@NotNull Item item) {

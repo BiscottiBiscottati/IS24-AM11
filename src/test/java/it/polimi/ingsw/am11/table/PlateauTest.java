@@ -25,12 +25,11 @@ class PlateauTest {
         // Add points to the player until they reach the armageddon time
         for (int i = 0; i < 20; i++) {
             plateau.addPlayerPoints(player, 1);
-
         }
 
         Assertions.assertTrue(plateau.isArmageddonTime());
 
-        // Add points to the player so they exceed the armageddon time
+        // Add points to the player, so they exceed the armageddon time
         plateau.addPlayerPoints(player, 1);
 
         // Assert that isArmageddonTime still returns true
@@ -121,7 +120,7 @@ class PlateauTest {
     }
 
     @Test
-    void getPlayerFinihingPosition() {
+    void getPlayerFinishingPosition() {
     }
 
     @Test
