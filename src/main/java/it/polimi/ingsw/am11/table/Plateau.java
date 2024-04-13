@@ -75,16 +75,19 @@ public class Plateau {
         }
     }
 
-    public void addCounterObjective(Player player, int objectives) throws IllegalPlateauActionException {
+    public void addCounterObjective(Player player, int objectives)
+    throws IllegalPlateauActionException {
         Integer temp = counterObjective.getOrDefault(player, null);
         if (temp == null) {
             throw new IllegalPlateauActionException("Player not found");
         } else {
             temp += objectives;
-            counterObjective.put(player, temp);
-        }
-        if (temp >= 3) {
-            throw new IllegalPlateauActionException("Player has already completed 3 objectives");
+            if (temp > 3) {
+                throw new IllegalPlateauActionException(
+                        "Player has already completed 3 objectives");
+            } else {
+                counterObjective.put(player, temp);
+            }
         }
     }
 
@@ -110,15 +113,19 @@ public class Plateau {
             if (pointsComparison != 0) {
                 return pointsComparison;
             } else {
-                return counterObjective.get(e2.getKey()).compareTo(counterObjective.get(e1.getKey()));
+                return counterObjective.get(e2.getKey()).compareTo(
+                        counterObjective.get(e1.getKey()));
             }
         });
 
         int rank = 1;
-        for (int i = 0; i < entries.size(); i++) {
+        int size = entries.size();
+        for (int i = 0; i < size; i++) {
             if (i > 0 && entries.get(i).getValue().equals(entries.get(i - 1).getValue())
-                    && counterObjective.get(entries.get(i).getKey()).equals(counterObjective.get(entries.get(i - 1).getKey()))) {
-                finalLeaderboard.put(entries.get(i).getKey(), finalLeaderboard.get(entries.get(i - 1).getKey()));
+                && counterObjective.get(entries.get(i).getKey()).equals(
+                    counterObjective.get(entries.get(i - 1).getKey()))) {
+                finalLeaderboard.put(entries.get(i).getKey(),
+                                     finalLeaderboard.get(entries.get(i - 1).getKey()));
             } else {
                 finalLeaderboard.put(entries.get(i).getKey(), rank++);
             }
@@ -127,7 +134,7 @@ public class Plateau {
 
     public int getPlayerFinishingPosition(Player player) {
 
-        return finalLeaderboard.getOrDefault(player, -1);
+        return finalLeaderboard.getOrDefault(player, - 1);
     }
 
 

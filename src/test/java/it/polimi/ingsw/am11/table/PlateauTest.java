@@ -99,7 +99,7 @@ class PlateauTest {
                                     PlayerColor.RED);
         plateau.addPlayer(player2);
         plateau.addPlayerPoints(player2, 5);
-        plateau.addCounterObjective(player2, 1);
+        plateau.addCounterObjective(player2, 2);
         Player player3 = new Player("Test Player3",
                                     PlayerColor.YELLOW);
         plateau.addPlayer(player3);
@@ -114,9 +114,9 @@ class PlateauTest {
         plateau.setFinalLeaderboard();
 
         Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player1));
-        Assertions.assertEquals(2, plateau.getPlayerFinishingPosition(player2));
-        Assertions.assertEquals(3, plateau.getPlayerFinishingPosition(player3));
-        Assertions.assertEquals(4, plateau.getPlayerFinishingPosition(player4));
+        Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player2));
+        Assertions.assertEquals(2, plateau.getPlayerFinishingPosition(player3));
+        Assertions.assertEquals(3, plateau.getPlayerFinishingPosition(player4));
 
     }
 
@@ -125,54 +125,94 @@ class PlateauTest {
     }
 
     @Test
-    void getWinners() {
+    void getWinners() throws IllegalPlateauActionException {
 
         Player player1 = new Player("Test Player1",
                                     PlayerColor.BLUE);
         plateau.addPlayer(player1);
+        plateau.addPlayerPoints(player1, 5);
+        plateau.addCounterObjective(player1, 2);
         Player player2 = new Player("Test Player2",
                                     PlayerColor.RED);
         plateau.addPlayer(player2);
+        plateau.addPlayerPoints(player2, 5);
+        plateau.addCounterObjective(player2, 2);
         Player player3 = new Player("Test Player3",
                                     PlayerColor.YELLOW);
         plateau.addPlayer(player3);
+        plateau.addPlayerPoints(player3, 4);
+        plateau.addCounterObjective(player3, 1);
         Player player4 = new Player("Test Player4",
                                     PlayerColor.GREEN);
         plateau.addPlayer(player4);
-
-        //FIXME should be a method to add points to a player to represent how it would be used
-
+        plateau.addPlayerPoints(player4, 3);
+        plateau.addCounterObjective(player4, 0);
 
         plateau.setFinalLeaderboard();
-
-        Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player1));
-        Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player2));
-        Assertions.assertEquals(2, plateau.getPlayerFinishingPosition(player3));
-        Assertions.assertEquals(3, plateau.getPlayerFinishingPosition(player4));
+        plateau.getWinners();
 
         Assertions.assertEquals(2, plateau.getWinners().size());
-        Assertions.assertEquals(player1, plateau.getWinners().get(0));
-        Assertions.assertEquals(player2, plateau.getWinners().get(1));
+        Assertions.assertTrue(plateau.getWinners().contains(player1));
+        Assertions.assertTrue(plateau.getWinners().contains(player2));
+
+
     }
 
     @Test
     void activateArmageddon() {
         plateau.activateArmageddon();
+        Assertions.assertTrue(plateau.isArmageddonTime());
+
+        plateau.reset();
+        Assertions.assertFalse(plateau.isArmageddonTime());
     }
 
     @Test
     void getStatus() {
+
+        plateau.reset();
+        GameStatus status = plateau.getStatus();
+        Assertions.assertEquals(GameStatus.ONGOING, status);
+
+        plateau.activateArmageddon();
+        status = plateau.getStatus();
+        Assertions.assertEquals(GameStatus.ARMAGEDDON, status);
+
     }
 
     @Test
     void setStatus() {
+        plateau.setStatus(GameStatus.ARMAGEDDON);
+        Assertions.assertEquals(GameStatus.ARMAGEDDON, plateau.getStatus());
+
+        plateau.setStatus(GameStatus.ONGOING);
+        Assertions.assertEquals(GameStatus.ONGOING, plateau.getStatus());
+
+
     }
 
     @Test
-    void addCounterObjective() {
+    void addCounterObjective() throws IllegalPlateauActionException {
+
+        Player player = new Player("Test Player",
+                                   PlayerColor.BLUE);
+        plateau.addPlayer(player);
+        Assertions.assertEquals(0, plateau.getCounterObjective(player));
+        plateau.addCounterObjective(player, 2);
+        Assertions.assertEquals(2, plateau.getCounterObjective(player));
+        plateau.addCounterObjective(player, 1);
+        Assertions.assertEquals(3, plateau.getCounterObjective(player));
+        Assertions.assertThrows(IllegalPlateauActionException.class,
+                                () -> plateau.addCounterObjective(player, 2));
+
     }
 
     @Test
-    void getCountObjective() {
+    void getCounterObjective() throws IllegalPlateauActionException {
+
+        Player player = new Player("Test Player",
+                                   PlayerColor.BLUE);
+        plateau.addPlayer(player);
+        Assertions.assertEquals(0, plateau.getCounterObjective(player));
     }
 }
