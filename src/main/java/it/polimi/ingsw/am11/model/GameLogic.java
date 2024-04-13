@@ -127,14 +127,12 @@ public class GameLogic implements GameModel {
 
     @Override //DONE
     public Optional<Color> getResourceDeckTop() {
-        Optional<Color> topColor = pickablesTable.getResourceDeckTop();
-        return topColor;
+        return pickablesTable.getResourceDeckTop();
     }
 
     @Override //DONE
     public Optional<Color> getGoldDeckTop() {
-        Optional<Color> topColor = pickablesTable.getGoldDeckTop();
-        return topColor;
+        return pickablesTable.getGoldDeckTop();
     }
 
     //endregion
@@ -195,9 +193,8 @@ public class GameLogic implements GameModel {
                     "You are trying to add too many players, the limit is " + ruleSet.getMaxPlayers()
             );
         } else {
-            PlayerField newField = new PlayerField();
             PersonalSpace newSpace = new PersonalSpace(ruleSet.getHandSize(), ruleSet.getNumOfPersonalObjective());
-            Player newPlayer = new Player(nickname, colour, newSpace, newField);
+            Player newPlayer = new Player(nickname, colour, newSpace);
             players.put(nickname, newPlayer);
             playerQueue.add(newPlayer);
             plateau.addPlayer(newPlayer);
@@ -218,11 +215,7 @@ public class GameLogic implements GameModel {
 
     @Override //DONE
     public int pickStarter() throws EmptyDeckException {
-        try {
-            return pickablesTable.pickStarterCard().getId();
-        } catch (EmptyDeckException ex) {
-            throw ex;
-        }
+        return pickablesTable.pickStarterCard().getId();
     }
 
     @Override //DONE
@@ -241,11 +234,7 @@ public class GameLogic implements GameModel {
         //The rules book says that unused objectives have to be returned to the deck, but it seems like
         //a useless action
         ObjectiveCard objectiveCard = pickablesTable.getObjectiveByID(cardID).orElseThrow();
-        try {
-            players.get(nickname).space().addObjective(objectiveCard);
-        } catch (IllegalPlayerSpaceActionException e) {
-            throw e;
-        }
+        players.get(nickname).space().addObjective(objectiveCard);
     }
 
     //endregion
@@ -298,8 +287,6 @@ public class GameLogic implements GameModel {
             throw new GameBreakingException(
                     "We have lost a card due to picking it from the deck and not being able to put it anywhere"
             );
-        } catch (EmptyDeckException ex) {
-            throw ex;
         }
     }
 
@@ -321,8 +308,6 @@ public class GameLogic implements GameModel {
             throw new GameBreakingException(
                     "We have lost a card due to picking it from the deck and not being able to put it anywhere"
             );
-        } catch (EmptyDeckException ex) {
-            throw ex;
         }
     }
 
@@ -342,8 +327,6 @@ public class GameLogic implements GameModel {
             throw new GameBreakingException(
                     "We have lost a card due to picking it from the visibles and not being able to put it anywhere"
             );
-        } catch (IllegalPickActionException ex) {
-            throw ex;
         }
 
     }
@@ -364,8 +347,6 @@ public class GameLogic implements GameModel {
             throw new GameBreakingException(
                     "We have lost a card due to picking it from the visibles and not being able to put it anywhere"
             );
-        } catch (IllegalPickActionException ex) {
-            throw ex;
         }
 
 
