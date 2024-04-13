@@ -96,7 +96,7 @@ public class PositionManager {
               .forEach(this.availablePositions::add);
         this.availablePositions.removeAll(this.closedPositions);
 
-        // Update the cards that are covered by the new card and returns List of Items being covered
+        // Update the cards that are covered by the new card and return the List of Items being covered
         return Stream.of(Corner.values())
                      .map(corner -> PositionManager.getPositionIn(position, corner))
                      .filter(this.cardsPositioned::containsKey)
