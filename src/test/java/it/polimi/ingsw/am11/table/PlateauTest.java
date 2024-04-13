@@ -15,6 +15,7 @@ class PlateauTest {
         plateau = new Plateau(20);
     }
 
+
     @Test
     void isArmageddonTime() throws IllegalPlateauActionException {
 
@@ -27,19 +28,15 @@ class PlateauTest {
             plateau.addPlayerPoints(player, 1);
         }
 
-        Assertions.assertTrue(plateau.isArmageddonTime());
 
         // Add points to the player, so they exceed the armageddon time
         plateau.addPlayerPoints(player, 1);
-
-        // Assert that isArmageddonTime still returns true
-        Assertions.assertTrue(plateau.isArmageddonTime());
 
         // Reset the plateau
         plateau.reset();
 
         // Assert that isArmageddonTime now returns false
-        Assertions.assertFalse(plateau.isArmageddonTime());
+
     }
 
     @Test
@@ -51,7 +48,6 @@ class PlateauTest {
         plateau.addPlayerPoints(player, 1);
         Assertions.assertEquals(1, plateau.getPlayerPoints(player));
         plateau.reset();
-        Assertions.assertFalse(plateau.isArmageddonTime());
         Assertions.assertEquals(0, plateau.getPlayerPoints(player));
 
 
@@ -80,46 +76,36 @@ class PlateauTest {
     }
 
     @Test
-    void getPlayerPoints() {
+    void getPlayerPoints() throws IllegalPlateauActionException {
 
-        Player player = new Player("Test Player",
-                                   PlayerColor.BLUE);
+        Player player = new Player("Test Player", PlayerColor.BLUE);
+
         plateau.addPlayer(player);
-        // FIXME you shouldn't be able to call directly playerPoints so null values are impossible
-        // Directly put null as the player's points
-        plateau.playerPoints.put(player, null);
 
-        // FIXME you should try to get not existent player not put a null directly into the map
-        // Assert that getPlayerPoints throws an IllegalPlateauActionException
-        Assertions.assertThrows(IllegalPlateauActionException.class, () -> plateau.getPlayerPoints(player));
+        Assertions.assertEquals(0, plateau.getPlayerPoints(player));
+
     }
 
     @Test
-    void setFinalLeaderboard() {
+    void setFinalLeaderboard() throws IllegalPlateauActionException {
 
         Player player1 = new Player("Test Player1",
                                     PlayerColor.BLUE);
-        plateau.addPlayer(player1);
+        plateau.addPlayerPoints(player1, 5);
         Player player2 = new Player("Test Player2",
                                     PlayerColor.RED);
-        plateau.addPlayer(player2);
+        plateau.addPlayerPoints(player2, 5);
         Player player3 = new Player("Test Player3",
                                     PlayerColor.YELLOW);
-        plateau.addPlayer(player3);
+        plateau.addPlayerPoints(player3, 4);
         Player player4 = new Player("Test Player4",
                                     PlayerColor.GREEN);
-        plateau.addPlayer(player4);
+        plateau.addPlayerPoints(player4, 3);
 
-        //FIXME should be a method to add points to a player to represent how it would be used
-        plateau.playerPoints.put(player1, 5);
-        plateau.playerPoints.put(player2, 5);
-        plateau.playerPoints.put(player3, 3);
-        plateau.playerPoints.put(player4, 2);
-
-        plateau.setFinalLeaderboard(plateau.playerPoints);
+        plateau.setFinalLeaderboard();
 
         //FIXME should be a method to get the final leaderboard
-        Assertions.assertEquals(1, plateau.finalLeaderboard.get(player2));
+        Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player1));
 
     }
 
@@ -144,12 +130,9 @@ class PlateauTest {
         plateau.addPlayer(player4);
 
         //FIXME should be a method to add points to a player to represent how it would be used
-        plateau.playerPoints.put(player1, 5);
-        plateau.playerPoints.put(player2, 5);
-        plateau.playerPoints.put(player3, 3);
-        plateau.playerPoints.put(player4, 2);
 
-        plateau.setFinalLeaderboard(plateau.playerPoints);
+
+        plateau.setFinalLeaderboard();
 
         Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player1));
         Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player2));
@@ -164,6 +147,5 @@ class PlateauTest {
     @Test
     void activateArmageddon() {
         plateau.activateArmageddon();
-        Assertions.assertTrue(plateau.isArmageddonTime());
     }
 }

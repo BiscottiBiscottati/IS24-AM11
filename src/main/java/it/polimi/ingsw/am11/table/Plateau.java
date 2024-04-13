@@ -10,26 +10,33 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Plateau {
-    final Map<Player, Integer> playerPoints;
-    final Map<Player, Integer> finalLeaderboard;
+    private final Map<Player, Integer> playerPoints;
+    private final Map<Player, Integer> finalLeaderboard;
     private final int armageddonTime;
-    private boolean isArmageddonTime;
+    GameStatus Status;
 
     // TODO why is there a finalLeaderboard and playerPoints? Are they the same thing?
     public Plateau(int armageddonTime) {
         this.playerPoints = new HashMap<>(8);
         this.armageddonTime = armageddonTime;
-        this.isArmageddonTime = false;
+        this.Status = GameStatus.ONGOING;
         this.finalLeaderboard = new HashMap<>(8);
     }
 
+    public GameStatus getStatus() {
+        return Status;
+    }
 
-    public boolean isArmageddonTime() {
-        return isArmageddonTime;
+    public void setStatus(GameStatus status) {
+        Status = status;
+    }
+
+    public GameStatus isArmageddonTime() {
+        return Status;
     }
 
     public void activateArmageddon() {
-        isArmageddonTime = true;
+        Status = GameStatus.ARMAGEDDON;
     }
 
     public void reset() {
@@ -41,7 +48,7 @@ public class Plateau {
                         .forEach(
                                 player -> finalLeaderboard.put(player, null)
                         );
-        isArmageddonTime = false;
+        Status = GameStatus.ONGOING;
     }
 
     public void addPlayer(Player newPlayer) {
@@ -57,7 +64,7 @@ public class Plateau {
             playerPoints.put(player, temp);
         }
         if (temp >= armageddonTime) {
-            isArmageddonTime = true;
+            Status = GameStatus.ARMAGEDDON;
         }
     }
 
@@ -68,7 +75,7 @@ public class Plateau {
         } else return temp;
     }
 
-    public void setFinalLeaderboard(Map<Player, Integer> playerPoints) {
+    public void setFinalLeaderboard() {
 
         AtomicInteger rank = new AtomicInteger(0);
         AtomicInteger previousPoints = new AtomicInteger(- 1);
@@ -99,6 +106,10 @@ public class Plateau {
             }
         }
         return winners;
+    }
+
+    public Map<Player, Integer> getFinalLeaderboard() {
+        return finalLeaderboard;
     }
 
 }
