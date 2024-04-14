@@ -40,6 +40,17 @@ public class GameLogic implements GameModel {
     //endregion
 
     //region GetterGameStatus DONE
+
+    /**
+     * Retrieves the nicknames of all the players of the current game.
+     * <p>
+     * The nickname is unique in the game and can be used to identify each specific
+     * <code> Player </code>.
+     * <p>
+     * Nicknames are chosen at the beginning of the game.
+     *
+     * @return a list of the nicknames of the players
+     */
     @Override //DONE
     public List<String> getPlayers() {
         return players.values()
@@ -48,16 +59,40 @@ public class GameLogic implements GameModel {
                       .toList();
     }
 
+
+    /**
+     * Retrieves the nickname of the player whose turn it is.
+     * <p>
+     * If the game has not been initialized with the method <code> .initGame </code> this method returns <code> null
+     * </code>.
+     *
+     * @return the nickname of the player that is playing or <code> null </code> if the game hasn't started
+     */
     @Override //DONE
     public String getCurrentTurnPlayer() {
         return currentPlaying.nickname();
     }
 
+    /**
+     * Retrieves the nickname of the player that is first in the order of the turns
+     * <p>
+     * If the game has not been initialized with the method <code> .initGame </code> this method returns <code> null
+     *
+     * @return the nickname of the player that played the first turn or <code> null</code> if the game hasn't started
+     */
     @Override //DONE
     public String getFirstPlayer() {
         return firstPlayer.nickname();
     }
 
+    /**
+     * When some conditions are met, (by default when the decks are empty or a player has reached a points' goal) the
+     * final phase of the game starts.
+     * <p>
+     * Upon entering the final phase the current round of turns is completed and the last round is played.
+     *
+     * @return true if the game is in the final phase, false otherwise
+     */
     @Override //DONE
     public boolean isArmageddonTime() {
         return plateau.isArmageddonTime();
@@ -65,7 +100,15 @@ public class GameLogic implements GameModel {
 
     //endregion
 
-    //region GettersPlayer DONE
+    //region GettersPlayer
+
+    /**
+     * Retrieves the identifier (ID) of all the <code>PlayableCards</code> in a specific player hand. The player is
+     * identified by his nickname.
+     *
+     * @param nickname Nickname of the player of interest
+     * @return a <code>List</code> of the IDs of the <code>PlayableCards</code> in the player hand
+     */
     @Override //DONE
     public List<Integer> getPlayerHand(@NotNull String nickname) {
         return players.get(nickname)
@@ -76,6 +119,16 @@ public class GameLogic implements GameModel {
                       .toList();
     }
 
+    /**
+     * Each player can have one or more personal objectives represented by the <code>ObjectiveCards</code>.
+     * <p>
+     * This method retrieves the identifier (ID) of all the <code>PlayableCards</code> in a specific player hand.
+     * <p>
+     * The player is identified by his nickname.
+     *
+     * @param nickname Nickname of the player of interest
+     * @return a <code>List</code> of the IDs of the <code>ObjectiveCards</code> of the player
+     */
     @Override //DONE
     public List<Integer> getPlayerObjective(@NotNull String nickname) {
         return players.get(nickname)
@@ -86,23 +139,46 @@ public class GameLogic implements GameModel {
                       .toList();
     }
 
+    /**
+     * Each player have an assigned color for his pawn.
+     *
+     * @param nickname Nickname of the player of interest
+     * @return the <code>PlayerColor</code> of the player
+     */
     @Override //DONE
     public PlayerColor getPlayerColor(@NotNull String nickname) {
         return players.get(nickname).color();
     }
 
-    @Override //DONE
+    @Override //TODO model shouldn't return something that has a reference of a Card, it should use ID
     public Map<Position, CardContainer> getPositionedCard(@NotNull String nickname) {
         return players.get(nickname).field().getCardsPositioned();
     }
 
+    /**
+     * For placing a card on the field a set of conditions has to be satisfied.
+     * <p>
+     * The new card needs to touch at least one of the corners of another placed card and all the corners of placed
+     * cards touched by the new card must not be NOT_USABLE.
+     * <p>
+     * This method retrieves the positions that satisfy these conditions.
+     *
+     * @param nickname Nickname of the player of interest
+     * @return the <code>Set</code> of <code>Position</code>s that are available for placing a card in the field
+     */
     @Override //DONE
     public Set<Position> getAvailablePositions(@NotNull String nickname) {
         return players.get(nickname).field().getAvailablePositions();
     }
     //endregion
 
-    //region GettersPickableTable DONE
+    //region GettersPickableTable DONE javadoc
+
+    /**
+     * During a game players have objectives in common
+     *
+     * @return a list of ID of <code>ObjectiveCard</code> that represent the common objectives
+     */
     @Override //DONE
     public List<Integer> getCommonObjectives() {
         return pickablesTable.getCommonObjectives()
@@ -111,6 +187,11 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
+    /**
+     * During the game some of the pickable cards are visible
+     *
+     * @return a list of ID of <code>GoldCard</code> exposed on the table
+     */
     @Override //DONE
     public List<Integer> getExposedGoldsCrd() {
         return pickablesTable.getShownGold().stream()
@@ -118,6 +199,11 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
+    /**
+     * During the game some of the pickable cards are visible
+     *
+     * @return a list of ID of <code>ResourceCard</code> exposed on the table
+     */
     @Override //DONE
     public List<Integer> getExposedResourcesCrd() {
         return pickablesTable.getShownResources().stream()
@@ -125,12 +211,17 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
-
+    /**
+     * @return the color of the card on top of the <code>ResourceCard</code>s deck
+     */
     @Override //DONE
     public Optional<Color> getResourceDeckTop() {
         return pickablesTable.getResourceDeckTop();
     }
 
+    /**
+     * @return the color of the card on top of the <code>GoldCard</code>s deck
+     */
     @Override //DONE
     public Optional<Color> getGoldDeckTop() {
         return pickablesTable.getGoldDeckTop();
@@ -158,9 +249,21 @@ public class GameLogic implements GameModel {
     }
     //endregion
 
-    //region GameInitialization DONE
+    //region GameInitialization DONE javadoc
+
+    /**
+     * This method initialize a new game, it has to be called after all the players have joined the games This method
+     * shuffle the players Set in order to randomize the turns order, it chooses the first player, it clears the field,
+     * the hand and the objectives for each player, it resets the plateau and the pickableTable.
+     *
+     * @throws IllegalNumOfPlayersException If there aren't at least 2 players in the game
+     * @throws GameStatusException          if a game is in progress
+     */
     @Override //DONE
-    public void initGame() throws IllegalNumOfPlayersException, EmptyDeckException {
+    public void initGame() throws IllegalNumOfPlayersException, GameStatusException {
+        if (plateau.getStatus() != GameStatus.SETUP) {
+            throw new GameStatusException("A game is in progress");
+        }
         if (players.size() < 2) {
             throw new IllegalNumOfPlayersException(
                     "You need at least 2 players to play this game, the current number is: " + players.size()
@@ -178,8 +281,23 @@ public class GameLogic implements GameModel {
         pickablesTable.initialize();
     }
 
+    /**
+     * This method can be used to add a new player in the game during the setting up phase.
+     * <p>
+     * A player can choose his nickname and color.
+     *
+     * @param nickname nickname of the new player
+     * @param colour   color of the new player
+     * @throws PlayerInitException if there is another player with the chosen nickname, if the colour is already taken,
+     *                             if the limit of players per game has already been reached
+     * @throws GameStatusException if a game is in progress
+     */
     @Override //DONE
-    public void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour) throws PlayerInitException {
+    public void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
+    throws PlayerInitException, GameStatusException {
+        if (plateau.getStatus() != GameStatus.SETUP) {
+            throw new GameStatusException("A game is in progress");
+        }
         if (players.containsKey(nickname)) {
             throw new PlayerInitException(nickname + " is already in use");
         } else if (players.values()
@@ -202,39 +320,113 @@ public class GameLogic implements GameModel {
         }
     }
 
+    /**
+     * Remove a player from the player list.
+     *
+     * @param nickname nickname of the player of interest
+     * @throws GameStatusException if a game is in progress
+     */
     @Override //DONE
-    public void shufflePlayers() {
+    public void removePlayer(@NotNull String nickname) throws GameStatusException {
+        if (plateau.getStatus() != GameStatus.SETUP) {
+            throw new GameStatusException("A game is in progress");
+        }
+        players.remove(nickname);
+        plateau.removePlayer();
+    }
+
+    /**
+     * Shuffle the players in order to randomize the turns order.
+     *
+     * @throws GameStatusException if a game is in progress
+     */
+    @Override //DONE
+    public void shufflePlayers() throws GameStatusException {
+        if (plateau.getStatus() != GameStatus.SETUP) {
+            throw new GameStatusException("A game is in progress");
+        }
         Collections.shuffle(playerQueue);
     }
 
-
+    /**
+     * Set the player that plays the first turn.
+     *
+     * @throws GameStatusException if a game is in progress
+     */
     @Override //DONE
-    public void setStartingPlayer() {
+    public void setStartingPlayer() throws GameStatusException {
+        if (plateau.getStatus() != GameStatus.SETUP) {
+            throw new GameStatusException("A game is in progress");
+        }
         firstPlayer = playerQueue.getFirst();
         currentPlaying = playerQueue.removeFirst();
     }
 
+    /**
+     * Pick a <code>StarterCard</code> from the deck on the <code>PickablesTable</code>.
+     *
+     * @return the ID of a <code>StarterCard</code>
+     * @throws EmptyDeckException  if the deck of  <code>StartingCard</code> is empty
+     * @throws GameStatusException if the game is not ongoing
+     */
     @Override //DONE
-    public int pickStarter() throws EmptyDeckException {
+    public int pickStarter() throws EmptyDeckException, GameStatusException {
+        if (plateau.getStatus() != GameStatus.ONGOING) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         return pickablesTable.pickStarterCard().getId();
     }
 
+    /**
+     * Each player needs a <code>StartingCard</code> at the beginning of the game.
+     *
+     * @param nickname nickname of the player of interest
+     * @param cardID   identifier of the <code>StartingCard</code> that has to be placed on the field
+     * @param isRetro  tell if the <code>StartingCard</code> is placed on the front (false) or on the back (true)
+     * @throws IllegalCardPlacingException if there is already card in that position
+     * @throws GameStatusException         if the game is not ongoing
+     */
     @Override //DONE
     public void setStarterFor(@NotNull String nickname, int cardID, boolean isRetro)
-    throws IllegalCardPlacingException {
+    throws IllegalCardPlacingException, GameStatusException {
+        if (plateau.getStatus() != GameStatus.ONGOING) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         StarterCard starterCard = pickablesTable.getStarterByID(cardID).orElseThrow();
         players.get(nickname).field().placeStartingCard(starterCard, isRetro);
     }
 
+    /**
+     * Pick a <code>ObjectiveCard</code> from the deck on the <code>PickablesTable</code>.
+     *
+     * @return the ID of a <code>ObjectiveCard</code>
+     * @throws EmptyDeckException  if the deck of  <code>ObjectiveCard</code> is empty
+     * @throws GameStatusException if the game is not ongoing
+     */
     @Override //DONE
-    public int pickObjective() throws EmptyDeckException {
+    public int pickObjective() throws EmptyDeckException, GameStatusException {
+        if (plateau.getStatus() != GameStatus.ONGOING) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         return pickablesTable.pickObjectiveCard().getId();
     }
 
+    /**
+     * Set a new personal objective for a player.
+     *
+     * @param nickname nickname of the player of interest
+     * @param cardID   identifier of the <code>ObjectiveCard</code> to be assigned to the player
+     * @throws IllegalPlayerSpaceActionException if there are already too many objectives
+     * @throws GameStatusException               if the game is not ongoing
+     */
     @Override //DONE
-    public void setObjectiveFor(@NotNull String nickname, int cardID) throws IllegalPlayerSpaceActionException {
+    public void setObjectiveFor(@NotNull String nickname, int cardID)
+    throws IllegalPlayerSpaceActionException, GameStatusException {
         //The rules book says that unused objectives have to be returned to the deck, but it seems like
         //a useless action
+        if (plateau.getStatus() != GameStatus.ONGOING) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         ObjectiveCard objectiveCard = pickablesTable.getObjectiveByID(cardID).orElseThrow();
         players.get(nickname).space().addObjective(objectiveCard);
     }
@@ -242,8 +434,20 @@ public class GameLogic implements GameModel {
     //endregion
 
     //region TurnsActions DONE
+
+    /**
+     * This method handle the changing of the turn and the final turn. If it is not the final turn it checks if it's
+     * armageddonTime and gives the turn to the next players. If it's the final turn it ends the game and prepare the
+     * final leaderboard.
+     *
+     * @throws GameBreakingException if there are discrepancies between plateau and gameLogic
+     * @throws GameStatusException   if the game is not ongoing
+     */
     @Override //DONE
-    public void goNextTurn() throws GameBreakingException {
+    public void goNextTurn() throws GameBreakingException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         if (pickablesTable.getGoldDeckTop().isPresent() &&
             pickablesTable.getResourceDeckTop().isPresent()) {
             plateau.activateArmageddon();
@@ -263,9 +467,24 @@ public class GameLogic implements GameModel {
         }
     }
 
-    @Override
+    /**
+     * This method is used to place new playable cards on the field
+     *
+     * @param nickname nickname of the player of interest
+     * @param ID       identifier of the card to be placed
+     * @param position position where the player wants to place the card
+     * @param isRetro  false if the card has to be placed with the front facing up, true otherwise
+     * @throws IllegalCardPlacingException   if the card can't be placed in that position
+     * @throws TurnsOrderException           if it's not that player turn
+     * @throws IllegalPlateauActionException if there isn't any player with that nickname
+     * @throws GameStatusException           if the game is not ongoing
+     */
+    @Override //DONE
     public void placeCard(@NotNull String nickname, int ID, @NotNull Position position, boolean isRetro)
-    throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException {
+    throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         Player player = players.get(nickname);
         if (currentPlaying != player) {
             throw new TurnsOrderException(
@@ -288,12 +507,26 @@ public class GameLogic implements GameModel {
         }
     }
 
-    @Override
+    /**
+     * This method transfer a <code>GoldCard</code> from the top of the gold deck to the hand of the player
+     *
+     * @param nickname nickname of the player of interest
+     * @return the ID of the picked <code>GoldCard</code>
+     * @throws GameBreakingException             if an unexpected modification of the hand has caused a card to be lost
+     * @throws EmptyDeckException                if the deck is empty
+     * @throws IllegalPlayerSpaceActionException if the hand is already full
+     * @throws TurnsOrderException               if it's not that player turn
+     * @throws GameStatusException               if the game is not ongoing
+     */
+    @Override //DONE
     public int drawFromGoldDeck(@NotNull String nickname)
     throws GameBreakingException,
            EmptyDeckException,
            IllegalPlayerSpaceActionException,
-           TurnsOrderException {
+           TurnsOrderException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         if (currentPlaying != players.get(nickname)) {
             throw new TurnsOrderException(
                     "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
@@ -314,13 +547,26 @@ public class GameLogic implements GameModel {
         }
     }
 
-    @Override
+    /**
+     * This method transfer a <code>ResourceCard</code> from the top of the resource deck to the hand of the player
+     *
+     * @param nickname nickname of the player of interest
+     * @return the ID of the picked <code>ResourceCard</code>
+     * @throws GameBreakingException             if an unexpected modification of the hand has caused a card to be lost
+     * @throws EmptyDeckException                if the deck is empty
+     * @throws IllegalPlayerSpaceActionException if the hand is already full
+     * @throws TurnsOrderException               if it's not that player turn
+     * @throws GameStatusException               if the game is not ongoing
+     */
+    @Override //DONE
     public int drawFromResourceDeck(@NotNull String nickname)
     throws
     GameBreakingException,
     EmptyDeckException,
-    IllegalPlayerSpaceActionException, TurnsOrderException {
-
+    IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         if (currentPlaying != players.get(nickname)) {
             throw new TurnsOrderException(
                     "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
@@ -341,12 +587,25 @@ public class GameLogic implements GameModel {
         }
     }
 
-    @Override
+    /**
+     * This method transfer a <code>GoldCard</code> from the visible gold cards to the hand of the player
+     *
+     * @param nickname nickname of the player of interest
+     * @param ID       identifier of the card to be picked
+     * @throws GameBreakingException             if an unexpected modification of the hand has caused a card to be lost
+     * @throws IllegalPickActionException        if the specified card can't be found
+     * @throws IllegalPlayerSpaceActionException if the hand is already full
+     * @throws TurnsOrderException               if it's not that player turn
+     * @throws GameStatusException               if the game is not ongoing
+     */
+    @Override //DONE
     public void drawVisibleGold(@NotNull String nickname, int ID)
     throws GameBreakingException,
            IllegalPickActionException,
-           IllegalPlayerSpaceActionException, TurnsOrderException {
-
+           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         if (currentPlaying != players.get(nickname)) {
             throw new TurnsOrderException(
                     "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
@@ -367,12 +626,14 @@ public class GameLogic implements GameModel {
 
     }
 
-    @Override
+    @Override //DONE
     public void drawVisibleResource(@NotNull String nickname, int ID)
     throws GameBreakingException,
            IllegalPickActionException,
-           IllegalPlayerSpaceActionException, TurnsOrderException {
-
+           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         if (currentPlaying != players.get(nickname)) {
             throw new TurnsOrderException(
                     "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
@@ -398,19 +659,42 @@ public class GameLogic implements GameModel {
 
     //region GameEnding
 
-
-    @Override
-    //TODO add possibility of signaling how many objectives a player has completed
-    public void countObjectivesPoints() throws IllegalPlateauActionException {
+    /**
+     * calculate the points from common and personal objectives for each player and add them to the plateau
+     *
+     * @throws IllegalPlateauActionException if a player is not found
+     */
+    @Override //DONE
+    public void countObjectivesPoints() throws IllegalPlateauActionException, GameStatusException {
+        if (plateau.getStatus() != GameStatus.ENDED) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         for (Player player : players.values()) {
             for (ObjectiveCard commonObjective : pickablesTable.getCommonObjectives()) {
-                plateau.addPlayerPoints(player, commonObjective.countPoints(player.field()));
+                int points = commonObjective.countPoints(player.field());
+                if (points > 0) {
+                    plateau.addCounterObjective(player);
+                }
+                plateau.addPlayerPoints(player, points);
             }
             for (ObjectiveCard privateObjective : player.space().getPlayerObjective()) {
-                plateau.addPlayerPoints(player, privateObjective.countPoints(player.field()));
+                int points = privateObjective.countPoints(player.field());
+                if (points > 0) {
+                    plateau.addCounterObjective(player);
+                }
+                plateau.addPlayerPoints(player, points);
             }
         }
     }
+
+    /**
+     * Ends the current game and gives the possiblity to add or remove players.
+     */
+    @Override //DONE
+    public void endGame() {
+        plateau.setStatus(GameStatus.SETUP);
+    }
+
 
     //endregion
 }

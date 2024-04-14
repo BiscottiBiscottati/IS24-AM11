@@ -14,14 +14,14 @@ public class Plateau {
     private final Map<Player, Integer> counterObjective;
     private final Map<Player, Integer> finalLeaderboard;
     private final int armageddonTime;
-    GameStatus status;
+    private GameStatus status;
 
     // TODO why is there a finalLeaderboard and playerPoints? Are they the same thing?
     public Plateau(int armageddonTime) {
         this.playerPoints = new HashMap<>(8);
         this.counterObjective = new HashMap<>(8);
         this.armageddonTime = armageddonTime;
-        this.status = GameStatus.ONGOING;
+        this.status = GameStatus.SETUP;
         this.finalLeaderboard = new HashMap<>(8);
     }
 
@@ -39,6 +39,10 @@ public class Plateau {
 
     public void activateArmageddon() {
         status = GameStatus.ARMAGEDDON;
+    }
+
+    public void removePlayer() {
+        //TODO
     }
 
     public void reset() {
@@ -84,6 +88,8 @@ public class Plateau {
             temp += 1;
             counterObjective.put(player, temp);
         }
+        //FIXME the RuleSet give the possibility to have more than 3 objectives per player,
+        // so this if condition is a limitation, it should be removed. Checking
         if (temp >= 3) {
             throw new IllegalPlateauActionException("Player has already completed 3 objectives");
         }

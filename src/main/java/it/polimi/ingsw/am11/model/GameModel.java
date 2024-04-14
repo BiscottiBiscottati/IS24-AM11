@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerColor;
 import it.polimi.ingsw.am11.players.Position;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -59,56 +60,61 @@ public interface GameModel {
     //endregion
 
     //region GameInitialization
-    void initGame() throws IllegalNumOfPlayersException, EmptyDeckException;
+    void initGame() throws IllegalNumOfPlayersException, GameStatusException;
 
-    void addPlayerToTable(String nickname, PlayerColor colour) throws PlayerInitException;
+    void addPlayerToTable(String nickname, PlayerColor colour) throws PlayerInitException, GameStatusException;
 
-    void shufflePlayers();
+    void removePlayer(@NotNull String nickname) throws GameStatusException;
 
-    void setStartingPlayer();
+    void shufflePlayers() throws GameStatusException;
 
-    int pickStarter() throws EmptyDeckException;
+    void setStartingPlayer() throws GameStatusException;
 
-    int pickObjective() throws EmptyDeckException;
+    int pickStarter() throws EmptyDeckException, GameStatusException;
+
+    int pickObjective() throws EmptyDeckException, GameStatusException;
 
     void setStarterFor(String nickname, int cardID, boolean isRetro)
-    throws IllegalCardPlacingException;
+    throws IllegalCardPlacingException, GameStatusException;
 
     void setObjectiveFor(String nickname, int cardID)
-    throws IllegalPlayerSpaceActionException;
+    throws IllegalPlayerSpaceActionException, GameStatusException;
     //endregion
 
     //region TurnsActions
 
-    void goNextTurn() throws GameBreakingException;
+    void goNextTurn() throws GameBreakingException, GameStatusException;
 
     void placeCard(String Nickname, int ID, Position position, boolean isRetro)
     throws IllegalCardPlacingException,
            TurnsOrderException,
-           IllegalPlateauActionException;
+           IllegalPlateauActionException, GameStatusException;
 
     int drawFromGoldDeck(String nickname)
     throws GameBreakingException,
            EmptyDeckException,
-           IllegalPlayerSpaceActionException, TurnsOrderException;
+           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException;
 
     int drawFromResourceDeck(String nickname)
     throws GameBreakingException,
            EmptyDeckException,
-           IllegalPlayerSpaceActionException, TurnsOrderException;
+           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException;
 
     void drawVisibleGold(String nickname, int ID)
     throws GameBreakingException,
            IllegalPickActionException,
-           IllegalPlayerSpaceActionException, TurnsOrderException;
+           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException;
 
     void drawVisibleResource(String nickname, int ID)
     throws GameBreakingException,
            IllegalPickActionException,
-           IllegalPlayerSpaceActionException, TurnsOrderException;
+           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException;
 
     //TODO add possibility of signaling how many objectives a player has completed
-    void countObjectivesPoints() throws IllegalPlateauActionException;
+    void countObjectivesPoints() throws IllegalPlateauActionException, GameStatusException;
+
+    //DONE
+    void endGame();
     //endregion
 
 }
