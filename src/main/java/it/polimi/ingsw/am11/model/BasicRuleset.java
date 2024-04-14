@@ -18,16 +18,16 @@ public class BasicRuleset implements RuleSet {
     }
 
     /**
-     * A Revealed card is a card that is facing up on the PickableTable
+     * A Revealed card is a card facing up on the PickableTable
      *
-     * @return the number of revealed cards on the table per type (e.g. Resource, Gold)
+     * @return the number of revealed cards on the table per type (e.g., Resource, Gold)
      */
     public int getMaxRevealedCardsPerType() {
         return maxRevealedCardsPerType;
     }
 
     /**
-     * @return the number of personal Objectives that a player have to receive
+     * @return the number of personal Objectives that a player has to receive
      */
     public int getNumOfPersonalObjective() {
         return numOfPersonalObjective;
@@ -48,7 +48,8 @@ public class BasicRuleset implements RuleSet {
     }
 
     /**
-     * @return the minimum number of points that are needed for the beginning of the final phase of the game
+     * @return the minimum number of points that are needed for the beginning of the final phase of
+     * the game
      */
     public int getPointsToArmageddon() {
         return pointsToArmageddon;

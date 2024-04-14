@@ -20,7 +20,8 @@ import java.util.Optional;
  * <p>
  * Each attribute is immutable.
  * <p>
- * The class can only be instantiated through the static inner builder {@link ResourceCard.Builder}.
+ * The class can only be instantiated through the static inner builder
+ * {@link ResourceCard.Builder}.
  */
 @SuppressWarnings("DataFlowIssue")
 public final class ResourceCard extends PlayableCard {
@@ -46,14 +47,9 @@ public final class ResourceCard extends PlayableCard {
     @Override
     @Contract(pure = true)
     public boolean isFrontAvailable(@NotNull Corner corner) {
-        return Objects.requireNonNull(availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE))
+        return Objects.requireNonNull(
+                              availableCornerOrItem.getOrDefault(corner, Availability.NOT_USABLE))
                       .isAvailable();
-    }
-
-    @Override
-    public boolean isAvailable(@NotNull Corner corner, boolean isRetro) {
-        if (isRetro) return true;
-        else return availableCornerOrItem.get(corner).isAvailable();
     }
 
     @Override
@@ -80,20 +76,26 @@ public final class ResourceCard extends PlayableCard {
     }
 
     @Override
-    public @Nullable CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
-        if (isRetro) return Availability.USABLE;
-        else return availableCornerOrItem.get(corner);
-    }
-
-    @Override
     @NotNull
     public Optional<Symbol> getSymbolToCollect() {
         return Optional.empty();
     }
 
+    @Override
+    public boolean isAvailable(@NotNull Corner corner, boolean isRetro) {
+        if (isRetro) return true;
+        else return availableCornerOrItem.get(corner).isAvailable();
+    }
+
+    @Override
+    public @Nullable CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
+        if (isRetro) return Availability.USABLE;
+        else return availableCornerOrItem.get(corner);
+    }
+
     /**
-     * Builder class for creating instances of {@link ResourceCard}. This builder provides methods to set the required
-     * attributes for the target object.
+     * Builder class for creating instances of {@link ResourceCard}. This builder provides methods
+     * to set the required attributes for the target object.
      */
     public static class Builder extends PlayableCard.Builder<ResourceCard> {
         private final @NotNull EnumMap<Corner, CornerContainer> availableCornerOrItem;
@@ -111,7 +113,8 @@ public final class ResourceCard extends PlayableCard {
 
         /**
          * @param corner          The corner to set
-         * @param cornerContainer The option to put on the corner can contain an item or be empty or not usable
+         * @param cornerContainer The option to put on the corner can contain an item or be empty or
+         *                        not usable
          * @return The modified builder
          * @see CornerContainer
          */
@@ -123,7 +126,8 @@ public final class ResourceCard extends PlayableCard {
         }
 
         /**
-         * Constructs a new instance of <code>ResourceCard</code> using the parameters set by the builder's methods.
+         * Constructs a new instance of <code>ResourceCard</code> using the parameters set by the
+         * builder's methods.
          *
          * @return A fully constructed instance of <code>ResourceCard</code>.
          */

@@ -90,7 +90,8 @@ public class TripletCard extends PositioningCard {
 
         @Override
         public @NotNull TripletCard build() throws IllegalCardBuildException {
-            if (colorOfPattern == null) throw new IllegalCardBuildException("Pattern need a color!");
+            if (colorOfPattern == null)
+                throw new IllegalCardBuildException("Pattern need a color!");
             else return new TripletCard(this);
         }
     }

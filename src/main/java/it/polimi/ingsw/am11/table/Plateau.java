@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Plateau {
     private final Map<Player, Integer> playerPoints;
@@ -16,10 +15,10 @@ public class Plateau {
     private final int armageddonTime;
     private GameStatus status;
 
-    // TODO why is there a finalLeaderboard and playerPoints? Are they the same thing?
+
     public Plateau(int armageddonTime) {
         this.playerPoints = new HashMap<>(8);
-        this.counterObjective = new HashMap<>(8);
+        this.counterObjective = new HashMap<>(3);
         this.armageddonTime = armageddonTime;
         this.status = GameStatus.SETUP;
         this.finalLeaderboard = new HashMap<>(8);
@@ -80,18 +79,19 @@ public class Plateau {
         }
     }
 
-    public void addCounterObjective(Player player) throws IllegalPlateauActionException {
+    public void addCounterObjective(Player player, int objectives)
+    throws IllegalPlateauActionException {
         Integer temp = counterObjective.getOrDefault(player, null);
         if (temp == null) {
             throw new IllegalPlateauActionException("Player not found");
         } else {
-            temp += 1;
-            counterObjective.put(player, temp);
-        }
-        //FIXME the RuleSet give the possibility to have more than 3 objectives per player,
-        // so this if condition is a limitation, it should be removed. Checking
-        if (temp >= 3) {
-            throw new IllegalPlateauActionException("Player has already completed 3 objectives");
+            temp += objectives;
+            if (temp > 3) {
+                throw new IllegalPlateauActionException(
+                        "Player has already completed 3 objectives");
+            } else {
+                counterObjective.put(player, temp);
+            }
         }
     }
 
@@ -102,7 +102,7 @@ public class Plateau {
         } else return temp;
     }
 
-    public int getCountObjective(Player player) throws IllegalPlateauActionException {
+    public int getCounterObjective(Player player) throws IllegalPlateauActionException {
         Integer temp = counterObjective.getOrDefault(player, null);
         if (temp == null) {
             throw new IllegalPlateauActionException("Player not found");
@@ -110,29 +110,30 @@ public class Plateau {
     }
 
     public void setFinalLeaderboard() {
+        List<Map.Entry<Player, Integer>> entries = new ArrayList<>(playerPoints.entrySet());
 
-        AtomicInteger rank = new AtomicInteger(0);
-        AtomicInteger previousPoints = new AtomicInteger(- 1);
-        AtomicInteger previousObjective = new AtomicInteger(- 1);
+        entries.sort((e1, e2) -> {
+            int pointsComparison = e2.getValue().compareTo(e1.getValue());
+            if (pointsComparison != 0) {
+                return pointsComparison;
+            } else {
+                return counterObjective.get(e2.getKey()).compareTo(
+                        counterObjective.get(e1.getKey()));
+            }
+        });
 
-        playerPoints.entrySet()
-                    .stream()
-                    .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue())) // sort in descending order
-                    .forEach(entry -> {
-                        if (entry.getValue() == previousPoints.get()) {
-                            if (counterObjective.get(entry.getKey()) > previousObjective.get()) {
-                                finalLeaderboard.put(entry.getKey(), rank.get());
-                                previousObjective.set(counterObjective.get(entry.getKey()));
-                            } else {
-                                finalLeaderboard.put(entry.getKey(), rank.get() + 1);
-                            }
-                        } else {
-                            rank.getAndIncrement();
-                            finalLeaderboard.put(entry.getKey(), rank.get());
-                            previousPoints.set(entry.getValue());
-                            previousObjective.set(counterObjective.get(entry.getKey()));
-                        }
-                    });
+        int rank = 1;
+        int size = entries.size();
+        for (int i = 0; i < size; i++) {
+            if (i > 0 && entries.get(i).getValue().equals(entries.get(i - 1).getValue())
+                && counterObjective.get(entries.get(i).getKey()).equals(
+                    counterObjective.get(entries.get(i - 1).getKey()))) {
+                finalLeaderboard.put(entries.get(i).getKey(),
+                                     finalLeaderboard.get(entries.get(i - 1).getKey()));
+            } else {
+                finalLeaderboard.put(entries.get(i).getKey(), rank++);
+            }
+        }
     }
 
     public int getPlayerFinishingPosition(Player player) {

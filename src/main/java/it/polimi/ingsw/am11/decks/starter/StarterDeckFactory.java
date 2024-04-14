@@ -21,53 +21,29 @@ public class StarterDeckFactory {
     private StarterDeckFactory() {
     }
 
-    private static void setCenterColors(@NotNull PreparedStatement centerStatement,
-                                        @NotNull ResultSet result,
-                                        StarterCard.Builder cardBuilder)
-    throws SQLException {
-        centerStatement.setInt(1, result.getInt("front_center_color_id"));
-        try (ResultSet centerResult = centerStatement.executeQuery()) {
-            centerResult.next();
-            for (Color color : Color.values()) {
-                if (centerResult.getBoolean(color.getColumnName())) {
-                    cardBuilder.hasCenterColor(color);
-                }
-            }
-        }
-    }
-
-    private static void setFrontRetroCorners(@NotNull StarterCard.Builder cardBuilder,
-                                             @NotNull ResultSet result)
-    throws IllegalCardBuildException, SQLException {
-        for (Corner corner : Corner.values()) {
-            cardBuilder.hasItemFrontIn(
-                    corner,
-                    CornerContainer.of(result.getString("front_" + corner.getColumnName())));
-            cardBuilder.hasColorRetroIn(
-                    corner,
-                    Color.valueOf(result.getString("retro_" + corner.getColumnName())));
-        }
-    }
-
     /**
      * Creates a deck of <code>StarterCard</code> based on the SQLite database.
      * <p>
-     * This method retrieves data from the SQLite database and uses it to create a deck of <code>StarterCard</code>. It
-     * first establishes a connection to the database and prepares two statements to execute queries.
+     * This method retrieves data from the SQLite database and uses it to create a deck of
+     * <code>StarterCard</code>. It first establishes a connection to the database and prepares two
+     * statements to execute queries.
      * <p>
      * The first query retrieves all the data needed to create a <code>StarterCard</code>.
      * <p>
      * The second query retrieves the center colors of the card.
      * <p>
-     * For each row in the result set of the first query, it creates a new <code>StarterCard</code> and adds it to the
-     * deck. It sets the front and retro corners of the card and the center colors.
+     * For each row in the result set of the first query, it creates a new <code>StarterCard</code>
+     * and adds it to the deck. It sets the front and retro corners of the card and the center
+     * colors.
      * <p>
-     * If an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown during this process, it is
-     * caught and wrapped in a <code>RuntimeException</code>.
+     * If an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown during
+     * this process, it is caught and wrapped in a <code>RuntimeException</code>.
      *
      * @return A deck of Starter Cards.
-     * @throws RuntimeException if an <code>SQLException</code> or <code>IllegalCardBuildException</code> is thrown
-     *                          during the creation of the deck.
+     * @throws RuntimeException if an <code>SQLException</code> or
+     *                          <code>IllegalCardBuildException</code> is thrown during the
+     *                          creation
+     *                          of the deck.
      * @see SQLException
      * @see IllegalCardBuildException
      */
@@ -103,6 +79,34 @@ public class StarterDeckFactory {
 
         // Return a new Deck containing the Starter Cards
         return new Deck<>(builder.build());
+    }
+
+    private static void setFrontRetroCorners(@NotNull StarterCard.Builder cardBuilder,
+                                             @NotNull ResultSet result)
+    throws IllegalCardBuildException, SQLException {
+        for (Corner corner : Corner.values()) {
+            cardBuilder.hasItemFrontIn(
+                    corner,
+                    CornerContainer.of(result.getString("front_" + corner.getColumnName())));
+            cardBuilder.hasColorRetroIn(
+                    corner,
+                    Color.valueOf(result.getString("retro_" + corner.getColumnName())));
+        }
+    }
+
+    private static void setCenterColors(@NotNull PreparedStatement centerStatement,
+                                        @NotNull ResultSet result,
+                                        StarterCard.Builder cardBuilder)
+    throws SQLException {
+        centerStatement.setInt(1, result.getInt("front_center_color_id"));
+        try (ResultSet centerResult = centerStatement.executeQuery()) {
+            centerResult.next();
+            for (Color color : Color.values()) {
+                if (centerResult.getBoolean(color.getColumnName())) {
+                    cardBuilder.hasCenterColor(color);
+                }
+            }
+        }
     }
 
 }

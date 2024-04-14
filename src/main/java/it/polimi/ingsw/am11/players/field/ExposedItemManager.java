@@ -32,18 +32,14 @@ public class ExposedItemManager {
         placedCardColors.replaceAll((color, count) -> 0);
     }
 
-    void addToExposed(@NotNull Item item) {
-        switch (item) {
-            case Color color -> this.exposedColors.merge(color, 1, Integer::sum);
-            case Symbol symbol -> this.exposedSymbols.merge(symbol, 1, Integer::sum);
-        }
-    }
-
     void subToExposed(@NotNull Item item) {
         switch (item) {
-            case Color color -> this.exposedColors.computeIfPresent(color, (c, count) -> (count > 0) ? count - 1 : 0);
-            case Symbol symbol ->
-                    this.exposedSymbols.computeIfPresent(symbol, (s, count) -> (count > 0) ? count - 1 : 0);
+            case Color color -> this.exposedColors.computeIfPresent(color,
+                                                                    (c, count) -> (count > 0) ?
+                                                                                  count - 1 : 0);
+            case Symbol symbol -> this.exposedSymbols.computeIfPresent(symbol,
+                                                                       (s, count) -> (count > 0) ?
+                                                                                     count - 1 : 0);
         }
     }
 
@@ -65,11 +61,11 @@ public class ExposedItemManager {
             .forEach(this::addToExposed);
     }
 
-    public int getExposedItem(@NotNull Item item) {
-        return switch (item) {
-            case Color color -> this.exposedColors.get(color);
-            case Symbol symbol -> this.exposedSymbols.get(symbol);
-        };
+    void addToExposed(@NotNull Item item) {
+        switch (item) {
+            case Color color -> this.exposedColors.merge(color, 1, Integer::sum);
+            case Symbol symbol -> this.exposedSymbols.merge(symbol, 1, Integer::sum);
+        }
     }
 
     public int getPlacedCardOf(@NotNull Color color) {
@@ -83,7 +79,15 @@ public class ExposedItemManager {
     public boolean isRequirementsMet(@NotNull PlayableCard card, boolean isRetro) {
         if (isRetro) return true;
         return Stream.of(Color.values())
-                     .allMatch(color -> card.getPlacingRequirementsOf(color) <= this.getExposedItem(color));
+                     .allMatch(color -> card.getPlacingRequirementsOf(color) <=
+                                        this.getExposedItem(color));
+    }
+
+    public int getExposedItem(@NotNull Item item) {
+        return switch (item) {
+            case Color color -> this.exposedColors.get(color);
+            case Symbol symbol -> this.exposedSymbols.get(symbol);
+        };
     }
 
 }

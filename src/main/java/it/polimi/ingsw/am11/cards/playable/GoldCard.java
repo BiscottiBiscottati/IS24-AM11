@@ -55,12 +55,6 @@ public final class GoldCard extends PlayableCard {
     }
 
     @Override
-    public boolean isAvailable(@NotNull Corner corner, boolean isRetro) {
-        if (isRetro) return true;
-        else return availableCornersOrSymbol.get(corner).isAvailable();
-    }
-
-    @Override
     public @NotNull Map<Color, Integer> getPlacingRequirements() {
         return colorPlacingRequirements;
     }
@@ -78,14 +72,20 @@ public final class GoldCard extends PlayableCard {
 
     @Override
     @NotNull
+    public CornerContainer getItemCorner(@NotNull Corner corner) {
+        return Objects.requireNonNull(availableCornersOrSymbol.get(corner));
+    }
+
+    @Override
+    @NotNull
     public Optional<Symbol> getSymbolToCollect() {
         return Optional.ofNullable(symbolToCollect);
     }
 
     @Override
-    @NotNull
-    public CornerContainer getItemCorner(@NotNull Corner corner) {
-        return Objects.requireNonNull(availableCornersOrSymbol.get(corner));
+    public boolean isAvailable(@NotNull Corner corner, boolean isRetro) {
+        if (isRetro) return true;
+        else return availableCornersOrSymbol.get(corner).isAvailable();
     }
 
     @Override
@@ -105,17 +105,19 @@ public final class GoldCard extends PlayableCard {
             }
             case COVERING_CORNERS -> {
                 return (int) (Arrays.stream(Corner.values())
-                                    .map(corner -> PositionManager.getPositionIn(positionOfCard, corner))
+                                    .map(corner -> PositionManager.getPositionIn(positionOfCard,
+                                                                                 corner))
                                     .filter(playerField.getCardsPositioned()::containsKey)
                                     .count() * this.getPoints());
             }
-            default -> throw new IllegalStateException("Unexpected value: " + this.pointsRequirements);
+            default ->
+                    throw new IllegalStateException("Unexpected value: " + this.pointsRequirements);
         }
     }
 
     /**
-     * Builder class for creating instances of {@link GoldCard}. This builder provides methods to set the required
-     * attributes for the target object.
+     * Builder class for creating instances of {@link GoldCard}. This builder provides methods to
+     * set the required attributes for the target object.
      */
     public static class Builder extends PlayableCard.Builder<GoldCard> {
 
@@ -126,13 +128,15 @@ public final class GoldCard extends PlayableCard {
 
 
         /**
-         * Constructor for <code>Builder</code> that's needed for creation of a <code>GoldCard</code>.
+         * Constructor for <code>Builder</code> that's needed for creation of a
+         * <code>GoldCard</code>.
          *
          * @param points       the point value of the card
          * @param primaryColor the color of the card
          * @throws IllegalCardBuildException if points are negative
          */
-        public Builder(int id, int points, @NotNull Color primaryColor) throws IllegalCardBuildException {
+        public Builder(int id, int points, @NotNull Color primaryColor)
+        throws IllegalCardBuildException {
             super(id, points, primaryColor);
             this.availableCorners = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
             this.colorPlacingRequirements = EnumMapUtils.Init(Color.class, 0);
@@ -164,13 +168,33 @@ public final class GoldCard extends PlayableCard {
 
         @Override
         @NotNull
-        public Builder hasIn(@NotNull Corner corner, @NotNull CornerContainer item) throws IllegalCardBuildException {
+        public Builder hasIn(@NotNull Corner corner, @NotNull CornerContainer item)
+        throws IllegalCardBuildException {
             switch (item) {
                 case Availability ignored -> availableCorners.put(corner, item);
                 case Symbol ignored -> availableCorners.put(corner, item);
-                default -> throw new IllegalCardBuildException("Invalid corner container for GoldCard!");
+                default -> throw new IllegalCardBuildException(
+                        "Invalid corner container for GoldCard!");
             }
             return this;
+        }
+
+        /**
+         * Constructs a new instance of <code>GoldCard</code> using the parameters set by the
+         * builder's methods.
+         *
+         * @return A fully constructed instance of <code>GoldCard</code>.
+         * @throws IllegalCardBuildException if placement requirements to place have a negative
+         *                                   value
+         */
+        @Override
+        @NotNull
+        public GoldCard build() throws IllegalCardBuildException {
+            if (this.pointsRequirements == null)
+                throw new IllegalCardBuildException("No points requirements!");
+            if (! Validator.nonNegativeValues(colorPlacingRequirements))
+                throw new IllegalCardBuildException("Placing requirements cannot be less than 0!");
+            return new GoldCard(this);
         }
 
         /**
@@ -199,11 +223,13 @@ public final class GoldCard extends PlayableCard {
         }
 
         /**
-         * Specifies a symbol to collect and sets the card as a <code>PointsRequirementsType.SYMBOL</code>.
+         * Specifies a symbol to collect and sets the card as a
+         * <code>PointsRequirementsType.SYMBOL</code>.
          * <p>
          * If the provided argument is null, the method does nothing and returns the Builder.
          *
-         * @param symbol if not null sets a symbol to collect for scoring points otherwise does nothing
+         * @param symbol if not null sets a symbol to collect for scoring points otherwise does
+         *               nothing
          * @return The builder with its values set or the same previous builder
          */
         public @NotNull Builder hasSymbolToCollect(@Nullable Symbol symbol) {
@@ -211,21 +237,6 @@ public final class GoldCard extends PlayableCard {
             this.pointsRequirements = PointsRequirementsType.SYMBOLS;
             this.symbolToCollect = symbol;
             return this;
-        }
-
-        /**
-         * Constructs a new instance of <code>GoldCard</code> using the parameters set by the builder's methods.
-         *
-         * @return A fully constructed instance of <code>GoldCard</code>.
-         * @throws IllegalCardBuildException if placement requirements to place have a negative value
-         */
-        @Override
-        @NotNull
-        public GoldCard build() throws IllegalCardBuildException {
-            if (this.pointsRequirements == null) throw new IllegalCardBuildException("No points requirements!");
-            if (! Validator.nonNegativeValues(colorPlacingRequirements))
-                throw new IllegalCardBuildException("Placing requirements cannot be less than 0!");
-            return new GoldCard(this);
         }
     }
 }

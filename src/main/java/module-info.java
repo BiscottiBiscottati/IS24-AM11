@@ -1,3 +1,4 @@
+@SuppressWarnings("JavaModuleNaming")
 module it.polimi.ingsw.am11 {
     requires javafx.controls;
     requires javafx.fxml;

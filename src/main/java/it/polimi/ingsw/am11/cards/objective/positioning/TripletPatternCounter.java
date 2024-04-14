@@ -54,7 +54,8 @@ public class TripletPatternCounter implements PatternCounter {
             return;
         }
 
-        if (field.get(currentPosition).isColorEquals(this.tripletColor)) updatedNumber = numberSeen + 1;
+        if (field.get(currentPosition).isColorEquals(this.tripletColor))
+            updatedNumber = numberSeen + 1;
         else updatedNumber = 0;
         if (updatedNumber == 3) {
             numberOfPatterns += 1;
