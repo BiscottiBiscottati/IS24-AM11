@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.exceptions.MaxHandSizeException;
+import it.polimi.ingsw.am11.exceptions.NotInHandException;
 
 import java.util.ArrayList;
 
@@ -44,12 +45,12 @@ public class PersonalSpace {
         }
     }
 
-    public void pickCard(PlayableCard cardToPick) {
+    public void pickCard(PlayableCard cardToPick) throws NotInHandException {
         if (playerHand.contains(cardToPick)) {
             playerHand.remove(cardToPick);
         } else {
             //throw not card in hand exception
-            // TODO: implement exception
+            throw new NotInHandException("Card not in hand");
         }
     }
 

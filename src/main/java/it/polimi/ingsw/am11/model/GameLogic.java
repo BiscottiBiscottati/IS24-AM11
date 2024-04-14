@@ -271,7 +271,8 @@ public class GameLogic implements GameModel {
     @Override
     public void placeCard(@NotNull String nickname, int ID, @NotNull Position position,
                           boolean isRetro)
-    throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException {
+    throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException,
+           NotInHandException {
         Player player = players.get(nickname);
         if (currentPlaying != player) {
             throw new TurnsOrderException(

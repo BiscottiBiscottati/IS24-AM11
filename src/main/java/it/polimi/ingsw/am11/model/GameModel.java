@@ -85,7 +85,7 @@ public interface GameModel {
     void placeCard(String Nickname, int ID, Position position, boolean isRetro)
     throws IllegalCardPlacingException,
            TurnsOrderException,
-           IllegalPlateauActionException;
+           IllegalPlateauActionException, NotInHandException;
 
     int drawFromGoldDeck(String nickname)
     throws GameBreakingException,
