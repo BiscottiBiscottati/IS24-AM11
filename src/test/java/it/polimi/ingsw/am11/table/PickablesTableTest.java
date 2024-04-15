@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.decks.Deck;
+import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
@@ -16,7 +17,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Optional;
 
 import static it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType.GOLD;
@@ -27,11 +27,11 @@ public class PickablesTableTest {
     static Deck<ResourceCard> resourceCardDeck;
 
     static Deck<GoldCard> goldCardDeck;
-    //    static Deck<ObjectiveCard> objectiveCardDeck;
+    static Deck<ObjectiveCard> objectiveCardDeck;
     static Deck<StarterCard> starterCardDeck;
 
-    int numOfObjectives = 2;
-    int numOfShownPerType = 2;
+    static int numOfObjectives = 2;
+    static int numOfShownPerType = 2;
     PickablesTable pickablesTable;
 
     @BeforeAll
@@ -39,8 +39,10 @@ public class PickablesTableTest {
         resourceCardDeck = ResourceDeckFactory.createDeck();
 
         goldCardDeck = GoldDeckFactory.createDeck();
-//        objectiveCardDeck = ObjectiveDeckFactory.createDeck();
+        objectiveCardDeck = ObjectiveDeckFactory.createDeck();
         starterCardDeck = StarterDeckFactory.createDeck();
+
+        PickablesTable.setConstants(numOfObjectives, numOfShownPerType);
 
     }
 
@@ -57,7 +59,7 @@ public class PickablesTableTest {
     }
 
     @Test
-    public void testGetPlayableByID() {
+    public void getPlayableByID() {
         ResourceCard card = resourceCardDeck.draw().orElseThrow();
         int resourceId = card.getId();
         Optional<PlayableCard> playableCard = pickablesTable.getPlayableByID(resourceId);
@@ -87,7 +89,7 @@ public class PickablesTableTest {
     }
 
     @Test
-    public void testInitialize() {
+    public void initialize() {
         pickablesTable.initialize();
         assertEquals(numOfObjectives, pickablesTable.getCommonObjectives().size());
         assertEquals(numOfShownPerType << 1, pickablesTable.getShownPlayable().size());
@@ -95,31 +97,7 @@ public class PickablesTableTest {
     }
 
     @Test
-    public void testPickGoldVisible() throws IllegalPickActionException {
-        // Get the list of visible gold cards
-        List<PlayableCard> shownGold = pickablesTable.getShownGold();
-        // Check that the list is not empty
-        Assertions.assertFalse(shownGold.isEmpty());
-        // Get the ID of the first card in the list
-        int cardId = shownGold.getFirst().getId();
-        PlayableCard card = pickablesTable.pickGoldVisible(cardId);
-        assertEquals(numOfShownPerType, pickablesTable.getShownGold().size());
-    }
-
-    @Test
-    public void testPickResourceVisible() throws IllegalPickActionException {
-        // Get the list of visible resource cards
-        List<PlayableCard> shownResources = pickablesTable.getShownResources();
-        // Check that the list is not empty
-        Assertions.assertFalse(shownResources.isEmpty());
-        // Get the ID of the first card in the list
-        int cardId = shownResources.getFirst().getId();
-        PlayableCard card = pickablesTable.pickResourceVisible(cardId);
-        assertEquals(numOfShownPerType, pickablesTable.getShownResources().size());
-    }
-
-    @Test
-    public void testDrawPlayableFrom() {
+    public void drawPlayableFrom() {
         // Pick cards from goldDeck until it's empty
         while (true) {
             try {
@@ -142,7 +120,7 @@ public class PickablesTableTest {
     }
 
     @Test
-    public void testPickStarterCard() {
+    public void pickStarterCard() {
         // Pick cards from starterCardDeck until it's empty
         while (true) {
             try {
@@ -155,7 +133,7 @@ public class PickablesTableTest {
     }
 
     @Test
-    public void testPickObjectiveCard() {
+    public void pickObjectiveCard() {
         // Pick cards from objectiveCardDeck until it's empty
         while (true) {
             try {
@@ -165,5 +143,102 @@ public class PickablesTableTest {
                 break; // Exit the loop when the deck is empty
             }
         }
+    }
+
+    @Test
+    void getCommonObjectives() {
+        assertEquals(2, pickablesTable.getCommonObjectives().size());
+        pickablesTable.getCommonObjectives()
+                      .stream()
+                      .map(ObjectiveCard::getId)
+                      .forEach(id -> {
+                          assertTrue(objectiveCardDeck.getCardById(id).isPresent());
+                      });
+    }
+
+    @Test
+    void getDeckTop() {
+        assertTrue(pickablesTable.getDeckTop(GOLD).isPresent());
+        assertTrue(pickablesTable.getDeckTop(RESOURCE).isPresent());
+        pickablesTable.getDeckTop(GOLD).ifPresent(goldColor -> {
+            try {
+                assertEquals(pickablesTable.drawPlayableFrom(GOLD).getColor(), goldColor);
+            } catch (EmptyDeckException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        pickablesTable.getDeckTop(RESOURCE).ifPresent(resourceColor -> {
+            try {
+                assertEquals(pickablesTable.drawPlayableFrom(RESOURCE).getColor(), resourceColor);
+            } catch (EmptyDeckException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
+        int remainingCards = pickablesTable.getRemainingDeckOf(GOLD);
+        for (int i = 0; i < remainingCards; i++) {
+            assertTrue(pickablesTable.getDeckTop(GOLD).isPresent());
+            try {
+                pickablesTable.drawPlayableFrom(GOLD);
+            } catch (EmptyDeckException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        assertTrue(pickablesTable.getDeckTop(GOLD).isEmpty());
+    }
+
+    @Test
+    void getStarterByID() {
+    }
+
+    @Test
+    void getObjectiveByID() {
+    }
+
+    @Test
+    void resetDecks() {
+    }
+
+    @Test
+    void shuffleDecks() {
+    }
+
+    @Test
+    void pickCommonObjectives() {
+    }
+
+    @Test
+    void pickPlayableVisible() {
+        pickablesTable.getShownPlayable().stream()
+                      .map(PlayableCard::getId)
+                      .forEach(id -> {
+                          try {
+                              assertNotNull(pickablesTable.pickPlayableVisible(id));
+                          } catch (IllegalPickActionException e) {
+                              throw new RuntimeException(e);
+                          }
+                          assertThrows(IllegalPickActionException.class,
+                                       () -> pickablesTable.pickPlayableVisible(id));
+                      });
+
+    }
+
+    @Test
+    void getShownPlayable() {
+    }
+
+    @Test
+    void getRemainingDeckOf() {
+        int numberInDeck = goldCardDeck.getRemainingCards() - numOfShownPerType;
+        assertEquals(numberInDeck,
+                     pickablesTable.getRemainingDeckOf(GOLD));
+        try {
+            pickablesTable.drawPlayableFrom(GOLD);
+        } catch (EmptyDeckException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(numberInDeck - 1,
+                     pickablesTable.getRemainingDeckOf(GOLD));
     }
 }

@@ -106,31 +106,27 @@ public class PickablesTable {
         commonObjectives.clear();
         shownGold.clear();
         shownResources.clear();
-        resetToInitialCondition();
-        shuffleAllDecks();
+        resetDecks();
+        shuffleDecks();
         try {
             pickCommonObjectives();
         } catch (EmptyDeckException e) {
             throw new RuntimeException(e);
         }
         for (int i = 0; i < numOfShownPerType; i++) {
-            if (goldDeck.draw().isPresent()) {
-                shownGold.add(goldDeck.draw().get());
-            }
-            if (resourceDeck.draw().isPresent()) {
-                shownResources.add(resourceDeck.draw().get());
-            }
+            goldDeck.draw().ifPresent(shownGold::add);
+            resourceDeck.draw().ifPresent(shownResources::add);
         }
     }
 
-    public void resetToInitialCondition() {
+    private void resetDecks() {
         goldDeck.reset();
         resourceDeck.reset();
         objectiveDeck.reset();
         starterDeck.reset();
     }
 
-    public void shuffleAllDecks() {
+    private void shuffleDecks() {
         goldDeck.shuffle();
         resourceDeck.shuffle();
         objectiveDeck.shuffle();
@@ -139,11 +135,9 @@ public class PickablesTable {
 
     public void pickCommonObjectives() throws EmptyDeckException {
         for (int i = 0; i < numOfObjectives; i++) {
-            if (objectiveDeck.draw().isPresent()) {
-                commonObjectives.add(objectiveDeck.draw().get());
-            } else {
-                throw new EmptyDeckException("Objective deck is empty!");
-            }
+            commonObjectives.add(objectiveDeck.draw()
+                                              .orElseThrow(() -> new EmptyDeckException(
+                                                      "Objective deck is empty!")));
         }
     }
 
@@ -185,6 +179,13 @@ public class PickablesTable {
         if (shownResources.size() < numOfShownPerType) {
             resourceDeck.draw().ifPresent(shownResources::add);
         }
+    }
+
+    public int getRemainingDeckOf(@NotNull PlayableCardType type) {
+        return switch (type) {
+            case GOLD -> goldDeck.getRemainingCards();
+            case RESOURCE -> resourceDeck.getRemainingCards();
+        };
     }
 
 }
