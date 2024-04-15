@@ -32,13 +32,13 @@ public class ColorCollectCard extends CollectingCard {
     }
 
     @Override
-    public @NotNull Map<Symbol, Integer> getSymbolRequirements() {
-        return SYMBOL_TO_COLLECT;
+    public @NotNull Map<Color, Integer> getColorRequirements() {
+        return this.colorToCollect;
     }
 
     @Override
-    public @NotNull Map<Color, Integer> getColorRequirements() {
-        return this.colorToCollect;
+    public @NotNull Map<Symbol, Integer> getSymbolRequirements() {
+        return SYMBOL_TO_COLLECT;
     }
 
     @Override

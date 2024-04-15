@@ -36,8 +36,10 @@ class StarterDeckFactoryTest {
     void setUp() {
         try {
             connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
-            queryStatement = connection.prepareStatement("SELECT * FROM starter_cards WHERE global_id = ?");
-            centerStatement = connection.prepareStatement("SELECT * FROM center_colors WHERE id = ?");
+            queryStatement = connection.prepareStatement(
+                    "SELECT * FROM starter_cards WHERE global_id = ?");
+            centerStatement = connection.prepareStatement(
+                    "SELECT * FROM center_colors WHERE id = ?");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

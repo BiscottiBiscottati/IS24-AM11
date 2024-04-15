@@ -61,7 +61,6 @@ public class Plateau {
     }
 
     public void addPlayer(Player newPlayer) {
-
         playerPoints.put(newPlayer, 0);
         counterObjective.put(newPlayer, 0);
     }
@@ -79,19 +78,12 @@ public class Plateau {
         }
     }
 
-    public void addCounterObjective(Player player, int objectives)
+    public void addCounterObjective(Player player)
     throws IllegalPlateauActionException {
-        Integer temp = counterObjective.getOrDefault(player, null);
-        if (temp == null) {
+        if (! counterObjective.containsKey(player)) {
             throw new IllegalPlateauActionException("Player not found");
         } else {
-            temp += objectives;
-            if (temp > 3) {
-                throw new IllegalPlateauActionException(
-                        "Player has already completed 3 objectives");
-            } else {
-                counterObjective.put(player, temp);
-            }
+            counterObjective.merge(player, 1, Integer::sum);
         }
     }
 

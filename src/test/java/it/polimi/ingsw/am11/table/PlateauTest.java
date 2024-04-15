@@ -43,7 +43,7 @@ class PlateauTest {
                                    PlayerColor.BLUE);
         plateau.addPlayer(player);
         plateau.addPlayerPoints(player, 1);
-        plateau.addCounterObjective(player, 1);
+        plateau.addCounterObjective(player);
         Assertions.assertEquals(1, plateau.getPlayerPoints(player));
         Assertions.assertEquals(1, plateau.getCounterObjective(player));
         plateau.reset();
@@ -94,22 +94,24 @@ class PlateauTest {
                                     PlayerColor.BLUE);
         plateau.addPlayer(player1);
         plateau.addPlayerPoints(player1, 5);
-        plateau.addCounterObjective(player1, 2);
+        plateau.addCounterObjective(player1);
         Player player2 = new Player("Test Player2",
                                     PlayerColor.RED);
         plateau.addPlayer(player2);
         plateau.addPlayerPoints(player2, 5);
-        plateau.addCounterObjective(player2, 2);
+        plateau.addCounterObjective(player2);
         Player player3 = new Player("Test Player3",
                                     PlayerColor.YELLOW);
         plateau.addPlayer(player3);
         plateau.addPlayerPoints(player3, 4);
-        plateau.addCounterObjective(player3, 1);
+        plateau.addCounterObjective(player3);
         Player player4 = new Player("Test Player4",
                                     PlayerColor.GREEN);
         plateau.addPlayer(player4);
         plateau.addPlayerPoints(player4, 3);
-        plateau.addCounterObjective(player4, 0);
+        plateau.addCounterObjective(player4);
+        plateau.addCounterObjective(player4);
+        plateau.addCounterObjective(player4);
 
         plateau.setFinalLeaderboard();
 
@@ -131,22 +133,22 @@ class PlateauTest {
                                     PlayerColor.BLUE);
         plateau.addPlayer(player1);
         plateau.addPlayerPoints(player1, 5);
-        plateau.addCounterObjective(player1, 2);
+        plateau.addCounterObjective(player1);
         Player player2 = new Player("Test Player2",
                                     PlayerColor.RED);
         plateau.addPlayer(player2);
         plateau.addPlayerPoints(player2, 5);
-        plateau.addCounterObjective(player2, 2);
+        plateau.addCounterObjective(player2);
         Player player3 = new Player("Test Player3",
                                     PlayerColor.YELLOW);
         plateau.addPlayer(player3);
         plateau.addPlayerPoints(player3, 4);
-        plateau.addCounterObjective(player3, 1);
+        plateau.addCounterObjective(player3);
         Player player4 = new Player("Test Player4",
                                     PlayerColor.GREEN);
         plateau.addPlayer(player4);
         plateau.addPlayerPoints(player4, 3);
-        plateau.addCounterObjective(player4, 0);
+        plateau.addCounterObjective(player4);
 
         plateau.setFinalLeaderboard();
         plateau.getWinners();
@@ -198,12 +200,11 @@ class PlateauTest {
                                    PlayerColor.BLUE);
         plateau.addPlayer(player);
         Assertions.assertEquals(0, plateau.getCounterObjective(player));
-        plateau.addCounterObjective(player, 2);
+        plateau.addCounterObjective(player);
+        plateau.addCounterObjective(player);
         Assertions.assertEquals(2, plateau.getCounterObjective(player));
-        plateau.addCounterObjective(player, 1);
+        plateau.addCounterObjective(player);
         Assertions.assertEquals(3, plateau.getCounterObjective(player));
-        Assertions.assertThrows(IllegalPlateauActionException.class,
-                                () -> plateau.addCounterObjective(player, 2));
 
     }
 

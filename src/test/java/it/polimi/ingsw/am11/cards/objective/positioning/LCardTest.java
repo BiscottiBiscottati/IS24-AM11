@@ -76,7 +76,8 @@ class LCardTest {
             lCard = (LCard) lCardStandard;
 
             StarterCard.Builder builder = new StarterCard.Builder(1);
-            Arrays.stream(Corner.values()).forEach(corner -> builder.hasColorRetroIn(corner, Color.PURPLE));
+            Arrays.stream(Corner.values()).forEach(
+                    corner -> builder.hasColorRetroIn(corner, Color.PURPLE));
             starterCard = builder.build();
             redCard = new ResourceCard.Builder(1, 0, Color.RED).build();
             blueCard = new ResourceCard.Builder(2, 0, Color.BLUE).build();

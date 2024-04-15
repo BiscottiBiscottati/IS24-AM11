@@ -28,7 +28,8 @@ class ResourceDeckFactoryTest {
     void setUp() {
         try {
             connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
-            idQuery = connection.prepareStatement("SELECT * FROM playable_cards WHERE global_id = ?");
+            idQuery = connection.prepareStatement(
+                    "SELECT * FROM playable_cards WHERE global_id = ?");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

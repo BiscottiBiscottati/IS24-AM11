@@ -58,16 +58,19 @@ class PositionManagerTest {
         Position position = Position.of(0, 0);
         assertEquals(
                 Position.of(1, 1),
-                PositionManager.getMovementOfPositions(position, Collections.singletonList(Corner.TOP_RX)));
+                PositionManager.getMovementOfPositions(position,
+                                                       Collections.singletonList(Corner.TOP_RX)));
         assertEquals(
                 Position.of(- 1, 1),
                 PositionManager.getMovementOfPositions(position, List.of(Corner.TOP_LX)));
         assertEquals(
                 Position.of(0, 2),
-                PositionManager.getMovementOfPositions(position, List.of(Corner.TOP_RX, Corner.TOP_LX)));
+                PositionManager.getMovementOfPositions(position,
+                                                       List.of(Corner.TOP_RX, Corner.TOP_LX)));
         assertEquals(
                 Position.of(2, - 2),
-                PositionManager.getMovementOfPositions(position, List.of(Corner.DOWN_RX, Corner.DOWN_RX)));
+                PositionManager.getMovementOfPositions(position,
+                                                       List.of(Corner.DOWN_RX, Corner.DOWN_RX)));
     }
 
     @Test

@@ -29,68 +29,13 @@ class ObjectiveDeckFactoryTest {
     PreparedStatement collectingStatement;
     PreparedStatement positioningStatement;
 
-    private static @NotNull Stream<Item> getItems() {
-        return Stream.concat(Arrays.stream(Color.values()), Arrays.stream(Symbol.values()));
-    }
-
-    private void checkPositioning(@NotNull PositioningCard positioningCard)
-    throws SQLException {
-        positioningStatement.setInt(1, positioningCard.getId());
-        try (ResultSet resultSet = positioningStatement.executeQuery()) {
-            if (resultSet.next()) {
-                assertEquals(positioningCard.getPoints(), resultSet.getInt("points"));
-                assertEquals(positioningCard.getType().name(), resultSet.getString("card_type"));
-                switch (positioningCard) {
-                    case TripletCard triplet -> {
-                        assertEquals(triplet.isFlipped(), resultSet.getBoolean("is_flipped"));
-                        Color colorToCheck = Color.valueOf(resultSet.getString("primary_color"));
-                        assertEquals(3, triplet.hasItemRequirements(colorToCheck));
-                        getItems().filter(item -> item != colorToCheck)
-                                  .forEach(item -> assertEquals(0, triplet.hasItemRequirements(item)));
-                    }
-                    case LCard lCard -> {
-                        assertEquals(lCard.isFlipped(), resultSet.getBoolean("is_flipped"));
-                        assertEquals(lCard.isRotated(), resultSet.getBoolean("is_rotated"));
-                        Color colorToCheck = Color.valueOf(resultSet.getString("primary_color"));
-                        Color secondColorToCheck = Color.valueOf(resultSet.getString("secondary_color"));
-                        assertEquals(2, lCard.hasItemRequirements(colorToCheck));
-                        assertEquals(1, lCard.hasItemRequirements(secondColorToCheck));
-                        getItems().filter(item -> item != colorToCheck && item != secondColorToCheck)
-                                  .forEach(item -> assertEquals(0, lCard.hasItemRequirements(item)));
-                    }
-                    default -> throw new IllegalStateException("Unexpected value: " + positioningCard);
-                }
-            } else {
-                throw new SQLException("Card not found in the database");
-            }
-        }
-    }
-
-    private void checkCollecting(@NotNull CollectingCard card) throws SQLException {
-        collectingStatement.setInt(1, card.getId());
-        try (ResultSet resultSet = collectingStatement.executeQuery()) {
-            if (resultSet.next()) {
-                assertEquals(card.getPoints(), resultSet.getInt("points"));
-                assertEquals(card.getType().name(), resultSet.getString("card_type"));
-                for (Color color : Color.values()) {
-                    assertEquals(card.hasItemRequirements(color),
-                                 resultSet.getInt(color.getColumnName()));
-                }
-                for (Symbol symbol : Symbol.values()) {
-                    assertEquals(card.hasItemRequirements(symbol),
-                                 resultSet.getInt(symbol.getColumnName()));
-                }
-            } else {
-                throw new SQLException("Card not found in the database");
-            }
-        }
-    }
-
     @AfterEach
     void tearDown() {
         try {
-            if (collectingStatement != null && ! collectingStatement.isClosed()) collectingStatement.close();
-            if (positioningStatement != null && ! positioningStatement.isClosed()) positioningStatement.close();
+            if (collectingStatement != null && ! collectingStatement.isClosed())
+                collectingStatement.close();
+            if (positioningStatement != null && ! positioningStatement.isClosed())
+                positioningStatement.close();
             if (connection != null && ! connection.isClosed()) connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -101,8 +46,10 @@ class ObjectiveDeckFactoryTest {
     void setUp() {
         try {
             connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
-            collectingStatement = connection.prepareStatement("SELECT * FROM item_collect_cards WHERE global_id = ?");
-            positioningStatement = connection.prepareStatement("SELECT * FROM positioning_cards WHERE global_id = ?");
+            collectingStatement = connection.prepareStatement(
+                    "SELECT * FROM item_collect_cards WHERE global_id = ?");
+            positioningStatement = connection.prepareStatement(
+                    "SELECT * FROM positioning_cards WHERE global_id = ?");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -143,5 +90,67 @@ class ObjectiveDeckFactoryTest {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    private void checkCollecting(@NotNull CollectingCard card) throws SQLException {
+        collectingStatement.setInt(1, card.getId());
+        try (ResultSet resultSet = collectingStatement.executeQuery()) {
+            if (resultSet.next()) {
+                assertEquals(card.getPoints(), resultSet.getInt("points"));
+                assertEquals(card.getType().name(), resultSet.getString("card_type"));
+                for (Color color : Color.values()) {
+                    assertEquals(card.hasItemRequirements(color),
+                                 resultSet.getInt(color.getColumnName()));
+                }
+                for (Symbol symbol : Symbol.values()) {
+                    assertEquals(card.hasItemRequirements(symbol),
+                                 resultSet.getInt(symbol.getColumnName()));
+                }
+            } else {
+                throw new SQLException("Card not found in the database");
+            }
+        }
+    }
+
+    private void checkPositioning(@NotNull PositioningCard positioningCard)
+    throws SQLException {
+        positioningStatement.setInt(1, positioningCard.getId());
+        try (ResultSet resultSet = positioningStatement.executeQuery()) {
+            if (resultSet.next()) {
+                assertEquals(positioningCard.getPoints(), resultSet.getInt("points"));
+                assertEquals(positioningCard.getType().name(), resultSet.getString("card_type"));
+                switch (positioningCard) {
+                    case TripletCard triplet -> {
+                        assertEquals(triplet.isFlipped(), resultSet.getBoolean("is_flipped"));
+                        Color colorToCheck = Color.valueOf(resultSet.getString("primary_color"));
+                        assertEquals(3, triplet.hasItemRequirements(colorToCheck));
+                        getItems().filter(item -> item != colorToCheck)
+                                  .forEach(item -> assertEquals(0,
+                                                                triplet.hasItemRequirements(item)));
+                    }
+                    case LCard lCard -> {
+                        assertEquals(lCard.isFlipped(), resultSet.getBoolean("is_flipped"));
+                        assertEquals(lCard.isRotated(), resultSet.getBoolean("is_rotated"));
+                        Color colorToCheck = Color.valueOf(resultSet.getString("primary_color"));
+                        Color secondColorToCheck = Color.valueOf(
+                                resultSet.getString("secondary_color"));
+                        assertEquals(2, lCard.hasItemRequirements(colorToCheck));
+                        assertEquals(1, lCard.hasItemRequirements(secondColorToCheck));
+                        getItems().filter(
+                                          item -> item != colorToCheck && item != secondColorToCheck)
+                                  .forEach(
+                                          item -> assertEquals(0, lCard.hasItemRequirements(item)));
+                    }
+                    default ->
+                            throw new IllegalStateException("Unexpected value: " + positioningCard);
+                }
+            } else {
+                throw new SQLException("Card not found in the database");
+            }
+        }
+    }
+
+    private static @NotNull Stream<Item> getItems() {
+        return Stream.concat(Arrays.stream(Color.values()), Arrays.stream(Symbol.values()));
     }
 }

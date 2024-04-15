@@ -42,8 +42,7 @@ public class StarterDeckFactory {
      * @return A deck of Starter Cards.
      * @throws RuntimeException if an <code>SQLException</code> or
      *                          <code>IllegalCardBuildException</code> is thrown during the
-     *                          creation
-     *                          of the deck.
+     *                          creation of the deck.
      * @see SQLException
      * @see IllegalCardBuildException
      */

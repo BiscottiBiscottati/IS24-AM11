@@ -9,8 +9,7 @@ package it.polimi.ingsw.am11.cards.utils.enums;
  * <code>TO_COMPLETE</code> is used to check if a pattern is complete.
  * <p>
  * <code>ADJACENT_LX</code> and <code>ADJACENT_RX</code> are used to traverse adjacent cells
- * without
- * pattern matching.
+ * without pattern matching.
  */
 public enum PatternPurpose {
     ADJACENT_LX,

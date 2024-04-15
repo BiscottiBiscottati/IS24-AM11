@@ -41,8 +41,10 @@ class GoldDeckFactoryTest {
     void setUp() {
         try {
             connection = DriverManager.getConnection(DatabaseConstants.DATABASE_URL);
-            idQuery = connection.prepareStatement("SELECT * FROM playable_cards WHERE global_id = ?");
-            placingReqQuery = connection.prepareStatement("SELECT * FROM placing_requirements WHERE id = ?");
+            idQuery = connection.prepareStatement(
+                    "SELECT * FROM playable_cards WHERE global_id = ?");
+            placingReqQuery = connection.prepareStatement(
+                    "SELECT * FROM placing_requirements WHERE id = ?");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -90,7 +92,9 @@ class GoldDeckFactoryTest {
                     // Testing the card symbol to collect
                     assertEquals(
                             result.getString("symbol_to_collect"),
-                            card.getSymbolToCollect().isEmpty() ? null : card.getSymbolToCollect().get().name()
+                            card.getSymbolToCollect().isEmpty() ? null
+                                                                :
+                            card.getSymbolToCollect().get().name()
                     );
 
                     // Testing the card placing requirements
