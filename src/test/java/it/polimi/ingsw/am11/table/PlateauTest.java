@@ -12,7 +12,7 @@ class PlateauTest {
 
     @BeforeEach
     void setUp() {
-        plateau = new Plateau(20);
+        plateau = new Plateau();
     }
 
 

@@ -23,28 +23,31 @@ import java.util.Optional;
 
 public class PickablesTable {
 
+    private static int numOfObjectives;
+    private static int numOfShownPerType;
     private final Deck<GoldCard> goldDeck;
     private final Deck<ResourceCard> resourceDeck;
     private final Deck<ObjectiveCard> objectiveDeck;
     private final Deck<StarterCard> starterDeck;
-    private final int numOfObjectives;
-    private final int numOfShownPerType;
     private final List<ObjectiveCard> commonObjectives;
     private final List<PlayableCard> shownGold;
     private final List<PlayableCard> shownResources;
 
-    public PickablesTable(int numOfObjectives, int numOfShownPerType) {
+    public PickablesTable() {
         this.goldDeck = GoldDeckFactory.createDeck();
         this.resourceDeck = ResourceDeckFactory.createDeck();
         this.objectiveDeck = ObjectiveDeckFactory.createDeck();
         this.starterDeck = StarterDeckFactory.createDeck();
-        this.numOfObjectives = numOfObjectives;
-        this.numOfShownPerType = numOfShownPerType;
 
         this.commonObjectives = new ArrayList<>(numOfObjectives);
         this.shownGold = new ArrayList<>(numOfShownPerType);
         this.shownResources = new ArrayList<>(numOfShownPerType);
 
+    }
+
+    public static void setConstants(int numOfObjectives, int numOfShownPerType) {
+        PickablesTable.numOfObjectives = numOfObjectives;
+        PickablesTable.numOfShownPerType = numOfShownPerType;
     }
 
     //region Getters
@@ -61,17 +64,26 @@ public class PickablesTable {
         return Collections.unmodifiableList(shownResources);
     }
 
-    public Optional<Color> getResourceDeckTop() {
-        if (resourceDeck.peekTop().isPresent()) {
-            return Optional.of(resourceDeck.peekTop().get().getColor());
-        } else {
-            return Optional.empty();
-        }
+    public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
+        return switch (type) {
+            case GOLD -> goldDeck.peekTop()
+                                 .map(PlayableCard::getColor);
+            case RESOURCE -> resourceDeck.peekTop()
+                                         .map(PlayableCard::getColor);
+        };
     }
 
     public Optional<Color> getGoldDeckTop() {
         if (goldDeck.peekTop().isPresent()) {
             return Optional.of(goldDeck.peekTop().get().getColor());
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Color> getResourceDeckTop() {
+        if (resourceDeck.peekTop().isPresent()) {
+            return Optional.of(resourceDeck.peekTop().get().getColor());
         } else {
             return Optional.empty();
         }

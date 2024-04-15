@@ -46,7 +46,7 @@ public class PickablesTableTest {
 
     @BeforeEach
     public void setUp() {
-        pickablesTable = new PickablesTable(numOfObjectives, numOfShownPerType);
+        pickablesTable = new PickablesTable();
         pickablesTable.initialize();
         resourceCardDeck.reset();
 

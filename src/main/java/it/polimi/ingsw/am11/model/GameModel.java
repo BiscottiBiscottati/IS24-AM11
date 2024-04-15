@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerColor;
 import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.table.GameStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Set;
 
 public interface GameModel {
     //region GetterGameStatus
-    List<String> getPlayers();
+    Set<String> getPlayers();
 
     String getCurrentTurnPlayer();
 
@@ -22,9 +23,9 @@ public interface GameModel {
     //endregion
 
     //region GettersPlayer
-    List<Integer> getPlayerHand(String nickname);
+    Set<Integer> getPlayerHand(String nickname);
 
-    List<Integer> getPlayerObjective(String nickname);
+    Set<Integer> getPlayerObjective(String nickname);
 
     PlayerColor getPlayerColor(String nickname);
 
@@ -51,8 +52,6 @@ public interface GameModel {
     int getPlayerPoints(String nickname)
     throws IllegalPlateauActionException;
 
-    boolean isArmageddonTime();
-
     int getPlayerFinishingPosition(String nickname) throws IllegalPlateauActionException;
 
     List<String> getWinner();
@@ -67,10 +66,6 @@ public interface GameModel {
 
     void removePlayer(@NotNull String nickname) throws GameStatusException;
 
-    void shufflePlayers() throws GameStatusException;
-
-    void setStartingPlayer() throws GameStatusException;
-
     int pickStarter() throws EmptyDeckException, GameStatusException;
 
     int pickObjective() throws EmptyDeckException, GameStatusException;
@@ -84,7 +79,7 @@ public interface GameModel {
 
     //region TurnsActions
 
-    void goNextTurn() throws GameBreakingException, GameStatusException;
+    String goNextTurn() throws GameBreakingException, GameStatusException;
 
     void placeCard(String Nickname, int ID, Position position, boolean isRetro)
     throws IllegalCardPlacingException,
@@ -116,6 +111,8 @@ public interface GameModel {
 
     //DONE
     void endGame();
+
+    GameStatus getStatus();
     //endregion
 
 }

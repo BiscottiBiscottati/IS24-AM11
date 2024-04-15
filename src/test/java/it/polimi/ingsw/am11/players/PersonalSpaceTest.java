@@ -82,9 +82,11 @@ class PersonalSpaceTest {
         PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, Color.BLUE);
         PlayableCard card = builder.build();
         personalSpace.addCardToHand(card);
-        personalSpace.pickCard(card);
+        //FIXME
+        personalSpace.pickCard(0);
         assertEquals(0, personalSpace.getPlayerHand().size());
-        assertThrows(NotInHandException.class, () -> personalSpace.pickCard(card));
+        //FIXME
+        assertThrows(NotInHandException.class, () -> personalSpace.pickCard(0));
     }
 
     @Test

@@ -9,17 +9,16 @@ import java.util.List;
 import java.util.Map;
 
 public class Plateau {
+    private static int armageddonTime;
     private final Map<Player, Integer> playerPoints;
     private final Map<Player, Integer> counterObjective;
     private final Map<Player, Integer> finalLeaderboard;
-    private final int armageddonTime;
     private GameStatus status;
 
 
-    public Plateau(int armageddonTime) {
+    public Plateau() {
         this.playerPoints = new HashMap<>(8);
         this.counterObjective = new HashMap<>(3);
-        this.armageddonTime = armageddonTime;
         this.status = GameStatus.SETUP;
         this.finalLeaderboard = new HashMap<>(8);
     }
@@ -34,6 +33,10 @@ public class Plateau {
 
     public boolean isArmageddonTime() {
         return status == GameStatus.ARMAGEDDON;
+    }
+
+    public static void setArmageddonTime(int armageddonTime) {
+        Plateau.armageddonTime = armageddonTime;
     }
 
     public void activateArmageddon() {

@@ -11,17 +11,20 @@ import java.util.ArrayList;
 
 public class PersonalSpace {
 
+
+    private static int maxSizeofHand;
+    private static int maxObjectives;
     private final ArrayList<PlayableCard> playerHand;
-    private final int maxSizeofHand;
-    private final int maxObjectives;
     private final ArrayList<ObjectiveCard> playerObjective;
 
-    public PersonalSpace(int maxSizeofHand, int maxObjectives) {
-        //TODO: checking if sizeofHand is legal
-        this.maxSizeofHand = maxSizeofHand;
-        this.maxObjectives = maxObjectives;
+    public PersonalSpace() {
         playerHand = new ArrayList<>(maxSizeofHand);
         playerObjective = new ArrayList<>(1);
+    }
+
+    public static void setConstants(int maxSizeofHand, int maxObjectives) {
+        PersonalSpace.maxSizeofHand = maxSizeofHand;
+        PersonalSpace.maxObjectives = maxObjectives;
     }
 
     public ArrayList<PlayableCard> getPlayerHand() {
@@ -45,13 +48,16 @@ public class PersonalSpace {
         }
     }
 
-    public void pickCard(PlayableCard cardToPick) throws NotInHandException {
-        if (playerHand.contains(cardToPick)) {
-            playerHand.remove(cardToPick);
-        } else {
-            //throw not card in hand exception
-            throw new NotInHandException("Card not in hand");
-        }
+    public void pickCard(int cardId) throws NotInHandException {
+        int cardToRemove = playerHand.stream()
+                                     .map(PlayableCard::getId)
+                                     .filter(id -> id == cardId)
+                                     .findFirst()
+                                     .orElseThrow(() -> new NotInHandException("Card not in hand"));
+
+        playerHand.stream()
+                  .filter(card -> card.getId() == cardToRemove);
+
     }
 
     public void addObjective(ObjectiveCard newObjective) throws IllegalPlayerSpaceActionException {
