@@ -90,10 +90,8 @@ public class PickablesTableTest {
     public void testInitialize() {
         pickablesTable.initialize();
         assertEquals(numOfObjectives, pickablesTable.getCommonObjectives().size());
-        assertEquals(numOfShownPerType, pickablesTable.getShownGold().size());
-        assertEquals(numOfShownPerType, pickablesTable.getShownResources().size());
-        Assertions.assertTrue(pickablesTable.getResourceDeckTop().isPresent());
-        Assertions.assertTrue(pickablesTable.getGoldDeckTop().isPresent());
+        assertEquals(numOfShownPerType << 1, pickablesTable.getShownPlayable().size());
+        Assertions.assertTrue(pickablesTable.getDeckTop(RESOURCE).isPresent());
     }
 
     @Test

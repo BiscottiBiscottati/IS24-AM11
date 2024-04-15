@@ -13,6 +13,7 @@ import it.polimi.ingsw.am11.table.Plateau;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class GameLogic implements GameModel {
 
@@ -158,24 +159,12 @@ public class GameLogic implements GameModel {
         return playerManager.getPlayer(nickname).field().getAvailablePositions();
     }
 
-    /**
-     * @return the color of the card on top of the <code>ResourceCard</code>s deck
-     */
-    @Override //
-    public Optional<Color> getResourceDeckTop() {
-        return pickablesTable.getResourceDeckTop();
-    }
 
-    //endregion
-
-    /**
-     * @return the color of the card on top of the <code>GoldCard</code>s deck
-     */
-    @Override //
-    public Optional<Color> getGoldDeckTop() {
-        return pickablesTable.getGoldDeckTop();
-    }
     //region GettersPickableTable  javadoc
+
+    public Optional<Color> getDeckTop(PlayableCardType type) {
+        return pickablesTable.getDeckTop(type);
+    }
 
     /**
      * During a game players have objectives in common
@@ -190,29 +179,17 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
-    /**
-     * During the game some of the pickable cards are visible
-     *
-     * @return a list of ID of <code>GoldCard</code> exposed on the table
-     */
-    @Override //
-    public List<Integer> getExposedGoldsCrd() {
-        return pickablesTable.getShownGold().stream()
+    @Override
+    public List<Integer> getExposedCards() {
+        return pickablesTable.getShownPlayable()
+                             .stream()
                              .map(PlayableCard::getId)
                              .toList();
     }
 
-    /**
-     * During the game some of the pickable cards are visible
-     *
-     * @return a list of ID of <code>ResourceCard</code> exposed on the table
-     */
-    @Override //
-    public List<Integer> getExposedResourcesCrd() {
-        return pickablesTable.getShownResources().stream()
-                             .map(PlayableCard::getId)
-                             .toList();
-    }
+    //endregion
+
+    //region GettersPlateau  javadoc
 
     /**
      * Retrive the points that a player has obtained since the start of the game
@@ -238,10 +215,6 @@ public class GameLogic implements GameModel {
     throws IllegalPlateauActionException {
         return plateau.getPlayerFinishingPosition(playerManager.getPlayer(nickname));
     }
-
-    //endregion
-
-    //region GettersPlateau  javadoc
 
     /**
      * This method return the winners, there could be more than on winners.
@@ -285,6 +258,9 @@ public class GameLogic implements GameModel {
         playerManager.resetAll();
         plateau.reset();
     }
+    //endregion
+
+    //region GameInitialization  javadoc
 
     /**
      * This method can be used to add a new player in the game during the setting up phase.
@@ -324,9 +300,6 @@ public class GameLogic implements GameModel {
         plateau.removePlayer(playerManager.getPlayer(nickname));
         playerManager.removePlayer(nickname);
     }
-    //endregion
-
-    //region GameInitialization  javadoc
 
     /**
      * Pick a <code>StarterCard</code> from the deck on the <code>PickableTable</code>.
@@ -413,8 +386,10 @@ public class GameLogic implements GameModel {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
             throw new GameStatusException("the game is not ongoing");
         }
-        if (pickablesTable.getGoldDeckTop().isPresent() &&
-            pickablesTable.getResourceDeckTop().isPresent()) {
+        //TODO can be done to functional
+        if (Stream.of(PlayableCardType.values())
+                  .map(pickablesTable::getDeckTop)
+                  .allMatch(Optional::isEmpty)) {
             plateau.activateArmageddon();
         }
         playerManager.goNextTurn();
@@ -520,6 +495,10 @@ public class GameLogic implements GameModel {
         }
     }
 
+    //endregion
+
+    //region TurnsActions  javadoc
+
     /**
      * This method transfer a <code>ResourceCard</code> from the top of the resource deck to the
      * hand of the player
@@ -563,24 +542,10 @@ public class GameLogic implements GameModel {
         }
     }
 
-    /**
-     * This method transfer a <code>GoldCard</code> from the visible gold cards to the hand of the
-     * player
-     *
-     * @param nickname nickname of the player of interest
-     * @param ID       identifier of the card to be picked
-     * @throws GameBreakingException             if an unexpected modification of the hand has
-     *                                           caused a card to be lost
-     * @throws IllegalPickActionException        if the specified card can't be found
-     * @throws IllegalPlayerSpaceActionException if the hand is already full
-     * @throws TurnsOrderException               if it's not that player turn
-     * @throws GameStatusException               if the game is not ongoing
-     */
-    @Override //
-    public void drawVisibleGold(@NotNull String nickname, int ID)
-    throws GameBreakingException,
-           IllegalPickActionException,
-           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException {
+    @Override
+    public int drawFromDeckOf(PlayableCardType type, String nickname)
+    throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
+           IllegalPlayerSpaceActionException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
             throw new GameStatusException("the game is not ongoing");
         }
@@ -591,38 +556,24 @@ public class GameLogic implements GameModel {
         }
         try {
             if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
-                PlayableCard card = pickablesTable.pickGoldVisible(ID);
+                PlayableCard card = pickablesTable.drawPlayableFrom(type);
                 playerManager.getPlayer(nickname).space().addCardToHand(card);
+                return card.getId();
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
             }
         } catch (MaxHandSizeException ex) {
             throw new GameBreakingException(
-                    "We have lost a card due to picking it from the visible and not being able " +
-                    "to put it anywhere"
+                    "We have lost a card due to picking it from the deck and not being able to " +
+                    "put it anywhere"
             );
         }
-
     }
 
-    /**
-     * This method transfer a <code>ResourceCard</code> from the visible resource cards to the hand
-     * of the player.
-     *
-     * @param nickname nickname of the player of interest
-     * @param ID       identifier of the card to be picked
-     * @throws GameBreakingException             if an unexpected modification of the hand has
-     *                                           caused a card to be lost
-     * @throws IllegalPickActionException        if the specified card can't be found
-     * @throws IllegalPlayerSpaceActionException if the hand is already full
-     * @throws TurnsOrderException               if it's not that player turn
-     * @throws GameStatusException               if the game is not ongoing
-     */
-    @Override //
-    public void drawVisibleResource(@NotNull String nickname, int ID)
-    throws GameBreakingException,
-           IllegalPickActionException,
-           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException {
+    @Override
+    public void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
+    throws GameStatusException, TurnsOrderException, GameBreakingException,
+           IllegalPlayerSpaceActionException, IllegalPickActionException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
             throw new GameStatusException("the game is not ongoing");
         }
@@ -633,7 +584,7 @@ public class GameLogic implements GameModel {
         }
         try {
             if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
-                PlayableCard card = pickablesTable.pickResourceVisible(ID);
+                PlayableCard card = pickablesTable.pickPlayableVisible(cardID);
                 playerManager.getPlayer(nickname).space().addCardToHand(card);
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
@@ -644,8 +595,6 @@ public class GameLogic implements GameModel {
                     "to put it anywhere"
             );
         }
-
-
     }
 
     /**
@@ -679,10 +628,6 @@ public class GameLogic implements GameModel {
         }
     }
 
-    //endregion
-
-    //region TurnsActions  javadoc
-
     /**
      * Ends the current game and gives the possibility to add or remove players.
      */
@@ -700,63 +645,6 @@ public class GameLogic implements GameModel {
     @Override
     public GameStatus getStatus() {
         return plateau.getStatus();
-    }
-
-    public int drawFromDeckOf(PlayableCardType type, String nickname)
-    throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
-           IllegalPlayerSpaceActionException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
-            throw new GameStatusException("the game is not ongoing");
-        }
-        if (currentPlaying != playerManager.getPlayer(nickname)) {
-            throw new TurnsOrderException(
-                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
-            );
-        }
-        try {
-            if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
-                PlayableCard card = pickablesTable.drawPlayableFrom(type);
-                playerManager.getPlayer(nickname).space().addCardToHand(card);
-                return card.getId();
-            } else {
-                throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
-            }
-        } catch (MaxHandSizeException ex) {
-            throw new GameBreakingException(
-                    "We have lost a card due to picking it from the deck and not being able to " +
-                    "put it anywhere"
-            );
-        }
-    }
-
-    public void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
-    throws GameStatusException, TurnsOrderException, GameBreakingException,
-           IllegalPlayerSpaceActionException, IllegalPickActionException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
-            throw new GameStatusException("the game is not ongoing");
-        }
-        if (currentPlaying != playerManager.getPlayer(nickname)) {
-            throw new TurnsOrderException(
-                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
-            );
-        }
-        try {
-            if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
-                PlayableCard card = pickablesTable.pickPlayableVisible(cardID);
-                playerManager.getPlayer(nickname).space().addCardToHand(card);
-            } else {
-                throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
-            }
-        } catch (MaxHandSizeException ex) {
-            throw new GameBreakingException(
-                    "We have lost a card due to picking it from the visible and not being able " +
-                    "to put it anywhere"
-            );
-        }
-    }
-
-    public Optional<Color> getDeckTop(PlayableCardType type) {
-        return pickablesTable.getDeckTop(type);
     }
 
     //endregion
