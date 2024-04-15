@@ -23,7 +23,6 @@ public class GameLogic implements GameModel {
     private final PlayerManager playerManager;
     private final PickablesTable pickablesTable;
     private final Plateau plateau;
-    private Player firstPlayer;
     private Player currentPlaying;
 
     //region Constructor 
@@ -447,96 +446,6 @@ public class GameLogic implements GameModel {
         }
         plateau.addPlayerPoints(player, points);
     }
-
-    /**
-     * This method transfer a <code>GoldCard</code> from the top of the gold deck to the hand of the
-     * player
-     *
-     * @param nickname nickname of the player of interest
-     * @return the ID of the picked <code>GoldCard</code>
-     * @throws GameBreakingException             if an unexpected modification of the hand has
-     *                                           caused a card to be lost
-     * @throws EmptyDeckException                if the deck is empty
-     * @throws IllegalPlayerSpaceActionException if the hand is already full
-     * @throws TurnsOrderException               if it's not that player turn
-     * @throws GameStatusException               if the game is not ongoing
-     */
-    @Override //
-    public int drawFromGoldDeck(@NotNull String nickname)
-    throws GameBreakingException,
-           EmptyDeckException,
-           IllegalPlayerSpaceActionException,
-           TurnsOrderException, GameStatusException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
-            throw new GameStatusException("the game is not ongoing");
-        }
-        if (currentPlaying != playerManager.getPlayer(nickname)) {
-            throw new TurnsOrderException(
-                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
-            );
-        }
-        try {
-            if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
-                PlayableCard card = pickablesTable.drawPlayableFrom(PlayableCardType.GOLD);
-                playerManager.getPlayer(nickname).space().addCardToHand(card);
-                return card.getId();
-            } else {
-                throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
-            }
-        } catch (MaxHandSizeException ex) {
-            throw new GameBreakingException(
-                    "We have lost a card due to picking it from the deck and not being able to " +
-                    "put it anywhere"
-            );
-        }
-    }
-
-    /**
-     * This method transfer a <code>ResourceCard</code> from the top of the resource deck to the
-     * hand of the player
-     *
-     * @param nickname nickname of the player of interest
-     * @return the ID of the picked <code>ResourceCard</code>
-     * @throws GameBreakingException             if an unexpected modification of the hand has
-     *                                           caused a card to be lost
-     * @throws EmptyDeckException                if the deck is empty
-     * @throws IllegalPlayerSpaceActionException if the hand is already full
-     * @throws TurnsOrderException               if it's not that player turn
-     * @throws GameStatusException               if the game is not ongoing
-     */
-    @Override //
-    public int drawFromResourceDeck(@NotNull String nickname)
-    throws
-    GameBreakingException,
-    EmptyDeckException,
-    IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
-            throw new GameStatusException("the game is not ongoing");
-        }
-        if (currentPlaying != playerManager.getPlayer(nickname)) {
-            throw new TurnsOrderException(
-                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
-            );
-        }
-        try {
-            if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
-                PlayableCard card = pickablesTable.drawPlayableFrom(PlayableCardType.RESOURCE);
-                playerManager.getPlayer(nickname).space().addCardToHand(card);
-                return card.getId();
-            } else {
-                throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
-            }
-        } catch (MaxHandSizeException ex) {
-            throw new GameBreakingException(
-                    "We have lost a card due to picking it from the deck and not being able to " +
-                    "put it anywhere"
-            );
-        }
-    }
-
-    //endregion
-
-    //region TurnsActions  javadoc
 
     @Override
     public int drawFromDeckOf(PlayableCardType type, String nickname)

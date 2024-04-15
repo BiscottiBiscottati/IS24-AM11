@@ -84,16 +84,6 @@ public interface GameModel {
            TurnsOrderException,
            IllegalPlateauActionException, GameStatusException, NotInHandException;
 
-    int drawFromGoldDeck(String nickname)
-    throws GameBreakingException,
-           EmptyDeckException,
-           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException;
-
-    int drawFromResourceDeck(String nickname)
-    throws GameBreakingException,
-           EmptyDeckException,
-           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException;
-
     int drawFromDeckOf(PlayableCardType type, String nickname)
     throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
            IllegalPlayerSpaceActionException;
