@@ -254,7 +254,7 @@ public class GameLogic implements GameModel {
     }
 
     /**
-     * Retrieve the ranking of a player at the end of the game, there could be more player whit the
+     * Retrieve the ranking of a player at the end of the game, there could be more player with the
      * same ranking
      *
      * @param nickname of the player of interest
@@ -367,7 +367,7 @@ public class GameLogic implements GameModel {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
-        Player player = players.get("nicname");
+        Player player = players.get(nickname);
         if (player != null) {
             plateau.removePlayer(player);
             players.remove(nickname);
@@ -402,7 +402,7 @@ public class GameLogic implements GameModel {
     }
 
     /**
-     * Pick a <code>StarterCard</code> from the deck on the <code>PickablesTable</code>.
+     * Pick a <code>StarterCard</code> from the deck on the <code>PickableTable</code>.
      *
      * @return the ID of a <code>StarterCard</code>
      * @throws EmptyDeckException  if the deck of  <code>StartingCard</code> is empty
@@ -417,7 +417,7 @@ public class GameLogic implements GameModel {
     }
 
     /**
-     * Pick a <code>ObjectiveCard</code> from the deck on the <code>PickablesTable</code>.
+     * Pick a <code>ObjectiveCard</code> from the deck on the <code>PickableTable</code>.
      *
      * @return the ID of a <code>ObjectiveCard</code>
      * @throws EmptyDeckException  if the deck of  <code>ObjectiveCard</code> is empty
@@ -579,7 +579,6 @@ public class GameLogic implements GameModel {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableCardFrom(PlayableCardType.GOLD);
                 players.get(nickname).space().addCardToHand(card);
-                assert card != null;
                 return card.getId();
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
@@ -623,7 +622,6 @@ public class GameLogic implements GameModel {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableCardFrom(PlayableCardType.RESOURCE);
                 players.get(nickname).space().addCardToHand(card);
-                assert card != null;
                 return card.getId();
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
@@ -756,7 +754,7 @@ public class GameLogic implements GameModel {
     }
 
     /**
-     * Ends the current game and gives the possiblity to add or remove players.
+     * Ends the current game and gives the possibility to add or remove players.
      */
     @Override //DONE
     public void endGame() {
