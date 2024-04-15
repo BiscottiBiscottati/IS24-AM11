@@ -280,12 +280,15 @@ public class GameLogic implements GameModel {
      */
     @Override // DONE
     public void removePlayer(@NotNull String nickname)
-    throws GameStatusException, PlayerInitException {
+    throws GameStatusException {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
-        plateau.removePlayer(playerManager.getPlayer(nickname));
-        playerManager.removePlayer(nickname);
+        try {
+            plateau.removePlayer(playerManager.getPlayer(nickname));
+            playerManager.removePlayer(nickname);
+        } catch (PlayerInitException ignored) {
+        }
     }
 
     /**

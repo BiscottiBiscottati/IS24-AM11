@@ -40,8 +40,6 @@ class GameLogicTest {
 
     @Test
     void getCurrentTurnPlayer() {
-        
-
     }
 
     @Test

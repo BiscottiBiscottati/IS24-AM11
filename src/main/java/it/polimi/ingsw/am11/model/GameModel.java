@@ -63,7 +63,7 @@ public interface GameModel {
     void addPlayerToTable(String nickname, PlayerColor colour)
     throws PlayerInitException, GameStatusException;
 
-    void removePlayer(@NotNull String nickname) throws GameStatusException, PlayerInitException;
+    void removePlayer(@NotNull String nickname) throws GameStatusException;
 
     int pickStarter() throws EmptyDeckException, GameStatusException;
 
