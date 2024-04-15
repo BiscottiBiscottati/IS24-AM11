@@ -1,17 +1,27 @@
 package it.polimi.ingsw.am11.cards.playable;
 
+import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.enums.*;
+import it.polimi.ingsw.am11.decks.Deck;
+import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
+import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
+import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SuppressWarnings("DataFlowIssue")
 class GoldCardTest {
 
-    private static GoldCard goldClassic;
-    private static PlayableCard goldSymbols;
+    static GoldCard goldClassic;
+    static PlayableCard goldSymbols;
+    static PlayableCard goldCovering;
+    static Deck<ResourceCard> resourceDeck;
+    static Deck<StarterCard> starterDeck;
 
     @BeforeAll
     static void beforeAll() {
@@ -31,12 +41,25 @@ class GoldCardTest {
                     .hasPointRequirements(PointsRequirementsType.SYMBOLS)
                     .hasSymbolToCollect(Symbol.FEATHER)
                     .build();
+            goldCovering = new GoldCard.Builder(3, 2, Color.PURPLE)
+                    .hasCorner(Corner.TOP_LX)
+                    .hasCorner(Corner.TOP_RX)
+                    .hasPointRequirements(PointsRequirementsType.COVERING_CORNERS)
+                    .build();
         } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
 
+        resourceDeck = ResourceDeckFactory.createDeck();
+        starterDeck = StarterDeckFactory.createDeck();
+
     }
 
+    @BeforeEach
+    void setUp() {
+        resourceDeck.reset();
+        starterDeck.reset();
+    }
 
     @Test
     void getType() {
@@ -152,5 +175,53 @@ class GoldCardTest {
                 () -> new GoldCard.Builder(191, 3, Color.PURPLE)
                         .build()
         );
+    }
+
+    @Test
+    void isFrontAvailable() {
+        assertTrue(goldClassic.isFrontAvailable(Corner.TOP_LX));
+        assertTrue(goldClassic.isFrontAvailable(Corner.TOP_RX));
+        assertFalse(goldClassic.isFrontAvailable(Corner.DOWN_LX));
+        assertFalse(goldClassic.isFrontAvailable(Corner.DOWN_RX));
+    }
+
+    @Test
+    void getPlacingRequirementsOf() {
+        assertEquals(3, goldClassic.getPlacingRequirementsOf(Color.RED));
+        assertEquals(1, goldClassic.getPlacingRequirementsOf(Color.GREEN));
+        assertEquals(0, goldClassic.getPlacingRequirementsOf(Color.BLUE));
+        assertEquals(0, goldClassic.getPlacingRequirementsOf(Color.PURPLE));
+    }
+
+    @Test
+    void isAvailable() {
+        assertTrue(goldClassic.isAvailable(Corner.TOP_LX, true));
+        assertTrue(goldClassic.isAvailable(Corner.TOP_RX, true));
+        assertFalse(goldClassic.isAvailable(Corner.DOWN_LX, false));
+        assertFalse(goldClassic.isAvailable(Corner.DOWN_RX, false));
+    }
+
+    @Test
+    void countPoints() {
+        PlayerField field = new PlayerField();
+        assertEquals(3, goldClassic.countPoints(field, Position.of(0, 0)));
+
+        try {
+            field.placeStartingCard(starterDeck.draw().orElseThrow(), true);
+            field.place(resourceDeck.draw().orElseThrow(), Position.of(1, - 1), true);
+            field.place(resourceDeck.draw().orElseThrow(), Position.of(1, 1), true);
+            field.place(goldSymbols, Position.of(- 1, - 1), false);
+            field.place(goldSymbols, Position.of(- 1, 1), false);
+        } catch (IllegalCardPlacingException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertEquals(4, goldCovering.countPoints(field, Position.of(2, 0)));
+        try {
+            assertEquals(6, field.place(goldSymbols, Position.of(2, 0), false));
+        } catch (IllegalCardPlacingException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

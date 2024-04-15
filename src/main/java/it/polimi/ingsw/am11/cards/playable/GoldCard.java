@@ -98,7 +98,8 @@ public final class GoldCard extends PlayableCard {
     }
 
     @Override
-    public int countPoints(@NotNull PlayerField playerField, @NotNull Position positionOfCard) {
+    public int countPoints(@NotNull PlayerField playerField,
+                           @NotNull Position positionOfCard) {
         switch (this.pointsRequirements) {
             case CLASSIC -> {
                 return super.countPoints(playerField, positionOfCard);
