@@ -39,7 +39,7 @@ public class GameLogic implements GameModel {
     }
     //endregion
 
-    //region GetterGameStatus DONE
+    //region GetterGameStatus DONE javadoc
 
     /**
      * Retrieves the nicknames of all the players of the current game.
@@ -171,10 +171,6 @@ public class GameLogic implements GameModel {
         return players.get(nickname).field().getAvailablePositions();
     }
 
-    @Override //DONE
-    public Optional<Color> getResourceDeckTop() {
-        return pickablesTable.getResourceDeckTop();
-    }
     //endregion
 
     //region GettersPickableTable DONE javadoc
@@ -234,24 +230,36 @@ public class GameLogic implements GameModel {
 
     //endregion
 
-    //region GettersPlateau DONE
+    //region GettersPlateau DONE javadoc
+
+    /**
+     * Retrive the points that a player has obtained since the start of the game
+     *
+     * @param nickname nickname of the player of interest
+     * @return the points of the player
+     * @throws IllegalPlateauActionException if there isn't a player with that nickname
+     */
     @Override //DONE
     public int getPlayerPoints(@NotNull String nickname) throws IllegalPlateauActionException {
         return plateau.getPlayerPoints(players.get(nickname));
     }
 
-    //endregion
-
-    @Override //DONE
-    public boolean isArmageddonTime() {
-        return plateau.isArmageddonTime();
-    }
-
+    /**
+     * Retrieve the ranking of a player at the end of the game, there could be more player whit the same ranking
+     *
+     * @param nickname of the player of interest
+     * @return the position in the leaderboard of the player
+     */
     @Override //DONE
     public int getPlayerFinishingPosition(@NotNull String nickname) {
         return plateau.getPlayerFinishingPosition(players.get(nickname));
     }
 
+    /**
+     * This method return the winners, there could be more than on winners.
+     *
+     * @return a list with the names of the winners
+     */
     @Override //DONE
     public List<String> getWinner() {
         return plateau.getWinners()
@@ -448,7 +456,7 @@ public class GameLogic implements GameModel {
 
     //endregion
 
-    //region TurnsActions DONE
+    //region TurnsActions DONE javadoc
 
     /**
      * This method handle the changing of the turn and the final turn. If it is not the final turn it checks if it's
@@ -496,7 +504,8 @@ public class GameLogic implements GameModel {
      */
     @Override //DONE
     public void placeCard(@NotNull String nickname, int ID, @NotNull Position position, boolean isRetro)
-    throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException, GameStatusException, NotInHandException {
+    throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException, GameStatusException,
+           NotInHandException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
             throw new GameStatusException("the game is not ongoing");
         }
@@ -547,6 +556,7 @@ public class GameLogic implements GameModel {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableCardFrom(PlayableCardType.GOLD);
                 players.get(nickname).space().addCardToHand(card);
+                assert card != null;
                 return card.getId();
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
@@ -588,6 +598,7 @@ public class GameLogic implements GameModel {
             if (players.get(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableCardFrom(PlayableCardType.RESOURCE);
                 players.get(nickname).space().addCardToHand(card);
+                assert card != null;
                 return card.getId();
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
@@ -640,6 +651,17 @@ public class GameLogic implements GameModel {
 
     }
 
+    /**
+     * This method transfer a <code>ResourceCard</code> from the visible resource cards to the hand of the player.
+     *
+     * @param nickname nickname of the player of interest
+     * @param ID       identifier of the card to be picked
+     * @throws GameBreakingException             if an unexpected modification of the hand has caused a card to be lost
+     * @throws IllegalPickActionException        if the specified card can't be found
+     * @throws IllegalPlayerSpaceActionException if the hand is already full
+     * @throws TurnsOrderException               if it's not that player turn
+     * @throws GameStatusException               if the game is not ongoing
+     */
     @Override //DONE
     public void drawVisibleResource(@NotNull String nickname, int ID)
     throws GameBreakingException,
@@ -672,12 +694,13 @@ public class GameLogic implements GameModel {
 
     //endregion
 
-    //region GameEnding
+    //region GameEnding DONE javadoc
 
     /**
      * calculate the points from common and personal objectives for each player and add them to the plateau
      *
      * @throws IllegalPlateauActionException if a player is not found
+     * @throws GameStatusException           if the game is not ongoing
      */
     @Override //DONE
     public void countObjectivesPoints() throws IllegalPlateauActionException, GameStatusException {
@@ -688,14 +711,14 @@ public class GameLogic implements GameModel {
             for (ObjectiveCard commonObjective : pickablesTable.getCommonObjectives()) {
                 int points = commonObjective.countPoints(player.field());
                 if (points > 0) {
-                    plateau.addCounterObjective(player);
+                    plateau.addCounterObjective(player, 1);
                 }
                 plateau.addPlayerPoints(player, points);
             }
             for (ObjectiveCard privateObjective : player.space().getPlayerObjective()) {
                 int points = privateObjective.countPoints(player.field());
                 if (points > 0) {
-                    plateau.addCounterObjective(player);
+                    plateau.addCounterObjective(player, 1);
                 }
                 plateau.addPlayerPoints(player, points);
             }
