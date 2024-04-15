@@ -53,15 +53,19 @@ public class PickablesTableTest {
     }
 
     @Test
-    public void testgetPlayableByID() {
-        int resourceId = resourceCardDeck.draw().get().getId();
+    public void testGetPlayableByID() {
+        ResourceCard card = resourceCardDeck.draw().orElseThrow();
+        int resourceId = card.getId();
         Optional<PlayableCard> playableCard = pickablesTable.getPlayableByID(resourceId);
 
         Assertions.assertNotNull(playableCard);
         Assertions.assertTrue(playableCard.isPresent());
 
-        PlayableCard card = playableCard.get();
-        Assertions.assertEquals(resourceId, card.getId());
+        PlayableCard playable = playableCard.get();
+        Assertions.assertEquals(resourceId, playable.getId());
+        Assertions.assertEquals(card, playable);
+        Assertions.assertEquals(Optional.of(card), playableCard);
+        Assertions.assertEquals(ResourceCard.class, playable.getClass());
     }
 
     @Test

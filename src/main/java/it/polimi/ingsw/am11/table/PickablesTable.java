@@ -14,7 +14,7 @@ import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,15 +78,9 @@ public class PickablesTable {
     }
 
     public Optional<PlayableCard> getPlayableByID(int id) {
-        Optional<ResourceCard> temp = resourceDeck.getCardById(id);
-        if (temp.isPresent()) {
-            return Optional.of(temp.get());
-        } else if (goldDeck.getCardById(id).isPresent()) {
-            Optional<GoldCard> cardById = goldDeck.getCardById(id);
-            return Optional.of(cardById.get());
-        } else {
-            return Optional.empty();
-        }
+        return resourceDeck.getCardById(id)
+                           .map(PlayableCard.class::cast)
+                           .or(() -> goldDeck.getCardById(id));
     }
 
     public Optional<StarterCard> getStarterByID(int id) {
@@ -97,7 +91,7 @@ public class PickablesTable {
         return objectiveDeck.getCardById(id);
     }
 
-    public @Nullable PlayableCard pickPlayableCardFrom(PlayableCardType type)
+    public @NotNull PlayableCard pickPlayableCardFrom(@NotNull PlayableCardType type)
     throws EmptyDeckException {
         return switch (type) {
             case GOLD -> goldDeck.draw().orElseThrow(
