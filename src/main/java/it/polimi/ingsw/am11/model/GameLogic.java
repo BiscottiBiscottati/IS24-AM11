@@ -301,6 +301,8 @@ public class GameLogic implements GameModel {
                     players.size()
             );
         }
+        playerQueue.clear();
+        playerQueue.addAll(players.values());
         shufflePlayers();
         setStartingPlayer();
         players.values().stream()
@@ -350,13 +352,12 @@ public class GameLogic implements GameModel {
                                                        ruleSet.getNumOfPersonalObjective());
             Player newPlayer = new Player(nickname, colour, newSpace);
             players.put(nickname, newPlayer);
-            playerQueue.add(newPlayer);
             plateau.addPlayer(newPlayer);
         }
     }
 
     /**
-     * Remove a player from the player list.
+     * Remove a player from the player list if present, else it does nothing.
      *
      * @param nickname nickname of the player of interest
      * @throws GameStatusException if a game is in progress
@@ -366,8 +367,11 @@ public class GameLogic implements GameModel {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
-        players.remove(nickname);
-        plateau.removePlayer();
+        Player player = players.get("nicname");
+        if (player != null) {
+            plateau.removePlayer(player);
+            players.remove(nickname);
+        }
     }
 
     /**

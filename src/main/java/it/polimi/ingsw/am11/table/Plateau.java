@@ -40,7 +40,7 @@ public class Plateau {
         status = GameStatus.ARMAGEDDON;
     }
 
-    public void removePlayer() {
+    public void removePlayer(Player player) {
         //TODO
     }
 
