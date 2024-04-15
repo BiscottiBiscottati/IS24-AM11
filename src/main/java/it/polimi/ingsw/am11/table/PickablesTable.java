@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class PickablesTable {
 
@@ -30,8 +31,8 @@ public class PickablesTable {
     private final Deck<ObjectiveCard> objectiveDeck;
     private final Deck<StarterCard> starterDeck;
     private final List<ObjectiveCard> commonObjectives;
-    private final List<PlayableCard> shownGold;
-    private final List<PlayableCard> shownResources;
+    private final List<GoldCard> shownGold;
+    private final List<ResourceCard> shownResources;
 
     public PickablesTable() {
         this.goldDeck = GoldDeckFactory.createDeck();
@@ -45,8 +46,11 @@ public class PickablesTable {
 
     }
 
-    public static void setConstants(int numOfObjectives, int numOfShownPerType) {
+    public static void setNumOfObjectives(int numOfObjectives) {
         PickablesTable.numOfObjectives = numOfObjectives;
+    }
+
+    public static void setNumOfShownPerType(int numOfShownPerType) {
         PickablesTable.numOfShownPerType = numOfShownPerType;
     }
 
@@ -56,14 +60,6 @@ public class PickablesTable {
         return Collections.unmodifiableList(commonObjectives);
     }
 
-    public List<PlayableCard> getShownGold() {
-        return Collections.unmodifiableList(shownGold);
-    }
-
-    public List<PlayableCard> getShownResources() {
-        return Collections.unmodifiableList(shownResources);
-    }
-
     public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
         return switch (type) {
             case GOLD -> goldDeck.peekTop()
@@ -71,22 +67,6 @@ public class PickablesTable {
             case RESOURCE -> resourceDeck.peekTop()
                                          .map(PlayableCard::getColor);
         };
-    }
-
-    public Optional<Color> getGoldDeckTop() {
-        if (goldDeck.peekTop().isPresent()) {
-            return Optional.of(goldDeck.peekTop().get().getColor());
-        } else {
-            return Optional.empty();
-        }
-    }
-
-    public Optional<Color> getResourceDeckTop() {
-        if (resourceDeck.peekTop().isPresent()) {
-            return Optional.of(resourceDeck.peekTop().get().getColor());
-        } else {
-            return Optional.empty();
-        }
     }
 
     public Optional<PlayableCard> getPlayableByID(int id) {
@@ -103,7 +83,7 @@ public class PickablesTable {
         return objectiveDeck.getCardById(id);
     }
 
-    public @NotNull PlayableCard pickPlayableCardFrom(@NotNull PlayableCardType type)
+    public @NotNull PlayableCard drawPlayableFrom(@NotNull PlayableCardType type)
     throws EmptyDeckException {
         return switch (type) {
             case GOLD -> goldDeck.draw().orElseThrow(
@@ -129,31 +109,27 @@ public class PickablesTable {
         commonObjectives.clear();
         shownGold.clear();
         shownResources.clear();
-        resetToInitialCondition();
-        shuffleAllDecks();
+        resetDecks();
+        shuffleDecks();
         try {
             pickCommonObjectives();
         } catch (EmptyDeckException e) {
             throw new RuntimeException(e);
         }
         for (int i = 0; i < numOfShownPerType; i++) {
-            if (goldDeck.draw().isPresent()) {
-                shownGold.add(goldDeck.draw().get());
-            }
-            if (resourceDeck.draw().isPresent()) {
-                shownResources.add(resourceDeck.draw().get());
-            }
+            goldDeck.draw().ifPresent(shownGold::add);
+            resourceDeck.draw().ifPresent(shownResources::add);
         }
     }
 
-    public void resetToInitialCondition() {
+    private void resetDecks() {
         goldDeck.reset();
         resourceDeck.reset();
         objectiveDeck.reset();
         starterDeck.reset();
     }
 
-    public void shuffleAllDecks() {
+    private void shuffleDecks() {
         goldDeck.shuffle();
         resourceDeck.shuffle();
         objectiveDeck.shuffle();
@@ -162,60 +138,57 @@ public class PickablesTable {
 
     public void pickCommonObjectives() throws EmptyDeckException {
         for (int i = 0; i < numOfObjectives; i++) {
-            if (objectiveDeck.draw().isPresent()) {
-                commonObjectives.add(objectiveDeck.draw().get());
-            } else {
-                throw new EmptyDeckException("Objective deck is empty!");
+            commonObjectives.add(objectiveDeck.draw()
+                                              .orElseThrow(() -> new EmptyDeckException(
+                                                      "Objective deck is empty!")));
+        }
+    }
+
+    public PlayableCard pickPlayableVisible(int cardID) throws IllegalPickActionException {
+        return this.getShownPlayable().stream()
+                   .filter(card -> card.getId() == cardID)
+                   .findFirst()
+                   .map(this::removePlayable)
+                   .map(playableCard -> {
+                       supplyVisible();
+                       return playableCard;
+                   })
+                   .orElseThrow(() -> new IllegalPickActionException(
+                           "Card with ID " + cardID + " is not visible!"));
+    }
+
+    public List<PlayableCard> getShownPlayable() {
+        return Stream.concat(shownGold.stream(), shownResources.stream())
+                     .toList();
+    }
+
+    private @NotNull PlayableCard removePlayable(@NotNull PlayableCard playableCard) {
+        switch (playableCard) {
+            case GoldCard goldCard -> {
+                shownGold.remove(goldCard);
+                return goldCard;
+            }
+            case ResourceCard resourceCard -> {
+                shownResources.remove(resourceCard);
+                return resourceCard;
             }
         }
     }
 
-    public PlayableCard pickGoldVisible(int ID) throws IllegalPickActionException {
-        for (PlayableCard card : shownGold) {
-            if (card.getId() == ID) {
-                shownGold.remove(card);
-                supplyGoldVisibles();
-                return card;
-            }
+    private void supplyVisible() {
+        if (shownGold.size() < numOfShownPerType) {
+            goldDeck.draw().ifPresent(shownGold::add);
         }
-        throw new IllegalPickActionException("Gold card with ID " + ID + " is not visible!");
-    }
-
-    public Optional<PlayableCard> supplyGoldVisibles() throws IllegalPickActionException {
-        if (shownGold.size() >= numOfShownPerType) {
-            throw new IllegalPickActionException("There are already enough shown gold cards!");
-        }
-        Optional<GoldCard> drawnCard = goldDeck.draw();
-        if (drawnCard.isPresent()) {
-            shownGold.add(drawnCard.get());
-            return Optional.of(drawnCard.get());
-        } else {
-            return Optional.empty();
+        if (shownResources.size() < numOfShownPerType) {
+            resourceDeck.draw().ifPresent(shownResources::add);
         }
     }
 
-    public PlayableCard pickResourceVisible(int ID) throws IllegalPickActionException {
-        for (PlayableCard card : shownResources) {
-            if (card.getId() == ID) {
-                shownResources.remove(card);
-                supplyResourceVisibles();
-                return card;
-            }
-        }
-        throw new IllegalPickActionException("Resource card with ID " + ID + " is not visible!");
-    }
-
-    public Optional<PlayableCard> supplyResourceVisibles() throws IllegalPickActionException {
-        if (shownResources.size() >= numOfShownPerType) {
-            throw new IllegalPickActionException("There are already enough shown resource cards!");
-        }
-        Optional<ResourceCard> drawnCard = resourceDeck.draw();
-        if (drawnCard.isPresent()) {
-            shownResources.add(drawnCard.get());
-            return Optional.of(drawnCard.get());
-        } else {
-            return Optional.empty();
-        }
+    public int getRemainingDeckOf(@NotNull PlayableCardType type) {
+        return switch (type) {
+            case GOLD -> goldDeck.getRemainingCards();
+            case RESOURCE -> resourceDeck.getRemainingCards();
+        };
     }
 
 }

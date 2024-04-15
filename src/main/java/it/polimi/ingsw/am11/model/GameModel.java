@@ -38,15 +38,10 @@ public interface GameModel {
     //endregion
 
     //region GetterPickableTable
-    Optional<Color> getResourceDeckTop();
-
-    Optional<Color> getGoldDeckTop();
 
     List<Integer> getCommonObjectives();
 
-    List<Integer> getExposedGoldsCrd();
-
-    List<Integer> getExposedResourcesCrd();
+    List<Integer> getExposedCards();
     //endregion
 
     //region GetterPlateau
@@ -89,25 +84,13 @@ public interface GameModel {
            TurnsOrderException,
            IllegalPlateauActionException, GameStatusException, NotInHandException;
 
-    int drawFromGoldDeck(String nickname)
-    throws GameBreakingException,
-           EmptyDeckException,
-           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException;
+    int drawFromDeckOf(PlayableCardType type, String nickname)
+    throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
+           IllegalPlayerSpaceActionException;
 
-    int drawFromResourceDeck(String nickname)
-    throws GameBreakingException,
-           EmptyDeckException,
-           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException;
-
-    void drawVisibleGold(String nickname, int ID)
-    throws GameBreakingException,
-           IllegalPickActionException,
-           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException;
-
-    void drawVisibleResource(String nickname, int ID)
-    throws GameBreakingException,
-           IllegalPickActionException,
-           IllegalPlayerSpaceActionException, TurnsOrderException, GameStatusException;
+    void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
+    throws GameStatusException, TurnsOrderException, GameBreakingException,
+           IllegalPlayerSpaceActionException, IllegalPickActionException;
 
     //TODO add possibility of signaling how many objectives a player has completed
     void countObjectivesPoints() throws IllegalPlateauActionException, GameStatusException;
