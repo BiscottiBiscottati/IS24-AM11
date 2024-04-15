@@ -42,7 +42,8 @@ public class PickablesTableTest {
         objectiveCardDeck = ObjectiveDeckFactory.createDeck();
         starterCardDeck = StarterDeckFactory.createDeck();
 
-        PickablesTable.setConstants(numOfObjectives, numOfShownPerType);
+        PickablesTable.setNumOfObjectives(numOfObjectives);
+        PickablesTable.setNumOfShownPerType(numOfShownPerType);
 
     }
 
@@ -53,8 +54,8 @@ public class PickablesTableTest {
         resourceCardDeck.reset();
 
         goldCardDeck.reset();
-//        objectiveCardDeck.reset();
-//        starterCardDeck.reset();
+        objectiveCardDeck.reset();
+        starterCardDeck.reset();
 
     }
 
