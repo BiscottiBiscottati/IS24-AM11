@@ -16,8 +16,6 @@ import java.util.*;
 
 public class GameLogic implements GameModel {
 
-    //TODO divide game logic in smaller classes like player manager and table manager turn manager
-
     private final RuleSet ruleSet;
     private final PlayerManager playerManager;
     private final PickablesTable pickablesTable;
@@ -281,7 +279,8 @@ public class GameLogic implements GameModel {
         pickablesTable.initialize();
     }
 
-    private void resetAll() {
+    @Override
+    public void resetAll() {
         playerManager.resetAll();
         plateau.reset();
     }
@@ -702,6 +701,7 @@ public class GameLogic implements GameModel {
         return plateau.getStatus();
     }
 
+    @Override
     public Optional<Color> getDeckTop(PlayableCardType type) {
         return pickablesTable.getDeckTop(type);
     }

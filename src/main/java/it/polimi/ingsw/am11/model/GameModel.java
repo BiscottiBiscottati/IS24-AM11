@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.CardContainer;
 import it.polimi.ingsw.am11.players.PlayerColor;
@@ -61,6 +62,8 @@ public interface GameModel {
     //region GameInitialization
     void initGame() throws IllegalNumOfPlayersException, GameStatusException;
 
+    void resetAll();
+
     void addPlayerToTable(String nickname, PlayerColor colour)
     throws PlayerInitException, GameStatusException;
 
@@ -113,6 +116,8 @@ public interface GameModel {
     void endGame();
 
     GameStatus getStatus();
+
+    Optional<Color> getDeckTop(PlayableCardType type);
     //endregion
 
 }
