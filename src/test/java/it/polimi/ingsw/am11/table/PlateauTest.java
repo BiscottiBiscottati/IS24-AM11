@@ -216,4 +216,9 @@ class PlateauTest {
         plateau.addPlayer(player);
         Assertions.assertEquals(0, plateau.getCounterObjective(player));
     }
+
+
+    @Test
+    void removePlayer() {
+    }
 }

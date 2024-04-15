@@ -41,7 +41,11 @@ public class Plateau {
     }
 
     public void removePlayer(Player player) {
-        //TODO
+
+        playerPoints.remove(player);
+        counterObjective.remove(player);
+        finalLeaderboard.remove(player);
+
     }
 
     public void reset() {
