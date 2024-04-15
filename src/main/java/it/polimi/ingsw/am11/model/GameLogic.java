@@ -23,9 +23,7 @@ public class GameLogic implements GameModel {
     private final PlayerManager playerManager;
     private final PickablesTable pickablesTable;
     private final Plateau plateau;
-    private Player currentPlaying;
 
-    //region Constructor 
     public GameLogic() {
         ruleSet = new BasicRuleset();
         setConstants();
@@ -35,16 +33,16 @@ public class GameLogic implements GameModel {
     }
 
     private void setConstants() {
-        PersonalSpace.setConstants(ruleSet.getHandSize(),
-                                   ruleSet.getNumOfPersonalObjective());
+        PersonalSpace.setMaxSizeofHand(ruleSet.getHandSize());
+        PersonalSpace.setMaxObjectives(ruleSet.getNumOfPersonalObjective());
+
         PlayerManager.setMaxNumberOfPlayers(ruleSet.getMaxPlayers());
-        PickablesTable.setConstants(ruleSet.getNumOfCommonObjectives(),
-                                    ruleSet.getMaxRevealedCardsPerType());
+
+        PickablesTable.setNumOfObjectives(ruleSet.getNumOfCommonObjectives());
+        PickablesTable.setNumOfShownPerType(ruleSet.getMaxRevealedCardsPerType());
+
         Plateau.setArmageddonTime(ruleSet.getPointsToArmageddon());
     }
-    //endregion
-
-    //region GetterGameStatus  javadoc
 
     /**
      * Retrieves the nicknames of all the players of the current game.
@@ -103,10 +101,6 @@ public class GameLogic implements GameModel {
         return playerManager.getHand(nickname);
     }
 
-    //endregion
-
-    //region GettersPlayer
-
     /**
      * Each player can have one or more personal objectives represented by the
      * <code>ObjectiveCards</code>.
@@ -157,9 +151,6 @@ public class GameLogic implements GameModel {
     public Set<Position> getAvailablePositions(@NotNull String nickname) {
         return playerManager.getPlayer(nickname).field().getAvailablePositions();
     }
-
-
-    //region GettersPickableTable  javadoc
 
     /**
      * During a game players have objectives in common
@@ -277,9 +268,6 @@ public class GameLogic implements GameModel {
             plateau.addPlayer(newPlayer);
         }
     }
-    //endregion
-
-    //region GameInitialization  javadoc
 
     /**
      * Remove a player from the player list if present, else it does nothing.
@@ -451,14 +439,7 @@ public class GameLogic implements GameModel {
     public int drawFromDeckOf(PlayableCardType type, String nickname)
     throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
            IllegalPlayerSpaceActionException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
-            throw new GameStatusException("the game is not ongoing");
-        }
-        if (currentPlaying != playerManager.getPlayer(nickname)) {
-            throw new TurnsOrderException(
-                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
-            );
-        }
+        checkIfDrawAllowed(nickname);
         try {
             if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.drawPlayableFrom(type);
@@ -479,14 +460,8 @@ public class GameLogic implements GameModel {
     public void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
            IllegalPlayerSpaceActionException, IllegalPickActionException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
-            throw new GameStatusException("the game is not ongoing");
-        }
-        if (currentPlaying != playerManager.getPlayer(nickname)) {
-            throw new TurnsOrderException(
-                    "It's not " + nickname + " turn, it's " + currentPlaying.nickname() + " turn."
-            );
-        }
+        checkIfDrawAllowed(nickname);
+
         try {
             if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableVisible(cardID);
@@ -556,10 +531,16 @@ public class GameLogic implements GameModel {
         return pickablesTable.getDeckTop(type);
     }
 
-    //endregion
-
-    //region GameEnding  javadoc
-
-
-    //endregion
+    private void checkIfDrawAllowed(String nickname)
+    throws GameStatusException, TurnsOrderException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
+            throw new GameStatusException("the game is not ongoing");
+        }
+        String currentTurnPlayer = playerManager.getCurrentTurnPlayer();
+        if (! Objects.equals(currentTurnPlayer, nickname)) {
+            throw new TurnsOrderException(
+                    "It's not " + nickname + " turn, it's " + currentTurnPlayer + " turn."
+            );
+        }
+    }
 }

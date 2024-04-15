@@ -22,8 +22,11 @@ public class PersonalSpace {
         playerObjective = new ArrayList<>(1);
     }
 
-    public static void setConstants(int maxSizeofHand, int maxObjectives) {
+    public static void setMaxSizeofHand(int maxSizeofHand) {
         PersonalSpace.maxSizeofHand = maxSizeofHand;
+    }
+
+    public static void setMaxObjectives(int maxObjectives) {
         PersonalSpace.maxObjectives = maxObjectives;
     }
 
@@ -56,8 +59,9 @@ public class PersonalSpace {
                                      .orElseThrow(() -> new NotInHandException("Card not in hand"));
 
         playerHand.stream()
-                  .filter(card -> card.getId() == cardToRemove);
-
+                  .filter(card -> card.getId() == cardToRemove)
+                  .findFirst()
+                  .ifPresent(playerHand::remove);
     }
 
     public void addObjective(ObjectiveCard newObjective) throws IllegalPlayerSpaceActionException {

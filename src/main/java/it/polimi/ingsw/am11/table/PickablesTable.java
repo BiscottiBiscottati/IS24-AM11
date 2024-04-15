@@ -46,8 +46,11 @@ public class PickablesTable {
 
     }
 
-    public static void setConstants(int numOfObjectives, int numOfShownPerType) {
+    public static void setNumOfObjectives(int numOfObjectives) {
         PickablesTable.numOfObjectives = numOfObjectives;
+    }
+
+    public static void setNumOfShownPerType(int numOfShownPerType) {
         PickablesTable.numOfShownPerType = numOfShownPerType;
     }
 
