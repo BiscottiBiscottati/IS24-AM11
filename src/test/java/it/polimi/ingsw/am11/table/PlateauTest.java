@@ -220,5 +220,15 @@ class PlateauTest {
 
     @Test
     void removePlayer() {
+        Player player = new Player("Test Player",
+                                   PlayerColor.BLUE);
+        plateau.addPlayer(player);
+        plateau.removePlayer(player);
+        Assertions.assertThrows(IllegalPlateauActionException.class,
+                                () -> plateau.getPlayerPoints(player));
+        Assertions.assertThrows(IllegalPlateauActionException.class,
+                                () -> plateau.getCounterObjective(player));
+        Assertions.assertThrows(IllegalPlateauActionException.class,
+                                () -> plateau.getPlayerFinishingPosition(player));
     }
 }

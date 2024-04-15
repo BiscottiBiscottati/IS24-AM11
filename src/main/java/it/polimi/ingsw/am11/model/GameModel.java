@@ -53,7 +53,7 @@ public interface GameModel {
 
     boolean isArmageddonTime();
 
-    int getPlayerFinishingPosition(String nickname);
+    int getPlayerFinishingPosition(String nickname) throws IllegalPlateauActionException;
 
     List<String> getWinner();
 
