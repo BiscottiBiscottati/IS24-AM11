@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class PickablesTable {
 
@@ -30,8 +31,8 @@ public class PickablesTable {
     private final Deck<ObjectiveCard> objectiveDeck;
     private final Deck<StarterCard> starterDeck;
     private final List<ObjectiveCard> commonObjectives;
-    private final List<PlayableCard> shownGold;
-    private final List<PlayableCard> shownResources;
+    private final List<GoldCard> shownGold;
+    private final List<ResourceCard> shownResources;
 
     public PickablesTable() {
         this.goldDeck = GoldDeckFactory.createDeck();
@@ -56,14 +57,6 @@ public class PickablesTable {
         return Collections.unmodifiableList(commonObjectives);
     }
 
-    public List<PlayableCard> getShownGold() {
-        return Collections.unmodifiableList(shownGold);
-    }
-
-    public List<PlayableCard> getShownResources() {
-        return Collections.unmodifiableList(shownResources);
-    }
-
     public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
         return switch (type) {
             case GOLD -> goldDeck.peekTop()
@@ -71,22 +64,6 @@ public class PickablesTable {
             case RESOURCE -> resourceDeck.peekTop()
                                          .map(PlayableCard::getColor);
         };
-    }
-
-    public Optional<Color> getGoldDeckTop() {
-        if (goldDeck.peekTop().isPresent()) {
-            return Optional.of(goldDeck.peekTop().get().getColor());
-        } else {
-            return Optional.empty();
-        }
-    }
-
-    public Optional<Color> getResourceDeckTop() {
-        if (resourceDeck.peekTop().isPresent()) {
-            return Optional.of(resourceDeck.peekTop().get().getColor());
-        } else {
-            return Optional.empty();
-        }
     }
 
     public Optional<PlayableCard> getPlayableByID(int id) {
@@ -103,7 +80,7 @@ public class PickablesTable {
         return objectiveDeck.getCardById(id);
     }
 
-    public @NotNull PlayableCard pickPlayableCardFrom(@NotNull PlayableCardType type)
+    public @NotNull PlayableCard drawPlayableFrom(@NotNull PlayableCardType type)
     throws EmptyDeckException {
         return switch (type) {
             case GOLD -> goldDeck.draw().orElseThrow(
@@ -167,6 +144,46 @@ public class PickablesTable {
             } else {
                 throw new EmptyDeckException("Objective deck is empty!");
             }
+        }
+    }
+
+    public PlayableCard pickPlayableVisible(int cardID) throws IllegalPickActionException {
+        return this.getShownPlayable().stream()
+                   .filter(card -> card.getId() == cardID)
+                   .findFirst()
+                   .map(this::removePlayable)
+                   .map(playableCard -> {
+                       supplyVisible();
+                       return playableCard;
+                   })
+                   .orElseThrow(() -> new IllegalPickActionException(
+                           "Card with ID " + cardID + " is not visible!"));
+    }
+
+    public List<PlayableCard> getShownPlayable() {
+        return Stream.concat(shownGold.stream(), shownResources.stream())
+                     .toList();
+    }
+
+    private @NotNull PlayableCard removePlayable(@NotNull PlayableCard playableCard) {
+        switch (playableCard) {
+            case GoldCard goldCard -> {
+                shownGold.remove(goldCard);
+                return goldCard;
+            }
+            case ResourceCard resourceCard -> {
+                shownResources.remove(resourceCard);
+                return resourceCard;
+            }
+        }
+    }
+
+    private void supplyVisible() {
+        if (shownGold.size() < numOfShownPerType) {
+            goldDeck.draw().ifPresent(shownGold::add);
+        }
+        if (shownResources.size() < numOfShownPerType) {
+            resourceDeck.draw().ifPresent(shownResources::add);
         }
     }
 

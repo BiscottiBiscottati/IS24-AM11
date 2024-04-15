@@ -121,11 +121,11 @@ public class PickablesTableTest {
     }
 
     @Test
-    public void testPickPlayableCardFrom() {
+    public void testDrawPlayableFrom() {
         // Pick cards from goldDeck until it's empty
         while (true) {
             try {
-                PlayableCard goldCard = pickablesTable.pickPlayableCardFrom(GOLD);
+                PlayableCard goldCard = pickablesTable.drawPlayableFrom(GOLD);
                 Assertions.assertNotNull(goldCard);
             } catch (EmptyDeckException e) {
                 break; // Exit the loop when the deck is empty
@@ -135,7 +135,7 @@ public class PickablesTableTest {
         // Pick cards from resourceDeck until it's empty
         while (true) {
             try {
-                PlayableCard resourceCard = pickablesTable.pickPlayableCardFrom(RESOURCE);
+                PlayableCard resourceCard = pickablesTable.drawPlayableFrom(RESOURCE);
                 Assertions.assertNotNull(resourceCard);
             } catch (EmptyDeckException e) {
                 break; // Exit the loop when the deck is empty
