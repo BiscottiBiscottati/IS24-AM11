@@ -41,11 +41,9 @@ public class Plateau {
     }
 
     public void removePlayer(Player player) {
-
         playerPoints.remove(player);
         counterObjective.remove(player);
         finalLeaderboard.remove(player);
-
     }
 
     public void reset() {
@@ -132,9 +130,12 @@ public class Plateau {
         }
     }
 
-    public int getPlayerFinishingPosition(Player player) {
-
-        return finalLeaderboard.getOrDefault(player, - 1);
+    public int getPlayerFinishingPosition(Player player) throws IllegalPlateauActionException {
+        if (finalLeaderboard.containsKey(player)) {
+            return finalLeaderboard.get(player);
+        } else {
+            throw new IllegalPlateauActionException("Player not found");
+        }
     }
 
 

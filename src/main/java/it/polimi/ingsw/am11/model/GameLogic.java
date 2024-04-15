@@ -261,7 +261,8 @@ public class GameLogic implements GameModel {
      * @return the position in the leaderboard of the player
      */
     @Override //DONE
-    public int getPlayerFinishingPosition(@NotNull String nickname) {
+    public int getPlayerFinishingPosition(@NotNull String nickname)
+    throws IllegalPlateauActionException {
         return plateau.getPlayerFinishingPosition(players.get(nickname));
     }
 
