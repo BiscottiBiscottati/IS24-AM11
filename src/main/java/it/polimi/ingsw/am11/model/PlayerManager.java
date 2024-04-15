@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.players.Player;
 import it.polimi.ingsw.am11.players.PlayerColor;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,6 +19,8 @@ public class PlayerManager {
     private final LinkedList<Player> playerQueue;
     private Player firstPlayer;
     private Player currentPlaying;
+
+    //TODO getplayercolor should have an exception
 
     public PlayerManager() {
         this.players = new HashMap<>(8);
@@ -40,15 +43,15 @@ public class PlayerManager {
         return players.size();
     }
 
-    public String getCurrentTurnPlayer() {
-        return currentPlaying.nickname();
+    public @Nullable String getCurrentTurnPlayer() {
+        return (currentPlaying != null) ? currentPlaying.nickname() : null;
     }
 
-    public String getFirstPlayer() {
-        return firstPlayer.nickname();
+    public @Nullable String getFirstPlayer() {
+        return (firstPlayer != null) ? firstPlayer.nickname() : null;
     }
 
-    public Player getPlayer(String nickname) {
+    public @Nullable Player getPlayer(String nickname) {
         return players.get(nickname);
     }
 
@@ -70,8 +73,9 @@ public class PlayerManager {
                       .collect(Collectors.toUnmodifiableSet());
     }
 
-    public PlayerColor getPlayerColor(@NotNull String nickname) {
-        return players.get(nickname).color();
+    public @Nullable PlayerColor getPlayerColor(@NotNull String nickname) {
+        Player player = players.get(nickname);
+        return (player != null) ? player.color() : null;
     }
 
     public Player addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)

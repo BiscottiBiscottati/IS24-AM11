@@ -95,13 +95,13 @@ class PlayerManagerTest {
         assertEquals(4, manager.getNumberOfPlayers());
         manager.removePlayer("Giorgio");
         assertEquals(4, manager.getNumberOfPlayers());
-        manager.removePlayer("Player1");
+        manager.removePlayer("player1");
         assertEquals(3, manager.getNumberOfPlayers());
-        manager.removePlayer("Player2");
+        manager.removePlayer("player2");
         assertEquals(2, manager.getNumberOfPlayers());
-        manager.removePlayer("Player3");
+        manager.removePlayer("player3");
         assertEquals(1, manager.getNumberOfPlayers());
-        manager.removePlayer("Player4");
+        manager.removePlayer("player4");
         assertEquals(0, manager.getNumberOfPlayers());
 
     }
@@ -200,10 +200,10 @@ class PlayerManagerTest {
             throw new RuntimeException(e);
         }
 
-        assertEquals(manager.getPlayerColor("Player1"), PlayerColor.BLUE);
-        assertEquals(manager.getPlayerColor("Player2"), PlayerColor.GREEN);
-        assertEquals(manager.getPlayerColor("Player3"), PlayerColor.RED);
-        assertEquals(manager.getPlayerColor("Player4"), PlayerColor.YELLOW);
+        assertEquals(manager.getPlayerColor("player1"), PlayerColor.BLUE);
+        assertEquals(manager.getPlayerColor("player2"), PlayerColor.GREEN);
+        assertEquals(manager.getPlayerColor("player3"), PlayerColor.RED);
+        assertEquals(manager.getPlayerColor("player4"), PlayerColor.YELLOW);
     }
 
     @Test
@@ -250,8 +250,8 @@ class PlayerManagerTest {
         }
 
         //removing a player
-        manager.removePlayer("Player1");
-        assertNull(manager.getPlayer("Player1"));
+        manager.removePlayer("player1");
+        assertNull(manager.getPlayer("player1"));
         Set<String> players = Set.of("player2", "player3", "player4");
         assertEquals(players, manager.getPlayers());
 
@@ -271,13 +271,12 @@ class PlayerManagerTest {
         } catch (PlayerInitException e) {
             throw new RuntimeException(e);
         }
-
         manager.startingTheGame();
 
         assertTrue(manager.isFirstTheCurrent());
 
-        for (int i = 0; i < players.size(); i++) {
-            goNextTurn();
+        for (int i = 0; i < 4; i++) {
+            manager.goNextTurn();
         }
         assertTrue(manager.isFirstTheCurrent());
     }
