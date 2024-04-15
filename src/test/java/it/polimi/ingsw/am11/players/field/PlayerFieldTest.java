@@ -195,7 +195,8 @@ class PlayerFieldTest {
         assertEquals(1, availablePos.size());
 
         // Place a StarterCard on its retro as they always have all corners available
-        assertDoesNotThrow(() -> playerField.placeStartingCard(starterDeck.draw().orElseThrow(), true));
+        assertDoesNotThrow(
+                () -> playerField.placeStartingCard(starterDeck.draw().orElseThrow(), true));
 
         Set<Position> availablePosAfterStarter = playerField.getAvailablePositions();
         Stream.of(Corner.values())
@@ -210,7 +211,8 @@ class PlayerFieldTest {
         assertFalse(playerField.isAvailable(Position.of(1, 1)));
 
         // Place a StarterCard on its retro as they always have all corners available
-        assertDoesNotThrow(() -> playerField.placeStartingCard(starterDeck.draw().orElseThrow(), true));
+        assertDoesNotThrow(
+                () -> playerField.placeStartingCard(starterDeck.draw().orElseThrow(), true));
         // Check that all corners are available
         Stream.of(Corner.values())
               .map(corner -> PositionManager.getPositionIn(Position.of(0, 0), corner))
@@ -293,6 +295,8 @@ class PlayerFieldTest {
         assertDoesNotThrow(() -> playerField.placeStartingCard(card, true));
         Stream.of(Color.values())
               .forEach(color -> assertEquals(0, playerField.getNumberOfPositionedColor(color)));
+
+        // TODO better test to do
 
         ResourceCard resourceCard = resourceDeck.draw().orElseThrow();
         assertDoesNotThrow(() -> playerField.place(resourceCard,
