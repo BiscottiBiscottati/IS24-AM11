@@ -39,8 +39,6 @@ public interface GameModel {
 
     //region GetterPickableTable
 
-    Optional<Color> getDeckTop(PlayableCardType type);
-
     List<Integer> getCommonObjectives();
 
     List<Integer> getExposedCards();

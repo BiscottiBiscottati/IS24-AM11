@@ -162,10 +162,6 @@ public class GameLogic implements GameModel {
 
     //region GettersPickableTable  javadoc
 
-    public Optional<Color> getDeckTop(PlayableCardType type) {
-        return pickablesTable.getDeckTop(type);
-    }
-
     /**
      * During a game players have objectives in common
      *
@@ -187,10 +183,6 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
-    //endregion
-
-    //region GettersPlateau  javadoc
-
     /**
      * Retrive the points that a player has obtained since the start of the game
      *
@@ -202,6 +194,10 @@ public class GameLogic implements GameModel {
     public int getPlayerPoints(@NotNull String nickname) throws IllegalPlateauActionException {
         return plateau.getPlayerPoints(playerManager.getPlayer(nickname));
     }
+
+    //endregion
+
+    //region GettersPlateau  javadoc
 
     /**
      * Retrieve the ranking of a player at the end of the game, there could be more player with the
@@ -254,13 +250,10 @@ public class GameLogic implements GameModel {
         pickablesTable.initialize();
     }
 
-    private void resetAll() {
+    public void resetAll() {
         playerManager.resetAll();
         plateau.reset();
     }
-    //endregion
-
-    //region GameInitialization  javadoc
 
     /**
      * This method can be used to add a new player in the game during the setting up phase.
@@ -285,6 +278,9 @@ public class GameLogic implements GameModel {
             plateau.addPlayer(newPlayer);
         }
     }
+    //endregion
+
+    //region GameInitialization  javadoc
 
     /**
      * Remove a player from the player list if present, else it does nothing.
@@ -495,10 +491,6 @@ public class GameLogic implements GameModel {
         }
     }
 
-    //endregion
-
-    //region TurnsActions  javadoc
-
     /**
      * This method transfer a <code>ResourceCard</code> from the top of the resource deck to the
      * hand of the player
@@ -541,6 +533,10 @@ public class GameLogic implements GameModel {
             );
         }
     }
+
+    //endregion
+
+    //region TurnsActions  javadoc
 
     @Override
     public int drawFromDeckOf(PlayableCardType type, String nickname)
@@ -645,6 +641,10 @@ public class GameLogic implements GameModel {
     @Override
     public GameStatus getStatus() {
         return plateau.getStatus();
+    }
+
+    public Optional<Color> getDeckTop(PlayableCardType type) {
+        return pickablesTable.getDeckTop(type);
     }
 
     //endregion
