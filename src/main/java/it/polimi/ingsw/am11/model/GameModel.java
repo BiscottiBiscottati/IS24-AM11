@@ -31,9 +31,9 @@ public interface GameModel {
     PlayerColor getPlayerColor(String nickname);
 
     //FIXME this interface has to be changed, it can't return a map
-    Map<Position, CardContainer> getPositionedCard(String nickname);
+    Map<Position, CardContainer> getPositionedCard(String nickname) throws PlayerInitException;
 
-    Set<Position> getAvailablePositions(String nickname);
+    Set<Position> getAvailablePositions(String nickname) throws PlayerInitException;
 
     //endregion
 
@@ -46,9 +46,10 @@ public interface GameModel {
 
     //region GetterPlateau
     int getPlayerPoints(String nickname)
-    throws IllegalPlateauActionException;
+    throws IllegalPlateauActionException, PlayerInitException;
 
-    int getPlayerFinishingPosition(String nickname) throws IllegalPlateauActionException;
+    int getPlayerFinishingPosition(String nickname)
+    throws IllegalPlateauActionException, PlayerInitException;
 
     List<String> getWinner();
 
@@ -62,17 +63,17 @@ public interface GameModel {
     void addPlayerToTable(String nickname, PlayerColor colour)
     throws PlayerInitException, GameStatusException;
 
-    void removePlayer(@NotNull String nickname) throws GameStatusException;
+    void removePlayer(@NotNull String nickname) throws GameStatusException, PlayerInitException;
 
     int pickStarter() throws EmptyDeckException, GameStatusException;
 
     int pickObjective() throws EmptyDeckException, GameStatusException;
 
     void setStarterFor(String nickname, int cardID, boolean isRetro)
-    throws IllegalCardPlacingException, GameStatusException;
+    throws IllegalCardPlacingException, GameStatusException, PlayerInitException;
 
     void setObjectiveFor(String nickname, int cardID)
-    throws IllegalPlayerSpaceActionException, GameStatusException;
+    throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException;
     //endregion
 
     //region TurnsActions
@@ -82,18 +83,20 @@ public interface GameModel {
     void placeCard(String Nickname, int ID, Position position, boolean isRetro)
     throws IllegalCardPlacingException,
            TurnsOrderException,
-           IllegalPlateauActionException, GameStatusException, NotInHandException;
+           IllegalPlateauActionException, GameStatusException, NotInHandException,
+           PlayerInitException;
 
     int drawFromDeckOf(PlayableCardType type, String nickname)
     throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
-           IllegalPlayerSpaceActionException;
+           IllegalPlayerSpaceActionException, PlayerInitException;
 
     void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
-           IllegalPlayerSpaceActionException, IllegalPickActionException;
+           IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException;
 
     //TODO add possibility of signaling how many objectives a player has completed
-    void countObjectivesPoints() throws IllegalPlateauActionException, GameStatusException;
+    void countObjectivesPoints()
+    throws IllegalPlateauActionException, GameStatusException, GameBreakingException;
 
     //DONE
     void endGame();

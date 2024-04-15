@@ -163,10 +163,14 @@ class PlayerManagerTest {
             throw new RuntimeException(e);
         }
         for (String nickname : players) {
-            assertEquals(nickname, manager.getPlayer(nickname).nickname());
+            try {
+                assertEquals(nickname, manager.getPlayer(nickname).nickname());
+            } catch (PlayerInitException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        assertNull(manager.getPlayer("Giorgio"));
+        assertThrows(PlayerInitException.class, () -> manager.getPlayer("giorgio"));
     }
 
     @Test
@@ -251,7 +255,7 @@ class PlayerManagerTest {
 
         //removing a player
         manager.removePlayer("player1");
-        assertNull(manager.getPlayer("player1"));
+        assertThrows(PlayerInitException.class, () -> manager.getPlayer("player1"));
         Set<String> players = Set.of("player2", "player3", "player4");
         assertEquals(players, manager.getPlayers());
 

@@ -20,8 +20,6 @@ public class PlayerManager {
     private Player firstPlayer;
     private Player currentPlaying;
 
-    //TODO getplayercolor should have an exception
-
     public PlayerManager() {
         this.players = new HashMap<>(8);
         this.playerQueue = new LinkedList<>();
@@ -51,8 +49,13 @@ public class PlayerManager {
         return (firstPlayer != null) ? firstPlayer.nickname() : null;
     }
 
-    public @Nullable Player getPlayer(String nickname) {
-        return players.get(nickname);
+    public @NotNull Player getPlayer(String nickname) throws PlayerInitException {
+        Player player = players.get(nickname);
+        if (player != null) {
+            return player;
+        } else {
+            throw new PlayerInitException("Player " + nickname + " not found");
+        }
     }
 
     public Set<Integer> getHand(String nickname) {

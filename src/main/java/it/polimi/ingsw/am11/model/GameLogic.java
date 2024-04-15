@@ -131,7 +131,8 @@ public class GameLogic implements GameModel {
 
     @Override
     //TODO model shouldn't return something that has a reference of a Card, it should use ID
-    public Map<Position, CardContainer> getPositionedCard(@NotNull String nickname) {
+    public Map<Position, CardContainer> getPositionedCard(@NotNull String nickname)
+    throws PlayerInitException {
         return playerManager.getPlayer(nickname).field().getCardsPositioned();
     }
 
@@ -148,7 +149,8 @@ public class GameLogic implements GameModel {
      * in the field
      */
     @Override //
-    public Set<Position> getAvailablePositions(@NotNull String nickname) {
+    public Set<Position> getAvailablePositions(@NotNull String nickname)
+    throws PlayerInitException {
         return playerManager.getPlayer(nickname).field().getAvailablePositions();
     }
 
@@ -181,7 +183,8 @@ public class GameLogic implements GameModel {
      * @throws IllegalPlateauActionException if there isn't a player with that nickname
      */
     @Override //
-    public int getPlayerPoints(@NotNull String nickname) throws IllegalPlateauActionException {
+    public int getPlayerPoints(@NotNull String nickname)
+    throws IllegalPlateauActionException, PlayerInitException {
         return plateau.getPlayerPoints(playerManager.getPlayer(nickname));
     }
 
@@ -198,7 +201,7 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public int getPlayerFinishingPosition(@NotNull String nickname)
-    throws IllegalPlateauActionException {
+    throws IllegalPlateauActionException, PlayerInitException {
         return plateau.getPlayerFinishingPosition(playerManager.getPlayer(nickname));
     }
 
@@ -276,7 +279,8 @@ public class GameLogic implements GameModel {
      * @throws GameStatusException if a game is in progress
      */
     @Override // DONE
-    public void removePlayer(@NotNull String nickname) throws GameStatusException {
+    public void removePlayer(@NotNull String nickname)
+    throws GameStatusException, PlayerInitException {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
@@ -327,7 +331,7 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public void setStarterFor(@NotNull String nickname, int cardID, boolean isRetro)
-    throws IllegalCardPlacingException, GameStatusException {
+    throws IllegalCardPlacingException, GameStatusException, PlayerInitException {
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
         }
@@ -345,7 +349,7 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public void setObjectiveFor(@NotNull String nickname, int cardID)
-    throws IllegalPlayerSpaceActionException, GameStatusException {
+    throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException {
         //The rules book says that unused objectives have to be returned to the deck, but it
         // seems like
         //a useless action
@@ -408,10 +412,11 @@ public class GameLogic implements GameModel {
                           boolean isRetro)
     throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException,
            GameStatusException,
-           NotInHandException {
+           NotInHandException, PlayerInitException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
             throw new GameStatusException("the game is not ongoing");
         }
+        Player player = playerManager.getPlayer(nickname);
         if (! Objects.equals(playerManager.getCurrentTurnPlayer(), nickname)) {
             throw new TurnsOrderException(
                     "It's not " + nickname + " turn, it's " + playerManager.getCurrentTurnPlayer() +
@@ -421,7 +426,6 @@ public class GameLogic implements GameModel {
         PlayableCard card = pickablesTable.getPlayableByID(cardID)
                                           .orElseThrow(() -> new IllegalCardPlacingException(
                                                   "Card not found"));
-        Player player = playerManager.getPlayer(nickname);
         int points = 0;
         if (player.field().isAvailable(position)) {
             if (player.field().isRequirementMet(card, isRetro)) {
@@ -438,7 +442,7 @@ public class GameLogic implements GameModel {
     @Override
     public int drawFromDeckOf(PlayableCardType type, String nickname)
     throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
-           IllegalPlayerSpaceActionException {
+           IllegalPlayerSpaceActionException, PlayerInitException {
         checkIfDrawAllowed(nickname);
         try {
             if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
@@ -459,7 +463,7 @@ public class GameLogic implements GameModel {
     @Override
     public void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
-           IllegalPlayerSpaceActionException, IllegalPickActionException {
+           IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException {
         checkIfDrawAllowed(nickname);
 
         try {
@@ -485,12 +489,18 @@ public class GameLogic implements GameModel {
      * @throws GameStatusException           if the game is not ongoing
      */
     @Override //
-    public void countObjectivesPoints() throws IllegalPlateauActionException, GameStatusException {
+    public void countObjectivesPoints()
+    throws IllegalPlateauActionException, GameStatusException, GameBreakingException {
         if (plateau.getStatus() != GameStatus.ENDED) {
             throw new GameStatusException("the game has not ended yet");
         }
         for (String nickname : playerManager.getPlayers()) {
-            Player player = playerManager.getPlayer(nickname);
+            Player player;
+            try {
+                player = playerManager.getPlayer(nickname);
+            } catch (PlayerInitException e) {
+                throw new GameBreakingException("Discrepancies between playerManager and itself");
+            }
             for (ObjectiveCard commonObjective : pickablesTable.getCommonObjectives()) {
                 int points = commonObjective.countPoints(player.field());
                 if (points > 0) {

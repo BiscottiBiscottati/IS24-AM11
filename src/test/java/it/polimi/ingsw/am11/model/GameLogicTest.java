@@ -23,6 +23,7 @@ class GameLogicTest {
     @Test
     void getPlayers() {
         Set<String> players = Set.of("player1", "player2", "player3");
+        assertTrue(model.getPlayers().isEmpty());
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
@@ -39,7 +40,7 @@ class GameLogicTest {
 
     @Test
     void getCurrentTurnPlayer() {
-
+        
 
     }
 
