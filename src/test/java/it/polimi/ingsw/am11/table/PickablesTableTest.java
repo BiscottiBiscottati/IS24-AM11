@@ -1,11 +1,14 @@
 package it.polimi.ingsw.am11.table;
 
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.decks.Deck;
+import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
+import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
 import org.junit.jupiter.api.Assertions;
@@ -18,14 +21,15 @@ import java.util.Optional;
 
 import static it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType.GOLD;
 import static it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType.RESOURCE;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PickablesTableTest {
     static Deck<ResourceCard> resourceCardDeck;
-    /*
+
     static Deck<GoldCard> goldCardDeck;
-    static Deck<ObjectiveCard> objectiveCardDeck;
+    //    static Deck<ObjectiveCard> objectiveCardDeck;
     static Deck<StarterCard> starterCardDeck;
-     */
+
     int numOfObjectives = 2;
     int numOfShownPerType = 2;
     PickablesTable pickablesTable;
@@ -33,11 +37,11 @@ public class PickablesTableTest {
     @BeforeAll
     static void beforeAll() {
         resourceCardDeck = ResourceDeckFactory.createDeck();
-        /*
+
         goldCardDeck = GoldDeckFactory.createDeck();
-        objectiveCardDeck = ObjectiveDeckFactory.createDeck();
+//        objectiveCardDeck = ObjectiveDeckFactory.createDeck();
         starterCardDeck = StarterDeckFactory.createDeck();
-         */
+
     }
 
     @BeforeEach
@@ -45,11 +49,11 @@ public class PickablesTableTest {
         pickablesTable = new PickablesTable(numOfObjectives, numOfShownPerType);
         pickablesTable.initialize();
         resourceCardDeck.reset();
-        /*
+
         goldCardDeck.reset();
-        objectiveCardDeck.reset();
-        starterCardDeck.reset();
-         */
+//        objectiveCardDeck.reset();
+//        starterCardDeck.reset();
+
     }
 
     @Test
@@ -62,18 +66,32 @@ public class PickablesTableTest {
         Assertions.assertTrue(playableCard.isPresent());
 
         PlayableCard playable = playableCard.get();
-        Assertions.assertEquals(resourceId, playable.getId());
-        Assertions.assertEquals(card, playable);
-        Assertions.assertEquals(Optional.of(card), playableCard);
-        Assertions.assertEquals(ResourceCard.class, playable.getClass());
+        assertEquals(resourceId, playable.getId());
+        assertEquals(card, playable);
+        assertEquals(Optional.of(card), playableCard);
+        assertEquals(ResourceCard.class, playable.getClass());
+
+        GoldCard goldCard = goldCardDeck.draw().orElseThrow();
+        playableCard = pickablesTable.getPlayableByID(goldCard.getId());
+
+        Assertions.assertNotNull(playableCard);
+        Assertions.assertTrue(playableCard.isPresent());
+
+        assertEquals(Optional.of(goldCard), playableCard);
+
+        StarterCard starterCard = starterCardDeck.draw().orElseThrow();
+        playableCard = pickablesTable.getPlayableByID(starterCard.getId());
+
+        assertNotNull(playableCard);
+        assertTrue(playableCard.isEmpty());
     }
 
     @Test
     public void testInitialize() {
         pickablesTable.initialize();
-        Assertions.assertEquals(numOfObjectives, pickablesTable.getCommonObjectives().size());
-        Assertions.assertEquals(numOfShownPerType, pickablesTable.getShownGold().size());
-        Assertions.assertEquals(numOfShownPerType, pickablesTable.getShownResources().size());
+        assertEquals(numOfObjectives, pickablesTable.getCommonObjectives().size());
+        assertEquals(numOfShownPerType, pickablesTable.getShownGold().size());
+        assertEquals(numOfShownPerType, pickablesTable.getShownResources().size());
         Assertions.assertTrue(pickablesTable.getResourceDeckTop().isPresent());
         Assertions.assertTrue(pickablesTable.getGoldDeckTop().isPresent());
     }
@@ -87,7 +105,7 @@ public class PickablesTableTest {
         // Get the ID of the first card in the list
         int cardId = shownGold.getFirst().getId();
         PlayableCard card = pickablesTable.pickGoldVisible(cardId);
-        Assertions.assertEquals(numOfShownPerType, pickablesTable.getShownGold().size());
+        assertEquals(numOfShownPerType, pickablesTable.getShownGold().size());
     }
 
     @Test
@@ -99,7 +117,7 @@ public class PickablesTableTest {
         // Get the ID of the first card in the list
         int cardId = shownResources.getFirst().getId();
         PlayableCard card = pickablesTable.pickResourceVisible(cardId);
-        Assertions.assertEquals(numOfShownPerType, pickablesTable.getShownResources().size());
+        assertEquals(numOfShownPerType, pickablesTable.getShownResources().size());
     }
 
     @Test
