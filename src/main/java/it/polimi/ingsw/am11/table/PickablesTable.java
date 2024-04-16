@@ -181,8 +181,8 @@ public class PickablesTable {
 
     public Set<PlayableCard> getShownPlayable(@NotNull PlayableCardType type) {
         return switch (type) {
-            case GOLD -> Collections.unmodifiableSet(shownGold);
-            case RESOURCE -> Collections.unmodifiableSet(shownResources);
+            case GOLD -> Set.copyOf(shownGold);
+            case RESOURCE -> Set.copyOf(shownResources);
         };
     }
 
