@@ -147,7 +147,24 @@ class GameLogicTest {
 
     @Test
     void getCommonObjectives() {
-        //TODO
+        {
+            Set<String> players = Set.of("player1", "player2", "player3", "player4");
+            try {
+                model.addPlayerToTable("player1", PlayerColor.BLUE);
+                model.addPlayerToTable("player2", PlayerColor.GREEN);
+                model.addPlayerToTable("player3", PlayerColor.RED);
+                model.addPlayerToTable("player4", PlayerColor.YELLOW);
+            } catch (PlayerInitException | GameStatusException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                model.initGame();
+            } catch (IllegalNumOfPlayersException | GameStatusException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
     }
 
     @Test

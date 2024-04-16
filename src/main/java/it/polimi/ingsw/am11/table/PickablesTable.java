@@ -16,7 +16,10 @@ import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class PickablesTable {
@@ -27,9 +30,9 @@ public class PickablesTable {
     private final Deck<ResourceCard> resourceDeck;
     private final Deck<ObjectiveCard> objectiveDeck;
     private final Deck<StarterCard> starterDeck;
-    private final List<ObjectiveCard> commonObjectives;
-    private final List<GoldCard> shownGold;
-    private final List<ResourceCard> shownResources;
+    private final Set<ObjectiveCard> commonObjectives;
+    private final Set<GoldCard> shownGold;
+    private final Set<ResourceCard> shownResources;
 
     public PickablesTable() {
         this.goldDeck = GoldDeckFactory.createDeck();
@@ -37,9 +40,9 @@ public class PickablesTable {
         this.objectiveDeck = ObjectiveDeckFactory.createDeck();
         this.starterDeck = StarterDeckFactory.createDeck();
 
-        this.commonObjectives = new ArrayList<>(numOfObjectives);
-        this.shownGold = new ArrayList<>(numOfShownPerType);
-        this.shownResources = new ArrayList<>(numOfShownPerType);
+        this.commonObjectives = new HashSet<>(numOfObjectives << 1);
+        this.shownGold = new HashSet<>(numOfShownPerType << 1);
+        this.shownResources = new HashSet<>(numOfShownPerType << 1);
 
     }
 
@@ -53,8 +56,8 @@ public class PickablesTable {
 
     //region Getters
 
-    public List<ObjectiveCard> getCommonObjectives() {
-        return Collections.unmodifiableList(commonObjectives);
+    public Set<ObjectiveCard> getCommonObjectives() {
+        return Collections.unmodifiableSet(commonObjectives);
     }
 
     public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
@@ -141,11 +144,6 @@ public class PickablesTable {
         }
     }
 
-    public List<PlayableCard> getShownPlayable() {
-        return Stream.concat(shownGold.stream(), shownResources.stream())
-                     .toList();
-    }
-
     public PlayableCard pickPlayableVisible(int cardID) throws IllegalPickActionException {
         return Stream.concat(shownGold.stream(), shownResources.stream())
                      .filter(card -> card.getId() == cardID)
@@ -183,8 +181,8 @@ public class PickablesTable {
 
     public Set<PlayableCard> getShownPlayable(@NotNull PlayableCardType type) {
         return switch (type) {
-            case GOLD -> new HashSet<>(shownGold);
-            case RESOURCE -> new HashSet<>(shownResources);
+            case GOLD -> Collections.unmodifiableSet(shownGold);
+            case RESOURCE -> Collections.unmodifiableSet(shownResources);
         };
     }
 

@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType.GOLD;
 import static it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType.RESOURCE;
@@ -93,7 +94,9 @@ public class PickablesTableTest {
     public void initialize() {
         pickablesTable.initialize();
         assertEquals(numOfObjectives, pickablesTable.getCommonObjectives().size());
-        assertEquals(numOfShownPerType << 1, pickablesTable.getShownPlayable().size());
+        assertEquals(numOfShownPerType, pickablesTable.getShownPlayable(GOLD).size());
+        assertEquals(numOfShownPerType, pickablesTable.getShownPlayable(RESOURCE).size());
+        Assertions.assertTrue(pickablesTable.getDeckTop(GOLD).isPresent());
         Assertions.assertTrue(pickablesTable.getDeckTop(RESOURCE).isPresent());
     }
 
@@ -211,17 +214,19 @@ public class PickablesTableTest {
 
     @Test
     void pickPlayableVisible() {
-        pickablesTable.getShownPlayable().stream()
-                      .map(PlayableCard::getId)
-                      .forEach(id -> {
-                          try {
-                              assertNotNull(pickablesTable.pickPlayableVisible(id));
-                          } catch (IllegalPickActionException e) {
-                              throw new RuntimeException(e);
-                          }
-                          assertThrows(IllegalPickActionException.class,
-                                       () -> pickablesTable.pickPlayableVisible(id));
-                      });
+
+        Stream.concat(Stream.of(pickablesTable.getShownPlayable(GOLD).toArray()),
+                      Stream.of(pickablesTable.getShownPlayable(RESOURCE).toArray()))
+              .map(PlayableCard::getId)
+              .forEach(id -> {
+                  try {
+                      assertNotNull(pickablesTable.pickPlayableVisible(id));
+                  } catch (IllegalPickActionException e) {
+                      throw new RuntimeException(e);
+                  }
+                  assertThrows(IllegalPickActionException.class,
+                               () -> pickablesTable.pickPlayableVisible(id));
+              });
 
     }
 
