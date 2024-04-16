@@ -1,6 +1,15 @@
 package it.polimi.ingsw.am11.model;
 
 public interface RuleSet {
+    /**
+     * @return the number of resource cards dealt at the beginning
+     */
+    int getResourceAtStart();
+
+    /**
+     * @return the number of gold cards dealt at the beginning
+     */
+    int getGoldAtStart();
 
     /**
      * @return the number of cards that the hand can hold

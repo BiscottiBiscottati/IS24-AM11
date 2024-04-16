@@ -168,6 +168,14 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
+    @Override
+    public Set<Integer> getExposedCards(PlayableCardType type) {
+        return pickablesTable.getShownPlayable(type)
+                             .stream()
+                             .map(PlayableCard::getId)
+                             .collect(Collectors.toSet());
+    }
+
     /**
      * Retrive the points that a player has obtained since the start of the game
      *
@@ -181,6 +189,10 @@ public class GameLogic implements GameModel {
         return plateau.getPlayerPoints(playerManager.getPlayer(nickname));
     }
 
+    //endregion
+
+    //region GettersPlateau  javadoc
+
     /**
      * Retrieve the ranking of a player at the end of the game, there could be more player with the
      * same ranking
@@ -193,10 +205,6 @@ public class GameLogic implements GameModel {
     throws IllegalPlateauActionException, PlayerInitException {
         return plateau.getPlayerFinishingPosition(playerManager.getPlayer(nickname));
     }
-
-    //endregion
-
-    //region GettersPlateau  javadoc
 
     /**
      * This method returns the winners, there could be more than on winners.
@@ -232,8 +240,34 @@ public class GameLogic implements GameModel {
         }
 
         resetAll();
-        playerManager.startingTheGame();
         pickablesTable.initialize();
+        playerManager.startingTheGame();
+        for (String player : playerManager.getPlayers()) {
+
+            for (int q = 0; q < ruleSet.getGoldAtStart(); q++) {
+                try {
+                    PlayableCard card = pickablesTable.drawPlayableFrom(PlayableCardType.GOLD);
+                    playerManager.getPlayer(player)
+                                 .space()
+                                 .addCardToHand(
+                                         pickablesTable.drawPlayableFrom(PlayableCardType.GOLD));
+                } catch (MaxHandSizeException e) {
+                    throw new RuntimeException(e);
+                } catch (PlayerInitException e) {
+                    throw new RuntimeException(e);
+                } catch (EmptyDeckException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            //TODO
+
+
+            PlayableCard card = pickablesTable.drawPlayableFrom(type);
+            playerManager.getPlayer(player)
+                         .space()
+                         .addCardToHand(pickablesTable.drawPlayableFrom(PlayableCardType.GOLD));
+
+        }
     }
 
     private void resetAll() {
@@ -453,6 +487,19 @@ public class GameLogic implements GameModel {
         }
     }
 
+    private void checkIfDrawAllowed(String nickname)
+    throws GameStatusException, TurnsOrderException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
+            throw new GameStatusException("the game is not ongoing");
+        }
+        String currentTurnPlayer = playerManager.getCurrentTurnPlayer();
+        if (! Objects.equals(currentTurnPlayer, nickname)) {
+            throw new TurnsOrderException(
+                    "It's not " + nickname + " turn, it's " + currentTurnPlayer + " turn."
+            );
+        }
+    }
+
     @Override
     public void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
@@ -532,26 +579,5 @@ public class GameLogic implements GameModel {
 
     public Optional<Color> getDeckTop(PlayableCardType type) {
         return pickablesTable.getDeckTop(type);
-    }
-
-    private void checkIfDrawAllowed(String nickname)
-    throws GameStatusException, TurnsOrderException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
-            throw new GameStatusException("the game is not ongoing");
-        }
-        String currentTurnPlayer = playerManager.getCurrentTurnPlayer();
-        if (! Objects.equals(currentTurnPlayer, nickname)) {
-            throw new TurnsOrderException(
-                    "It's not " + nickname + " turn, it's " + currentTurnPlayer + " turn."
-            );
-        }
-    }
-
-    @Override
-    public Set<Integer> getExposedCards(PlayableCardType type) {
-        return pickablesTable.getShownPlayable(type)
-                             .stream()
-                             .map(PlayableCard::getId)
-                             .collect(Collectors.toSet());
     }
 }

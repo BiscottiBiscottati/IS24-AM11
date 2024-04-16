@@ -9,6 +9,22 @@ public class BasicRuleset implements RuleSet {
     private static final int maxPlayers = 4;
 
     private static final int pointsToArmageddon = 20;
+    private static final int goldAtStart = 1;
+    private static final int resourceAtStart = 2;
+
+    /**
+     * @return the number of gold cards dealt at the beginning
+     */
+    public int getGoldAtStart() {
+        return goldAtStart;
+    }
+
+    /**
+     * @return the number of resource cards dealt at the beginning
+     */
+    public int getResourceAtStart() {
+        return resourceAtStart;
+    }
 
     /**
      * @return the number of cards that the hand can hold
