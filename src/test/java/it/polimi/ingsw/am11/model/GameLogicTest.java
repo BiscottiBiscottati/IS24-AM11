@@ -1,22 +1,34 @@
 package it.polimi.ingsw.am11.model;
 
+import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.decks.Deck;
+import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.exceptions.GameBreakingException;
 import it.polimi.ingsw.am11.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.exceptions.IllegalNumOfPlayersException;
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.players.PlayerColor;
 import it.polimi.ingsw.am11.table.GameStatus;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameLogicTest {
 
+    static Deck<ObjectiveCard> dObjective;
     GameModel model;
+
+    @BeforeAll
+    static void beforeAll() {
+        dObjective = ObjectiveDeckFactory.createDeck();
+    }
+
 
     @BeforeEach
     void setUp() {
@@ -149,6 +161,8 @@ class GameLogicTest {
     @Test
     void getCommonObjectives() {
         {
+
+
             Set<String> players = Set.of("player1", "player2", "player3", "player4");
             try {
                 model.addPlayerToTable("player1", PlayerColor.BLUE);
@@ -163,6 +177,15 @@ class GameLogicTest {
                 model.initGame();
             } catch (IllegalNumOfPlayersException | GameStatusException e) {
                 throw new RuntimeException(e);
+            }
+
+            assertNotNull(model.getCommonObjectives());
+
+            assertEquals(model.getCommonObjectives().size(), 2);
+
+            List<Integer> listObj = model.getCommonObjectives();
+            for (Integer id : listObj) {
+                assertNotNull(dObjective.getCardById(id));
             }
 
         }
