@@ -1,12 +1,15 @@
 package it.polimi.ingsw.am11.model;
 
+import it.polimi.ingsw.am11.exceptions.GameBreakingException;
 import it.polimi.ingsw.am11.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.exceptions.IllegalNumOfPlayersException;
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.players.PlayerColor;
+import it.polimi.ingsw.am11.table.GameStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,70 +43,161 @@ class GameLogicTest {
 
     @Test
     void getCurrentTurnPlayer() {
+
+        Set<String> players = Set.of("player1", "player2", "player3");
+        int numOfPlayers = players.size();
+        try {
+            model.addPlayerToTable("player1", PlayerColor.BLUE);
+            model.addPlayerToTable("player2", PlayerColor.GREEN);
+            model.addPlayerToTable("player3", PlayerColor.RED);
+        } catch (PlayerInitException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            model.initGame();
+        } catch (IllegalNumOfPlayersException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
+        assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
+        for (int i = 0; i < numOfPlayers; i++) {
+            orderOfPlayers.add(i, model.getCurrentTurnPlayer());
+            try {
+                model.goNextTurn();
+            } catch (GameBreakingException | GameStatusException e) {
+                throw new RuntimeException(e);
+            }
+            for (int j = 0; j < numOfPlayers; j++) {
+                assertEquals(orderOfPlayers.get(j), model.getCurrentTurnPlayer());
+                try {
+                    model.goNextTurn();
+                } catch (GameBreakingException | GameStatusException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     @Test
     void getFirstPlayer() {
+        Set<String> players = Set.of("player1", "player2", "player3");
+        int numOfPlayers = players.size();
+        try {
+            model.addPlayerToTable("player1", PlayerColor.BLUE);
+            model.addPlayerToTable("player2", PlayerColor.GREEN);
+            model.addPlayerToTable("player3", PlayerColor.RED);
+        } catch (PlayerInitException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            model.initGame();
+        } catch (IllegalNumOfPlayersException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+
+        ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
+        assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
+        String firstPlayer = model.getFirstPlayer();
+        try {
+            model.goNextTurn();
+        } catch (GameBreakingException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(firstPlayer, model.getFirstPlayer());
     }
 
     @Test
     void getPlayerHand() {
+        //TODO
     }
 
     @Test
     void getPlayerObjective() {
+        //TODO
     }
 
     @Test
     void getPlayerColor() {
+        Set<String> players = Set.of("player1", "player2", "player3", "player4");
+        try {
+            model.addPlayerToTable("player1", PlayerColor.BLUE);
+            model.addPlayerToTable("player2", PlayerColor.GREEN);
+            model.addPlayerToTable("player3", PlayerColor.RED);
+            model.addPlayerToTable("player4", PlayerColor.YELLOW);
+        } catch (PlayerInitException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertEquals(model.getPlayerColor("player1"), PlayerColor.BLUE);
+        assertEquals(model.getPlayerColor("player2"), PlayerColor.GREEN);
+        assertEquals(model.getPlayerColor("player3"), PlayerColor.RED);
+        assertEquals(model.getPlayerColor("player4"), PlayerColor.YELLOW);
     }
 
     @Test
     void getPositionedCard() {
+        //TODO
     }
 
     @Test
     void getAvailablePositions() {
+        //TODO
     }
 
-    @Test
-    void getResourceDeckTop() {
-    }
-
-    @Test
-    void getGoldDeckTop() {
-    }
 
     @Test
     void getCommonObjectives() {
-    }
-
-    @Test
-    void getExposedGoldsCrd() {
-    }
-
-    @Test
-    void getExposedResourcesCrd() {
+        //TODO
     }
 
     @Test
     void getPlayerPoints() {
+        //TODO
     }
 
     @Test
     void isArmageddonTime() {
+        //TODO
     }
 
     @Test
     void getPlayerFinishingPosition() {
+        //TODO
     }
 
     @Test
     void getWinner() {
+        //TODO
     }
 
     @Test
     void initGame() {
+        Set<String> players = Set.of("player1", "player2", "player3", "player4");
+        assertThrows(IllegalNumOfPlayersException.class, () -> model.initGame());
+        try {
+            model.addPlayerToTable("player1", PlayerColor.BLUE);
+        } catch (PlayerInitException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+        assertThrows(IllegalNumOfPlayersException.class, () -> model.initGame());
+        try {
+            model.addPlayerToTable("player2", PlayerColor.GREEN);
+            model.addPlayerToTable("player3", PlayerColor.RED);
+            model.addPlayerToTable("player4", PlayerColor.YELLOW);
+        } catch (PlayerInitException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            model.initGame();
+        } catch (IllegalNumOfPlayersException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertThrows(GameStatusException.class, () -> model.initGame());
+
+        assertEquals(model.getStatus(), GameStatus.ONGOING);
+
+
     }
 
     @Test
@@ -223,22 +317,6 @@ class GameLogicTest {
 
     @Test
     void placeCard() {
-    }
-
-    @Test
-    void drawFromGoldDeck() {
-    }
-
-    @Test
-    void drawFromResourceDeck() {
-    }
-
-    @Test
-    void drawVisibleGold() {
-    }
-
-    @Test
-    void drawVisibleResource() {
     }
 
     @Test

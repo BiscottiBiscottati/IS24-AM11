@@ -41,7 +41,7 @@ public interface GameModel {
 
     List<Integer> getCommonObjectives();
 
-    List<Integer> getExposedCards();
+    Set<Integer> getExposedCards(PlayableCardType type);
     //endregion
 
     //region GetterPlateau

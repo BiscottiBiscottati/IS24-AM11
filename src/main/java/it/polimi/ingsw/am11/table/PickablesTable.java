@@ -16,10 +16,7 @@ import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class PickablesTable {
@@ -144,22 +141,22 @@ public class PickablesTable {
         }
     }
 
-    public PlayableCard pickPlayableVisible(int cardID) throws IllegalPickActionException {
-        return this.getShownPlayable().stream()
-                   .filter(card -> card.getId() == cardID)
-                   .findFirst()
-                   .map(this::removePlayable)
-                   .map(playableCard -> {
-                       supplyVisible();
-                       return playableCard;
-                   })
-                   .orElseThrow(() -> new IllegalPickActionException(
-                           "Card with ID " + cardID + " is not visible!"));
-    }
-
     public List<PlayableCard> getShownPlayable() {
         return Stream.concat(shownGold.stream(), shownResources.stream())
                      .toList();
+    }
+
+    public PlayableCard pickPlayableVisible(int cardID) throws IllegalPickActionException {
+        return Stream.concat(shownGold.stream(), shownResources.stream())
+                     .filter(card -> card.getId() == cardID)
+                     .findFirst()
+                     .map(this::removePlayable)
+                     .map(playableCard -> {
+                         supplyVisible();
+                         return playableCard;
+                     })
+                     .orElseThrow(() -> new IllegalPickActionException(
+                             "Card with ID " + cardID + " is not visible!"));
     }
 
     private @NotNull PlayableCard removePlayable(@NotNull PlayableCard playableCard) {
@@ -182,6 +179,13 @@ public class PickablesTable {
         if (shownResources.size() < numOfShownPerType) {
             resourceDeck.draw().ifPresent(shownResources::add);
         }
+    }
+
+    public Set<PlayableCard> getShownPlayable(@NotNull PlayableCardType type) {
+        return switch (type) {
+            case GOLD -> new HashSet<>(shownGold);
+            case RESOURCE -> new HashSet<>(shownResources);
+        };
     }
 
     public int getRemainingDeckOf(@NotNull PlayableCardType type) {

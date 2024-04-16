@@ -168,14 +168,6 @@ public class GameLogic implements GameModel {
                              .toList();
     }
 
-    @Override
-    public List<Integer> getExposedCards() {
-        return pickablesTable.getShownPlayable()
-                             .stream()
-                             .map(PlayableCard::getId)
-                             .toList();
-    }
-
     /**
      * Retrive the points that a player has obtained since the start of the game
      *
@@ -189,10 +181,6 @@ public class GameLogic implements GameModel {
         return plateau.getPlayerPoints(playerManager.getPlayer(nickname));
     }
 
-    //endregion
-
-    //region GettersPlateau  javadoc
-
     /**
      * Retrieve the ranking of a player at the end of the game, there could be more player with the
      * same ranking
@@ -205,6 +193,10 @@ public class GameLogic implements GameModel {
     throws IllegalPlateauActionException, PlayerInitException {
         return plateau.getPlayerFinishingPosition(playerManager.getPlayer(nickname));
     }
+
+    //endregion
+
+    //region GettersPlateau  javadoc
 
     /**
      * This method returns the winners, there could be more than on winners.
@@ -553,5 +545,13 @@ public class GameLogic implements GameModel {
                     "It's not " + nickname + " turn, it's " + currentTurnPlayer + " turn."
             );
         }
+    }
+
+    @Override
+    public Set<Integer> getExposedCards(PlayableCardType type) {
+        return pickablesTable.getShownPlayable(type)
+                             .stream()
+                             .map(PlayableCard::getId)
+                             .collect(Collectors.toSet());
     }
 }

@@ -150,6 +150,10 @@ class PlayerManagerTest {
 
         ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
         assertEquals(manager.getFirstPlayer(), manager.getCurrentTurnPlayer());
+
+        String firstPlayer = manager.getFirstPlayer();
+        manager.goNextTurn();
+        assertEquals(firstPlayer, manager.getFirstPlayer());
     }
 
     @Test
