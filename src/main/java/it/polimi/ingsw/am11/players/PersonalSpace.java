@@ -46,7 +46,7 @@ public class PersonalSpace {
 
     public void addCardToHand(PlayableCard newCard) throws MaxHandSizeException {
         //throw alreadyMaxCardInHand
-        if (playerHand.size() == maxSizeofHand) {
+        if (playerHand.size() >= maxSizeofHand) {
             throw new MaxHandSizeException("already Max Card In Hand");
         } else {
             playerHand.add(newCard);

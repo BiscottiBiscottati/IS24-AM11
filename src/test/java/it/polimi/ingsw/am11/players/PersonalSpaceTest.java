@@ -2,7 +2,6 @@ package it.polimi.ingsw.am11.players;
 
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.objective.collecting.ColorCollectCard;
-import it.polimi.ingsw.am11.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -72,9 +71,10 @@ class PersonalSpaceTest {
         personalSpace.addCardToHand(card);
         assertEquals(2, personalSpace.availableSpaceInHand());
 
-        PlayableCard.Builder builder2 = new ResourceCard.Builder(1, 3, Color.BLUE);
+        PlayableCard.Builder builder2 = new ResourceCard.Builder(2, 3, Color.BLUE);
         PlayableCard card2 = builder2.build();
         personalSpace.addCardToHand(card2);
+
         assertEquals(1, personalSpace.availableSpaceInHand());
     }
 
