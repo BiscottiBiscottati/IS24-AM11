@@ -15,15 +15,13 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface GameModel {
-    //region GetterGameStatus
+
     Set<String> getPlayers();
 
     String getCurrentTurnPlayer();
 
     String getFirstPlayer();
-    //endregion
 
-    //region GettersPlayer
     Set<Integer> getPlayerHand(String nickname);
 
     Set<Integer> getPlayerObjective(String nickname);
@@ -35,16 +33,11 @@ public interface GameModel {
 
     Set<Position> getAvailablePositions(String nickname) throws PlayerInitException;
 
-    //endregion
-
-    //region GetterPickableTable
-
     List<Integer> getCommonObjectives();
 
     Set<Integer> getExposedCards(PlayableCardType type);
-    //endregion
 
-    //region GetterPlateau
+
     int getPlayerPoints(String nickname)
     throws IllegalPlateauActionException, PlayerInitException;
 
@@ -53,9 +46,6 @@ public interface GameModel {
 
     Set<String> getWinner();
 
-    //endregion
-
-    //region GameInitialization
     void initGame() throws IllegalNumOfPlayersException, GameStatusException;
 
     void addPlayerToTable(String nickname, PlayerColor colour)
@@ -72,9 +62,6 @@ public interface GameModel {
 
     void setObjectiveFor(String nickname, int cardID)
     throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException;
-    //endregion
-
-    //region TurnsActions
 
     String goNextTurn() throws GameBreakingException, GameStatusException;
 
@@ -102,6 +89,5 @@ public interface GameModel {
     GameStatus getStatus();
 
     Optional<Color> getDeckTop(PlayableCardType type);
-    //endregion
 
 }
