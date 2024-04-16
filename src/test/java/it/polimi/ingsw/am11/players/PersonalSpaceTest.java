@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.players;
 
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.objective.collecting.ColorCollectCard;
+import it.polimi.ingsw.am11.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
@@ -78,7 +79,44 @@ class PersonalSpaceTest {
     }
 
     @Test
-    void addCardToHand() {
+    void addCardToHand() throws IllegalCardBuildException {
+
+        Player player = new Player("test player", PlayerColor.BLUE);
+        PersonalSpace personalSpace = player.space();
+        assertEquals(3, personalSpace.availableSpaceInHand());
+
+        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, Color.BLUE);
+        PlayableCard card = null;
+        try {
+            card = builder.build();
+        } catch (IllegalCardBuildException e) {
+            e.printStackTrace();
+        }
+        try {
+            personalSpace.addCardToHand(card);
+        } catch (MaxHandSizeException e) {
+            e.printStackTrace();
+        }
+        assertEquals(2, personalSpace.availableSpaceInHand());
+        assertEquals(card, personalSpace.getPlayerHand().iterator().next());
+        assertEquals(1, personalSpace.getPlayerHand().size());
+
+        PlayableCard.Builder builder2 = new ResourceCard.Builder(2, 0, Color.BLUE);
+        PlayableCard card2 = null;
+        try {
+            card2 = builder2.build();
+        } catch (IllegalCardBuildException e) {
+            e.printStackTrace();
+        }
+        try {
+            personalSpace.addCardToHand(card2);
+        } catch (MaxHandSizeException e) {
+            e.printStackTrace();
+        }
+        assertEquals(1, personalSpace.availableSpaceInHand());
+        assertEquals(card2, personalSpace.getPlayerHand().stream().skip(1).findFirst().get());
+        assertEquals(2, personalSpace.getPlayerHand().size());
+
     }
 
     @Test
@@ -99,7 +137,24 @@ class PersonalSpaceTest {
     }
 
     @Test
-    void addObjective() {
+    void addObjective() throws IllegalCardBuildException {
+
+        Player player = new Player("test player", PlayerColor.BLUE);
+        PersonalSpace personalSpace = player.space();
+        assertEquals(0, personalSpace.getPlayerObjective().size());
+
+        ColorCollectCard.Builder builder = new ColorCollectCard.Builder(1, 1);
+        ObjectiveCard card = builder.build();
+        try {
+            personalSpace.addObjective(card);
+        } catch (IllegalPlayerSpaceActionException e) {
+            e.printStackTrace();
+        }
+        assertEquals(1, personalSpace.getPlayerObjective().size());
+        assertThrows(IllegalPlayerSpaceActionException.class,
+                     () -> personalSpace.addObjective(card));
+        assertEquals(card, personalSpace.getPlayerObjective().iterator().next());
+
     }
 
     @Test
