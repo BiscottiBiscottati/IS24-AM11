@@ -51,14 +51,12 @@ public interface GameModel {
     int getPlayerFinishingPosition(String nickname)
     throws IllegalPlateauActionException, PlayerInitException;
 
-    List<String> getWinner();
+    Set<String> getWinner();
 
     //endregion
 
     //region GameInitialization
     void initGame() throws IllegalNumOfPlayersException, GameStatusException;
-
-    void resetAll();
 
     void addPlayerToTable(String nickname, PlayerColor colour)
     throws PlayerInitException, GameStatusException;
@@ -88,7 +86,7 @@ public interface GameModel {
 
     int drawFromDeckOf(PlayableCardType type, String nickname)
     throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
-           IllegalPlayerSpaceActionException, PlayerInitException;
+           IllegalPlayerSpaceActionException, PlayerInitException, MaxHandSizeException;
 
     void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
