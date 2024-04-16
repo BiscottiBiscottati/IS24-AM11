@@ -6,7 +6,9 @@ import it.polimi.ingsw.am11.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.exceptions.NotInHandException;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 
 public class PersonalSpace {
@@ -14,12 +16,12 @@ public class PersonalSpace {
 
     private static int maxSizeofHand;
     private static int maxObjectives;
-    private final ArrayList<PlayableCard> playerHand;
-    private final ArrayList<ObjectiveCard> playerObjective;
+    private final Set<PlayableCard> playerHand;
+    private final Set<ObjectiveCard> playerObjective;
 
     public PersonalSpace() {
-        playerHand = new ArrayList<>(maxSizeofHand);
-        playerObjective = new ArrayList<>(1);
+        playerHand = new HashSet<>(maxSizeofHand << 1);
+        playerObjective = new HashSet<>(maxObjectives << 1);
     }
 
     public static void setMaxSizeofHand(int maxSizeofHand) {
@@ -30,11 +32,11 @@ public class PersonalSpace {
         PersonalSpace.maxObjectives = maxObjectives;
     }
 
-    public ArrayList<PlayableCard> getPlayerHand() {
+    public Set<PlayableCard> getPlayerHand() {
         return playerHand;
     }
 
-    public ArrayList<ObjectiveCard> getPlayerObjective() {
+    public Set<ObjectiveCard> getPlayerObjective() {
         return playerObjective;
     }
 
@@ -52,19 +54,23 @@ public class PersonalSpace {
     }
 
     public void pickCard(int cardId) throws NotInHandException {
-        int cardToRemove = playerHand.stream()
-                                     .map(PlayableCard::getId)
-                                     .filter(id -> id == cardId)
-                                     .findFirst()
-                                     .orElseThrow(() -> new NotInHandException("Card not in hand"));
+        PlayableCard cardToRemove = playerHand.stream()
+                                              .filter(card -> card.getId() == cardId)
+                                              .findFirst()
+                                              .orElseThrow(() -> new NotInHandException(
+                                                      "Card not in hand"));
 
         playerHand.stream()
-                  .filter(card -> card.getId() == cardToRemove)
+                  .filter(cardToRemove::equals)
                   .findFirst()
                   .ifPresent(playerHand::remove);
     }
 
     public void addObjective(ObjectiveCard newObjective) throws IllegalPlayerSpaceActionException {
+        Optional.of(newObjective)
+                .filter(objective -> ! playerObjective.contains(objective))
+                .orElseThrow(() -> new IllegalPlayerSpaceActionException(
+                        "You are trying to add the same objective twice"));
         if (playerObjective.size() < maxObjectives) {
             playerObjective.add(newObjective);
         } else {
