@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+@SuppressWarnings({"ClassWithTooManyMethods", "OverlyCoupledClass"})
 public interface GameModel {
 
     Set<String> getPlayers();
