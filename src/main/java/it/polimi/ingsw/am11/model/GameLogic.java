@@ -229,7 +229,8 @@ public class GameLogic implements GameModel {
      * @throws GameStatusException          if a game is in progress
      */
     @Override //
-    public void initGame() throws IllegalNumOfPlayersException, GameStatusException {
+    public void initGame()
+    throws IllegalNumOfPlayersException, GameStatusException, GameBreakingException {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
@@ -244,29 +245,31 @@ public class GameLogic implements GameModel {
         playerManager.startingTheGame();
         for (String player : playerManager.getPlayers()) {
 
-            for (int q = 0; q < ruleSet.getGoldAtStart(); q++) {
+            int goldAtStart = ruleSet.getGoldAtStart();
+            for (int q = 0; q < goldAtStart; q++) {
                 try {
                     PlayableCard card = pickablesTable.drawPlayableFrom(PlayableCardType.GOLD);
                     playerManager.getPlayer(player)
                                  .space()
                                  .addCardToHand(
                                          pickablesTable.drawPlayableFrom(PlayableCardType.GOLD));
-                } catch (MaxHandSizeException e) {
-                    throw new RuntimeException(e);
-                } catch (PlayerInitException e) {
-                    throw new RuntimeException(e);
-                } catch (EmptyDeckException e) {
-                    throw new RuntimeException(e);
+                } catch (MaxHandSizeException | PlayerInitException | EmptyDeckException e) {
+                    throw new GameBreakingException("Ruleset has incompatible values");
                 }
             }
-            //TODO
-
-
-            PlayableCard card = pickablesTable.drawPlayableFrom(type);
-            playerManager.getPlayer(player)
-                         .space()
-                         .addCardToHand(pickablesTable.drawPlayableFrom(PlayableCardType.GOLD));
-
+            int resourceAtStart = ruleSet.getResourceAtStart();
+            for (int q = 0; q < resourceAtStart; q++) {
+                try {
+                    PlayableCard card = pickablesTable.drawPlayableFrom(PlayableCardType.RESOURCE);
+                    playerManager.getPlayer(player)
+                                 .space()
+                                 .addCardToHand(
+                                         pickablesTable.drawPlayableFrom(
+                                                 PlayableCardType.RESOURCE));
+                } catch (MaxHandSizeException | PlayerInitException | EmptyDeckException e) {
+                    throw new GameBreakingException("Ruleset has incompatible values");
+                }
+            }
         }
     }
 
