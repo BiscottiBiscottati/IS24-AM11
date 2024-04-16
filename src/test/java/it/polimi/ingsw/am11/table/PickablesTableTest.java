@@ -215,8 +215,8 @@ public class PickablesTableTest {
     @Test
     void pickPlayableVisible() {
 
-        Stream.concat(Stream.of(pickablesTable.getShownPlayable(GOLD).toArray()),
-                      Stream.of(pickablesTable.getShownPlayable(RESOURCE).toArray()))
+        Stream.concat(pickablesTable.getShownPlayable(GOLD).stream()
+                      , (pickablesTable.getShownPlayable(RESOURCE).stream()))
               .map(PlayableCard::getId)
               .forEach(id -> {
                   try {

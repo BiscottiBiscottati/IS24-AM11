@@ -67,15 +67,16 @@ class GameLogicTest {
             } catch (GameBreakingException | GameStatusException e) {
                 throw new RuntimeException(e);
             }
-            for (int j = 0; j < numOfPlayers; j++) {
-                assertEquals(orderOfPlayers.get(j), model.getCurrentTurnPlayer());
-                try {
-                    model.goNextTurn();
-                } catch (GameBreakingException | GameStatusException e) {
-                    throw new RuntimeException(e);
-                }
+        }
+        for (int j = 0; j < numOfPlayers; j++) {
+            assertEquals(orderOfPlayers.get(j), model.getCurrentTurnPlayer());
+            try {
+                model.goNextTurn();
+            } catch (GameBreakingException | GameStatusException e) {
+                throw new RuntimeException(e);
             }
         }
+
     }
 
     @Test
