@@ -9,11 +9,18 @@ import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.exceptions.NotInHandException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersonalSpaceTest {
+
+    @BeforeEach
+    void setUp() {
+        PersonalSpace.setMaxObjectives(1);
+        PersonalSpace.setMaxSizeofHand(3);
+    }
 
     @Test
     void getPlayerHand() throws IllegalCardBuildException, MaxHandSizeException {
@@ -30,8 +37,10 @@ class PersonalSpaceTest {
         PlayableCard.Builder builder2 = new ResourceCard.Builder(2, 0, Color.BLUE);
         PlayableCard card2 = builder2.build();
         personalSpace.addCardToHand(card2);
+
         assertEquals(2, personalSpace.getPlayerHand().size());
-        assertEquals(card, personalSpace.getPlayerHand().getFirst());
+        assertTrue(personalSpace.getPlayerHand().contains(card));
+        assertTrue(personalSpace.getPlayerHand().contains(card2));
     }
 
     @Test
@@ -47,7 +56,7 @@ class PersonalSpaceTest {
         ObjectiveCard card = builder.build();
         personalSpace.addObjective(card);
         assertEquals(1, personalSpace.getPlayerObjective().size());
-        assertEquals(card, personalSpace.getPlayerObjective().getFirst());
+        assertTrue(personalSpace.getPlayerObjective().contains(card));
     }
 
     @Test
@@ -82,11 +91,11 @@ class PersonalSpaceTest {
         PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, Color.BLUE);
         PlayableCard card = builder.build();
         personalSpace.addCardToHand(card);
-        //FIXME
-        personalSpace.pickCard(0);
+
+        assertThrows(NotInHandException.class, () -> personalSpace.pickCard(2));
+        personalSpace.pickCard(card.getId());
         assertEquals(0, personalSpace.getPlayerHand().size());
-        //FIXME
-        assertThrows(NotInHandException.class, () -> personalSpace.pickCard(0));
+        assertThrows(NotInHandException.class, () -> personalSpace.pickCard(card.getId()));
     }
 
     @Test
