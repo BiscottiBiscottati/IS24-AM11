@@ -79,11 +79,9 @@ public interface GameModel {
     throws GameStatusException, TurnsOrderException, GameBreakingException,
            IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException;
 
-    //TODO add possibility of signaling how many objectives a player has completed
     void countObjectivesPoints()
     throws IllegalPlateauActionException, GameStatusException, GameBreakingException;
 
-    //DONE
     void endGame();
 
     GameStatus getStatus();
