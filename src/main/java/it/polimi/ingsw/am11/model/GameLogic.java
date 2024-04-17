@@ -665,6 +665,7 @@ public class GameLogic implements GameModel {
         return plateau.getStatus();
     }
 
+    @Override
     public Optional<Color> getDeckTop(PlayableCardType type) throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException("the game is not ongoing");
@@ -672,10 +673,11 @@ public class GameLogic implements GameModel {
         return pickablesTable.getDeckTop(type);
     }
 
+    @Override
     public Set<Integer> getCandidateObjectives(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
         if (plateau.getStatus() != GameStatus.ONGOING) {
-            throw new GameStatusException("the game is not ongoing");
+            throw new GameStatusEvxception("the game is not ongoing");
         }
         return playerManager.getCandidateObjectives(nickname)
                             .stream()
@@ -690,6 +692,7 @@ public class GameLogic implements GameModel {
      * @return the <code>StarterCard</code> assigned to the player
      */
 
+    @Override
     public Optional<StarterCard> getStarterCard(@NotNull String nickname)
     throws PlayerInitException {
         return playerManager.getStarterCard(nickname);

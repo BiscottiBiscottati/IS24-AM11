@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.model;
 
+import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.exceptions.*;
@@ -96,4 +97,9 @@ public interface GameModel {
 
     Optional<Color> getDeckTop(PlayableCardType type) throws GameStatusException;
 
+    Set<Integer> getCandidateObjectives(@NotNull String nickname)
+    throws PlayerInitException, GameStatusException;
+
+    Optional<StarterCard> getStarterCard(@NotNull String nickname)
+    throws PlayerInitException;
 }
