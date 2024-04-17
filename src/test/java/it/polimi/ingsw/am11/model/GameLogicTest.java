@@ -67,7 +67,7 @@ class GameLogicTest {
         }
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException e) {
+        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
@@ -104,7 +104,7 @@ class GameLogicTest {
         }
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException e) {
+        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
@@ -175,7 +175,7 @@ class GameLogicTest {
 
             try {
                 model.initGame();
-            } catch (IllegalNumOfPlayersException | GameStatusException e) {
+            } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
 
@@ -196,10 +196,6 @@ class GameLogicTest {
         //TODO
     }
 
-    @Test
-    void isArmageddonTime() {
-        //TODO
-    }
 
     @Test
     void getPlayerFinishingPosition() {
@@ -230,7 +226,7 @@ class GameLogicTest {
         }
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException e) {
+        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
@@ -260,7 +256,7 @@ class GameLogicTest {
 
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException e) {
+        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
@@ -328,7 +324,7 @@ class GameLogicTest {
         //Test GameStatusException
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException e) {
+        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class,
@@ -354,17 +350,59 @@ class GameLogicTest {
 
     @Test
     void goNextTurn() {
+        Set<String> players = Set.of("player1", "player2", "player3", "player4");
+        try {
+            model.addPlayerToTable("player1", PlayerColor.BLUE);
+            model.addPlayerToTable("player2", PlayerColor.GREEN);
+            model.addPlayerToTable("player3", PlayerColor.RED);
+            model.addPlayerToTable("player4", PlayerColor.YELLOW);
+        } catch (PlayerInitException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertThrows(GameStatusException.class, () -> model.goNextTurn());
+        try {
+            model.initGame();
+        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+            throw new RuntimeException(e);
+        }
+
+        //TODO, need to simulate game
+
+
     }
 
     @Test
     void placeCard() {
+        //TODO, need to simulate game
     }
 
     @Test
     void countObjectivesPoints() {
+        //TODO, need to simulate game
+
     }
 
     @Test
     void endGame() {
+
+        Set<String> players = Set.of("player1", "player2", "player3", "player4");
+        try {
+            model.addPlayerToTable("player1", PlayerColor.BLUE);
+            model.addPlayerToTable("player2", PlayerColor.GREEN);
+            model.addPlayerToTable("player3", PlayerColor.RED);
+            model.addPlayerToTable("player4", PlayerColor.YELLOW);
+        } catch (PlayerInitException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            model.initGame();
+        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+            throw new RuntimeException(e);
+        }
+
+        model.endGame();
+        assertEquals(model.getStatus(), GameStatus.SETUP);
     }
 }

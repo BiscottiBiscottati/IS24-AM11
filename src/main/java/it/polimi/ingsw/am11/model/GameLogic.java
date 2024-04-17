@@ -11,14 +11,13 @@ import it.polimi.ingsw.am11.table.GameStatus;
 import it.polimi.ingsw.am11.table.PickablesTable;
 import it.polimi.ingsw.am11.table.Plateau;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GameLogic implements GameModel {
-
-    //TODO divide game logic in smaller classes like player manager and table manager turn manager
 
     private final RuleSet ruleSet;
     private final PlayerManager playerManager;
@@ -72,7 +71,10 @@ public class GameLogic implements GameModel {
      * started
      */
     @Override // DONE
-    public String getCurrentTurnPlayer() {
+    public @Nullable String getCurrentTurnPlayer() throws GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
+            throw new GameStatusException("the game has not started, turns haven't been decided");
+        }
         return playerManager.getCurrentTurnPlayer();
     }
 
@@ -86,7 +88,10 @@ public class GameLogic implements GameModel {
      * game hasn't started
      */
     @Override // DONE
-    public String getFirstPlayer() {
+    public @Nullable String getFirstPlayer() throws GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP) {
+            throw new GameStatusException("the game has not started, turns haven't been decided");
+        }
         return playerManager.getFirstPlayer();
     }
 
@@ -98,7 +103,11 @@ public class GameLogic implements GameModel {
      * @return a <code>List</code> of the IDs of the <code>PlayableCards</code> in the player hand
      */
     @Override // DONE
-    public Set<Integer> getPlayerHand(@NotNull String nickname) {
+    public Set<Integer> getPlayerHand(@NotNull String nickname)
+    throws GameStatusException, PlayerInitException {
+        if (plateau.getStatus() == GameStatus.SETUP) {
+            throw new GameStatusException("the game has not started, cards hasn't been dealt");
+        }
         return playerManager.getHand(nickname);
     }
 
@@ -115,7 +124,11 @@ public class GameLogic implements GameModel {
      * @return a <code>List</code> of the IDs of the <code>ObjectiveCards</code> of the player
      */
     @Override // DONE
-    public Set<Integer> getPlayerObjective(@NotNull String nickname) {
+    public Set<Integer> getPlayerObjective(@NotNull String nickname)
+    throws PlayerInitException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP) {
+            throw new GameStatusException("the game has not started, objectives hasn't been dealt");
+        }
         return playerManager.getPlayerObjective(nickname);
     }
 
@@ -126,14 +139,18 @@ public class GameLogic implements GameModel {
      * @return the <code>PlayerColor</code> of the player
      */
     @Override // DONE
-    public PlayerColor getPlayerColor(@NotNull String nickname) {
+    public PlayerColor getPlayerColor(@NotNull String nickname) throws PlayerInitException {
         return playerManager.getPlayerColor(nickname);
     }
 
     @Override
     //TODO model shouldn't return something that has a reference of a Card, it should use ID
     public Map<Position, CardContainer> getPositionedCard(@NotNull String nickname)
-    throws PlayerInitException {
+    throws PlayerInitException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP) {
+            throw new GameStatusException(
+                    "the game has not started, there are no positioned cards");
+        }
         return playerManager.getPlayer(nickname).field().getCardsPositioned();
     }
 
@@ -151,8 +168,12 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public Set<Position> getAvailablePositions(@NotNull String nickname)
-    throws PlayerInitException {
-        return playerManager.getPlayer(nickname).field().getAvailablePositions();
+    throws PlayerInitException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP) {
+            throw new GameStatusException(
+                    "the game has not started, there are no positioned cards");
+        }
+        return playerManager.getAvailablePositions(nickname);
     }
 
     /**
@@ -161,7 +182,11 @@ public class GameLogic implements GameModel {
      * @return a list of ID of <code>ObjectiveCard</code> that represent the common objectives
      */
     @Override //
-    public List<Integer> getCommonObjectives() {
+    public List<Integer> getCommonObjectives() throws GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP) {
+            throw new GameStatusException(
+                    "the game has not started, there are no objectives");
+        }
         return pickablesTable.getCommonObjectives()
                              .stream()
                              .map(ObjectiveCard::getId)
@@ -169,7 +194,11 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public Set<Integer> getExposedCards(PlayableCardType type) {
+    public Set<Integer> getExposedCards(PlayableCardType type) throws GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP) {
+            throw new GameStatusException(
+                    "the game has not started, there are exposed cards");
+        }
         return pickablesTable.getShownPlayable(type)
                              .stream()
                              .map(PlayableCard::getId)
@@ -181,17 +210,21 @@ public class GameLogic implements GameModel {
      *
      * @param nickname nickname of the player of interest
      * @return the points of the player
-     * @throws IllegalPlateauActionException if there isn't a player with that nickname
      */
     @Override //
     public int getPlayerPoints(@NotNull String nickname)
-    throws IllegalPlateauActionException, PlayerInitException {
-        return plateau.getPlayerPoints(playerManager.getPlayer(nickname));
+    throws PlayerInitException, GameStatusException,
+           GameBreakingException {
+        if (plateau.getStatus() == GameStatus.SETUP) {
+            throw new GameStatusException(
+                    "the game has not started, players don't have points");
+        }
+        try {
+            return plateau.getPlayerPoints(playerManager.getPlayer(nickname));
+        } catch (IllegalPlateauActionException e) {
+            throw new GameBreakingException("Plateau and player manager have discrepancies");
+        }
     }
-
-    //endregion
-
-    //region GettersPlateau  javadoc
 
     /**
      * Retrieve the ranking of a player at the end of the game, there could be more player with the
@@ -202,9 +235,23 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public int getPlayerFinishingPosition(@NotNull String nickname)
-    throws IllegalPlateauActionException, PlayerInitException {
-        return plateau.getPlayerFinishingPosition(playerManager.getPlayer(nickname));
+    throws PlayerInitException, GameStatusException,
+           GameBreakingException {
+        if (plateau.getStatus() != GameStatus.ENDED) {
+            throw new GameStatusException(
+                    "the game has not ended, there isn't a leaderboard");
+        }
+        try {
+            return plateau.getPlayerFinishingPosition(playerManager.getPlayer(nickname));
+        } catch (IllegalPlateauActionException e) {
+            throw new GameBreakingException("Plateau and player manager have discrepancies");
+        }
+
     }
+
+    //endregion
+
+    //region GettersPlateau  javadoc
 
     /**
      * This method returns the winners, there could be more than on winners.
@@ -212,7 +259,11 @@ public class GameLogic implements GameModel {
      * @return a set with the names of the winners
      */
     @Override //
-    public Set<String> getWinner() {
+    public Set<String> getWinner() throws GameStatusException {
+        if (plateau.getStatus() != GameStatus.ENDED) {
+            throw new GameStatusException(
+                    "the game has not ended, there isn't a leaderboard");
+        }
         return plateau.getWinners()
                       .stream()
                       .map(Player::nickname)
@@ -248,7 +299,6 @@ public class GameLogic implements GameModel {
             int goldAtStart = ruleSet.getGoldAtStart();
             for (int q = 0; q < goldAtStart; q++) {
                 try {
-                    PlayableCard card = pickablesTable.drawPlayableFrom(PlayableCardType.GOLD);
                     playerManager.getPlayer(player)
                                  .space()
                                  .addCardToHand(
@@ -260,7 +310,6 @@ public class GameLogic implements GameModel {
             int resourceAtStart = ruleSet.getResourceAtStart();
             for (int q = 0; q < resourceAtStart; q++) {
                 try {
-                    PlayableCard card = pickablesTable.drawPlayableFrom(PlayableCardType.RESOURCE);
                     playerManager.getPlayer(player)
                                  .space()
                                  .addCardToHand(
@@ -322,18 +371,22 @@ public class GameLogic implements GameModel {
     }
 
     /**
-     * Pick a <code>StarterCard</code> from the deck on the <code>PickableTable</code>.
+     * Pick a <code>StarterCard</code> from the deck on the <code>PickableTable</code> and saves it
+     * in player space
      *
      * @return the ID of a <code>StarterCard</code>
      * @throws EmptyDeckException  if the deck of  <code>StartingCard</code> is empty
      * @throws GameStatusException if the game is not ongoing
      */
     @Override //
-    public int pickStarter() throws EmptyDeckException, GameStatusException {
+    public int pickStarterFor(String nickname)
+    throws EmptyDeckException, GameStatusException, PlayerInitException {
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
         }
-        return pickablesTable.pickStarterCard().getId();
+        playerManager.setStarterCard(nickname, pickablesTable.pickStarterCard());
+
+        return playerManager.getStarterCard(nickname).orElseThrow().getId();
     }
 
     /**
@@ -352,24 +405,24 @@ public class GameLogic implements GameModel {
     }
 
     /**
-     * Each player needs a <code>StartingCard</code> at the beginning of the game.
+     * Each player needs a <code>StartingCard</code> at the beginning of the game. This method place
+     * the picked one on the field
      *
      * @param nickname nickname of the player of interest
-     * @param cardID   identifier of the <code>StartingCard</code> that has to be placed on the
-     *                 field
      * @param isRetro  tell if the <code>StartingCard</code> is placed on the front (false) or on
      *                 the back (true)
      * @throws IllegalCardPlacingException if there is already a card in that position
      * @throws GameStatusException         if the game is not ongoing
      */
     @Override //
-    public void setStarterFor(@NotNull String nickname, int cardID, boolean isRetro)
+    public void setStarterFor(@NotNull String nickname, boolean isRetro)
     throws IllegalCardPlacingException, GameStatusException, PlayerInitException {
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
         }
-        StarterCard starterCard = pickablesTable.getStarterByID(cardID).orElseThrow();
-        playerManager.getPlayer(nickname).field().placeStartingCard(starterCard, isRetro);
+        Player player = playerManager.getPlayer(nickname);
+        player.field().placeStartingCard(playerManager.getStarterCard(nickname).orElseThrow(),
+                                         isRetro);
     }
 
     /**
@@ -583,4 +636,17 @@ public class GameLogic implements GameModel {
     public Optional<Color> getDeckTop(PlayableCardType type) {
         return pickablesTable.getDeckTop(type);
     }
+
+    /**
+     * Each player will get assigned a specific starter card, this method retrieves it.
+     *
+     * @param nickname Nickname of the player of interest
+     * @return the <code>StarterCard</code> assigned to the player
+     */
+
+    public Optional<StarterCard> getStarterCard(@NotNull String nickname)
+    throws PlayerInitException {
+        return playerManager.getStarterCard(nickname);
+    }
 }
+

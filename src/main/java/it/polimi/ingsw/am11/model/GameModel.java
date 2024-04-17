@@ -19,33 +19,38 @@ public interface GameModel {
 
     Set<String> getPlayers();
 
-    String getCurrentTurnPlayer();
+    String getCurrentTurnPlayer() throws GameStatusException;
 
-    String getFirstPlayer();
+    String getFirstPlayer() throws GameStatusException;
 
-    Set<Integer> getPlayerHand(String nickname);
+    Set<Integer> getPlayerHand(String nickname) throws GameStatusException, PlayerInitException;
 
-    Set<Integer> getPlayerObjective(String nickname);
+    Set<Integer> getPlayerObjective(String nickname) throws PlayerInitException,
+                                                            GameStatusException;
 
-    PlayerColor getPlayerColor(String nickname);
+    PlayerColor getPlayerColor(String nickname) throws PlayerInitException;
 
     //FIXME this interface has to be changed, it can't return a map
-    Map<Position, CardContainer> getPositionedCard(String nickname) throws PlayerInitException;
+    Map<Position, CardContainer> getPositionedCard(String nickname)
+    throws PlayerInitException, GameStatusException;
 
-    Set<Position> getAvailablePositions(String nickname) throws PlayerInitException;
+    Set<Position> getAvailablePositions(String nickname)
+    throws PlayerInitException, GameStatusException;
 
-    List<Integer> getCommonObjectives();
+    List<Integer> getCommonObjectives() throws GameStatusException;
 
-    Set<Integer> getExposedCards(PlayableCardType type);
+    Set<Integer> getExposedCards(PlayableCardType type) throws GameStatusException;
 
 
     int getPlayerPoints(String nickname)
-    throws IllegalPlateauActionException, PlayerInitException;
+    throws PlayerInitException, GameStatusException,
+           GameBreakingException;
 
     int getPlayerFinishingPosition(String nickname)
-    throws IllegalPlateauActionException, PlayerInitException;
+    throws PlayerInitException, GameStatusException,
+           GameBreakingException;
 
-    Set<String> getWinner();
+    Set<String> getWinner() throws GameStatusException;
 
     void initGame() throws IllegalNumOfPlayersException, GameStatusException, GameBreakingException;
 
@@ -54,11 +59,12 @@ public interface GameModel {
 
     void removePlayer(@NotNull String nickname) throws GameStatusException;
 
-    int pickStarter() throws EmptyDeckException, GameStatusException;
+    int pickStarterFor(String nickname) throws EmptyDeckException, GameStatusException,
+                                               PlayerInitException;
 
     int pickObjective() throws EmptyDeckException, GameStatusException;
 
-    void setStarterFor(String nickname, int cardID, boolean isRetro)
+    void setStarterFor(String nickname, boolean isRetro)
     throws IllegalCardPlacingException, GameStatusException, PlayerInitException;
 
     void setObjectiveFor(String nickname, int cardID)

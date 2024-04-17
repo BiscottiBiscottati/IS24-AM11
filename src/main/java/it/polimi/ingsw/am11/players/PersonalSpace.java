@@ -2,9 +2,11 @@ package it.polimi.ingsw.am11.players;
 
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.exceptions.NotInHandException;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -18,6 +20,10 @@ public class PersonalSpace {
     private static int maxObjectives;
     private final Set<PlayableCard> playerHand;
     private final Set<ObjectiveCard> playerObjective;
+
+    private Optional<StarterCard> starterCard;
+
+    private Set<ObjectiveCard> candidateObjectives;
 
     public PersonalSpace() {
         playerHand = new HashSet<>(maxSizeofHand << 1);
@@ -38,6 +44,22 @@ public class PersonalSpace {
 
     public Set<ObjectiveCard> getPlayerObjective() {
         return playerObjective;
+    }
+
+    public Optional<StarterCard> getStarterCard() {
+        return starterCard;
+    }
+
+    public void setStarterCard(@NotNull StarterCard starter) {
+        starterCard = Optional.of(starter);
+    }
+
+    public Set<ObjectiveCard> getCandidateObjectives() {
+        return Set.copyOf(candidateObjectives);
+    }
+
+    public void setNewCandidateObjectives(ObjectiveCard objective) {
+        candidateObjectives.add(objective);
     }
 
     public int availableSpaceInHand() {

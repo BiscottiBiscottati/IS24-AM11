@@ -2,10 +2,12 @@ package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.players.PersonalSpace;
 import it.polimi.ingsw.am11.players.Player;
 import it.polimi.ingsw.am11.players.PlayerColor;
+import it.polimi.ingsw.am11.players.Position;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -58,27 +60,91 @@ public class PlayerManager {
         }
     }
 
-    public Set<Integer> getHand(String nickname) {
-        return players.get(nickname)
-                      .space()
-                      .getPlayerHand()
-                      .stream()
-                      .map(PlayableCard::getId)
-                      .collect(Collectors.toUnmodifiableSet());
-    }
-
-    public Set<Integer> getPlayerObjective(@NotNull String nickname) {
-        return players.get(nickname)
-                      .space()
-                      .getPlayerObjective()
-                      .stream()
-                      .map(ObjectiveCard::getId)
-                      .collect(Collectors.toUnmodifiableSet());
-    }
-
-    public @Nullable PlayerColor getPlayerColor(@NotNull String nickname) {
+    public Set<Integer> getHand(String nickname) throws PlayerInitException {
         Player player = players.get(nickname);
-        return (player != null) ? player.color() : null;
+        if (player != null) {
+            return player.space()
+                         .getPlayerHand()
+                         .stream()
+                         .map(PlayableCard::getId)
+                         .collect(Collectors.toUnmodifiableSet());
+        } else {
+            throw new PlayerInitException("Player " + nickname + " not found");
+        }
+    }
+
+    public Set<Integer> getPlayerObjective(@NotNull String nickname) throws PlayerInitException {
+        Player player = players.get(nickname);
+        if (player != null) {
+            return player.space()
+                         .getPlayerObjective()
+                         .stream()
+                         .map(ObjectiveCard::getId)
+                         .collect(Collectors.toUnmodifiableSet());
+        } else {
+            throw new PlayerInitException("Player " + nickname + " not found");
+        }
+
+    }
+
+    public Optional<StarterCard> getStarterCard(@NotNull String nickname)
+    throws PlayerInitException {
+        Player player = players.get(nickname);
+        if (player != null) {
+            return player.space().getStarterCard();
+        } else {
+            throw new PlayerInitException("Player " + nickname + " not found");
+        }
+    }
+
+    public Set<ObjectiveCard> getCandidateObjectives(@NotNull String nickname)
+    throws PlayerInitException {
+        Player player = players.get(nickname);
+        if (player != null) {
+            return player.space().getCandidateObjectives();
+        } else {
+            throw new PlayerInitException("Player " + nickname + " not found");
+        }
+    }
+
+    public void setStarterCard(@NotNull String nickname, @NotNull StarterCard starter)
+    throws PlayerInitException {
+        Player player = players.get(nickname);
+        if (player != null) {
+            player.space().setStarterCard(starter);
+        } else {
+            throw new PlayerInitException("Player " + nickname + " not found");
+        }
+    }
+
+    public void setNewCandidateObjective(@NotNull String nickname, @NotNull ObjectiveCard objective)
+    throws PlayerInitException {
+        Player player = players.get(nickname);
+        if (player != null) {
+            player.space().setNewCandidateObjectives(objective);
+        } else {
+            throw new PlayerInitException("Player " + nickname + " not found");
+        }
+    }
+
+
+    public PlayerColor getPlayerColor(@NotNull String nickname) throws PlayerInitException {
+        Player player = players.get(nickname);
+        if (player != null) {
+            return player.color();
+        } else {
+            throw new PlayerInitException("Player " + nickname + " not found");
+        }
+    }
+
+    public Set<Position> getAvailablePositions(@NotNull String nickname)
+    throws PlayerInitException {
+        Player player = players.get(nickname);
+        if (player != null) {
+            return player.field().getAvailablePositions();
+        } else {
+            throw new PlayerInitException("Player " + nickname + " not found");
+        }
     }
 
     public Player addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
