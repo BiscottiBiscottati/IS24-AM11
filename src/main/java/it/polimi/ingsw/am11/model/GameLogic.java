@@ -151,7 +151,10 @@ public class GameLogic implements GameModel {
             throw new GameStatusException(
                     "the game has not started, there are no positioned cards");
         }
-        return playerManager.getPlayer(nickname).field().getCardsPositioned();
+        return playerManager.getPlayer(nickname)
+                            .orElseThrow(() -> new PlayerInitException("Player not found"))
+                            .field()
+                            .getCardsPositioned();
     }
 
     /**
@@ -213,14 +216,17 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public int getPlayerPoints(@NotNull String nickname)
-    throws PlayerInitException, GameStatusException,
-           GameBreakingException {
+    throws GameStatusException,
+           GameBreakingException, PlayerInitException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException(
                     "the game has not started, players don't have points");
         }
         try {
-            return plateau.getPlayerPoints(playerManager.getPlayer(nickname));
+            // TODO throws list to complete
+            return plateau.getPlayerPoints(playerManager.getPlayer(nickname)
+                                                        .orElseThrow(() -> new PlayerInitException(
+                                                                "Player not found")));
         } catch (IllegalPlateauActionException e) {
             throw new GameBreakingException("Plateau and player manager have discrepancies");
         }
@@ -242,16 +248,16 @@ public class GameLogic implements GameModel {
                     "the game has not ended, there isn't a leaderboard");
         }
         try {
-            return plateau.getPlayerFinishingPosition(playerManager.getPlayer(nickname));
+            return plateau.getPlayerFinishingPosition(
+                    playerManager.getPlayer(nickname)
+                                 .orElseThrow(
+                                         () -> new PlayerInitException(
+                                                 "Player not " +
+                                                 "found")));
         } catch (IllegalPlateauActionException e) {
             throw new GameBreakingException("Plateau and player manager have discrepancies");
         }
-
     }
-
-    //endregion
-
-    //region GettersPlateau  javadoc
 
     /**
      * This method returns the winners, there could be more than on winners.
@@ -281,7 +287,7 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public void initGame()
-    throws IllegalNumOfPlayersException, GameStatusException, GameBreakingException {
+    throws IllegalNumOfPlayersException, GameStatusException {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
@@ -294,31 +300,30 @@ public class GameLogic implements GameModel {
         resetAll();
         pickablesTable.initialize();
         playerManager.startingTheGame();
-        for (String player : playerManager.getPlayers()) {
 
-            int goldAtStart = ruleSet.getGoldAtStart();
-            for (int q = 0; q < goldAtStart; q++) {
-                try {
-                    playerManager.getPlayer(player)
-                                 .space()
-                                 .addCardToHand(
-                                         pickablesTable.drawPlayableFrom(PlayableCardType.GOLD));
-                } catch (MaxHandSizeException | PlayerInitException | EmptyDeckException e) {
-                    throw new GameBreakingException("Ruleset has incompatible values");
+
+        try {
+            PlayableCard card;
+            List<PersonalSpace> spaces = playerManager.getPlayers().stream()
+                                                      .map(playerManager::getPlayer)
+                                                      .filter(Optional::isPresent)
+                                                      .map(Optional::get)
+                                                      .map(Player::space)
+                                                      .toList();
+            for (PersonalSpace space : spaces) {
+                int numOfGolds = ruleSet.getGoldAtStart();
+                for (int i = 0; i < numOfGolds; i++) {
+                    card = pickablesTable.drawPlayableFrom(PlayableCardType.GOLD);
+                    space.addCardToHand(card);
+                }
+                int numOfResources = ruleSet.getResourceAtStart();
+                for (int i = 0; i < numOfResources; i++) {
+                    card = pickablesTable.drawPlayableFrom(PlayableCardType.RESOURCE);
+                    space.addCardToHand(card);
                 }
             }
-            int resourceAtStart = ruleSet.getResourceAtStart();
-            for (int q = 0; q < resourceAtStart; q++) {
-                try {
-                    playerManager.getPlayer(player)
-                                 .space()
-                                 .addCardToHand(
-                                         pickablesTable.drawPlayableFrom(
-                                                 PlayableCardType.RESOURCE));
-                } catch (MaxHandSizeException | PlayerInitException | EmptyDeckException e) {
-                    throw new GameBreakingException("Ruleset has incompatible values");
-                }
-            }
+        } catch (EmptyDeckException | MaxHandSizeException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -364,7 +369,9 @@ public class GameLogic implements GameModel {
             throw new GameStatusException("A game is in progress");
         }
         try {
-            plateau.removePlayer(playerManager.getPlayer(nickname));
+            plateau.removePlayer(playerManager.getPlayer(nickname)
+                                              .orElseThrow(() -> new PlayerInitException(
+                                                      "player not found")));
             playerManager.removePlayer(nickname);
         } catch (PlayerInitException ignored) {
         }
@@ -428,7 +435,8 @@ public class GameLogic implements GameModel {
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
         }
-        Player player = playerManager.getPlayer(nickname);
+        // TODO throws to complete
+        Player player = playerManager.getPlayer(nickname).orElseThrow();
         player.field().placeStartingCard(playerManager.getStarterCard(nickname).orElseThrow(),
                                          isRetro);
     }
@@ -451,7 +459,9 @@ public class GameLogic implements GameModel {
             throw new GameStatusException("the game is not ongoing");
         }
         ObjectiveCard objectiveCard = playerManager.getCandidateObjectiveByID(nickname, cardID);
-        playerManager.getPlayer(nickname).space().addObjective(objectiveCard);
+        playerManager.getPlayer(nickname).orElseThrow(
+                             () -> new PlayerInitException("player not found"))
+                     .space().addObjective(objectiveCard);
         //TODO check better since i was di fretta
     }
 
@@ -510,7 +520,9 @@ public class GameLogic implements GameModel {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
             throw new GameStatusException("the game is not ongoing");
         }
-        Player player = playerManager.getPlayer(nickname);
+        Player player = playerManager.getPlayer(nickname)
+                                     .orElseThrow(
+                                             () -> new PlayerInitException("Player not found"));
         if (! Objects.equals(playerManager.getCurrentTurnPlayer(), nickname)) {
             throw new TurnsOrderException(
                     "It's not " + nickname + " turn, it's " + playerManager.getCurrentTurnPlayer() +
@@ -543,9 +555,13 @@ public class GameLogic implements GameModel {
 
         checkIfDrawAllowed(nickname);
 
-        if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
+        PersonalSpace playerSpace = playerManager.getPlayer(nickname)
+                                                 .orElseThrow(() -> new PlayerInitException(
+                                                         "Player not found"))
+                                                 .space();
+        if (playerSpace.availableSpaceInHand() >= 1) {
             PlayableCard card = pickablesTable.drawPlayableFrom(type);
-            playerManager.getPlayer(nickname).space().addCardToHand(card);
+            playerSpace.addCardToHand(card);
             return card.getId();
         } else {
             throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
@@ -571,10 +587,14 @@ public class GameLogic implements GameModel {
            IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException {
         checkIfDrawAllowed(nickname);
 
+        PersonalSpace playerSpace = playerManager.getPlayer(nickname)
+                                                 .orElseThrow(() -> new PlayerInitException(
+                                                         "Player not found"))
+                                                 .space();
         try {
-            if (playerManager.getPlayer(nickname).space().availableSpaceInHand() >= 1) {
+            if (playerSpace.availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableVisible(cardID);
-                playerManager.getPlayer(nickname).space().addCardToHand(card);
+                playerSpace.addCardToHand(card);
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
             }
@@ -602,7 +622,9 @@ public class GameLogic implements GameModel {
         for (String nickname : playerManager.getPlayers()) {
             Player player;
             try {
-                player = playerManager.getPlayer(nickname);
+                player = playerManager.getPlayer(nickname)
+                                      .orElseThrow(
+                                              () -> new PlayerInitException("player not found"));
             } catch (PlayerInitException e) {
                 throw new GameBreakingException("Discrepancies between playerManager and itself");
             }
