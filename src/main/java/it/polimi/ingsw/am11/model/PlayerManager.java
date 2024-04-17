@@ -52,13 +52,8 @@ public class PlayerManager {
         return (firstPlayer != null) ? firstPlayer.nickname() : null;
     }
 
-    public @NotNull Player getPlayer(String nickname) throws PlayerInitException {
-        Player player = players.get(nickname);
-        if (player != null) {
-            return player;
-        } else {
-            throw new PlayerInitException("Player " + nickname + " not found");
-        }
+    public Optional<Player> getPlayer(String nickname) {
+        return Optional.ofNullable(players.get(nickname));
     }
 
     public Set<Integer> getHand(String nickname) throws PlayerInitException {

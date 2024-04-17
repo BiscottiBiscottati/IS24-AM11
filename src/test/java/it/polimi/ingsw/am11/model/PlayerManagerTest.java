@@ -168,7 +168,8 @@ class PlayerManagerTest {
         }
         for (String nickname : players) {
             try {
-                assertEquals(nickname, manager.getPlayer(nickname).nickname());
+                assertEquals(nickname,
+                             manager.getPlayer(nickname).orElseThrow().nickname());
             } catch (PlayerInitException e) {
                 throw new RuntimeException(e);
             }
