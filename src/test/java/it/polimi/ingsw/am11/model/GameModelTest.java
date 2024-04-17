@@ -45,6 +45,7 @@ class GameModelTest {
 
     }
 
+
     @Test
     void testInitGame() {
         assertThrows(IllegalNumOfPlayersException.class, () -> model.initGame());
@@ -64,55 +65,63 @@ class GameModelTest {
                      () -> model.addPlayerToTable("lola", PlayerColor.GREEN));
         assertThrows(GameStatusException.class, model::initGame);
 
-        assertTrue(players.contains(model.getFirstPlayer()));
-        assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
+        try {
+            assertTrue(players.contains(model.getFirstPlayer()));
+            assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
 
-        assertThrows(GameStatusException.class, () -> model.removePlayer("lola"));
+            assertThrows(GameStatusException.class, () -> model.removePlayer("lola"));
 
-        assertEquals(2, model.getCommonObjectives().size());
-        assertEquals(2,
-                     model.getCommonObjectives().stream()
-                          .map(objectiveCardDeck::getCardById)
-                          .filter(Optional::isPresent)
-                          .count());
+            assertEquals(2, model.getCommonObjectives().size());
+            assertEquals(2,
+                         model.getCommonObjectives().stream()
+                              .map(objectiveCardDeck::getCardById)
+                              .filter(Optional::isPresent)
+                              .count());
 
-        assertEquals(2, model.getExposedCards(PlayableCardType.GOLD).size());
-        assertEquals(2,
-                     model.getExposedCards(PlayableCardType.GOLD).stream()
-                          .map(goldCardDeck::getCardById)
-                          .filter(Optional::isPresent)
-                          .count());
+            assertEquals(2, model.getExposedCards(PlayableCardType.GOLD).size());
+            assertEquals(2,
+                         model.getExposedCards(PlayableCardType.GOLD).stream()
+                              .map(goldCardDeck::getCardById)
+                              .filter(Optional::isPresent)
+                              .count());
 
-        assertEquals(2, model.getExposedCards(PlayableCardType.RESOURCE).size());
-        assertEquals(2,
-                     model.getExposedCards(PlayableCardType.RESOURCE).stream()
-                          .map(resourceCardDeck::getCardById)
-                          .filter(Optional::isPresent)
-                          .count());
+            assertEquals(2, model.getExposedCards(PlayableCardType.RESOURCE).size());
+            assertEquals(2,
+                         model.getExposedCards(PlayableCardType.RESOURCE).stream()
+                              .map(resourceCardDeck::getCardById)
+                              .filter(Optional::isPresent)
+                              .count());
+        } catch (GameStatusException e) {
+            throw new RuntimeException(e);
+        }
 
         try {
             assertEquals(Position.of(0, 0),
                          model.getAvailablePositions("edo").stream()
                               .findFirst()
                               .orElseThrow());
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
 
-        assertEquals(3, model.getPlayerHand("edo").size());
+        try {
+            assertEquals(3, model.getPlayerHand("edo").size());
 
-        assertEquals(1,
-                     model.getPlayerHand("edo")
-                          .stream()
-                          .map(goldCardDeck::getCardById)
-                          .filter(Optional::isPresent)
-                          .count());
+            assertEquals(1,
+                         model.getPlayerHand("edo")
+                              .stream()
+                              .map(goldCardDeck::getCardById)
+                              .filter(Optional::isPresent)
+                              .count());
 
-        assertEquals(1,
-                     model.getPlayerHand("edo")
-                          .stream()
-                          .map(resourceCardDeck::getCardById)
-                          .filter(Optional::isPresent)
-                          .count());
+            assertEquals(1,
+                         model.getPlayerHand("edo")
+                              .stream()
+                              .map(resourceCardDeck::getCardById)
+                              .filter(Optional::isPresent)
+                              .count());
+        } catch (GameStatusException | PlayerInitException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

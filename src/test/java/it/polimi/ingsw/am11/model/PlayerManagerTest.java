@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -167,15 +168,11 @@ class PlayerManagerTest {
             throw new RuntimeException(e);
         }
         for (String nickname : players) {
-            try {
-                assertEquals(nickname,
-                             manager.getPlayer(nickname).orElseThrow().nickname());
-            } catch (PlayerInitException e) {
-                throw new RuntimeException(e);
-            }
+            assertEquals(nickname,
+                         manager.getPlayer(nickname).orElseThrow().nickname());
         }
 
-        assertThrows(PlayerInitException.class, () -> manager.getPlayer("giorgio"));
+        assertEquals(Optional.empty(), manager.getPlayer("giorgio"));
     }
 
     @Test
@@ -209,10 +206,10 @@ class PlayerManagerTest {
             throw new RuntimeException(e);
         }
 
-        assertEquals(manager.getPlayerColor("player1"), PlayerColor.BLUE);
-        assertEquals(manager.getPlayerColor("player2"), PlayerColor.GREEN);
-        assertEquals(manager.getPlayerColor("player3"), PlayerColor.RED);
-        assertEquals(manager.getPlayerColor("player4"), PlayerColor.YELLOW);
+        assertEquals(manager.getPlayerColor("player1"), Optional.of(PlayerColor.BLUE));
+        assertEquals(manager.getPlayerColor("player2"), Optional.of(PlayerColor.GREEN));
+        assertEquals(manager.getPlayerColor("player3"), Optional.of(PlayerColor.RED));
+        assertEquals(manager.getPlayerColor("player4"), Optional.of(PlayerColor.YELLOW));
     }
 
     @Test
@@ -260,7 +257,7 @@ class PlayerManagerTest {
 
         //removing a player
         manager.removePlayer("player1");
-        assertThrows(PlayerInitException.class, () -> manager.getPlayer("player1"));
+        assertEquals(Optional.empty(), manager.getPlayer("player1"));
         Set<String> players = Set.of("player2", "player3", "player4");
         assertEquals(players, manager.getPlayers());
 

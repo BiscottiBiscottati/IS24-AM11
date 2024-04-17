@@ -140,7 +140,8 @@ public class GameLogic implements GameModel {
      */
     @Override // DONE
     public PlayerColor getPlayerColor(@NotNull String nickname) throws PlayerInitException {
-        return playerManager.getPlayerColor(nickname);
+        return playerManager.getPlayerColor(nickname)
+                            .orElseThrow(() -> new PlayerInitException("Player not found"));
     }
 
     @Override

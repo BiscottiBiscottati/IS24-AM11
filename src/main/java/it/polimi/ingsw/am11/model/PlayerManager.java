@@ -134,13 +134,9 @@ public class PlayerManager {
     }
 
 
-    public PlayerColor getPlayerColor(@NotNull String nickname) throws PlayerInitException {
-        Player player = players.get(nickname);
-        if (player != null) {
-            return player.color();
-        } else {
-            throw new PlayerInitException("Player " + nickname + " not found");
-        }
+    public Optional<PlayerColor> getPlayerColor(@NotNull String nickname) {
+        return Optional.ofNullable(players.get(nickname))
+                       .map(Player::color);
     }
 
     public Set<Position> getAvailablePositions(@NotNull String nickname)

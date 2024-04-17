@@ -71,18 +71,22 @@ class GameLogicTest {
             throw new RuntimeException(e);
         }
         ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
-        assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
+        try {
+            assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
+        } catch (GameStatusException e) {
+            throw new RuntimeException(e);
+        }
         for (int i = 0; i < numOfPlayers; i++) {
-            orderOfPlayers.add(i, model.getCurrentTurnPlayer());
             try {
+                orderOfPlayers.add(i, model.getCurrentTurnPlayer());
                 model.goNextTurn();
             } catch (GameBreakingException | GameStatusException e) {
                 throw new RuntimeException(e);
             }
         }
         for (int j = 0; j < numOfPlayers; j++) {
-            assertEquals(orderOfPlayers.get(j), model.getCurrentTurnPlayer());
             try {
+                assertEquals(orderOfPlayers.get(j), model.getCurrentTurnPlayer());
                 model.goNextTurn();
             } catch (GameBreakingException | GameStatusException e) {
                 throw new RuntimeException(e);
@@ -109,14 +113,14 @@ class GameLogicTest {
         }
 
         ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
-        assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
-        String firstPlayer = model.getFirstPlayer();
         try {
+            assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
+            String firstPlayer = model.getFirstPlayer();
             model.goNextTurn();
+            assertEquals(firstPlayer, model.getFirstPlayer());
         } catch (GameBreakingException | GameStatusException e) {
             throw new RuntimeException(e);
         }
-        assertEquals(firstPlayer, model.getFirstPlayer());
     }
 
     @Test
@@ -137,14 +141,14 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
+            assertEquals(model.getPlayerColor("player1"), PlayerColor.BLUE);
+            assertEquals(model.getPlayerColor("player2"), PlayerColor.GREEN);
+            assertEquals(model.getPlayerColor("player3"), PlayerColor.RED);
+            assertEquals(model.getPlayerColor("player4"), PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
 
-        assertEquals(model.getPlayerColor("player1"), PlayerColor.BLUE);
-        assertEquals(model.getPlayerColor("player2"), PlayerColor.GREEN);
-        assertEquals(model.getPlayerColor("player3"), PlayerColor.RED);
-        assertEquals(model.getPlayerColor("player4"), PlayerColor.YELLOW);
     }
 
     @Test
@@ -179,11 +183,17 @@ class GameLogicTest {
                 throw new RuntimeException(e);
             }
 
-            assertNotNull(model.getCommonObjectives());
+            List<Integer> listObj;
 
-            assertEquals(model.getCommonObjectives().size(), 2);
+            try {
+                assertNotNull(model.getCommonObjectives());
+                assertEquals(model.getCommonObjectives().size(), 2);
+                listObj = model.getCommonObjectives();
+            } catch (GameStatusException e) {
+                throw new RuntimeException(e);
+            }
 
-            List<Integer> listObj = model.getCommonObjectives();
+
             for (Integer id : listObj) {
                 assertNotNull(dObjective.getCardById(id));
             }
