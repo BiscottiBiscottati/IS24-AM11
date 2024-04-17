@@ -62,7 +62,8 @@ public interface GameModel {
     int pickStarterFor(String nickname) throws EmptyDeckException, GameStatusException,
                                                PlayerInitException;
 
-    int pickObjective() throws EmptyDeckException, GameStatusException;
+    Set<Integer> pickCandidateObjectives(@NotNull String nickname)
+    throws EmptyDeckException, GameStatusException, PlayerInitException;
 
     void setStarterFor(String nickname, boolean isRetro)
     throws IllegalCardPlacingException, GameStatusException, PlayerInitException;
@@ -93,6 +94,6 @@ public interface GameModel {
 
     GameStatus getStatus();
 
-    Optional<Color> getDeckTop(PlayableCardType type);
+    Optional<Color> getDeckTop(PlayableCardType type) throws GameStatusException;
 
 }

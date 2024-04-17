@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.model;
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.players.PersonalSpace;
 import it.polimi.ingsw.am11.players.Player;
@@ -102,6 +103,16 @@ public class PlayerManager {
         Player player = players.get(nickname);
         if (player != null) {
             return player.space().getCandidateObjectives();
+        } else {
+            throw new PlayerInitException("Player " + nickname + " not found");
+        }
+    }
+
+    public ObjectiveCard getCandidateObjectiveByID(@NotNull String nickname, @NotNull int id)
+    throws PlayerInitException, IllegalPlayerSpaceActionException {
+        Player player = players.get(nickname);
+        if (player != null) {
+            return player.space().getCandidateObjectiveByID(id);
         } else {
             throw new PlayerInitException("Player " + nickname + " not found");
         }

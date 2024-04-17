@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.exceptions.NotInHandException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class PersonalSpace {
 
     private Optional<StarterCard> starterCard;
 
-    private Set<ObjectiveCard> candidateObjectives;
+    private Map<Integer, ObjectiveCard> candidateObjectives;
 
     public PersonalSpace() {
         playerHand = new HashSet<>(maxSizeofHand << 1);
@@ -55,11 +56,22 @@ public class PersonalSpace {
     }
 
     public Set<ObjectiveCard> getCandidateObjectives() {
-        return Set.copyOf(candidateObjectives);
+        return new HashSet<>(candidateObjectives.values());
+    }
+
+    public ObjectiveCard getCandidateObjectiveByID(@NotNull int id)
+    throws IllegalPlayerSpaceActionException {
+        ObjectiveCard objective = candidateObjectives.get(id);
+        if (objective != null) {
+            return objective;
+        } else {
+            throw new IllegalPlayerSpaceActionException(
+                    "The objective that you chose is not one of yours");
+        }
     }
 
     public void setNewCandidateObjectives(ObjectiveCard objective) {
-        candidateObjectives.add(objective);
+        candidateObjectives.put(objective.getId(), objective);
     }
 
     public int availableSpaceInHand() {

@@ -2,6 +2,11 @@ package it.polimi.ingsw.am11.model;
 
 public interface RuleSet {
     /**
+     * @return the number of objective that a player can choose between at the start of the game
+     */
+    int getObjectiveToChooseFrom();
+
+    /**
      * @return the number of resource cards dealt at the beginning
      */
     int getResourceAtStart();

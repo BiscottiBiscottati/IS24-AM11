@@ -12,11 +12,13 @@ public class BasicRuleset implements RuleSet {
     private static final int goldAtStart = 1;
     private static final int resourceAtStart = 2;
 
+    private static final int objectiveToChooseFrom = 2;
+
     /**
-     * @return the number of gold cards dealt at the beginning
+     * @return the number of objective that a player can choose between at the start of the game
      */
-    public int getGoldAtStart() {
-        return goldAtStart;
+    public int getObjectiveToChooseFrom() {
+        return objectiveToChooseFrom;
     }
 
     /**
@@ -24,6 +26,13 @@ public class BasicRuleset implements RuleSet {
      */
     public int getResourceAtStart() {
         return resourceAtStart;
+    }
+
+    /**
+     * @return the number of gold cards dealt at the beginning
+     */
+    public int getGoldAtStart() {
+        return goldAtStart;
     }
 
     /**

@@ -397,11 +397,19 @@ public class GameLogic implements GameModel {
      * @throws GameStatusException if the game is not ongoing
      */
     @Override //
-    public int pickObjective() throws EmptyDeckException, GameStatusException {
+    public Set<Integer> pickCandidateObjectives(@NotNull String nickname)
+    throws EmptyDeckException, GameStatusException, PlayerInitException {
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
         }
-        return pickablesTable.pickObjectiveCard().getId();
+        int objectiveToChooseFrom = ruleSet.getObjectiveToChooseFrom();
+        for (int i = 0; i < objectiveToChooseFrom; i++) {
+            playerManager.setNewCandidateObjective(nickname, pickablesTable.pickObjectiveCard());
+        }
+        return playerManager.getCandidateObjectives(nickname)
+                            .stream()
+                            .map(ObjectiveCard::getId)
+                            .collect(Collectors.toSet());
     }
 
     /**
@@ -442,8 +450,9 @@ public class GameLogic implements GameModel {
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
         }
-        ObjectiveCard objectiveCard = pickablesTable.getObjectiveByID(cardID).orElseThrow();
+        ObjectiveCard objectiveCard = playerManager.getCandidateObjectiveByID(nickname, cardID);
         playerManager.getPlayer(nickname).space().addObjective(objectiveCard);
+        //TODO check better since i was di fretta
     }
 
     /**
@@ -633,8 +642,22 @@ public class GameLogic implements GameModel {
         return plateau.getStatus();
     }
 
-    public Optional<Color> getDeckTop(PlayableCardType type) {
+    public Optional<Color> getDeckTop(PlayableCardType type) throws GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP) {
+            throw new GameStatusException("the game is not ongoing");
+        }
         return pickablesTable.getDeckTop(type);
+    }
+
+    public Set<Integer> getCandidateObjectives(@NotNull String nickname)
+    throws PlayerInitException, GameStatusException {
+        if (plateau.getStatus() != GameStatus.ONGOING) {
+            throw new GameStatusException("the game is not ongoing");
+        }
+        return playerManager.getCandidateObjectives(nickname)
+                            .stream()
+                            .map(ObjectiveCard::getId)
+                            .collect(Collectors.toSet());
     }
 
     /**
