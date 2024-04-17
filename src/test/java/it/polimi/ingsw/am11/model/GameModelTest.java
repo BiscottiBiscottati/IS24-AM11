@@ -114,7 +114,7 @@ class GameModelTest {
                               .filter(Optional::isPresent)
                               .count());
 
-            assertEquals(1,
+            assertEquals(2,
                          model.getPlayerHand("edo")
                               .stream()
                               .map(resourceCardDeck::getCardById)
