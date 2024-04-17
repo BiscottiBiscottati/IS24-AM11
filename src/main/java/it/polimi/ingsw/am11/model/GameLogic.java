@@ -55,7 +55,7 @@ public class GameLogic implements GameModel {
      * @return a set of the nicknames of the players
      */
     @Override // DONE
-    public Set<String> getPlayers() {
+    public @NotNull Set<String> getPlayers() {
         return playerManager.getPlayers();
     }
 
@@ -103,7 +103,7 @@ public class GameLogic implements GameModel {
      * @return a <code>List</code> of the IDs of the <code>PlayableCards</code> in the player hand
      */
     @Override // DONE
-    public Set<Integer> getPlayerHand(@NotNull String nickname)
+    public @NotNull Set<Integer> getPlayerHand(@NotNull String nickname)
     throws GameStatusException, PlayerInitException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException("the game has not started, cards hasn't been dealt");
@@ -124,7 +124,7 @@ public class GameLogic implements GameModel {
      * @return a <code>List</code> of the IDs of the <code>ObjectiveCards</code> of the player
      */
     @Override // DONE
-    public Set<Integer> getPlayerObjective(@NotNull String nickname)
+    public @NotNull Set<Integer> getPlayerObjective(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException("the game has not started, objectives hasn't been dealt");
@@ -139,7 +139,8 @@ public class GameLogic implements GameModel {
      * @return the <code>PlayerColor</code> of the player
      */
     @Override // DONE
-    public PlayerColor getPlayerColor(@NotNull String nickname) throws PlayerInitException {
+    public @NotNull PlayerColor getPlayerColor(@NotNull String nickname)
+    throws PlayerInitException {
         return playerManager.getPlayerColor(nickname)
                             .orElseThrow(() -> new PlayerInitException("Player not found"));
     }
@@ -171,7 +172,7 @@ public class GameLogic implements GameModel {
      * in the field
      */
     @Override //
-    public Set<Position> getAvailablePositions(@NotNull String nickname)
+    public @NotNull Set<Position> getAvailablePositions(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException(
@@ -186,7 +187,7 @@ public class GameLogic implements GameModel {
      * @return a list of ID of <code>ObjectiveCard</code> that represent the common objectives
      */
     @Override //
-    public List<Integer> getCommonObjectives() throws GameStatusException {
+    public @NotNull List<Integer> getCommonObjectives() throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException(
                     "the game has not started, there are no objectives");
@@ -198,7 +199,8 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public Set<Integer> getExposedCards(PlayableCardType type) throws GameStatusException {
+    public @NotNull Set<Integer> getExposedCards(@NotNull PlayableCardType type)
+    throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException(
                     "the game has not started, there are exposed cards");
@@ -266,7 +268,7 @@ public class GameLogic implements GameModel {
      * @return a set with the names of the winners
      */
     @Override //
-    public Set<String> getWinner() throws GameStatusException {
+    public @NotNull Set<String> getWinner() throws GameStatusException {
         if (plateau.getStatus() != GameStatus.ENDED) {
             throw new GameStatusException(
                     "the game has not ended, there isn't a leaderboard");
@@ -387,7 +389,7 @@ public class GameLogic implements GameModel {
      * @throws GameStatusException if the game is not ongoing
      */
     @Override //
-    public int pickStarterFor(String nickname)
+    public int pickStarterFor(@NotNull String nickname)
     throws EmptyDeckException, GameStatusException, PlayerInitException {
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
@@ -405,7 +407,7 @@ public class GameLogic implements GameModel {
      * @throws GameStatusException if the game is not ongoing
      */
     @Override //
-    public Set<Integer> pickCandidateObjectives(@NotNull String nickname)
+    public @NotNull Set<Integer> pickCandidateObjectives(@NotNull String nickname)
     throws EmptyDeckException, GameStatusException, PlayerInitException {
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
@@ -475,7 +477,7 @@ public class GameLogic implements GameModel {
      * @throws GameStatusException   if the game is not ongoing
      */
     @Override // DONE
-    public String goNextTurn() throws GameBreakingException, GameStatusException {
+    public @NotNull String goNextTurn() throws GameBreakingException, GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
             throw new GameStatusException("the game is not ongoing");
         }
@@ -550,7 +552,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public int drawFromDeckOf(PlayableCardType type, String nickname)
+    public int drawFromDeckOf(@NotNull PlayableCardType type, @NotNull String nickname)
     throws GameStatusException, TurnsOrderException, EmptyDeckException,
            IllegalPlayerSpaceActionException, PlayerInitException, MaxHandSizeException {
 
@@ -583,7 +585,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
+    public void drawVisibleOf(@NotNull PlayableCardType type, @NotNull String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
            IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException {
         checkIfDrawAllowed(nickname);
@@ -661,12 +663,13 @@ public class GameLogic implements GameModel {
      * @see GameStatus
      */
     @Override
-    public GameStatus getStatus() {
+    public @NotNull GameStatus getStatus() {
         return plateau.getStatus();
     }
 
     @Override
-    public Optional<Color> getDeckTop(PlayableCardType type) throws GameStatusException {
+    public @NotNull Optional<Color> getDeckTop(@NotNull PlayableCardType type)
+    throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException("the game is not ongoing");
         }
@@ -674,10 +677,10 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public Set<Integer> getCandidateObjectives(@NotNull String nickname)
+    public @NotNull Set<Integer> getCandidateObjectives(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
         if (plateau.getStatus() != GameStatus.ONGOING) {
-            throw new GameStatusEvxception("the game is not ongoing");
+            throw new GameStatusException("the game is not ongoing");
         }
         return playerManager.getCandidateObjectives(nickname)
                             .stream()
@@ -690,10 +693,11 @@ public class GameLogic implements GameModel {
      *
      * @param nickname Nickname of the player of interest
      * @return the <code>StarterCard</code> assigned to the player
+     * @throws PlayerInitException if there is no player with that nickname
      */
 
     @Override
-    public Optional<StarterCard> getStarterCard(@NotNull String nickname)
+    public @NotNull Optional<StarterCard> getStarterCard(@NotNull String nickname)
     throws PlayerInitException {
         return playerManager.getStarterCard(nickname);
     }
