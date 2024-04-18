@@ -11,7 +11,6 @@ import it.polimi.ingsw.am11.players.PlayerColor;
 import it.polimi.ingsw.am11.players.Position;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,12 +43,14 @@ public class PlayerManager {
         return players.size();
     }
 
-    public @Nullable String getCurrentTurnPlayer() {
-        return (currentPlaying != null) ? currentPlaying.nickname() : null;
+    public Optional<String> getCurrentTurnPlayer() {
+        return Optional.ofNullable(currentPlaying)
+                       .map(Player::nickname);
     }
 
-    public @Nullable String getFirstPlayer() {
-        return (firstPlayer != null) ? firstPlayer.nickname() : null;
+    public Optional<String> getFirstPlayer() {
+        return Optional.ofNullable(firstPlayer)
+                       .map(Player::nickname);
     }
 
     public Optional<Player> getPlayer(String nickname) {

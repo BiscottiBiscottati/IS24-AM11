@@ -124,11 +124,11 @@ class PlayerManagerTest {
         assertEquals(manager.getFirstPlayer(), manager.getCurrentTurnPlayer());
 
         for (int i = 0; i < numOfPlayers; i++) {
-            orderOfPlayers.add(i, manager.getCurrentTurnPlayer());
+            orderOfPlayers.add(i, manager.getCurrentTurnPlayer().orElseThrow());
             manager.goNextTurn();
         }
         for (int j = 0; j < numOfPlayers; j++) {
-            assertEquals(orderOfPlayers.get(j), manager.getCurrentTurnPlayer());
+            assertEquals(Optional.of(orderOfPlayers.get(j)), manager.getCurrentTurnPlayer());
             manager.goNextTurn();
         }
 
@@ -152,7 +152,7 @@ class PlayerManagerTest {
         ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
         assertEquals(manager.getFirstPlayer(), manager.getCurrentTurnPlayer());
 
-        String firstPlayer = manager.getFirstPlayer();
+        Optional<String> firstPlayer = manager.getFirstPlayer();
         manager.goNextTurn();
         assertEquals(firstPlayer, manager.getFirstPlayer());
     }
@@ -298,9 +298,10 @@ class PlayerManagerTest {
         } catch (PlayerInitException e) {
             throw new RuntimeException(e);
         }
+        manager.startingTheGame();
 
         int numOfPlayers = players.size();
-        ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
+        ArrayList<Optional<String>> orderOfPlayers = new ArrayList<>(numOfPlayers);
         assertEquals(manager.getFirstPlayer(), manager.getCurrentTurnPlayer());
 
         for (int i = 0; i < numOfPlayers; i++) {
@@ -311,6 +312,7 @@ class PlayerManagerTest {
             assertEquals(orderOfPlayers.get(j), manager.getCurrentTurnPlayer());
             manager.goNextTurn();
         }
+        orderOfPlayers.forEach(player -> assertFalse(player.isEmpty()));
 
 
     }
@@ -327,13 +329,13 @@ class PlayerManagerTest {
             throw new RuntimeException(e);
         }
 
-        assertNull(manager.getFirstPlayer());
-        assertNull(manager.getCurrentTurnPlayer());
+        assertTrue(manager.getFirstPlayer().isEmpty());
+        assertTrue(manager.getCurrentTurnPlayer().isEmpty());
 
         manager.startingTheGame();
 
-        assertNotNull(manager.getFirstPlayer());
-        assertNotNull(manager.getCurrentTurnPlayer());
+        assertTrue(manager.getFirstPlayer().isPresent());
+        assertTrue(manager.getCurrentTurnPlayer().isPresent());
         assertTrue(manager.isFirstTheCurrent());
     }
 

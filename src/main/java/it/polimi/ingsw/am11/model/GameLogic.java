@@ -11,7 +11,6 @@ import it.polimi.ingsw.am11.table.GameStatus;
 import it.polimi.ingsw.am11.table.PickablesTable;
 import it.polimi.ingsw.am11.table.Plateau;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -71,11 +70,11 @@ public class GameLogic implements GameModel {
      * started
      */
     @Override // DONE
-    public @Nullable String getCurrentTurnPlayer() throws GameStatusException {
+    public @NotNull String getCurrentTurnPlayer() throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
             throw new GameStatusException("the game has not started, turns haven't been decided");
         }
-        return playerManager.getCurrentTurnPlayer();
+        return playerManager.getCurrentTurnPlayer().orElseThrow();
     }
 
     /**
@@ -88,11 +87,11 @@ public class GameLogic implements GameModel {
      * game hasn't started
      */
     @Override // DONE
-    public @Nullable String getFirstPlayer() throws GameStatusException {
+    public @NotNull String getFirstPlayer() throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException("the game has not started, turns haven't been decided");
         }
-        return playerManager.getFirstPlayer();
+        return playerManager.getFirstPlayer().orElseThrow();
     }
 
     /**
@@ -499,7 +498,7 @@ public class GameLogic implements GameModel {
                    playerManager.isFirstTheCurrent()) {
             plateau.setStatus(GameStatus.LAST_TURN);
         }
-        return playerManager.getCurrentTurnPlayer();
+        return playerManager.getCurrentTurnPlayer().orElseThrow();
     }
 
     /**
@@ -576,8 +575,9 @@ public class GameLogic implements GameModel {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
             throw new GameStatusException("the game is not ongoing");
         }
-        String currentTurnPlayer = playerManager.getCurrentTurnPlayer();
-        if (! Objects.equals(currentTurnPlayer, nickname)) {
+        // chef if current player not a player
+        Optional<String> currentTurnPlayer = playerManager.getCurrentTurnPlayer();
+        if (! Objects.equals(currentTurnPlayer, Optional.of(nickname))) {
             throw new TurnsOrderException(
                     "It's not " + nickname + " turn, it's " + currentTurnPlayer + " turn."
             );
