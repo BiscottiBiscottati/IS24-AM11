@@ -66,8 +66,8 @@ public class GameLogic implements GameModel {
      * returns <code> null
      * </code>.
      *
-     * @return the nickname of the player that is playing or <code> null </code> if the game hasn't
-     * started
+     * @return the nickname of the player that is playing
+     * @throws GameStatusException if the game hasn't started or has ended
      */
     @Override // DONE
     public @NotNull String getCurrentTurnPlayer() throws GameStatusException {
@@ -83,8 +83,8 @@ public class GameLogic implements GameModel {
      * If the game has not been initialized with the method <code> .initGame </code> this method
      * returns <code> null
      *
-     * @return the nickname of the player that played the first turn or <code> null</code> if the
-     * game hasn't started
+     * @return the nickname of the player that played the first turn
+     * @throws GameStatusException if the game hasn't started or has ended
      */
     @Override // DONE
     public @NotNull String getFirstPlayer() throws GameStatusException {
