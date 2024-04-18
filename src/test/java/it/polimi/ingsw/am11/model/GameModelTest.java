@@ -3,23 +3,28 @@ package it.polimi.ingsw.am11.model;
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.cards.playable.ResourceCard;
+import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
-import it.polimi.ingsw.am11.exceptions.GameBreakingException;
-import it.polimi.ingsw.am11.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.exceptions.IllegalNumOfPlayersException;
-import it.polimi.ingsw.am11.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.PlayerColor;
 import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.field.PositionManager;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -72,6 +77,8 @@ class GameModelTest {
         assertDoesNotThrow(() -> model.addPlayerToTable("osama", PlayerColor.YELLOW));
 
         Set<String> players = Set.of("edo", "chen", "osama");
+
+        assertThrows(GameStatusException.class, () -> model.pickStarterFor("edo"));
 
         // Test init game
         assertDoesNotThrow(() -> model.initGame());
@@ -148,7 +155,82 @@ class GameModelTest {
         }
     }
 
+    @Test
     void testDealingStarter() {
+        int card;
+        Map<String, Integer> starterCards = new HashMap<>(8);
+        try {
+            card = model.pickStarterFor("edo");
+            starterCards.put("edo", card);
+        } catch (EmptyDeckException | GameStatusException | PlayerInitException |
+                 IllegalPlayerSpaceActionException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertThrows(IllegalPlayerSpaceActionException.class, () -> model.pickStarterFor("edo"));
+
+        try {
+            assertTrue(model.getStarterCard("edo").isPresent());
+            card = model.pickStarterFor("chen");
+            starterCards.put("chen", card);
+            card = model.pickStarterFor("osama");
+            starterCards.put("osama", card);
+
+            assertThrows(PlayerInitException.class,
+                         () -> model.pickStarterFor("lola"));
+            assertThrows(PlayerInitException.class, () -> model.getStarterCard("lola"));
+
+            assertTrue(model.getAvailablePositions("edo")
+                            .contains(Position.of(0, 0)));
+
+            Function<String, Optional<Integer>> getStarter = player -> {
+                try {
+                    return model.getStarterCard(player);
+                } catch (PlayerInitException e) {
+                    throw new RuntimeException(e);
+                }
+            };
+
+            Set<Integer> starters = players.stream()
+                                           .map(getStarter)
+                                           .filter(Optional::isPresent)
+                                           .map(Optional::get)
+                                           .collect(Collectors.toSet());
+            assertEquals(3, starters.size());
+
+            for (String player : players) {
+                assertEquals(Optional.of(starterCards.get(player)),
+                             model.getStarterCard(player));
+                model.setStarterFor(player, true);
+                assertEquals(Optional.of(starterCards.get(player)),
+                             model.getStarterCard(player));
+            }
+
+            Set<Position> positions = Stream.of(Corner.values())
+                                            .map(corner -> PositionManager.getPositionIn(
+                                                    Position.of(0, 0), corner))
+                                            .collect(Collectors.toSet());
+
+            Function<String, Set<Position>> getAvailablePos = player -> {
+                try {
+                    return model.getAvailablePositions(player);
+                } catch (PlayerInitException | GameStatusException e) {
+                    throw new RuntimeException(e);
+                }
+            };
+
+            players.stream()
+                   .map(getAvailablePos)
+                   .map(positions::containsAll)
+                   .forEach(Assertions::assertTrue);
+
+            model.pickCandidateObjectives("edo"); //TODO
+
+
+        } catch (PlayerInitException | GameStatusException | EmptyDeckException |
+                 IllegalCardPlacingException | IllegalPlayerSpaceActionException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }
