@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
+import it.polimi.ingsw.am11.exceptions.GameBreakingException;
 import it.polimi.ingsw.am11.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.exceptions.IllegalNumOfPlayersException;
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
@@ -27,6 +28,7 @@ class GameModelTest {
     static Deck<GoldCard> goldCardDeck;
     static Deck<ResourceCard> resourceCardDeck;
     static Deck<ObjectiveCard> objectiveCardDeck;
+    static Set<String> players;
     GameModel model;
 
     @BeforeAll
@@ -34,6 +36,7 @@ class GameModelTest {
         goldCardDeck = GoldDeckFactory.createDeck();
         resourceCardDeck = ResourceDeckFactory.createDeck();
         objectiveCardDeck = ObjectiveDeckFactory.createDeck();
+        players = Set.of("edo", "chen", "osama");
     }
 
     @BeforeEach
@@ -43,12 +46,25 @@ class GameModelTest {
         resourceCardDeck.reset();
         objectiveCardDeck.reset();
 
+        try {
+            model.addPlayerToTable("edo", PlayerColor.RED);
+            model.addPlayerToTable("chen", PlayerColor.BLUE);
+            model.addPlayerToTable("osama", PlayerColor.YELLOW);
+            model.initGame();
+        } catch (PlayerInitException | GameStatusException | IllegalNumOfPlayersException |
+                 GameBreakingException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
     @Test
     void testInitGame() {
+        model = new GameLogic();
+        // Test illegal number of players
         assertThrows(IllegalNumOfPlayersException.class, () -> model.initGame());
+        // Test adding of players
         assertDoesNotThrow(() -> model.addPlayerToTable("edo", PlayerColor.RED));
         assertThrows(PlayerInitException.class,
                      () -> model.addPlayerToTable("edo", PlayerColor.RED));
@@ -56,21 +72,28 @@ class GameModelTest {
         assertDoesNotThrow(() -> model.addPlayerToTable("osama", PlayerColor.YELLOW));
 
         Set<String> players = Set.of("edo", "chen", "osama");
+
+        // Test init game
         assertDoesNotThrow(() -> model.initGame());
 
+        // Check if the players are the same
         assertEquals(3, model.getPlayers().size());
         assertEquals(players, model.getPlayers());
 
+        // Check if user can't add more players
         assertThrows(GameStatusException.class,
                      () -> model.addPlayerToTable("lola", PlayerColor.GREEN));
         assertThrows(GameStatusException.class, model::initGame);
 
         try {
+            // Check if the first player is the same as the current turn player
             assertTrue(players.contains(model.getFirstPlayer()));
             assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
 
+            // Check if the player can be removed
             assertThrows(GameStatusException.class, () -> model.removePlayer("lola"));
 
+            // Check if cards have been dealt
             assertEquals(2, model.getCommonObjectives().size());
             assertEquals(2,
                          model.getCommonObjectives().stream()
@@ -123,5 +146,9 @@ class GameModelTest {
         } catch (GameStatusException | PlayerInitException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    void testDealingStarter() {
+
     }
 }

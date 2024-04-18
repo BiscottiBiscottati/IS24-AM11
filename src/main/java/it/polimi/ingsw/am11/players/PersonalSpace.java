@@ -22,7 +22,7 @@ public class PersonalSpace {
     private final Set<PlayableCard> playerHand;
     private final Set<ObjectiveCard> playerObjective;
 
-    private Optional<StarterCard> starterCard;
+    private StarterCard starterCard;
 
     private Map<Integer, ObjectiveCard> candidateObjectives;
 
@@ -48,18 +48,18 @@ public class PersonalSpace {
     }
 
     public Optional<StarterCard> getStarterCard() {
-        return starterCard;
+        return Optional.of(starterCard);
     }
 
     public void setStarterCard(@NotNull StarterCard starter) {
-        starterCard = Optional.of(starter);
+        starterCard = starter;
     }
 
     public Set<ObjectiveCard> getCandidateObjectives() {
         return new HashSet<>(candidateObjectives.values());
     }
 
-    public ObjectiveCard getCandidateObjectiveByID(@NotNull int id)
+    public ObjectiveCard getCandidateObjectiveByID(int id)
     throws IllegalPlayerSpaceActionException {
         ObjectiveCard objective = candidateObjectives.get(id);
         if (objective != null) {
