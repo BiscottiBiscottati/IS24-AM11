@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.model;
 
-import it.polimi.ingsw.am11.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.exceptions.*;
@@ -37,7 +36,8 @@ public interface GameModel {
     Set<Position> getAvailablePositions(String nickname)
     throws PlayerInitException, GameStatusException;
 
-    @NotNull Set<Integer> getCommonObjectives() throws GameStatusException;
+    @NotNull
+    Set<Integer> getCommonObjectives() throws GameStatusException;
 
     Set<Integer> getExposedCards(PlayableCardType type) throws GameStatusException;
 
@@ -60,7 +60,8 @@ public interface GameModel {
     void removePlayer(@NotNull String nickname) throws GameStatusException;
 
     int pickStarterFor(String nickname) throws EmptyDeckException, GameStatusException,
-                                               PlayerInitException;
+                                               PlayerInitException,
+                                               IllegalPlayerSpaceActionException;
 
     Set<Integer> pickCandidateObjectives(@NotNull String nickname)
     throws EmptyDeckException, GameStatusException, PlayerInitException;
@@ -99,6 +100,6 @@ public interface GameModel {
     Set<Integer> getCandidateObjectives(@NotNull String nickname)
     throws PlayerInitException, GameStatusException;
 
-    Optional<StarterCard> getStarterCard(@NotNull String nickname)
+    Optional<Integer> getStarterCard(@NotNull String nickname)
     throws PlayerInitException;
 }

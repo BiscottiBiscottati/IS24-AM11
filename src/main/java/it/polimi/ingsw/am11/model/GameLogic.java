@@ -389,7 +389,8 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public int pickStarterFor(@NotNull String nickname)
-    throws EmptyDeckException, GameStatusException, PlayerInitException {
+    throws EmptyDeckException, GameStatusException, PlayerInitException,
+           IllegalPlayerSpaceActionException {
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
         }
@@ -698,9 +699,10 @@ public class GameLogic implements GameModel {
      */
 
     @Override
-    public @NotNull Optional<StarterCard> getStarterCard(@NotNull String nickname)
+    public @NotNull Optional<Integer> getStarterCard(@NotNull String nickname)
     throws PlayerInitException {
-        return playerManager.getStarterCard(nickname);
+        return playerManager.getStarterCard(nickname)
+                            .map(StarterCard::getId);
     }
 }
 

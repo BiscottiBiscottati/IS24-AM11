@@ -115,7 +115,7 @@ public class PlayerManager {
     }
 
     public void setStarterCard(@NotNull String nickname, @NotNull StarterCard starter)
-    throws PlayerInitException {
+    throws PlayerInitException, IllegalPlayerSpaceActionException {
         Player player = players.get(nickname);
         if (player != null) {
             player.space().setStarterCard(starter);

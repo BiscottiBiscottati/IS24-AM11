@@ -29,6 +29,7 @@ public class PersonalSpace {
     public PersonalSpace() {
         playerHand = new HashSet<>(maxSizeofHand << 1);
         playerObjective = new HashSet<>(maxObjectives << 1);
+        starterCard = null;
     }
 
     public static void setMaxSizeofHand(int maxSizeofHand) {
@@ -48,11 +49,17 @@ public class PersonalSpace {
     }
 
     public Optional<StarterCard> getStarterCard() {
-        return Optional.of(starterCard);
+        return Optional.ofNullable(starterCard);
     }
 
-    public void setStarterCard(@NotNull StarterCard starter) {
-        starterCard = starter;
+    public void setStarterCard(@NotNull StarterCard starter)
+    throws IllegalPlayerSpaceActionException {
+        if (starterCard == null) {
+            starterCard = starter;
+        } else {
+            throw new IllegalPlayerSpaceActionException(
+                    "You are trying to set a starter card twice");
+        }
     }
 
     public Set<ObjectiveCard> getCandidateObjectives() {
