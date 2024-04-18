@@ -183,10 +183,10 @@ public class GameLogic implements GameModel {
     /**
      * During a game, players have objectives in common
      *
-     * @return a list of ID of <code>ObjectiveCard</code> that represent the common objectives
+     * @return a set of ID of <code>ObjectiveCard</code> that represent the common objectives
      */
     @Override //
-    public @NotNull List<Integer> getCommonObjectives() throws GameStatusException {
+    public @NotNull Set<Integer> getCommonObjectives() throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException(
                     "the game has not started, there are no objectives");
@@ -194,7 +194,7 @@ public class GameLogic implements GameModel {
         return pickablesTable.getCommonObjectives()
                              .stream()
                              .map(ObjectiveCard::getId)
-                             .toList();
+                             .collect(Collectors.toUnmodifiableSet());
     }
 
     @Override
@@ -207,7 +207,7 @@ public class GameLogic implements GameModel {
         return pickablesTable.getShownPlayable(type)
                              .stream()
                              .map(PlayableCard::getId)
-                             .collect(Collectors.toSet());
+                             .collect(Collectors.toUnmodifiableSet());
     }
 
     /**
@@ -525,9 +525,10 @@ public class GameLogic implements GameModel {
         Player player = playerManager.getPlayer(nickname)
                                      .orElseThrow(
                                              () -> new PlayerInitException("Player not found"));
-        if (! Objects.equals(playerManager.getCurrentTurnPlayer(), nickname)) {
+        if (! Objects.equals(playerManager.getCurrentTurnPlayer(), Optional.of(nickname))) {
             throw new TurnsOrderException(
-                    "It's not " + nickname + " turn, it's " + playerManager.getCurrentTurnPlayer() +
+                    "It's not " + nickname + " turn, it's " +
+                    playerManager.getCurrentTurnPlayer().orElseThrow() +
                     " turn."
             );
         }

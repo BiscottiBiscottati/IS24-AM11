@@ -10,7 +10,6 @@ import it.polimi.ingsw.am11.players.Position;
 import it.polimi.ingsw.am11.table.GameStatus;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -38,7 +37,7 @@ public interface GameModel {
     Set<Position> getAvailablePositions(String nickname)
     throws PlayerInitException, GameStatusException;
 
-    List<Integer> getCommonObjectives() throws GameStatusException;
+    @NotNull Set<Integer> getCommonObjectives() throws GameStatusException;
 
     Set<Integer> getExposedCards(PlayableCardType type) throws GameStatusException;
 
