@@ -79,9 +79,6 @@ public interface GameModel {
     throws GameStatusException, TurnsOrderException, GameBreakingException,
            IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException;
 
-    void countObjectivesPoints()
-    throws IllegalPlateauActionException, GameStatusException, GameBreakingException;
-
     void endGame();
 
     GameStatus getStatus();

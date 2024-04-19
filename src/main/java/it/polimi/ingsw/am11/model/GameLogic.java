@@ -614,32 +614,6 @@ public class GameLogic implements GameModel {
         }
     }
 
-    @Override
-    public void drawVisibleOf(@NotNull PlayableCardType type, @NotNull String nickname, int cardID)
-    throws GameStatusException, TurnsOrderException, GameBreakingException,
-           IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException {
-
-        PersonalSpace playerSpace = playerManager.getPlayer(nickname)
-                                                 .orElseThrow(() -> new PlayerInitException(
-                                                         "Player not found"))
-                                                 .space();
-        checkIfDrawAllowed(nickname);
-        try {
-            if (playerSpace.availableSpaceInHand() >= 1) {
-                PlayableCard card = pickablesTable.pickPlayableVisible(cardID);
-                playerSpace.addCardToHand(card);
-                goNextTurn();
-            } else {
-                throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
-            }
-        } catch (MaxHandSizeException ex) {
-            throw new GameBreakingException(
-                    "We have lost a card due to picking it from the visible and not being able " +
-                    "to put it anywhere"
-            );
-        }
-    }
-
     /**
      * Calculate the points from common and personal objectives for each player and add them to the
      * plateau
@@ -647,8 +621,8 @@ public class GameLogic implements GameModel {
      * @throws IllegalPlateauActionException if a player is not found
      * @throws GameStatusException           if the game is not ongoing
      */
-    @Override //
-    public void countObjectivesPoints()
+
+    private void countObjectivesPoints()
     throws IllegalPlateauActionException, GameStatusException, GameBreakingException {
         if (plateau.getStatus() != GameStatus.ENDED) {
             throw new GameStatusException("the game has not ended yet");
@@ -676,6 +650,32 @@ public class GameLogic implements GameModel {
                 }
                 plateau.addPlayerPoints(player, points);
             }
+        }
+    }
+
+    @Override
+    public void drawVisibleOf(@NotNull PlayableCardType type, @NotNull String nickname, int cardID)
+    throws GameStatusException, TurnsOrderException, GameBreakingException,
+           IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException {
+
+        PersonalSpace playerSpace = playerManager.getPlayer(nickname)
+                                                 .orElseThrow(() -> new PlayerInitException(
+                                                         "Player not found"))
+                                                 .space();
+        checkIfDrawAllowed(nickname);
+        try {
+            if (playerSpace.availableSpaceInHand() >= 1) {
+                PlayableCard card = pickablesTable.pickPlayableVisible(cardID);
+                playerSpace.addCardToHand(card);
+                goNextTurn();
+            } else {
+                throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
+            }
+        } catch (MaxHandSizeException ex) {
+            throw new GameBreakingException(
+                    "We have lost a card due to picking it from the visible and not being able " +
+                    "to put it anywhere"
+            );
         }
     }
 

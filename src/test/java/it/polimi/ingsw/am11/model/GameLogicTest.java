@@ -471,12 +471,6 @@ class GameLogicTest {
     }
 
     @Test
-    void countObjectivesPoints() {
-        //TODO, need to simulate game
-
-    }
-
-    @Test
     void endGame() {
 
         Set<String> players = Set.of("player1", "player2", "player3", "player4");
