@@ -8,10 +8,7 @@ import it.polimi.ingsw.am11.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.exceptions.NotInHandException;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 public class PersonalSpace {
@@ -19,17 +16,18 @@ public class PersonalSpace {
 
     private static int maxSizeofHand;
     private static int maxObjectives;
+    private static int maxCandidateObjectives;
     private final Set<PlayableCard> playerHand;
     private final Set<ObjectiveCard> playerObjective;
-
+    private final Map<Integer, ObjectiveCard> candidateObjectives;
     private StarterCard starterCard;
-
-    private Map<Integer, ObjectiveCard> candidateObjectives;
 
     public PersonalSpace() {
         playerHand = new HashSet<>(maxSizeofHand << 1);
         playerObjective = new HashSet<>(maxObjectives << 1);
+        candidateObjectives = new HashMap<>(maxCandidateObjectives << 1);
         starterCard = null;
+
     }
 
     public static void setMaxSizeofHand(int maxSizeofHand) {
@@ -38,6 +36,10 @@ public class PersonalSpace {
 
     public static void setMaxObjectives(int maxObjectives) {
         PersonalSpace.maxObjectives = maxObjectives;
+    }
+
+    public static void setMaxCandidateObjectives(int maxCandidate) {
+        PersonalSpace.maxCandidateObjectives = maxCandidate;
     }
 
     public Set<PlayableCard> getPlayerHand() {
@@ -118,6 +120,10 @@ public class PersonalSpace {
             throw new IllegalPlayerSpaceActionException(
                     "You are trying to add too many personal objectives");
         }
+    }
+
+    public void removeCandidateObjective(int id) {
+        candidateObjectives.remove(id);
     }
 
     public void clearAll() {

@@ -230,6 +230,8 @@ class GameModelTest {
         } catch (PlayerInitException | GameStatusException | EmptyDeckException |
                  IllegalCardPlacingException | IllegalPlayerSpaceActionException e) {
             throw new RuntimeException(e);
+        } catch (IllegalPickActionException e) {
+            throw new RuntimeException(e);
         }
 
     }

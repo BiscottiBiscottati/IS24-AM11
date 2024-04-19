@@ -104,7 +104,7 @@ public class PlayerManager {
         }
     }
 
-    public ObjectiveCard getCandidateObjectiveByID(@NotNull String nickname, @NotNull int id)
+    public ObjectiveCard getCandidateObjectiveByID(@NotNull String nickname, int id)
     throws PlayerInitException, IllegalPlayerSpaceActionException {
         Player player = players.get(nickname);
         if (player != null) {

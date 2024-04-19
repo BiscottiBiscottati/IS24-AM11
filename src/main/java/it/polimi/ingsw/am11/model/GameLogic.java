@@ -34,6 +34,7 @@ public class GameLogic implements GameModel {
     private void setConstants() {
         PersonalSpace.setMaxSizeofHand(ruleSet.getHandSize());
         PersonalSpace.setMaxObjectives(ruleSet.getNumOfPersonalObjective());
+        PersonalSpace.setMaxCandidateObjectives(ruleSet.getObjectiveToChooseFrom());
 
         PlayerManager.setMaxNumberOfPlayers(ruleSet.getMaxPlayers());
 
@@ -408,9 +409,13 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public @NotNull Set<Integer> pickCandidateObjectives(@NotNull String nickname)
-    throws EmptyDeckException, GameStatusException, PlayerInitException {
+    throws EmptyDeckException, GameStatusException, PlayerInitException,
+           IllegalPickActionException {
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
+        }
+        if (! playerManager.getCandidateObjectives(nickname).isEmpty()) {
+            throw new IllegalPickActionException("This payer already has his candidate objectives");
         }
         int objectiveToChooseFrom = ruleSet.getObjectiveToChooseFrom();
         for (int i = 0; i < objectiveToChooseFrom; i++) {
@@ -455,17 +460,16 @@ public class GameLogic implements GameModel {
     @Override //
     public void setObjectiveFor(@NotNull String nickname, int cardID)
     throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException {
-        //The rule book says that unused objectives have to be returned to the deck, but it
-        // seems like
-        //a useless action
         if (plateau.getStatus() != GameStatus.ONGOING) {
             throw new GameStatusException("the game is not ongoing");
         }
         ObjectiveCard objectiveCard = playerManager.getCandidateObjectiveByID(nickname, cardID);
         playerManager.getPlayer(nickname).orElseThrow(
                              () -> new PlayerInitException("player not found"))
+                     .space().removeCandidateObjective(cardID);
+        playerManager.getPlayer(nickname).orElseThrow(
+                             () -> new PlayerInitException("player not found"))
                      .space().addObjective(objectiveCard);
-        //TODO check better since i was di fretta
     }
 
     /**
