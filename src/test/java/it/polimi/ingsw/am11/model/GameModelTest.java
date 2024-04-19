@@ -100,7 +100,7 @@ class GameModelTest {
             // Check if the player can be removed
             assertThrows(GameStatusException.class, () -> model.removePlayer("lola"));
 
-            // Check if cards have been dealt
+            // Check if cards have been dealt on the table
             assertEquals(2, model.getCommonObjectives().size());
             assertEquals(2,
                          model.getCommonObjectives().stream()
@@ -159,7 +159,9 @@ class GameModelTest {
     void testDealingStarter() {
         int card;
         Map<String, Integer> starterCards = new HashMap<>(8);
+
         try {
+            // Test if the player can pick a starter card
             card = model.pickStarterFor("edo");
             starterCards.put("edo", card);
         } catch (EmptyDeckException | GameStatusException | PlayerInitException |
@@ -167,19 +169,25 @@ class GameModelTest {
             throw new RuntimeException(e);
         }
 
+        // Test if the player can't pick a starter card twice
         assertThrows(IllegalPlayerSpaceActionException.class, () -> model.pickStarterFor("edo"));
 
         try {
+            // pick if Starter is present
             assertTrue(model.getStarterCard("edo").isPresent());
+
+            // pick starter for other players
             card = model.pickStarterFor("chen");
             starterCards.put("chen", card);
             card = model.pickStarterFor("osama");
             starterCards.put("osama", card);
 
+            // Test if the player doesn't exist
             assertThrows(PlayerInitException.class,
                          () -> model.pickStarterFor("lola"));
             assertThrows(PlayerInitException.class, () -> model.getStarterCard("lola"));
 
+            // Test if before placing positions the starter card is not set
             assertTrue(model.getAvailablePositions("edo")
                             .contains(Position.of(0, 0)));
 
@@ -191,21 +199,29 @@ class GameModelTest {
                 }
             };
 
+            // getting all starters dealt
             Set<Integer> starters = players.stream()
                                            .map(getStarter)
                                            .filter(Optional::isPresent)
                                            .map(Optional::get)
                                            .collect(Collectors.toSet());
+            // check starters are the same as players
             assertEquals(3, starters.size());
 
             for (String player : players) {
+                // check if starter is the same for each player
                 assertEquals(Optional.of(starterCards.get(player)),
                              model.getStarterCard(player));
+
+                // place starter for each player
                 model.setStarterFor(player, true);
+
+                // check that nothing changes
                 assertEquals(Optional.of(starterCards.get(player)),
                              model.getStarterCard(player));
             }
 
+            // get all positions around 0,0
             Set<Position> positions = Stream.of(Corner.values())
                                             .map(corner -> PositionManager.getPositionIn(
                                                     Position.of(0, 0), corner))
@@ -219,41 +235,71 @@ class GameModelTest {
                 }
             };
 
+            // check that available positions are the same as the ones around 0,0
             players.stream()
                    .map(getAvailablePos)
                    .map(positions::containsAll)
                    .forEach(Assertions::assertTrue);
+
+        } catch (PlayerInitException | GameStatusException | EmptyDeckException |
+                 IllegalCardPlacingException | IllegalPlayerSpaceActionException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    void testDealingObjective() {
+        Map<String, Integer> objOfPlayer = new HashMap<>(8);
+        try {
             for (String player : players) {
+                // pick candidate objectives
                 Set<Integer> objCards = model.pickCandidateObjectives(player);
 
+                // check size of candidate objectives
                 assertEquals(2, objCards.size());
                 assertEquals(2, model.getCandidateObjectives(player).size());
                 assertEquals(objCards, model.getCandidateObjectives(player));
+
+                // check if player can't pick candidate objectives twice
                 assertThrows(IllegalPickActionException.class,
                              () -> model.pickCandidateObjectives(player));
 
+                // check that they are objective cards
                 assertEquals(2,
                              objCards.stream()
                                      .map(objectiveCardDeck::getCardById)
                                      .filter(Optional::isPresent)
                                      .count());
 
+                // check that player can't set an objective that is not in the candidate objectives
                 assertThrows(IllegalPlayerSpaceActionException.class,
                              () -> model.setObjectiveFor(player, 0));
+
                 int chosenCard = objCards.stream().findFirst().orElseThrow();
+                objOfPlayer.put(player, chosenCard);
+
+                // set objective for player
                 model.setObjectiveFor(player, chosenCard);
 
+                // check that objective has been set
                 assertEquals(chosenCard,
                              model.getPlayerObjective(player).stream().findFirst().orElseThrow());
             }
 
+            // check if player doesn't exist
             assertThrows(PlayerInitException.class,
                          () -> model.pickCandidateObjectives("lola"));
-        } catch (PlayerInitException | GameStatusException | EmptyDeckException |
-                 IllegalCardPlacingException | IllegalPlayerSpaceActionException |
-                 IllegalPickActionException e) {
+            for (String player : players) {
+                // check each objective has been set and are equals
+                Optional<Integer> objCard = model.getPlayerObjective(player).stream().findFirst();
+                assertEquals(Optional.of(objOfPlayer.get(player)), objCard);
+            }
+        } catch (EmptyDeckException | GameStatusException | IllegalPickActionException |
+                 PlayerInitException | IllegalPlayerSpaceActionException e) {
             throw new RuntimeException(e);
         }
-
     }
+
+
 }
