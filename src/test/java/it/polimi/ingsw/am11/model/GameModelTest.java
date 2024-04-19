@@ -223,14 +223,35 @@ class GameModelTest {
                    .map(getAvailablePos)
                    .map(positions::containsAll)
                    .forEach(Assertions::assertTrue);
+            for (String player : players) {
+                Set<Integer> objCards = model.pickCandidateObjectives(player);
 
-            model.pickCandidateObjectives("edo"); //TODO
+                assertEquals(2, objCards.size());
+                assertEquals(2, model.getCandidateObjectives(player).size());
+                assertEquals(objCards, model.getCandidateObjectives(player));
+                assertThrows(IllegalPickActionException.class,
+                             () -> model.pickCandidateObjectives(player));
 
+                assertEquals(2,
+                             objCards.stream()
+                                     .map(objectiveCardDeck::getCardById)
+                                     .filter(Optional::isPresent)
+                                     .count());
 
+                assertThrows(IllegalPlayerSpaceActionException.class,
+                             () -> model.setObjectiveFor(player, 0));
+                int chosenCard = objCards.stream().findFirst().orElseThrow();
+                model.setObjectiveFor(player, chosenCard);
+
+                assertEquals(chosenCard,
+                             model.getPlayerObjective(player).stream().findFirst().orElseThrow());
+            }
+
+            assertThrows(PlayerInitException.class,
+                         () -> model.pickCandidateObjectives("lola"));
         } catch (PlayerInitException | GameStatusException | EmptyDeckException |
-                 IllegalCardPlacingException | IllegalPlayerSpaceActionException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalPickActionException e) {
+                 IllegalCardPlacingException | IllegalPlayerSpaceActionException |
+                 IllegalPickActionException e) {
             throw new RuntimeException(e);
         }
 

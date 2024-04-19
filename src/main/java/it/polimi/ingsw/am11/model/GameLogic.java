@@ -464,12 +464,12 @@ public class GameLogic implements GameModel {
             throw new GameStatusException("the game is not ongoing");
         }
         ObjectiveCard objectiveCard = playerManager.getCandidateObjectiveByID(nickname, cardID);
-        playerManager.getPlayer(nickname).orElseThrow(
-                             () -> new PlayerInitException("player not found"))
-                     .space().removeCandidateObjective(cardID);
-        playerManager.getPlayer(nickname).orElseThrow(
-                             () -> new PlayerInitException("player not found"))
-                     .space().addObjective(objectiveCard);
+        PersonalSpace playerSpace = playerManager.getPlayer(nickname)
+                                                 .orElseThrow(() -> new PlayerInitException(
+                                                         "Player not found"))
+                                                 .space();
+        playerSpace.removeCandidateObjective(cardID);
+        playerSpace.addObjective(objectiveCard);
     }
 
     /**
