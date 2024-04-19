@@ -21,6 +21,7 @@ public class PersonalSpace {
     private final Set<ObjectiveCard> playerObjective;
     private final Map<Integer, ObjectiveCard> candidateObjectives;
     private StarterCard starterCard;
+    private boolean placed;
 
     public PersonalSpace() {
         playerHand = new HashSet<>(maxSizeofHand << 1);
@@ -40,6 +41,14 @@ public class PersonalSpace {
 
     public static void setMaxCandidateObjectives(int maxCandidate) {
         PersonalSpace.maxCandidateObjectives = maxCandidate;
+    }
+
+    public void setCardBeenPlaced(boolean val) {
+        placed = val;
+    }
+
+    public boolean hasCardBeenPlaced() {
+        return placed;
     }
 
     public Set<PlayableCard> getPlayerHand() {

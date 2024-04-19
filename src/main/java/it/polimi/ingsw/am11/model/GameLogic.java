@@ -483,41 +483,6 @@ public class GameLogic implements GameModel {
     }
 
     /**
-     * This method handles the changing of the turn and the final turn. If it is not the final turn,
-     * it checks if it's armageddonTime and gives the turn to the next players. If it's the final
-     * turn, it ends the game and prepares the final leaderboard.
-     *
-     * @throws GameBreakingException if there are discrepancies between plateau and gameLogic
-     * @throws GameStatusException   if the game is not ongoing
-     */
-    @Override // DONE
-    public @NotNull String goNextTurn() throws GameBreakingException, GameStatusException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
-            plateau.getStatus() == GameStatus.STARTING) {
-            throw new GameStatusException("the game is not ongoing");
-        }
-        if (Stream.of(PlayableCardType.values())
-                  .map(pickablesTable::getDeckTop)
-                  .allMatch(Optional::isEmpty)) {
-            plateau.activateArmageddon();
-        }
-        playerManager.goNextTurn();
-        if (plateau.getStatus() == GameStatus.LAST_TURN && playerManager.isFirstTheCurrent()) {
-            plateau.setStatus(GameStatus.ENDED);
-            try {
-                countObjectivesPoints();
-            } catch (IllegalPlateauActionException ex) {
-                throw new GameBreakingException("Players in game logic and plateau don't match");
-            }
-            plateau.setFinalLeaderboard();
-        } else if (plateau.getStatus() == GameStatus.ARMAGEDDON &&
-                   playerManager.isFirstTheCurrent()) {
-            plateau.setStatus(GameStatus.LAST_TURN);
-        }
-        return playerManager.getCurrentTurnPlayer().orElseThrow();
-    }
-
-    /**
      * This method is used to place new playable cards on the field
      *
      * @param nickname nickname of the player of interest
@@ -549,6 +514,10 @@ public class GameLogic implements GameModel {
                     " turn."
             );
         }
+        if (player.space().hasCardBeenPlaced()) {
+            throw new TurnsOrderException(nickname + " has already placed a card first");
+        }
+
         PlayableCard card = pickablesTable.getPlayableByID(cardID)
                                           .orElseThrow(() -> new IllegalCardPlacingException(
                                                   "Card not found"));
@@ -564,6 +533,7 @@ public class GameLogic implements GameModel {
                         () -> new NotInHandException("Card not in hand"));
         points = player.field().place(card, position, isRetro);
         player.space().pickCard(cardID);
+        player.space().setCardBeenPlaced(true);
 
         plateau.addPlayerPoints(player, points);
     }
@@ -571,17 +541,20 @@ public class GameLogic implements GameModel {
     @Override
     public int drawFromDeckOf(@NotNull PlayableCardType type, @NotNull String nickname)
     throws GameStatusException, TurnsOrderException, EmptyDeckException,
-           IllegalPlayerSpaceActionException, PlayerInitException, MaxHandSizeException {
-
-        checkIfDrawAllowed(nickname);
+           IllegalPlayerSpaceActionException, PlayerInitException, MaxHandSizeException,
+           GameBreakingException {
 
         PersonalSpace playerSpace = playerManager.getPlayer(nickname)
                                                  .orElseThrow(() -> new PlayerInitException(
                                                          "Player not found"))
                                                  .space();
+
+        checkIfDrawAllowed(nickname);
+
         if (playerSpace.availableSpaceInHand() >= 1) {
             PlayableCard card = pickablesTable.drawPlayableFrom(type);
             playerSpace.addCardToHand(card);
+            goNextTurn();
             return card.getId();
         } else {
             throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
@@ -601,22 +574,61 @@ public class GameLogic implements GameModel {
                     "It's not " + nickname + " turn, it's " + currentTurnPlayer + " turn."
             );
         }
+        if (! playerManager.getPlayer(nickname).orElseThrow().space().hasCardBeenPlaced()) {
+            throw new TurnsOrderException(nickname + " has to place a card first");
+        }
+
+    }
+
+    /**
+     * This method handles the changing of the turn and the final turn. If it is not the final turn,
+     * it checks if it's armageddonTime and gives the turn to the next players. If it's the final
+     * turn, it ends the game and prepares the final leaderboard.
+     *
+     * @throws GameBreakingException if there are discrepancies between plateau and gameLogic
+     * @throws GameStatusException   if the game is not ongoing
+     */
+    // DONE
+    private void goNextTurn() throws GameBreakingException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
+            plateau.getStatus() == GameStatus.STARTING) {
+            throw new GameStatusException("the game is not ongoing");
+        }
+        if (Stream.of(PlayableCardType.values())
+                  .map(pickablesTable::getDeckTop)
+                  .allMatch(Optional::isEmpty)) {
+            plateau.activateArmageddon();
+        }
+        playerManager.goNextTurn();
+        if (plateau.getStatus() == GameStatus.LAST_TURN && playerManager.isFirstTheCurrent()) {
+            plateau.setStatus(GameStatus.ENDED);
+            try {
+                countObjectivesPoints();
+            } catch (IllegalPlateauActionException ex) {
+                throw new GameBreakingException("Players in game logic and plateau don't match");
+            }
+            plateau.setFinalLeaderboard();
+        } else if (plateau.getStatus() == GameStatus.ARMAGEDDON &&
+                   playerManager.isFirstTheCurrent()) {
+            plateau.setStatus(GameStatus.LAST_TURN);
+        }
     }
 
     @Override
     public void drawVisibleOf(@NotNull PlayableCardType type, @NotNull String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
            IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException {
-        checkIfDrawAllowed(nickname);
 
         PersonalSpace playerSpace = playerManager.getPlayer(nickname)
                                                  .orElseThrow(() -> new PlayerInitException(
                                                          "Player not found"))
                                                  .space();
+        checkIfDrawAllowed(nickname);
         try {
             if (playerSpace.availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableVisible(cardID);
                 playerSpace.addCardToHand(card);
+                goNextTurn();
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
             }

@@ -65,8 +65,6 @@ public interface GameModel {
     void setObjectiveFor(String nickname, int cardID)
     throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException;
 
-    String goNextTurn() throws GameBreakingException, GameStatusException;
-
     void placeCard(String Nickname, int ID, Position position, boolean isRetro)
     throws IllegalCardPlacingException,
            TurnsOrderException,

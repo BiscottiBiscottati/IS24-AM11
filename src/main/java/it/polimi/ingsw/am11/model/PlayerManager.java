@@ -191,6 +191,7 @@ public class PlayerManager {
     public void goNextTurn() {
         playerQueue.addLast(currentPlaying);
         currentPlaying = playerQueue.removeFirst();
+        currentPlaying.space().setCardBeenPlaced(false);
     }
 
     public void resetAll() {

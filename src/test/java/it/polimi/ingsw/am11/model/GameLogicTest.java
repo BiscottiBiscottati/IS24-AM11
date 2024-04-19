@@ -91,22 +91,7 @@ class GameLogicTest {
         } catch (GameStatusException e) {
             throw new RuntimeException(e);
         }
-        for (int i = 0; i < numOfPlayers; i++) {
-            try {
-                orderOfPlayers.add(i, model.getCurrentTurnPlayer());
-                model.goNextTurn();
-            } catch (GameBreakingException | GameStatusException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        for (int j = 0; j < numOfPlayers; j++) {
-            try {
-                assertEquals(orderOfPlayers.get(j), model.getCurrentTurnPlayer());
-                model.goNextTurn();
-            } catch (GameBreakingException | GameStatusException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        //TODO
 
     }
 
@@ -145,10 +130,7 @@ class GameLogicTest {
         ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
         try {
             assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
-            String firstPlayer = model.getFirstPlayer();
-            model.goNextTurn();
-            assertEquals(firstPlayer, model.getFirstPlayer());
-        } catch (GameBreakingException | GameStatusException e) {
+        } catch (GameStatusException e) {
             throw new RuntimeException(e);
         }
     }
@@ -471,30 +453,6 @@ class GameLogicTest {
     @Test
     void setObjectiveFor() {
         //TODO
-    }
-
-    @Test
-    void goNextTurn() {
-        Set<String> players = Set.of("player1", "player2", "player3", "player4");
-        try {
-            model.addPlayerToTable("player1", PlayerColor.BLUE);
-            model.addPlayerToTable("player2", PlayerColor.GREEN);
-            model.addPlayerToTable("player3", PlayerColor.RED);
-            model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
-            throw new RuntimeException(e);
-        }
-
-        assertThrows(GameStatusException.class, () -> model.goNextTurn());
-        try {
-            model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
-        }
-
-        //TODO, need to simulate game
-
-
     }
 
     @Test
