@@ -174,7 +174,7 @@ class PlateauTest {
 
         plateau.reset();
         GameStatus status = plateau.getStatus();
-        Assertions.assertEquals(GameStatus.ONGOING, status);
+        Assertions.assertEquals(GameStatus.STARTING, status);
 
         plateau.activateArmageddon();
         status = plateau.getStatus();

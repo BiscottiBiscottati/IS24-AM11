@@ -126,7 +126,7 @@ public class GameLogic implements GameModel {
     @Override // DONE
     public @NotNull Set<Integer> getPlayerObjective(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.STARTING) {
+        if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException("the game has not started, objectives hasn't been dealt");
         }
         return playerManager.getPlayerObjective(nickname);
@@ -174,7 +174,7 @@ public class GameLogic implements GameModel {
     @Override //
     public @NotNull Set<Position> getAvailablePositions(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.STARTING) {
+        if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException(
                     "the game has not started, there are no positioned cards");
         }
@@ -336,7 +336,7 @@ public class GameLogic implements GameModel {
             }
         } catch (IllegalPlayerSpaceActionException | EmptyDeckException |
                  IllegalPickActionException | PlayerInitException e) {
-            throw new GameBreakingException("Something brokw while dealing starters or objectives");
+            throw new GameBreakingException("Something broke while dealing starters or objectives");
         }
     }
 

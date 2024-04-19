@@ -3,10 +3,7 @@ package it.polimi.ingsw.am11.model;
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
-import it.polimi.ingsw.am11.exceptions.GameBreakingException;
-import it.polimi.ingsw.am11.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.exceptions.IllegalNumOfPlayersException;
-import it.polimi.ingsw.am11.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.exceptions.*;
 import it.polimi.ingsw.am11.players.PlayerColor;
 import it.polimi.ingsw.am11.table.GameStatus;
 import org.junit.jupiter.api.BeforeAll;
@@ -69,6 +66,25 @@ class GameLogicTest {
         } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
+
+        //setting objectives and starter
+        for (String nickname : players) {
+            try {
+                model.setObjectiveFor(nickname, model.getCandidateObjectives(
+                        nickname).stream().findFirst().orElseThrow());
+                model.setStarterFor(nickname, false);
+            } catch (IllegalPlayerSpaceActionException e) {
+                throw new RuntimeException(e);
+            } catch (GameStatusException e) {
+                throw new RuntimeException(e);
+            } catch (PlayerInitException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalCardPlacingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
         ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
         try {
             assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
@@ -110,6 +126,21 @@ class GameLogicTest {
         } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
+        for (String nickname : players) {
+            try {
+                model.setObjectiveFor(nickname, model.getCandidateObjectives(
+                        nickname).stream().findFirst().orElseThrow());
+                model.setStarterFor(nickname, false);
+            } catch (IllegalPlayerSpaceActionException e) {
+                throw new RuntimeException(e);
+            } catch (GameStatusException e) {
+                throw new RuntimeException(e);
+            } catch (PlayerInitException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalCardPlacingException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
         try {
@@ -124,12 +155,98 @@ class GameLogicTest {
 
     @Test
     void getPlayerHand() {
-        //TODO
+        Set<String> players = Set.of("player1", "player2", "player3");
+        int numOfPlayers = players.size();
+        try {
+            model.addPlayerToTable("player1", PlayerColor.BLUE);
+            model.addPlayerToTable("player2", PlayerColor.GREEN);
+            model.addPlayerToTable("player3", PlayerColor.RED);
+        } catch (PlayerInitException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+        assertThrows(GameStatusException.class, () -> model.getPlayerHand("player1"));
+        try {
+            model.initGame();
+        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+            throw new RuntimeException(e);
+        }
+        for (String nickname : players) {
+            try {
+                model.setObjectiveFor(nickname, model.getCandidateObjectives(
+                        nickname).stream().findFirst().orElseThrow());
+                model.setStarterFor(nickname, false);
+            } catch (IllegalPlayerSpaceActionException e) {
+                throw new RuntimeException(e);
+            } catch (GameStatusException e) {
+                throw new RuntimeException(e);
+            } catch (PlayerInitException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalCardPlacingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try {
+            assertEquals(model.getPlayerHand("player1").size(), 3);
+        } catch (GameStatusException e) {
+            throw new RuntimeException(e);
+        } catch (PlayerInitException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     @Test
     void getPlayerObjective() {
-        //TODO
+        Set<String> players = Set.of("player1", "player2", "player3");
+        int numOfPlayers = players.size();
+        try {
+            model.addPlayerToTable("player1", PlayerColor.BLUE);
+            model.addPlayerToTable("player2", PlayerColor.GREEN);
+            model.addPlayerToTable("player3", PlayerColor.RED);
+        } catch (PlayerInitException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+        assertThrows(GameStatusException.class, () -> model.getPlayerObjective("player1"));
+
+        try {
+            model.initGame();
+        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            assertTrue(model.getPlayerObjective("player1").isEmpty());
+        } catch (PlayerInitException e) {
+            throw new RuntimeException(e);
+        } catch (GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (String nickname : players) {
+            try {
+                model.setObjectiveFor(nickname, model.getCandidateObjectives(
+                        nickname).stream().findFirst().orElseThrow());
+                model.setStarterFor(nickname, false);
+            } catch (IllegalPlayerSpaceActionException e) {
+                throw new RuntimeException(e);
+            } catch (GameStatusException e) {
+                throw new RuntimeException(e);
+            } catch (PlayerInitException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalCardPlacingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try {
+            assertEquals(model.getPlayerObjective("player1").size(), 1);
+        } catch (PlayerInitException e) {
+            throw new RuntimeException(e);
+        } catch (GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     @Test
@@ -201,6 +318,11 @@ class GameLogicTest {
     }
 
     @Test
+    void getExposedCards() {
+        //TODO
+    }
+
+    @Test
     void getPlayerPoints() {
         //TODO
     }
@@ -241,7 +363,7 @@ class GameLogicTest {
 
         assertThrows(GameStatusException.class, () -> model.initGame());
 
-        assertEquals(model.getStatus(), GameStatus.ONGOING);
+        assertEquals(model.getStatus(), GameStatus.STARTING);
 
 
     }
@@ -342,19 +464,13 @@ class GameLogicTest {
     }
 
     @Test
-    void pickStarter() {
-    }
-
-    @Test
-    void pickObjective() {
-    }
-
-    @Test
     void setStarterFor() {
+        //TODO
     }
 
     @Test
     void setObjectiveFor() {
+        //TODO
     }
 
     @Test
@@ -387,6 +503,16 @@ class GameLogicTest {
     }
 
     @Test
+    void drawFromDeckOf() {
+        //TODO
+    }
+
+    @Test
+    void drawVisibleOf() {
+        //TODO
+    }
+
+    @Test
     void countObjectivesPoints() {
         //TODO, need to simulate game
 
@@ -414,4 +540,22 @@ class GameLogicTest {
         model.endGame();
         assertEquals(model.getStatus(), GameStatus.SETUP);
     }
+
+
+    @Test
+    void getStatus() {
+    }
+
+    @Test
+    void getDeckTop() {
+    }
+
+    @Test
+    void getCandidateObjectives() {
+    }
+
+    @Test
+    void getStarterCard() {
+    }
 }
+
