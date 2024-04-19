@@ -204,4 +204,14 @@ public class PlayerManager {
                .map(Player::field)
                .forEach(PlayerField::clearAll);
     }
+
+    public boolean areTheyReady() {
+        boolean isReady = true;
+        for (Player player : players.values()) {
+            isReady = isReady &&
+                      player.space().areObjectiveAll() &&
+                      ! player.field().isAvailable(new Position(0, 0));
+        }
+        return isReady;
+    }
 }

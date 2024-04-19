@@ -59,13 +59,6 @@ public interface GameModel {
 
     void removePlayer(@NotNull String nickname) throws GameStatusException;
 
-    int pickStarterFor(String nickname) throws EmptyDeckException, GameStatusException,
-                                               PlayerInitException,
-                                               IllegalPlayerSpaceActionException;
-
-    Set<Integer> pickCandidateObjectives(@NotNull String nickname)
-    throws EmptyDeckException, GameStatusException, PlayerInitException, IllegalPickActionException;
-
     void setStarterFor(String nickname, boolean isRetro)
     throws IllegalCardPlacingException, GameStatusException, PlayerInitException;
 
@@ -101,5 +94,5 @@ public interface GameModel {
     throws PlayerInitException, GameStatusException;
 
     Optional<Integer> getStarterCard(@NotNull String nickname)
-    throws PlayerInitException;
+    throws PlayerInitException, GameStatusException;
 }

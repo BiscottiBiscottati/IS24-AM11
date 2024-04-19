@@ -62,7 +62,7 @@ public class Plateau {
                         .forEach(
                                 player -> counterObjective.put(player, 0)
                         );
-        status = GameStatus.ONGOING;
+        status = GameStatus.STARTING;
     }
 
     public void addPlayer(Player newPlayer) {

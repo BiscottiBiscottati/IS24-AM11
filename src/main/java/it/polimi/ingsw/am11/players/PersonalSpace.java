@@ -131,4 +131,8 @@ public class PersonalSpace {
         playerObjective.clear();
     }
 
+    public boolean areObjectiveAll() {
+        return maxObjectives == playerObjective.size();
+    }
+
 }
