@@ -74,7 +74,7 @@ public class PersonalSpace {
     }
 
     public Set<ObjectiveCard> getCandidateObjectives() {
-        return new HashSet<>(candidateObjectives.values());
+        return Set.copyOf(candidateObjectives.values());
     }
 
     public ObjectiveCard getCandidateObjectiveByID(int id)
@@ -138,9 +138,11 @@ public class PersonalSpace {
     public void clearAll() {
         playerHand.clear();
         playerObjective.clear();
+        candidateObjectives.clear();
+        starterCard = null;
     }
 
-    public boolean areObjectiveAll() {
+    public boolean areObjectiveGiven() {
         return maxObjectives == playerObjective.size();
     }
 

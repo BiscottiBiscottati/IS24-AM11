@@ -7,9 +7,9 @@ import it.polimi.ingsw.am11.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.players.PersonalSpace;
 import it.polimi.ingsw.am11.players.Player;
+import it.polimi.ingsw.am11.players.field.PlayerField;
 import it.polimi.ingsw.am11.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.players.utils.Position;
-import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -210,7 +210,7 @@ public class PlayerManager {
         boolean isReady = true;
         for (Player player : players.values()) {
             isReady = isReady &&
-                      player.space().areObjectiveAll() &&
+                      player.space().areObjectiveGiven() &&
                       ! player.field().isAvailable(new Position(0, 0));
         }
         return isReady;
