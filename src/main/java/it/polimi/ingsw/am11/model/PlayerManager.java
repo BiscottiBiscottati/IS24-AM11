@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 public class PlayerManager {
     private static int maxNumberOfPlayers;
     private final Map<String, Player> players;
-    private final LinkedList<Player> playerQueue;
+    private final Queue<Player> playerQueue;
     private Player firstPlayer;
     private Player currentPlaying;
 
     public PlayerManager() {
         this.players = new HashMap<>(8);
-        this.playerQueue = new LinkedList<>();
+        this.playerQueue = new ArrayDeque<>(maxNumberOfPlayers);
     }
 
     public static void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
@@ -169,19 +169,31 @@ public class PlayerManager {
         } else {
             Player newPlayer = new Player(nickname, colour);
             players.put(nickname, newPlayer);
+            playerQueue.add(newPlayer);
             return newPlayer;
         }
     }
 
     public void removePlayer(String nickname) {
+        Player toRemove = players.get(nickname);
+        if (toRemove == null) {
+            return;
+        }
+        playerQueue.remove(toRemove);
         players.remove(nickname);
     }
 
     public void startingTheGame() {
-        playerQueue.addAll(players.values());
-        Collections.shuffle(playerQueue);
-        firstPlayer = playerQueue.getFirst();
-        currentPlaying = playerQueue.removeFirst();
+        int randomIndex = new Random().nextInt(playerQueue.size());
+        firstPlayer = players.values()
+                             .toArray(new Player[playerQueue.size()])[randomIndex];
+
+        Player peeked = playerQueue.element();
+        while (peeked != firstPlayer) {
+            playerQueue.offer(playerQueue.poll());
+            peeked = playerQueue.element();
+        }
+        currentPlaying = playerQueue.remove();
     }
 
     public boolean isFirstTheCurrent() {
@@ -189,13 +201,12 @@ public class PlayerManager {
     }
 
     public void goNextTurn() {
-        playerQueue.addLast(currentPlaying);
-        currentPlaying = playerQueue.removeFirst();
+        playerQueue.offer(currentPlaying);
+        currentPlaying = playerQueue.remove();
         currentPlaying.space().setCardBeenPlaced(false);
     }
 
     public void resetAll() {
-        playerQueue.clear();
         players.values()
                .stream()
                .map(Player::space)

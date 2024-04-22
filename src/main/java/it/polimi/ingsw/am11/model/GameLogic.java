@@ -109,7 +109,8 @@ public class GameLogic implements GameModel {
     @Override // DONE
     public @NotNull Set<Integer> getPlayerHand(@NotNull String nickname)
     throws GameStatusException, PlayerInitException {
-        if (plateau.getStatus() == GameStatus.SETUP) {
+        if (Set.of(GameStatus.ONGOING, GameStatus.ARMAGEDDON, GameStatus.ENDED)
+               .contains(plateau.getStatus())) {
             throw new GameStatusException("the game has not started, cards hasn't been dealt");
         }
         return playerManager.getHand(nickname);

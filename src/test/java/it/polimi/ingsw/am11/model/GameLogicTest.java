@@ -54,7 +54,7 @@ class GameLogicTest {
     }
 
     @Test
-    void getCurrentTurnPlayer() throws GameStatusException {
+    void getCurrentTurnPlayer() {
 
         Set<String> players = Set.of("player1", "player2", "player3");
         int numOfPlayers = players.size();
@@ -91,10 +91,15 @@ class GameLogicTest {
 
 
         try {
-            model.placeCard(model.getCurrentTurnPlayer(), model.getPlayerHand(
-                                    model.getCurrentTurnPlayer()).stream().findFirst().orElseThrow(),
-                            model.getAvailablePositions(
-                                    model.getCurrentTurnPlayer()).stream().findFirst().orElseThrow(),
+            model.placeCard(model.getCurrentTurnPlayer(),
+                            model.getPlayerHand(model.getCurrentTurnPlayer())
+                                 .stream()
+                                 .findFirst()
+                                 .orElseThrow(),
+                            model.getAvailablePositions(model.getCurrentTurnPlayer())
+                                 .stream()
+                                 .findFirst()
+                                 .orElseThrow(),
                             false);
             model.drawFromDeckOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer());
         } catch (GameStatusException | TurnsOrderException | IllegalCardPlacingException |
@@ -704,8 +709,8 @@ class GameLogicTest {
 
         //Remove all
         try {
-            model.removePlayer("player2");
             model.removePlayer("player3");
+            model.removePlayer("player2");
         } catch (GameStatusException e) {
             throw new RuntimeException(e);
         }
@@ -721,9 +726,9 @@ class GameLogicTest {
 
         //Adding new players
         try {
-            model.addPlayerToTable("player1", PlayerColor.BLUE);
-            model.addPlayerToTable("player2", PlayerColor.GREEN);
-            model.addPlayerToTable("player3", PlayerColor.RED);
+            model.addPlayerToTable("cacca", PlayerColor.BLUE);
+            model.addPlayerToTable("farfalla", PlayerColor.GREEN);
+            model.addPlayerToTable("geese", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
@@ -735,7 +740,7 @@ class GameLogicTest {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class,
-                     () -> model.removePlayer("player1"));
+                     () -> model.removePlayer("cacca"));
 
     }
 
