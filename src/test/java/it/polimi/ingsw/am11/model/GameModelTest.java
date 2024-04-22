@@ -122,11 +122,26 @@ class GameModelTest {
             throw new RuntimeException(e);
         }
 
+        for (String player : players) {
+            try {
+                model.setStarterFor(player, true);
+                model.setObjectiveFor(player,
+                                      model.getCandidateObjectives(player)
+                                           .stream()
+                                           .findFirst().orElseThrow());
+            } catch (IllegalCardPlacingException | GameStatusException | PlayerInitException |
+                     IllegalPlayerSpaceActionException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         try {
-            assertEquals(Position.of(0, 0),
-                         model.getAvailablePositions("edo").stream()
-                              .findFirst()
-                              .orElseThrow());
+            Set<Position> availPos = Stream.of(Corner.values())
+                                           .map(corner -> PositionManager.getPositionIn(
+                                                   Position.of(0, 0), corner))
+                                           .collect(Collectors.toSet());
+            assertEquals(availPos,
+                         model.getAvailablePositions("edo"));
         } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }

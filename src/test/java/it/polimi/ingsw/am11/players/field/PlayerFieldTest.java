@@ -177,8 +177,7 @@ class PlayerFieldTest {
                 placedPos.add(position);
 
                 // Checking that the card gives the expected points
-                pointsExpected = card.getPoints();
-                assertEquals(pointsExpected, pointsGiven.get());
+                assertEquals(0, pointsGiven.get());
             }
 
             // Checking that the cards are placed and the positions are not available

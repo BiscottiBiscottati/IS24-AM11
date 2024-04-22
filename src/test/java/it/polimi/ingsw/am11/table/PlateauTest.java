@@ -22,6 +22,7 @@ class PlateauTest {
         Player player = new Player("Test Player",
                                    PlayerColor.BLUE);
         plateau.addPlayer(player);
+        plateau.setStatus(GameStatus.ONGOING);
 
         // Add points to the player until they reach the armageddon time
         for (int i = 0; i < 20; i++) {
