@@ -67,19 +67,22 @@ public class GameController {
         return model.getExposedCards(type);
     }
 
-    public int getPlayerPoints(String nickname) throws PlayerInitException,
-                                                       GameStatusException,
-                                                       GameBreakingException {
+    public int getPlayerPoints(String nickname)
+    throws PlayerInitException,
+           GameStatusException,
+           GameBreakingException {
         return model.getPlayerPoints(nickname);
     }
 
-    public int getPlayerFinishingPosition(String nickname) throws PlayerInitException,
-                                                                  GameStatusException,
-                                                                  GameBreakingException {
+    public int getPlayerFinishingPosition(String nickname)
+    throws PlayerInitException,
+           GameStatusException,
+           GameBreakingException {
         return model.getPlayerFinishingPosition(nickname);
     }
 
-    public Set<String> getWinner() throws GameStatusException {
+    public Set<String> getWinner()
+    throws GameStatusException {
         return model.getWinner();
     }
 
@@ -89,7 +92,8 @@ public class GameController {
         model.initGame();
     }
 
-    public void addPlayerToTable(String nickname) throws PlayerInitException, GameStatusException {
+    public void addPlayerToTable(String nickname)
+    throws PlayerInitException, GameStatusException {
 
         Set<String> players = model.getPlayers();
         if (players.contains(nickname)) {
@@ -107,15 +111,17 @@ public class GameController {
         model.removePlayer(nickname);
     }
 
-    public void setStarterFor(String nickname, boolean isRetro) throws GameStatusException,
-                                                                       PlayerInitException,
-                                                                       IllegalCardPlacingException {
+    public void setStarterFor(String nickname, boolean isRetro)
+    throws GameStatusException,
+           PlayerInitException,
+           IllegalCardPlacingException {
         model.setStarterFor(nickname, isRetro);
     }
 
-    public void setObjectiveFor(String nickname, int cardID) throws GameStatusException,
-                                                                    PlayerInitException,
-                                                                    IllegalPlayerSpaceActionException {
+    public void setObjectiveFor(String nickname, int cardID)
+    throws GameStatusException,
+           PlayerInitException,
+           IllegalPlayerSpaceActionException {
         model.setObjectiveFor(nickname, cardID);
     }
 
