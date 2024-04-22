@@ -151,7 +151,6 @@ class GameLogicTest {
         while (true) {
             try {
                 if (model.getStatus() == GameStatus.ENDED) {
-                    gameEnded = true;
                     break;
                 }
                 model.placeCard(model.getCurrentTurnPlayer(),
@@ -249,22 +248,15 @@ class GameLogicTest {
                 model.setObjectiveFor(nickname, model.getCandidateObjectives(
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException e) {
-                throw new RuntimeException(e);
-            } catch (GameStatusException e) {
-                throw new RuntimeException(e);
-            } catch (PlayerInitException e) {
-                throw new RuntimeException(e);
-            } catch (IllegalCardPlacingException e) {
+            } catch (IllegalPlayerSpaceActionException | IllegalCardPlacingException |
+                     PlayerInitException | GameStatusException e) {
                 throw new RuntimeException(e);
             }
         }
 
         try {
             assertEquals(model.getPlayerHand("player1").size(), 3);
-        } catch (GameStatusException e) {
-            throw new RuntimeException(e);
-        } catch (PlayerInitException e) {
+        } catch (GameStatusException | PlayerInitException e) {
             throw new RuntimeException(e);
         }
 
@@ -291,9 +283,7 @@ class GameLogicTest {
         }
         try {
             assertTrue(model.getPlayerObjective("player1").isEmpty());
-        } catch (PlayerInitException e) {
-            throw new RuntimeException(e);
-        } catch (GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
 
@@ -302,21 +292,14 @@ class GameLogicTest {
                 model.setObjectiveFor(nickname, model.getCandidateObjectives(
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException e) {
-                throw new RuntimeException(e);
-            } catch (GameStatusException e) {
-                throw new RuntimeException(e);
-            } catch (PlayerInitException e) {
-                throw new RuntimeException(e);
-            } catch (IllegalCardPlacingException e) {
+            } catch (IllegalPlayerSpaceActionException | IllegalCardPlacingException |
+                     PlayerInitException | GameStatusException e) {
                 throw new RuntimeException(e);
             }
         }
         try {
             assertEquals(model.getPlayerObjective("player1").size(), 1);
-        } catch (PlayerInitException e) {
-            throw new RuntimeException(e);
-        } catch (GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
 
@@ -655,7 +638,6 @@ class GameLogicTest {
         while (true) {
             try {
                 if (model.getStatus() == GameStatus.ENDED) {
-                    gameEnded = true;
                     break;
                 }
                 model.placeCard(model.getCurrentTurnPlayer(),
@@ -1153,7 +1135,7 @@ class GameLogicTest {
     }
 
     @Test
-    void drawVisibleOf() throws PlayerInitException, GameStatusException {
+    void drawVisibleOf() {
 
         Set<String> players = Set.of("player1", "player2", "player3");
         try {

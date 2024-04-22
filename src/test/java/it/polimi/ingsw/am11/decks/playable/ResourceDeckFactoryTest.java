@@ -52,7 +52,7 @@ class ResourceDeckFactoryTest {
         // Testing the creation of a ResourceDeck
         assertNotNull(deck);
 
-        // Testing size of the deck
+        // Testing the size of the deck
         assertEquals(40, deck.getRemainingCards());
 
         Set<Integer> uniqueIds = new HashSet<>(40);

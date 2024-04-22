@@ -10,37 +10,37 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ObjectiveCardTypeTest {
 
-    static Set<Position> standardTriplet = Set.of(
+    static final Set<Position> standardTriplet = Set.of(
             Position.of(0, 2),
             Position.of(1, 1),
             Position.of(2, 0)
     );
 
-    static Set<Position> flippedTriplet = Set.of(
+    static final Set<Position> flippedTriplet = Set.of(
             Position.of(0, 0),
             Position.of(1, 1),
             Position.of(2, 2)
     );
 
-    static Set<Position> LShape = Set.of(
+    static final Set<Position> LShape = Set.of(
             Position.of(1, 3),
             Position.of(1, 1),
             Position.of(2, 0)
     );
 
-    static Set<Position> flippedL = Set.of(
+    static final Set<Position> flippedL = Set.of(
             Position.of(1, 3),
             Position.of(1, 1),
             Position.of(0, 0)
     );
 
-    static Set<Position> rotatedL = Set.of(
+    static final Set<Position> rotatedL = Set.of(
             Position.of(1, - 1),
             Position.of(1, 1),
             Position.of(0, 2)
     );
 
-    static Set<Position> rotatedFlippedL = Set.of(
+    static final Set<Position> rotatedFlippedL = Set.of(
             Position.of(1, - 1),
             Position.of(1, 1),
             Position.of(2, 2)

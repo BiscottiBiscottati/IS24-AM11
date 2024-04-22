@@ -137,9 +137,11 @@ class ObjectiveDeckFactoryTest {
                         assertEquals(2, lCard.hasItemRequirements(colorToCheck));
                         assertEquals(1, lCard.hasItemRequirements(secondColorToCheck));
                         getItems().filter(
-                                          item -> item != colorToCheck && item != secondColorToCheck)
+                                          item -> item != colorToCheck &&
+                                                  item != secondColorToCheck)
                                   .forEach(
-                                          item -> assertEquals(0, lCard.hasItemRequirements(item)));
+                                          item -> assertEquals(0,
+                                                               lCard.hasItemRequirements(item)));
                     }
                     default ->
                             throw new IllegalStateException("Unexpected value: " + positioningCard);

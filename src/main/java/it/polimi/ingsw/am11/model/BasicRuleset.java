@@ -15,7 +15,7 @@ public class BasicRuleset implements RuleSet {
     private static final int objectiveToChooseFrom = 2;
 
     /**
-     * @return the number of objective that a player can choose between at the start of the game
+     * @return the number of objectives that a player can choose between at the start of the game
      */
     public int getObjectiveToChooseFrom() {
         return objectiveToChooseFrom;

@@ -262,7 +262,7 @@ class GameModelTest {
                 // pick candidate objectives
                 Set<Integer> objCards = model.getCandidateObjectives(player);
 
-                // check size of candidate objectives
+                // check the size of candidate objectives
                 assertEquals(2, objCards.size());
                 assertEquals(2, model.getCandidateObjectives(player).size());
                 assertEquals(objCards, model.getCandidateObjectives(player));

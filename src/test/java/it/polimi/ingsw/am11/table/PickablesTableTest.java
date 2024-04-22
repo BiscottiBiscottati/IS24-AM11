@@ -25,14 +25,12 @@ import static it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType.RESOURCE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PickablesTableTest {
+    static final int numOfObjectives = 2;
+    static final int numOfShownPerType = 2;
     static Deck<ResourceCard> resourceCardDeck;
-
     static Deck<GoldCard> goldCardDeck;
     static Deck<ObjectiveCard> objectiveCardDeck;
     static Deck<StarterCard> starterCardDeck;
-
-    static int numOfObjectives = 2;
-    static int numOfShownPerType = 2;
     PickablesTable pickablesTable;
 
     @BeforeAll
@@ -155,9 +153,7 @@ public class PickablesTableTest {
         pickablesTable.getCommonObjectives()
                       .stream()
                       .map(ObjectiveCard::getId)
-                      .forEach(id -> {
-                          assertTrue(objectiveCardDeck.getCardById(id).isPresent());
-                      });
+                      .forEach(id -> assertTrue(objectiveCardDeck.getCardById(id).isPresent()));
     }
 
     @Test

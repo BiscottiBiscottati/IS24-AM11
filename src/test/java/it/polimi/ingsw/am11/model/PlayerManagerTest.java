@@ -223,7 +223,7 @@ class PlayerManagerTest {
             throw new RuntimeException(e);
         }
 
-        //adding a player with same name or color
+        //adding a player with the same name or color
         assertThrows(PlayerInitException.class,
                      () -> manager.addPlayerToTable("player1", PlayerColor.YELLOW));
         assertThrows(PlayerInitException.class,
