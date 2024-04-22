@@ -3,10 +3,10 @@ package it.polimi.ingsw.am11.cards.objective.positioning;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.cards.utils.enums.PatternPurpose;
-import it.polimi.ingsw.am11.players.utils.CardContainer;
-import it.polimi.ingsw.am11.players.utils.Position;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import it.polimi.ingsw.am11.players.field.PositionManager;
+import it.polimi.ingsw.am11.players.utils.CardContainer;
+import it.polimi.ingsw.am11.players.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

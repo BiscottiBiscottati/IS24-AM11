@@ -7,9 +7,9 @@ import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.cards.utils.helpers.Validator;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.players.utils.Position;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import it.polimi.ingsw.am11.players.field.PositionManager;
+import it.polimi.ingsw.am11.players.utils.Position;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
