@@ -230,7 +230,6 @@ public class GameLogic implements GameModel {
                     "the game has not started, players don't have points");
         }
         try {
-            // TODO throws list to complete
             return plateau.getPlayerPoints(playerManager.getPlayer(nickname)
                                                         .orElseThrow(() -> new PlayerInitException(
                                                                 "Player not found")));
@@ -436,8 +435,8 @@ public class GameLogic implements GameModel {
     }
 
     /**
-     * Each player needs a <code>StartingCard</code> at the beginning of the game. This method place
-     * the picked one on the field
+     * Each player needs a <code>StartingCard</code> at the beginning of the game. This method
+     * places the picked one on the field
      *
      * @param nickname nickname of the player of interest
      * @param isRetro  tell if the <code>StartingCard</code> is placed on the front (false) or on
@@ -451,8 +450,9 @@ public class GameLogic implements GameModel {
         if (plateau.getStatus() != GameStatus.STARTING) {
             throw new GameStatusException("the game is not starting");
         }
-        // TODO throws to complete
-        Player player = playerManager.getPlayer(nickname).orElseThrow();
+        Player player = playerManager.getPlayer(nickname)
+                                     .orElseThrow(() -> new PlayerInitException("Player not " +
+                                                                                "found"));
         player.field().placeStartingCard(playerManager.getStarterCard(nickname).orElseThrow(),
                                          isRetro);
         if (playerManager.areTheyReady()) {
