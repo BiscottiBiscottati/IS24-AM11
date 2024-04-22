@@ -65,12 +65,14 @@ class GameLogicTest {
         } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
+        assertThrows(GameStatusException.class, () -> model.getCurrentTurnPlayer());
         try {
             model.initGame();
         } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
+        assertDoesNotThrow(() -> model.getCurrentTurnPlayer());
         //setting objectives and starter
         for (String nickname : playerQueue) {
             try {
@@ -144,7 +146,50 @@ class GameLogicTest {
         } catch (GameStatusException e) {
             throw new RuntimeException(e);
         }
-        //TODO
+
+        boolean gameEnded = false;
+        while (true) {
+            try {
+                if (model.getStatus() == GameStatus.ENDED) {
+                    gameEnded = true;
+                    break;
+                }
+                model.placeCard(model.getCurrentTurnPlayer(),
+                                model.getPlayerHand(model.getCurrentTurnPlayer())
+                                     .stream()
+                                     .findFirst().orElseThrow(),
+                                model.getAvailablePositions(model.getCurrentTurnPlayer())
+                                     .stream()
+                                     .findFirst().orElseThrow(),
+                                true);
+                if (model.getDeckTop(PlayableCardType.GOLD).isPresent()) {
+                    model.drawFromDeckOf(PlayableCardType.GOLD,
+                                         model.getCurrentTurnPlayer());
+                } else if (model.getDeckTop(PlayableCardType.RESOURCE).isPresent()) {
+                    model.drawFromDeckOf(PlayableCardType.RESOURCE,
+                                         model.getCurrentTurnPlayer());
+                } else if (model.getExposedCards(PlayableCardType.RESOURCE).isEmpty()) {
+                    model.drawVisibleOf(PlayableCardType.RESOURCE, model.getCurrentTurnPlayer(),
+                                        model.getExposedCards(PlayableCardType.RESOURCE)
+                                             .stream()
+                                             .findFirst().orElseThrow());
+                } else if (model.getExposedCards(PlayableCardType.GOLD).isEmpty()) {
+                    model.drawVisibleOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer(),
+                                        model.getExposedCards(PlayableCardType.GOLD)
+                                             .stream()
+                                             .findFirst().orElseThrow());
+                } else {
+                    model.goNextTurn();
+                }
+            } catch (IllegalPlayerSpaceActionException | TurnsOrderException |
+                     IllegalCardPlacingException | PlayerInitException |
+                     IllegalPickActionException | NotInHandException | EmptyDeckException |
+                     IllegalPlateauActionException | GameBreakingException | MaxHandSizeException |
+                     GameStatusException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        assertThrows(GameStatusException.class, () -> model.getCurrentTurnPlayer());
     }
 
     @Test
@@ -358,14 +403,12 @@ class GameLogicTest {
                  IllegalPickActionException e) {
             throw new RuntimeException(e);
         }
-        //TODO
     }
 
     @Test
     void getAvailablePositions() throws PlayerInitException, GameStatusException {
 
         Set<String> players = Set.of("player1", "player2", "player3");
-        int numOfPlayers = players.size();
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
@@ -398,6 +441,7 @@ class GameLogicTest {
                             model.getAvailablePositions(
                                     model.getCurrentTurnPlayer()).stream().findFirst().orElseThrow(),
                             true);
+            assertEquals(model.getAvailablePositions(model.getCurrentTurnPlayer()).size(), 6);
             model.drawFromDeckOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer());
         } catch (GameStatusException | TurnsOrderException | IllegalCardPlacingException |
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
@@ -405,7 +449,7 @@ class GameLogicTest {
                  MaxHandSizeException | IllegalPickActionException e) {
             throw new RuntimeException(e);
         }
-        //TODO kinda difficult to test
+        assertEquals(model.getAvailablePositions(model.getCurrentTurnPlayer()).size(), 4);
     }
 
 
@@ -475,14 +519,61 @@ class GameLogicTest {
             throw new RuntimeException(e);
         }
 
+        for (String nickname : players) {
+            try {
+                model.setObjectiveFor(nickname, model.getCandidateObjectives(
+                        nickname).stream().findFirst().orElseThrow());
+                model.setStarterFor(nickname, false);
+            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
+                     IllegalCardPlacingException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-        //TODO
+        try {
+            model.placeCard(model.getCurrentTurnPlayer(), model.getPlayerHand(
+                                    model.getCurrentTurnPlayer()).stream().findFirst().orElseThrow(),
+                            model.getAvailablePositions(
+                                    model.getCurrentTurnPlayer()).stream().findFirst().orElseThrow(),
+                            true);
+            model.drawVisibleOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer(),
+                                model.getExposedCards(
+                                        PlayableCardType.GOLD).stream().findFirst().orElseThrow());
+            assertEquals(model.getExposedCards(PlayableCardType.GOLD).size(), 2);
+        } catch (GameStatusException | TurnsOrderException | IllegalCardPlacingException |
+                 PlayerInitException | NotInHandException | IllegalPlateauActionException |
+                 IllegalPlayerSpaceActionException | GameBreakingException |
+                 IllegalPickActionException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            model.placeCard(model.getCurrentTurnPlayer(), model.getPlayerHand(
+                                    model.getCurrentTurnPlayer()).stream().findFirst().orElseThrow(),
+                            model.getAvailablePositions(
+                                    model.getCurrentTurnPlayer()).stream().findFirst().orElseThrow(),
+                            true);
+            model.drawVisibleOf(PlayableCardType.RESOURCE, model.getCurrentTurnPlayer(),
+                                model.getExposedCards(
+                                        PlayableCardType.RESOURCE).stream().findFirst().orElseThrow());
+            assertEquals(model.getExposedCards(PlayableCardType.RESOURCE).size(), 2);
+        } catch (TurnsOrderException | IllegalCardPlacingException | NotInHandException |
+                 IllegalPlateauActionException | IllegalPlayerSpaceActionException |
+                 GameBreakingException | IllegalPickActionException | PlayerInitException |
+                 GameStatusException e) {
+            throw new RuntimeException(e);
+        }
+        model.forceEnd();
+        assertThrows(GameStatusException.class, () -> model.getExposedCards(PlayableCardType.GOLD));
+        assertThrows(GameStatusException.class,
+                     () -> model.getExposedCards(PlayableCardType.RESOURCE));
     }
 
     @Test
-    void getPlayerPoints() throws IllegalCardBuildException {
+    void getPlayerPoints() {
 
         Set<String> players = Set.of("player1", "player2", "player3", "player4");
+
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
@@ -494,11 +585,14 @@ class GameLogicTest {
 
         assertThrows(GameStatusException.class, () -> model.getPlayerPoints("player1"));
 
+
         try {
             model.initGame();
         } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
+
+        assertThrows(PlayerInitException.class, () -> model.getPlayerPoints("playerX"));
 
         try {
             for (String nickname : players) {
@@ -519,9 +613,8 @@ class GameLogicTest {
         } catch (PlayerInitException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
-
-
-        //TODO
+        model.forceEnd();
+        assertThrows(GameStatusException.class, () -> model.getPlayerPoints("player1"));
     }
 
 
@@ -604,7 +697,7 @@ class GameLogicTest {
         for (String nickname : players) {
             assertDoesNotThrow(() -> model.getPlayerFinishingPosition(nickname));
         }
-        //TODO
+        assertThrows(PlayerInitException.class, () -> model.getPlayerFinishingPosition("playerX"));
     }
 
     @Test
@@ -817,12 +910,13 @@ class GameLogicTest {
         } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
-        assertThrows(GameStatusException.class, () -> model.getStarterCard("player1"));
+        assertThrows(GameStatusException.class, () -> model.setStarterFor("player1", false));
         try {
             model.initGame();
         } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
+        assertThrows(PlayerInitException.class, () -> model.setStarterFor("playerX", false));
         for (String nickname : players) {
             try {
                 model.setObjectiveFor(nickname, model.getCandidateObjectives(
@@ -836,7 +930,6 @@ class GameLogicTest {
         assertDoesNotThrow(() -> model.getStarterCard("player1"));
         assertDoesNotThrow(() -> model.getStarterCard("player2"));
         assertDoesNotThrow(() -> model.getStarterCard("player3"));
-        //TODO
     }
 
     @Test
