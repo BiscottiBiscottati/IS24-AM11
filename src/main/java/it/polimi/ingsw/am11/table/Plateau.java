@@ -78,7 +78,7 @@ public class Plateau {
             temp += points;
             playerPoints.put(player, temp);
         }
-        if (temp >= armageddonTime) {
+        if (temp >= armageddonTime && status == GameStatus.ONGOING) {
             status = GameStatus.ARMAGEDDON;
         }
     }
@@ -123,8 +123,8 @@ public class Plateau {
         int size = entries.size();
         for (int i = 0; i < size; i++) {
             if (i > 0 && entries.get(i).getValue().equals(entries.get(i - 1).getValue())
-                && counterObjective.get(entries.get(i).getKey()).equals(
-                    counterObjective.get(entries.get(i - 1).getKey()))) {
+                && counterObjective.get(entries.get(i).getKey())
+                                   .equals(counterObjective.get(entries.get(i - 1).getKey()))) {
                 finalLeaderboard.put(entries.get(i).getKey(),
                                      finalLeaderboard.get(entries.get(i - 1).getKey()));
             } else {

@@ -97,6 +97,8 @@ public class PlayerField {
         this.itemManager.addExposedItemOn(card, isRetro);
 
         // returns the points gained from placing the card
+        if (isRetro)
+            return 0;
         return card.countPoints(this, position);
     }
 

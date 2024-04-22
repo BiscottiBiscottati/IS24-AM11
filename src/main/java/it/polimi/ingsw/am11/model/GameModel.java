@@ -73,13 +73,16 @@ public interface GameModel {
 
     int drawFromDeckOf(PlayableCardType type, String nickname)
     throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
-           IllegalPlayerSpaceActionException, PlayerInitException, MaxHandSizeException;
+           IllegalPlayerSpaceActionException, PlayerInitException, MaxHandSizeException,
+           IllegalPickActionException;
+
+    void goNextTurn() throws GameBreakingException, GameStatusException;
 
     void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
            IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException;
 
-    void endGame();
+    void forceEnd();
 
     GameStatus getStatus();
 

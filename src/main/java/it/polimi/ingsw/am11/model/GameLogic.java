@@ -109,9 +109,11 @@ public class GameLogic implements GameModel {
     @Override // DONE
     public @NotNull Set<Integer> getPlayerHand(@NotNull String nickname)
     throws GameStatusException, PlayerInitException {
-        if (Set.of(GameStatus.ONGOING, GameStatus.ARMAGEDDON, GameStatus.ENDED)
+        if (Set.of(GameStatus.SETUP, GameStatus.STARTING)
                .contains(plateau.getStatus())) {
-            throw new GameStatusException("the game has not started, cards hasn't been dealt");
+            throw new GameStatusException("the game is" +
+                                          plateau.getStatus().name() +
+                                          ", cards hasn't been dealt");
         }
         return playerManager.getHand(nickname);
     }
@@ -531,7 +533,7 @@ public class GameLogic implements GameModel {
                 .filter(b -> b)
                 .orElseThrow(
                         () -> new IllegalCardPlacingException(
-                                "Card can't be placed in that position"));
+                                "Card requirements not met!"));
         Optional.of(playerManager.getHand(nickname).contains(cardID))
                 .filter(b -> b)
                 .orElseThrow(
@@ -547,7 +549,7 @@ public class GameLogic implements GameModel {
     public int drawFromDeckOf(@NotNull PlayableCardType type, @NotNull String nickname)
     throws GameStatusException, TurnsOrderException, EmptyDeckException,
            IllegalPlayerSpaceActionException, PlayerInitException, MaxHandSizeException,
-           GameBreakingException {
+           GameBreakingException, IllegalPickActionException {
 
         PersonalSpace playerSpace = playerManager.getPlayer(nickname)
                                                  .orElseThrow(() -> new PlayerInitException(
@@ -567,7 +569,7 @@ public class GameLogic implements GameModel {
     }
 
     private void checkIfDrawAllowed(String nickname)
-    throws GameStatusException, TurnsOrderException {
+    throws GameStatusException, TurnsOrderException, IllegalPickActionException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
             plateau.getStatus() == GameStatus.STARTING) {
             throw new GameStatusException("the game is not ongoing");
@@ -580,43 +582,9 @@ public class GameLogic implements GameModel {
             );
         }
         if (! playerManager.getPlayer(nickname).orElseThrow().space().hasCardBeenPlaced()) {
-            throw new TurnsOrderException(nickname + " has to place a card first");
+            throw new IllegalPickActionException(nickname + " has to place a card first");
         }
 
-    }
-
-    /**
-     * This method handles the changing of the turn and the final turn. If it is not the final turn,
-     * it checks if it's armageddonTime and gives the turn to the next players. If it's the final
-     * turn, it ends the game and prepares the final leaderboard.
-     *
-     * @throws GameBreakingException if there are discrepancies between plateau and gameLogic
-     * @throws GameStatusException   if the game is not ongoing
-     */
-    // DONE
-    private void goNextTurn() throws GameBreakingException, GameStatusException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
-            plateau.getStatus() == GameStatus.STARTING) {
-            throw new GameStatusException("the game is not ongoing");
-        }
-        if (Stream.of(PlayableCardType.values())
-                  .map(pickablesTable::getDeckTop)
-                  .allMatch(Optional::isEmpty)) {
-            plateau.activateArmageddon();
-        }
-        playerManager.goNextTurn();
-        if (plateau.getStatus() == GameStatus.LAST_TURN && playerManager.isFirstTheCurrent()) {
-            plateau.setStatus(GameStatus.ENDED);
-            try {
-                countObjectivesPoints();
-            } catch (IllegalPlateauActionException ex) {
-                throw new GameBreakingException("Players in game logic and plateau don't match");
-            }
-            plateau.setFinalLeaderboard();
-        } else if (plateau.getStatus() == GameStatus.ARMAGEDDON &&
-                   playerManager.isFirstTheCurrent()) {
-            plateau.setStatus(GameStatus.LAST_TURN);
-        }
     }
 
     /**
@@ -658,6 +626,41 @@ public class GameLogic implements GameModel {
         }
     }
 
+    /**
+     * This method handles the changing of the turn and the final turn. If it is not the final turn,
+     * it checks if it's armageddonTime and gives the turn to the next players. If it's the final
+     * turn, it ends the game and prepares the final leaderboard.
+     *
+     * @throws GameBreakingException if there are discrepancies between plateau and gameLogic
+     * @throws GameStatusException   if the game is not ongoing
+     */
+    @Override
+    public void goNextTurn() throws GameBreakingException, GameStatusException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
+            plateau.getStatus() == GameStatus.STARTING) {
+            throw new GameStatusException("the game is not ongoing");
+        }
+        if (Stream.of(PlayableCardType.values())
+                  .map(pickablesTable::getDeckTop)
+                  .allMatch(Optional::isEmpty) &&
+            plateau.getStatus() == GameStatus.ONGOING) {
+            plateau.activateArmageddon();
+        }
+        playerManager.goNextTurn();
+        if (plateau.getStatus() == GameStatus.LAST_TURN && playerManager.isFirstTheCurrent()) {
+            plateau.setStatus(GameStatus.ENDED);
+            try {
+                countObjectivesPoints();
+            } catch (IllegalPlateauActionException ex) {
+                throw new GameBreakingException("Players in game logic and plateau don't match");
+            }
+            plateau.setFinalLeaderboard();
+        } else if (plateau.getStatus() == GameStatus.ARMAGEDDON &&
+                   playerManager.isFirstTheCurrent()) {
+            plateau.setStatus(GameStatus.LAST_TURN);
+        }
+    }
+
     @Override
     public void drawVisibleOf(@NotNull PlayableCardType type, @NotNull String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
@@ -686,9 +689,13 @@ public class GameLogic implements GameModel {
 
     /**
      * Ends the current game and gives the possibility to add or remove players.
+     * <p>
+     * It doesn't clear the current state of the game. Doesn't calculate final points.
+     * <p>
+     * It must be called with a initGame for reinitialization
      */
     @Override //
-    public void endGame() {
+    public void forceEnd() {
         plateau.setStatus(GameStatus.SETUP);
     }
 
@@ -735,7 +742,8 @@ public class GameLogic implements GameModel {
     @Override
     public @NotNull Optional<Integer> getStarterCard(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
-        if (plateau.getStatus() != GameStatus.STARTING) {
+        if (Set.of(GameStatus.SETUP, GameStatus.ENDED)
+               .contains(plateau.getStatus())) {
             throw new GameStatusException("the game has not started");
         }
         return playerManager.getStarterCard(nickname)
