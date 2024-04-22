@@ -12,9 +12,9 @@ import it.polimi.ingsw.am11.table.GameStatus;
 
 import java.util.*;
 
-public class Controller {
+public class GameController {
     GameModel model = new GameLogic();
-    List<PlayerColor> colors = new ArrayList<>(Arrays.asList(PlayerColor.values()));
+    List<PlayerColor> colors = Arrays.asList(PlayerColor.values());
 
     public String getFirstPlayer() throws GameStatusException {
         return model.getFirstPlayer();
