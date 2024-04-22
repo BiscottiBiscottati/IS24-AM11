@@ -13,8 +13,14 @@ import it.polimi.ingsw.am11.table.GameStatus;
 import java.util.*;
 
 public class GameController {
-    GameModel model = new GameLogic();
-    List<PlayerColor> colors = Arrays.asList(PlayerColor.values());
+    private final GameModel model;
+    private final List<PlayerColor> colors;
+
+    public GameController() {
+        model = new GameLogic();
+        colors = Arrays.asList(PlayerColor.values());
+        Collections.shuffle(colors);
+    }
 
     public String getFirstPlayer() throws GameStatusException {
         return model.getFirstPlayer();
