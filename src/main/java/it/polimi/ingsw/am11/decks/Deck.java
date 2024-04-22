@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.cards.utils.CardIdentity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
 
@@ -82,6 +83,19 @@ public class Deck<T extends CardIdentity> {
     public void reset() {
         this.deck.clear();
         this.deck.addAll(mappingIdToCard.values());
+    }
+
+    public void resetInto(@NotNull List<Integer> ids) {
+        this.deck.clear();
+        ids.stream()
+           .map(mappingIdToCard::get)
+           .forEach(this.deck::addLast);
+    }
+
+    public List<Integer> saveCurrentState() {
+        return this.deck.stream()
+                        .map(CardIdentity::getId)
+                        .toList();
     }
 
     /**

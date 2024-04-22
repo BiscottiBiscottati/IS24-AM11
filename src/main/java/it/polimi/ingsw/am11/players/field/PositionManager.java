@@ -16,12 +16,14 @@ public class PositionManager {
     private final @NotNull Set<Position> availablePositions;
     private final @NotNull Set<Position> closedPositions;
     private final @NotNull Map<Position, CardContainer> cardsPositioned;
+    private FieldCard lastPlacedCard;
 
     PositionManager() {
         this.availablePositions = new HashSet<>(32);
         this.availablePositions.add(Position.of(0, 0));
         this.closedPositions = new HashSet<>(32);
         this.cardsPositioned = new HashMap<>(64);
+        this.lastPlacedCard = null;
     }
 
     public static Position getMovementOfPositions(@NotNull Position currentPosition,
@@ -89,6 +91,8 @@ public class PositionManager {
               .forEach(this.availablePositions::add);
         this.availablePositions.removeAll(this.closedPositions);
 
+        this.lastPlacedCard = card;
+
         // Update the cards that are covered by the new card and return the List of Items being
         // covered
         return Stream.of(Corner.values())
@@ -116,10 +120,6 @@ public class PositionManager {
         return Optional.empty();
     }
 
-    public Map<Position, CardContainer> getCardsPositioned() {
-        return Map.copyOf(cardsPositioned);
-    }
-
     public Set<Position> getAvailablePositions() {
         return Set.copyOf(availablePositions);
     }
@@ -136,5 +136,54 @@ public class PositionManager {
         return cardsPositioned.values()
                               .stream()
                               .anyMatch(cardContainer -> cardContainer.isCardEquals(card));
+    }
+
+    public FieldCard resetLastMove() {
+        this.cardsPositioned.entrySet()
+                            .stream()
+                            .filter(entry -> entry.getValue().getCard().equals(lastPlacedCard))
+                            .map(Map.Entry::getKey)
+                            .forEach(cardsPositioned::remove);
+
+        this.availablePositions.clear();
+        this.closedPositions.clear();
+
+        this.cardsPositioned.keySet()
+                            .stream()
+                            .flatMap(pos -> Stream.of(Corner.values())
+                                                  .map(corner -> PositionManager.getPositionIn(
+                                                          pos, corner)))
+                            .distinct()
+                            .filter(pos -> ! this.cardsPositioned.containsKey(pos))
+                            .forEach(position -> {
+                                if (isAdjacentClosed(position)) {
+                                    closedPositions.add(position);
+                                } else {
+                                    availablePositions.add(position);
+                                }
+                            });
+        // TODO may need to test
+
+        return lastPlacedCard;
+    }
+
+    private boolean isAdjacentClosed(@NotNull Position position) {
+        return Stream.of(Corner.values())
+                     .map(corner -> PositionManager.getPositionIn(position, corner))
+                     .anyMatch(adjPos -> {
+                         if (! this.cardsPositioned.containsKey(adjPos)) {
+                             return false;
+                         } else {
+                             return this.cardsPositioned.get(adjPos)
+                                                        .isCornerCovered(
+                                                                PositionManager.getCornerFromPositions(
+                                                                        adjPos,
+                                                                        position).orElseThrow());
+                         }
+                     });
+    }
+
+    public Map<Position, CardContainer> getCardsPositioned() {
+        return Map.copyOf(cardsPositioned);
     }
 }
