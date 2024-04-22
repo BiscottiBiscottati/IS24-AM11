@@ -5,7 +5,7 @@ import it.polimi.ingsw.am11.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.enums.*;
 import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.utils.Position;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.table;
 
 import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.players.Player;
-import it.polimi.ingsw.am11.players.PlayerColor;
+import it.polimi.ingsw.am11.players.utils.PlayerColor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

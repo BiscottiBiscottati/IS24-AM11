@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.players;
+package it.polimi.ingsw.am11.players.utils;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

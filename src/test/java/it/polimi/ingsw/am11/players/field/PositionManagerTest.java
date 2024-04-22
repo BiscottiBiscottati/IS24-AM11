@@ -7,7 +7,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
-import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.utils.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

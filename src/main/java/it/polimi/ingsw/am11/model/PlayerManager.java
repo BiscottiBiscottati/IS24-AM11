@@ -7,8 +7,8 @@ import it.polimi.ingsw.am11.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.players.PersonalSpace;
 import it.polimi.ingsw.am11.players.Player;
-import it.polimi.ingsw.am11.players.PlayerColor;
-import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.players.utils.Position;
 import it.polimi.ingsw.am11.players.field.PlayerField;
 import org.jetbrains.annotations.NotNull;
 

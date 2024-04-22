@@ -8,7 +8,7 @@ import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.exceptions.*;
-import it.polimi.ingsw.am11.players.PlayerColor;
+import it.polimi.ingsw.am11.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.table.GameStatus;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

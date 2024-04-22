@@ -3,9 +3,9 @@ package it.polimi.ingsw.am11.model;
 import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.exceptions.*;
-import it.polimi.ingsw.am11.players.CardContainer;
-import it.polimi.ingsw.am11.players.PlayerColor;
-import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.utils.CardContainer;
+import it.polimi.ingsw.am11.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.players.utils.Position;
 import it.polimi.ingsw.am11.table.GameStatus;
 import org.jetbrains.annotations.NotNull;
 

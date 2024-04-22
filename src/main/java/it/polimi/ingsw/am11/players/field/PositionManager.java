@@ -4,8 +4,8 @@ import it.polimi.ingsw.am11.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.cards.utils.Item;
 import it.polimi.ingsw.am11.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
-import it.polimi.ingsw.am11.players.CardContainer;
-import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.utils.CardContainer;
+import it.polimi.ingsw.am11.players.utils.Position;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

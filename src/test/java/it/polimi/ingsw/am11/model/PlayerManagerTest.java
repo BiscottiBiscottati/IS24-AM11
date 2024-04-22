@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.exceptions.PlayerInitException;
-import it.polimi.ingsw.am11.players.PlayerColor;
+import it.polimi.ingsw.am11.players.utils.PlayerColor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

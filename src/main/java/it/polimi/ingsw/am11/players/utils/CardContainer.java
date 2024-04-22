@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.players;
+package it.polimi.ingsw.am11.players.utils;
 
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.cards.utils.FieldCard;

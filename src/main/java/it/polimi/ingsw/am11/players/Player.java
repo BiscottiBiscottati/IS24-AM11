@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.players;
 
 import it.polimi.ingsw.am11.players.field.PlayerField;
+import it.polimi.ingsw.am11.players.utils.PlayerColor;
 
 public record Player(String nickname,
                      PlayerColor color,

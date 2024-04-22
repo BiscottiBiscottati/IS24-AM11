@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.cards.utils.enums;
 
 import com.google.common.collect.ImmutableSet;
-import it.polimi.ingsw.am11.players.Position;
+import it.polimi.ingsw.am11.players.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
