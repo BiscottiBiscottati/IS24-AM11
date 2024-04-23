@@ -843,9 +843,9 @@ class GameLogicTest {
 
         //Adding new players
         try {
-            model.addPlayerToTable("cacca", PlayerColor.BLUE);
-            model.addPlayerToTable("farfalla", PlayerColor.GREEN);
-            model.addPlayerToTable("geese", PlayerColor.RED);
+            model.addPlayerToTable("playerX", PlayerColor.BLUE);
+            model.addPlayerToTable("playerY", PlayerColor.GREEN);
+            model.addPlayerToTable("playerZ", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
@@ -857,7 +857,7 @@ class GameLogicTest {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class,
-                     () -> model.removePlayer("cacca"));
+                     () -> model.removePlayer("playerX"));
 
     }
 
