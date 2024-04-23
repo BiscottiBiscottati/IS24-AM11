@@ -1,9 +1,6 @@
 package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.cards.playable.PlayableCard;
-import it.polimi.ingsw.am11.cards.playable.ResourceCard;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.decks.Deck;
 import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
@@ -146,8 +143,6 @@ class GameLogicTest {
         } catch (GameStatusException e) {
             throw new RuntimeException(e);
         }
-
-        boolean gameEnded = false;
         while (true) {
             try {
                 if (model.getStatus() == GameStatus.ENDED) {
@@ -217,8 +212,6 @@ class GameLogicTest {
                 throw new RuntimeException(e);
             }
         }
-
-        ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
         try {
             assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
         } catch (GameStatusException e) {
@@ -229,7 +222,6 @@ class GameLogicTest {
     @Test
     void getPlayerHand() {
         Set<String> players = Set.of("player1", "player2", "player3");
-        int numOfPlayers = players.size();
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
@@ -266,7 +258,6 @@ class GameLogicTest {
     @Test
     void getPlayerObjective() {
         Set<String> players = Set.of("player1", "player2", "player3");
-        int numOfPlayers = players.size();
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
@@ -308,7 +299,6 @@ class GameLogicTest {
 
     @Test
     void getPlayerColor() {
-        Set<String> players = Set.of("player1", "player2", "player3", "player4");
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
@@ -327,7 +317,6 @@ class GameLogicTest {
     @Test
     void getPositionedCard() throws PlayerInitException, GameStatusException {
         Set<String> players = Set.of("player1", "player2", "player3");
-        int numOfPlayers = players.size();
 
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
@@ -439,9 +428,6 @@ class GameLogicTest {
     @Test
     void getCommonObjectives() {
         {
-
-
-            Set<String> players = Set.of("player1", "player2", "player3", "player4");
             try {
                 model.addPlayerToTable("player1", PlayerColor.BLUE);
                 model.addPlayerToTable("player2", PlayerColor.GREEN);
@@ -603,8 +589,7 @@ class GameLogicTest {
 
     @Test
     void getPlayerFinishingPosition()
-    throws PlayerInitException, GameBreakingException, GameStatusException,
-           IllegalCardBuildException {
+    throws PlayerInitException, GameBreakingException, GameStatusException {
 
         Set<String> players = Set.of("player1", "player2", "player3", "player4");
         try {
@@ -632,9 +617,6 @@ class GameLogicTest {
         }
 
         assertThrows(GameStatusException.class, () -> model.getPlayerFinishingPosition("player1"));
-        PlayableCard.Builder builder = new ResourceCard.Builder(1, 1, Color.BLUE);
-
-        boolean gameEnded = false;
         while (true) {
             try {
                 if (model.getStatus() == GameStatus.ENDED) {
@@ -757,7 +739,6 @@ class GameLogicTest {
 
     @Test
     void initGame() {
-        Set<String> players = Set.of("player1", "player2", "player3", "player4");
         assertThrows(IllegalNumOfPlayersException.class, () -> model.initGame());
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
@@ -862,9 +843,9 @@ class GameLogicTest {
 
         //Adding new players
         try {
-            model.addPlayerToTable("cacca", PlayerColor.BLUE);
-            model.addPlayerToTable("farfalla", PlayerColor.GREEN);
-            model.addPlayerToTable("geese", PlayerColor.RED);
+            model.addPlayerToTable("playerX", PlayerColor.BLUE);
+            model.addPlayerToTable("playerY", PlayerColor.GREEN);
+            model.addPlayerToTable("playerZ", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
@@ -876,7 +857,7 @@ class GameLogicTest {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class,
-                     () -> model.removePlayer("cacca"));
+                     () -> model.removePlayer("playerX"));
 
     }
 
@@ -1244,8 +1225,6 @@ class GameLogicTest {
 
     @Test
     void forceEnd() {
-
-        Set<String> players = Set.of("player1", "player2", "player3", "player4");
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
@@ -1272,8 +1251,6 @@ class GameLogicTest {
 
     @Test
     void getStatus() {
-
-        Set<String> players = Set.of("player1", "player2", "player3", "player4");
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
@@ -1299,8 +1276,6 @@ class GameLogicTest {
 
         assertThrows(GameStatusException.class, () -> model.getDeckTop(PlayableCardType.GOLD));
         assertThrows(GameStatusException.class, () -> model.getDeckTop(PlayableCardType.RESOURCE));
-
-        Set<String> players = Set.of("player1", "player2", "player3", "player4");
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
