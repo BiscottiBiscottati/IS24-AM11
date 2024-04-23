@@ -15,6 +15,8 @@ module it.polimi.ingsw.am11 {
     requires com.google.common;
 
     requires java.sql;
+    requires java.rmi;
+    exports it.polimi.ingsw.am11.network.RMI to java.rmi;
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
     exports it.polimi.ingsw.am11;
