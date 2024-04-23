@@ -1,17 +1,18 @@
 package it.polimi.ingsw.am11.table;
 
-import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.cards.playable.GoldCard;
-import it.polimi.ingsw.am11.cards.playable.PlayableCard;
-import it.polimi.ingsw.am11.cards.playable.ResourceCard;
-import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.decks.Deck;
-import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
-import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
-import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
-import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
-import it.polimi.ingsw.am11.exceptions.EmptyDeckException;
-import it.polimi.ingsw.am11.exceptions.IllegalPickActionException;
+import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
+import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
+import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.decks.Deck;
+import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
+import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
+import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
+import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
+import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
+import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
+import it.polimi.ingsw.am11.model.table.PickablesTable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType.GOLD;
-import static it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType.RESOURCE;
+import static it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType.GOLD;
+import static it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType.RESOURCE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PickablesTableTest {

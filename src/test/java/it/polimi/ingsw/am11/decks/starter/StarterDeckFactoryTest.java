@@ -1,10 +1,11 @@
 package it.polimi.ingsw.am11.decks.starter;
 
-import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.decks.Deck;
-import it.polimi.ingsw.am11.decks.utils.DatabaseConstants;
+import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.decks.Deck;
+import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
+import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,13 +1,14 @@
 package it.polimi.ingsw.am11.decks.playable;
 
-import it.polimi.ingsw.am11.cards.playable.GoldCard;
-import it.polimi.ingsw.am11.cards.utils.CornerContainer;
-import it.polimi.ingsw.am11.cards.utils.enums.Availability;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.decks.Deck;
-import it.polimi.ingsw.am11.decks.utils.DatabaseConstants;
+import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
+import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Availability;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
+import it.polimi.ingsw.am11.model.decks.Deck;
+import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
+import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

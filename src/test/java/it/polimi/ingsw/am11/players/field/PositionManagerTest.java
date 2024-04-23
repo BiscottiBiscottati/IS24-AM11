@@ -1,13 +1,14 @@
 package it.polimi.ingsw.am11.players.field;
 
-import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.cards.utils.CornerContainer;
-import it.polimi.ingsw.am11.cards.utils.Item;
-import it.polimi.ingsw.am11.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.decks.Deck;
-import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
-import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
-import it.polimi.ingsw.am11.players.utils.Position;
+import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.model.cards.utils.Item;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.decks.Deck;
+import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
+import it.polimi.ingsw.am11.model.players.field.PositionManager;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

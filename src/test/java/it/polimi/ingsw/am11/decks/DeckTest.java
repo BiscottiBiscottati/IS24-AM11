@@ -1,9 +1,10 @@
 package it.polimi.ingsw.am11.decks;
 
-import it.polimi.ingsw.am11.cards.playable.GoldCard;
-import it.polimi.ingsw.am11.cards.playable.ResourceCard;
-import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
-import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
+import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
+import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
+import it.polimi.ingsw.am11.model.decks.Deck;
+import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
+import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

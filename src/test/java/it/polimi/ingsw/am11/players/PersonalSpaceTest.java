@@ -1,15 +1,17 @@
 package it.polimi.ingsw.am11.players;
 
-import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.cards.objective.collecting.ColorCollectCard;
-import it.polimi.ingsw.am11.cards.playable.PlayableCard;
-import it.polimi.ingsw.am11.cards.playable.ResourceCard;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.exceptions.IllegalPlayerSpaceActionException;
-import it.polimi.ingsw.am11.exceptions.MaxHandSizeException;
-import it.polimi.ingsw.am11.exceptions.NotInHandException;
-import it.polimi.ingsw.am11.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
+import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException;
+import it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException;
+import it.polimi.ingsw.am11.model.exceptions.NotInHandException;
+import it.polimi.ingsw.am11.model.players.PersonalSpace;
+import it.polimi.ingsw.am11.model.players.Player;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

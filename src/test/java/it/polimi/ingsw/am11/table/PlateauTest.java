@@ -1,8 +1,10 @@
 package it.polimi.ingsw.am11.table;
 
-import it.polimi.ingsw.am11.exceptions.IllegalPlateauActionException;
-import it.polimi.ingsw.am11.players.Player;
-import it.polimi.ingsw.am11.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
+import it.polimi.ingsw.am11.model.players.Player;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.table.Plateau;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,19 +1,19 @@
 package it.polimi.ingsw.am11.model;
 
-import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.cards.playable.PlayableCard;
-import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.exceptions.*;
-import it.polimi.ingsw.am11.players.PersonalSpace;
-import it.polimi.ingsw.am11.players.Player;
-import it.polimi.ingsw.am11.players.utils.CardContainer;
-import it.polimi.ingsw.am11.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.players.utils.Position;
-import it.polimi.ingsw.am11.table.GameStatus;
-import it.polimi.ingsw.am11.table.PickablesTable;
-import it.polimi.ingsw.am11.table.Plateau;
+import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.model.players.PersonalSpace;
+import it.polimi.ingsw.am11.model.players.Player;
+import it.polimi.ingsw.am11.model.players.utils.CardContainer;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.table.PickablesTable;
+import it.polimi.ingsw.am11.model.table.Plateau;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

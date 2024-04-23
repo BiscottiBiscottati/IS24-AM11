@@ -1,15 +1,16 @@
 package it.polimi.ingsw.am11.cards.objective.positioning;
 
-import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.cards.playable.ResourceCard;
-import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.players.field.PlayerField;
-import it.polimi.ingsw.am11.players.utils.CardContainer;
-import it.polimi.ingsw.am11.players.utils.Position;
+import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
+import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
+import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.players.field.PlayerField;
+import it.polimi.ingsw.am11.model.players.utils.CardContainer;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,12 +1,12 @@
 package it.polimi.ingsw.am11.model;
 
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.exceptions.*;
-import it.polimi.ingsw.am11.players.utils.CardContainer;
-import it.polimi.ingsw.am11.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.players.utils.Position;
-import it.polimi.ingsw.am11.table.GameStatus;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.model.players.utils.CardContainer;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.model.table.GameStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

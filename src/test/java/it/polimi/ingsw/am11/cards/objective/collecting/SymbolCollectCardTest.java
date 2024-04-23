@@ -1,10 +1,11 @@
 package it.polimi.ingsw.am11.cards.objective.collecting;
 
-import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.players.field.PlayerField;
+import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
+import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

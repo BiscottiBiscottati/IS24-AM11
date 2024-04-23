@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.cards.utils;
 
-import it.polimi.ingsw.am11.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.players.utils.Position;
+import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;

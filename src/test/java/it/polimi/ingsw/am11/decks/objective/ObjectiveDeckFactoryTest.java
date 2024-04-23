@@ -1,15 +1,16 @@
 package it.polimi.ingsw.am11.decks.objective;
 
-import it.polimi.ingsw.am11.cards.objective.CollectingCard;
-import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.cards.objective.PositioningCard;
-import it.polimi.ingsw.am11.cards.objective.positioning.LCard;
-import it.polimi.ingsw.am11.cards.objective.positioning.TripletCard;
-import it.polimi.ingsw.am11.cards.utils.Item;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.decks.Deck;
-import it.polimi.ingsw.am11.decks.utils.DatabaseConstants;
+import it.polimi.ingsw.am11.model.cards.objective.CollectingCard;
+import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.objective.PositioningCard;
+import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
+import it.polimi.ingsw.am11.model.cards.objective.positioning.TripletCard;
+import it.polimi.ingsw.am11.model.cards.utils.Item;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
+import it.polimi.ingsw.am11.model.decks.Deck;
+import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
+import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

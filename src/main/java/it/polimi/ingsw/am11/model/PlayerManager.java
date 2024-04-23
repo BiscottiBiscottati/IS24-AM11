@@ -1,15 +1,15 @@
 package it.polimi.ingsw.am11.model;
 
-import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.cards.playable.PlayableCard;
-import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.exceptions.IllegalPlayerSpaceActionException;
-import it.polimi.ingsw.am11.exceptions.PlayerInitException;
-import it.polimi.ingsw.am11.players.PersonalSpace;
-import it.polimi.ingsw.am11.players.Player;
-import it.polimi.ingsw.am11.players.field.PlayerField;
-import it.polimi.ingsw.am11.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.players.utils.Position;
+import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException;
+import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.model.players.PersonalSpace;
+import it.polimi.ingsw.am11.model.players.Player;
+import it.polimi.ingsw.am11.model.players.field.PlayerField;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

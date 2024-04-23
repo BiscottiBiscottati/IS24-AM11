@@ -1,14 +1,17 @@
 package it.polimi.ingsw.am11.cards.playable;
 
-import it.polimi.ingsw.am11.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.cards.utils.enums.*;
-import it.polimi.ingsw.am11.decks.Deck;
-import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
-import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
-import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.exceptions.IllegalCardPlacingException;
-import it.polimi.ingsw.am11.players.field.PlayerField;
-import it.polimi.ingsw.am11.players.utils.Position;
+import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
+import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
+import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.cards.utils.enums.*;
+import it.polimi.ingsw.am11.model.decks.Deck;
+import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
+import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
+import it.polimi.ingsw.am11.model.players.field.PlayerField;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

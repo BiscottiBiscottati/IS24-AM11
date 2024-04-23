@@ -1,12 +1,13 @@
 package it.polimi.ingsw.am11.cards.objective;
 
-import it.polimi.ingsw.am11.cards.objective.collecting.ColorCollectCard;
-import it.polimi.ingsw.am11.cards.objective.collecting.SymbolCollectCard;
-import it.polimi.ingsw.am11.cards.objective.positioning.LCard;
-import it.polimi.ingsw.am11.cards.objective.positioning.TripletCard;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
+import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
+import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
+import it.polimi.ingsw.am11.model.cards.objective.positioning.TripletCard;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

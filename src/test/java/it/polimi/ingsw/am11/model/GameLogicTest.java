@@ -1,12 +1,15 @@
 package it.polimi.ingsw.am11.model;
 
-import it.polimi.ingsw.am11.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.decks.Deck;
-import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
-import it.polimi.ingsw.am11.exceptions.*;
-import it.polimi.ingsw.am11.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.table.GameStatus;
+import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.decks.Deck;
+import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
+import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.table.GameStatus;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -1225,6 +1228,8 @@ class GameLogicTest {
 
     @Test
     void forceEnd() {
+
+        Set<String> players = Set.of("player1", "player2", "player3", "player4");
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.am11.decks;
 
-import it.polimi.ingsw.am11.decks.objective.ObjectiveDeckFactory;
-import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
-import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
-import it.polimi.ingsw.am11.decks.starter.StarterDeckFactory;
+import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
+import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
+import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
+import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

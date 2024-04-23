@@ -1,14 +1,15 @@
 package it.polimi.ingsw.am11.players.field;
 
-import it.polimi.ingsw.am11.cards.playable.GoldCard;
-import it.polimi.ingsw.am11.cards.playable.ResourceCard;
-import it.polimi.ingsw.am11.cards.utils.Item;
-import it.polimi.ingsw.am11.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.decks.Deck;
-import it.polimi.ingsw.am11.decks.playable.GoldDeckFactory;
-import it.polimi.ingsw.am11.decks.playable.ResourceDeckFactory;
+import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
+import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
+import it.polimi.ingsw.am11.model.cards.utils.Item;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
+import it.polimi.ingsw.am11.model.decks.Deck;
+import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
+import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
+import it.polimi.ingsw.am11.model.players.field.ExposedItemManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
