@@ -662,7 +662,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void drawVisibleOf(@NotNull PlayableCardType type, @NotNull String nickname, int cardID)
+    public int drawVisibleOf(@NotNull PlayableCardType type, @NotNull String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
            IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException {
 
@@ -685,6 +685,7 @@ public class GameLogic implements GameModel {
                     "to put it anywhere"
             );
         }
+        return cardID;
     }
 
     /**

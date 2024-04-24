@@ -12,16 +12,6 @@ public class CardController {
         this.model = model;
     }
 
-    public void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
-    throws GameStatusException,
-           TurnsOrderException,
-           GameBreakingException,
-           IllegalPlayerSpaceActionException,
-           IllegalPickActionException,
-           PlayerInitException {
-        model.drawVisibleOf(type, nickname, cardID);
-    }
-
     public void setObjectiveFor(String nickname, int cardID)
     throws GameStatusException,
            PlayerInitException,
@@ -39,18 +29,18 @@ public class CardController {
         model.placeCard(Nickname, ID, position, isRetro);
     }
 
-    public int drawFromDeckOf(PlayableCardType type, String nickname)
-    throws GameStatusException,
-           TurnsOrderException,
-           GameBreakingException,
-           EmptyDeckException,
-           IllegalPlayerSpaceActionException,
-           PlayerInitException,
-           MaxHandSizeException,
-           IllegalPickActionException {
-        return model.drawFromDeckOf(type, nickname);
+    public int drawCard(boolean fromVisible, PlayableCardType type, String nickname, int cardID)
+    throws IllegalPlayerSpaceActionException, TurnsOrderException, IllegalPickActionException,
+           PlayerInitException, GameStatusException, EmptyDeckException,
+           MaxHandSizeException {
+        try {
+            if (fromVisible) {
+                return model.drawVisibleOf(type, nickname, cardID);
+            } else return model.drawFromDeckOf(type, nickname);
+        } catch (GameBreakingException e) {
+            throw new RuntimeException(e);
+        }
     }
-
 
     public void setStarterFor(String nickname, boolean isRetro)
     throws GameStatusException,

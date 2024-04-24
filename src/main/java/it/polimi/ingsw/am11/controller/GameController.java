@@ -14,14 +14,21 @@ public class GameController {
     }
 
     public void initGame() throws IllegalNumOfPlayersException,
-                                  GameStatusException,
-                                  GameBreakingException {
-        model.initGame();
+                                  GameStatusException {
+        try {
+            model.initGame();
+        } catch (GameBreakingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void goNextTurn() throws GameBreakingException,
-                                    GameStatusException {
-        model.goNextTurn();
+    public void goNextTurn() throws
+                             GameStatusException {
+        try {
+            model.goNextTurn();
+        } catch (GameBreakingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void forceEnd() {

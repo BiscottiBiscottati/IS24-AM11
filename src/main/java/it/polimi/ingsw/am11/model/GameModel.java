@@ -78,7 +78,7 @@ public interface GameModel {
 
     void goNextTurn() throws GameBreakingException, GameStatusException;
 
-    void drawVisibleOf(PlayableCardType type, String nickname, int cardID)
+    int drawVisibleOf(PlayableCardType type, String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
            IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException;
 
