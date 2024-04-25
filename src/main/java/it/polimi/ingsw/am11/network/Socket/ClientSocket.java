@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.network;
+package it.polimi.ingsw.am11.network.Socket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,6 +31,16 @@ public class ClientSocket {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void close() {
+        try {
+            in.close();
+            out.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
