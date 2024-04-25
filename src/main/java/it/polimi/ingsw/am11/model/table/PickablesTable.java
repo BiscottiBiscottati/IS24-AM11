@@ -14,12 +14,15 @@ import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
+import it.polimi.ingsw.am11.view.events.ShownPlayableEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeSupport;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PickablesTable {
@@ -33,6 +36,7 @@ public class PickablesTable {
     private final Set<ObjectiveCard> commonObjectives;
     private final Set<GoldCard> shownGold;
     private final Set<ResourceCard> shownResources;
+    private final PropertyChangeSupport pcs;
 
     public PickablesTable() {
         this.goldDeck = GoldDeckFactory.createDeck();
@@ -43,6 +47,8 @@ public class PickablesTable {
         this.commonObjectives = new HashSet<>(numOfObjectives << 1);
         this.shownGold = new HashSet<>(numOfShownPerType << 1);
         this.shownResources = new HashSet<>(numOfShownPerType << 1);
+
+        this.pcs = new PropertyChangeSupport(this);
 
     }
 
@@ -149,10 +155,6 @@ public class PickablesTable {
                      .filter(card -> card.getId() == cardID)
                      .findFirst()
                      .map(this::removePlayable)
-                     .map(playableCard -> {
-                         supplyVisible();
-                         return playableCard;
-                     })
                      .orElseThrow(() -> new IllegalPickActionException(
                              "Card with ID " + cardID + " is not visible!"));
     }
@@ -161,21 +163,36 @@ public class PickablesTable {
         switch (playableCard) {
             case GoldCard goldCard -> {
                 shownGold.remove(goldCard);
+                Optional<GoldCard> gold = goldDeck.draw();
+                gold.ifPresent(shownGold::add);
+
+                pcs.firePropertyChange(new ShownPlayableEvent(
+                        this.shownGold.stream()
+                                      .map(PlayableCard::getId)
+                                      .collect(Collectors.toUnmodifiableSet()),
+                        PlayableCardType.GOLD,
+                        goldCard.getId(),
+                        gold.map(PlayableCard::getId).orElse(null)
+                ));
                 return goldCard;
             }
             case ResourceCard resourceCard -> {
                 shownResources.remove(resourceCard);
+                resourceDeck.draw().ifPresent(shownResources::add);
+
+                pcs.firePropertyChange(new ShownPlayableEvent(
+                        this.shownResources.stream()
+                                           .map(PlayableCard::getId)
+                                           .collect(Collectors.toUnmodifiableSet()),
+                        PlayableCardType.RESOURCE,
+                        resourceCard.getId(),
+                        shownResources.stream()
+                                      .map(PlayableCard::getId)
+                                      .findFirst()
+                                      .orElse(null)
+                ));
                 return resourceCard;
             }
-        }
-    }
-
-    private void supplyVisible() {
-        if (shownGold.size() < numOfShownPerType) {
-            goldDeck.draw().ifPresent(shownGold::add);
-        }
-        if (shownResources.size() < numOfShownPerType) {
-            resourceDeck.draw().ifPresent(shownResources::add);
         }
     }
 

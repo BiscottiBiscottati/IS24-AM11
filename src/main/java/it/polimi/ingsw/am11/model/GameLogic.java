@@ -14,6 +14,8 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.model.table.PickablesTable;
 import it.polimi.ingsw.am11.model.table.Plateau;
+import it.polimi.ingsw.am11.view.PlayerViewUpdater;
+import it.polimi.ingsw.am11.view.TableViewUpdater;
 import it.polimi.ingsw.am11.view.events.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.events.HandChangeEvent;
 import org.jetbrains.annotations.NotNull;
@@ -774,6 +776,16 @@ public class GameLogic implements GameModel {
         }
         return playerManager.getStarterCard(nickname)
                             .map(StarterCard::getId);
+    }
+
+    @Override
+    public void addListener(PlayerViewUpdater listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    public void addListener(TableViewUpdater listener) {
+        //TODO
     }
 }
 

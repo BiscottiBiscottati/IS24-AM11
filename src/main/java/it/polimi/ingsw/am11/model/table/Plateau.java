@@ -2,7 +2,11 @@ package it.polimi.ingsw.am11.model.table;
 
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
+import it.polimi.ingsw.am11.view.TableViewUpdater;
+import it.polimi.ingsw.am11.view.events.PlayerPointsChangeEvent;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +17,7 @@ public class Plateau {
     private final Map<Player, Integer> playerPoints;
     private final Map<Player, Integer> counterObjective;
     private final Map<Player, Integer> finalLeaderboard;
+    private final PropertyChangeSupport pcs;
     private GameStatus status;
 
 
@@ -21,6 +26,7 @@ public class Plateau {
         this.counterObjective = new HashMap<>(3);
         this.status = GameStatus.SETUP;
         this.finalLeaderboard = new HashMap<>(8);
+        this.pcs = new PropertyChangeSupport(this);
     }
 
     public GameStatus getStatus() {
@@ -81,6 +87,11 @@ public class Plateau {
         if (temp >= armageddonTime && status == GameStatus.ONGOING) {
             status = GameStatus.ARMAGEDDON;
         }
+
+        pcs.firePropertyChange(new PlayerPointsChangeEvent(Map.copyOf(playerPoints),
+                                                           player.nickname(),
+                                                           temp - points,
+                                                           temp));
     }
 
     public void addCounterObjective(Player player)
@@ -150,6 +161,14 @@ public class Plateau {
             }
         }
         return winners;
+    }
+
+    public void addListener(TableViewUpdater listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
     }
 
 }

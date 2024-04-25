@@ -2,8 +2,8 @@ package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.view.ViewUpdater;
-import it.polimi.ingsw.am11.view.VirtualView;
+import it.polimi.ingsw.am11.view.PlayerViewUpdater;
+import it.polimi.ingsw.am11.view.VirtualPlayerView;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -352,7 +352,7 @@ class PlayerManagerTest {
 
     @Test
     void addListener() {
-        ViewUpdater listener = new ViewUpdater(new VirtualView());
+        PlayerViewUpdater listener = new PlayerViewUpdater(new VirtualPlayerView());
         manager.addListener(listener);
 
         try {
