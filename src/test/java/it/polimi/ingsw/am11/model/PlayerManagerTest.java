@@ -2,9 +2,13 @@ package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.view.ViewUpdater;
+import it.polimi.ingsw.am11.view.VirtualView;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -12,10 +16,12 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class PlayerManagerTest {
 
     static RuleSet ruleSet;
     private static PlayerManager manager;
+
 
     @BeforeAll
     static void beforeAll() {
@@ -342,5 +348,28 @@ class PlayerManagerTest {
     @Test
     void resetAll() {
         //TODO
+    }
+
+    @Test
+    void addListener() {
+        ViewUpdater listener = new ViewUpdater(new VirtualView());
+        manager.addListener(listener);
+
+        try {
+            manager.addPlayerToTable("player1", PlayerColor.BLUE);
+            manager.addPlayerToTable("player2", PlayerColor.GREEN);
+        } catch (PlayerInitException e) {
+            throw new RuntimeException(e);
+        }
+
+        manager.startingTheGame();
+        manager.goNextTurn();
+        manager.goNextTurn();
+
+        // TODO asserts for firing events
+    }
+
+    @Test
+    void removeListener() {
     }
 }

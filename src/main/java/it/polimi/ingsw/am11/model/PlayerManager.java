@@ -10,10 +10,10 @@ import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.view.ViewUpdater;
 import it.polimi.ingsw.am11.view.events.TurnChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -200,7 +200,6 @@ public class PlayerManager {
         }
         currentPlaying = playerQueue.element();
         pcs.firePropertyChange(new TurnChangeEvent(List.copyOf(playerQueue),
-                                                   "turnChange",
                                                    null,
                                                    currentPlaying.nickname()));
     }
@@ -216,7 +215,6 @@ public class PlayerManager {
         currentPlaying = playerQueue.element();
         currentPlaying.space().setCardBeenPlaced(false);
         pcs.firePropertyChange(new TurnChangeEvent(List.copyOf(playerQueue),
-                                                   "turnChange",
                                                    previousPlayer,
                                                    currentPlaying.nickname()));
     }
@@ -242,11 +240,11 @@ public class PlayerManager {
         return isReady;
     }
 
-    public void addListener(PropertyChangeListener listener) {
+    public void addListener(ViewUpdater listener) {
         pcs.addPropertyChangeListener(listener);
     }
 
-    public void removeListener(PropertyChangeListener listener) {
+    public void removeListener(ViewUpdater listener) {
         pcs.removePropertyChangeListener(listener);
     }
 }

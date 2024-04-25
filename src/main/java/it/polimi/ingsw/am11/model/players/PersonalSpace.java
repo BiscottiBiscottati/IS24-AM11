@@ -6,11 +6,8 @@ import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.model.exceptions.NotInHandException;
-import it.polimi.ingsw.am11.view.events.HandChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 
@@ -24,7 +21,6 @@ public class PersonalSpace {
     private final Set<PlayableCard> playerHand;
     private final Set<ObjectiveCard> playerObjective;
     private final Map<Integer, ObjectiveCard> candidateObjectives;
-    private final PropertyChangeSupport pcs;
     private StarterCard starterCard;
     private boolean placed;
 
@@ -33,7 +29,6 @@ public class PersonalSpace {
         playerObjective = new HashSet<>(maxObjectives << 1);
         candidateObjectives = new HashMap<>(maxCandidateObjectives << 1);
         starterCard = null;
-        pcs = new PropertyChangeSupport(this);
     }
 
     public static void setMaxSizeofHand(int maxSizeofHand) {
@@ -107,10 +102,6 @@ public class PersonalSpace {
             throw new MaxHandSizeException("already Max Card In Hand");
         } else {
             playerHand.add(newCard);
-            pcs.firePropertyChange(new HandChangeEvent(Set.copyOf(this.playerHand),
-                                                       "hand",
-                                                       null,
-                                                       newCard.getId()));
         }
     }
 
@@ -126,10 +117,6 @@ public class PersonalSpace {
                   .findFirst()
                   .ifPresent(playerHand::remove);
 
-        pcs.firePropertyChange(new HandChangeEvent(Set.copyOf(this.playerHand),
-                                                   "hand",
-                                                   cardId,
-                                                   null));
     }
 
     public void addObjective(ObjectiveCard newObjective) throws IllegalPlayerSpaceActionException {
@@ -155,21 +142,10 @@ public class PersonalSpace {
         candidateObjectives.clear();
         starterCard = null;
 
-        pcs.firePropertyChange(new HandChangeEvent(Set.copyOf(this.playerHand),
-                                                   "hand",
-                                                   null,
-                                                   null));
     }
 
     public boolean areObjectiveGiven() {
         return maxObjectives == playerObjective.size();
     }
 
-    public void addListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
-
-    public void removeListener(PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(listener);
-    }
 }

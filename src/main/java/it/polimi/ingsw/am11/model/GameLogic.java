@@ -14,8 +14,11 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.model.table.PickablesTable;
 import it.polimi.ingsw.am11.model.table.Plateau;
+import it.polimi.ingsw.am11.view.events.FieldChangeEvent;
+import it.polimi.ingsw.am11.view.events.HandChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,6 +29,7 @@ public class GameLogic implements GameModel {
     private final PlayerManager playerManager;
     private final PickablesTable pickablesTable;
     private final Plateau plateau;
+    private final PropertyChangeSupport pcs;
 
     public GameLogic() {
         ruleSet = new BasicRuleset();
@@ -33,6 +37,7 @@ public class GameLogic implements GameModel {
         this.playerManager = new PlayerManager();
         this.pickablesTable = new PickablesTable();
         this.plateau = new Plateau();
+        this.pcs = new PropertyChangeSupport(this);
     }
 
     private void setConstants() {
@@ -538,8 +543,19 @@ public class GameLogic implements GameModel {
                 .filter(b -> b)
                 .orElseThrow(
                         () -> new NotInHandException("Card not in hand"));
-        points = player.field().place(card, position, isRetro);
         player.space().pickCard(cardID);
+
+        pcs.firePropertyChange(new HandChangeEvent(playerManager.getHand(nickname), nickname,
+                                                   cardID, null));
+
+        points = player.field().place(card, position, isRetro);
+
+        pcs.firePropertyChange(new FieldChangeEvent(player.field().getCardsPositioned(),
+                                                    nickname,
+                                                    null,
+                                                    Map.entry(position,
+                                                              CardContainer.of(card, isRetro))));
+
         player.space().setCardBeenPlaced(true);
 
         plateau.addPlayerPoints(player, points);
@@ -561,6 +577,10 @@ public class GameLogic implements GameModel {
         if (playerSpace.availableSpaceInHand() >= 1) {
             PlayableCard card = pickablesTable.drawPlayableFrom(type);
             playerSpace.addCardToHand(card);
+
+            pcs.firePropertyChange(new HandChangeEvent(playerManager.getHand(nickname), nickname,
+                                                       null, card.getId()));
+
             goNextTurn();
             return card.getId();
         } else {
@@ -675,6 +695,11 @@ public class GameLogic implements GameModel {
             if (playerSpace.availableSpaceInHand() >= 1) {
                 PlayableCard card = pickablesTable.pickPlayableVisible(cardID);
                 playerSpace.addCardToHand(card);
+
+                pcs.firePropertyChange(
+                        new HandChangeEvent(playerManager.getHand(nickname), nickname,
+                                            null, card.getId()));
+
                 goNextTurn();
             } else {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
