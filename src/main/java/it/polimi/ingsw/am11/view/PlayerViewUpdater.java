@@ -8,11 +8,11 @@ import org.jetbrains.annotations.NotNull;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class ViewUpdater implements PropertyChangeListener {
+public class PlayerViewUpdater implements PropertyChangeListener {
 
-    private final VirtualView virtualView;
+    private final VirtualPlayerView virtualView;
 
-    public ViewUpdater(VirtualView virtualView) {
+    public PlayerViewUpdater(VirtualPlayerView virtualView) {
         this.virtualView = virtualView;
     }
 

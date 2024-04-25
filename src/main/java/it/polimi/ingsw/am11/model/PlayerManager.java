@@ -10,7 +10,7 @@ import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.view.ViewUpdater;
+import it.polimi.ingsw.am11.view.PlayerViewUpdater;
 import it.polimi.ingsw.am11.view.events.TurnChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -240,11 +240,11 @@ public class PlayerManager {
         return isReady;
     }
 
-    public void addListener(ViewUpdater listener) {
+    public void addListener(PlayerViewUpdater listener) {
         pcs.addPropertyChangeListener(listener);
     }
 
-    public void removeListener(ViewUpdater listener) {
+    public void removeListener(PlayerViewUpdater listener) {
         pcs.removePropertyChangeListener(listener);
     }
 }
