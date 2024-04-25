@@ -10,8 +10,11 @@ import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.view.events.TurnChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,12 +22,14 @@ public class PlayerManager {
     private static int maxNumberOfPlayers;
     private final Map<String, Player> players;
     private final Queue<Player> playerQueue;
+    private final PropertyChangeSupport pcs;
     private Player firstPlayer;
     private Player currentPlaying;
 
     public PlayerManager() {
         this.players = new HashMap<>(8);
         this.playerQueue = new ArrayDeque<>(maxNumberOfPlayers);
+        this.pcs = new PropertyChangeSupport(this);
     }
 
     public static void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
@@ -193,7 +198,11 @@ public class PlayerManager {
             playerQueue.offer(playerQueue.poll());
             peeked = playerQueue.element();
         }
-        currentPlaying = playerQueue.remove();
+        currentPlaying = playerQueue.element();
+        pcs.firePropertyChange(new TurnChangeEvent(List.copyOf(playerQueue),
+                                                   "turnChange",
+                                                   null,
+                                                   currentPlaying.nickname()));
     }
 
     public boolean isFirstTheCurrent() {
@@ -201,9 +210,15 @@ public class PlayerManager {
     }
 
     public void goNextTurn() {
+        String previousPlayer = currentPlaying.nickname();
+        playerQueue.remove();
         playerQueue.offer(currentPlaying);
-        currentPlaying = playerQueue.remove();
+        currentPlaying = playerQueue.element();
         currentPlaying.space().setCardBeenPlaced(false);
+        pcs.firePropertyChange(new TurnChangeEvent(List.copyOf(playerQueue),
+                                                   "turnChange",
+                                                   previousPlayer,
+                                                   currentPlaying.nickname()));
     }
 
     public void resetAll() {
@@ -225,5 +240,13 @@ public class PlayerManager {
                       ! player.field().isAvailable(new Position(0, 0));
         }
         return isReady;
+    }
+
+    public void addListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
     }
 }
