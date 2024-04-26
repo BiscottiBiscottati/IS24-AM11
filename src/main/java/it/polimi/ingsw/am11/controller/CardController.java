@@ -20,14 +20,14 @@ public class CardController implements CardControllerInterface {
         model.setObjectiveFor(nickname, cardID);
     }
 
-    public void placeCard(String Nickname, int ID, Position position, boolean isRetro)
+    public void placeCard(String Nickname, int cardId, Position position, boolean isRetro)
     throws GameStatusException,
            PlayerInitException,
            IllegalCardPlacingException,
            TurnsOrderException,
            IllegalPlateauActionException,
            NotInHandException {
-        model.placeCard(Nickname, ID, position, isRetro);
+        model.placeCard(Nickname, cardId, position, isRetro);
     }
 
     public int drawCard(boolean fromVisible, PlayableCardType type, String nickname, int cardID)

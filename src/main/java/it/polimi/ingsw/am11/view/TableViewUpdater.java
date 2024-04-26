@@ -13,5 +13,6 @@ public class TableViewUpdater implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // TODO
+
     }
 }

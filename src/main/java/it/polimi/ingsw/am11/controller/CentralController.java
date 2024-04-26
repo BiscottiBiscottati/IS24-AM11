@@ -35,4 +35,12 @@ public class CentralController {
         this.playerViews.put(nickname, playerView);
         this.model.addPlayerListener(new PlayerViewUpdater(playerView), nickname);
     }
+
+    public CardController getCardController() {
+        return cardController;
+    }
+
+    public GameController getGameController() {
+        return gameController;
+    }
 }

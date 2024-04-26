@@ -431,13 +431,11 @@ public class GameLogic implements GameModel {
      */
     @Override // DONE
     public void removePlayer(@NotNull String nickname)
-    throws GameStatusException, PlayerInitException {
+    throws GameStatusException {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
-        plateau.removePlayer(playerManager.getPlayer(nickname)
-                                          .orElseThrow(() -> new PlayerInitException(
-                                                  "player not found")));
+        playerManager.getPlayer(nickname).ifPresent(plateau::removePlayer);
         playerManager.removePlayer(nickname);
         Arrays.stream(pcs.getPropertyChangeListeners(nickname))
               .forEach(pcs::removePropertyChangeListener);
