@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.controller.GameController;
 import it.polimi.ingsw.am11.model.GameLogic;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.view.PlayerViewInterface;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -12,7 +13,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ServerMain implements Loggable {
+public class ServerMain implements Loggable, PlayerViewInterface {
 
     static int PORT = 1234;
     private final GameController gameController = new GameController(new GameLogic());
@@ -46,23 +47,8 @@ public class ServerMain implements Loggable {
     }
 
     @Override
-    public boolean initGame() throws RemoteException {
-        try {
-            gameController.initGame();
-            return true;
-        } catch (Exception e) {
-            throw new RemoteException("Failed to initialize game", e);
-        }
-    }
+    public void update() {
 
-    @Override
-    public boolean goNextTurn() throws RemoteException {
-        try {
-            gameController.goNextTurn();
-            return true;
-        } catch (Exception e) {
-            throw new RemoteException("Failed to advance to the next turn", e);
-        }
     }
 
     @Override
@@ -76,22 +62,12 @@ public class ServerMain implements Loggable {
     }
 
     @Override
-    public boolean removePlayer(String nickname) throws RemoteException {
+    public boolean initGame() throws RemoteException {
         try {
-            gameController.removePlayer(nickname);
+            gameController.initGame();
             return true;
         } catch (Exception e) {
-            throw new RemoteException("Failed to remove player", e);
-        }
-    }
-
-    @Override
-    public boolean forceEnd() throws RemoteException {
-        try {
-            gameController.forceEnd();
-            return true;
-        } catch (Exception e) {
-            throw new RemoteException("Failed to force end", e);
+            throw new RemoteException("Failed to initialize game", e);
         }
     }
 
@@ -102,6 +78,26 @@ public class ServerMain implements Loggable {
             return true;
         } catch (Exception e) {
             throw new RemoteException("Failed to set objective for player", e);
+        }
+    }
+
+    @Override
+    public boolean setStarterFor(String nickname, boolean isRetro) throws RemoteException {
+        try {
+            cardController.setStarterFor(nickname, isRetro);
+            return true;
+        } catch (Exception e) {
+            throw new RemoteException("Failed to set starter for player", e);
+        }
+    }
+
+    @Override
+    public int drawCard(boolean fromVisible, PlayableCardType type, String nickname, int cardID)
+    throws RemoteException {
+        try {
+            return cardController.drawCard(fromVisible, type, nickname, cardID);
+        } catch (Exception e) {
+            throw new RemoteException("Failed to draw card", e);
         }
     }
 
@@ -117,22 +113,12 @@ public class ServerMain implements Loggable {
     }
 
     @Override
-    public int drawCard(boolean fromVisible, PlayableCardType type, String nickname, int cardID)
-    throws RemoteException {
+    public boolean forceEnd() throws RemoteException {
         try {
-            return cardController.drawCard(fromVisible, type, nickname, cardID);
-        } catch (Exception e) {
-            throw new RemoteException("Failed to draw card", e);
-        }
-    }
-
-    @Override
-    public boolean setStarterFor(String nickname, boolean isRetro) throws RemoteException {
-        try {
-            cardController.setStarterFor(nickname, isRetro);
+            gameController.forceEnd();
             return true;
         } catch (Exception e) {
-            throw new RemoteException("Failed to set starter for player", e);
+            throw new RemoteException("Failed to force end", e);
         }
     }
 }
