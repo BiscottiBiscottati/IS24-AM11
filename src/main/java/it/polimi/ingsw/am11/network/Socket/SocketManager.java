@@ -1,9 +1,6 @@
 package it.polimi.ingsw.am11.network.Socket;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -32,7 +29,7 @@ public class SocketManager {
                 System.out.println("Waiting fo connections...");
                 // Accept a new connection from a client
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Nuova connessione: " + clientSocket);
+                //System.out.println("Nuova connessione: " + clientSocket);
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
 
                 // Execute the client handler in a separate thread

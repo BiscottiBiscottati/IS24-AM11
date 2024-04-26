@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.network.Socket;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,6 +12,7 @@ public class ClientHandler implements Runnable {
     private final Socket clientSocket;
     private BufferedReader in;
     private PrintWriter out;
+    private ObjectMapper mapper;
 
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -24,11 +27,8 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("Client running: " + clientSocket);
-            String input = in.readLine();
-            // the server send back the input string in uppercase
-            String output = input.toUpperCase();
-            out.println(output);
+            String message = in.readLine();
+            out.println("Received: " + message);
             clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
