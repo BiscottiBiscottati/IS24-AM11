@@ -1,5 +1,11 @@
 package it.polimi.ingsw.am11.network.RMI;
 
+import it.polimi.ingsw.am11.controller.CardController;
+import it.polimi.ingsw.am11.controller.GameController;
+import it.polimi.ingsw.am11.model.GameLogic;
+import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.players.utils.Position;
+
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -9,6 +15,8 @@ import java.rmi.server.UnicastRemoteObject;
 public class ServerMain implements Loggable {
 
     static int PORT = 1234;
+    private final GameController gameController = new GameController(new GameLogic());
+    private final CardController cardController = new CardController(new GameLogic());
 
     public static void main(String[] args) {
         System.out.println("Hello from Server!");
@@ -35,5 +43,96 @@ public class ServerMain implements Loggable {
     @Override
     public void logout(String nick) throws RemoteException {
 
+    }
+
+    @Override
+    public boolean initGame() throws RemoteException {
+        try {
+            gameController.initGame();
+            return true;
+        } catch (Exception e) {
+            throw new RemoteException("Failed to initialize game", e);
+        }
+    }
+
+    @Override
+    public boolean goNextTurn() throws RemoteException {
+        try {
+            gameController.goNextTurn();
+            return true;
+        } catch (Exception e) {
+            throw new RemoteException("Failed to advance to the next turn", e);
+        }
+    }
+
+    @Override
+    public boolean addPlayer(String nickname) throws RemoteException {
+        try {
+            gameController.addPlayer(nickname);
+            return true;
+        } catch (Exception e) {
+            throw new RemoteException("Failed to add player", e);
+        }
+    }
+
+    @Override
+    public boolean removePlayer(String nickname) throws RemoteException {
+        try {
+            gameController.removePlayer(nickname);
+            return true;
+        } catch (Exception e) {
+            throw new RemoteException("Failed to remove player", e);
+        }
+    }
+
+    @Override
+    public boolean forceEnd() throws RemoteException {
+        try {
+            gameController.forceEnd();
+            return true;
+        } catch (Exception e) {
+            throw new RemoteException("Failed to force end", e);
+        }
+    }
+
+    @Override
+    public boolean setObjFor(String nickname, int cardID) throws RemoteException {
+        try {
+            cardController.setObjectiveFor(nickname, cardID);
+            return true;
+        } catch (Exception e) {
+            throw new RemoteException("Failed to set objective for player", e);
+        }
+    }
+
+    @Override
+    public boolean placeCard(String Nickname, int ID, Position position, boolean isRetro)
+    throws RemoteException {
+        try {
+            cardController.placeCard(Nickname, ID, position, isRetro);
+            return true;
+        } catch (Exception e) {
+            throw new RemoteException("Failed to place card", e);
+        }
+    }
+
+    @Override
+    public int drawCard(boolean fromVisible, PlayableCardType type, String nickname, int cardID)
+    throws RemoteException {
+        try {
+            return cardController.drawCard(fromVisible, type, nickname, cardID);
+        } catch (Exception e) {
+            throw new RemoteException("Failed to draw card", e);
+        }
+    }
+
+    @Override
+    public boolean setStarterFor(String nickname, boolean isRetro) throws RemoteException {
+        try {
+            cardController.setStarterFor(nickname, isRetro);
+            return true;
+        } catch (Exception e) {
+            throw new RemoteException("Failed to set starter for player", e);
+        }
     }
 }

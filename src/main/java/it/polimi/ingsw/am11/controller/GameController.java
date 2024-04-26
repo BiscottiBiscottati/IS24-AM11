@@ -6,12 +6,13 @@ import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalNumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.network.RMI.GameControllerInterface;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class GameController {
+public class GameController implements GameControllerInterface {
     private final GameModel model;
     private final List<PlayerColor> colors;
 

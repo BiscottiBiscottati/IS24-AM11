@@ -18,7 +18,7 @@ public class ClientMain {
             // Looking up the registry for the remote object
             Loggable stub = (Loggable) registry.lookup("Loggable");
             // Calling the remote method using the obtained object
-            Boolean Logged = stub.login("Bob");
+            boolean Logged = stub.login("Bob");
             System.out.println("Remote method invoked: " + Logged);
         } catch (RemoteException | NotBoundException e) {
             System.err.println("Client exception: " + e);
