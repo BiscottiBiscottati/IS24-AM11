@@ -25,7 +25,7 @@ public class CentralController {
         this.cardController = new CardController(model);
         this.gameController = new GameController(model);
         this.playerViews = new HashMap<>(8);
-        this.model.addListener(new TableViewUpdater(tableView));
+        this.model.addTableListener(new TableViewUpdater(tableView));
     }
 
     public void connectPlayer(String nickname, VirtualPlayerView playerView)
@@ -33,6 +33,6 @@ public class CentralController {
            GameStatusException {
         this.gameController.addPlayer(nickname);
         this.playerViews.put(nickname, playerView);
-        this.model.addListener(new PlayerViewUpdater(playerView));
+        this.model.addPlayerListener(new PlayerViewUpdater(playerView), nickname);
     }
 }

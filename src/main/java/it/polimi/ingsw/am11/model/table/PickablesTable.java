@@ -14,6 +14,8 @@ import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
+import it.polimi.ingsw.am11.view.TableViewUpdater;
+import it.polimi.ingsw.am11.view.events.DeckTopChangeEvent;
 import it.polimi.ingsw.am11.view.events.ShownPlayableEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +51,6 @@ public class PickablesTable {
         this.shownResources = new HashSet<>(numOfShownPerType << 1);
 
         this.pcs = new PropertyChangeSupport(this);
-
     }
 
     public static void setNumOfObjectives(int numOfObjectives) {
@@ -64,15 +65,6 @@ public class PickablesTable {
 
     public Set<ObjectiveCard> getCommonObjectives() {
         return Collections.unmodifiableSet(commonObjectives);
-    }
-
-    public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
-        return switch (type) {
-            case GOLD -> goldDeck.peekTop()
-                                 .map(PlayableCard::getColor);
-            case RESOURCE -> resourceDeck.peekTop()
-                                         .map(PlayableCard::getColor);
-        };
     }
 
     public Optional<PlayableCard> getPlayableByID(int id) {
@@ -92,10 +84,37 @@ public class PickablesTable {
     public @NotNull PlayableCard drawPlayableFrom(@NotNull PlayableCardType type)
     throws EmptyDeckException {
         return switch (type) {
-            case GOLD -> goldDeck.draw().orElseThrow(
-                    () -> new EmptyDeckException("Gold deck is empty!"));
-            case RESOURCE -> resourceDeck.draw().orElseThrow(
-                    () -> new EmptyDeckException("Resource deck is empty!"));
+            case GOLD -> {
+                GoldCard gold = goldDeck.draw().orElseThrow(
+                        () -> new EmptyDeckException("Gold deck is empty!"));
+                pcs.firePropertyChange(new DeckTopChangeEvent(
+                        getDeckTop(PlayableCardType.GOLD),
+                        PlayableCardType.GOLD,
+                        gold.getColor(),
+                        getDeckTop(PlayableCardType.GOLD).orElse(null)
+                ));
+                yield gold;
+            }
+            case RESOURCE -> {
+                ResourceCard resource = resourceDeck.draw().orElseThrow(
+                        () -> new EmptyDeckException("Resource deck is empty!"));
+                pcs.firePropertyChange(new DeckTopChangeEvent(
+                        getDeckTop(PlayableCardType.RESOURCE),
+                        PlayableCardType.RESOURCE,
+                        resource.getColor(),
+                        getDeckTop(PlayableCardType.RESOURCE).orElse(null)
+                ));
+                yield resource;
+            }
+        };
+    }
+
+    public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
+        return switch (type) {
+            case GOLD -> goldDeck.peekTop()
+                                 .map(PlayableCard::getColor);
+            case RESOURCE -> resourceDeck.peekTop()
+                                         .map(PlayableCard::getColor);
         };
     }
 
@@ -174,11 +193,18 @@ public class PickablesTable {
                         goldCard.getId(),
                         gold.map(PlayableCard::getId).orElse(null)
                 ));
+                pcs.firePropertyChange(new DeckTopChangeEvent(
+                        getDeckTop(PlayableCardType.GOLD),
+                        PlayableCardType.GOLD,
+                        gold.map(PlayableCard::getColor).orElse(null),
+                        getDeckTop(PlayableCardType.GOLD).orElse(null)
+                ));
                 return goldCard;
             }
             case ResourceCard resourceCard -> {
                 shownResources.remove(resourceCard);
-                resourceDeck.draw().ifPresent(shownResources::add);
+                Optional<ResourceCard> resource = resourceDeck.draw();
+                resource.ifPresent(shownResources::add);
 
                 pcs.firePropertyChange(new ShownPlayableEvent(
                         this.shownResources.stream()
@@ -186,10 +212,13 @@ public class PickablesTable {
                                            .collect(Collectors.toUnmodifiableSet()),
                         PlayableCardType.RESOURCE,
                         resourceCard.getId(),
-                        shownResources.stream()
-                                      .map(PlayableCard::getId)
-                                      .findFirst()
-                                      .orElse(null)
+                        resource.map(PlayableCard::getId).orElse(null)
+                ));
+                pcs.firePropertyChange(new DeckTopChangeEvent(
+                        getDeckTop(PlayableCardType.RESOURCE),
+                        PlayableCardType.RESOURCE,
+                        resource.map(PlayableCard::getColor).orElse(null),
+                        getDeckTop(PlayableCardType.RESOURCE).orElse(null)
                 ));
                 return resourceCard;
             }
@@ -208,6 +237,14 @@ public class PickablesTable {
             case GOLD -> goldDeck.getRemainingCards();
             case RESOURCE -> resourceDeck.getRemainingCards();
         };
+    }
+
+    public void addListener(TableViewUpdater listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removeListener(TableViewUpdater listener) {
+        pcs.removePropertyChangeListener(listener);
     }
 
 }

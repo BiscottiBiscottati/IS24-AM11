@@ -59,7 +59,7 @@ public interface GameModel {
     void addPlayerToTable(String nickname, PlayerColor colour)
     throws PlayerInitException, GameStatusException;
 
-    void removePlayer(@NotNull String nickname) throws GameStatusException;
+    void removePlayer(@NotNull String nickname) throws GameStatusException, PlayerInitException;
 
     void setStarterFor(String nickname, boolean isRetro)
     throws IllegalCardPlacingException, GameStatusException, PlayerInitException;
@@ -96,7 +96,7 @@ public interface GameModel {
     Optional<Integer> getStarterCard(@NotNull String nickname)
     throws PlayerInitException, GameStatusException;
 
-    void addListener(PlayerViewUpdater listener);
+    void addPlayerListener(PlayerViewUpdater listener, String nickname);
 
-    void addListener(TableViewUpdater listener);
+    void addTableListener(TableViewUpdater listener);
 }

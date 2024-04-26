@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.model.table;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.view.TableViewUpdater;
+import it.polimi.ingsw.am11.view.events.GameStatusChangeEvent;
 import it.polimi.ingsw.am11.view.events.PlayerPointsChangeEvent;
 
 import java.beans.PropertyChangeListener;
@@ -34,7 +35,13 @@ public class Plateau {
     }
 
     public void setStatus(GameStatus status) {
+        GameStatus oldValue = this.status;
         this.status = status;
+        pcs.firePropertyChange(new GameStatusChangeEvent(
+                status,
+                oldValue,
+                status
+        ));
     }
 
     public boolean isArmageddonTime() {
@@ -46,7 +53,7 @@ public class Plateau {
     }
 
     public void activateArmageddon() {
-        status = GameStatus.ARMAGEDDON;
+        setStatus(GameStatus.ARMAGEDDON);
     }
 
     public void removePlayer(Player player) {
@@ -57,9 +64,15 @@ public class Plateau {
 
     public void reset() {
         playerPoints.keySet()
-                    .forEach(
-                            player -> playerPoints.put(player, 0)
-                    );
+                    .forEach(player -> {
+                        playerPoints.put(player, 0);
+                        pcs.firePropertyChange(new PlayerPointsChangeEvent(
+                                Map.copyOf(playerPoints),
+                                player.nickname(),
+                                null,
+                                0
+                        ));
+                    });
         finalLeaderboard.keySet()
                         .forEach(
                                 player -> finalLeaderboard.put(player, null)
@@ -68,7 +81,7 @@ public class Plateau {
                         .forEach(
                                 player -> counterObjective.put(player, 0)
                         );
-        status = GameStatus.STARTING;
+        setStatus(GameStatus.STARTING); // FIXME may create problem if we remove players
     }
 
     public void addPlayer(Player newPlayer) {
@@ -83,15 +96,16 @@ public class Plateau {
         } else {
             temp += points;
             playerPoints.put(player, temp);
+
+            pcs.firePropertyChange(new PlayerPointsChangeEvent(Map.copyOf(playerPoints),
+                                                               player.nickname(),
+                                                               temp - points,
+                                                               temp));
         }
         if (temp >= armageddonTime && status == GameStatus.ONGOING) {
-            status = GameStatus.ARMAGEDDON;
+            setStatus(GameStatus.ARMAGEDDON);
         }
 
-        pcs.firePropertyChange(new PlayerPointsChangeEvent(Map.copyOf(playerPoints),
-                                                           player.nickname(),
-                                                           temp - points,
-                                                           temp));
     }
 
     public void addCounterObjective(Player player)

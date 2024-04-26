@@ -431,17 +431,16 @@ public class GameLogic implements GameModel {
      */
     @Override // DONE
     public void removePlayer(@NotNull String nickname)
-    throws GameStatusException {
+    throws GameStatusException, PlayerInitException {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
-        try {
-            plateau.removePlayer(playerManager.getPlayer(nickname)
-                                              .orElseThrow(() -> new PlayerInitException(
-                                                      "player not found")));
-            playerManager.removePlayer(nickname);
-        } catch (PlayerInitException ignored) {
-        }
+        plateau.removePlayer(playerManager.getPlayer(nickname)
+                                          .orElseThrow(() -> new PlayerInitException(
+                                                  "player not found")));
+        playerManager.removePlayer(nickname);
+        Arrays.stream(pcs.getPropertyChangeListeners(nickname))
+              .forEach(pcs::removePropertyChangeListener);
     }
 
     /**
@@ -779,13 +778,14 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void addListener(PlayerViewUpdater listener) {
-        pcs.addPropertyChangeListener(listener);
+    public void addPlayerListener(PlayerViewUpdater listener, String nickname) {
+        pcs.addPropertyChangeListener(nickname, listener);
     }
 
     @Override
-    public void addListener(TableViewUpdater listener) {
-        //TODO
+    public void addTableListener(TableViewUpdater listener) {
+        plateau.addListener(listener);
+        pickablesTable.addListener(listener);
     }
 }
 

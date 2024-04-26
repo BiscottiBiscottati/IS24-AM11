@@ -11,6 +11,8 @@ import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.PlayerViewUpdater;
+import it.polimi.ingsw.am11.view.events.FieldChangeEvent;
+import it.polimi.ingsw.am11.view.events.HandChangeEvent;
 import it.polimi.ingsw.am11.view.events.TurnChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -228,6 +230,21 @@ public class PlayerManager {
                .stream()
                .map(Player::field)
                .forEach(PlayerField::clearAll);
+
+        players.forEach((name, player) -> {
+            pcs.firePropertyChange(new HandChangeEvent(
+                    player.space().getPlayerHand(),
+                    name,
+                    null,
+                    null
+            ));
+            pcs.firePropertyChange(new FieldChangeEvent(
+                    player.field().getCardsPositioned(),
+                    name,
+                    null,
+                    null
+            ));
+        });
     }
 
     public boolean areTheyReady() {
