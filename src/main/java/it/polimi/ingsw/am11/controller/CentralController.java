@@ -12,14 +12,16 @@ import it.polimi.ingsw.am11.view.VirtualTableView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CentralController {
+public enum CentralController {
+    INSTANCE;
+
     private final GameModel model;
     private final VirtualTableView tableView;
     private final CardController cardController;
     private final GameController gameController;
     private final Map<String, VirtualPlayerView> playerViews;
 
-    public CentralController() {
+    CentralController() {
         this.model = new GameLogic();
         this.tableView = new VirtualTableView();
         this.cardController = new CardController(model);

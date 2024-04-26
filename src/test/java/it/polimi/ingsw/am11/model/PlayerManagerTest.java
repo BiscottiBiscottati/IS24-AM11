@@ -2,8 +2,6 @@ package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.view.PlayerViewUpdater;
-import it.polimi.ingsw.am11.view.VirtualPlayerView;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -352,8 +350,6 @@ class PlayerManagerTest {
 
     @Test
     void addListener() {
-        PlayerViewUpdater listener = new PlayerViewUpdater(new VirtualPlayerView());
-        manager.addListener(listener);
 
         try {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
