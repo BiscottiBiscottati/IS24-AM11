@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.controller;
 
+import it.polimi.ingsw.am11.model.GameLogic;
 import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
@@ -18,8 +19,8 @@ public class CentralController {
     private final GameController gameController;
     private final Map<String, VirtualPlayerView> playerViews;
 
-    public CentralController(GameModel model) {
-        this.model = model;
+    public CentralController() {
+        this.model = new GameLogic();
         this.tableView = new VirtualTableView();
         this.cardController = new CardController(model);
         this.gameController = new GameController(model);
