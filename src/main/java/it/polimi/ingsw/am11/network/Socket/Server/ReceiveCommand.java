@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.view.VirtualPlayerView;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 public class ReceiveCommand {

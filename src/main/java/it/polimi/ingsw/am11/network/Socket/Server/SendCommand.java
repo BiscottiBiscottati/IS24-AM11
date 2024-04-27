@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.network.Socket.Server;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
@@ -10,13 +9,12 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
 
-import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.Set;
 
 public class SendCommand implements PlayerConnector, TableConnector {
-    private PrintWriter out;
-    private ObjectMapper mapper = new ObjectMapper();
+    private final PrintWriter out;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public SendCommand(PrintWriter out) {
         this.out = out;
@@ -28,7 +26,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
         json.put("method", "updateHand");
         json.put("cardId", cardId);
         json.put("removeMode", removeMode);
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
@@ -37,7 +35,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
         json.put("method", "updatePersonalObjective");
         json.put("cardId", cardId);
         json.put("removeMode", removeMode);
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
@@ -45,7 +43,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "sendStarterCard");
         json.put("cardId", cardId);
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
@@ -53,7 +51,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "sendCandidateObjective");
         json.put("cardsId", cardsId.toString());
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
@@ -62,7 +60,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
         json.put("method", "updateDeckTop");
         json.put("type", type.toString());
         json.put("color", color.toString());
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
@@ -73,7 +71,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
         json.put("position", position.toString());
         json.put("cardId", cardId);
         json.put("removeMode", removeMode);
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
@@ -82,7 +80,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
         json.put("method", "updateShownPlayable");
         json.put("previousId", previousId);
         json.put("currentId", currentId);
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
@@ -90,7 +88,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateTurnChange");
         json.put("nickname", nickname);
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
@@ -99,7 +97,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
         json.put("method", "updatePlayerPoint");
         json.put("nickname", nickname);
         json.put("points", points);
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
@@ -107,7 +105,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateGameStatus");
         json.put("status", status.toString());
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
@@ -116,6 +114,6 @@ public class SendCommand implements PlayerConnector, TableConnector {
         json.put("method", "updateCommonObjective");
         json.put("cardId", cardId);
         json.put("removeMode", removeMode);
-        out.println(json.toString());
+        out.println(json);
     }
 }

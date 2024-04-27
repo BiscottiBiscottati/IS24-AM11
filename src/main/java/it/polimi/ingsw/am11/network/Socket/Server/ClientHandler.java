@@ -34,7 +34,7 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         boolean validNickname = false;
-        while (!validNickname) {
+        while (! validNickname) {
             try {
                 nickname = in.readLine();
                 SendCommand sendCommand = new SendCommand(out);
