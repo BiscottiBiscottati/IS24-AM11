@@ -1,6 +1,7 @@
-package it.polimi.ingsw.am11.network.Socket;
+package it.polimi.ingsw.am11.network.Socket.Server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.polimi.ingsw.am11.view.VirtualPlayerView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.net.Socket;
 
 public class ClientHandler implements Runnable {
     private final Socket clientSocket;
+    private String nickname;
     private BufferedReader in;
     private PrintWriter out;
     private ObjectMapper mapper;
@@ -27,8 +29,10 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-            String message = in.readLine();
-            out.println("Received: " + message);
+            nickname = in.readLine();
+            System.out.println("Connected: " + nickname);
+            SendCommand sendCommand = new SendCommand(nickname, in, out);
+
             clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.network.Socket;
 
+import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
+import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Executors;

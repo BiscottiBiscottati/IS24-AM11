@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.network.Socket;
+package it.polimi.ingsw.am11.network.Socket.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
