@@ -40,7 +40,7 @@ public class ClientHandler implements Runnable {
                 SendCommand sendCommand = new SendCommand(out);
                 view = CentralController.INSTANCE
                         .connectPlayer(nickname, sendCommand, sendCommand);
-                receiveCommand = new ReceiveCommand(view, in);
+                receiveCommand = new ReceiveCommand(view);
                 validNickname = true;
             } catch (IOException e) {
                 e.printStackTrace();
