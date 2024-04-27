@@ -37,7 +37,7 @@ public class ClientHandler implements Runnable {
         while (!validNickname) {
             try {
                 nickname = in.readLine();
-                SendCommand sendCommand = new SendCommand(nickname, out);
+                SendCommand sendCommand = new SendCommand(out);
                 view = CentralController.INSTANCE
                         .connectPlayer(nickname, sendCommand, sendCommand);
                 receiveCommand = new ReceiveCommand(view, in);
