@@ -34,6 +34,7 @@ public class GameController implements GameControllerInterface {
     public void goNextTurn() throws
                              GameStatusException {
         try {
+            // TODO to handle disconnection in the model
             model.goNextTurn();
         } catch (GameBreakingException e) {
             throw new RuntimeException(e);
