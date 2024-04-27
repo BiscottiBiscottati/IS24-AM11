@@ -21,5 +21,4 @@ public class VirtualTableView {
         this.connectors.remove(nickname);
     }
 
-
 }

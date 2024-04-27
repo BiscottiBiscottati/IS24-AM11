@@ -4,10 +4,13 @@ import it.polimi.ingsw.am11.model.GameLogic;
 import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.network.PlayerConnector;
+import it.polimi.ingsw.am11.network.TableConnector;
 import it.polimi.ingsw.am11.view.PlayerViewUpdater;
 import it.polimi.ingsw.am11.view.TableViewUpdater;
 import it.polimi.ingsw.am11.view.VirtualPlayerView;
 import it.polimi.ingsw.am11.view.VirtualTableView;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,12 +33,17 @@ public enum CentralController {
         this.model.addTableListener(new TableViewUpdater(tableView));
     }
 
-    public void connectPlayer(String nickname, VirtualPlayerView playerView)
+    public @NotNull VirtualPlayerView connectPlayer(String nickname,
+                                                    PlayerConnector playerConnector,
+                                                    TableConnector tableConnector)
     throws PlayerInitException,
            GameStatusException {
         this.gameController.addPlayer(nickname);
+        VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
         this.playerViews.put(nickname, playerView);
         this.model.addPlayerListener(new PlayerViewUpdater(playerView), nickname);
+        this.tableView.addConnector(nickname, tableConnector);
+        return playerView;
     }
 
     public CardController getCardController() {

@@ -390,8 +390,11 @@ public class GameLogic implements GameModel {
         if (plateau.getStatus() != GameStatus.STARTING) {
             throw new GameStatusException("this is not the right time");
         }
+        CentralController.INSTANCE.connectPlayer(nickname, this);
+        CentralController.INSTANCE.connectPlayer(nickname, this);
         if (! playerManager.getCandidateObjectives(nickname).isEmpty()) {
-            throw new IllegalPickActionException("This payer already has his candidate objectives");
+            throw new IllegalPickActionException("This player already has his candidate " +
+                                                 "objectives");
         }
         int objectiveToChooseFrom = ruleSet.getObjectiveToChooseFrom();
         for (int i = 0; i < objectiveToChooseFrom; i++) {
