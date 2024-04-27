@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class CandidateObjectiveEvent extends PropertyChangeEvent {
 
+    // TODO to add to model
     private final Set<Integer> oldCardsId;
     private final Set<Integer> newCardsId;
 

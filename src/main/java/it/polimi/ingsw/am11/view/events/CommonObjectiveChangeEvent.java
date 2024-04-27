@@ -2,14 +2,14 @@ package it.polimi.ingsw.am11.view.events;
 
 import java.beans.PropertyChangeEvent;
 
-public class StarterCardEvent extends PropertyChangeEvent {
+public class CommonObjectiveChangeEvent extends PropertyChangeEvent {
 
-    //TODO to add to model
+    // TODO to add to model
     private final Integer oldCardId;
     private final Integer newCardId;
 
-    public StarterCardEvent(Object source, String player, Integer oldCardId,
-                            Integer newCardId) {
+    public CommonObjectiveChangeEvent(Object source, String player, Integer oldCardId,
+                                      Integer newCardId) {
         super(source, player, oldCardId, newCardId);
         this.oldCardId = oldCardId;
         this.newCardId = newCardId;
