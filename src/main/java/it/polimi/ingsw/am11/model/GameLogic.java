@@ -317,6 +317,7 @@ public class GameLogic implements GameModel {
         pickablesTable.initialize();
         playerManager.startingTheGame();
 
+        // TODO give starter first then give objective then hand
 
         try {
             PlayableCard card;

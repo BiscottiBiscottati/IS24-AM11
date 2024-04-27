@@ -11,16 +11,19 @@ import it.polimi.ingsw.am11.network.TableConnector;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.Set;
 
 public class SendCommand implements PlayerConnector, TableConnector {
-    private String nickname;
-    private BufferedReader in;
-    private PrintWriter out;
+    private final String nickname;
+    private final BufferedReader in;
+    private final PrintWriter out;
+
     public SendCommand(String nickname, BufferedReader in, PrintWriter out) {
         this.nickname = nickname;
         this.in = in;
         this.out = out;
     }
+
     @Override
     public void updateHand(int cardId, boolean removeMode) {
         ObjectMapper mapper = new ObjectMapper();
@@ -28,11 +31,21 @@ public class SendCommand implements PlayerConnector, TableConnector {
 
         json.put("cardId", cardId);
         json.put("removeMode", removeMode);
-        out.println(json.toString());
+        out.println(json);
     }
 
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
+
+    }
+
+    @Override
+    public void sendStarterCard(int cardId) {
+
+    }
+
+    @Override
+    public void sendCandidateObjective(Set<Integer> cardsId) {
 
     }
 
