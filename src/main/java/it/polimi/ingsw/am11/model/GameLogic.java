@@ -415,7 +415,7 @@ public class GameLogic implements GameModel {
      */
     @Override // DONE
     public void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
-    throws PlayerInitException, GameStatusException {
+    throws PlayerInitException, GameStatusException, MaxPlayersReachedException {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         } else {

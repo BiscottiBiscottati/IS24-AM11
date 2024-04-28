@@ -57,7 +57,7 @@ public interface GameModel {
     void initGame() throws IllegalNumOfPlayersException, GameStatusException, GameBreakingException;
 
     void addPlayerToTable(String nickname, PlayerColor colour)
-    throws PlayerInitException, GameStatusException;
+    throws PlayerInitException, GameStatusException, MaxPlayersReachedException;
 
     void removePlayer(@NotNull String nickname) throws GameStatusException;
 
