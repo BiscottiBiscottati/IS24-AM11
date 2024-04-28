@@ -1,10 +1,7 @@
 package it.polimi.ingsw.am11.controller;
 
 import it.polimi.ingsw.am11.model.GameModel;
-import it.polimi.ingsw.am11.model.exceptions.GameBreakingException;
-import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.model.exceptions.IllegalNumOfPlayersException;
-import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.network.RMI.GameControllerInterface;
 
@@ -42,7 +39,7 @@ public class GameController implements GameControllerInterface {
     }
 
     public void addPlayer(String nickname)
-    throws PlayerInitException, GameStatusException {
+    throws PlayerInitException, GameStatusException, MaxPlayersReachedException {
         if (colors.isEmpty()) {
             throw new PlayerInitException("No more colors available");
         }

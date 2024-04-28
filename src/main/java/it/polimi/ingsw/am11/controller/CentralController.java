@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.controller;
 import it.polimi.ingsw.am11.model.GameLogic;
 import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
+import it.polimi.ingsw.am11.model.exceptions.MaxPlayersReachedException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
@@ -37,7 +38,7 @@ public enum CentralController {
                                                     PlayerConnector playerConnector,
                                                     TableConnector tableConnector)
     throws PlayerInitException,
-           GameStatusException {
+           GameStatusException, MaxPlayersReachedException {
         this.gameController.addPlayer(nickname);
         VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
         this.playerViews.put(nickname, playerView);
