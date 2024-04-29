@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.model;
 
+import it.polimi.ingsw.am11.model.exceptions.MaxPlayersReachedException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import org.junit.jupiter.api.BeforeAll;
@@ -60,7 +61,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -76,25 +77,25 @@ class PlayerManagerTest {
 
         try {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertEquals(1, manager.getNumberOfPlayers());
         try {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertEquals(2, manager.getNumberOfPlayers());
         try {
             manager.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertEquals(3, manager.getNumberOfPlayers());
         try {
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertEquals(4, manager.getNumberOfPlayers());
@@ -119,7 +120,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         manager.startingTheGame();
@@ -148,7 +149,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         manager.startingTheGame();
@@ -168,7 +169,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         for (String nickname : players) {
@@ -187,7 +188,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         //TODO
@@ -206,7 +207,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -223,7 +224,7 @@ class PlayerManagerTest {
         //adding 1 player
         try {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -237,7 +238,7 @@ class PlayerManagerTest {
         try {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -255,7 +256,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -278,7 +279,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         manager.startingTheGame();
@@ -299,7 +300,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         manager.startingTheGame();
@@ -329,7 +330,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -354,7 +355,7 @@ class PlayerManagerTest {
         try {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
-        } catch (PlayerInitException e) {
+        } catch (PlayerInitException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
