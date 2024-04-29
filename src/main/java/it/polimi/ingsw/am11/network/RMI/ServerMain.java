@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.network.RMI;
 
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.model.exceptions.MaxPlayersReachedException;
+import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.view.VirtualPlayerView;
 
@@ -43,7 +43,7 @@ public class ServerMain implements Loggable {
 
     @Override
     public void login(String nick)
-    throws RemoteException, PlayerInitException, GameStatusException, MaxPlayersReachedException {
+    throws RemoteException, PlayerInitException, GameStatusException, NumOfPlayersException {
         try {
             MessageManager messageManager = new MessageManager();
             VirtualPlayerView view = CentralController.INSTANCE
@@ -52,8 +52,8 @@ public class ServerMain implements Loggable {
             throw new PlayerInitException("Invalid nickname. Please try again.");
         } catch (GameStatusException e) {
             throw new GameStatusException("Game status exception.");
-        } catch (MaxPlayersReachedException e) {
-            throw new MaxPlayersReachedException("Max players reached.");
+        } catch (NumOfPlayersException e) {
+            throw new NumOfPlayersException("Max players reached.");
         }
     }
 

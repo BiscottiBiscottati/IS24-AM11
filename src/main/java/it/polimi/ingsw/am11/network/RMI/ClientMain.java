@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.network.RMI;
 
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.model.exceptions.MaxPlayersReachedException;
+import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 
 import java.rmi.NotBoundException;
@@ -32,7 +32,7 @@ public class ClientMain {
         } catch (RemoteException | NotBoundException e) {
             System.err.println("Client exception: " + e);
             throw new RuntimeException(e);
-        } catch (MaxPlayersReachedException | PlayerInitException | GameStatusException e) {
+        } catch (NumOfPlayersException | PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
     }
