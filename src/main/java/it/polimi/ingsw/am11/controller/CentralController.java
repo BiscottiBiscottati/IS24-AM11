@@ -56,6 +56,7 @@ public enum CentralController {
         this.playerViews.put(nickname, playerView);
         this.model.addPlayerListener(new PlayerViewUpdater(playerView), nickname);
         this.tableView.addConnector(nickname, tableConnector);
+        this.model.addTableListener(new TableViewUpdater(tableView));
         if (numOfPlayers == playerViews.size()) {
             try {
                 gameController.initGame();
