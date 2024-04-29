@@ -3,13 +3,12 @@ package it.polimi.ingsw.am11.controller;
 import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.network.RMI.GameControllerInterface;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class GameController implements GameControllerInterface {
+public class GameController {
     private final GameModel model;
     private final List<PlayerColor> colors;
 

@@ -7,7 +7,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import org.jetbrains.annotations.NotNull;
 
-public class VirtualPlayerView {
+public class VirtualPlayerView implements PlayerViewInterface {
     private static final CardController cardController;
     private static final GameController gameController;
 

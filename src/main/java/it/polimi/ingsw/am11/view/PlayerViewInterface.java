@@ -1,29 +1,16 @@
 package it.polimi.ingsw.am11.view;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.model.players.utils.Position;
 
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 
 public interface PlayerViewInterface extends Remote {
 
-    void update();
+    void setStarterCard(boolean isRetro);
 
-    boolean addPlayer(String nickname) throws RemoteException;
+    void setObjectiveCard(int cardId);
 
-    boolean initGame() throws RemoteException;
+    void placeCard(int cardId, int x, int y, boolean isRetro);
 
-    boolean setObjFor(String nickname, int cardID) throws RemoteException;
-
-    boolean setStarterFor(String nickname, boolean isRetro) throws RemoteException;
-
-    int drawCard(boolean fromVisible, PlayableCardType type, String nickname, int cardID)
-    throws RemoteException;
-
-    boolean placeCard(String Nickname, int ID, Position position, boolean isRetro)
-    throws RemoteException;
-
-    boolean forceEnd() throws RemoteException;
-
+    void drawCard(boolean fromVisible, PlayableCardType type, int cardId);
 }

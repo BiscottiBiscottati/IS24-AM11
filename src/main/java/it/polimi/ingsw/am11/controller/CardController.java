@@ -4,9 +4,8 @@ import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.network.RMI.CardControllerInterface;
 
-public class CardController implements CardControllerInterface {
+public class CardController {
     private final GameModel model;
 
     public CardController(GameModel model) {

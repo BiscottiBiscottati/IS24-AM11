@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am11.network.RMI;
 
-import it.polimi.ingsw.am11.view.PlayerViewInterface;
+import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
+import it.polimi.ingsw.am11.model.exceptions.MaxPlayersReachedException;
+import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -24,13 +26,13 @@ public class ClientMain {
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", PORT);
             // Looking up the registry for the remote object
             Loggable stub = (Loggable) registry.lookup("Loggable");
-            PlayerViewInterface playerViewStub = (PlayerViewInterface) registry.lookup(
-                    "PlayerViewInterface");
             // Calling the remote method using the obtained object
-            boolean Logged = stub.login(nick);
-            System.out.println("Remote method invoked: " + Logged);
+            stub.login(nick);
+            System.out.println("Remote method invoked");
         } catch (RemoteException | NotBoundException e) {
             System.err.println("Client exception: " + e);
+            throw new RuntimeException(e);
+        } catch (MaxPlayersReachedException | PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
         }
     }
