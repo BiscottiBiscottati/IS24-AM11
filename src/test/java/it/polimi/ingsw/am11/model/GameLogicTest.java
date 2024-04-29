@@ -1,9 +1,6 @@
 package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
@@ -42,7 +39,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -62,7 +59,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.getCurrentTurnPlayer());
@@ -197,7 +194,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         try {
@@ -229,7 +226,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.getPlayerHand("player1"));
@@ -265,7 +262,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.getPlayerObjective("player1"));
@@ -313,6 +310,8 @@ class GameLogicTest {
             assertEquals(model.getPlayerColor("player4"), PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException e) {
             throw new RuntimeException(e);
+        } catch (MaxPlayersReachedException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -326,7 +325,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
 
-        } catch (GameStatusException e) {
+        } catch (GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -388,7 +387,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.getAvailablePositions("player1"));
@@ -436,7 +435,7 @@ class GameLogicTest {
                 model.addPlayerToTable("player2", PlayerColor.GREEN);
                 model.addPlayerToTable("player3", PlayerColor.RED);
                 model.addPlayerToTable("player4", PlayerColor.YELLOW);
-            } catch (PlayerInitException | GameStatusException e) {
+            } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
                 throw new RuntimeException(e);
             }
 
@@ -473,7 +472,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.getExposedCards(PlayableCardType.GOLD));
@@ -551,7 +550,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -600,7 +599,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         try {
@@ -675,7 +674,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         try {
@@ -745,7 +744,7 @@ class GameLogicTest {
         assertThrows(IllegalNumOfPlayersException.class, () -> model.initGame());
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(IllegalNumOfPlayersException.class, () -> model.initGame());
@@ -753,7 +752,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         try {
@@ -803,7 +802,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -849,7 +848,7 @@ class GameLogicTest {
             model.addPlayerToTable("playerX", PlayerColor.BLUE);
             model.addPlayerToTable("playerY", PlayerColor.GREEN);
             model.addPlayerToTable("playerZ", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -873,7 +872,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.setStarterFor("player1", false));
@@ -905,7 +904,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.getPlayerObjective("player1"));
@@ -940,7 +939,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class,
@@ -1024,7 +1023,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class,
@@ -1126,7 +1125,7 @@ class GameLogicTest {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class,
@@ -1235,7 +1234,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -1261,7 +1260,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
 
@@ -1286,7 +1285,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         try {
@@ -1307,7 +1306,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.getCandidateObjectives("player1"));
@@ -1351,7 +1350,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
+        } catch (PlayerInitException | GameStatusException | MaxPlayersReachedException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.getStarterCard("player1"));
