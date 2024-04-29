@@ -18,6 +18,8 @@ import java.util.Set;
 @SuppressWarnings({"ClassWithTooManyMethods", "OverlyCoupledClass"})
 public interface GameModel {
 
+    RuleSet getRuleSet();
+
     Set<String> getPlayers();
 
     String getCurrentTurnPlayer() throws GameStatusException;
@@ -57,7 +59,7 @@ public interface GameModel {
     void initGame() throws IllegalNumOfPlayersException, GameStatusException, GameBreakingException;
 
     void addPlayerToTable(String nickname, PlayerColor colour)
-    throws PlayerInitException, GameStatusException, MaxPlayersReachedException;
+    throws PlayerInitException, GameStatusException, NumOfPlayersException;
 
     void removePlayer(@NotNull String nickname) throws GameStatusException;
 

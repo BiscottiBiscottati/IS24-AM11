@@ -39,7 +39,7 @@ public class GameController implements GameControllerInterface {
     }
 
     public void addPlayer(String nickname)
-    throws PlayerInitException, GameStatusException, MaxPlayersReachedException {
+    throws PlayerInitException, GameStatusException, NumOfPlayersException {
         if (colors.isEmpty()) {
             throw new PlayerInitException("No more colors available");
         }

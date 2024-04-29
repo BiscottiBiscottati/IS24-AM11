@@ -57,7 +57,7 @@ class GameModelTest {
             model.addPlayerToTable("osama", PlayerColor.YELLOW);
             model.initGame();
         } catch (PlayerInitException | GameStatusException | IllegalNumOfPlayersException |
-                 GameBreakingException | MaxPlayersReachedException e) {
+                 GameBreakingException | NumOfPlayersException e) {
             throw new RuntimeException(e);
         }
 

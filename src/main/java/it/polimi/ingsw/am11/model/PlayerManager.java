@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException;
-import it.polimi.ingsw.am11.model.exceptions.MaxPlayersReachedException;
+import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.PersonalSpace;
 import it.polimi.ingsw.am11.model.players.Player;
@@ -159,7 +159,7 @@ public class PlayerManager {
     }
 
     public Player addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
-    throws PlayerInitException, MaxPlayersReachedException {
+    throws PlayerInitException, NumOfPlayersException {
         if (players.containsKey(nickname)) {
             throw new PlayerInitException(nickname + " is already in use");
         } else if (players.values()
@@ -170,7 +170,7 @@ public class PlayerManager {
                     "Colour already in use: " + colour
             );
         } else if (players.size() >= maxNumberOfPlayers) {
-            throw new MaxPlayersReachedException(
+            throw new NumOfPlayersException(
                     "You are trying to add too many players, the limit is " +
                     maxNumberOfPlayers
             );

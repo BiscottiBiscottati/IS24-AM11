@@ -55,6 +55,11 @@ public class GameLogic implements GameModel {
         Plateau.setArmageddonTime(ruleSet.getPointsToArmageddon());
     }
 
+    @Override
+    public RuleSet getRuleSet() {
+        return ruleSet;
+    }
+
     /**
      * Retrieves the nicknames of all the players of the current game.
      * <p>
@@ -415,7 +420,7 @@ public class GameLogic implements GameModel {
      */
     @Override // DONE
     public void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
-    throws PlayerInitException, GameStatusException, MaxPlayersReachedException {
+    throws PlayerInitException, GameStatusException, NumOfPlayersException {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         } else {
