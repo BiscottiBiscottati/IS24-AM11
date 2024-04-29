@@ -65,7 +65,7 @@ class GameLogicTest {
         assertThrows(GameStatusException.class, () -> model.getCurrentTurnPlayer());
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
@@ -199,7 +199,7 @@ class GameLogicTest {
         }
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         for (String nickname : players) {
@@ -232,7 +232,7 @@ class GameLogicTest {
         assertThrows(GameStatusException.class, () -> model.getPlayerHand("player1"));
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         for (String nickname : players) {
@@ -269,7 +269,7 @@ class GameLogicTest {
 
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         try {
@@ -331,7 +331,7 @@ class GameLogicTest {
 
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.getPositionedCard("player1"));
@@ -393,7 +393,7 @@ class GameLogicTest {
         assertThrows(GameStatusException.class, () -> model.getAvailablePositions("player1"));
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         assertDoesNotThrow(() -> model.getAvailablePositions("player1"));
@@ -441,7 +441,7 @@ class GameLogicTest {
 
             try {
                 model.initGame();
-            } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+            } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
 
@@ -478,7 +478,7 @@ class GameLogicTest {
         assertThrows(GameStatusException.class, () -> model.getExposedCards(PlayableCardType.GOLD));
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         try {
@@ -559,7 +559,7 @@ class GameLogicTest {
 
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
@@ -604,7 +604,7 @@ class GameLogicTest {
         }
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         try {
@@ -679,7 +679,7 @@ class GameLogicTest {
         }
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         try {
@@ -741,13 +741,13 @@ class GameLogicTest {
 
     @Test
     void initGame() {
-        assertThrows(IllegalNumOfPlayersException.class, () -> model.initGame());
+        assertThrows(NumOfPlayersException.class, () -> model.initGame());
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
             throw new RuntimeException(e);
         }
-        assertThrows(IllegalNumOfPlayersException.class, () -> model.initGame());
+        assertThrows(NumOfPlayersException.class, () -> model.initGame());
         try {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
@@ -757,7 +757,7 @@ class GameLogicTest {
         }
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
@@ -787,7 +787,7 @@ class GameLogicTest {
 
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
@@ -855,7 +855,7 @@ class GameLogicTest {
         //Test GameStatusException
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class,
@@ -878,7 +878,7 @@ class GameLogicTest {
         assertThrows(GameStatusException.class, () -> model.setStarterFor("player1", false));
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         assertThrows(PlayerInitException.class, () -> model.setStarterFor("playerX", false));
@@ -910,7 +910,7 @@ class GameLogicTest {
         assertThrows(GameStatusException.class, () -> model.getPlayerObjective("player1"));
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         assertThrows(PlayerInitException.class,
@@ -950,7 +950,7 @@ class GameLogicTest {
                                            false));
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class,
@@ -1030,7 +1030,7 @@ class GameLogicTest {
                      () -> model.drawFromDeckOf(PlayableCardType.GOLD, "player1"));
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         for (String nickname : players) {
@@ -1132,7 +1132,7 @@ class GameLogicTest {
                      () -> model.drawVisibleOf(PlayableCardType.GOLD, "player1", 1));
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         for (String nickname : players) {
@@ -1240,7 +1240,7 @@ class GameLogicTest {
 
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
@@ -1267,7 +1267,7 @@ class GameLogicTest {
         assertEquals(model.getStatus(), GameStatus.SETUP);
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         assertEquals(model.getStatus(), GameStatus.STARTING);
@@ -1290,7 +1290,7 @@ class GameLogicTest {
         }
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
         assertNotNull(model.getDeckTop(PlayableCardType.GOLD));
@@ -1312,7 +1312,7 @@ class GameLogicTest {
         assertThrows(GameStatusException.class, () -> model.getCandidateObjectives("player1"));
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
@@ -1356,7 +1356,7 @@ class GameLogicTest {
         assertThrows(GameStatusException.class, () -> model.getStarterCard("player1"));
         try {
             model.initGame();
-        } catch (IllegalNumOfPlayersException | GameStatusException | GameBreakingException e) {
+        } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 

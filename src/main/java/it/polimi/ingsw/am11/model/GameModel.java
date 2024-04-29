@@ -56,7 +56,7 @@ public interface GameModel {
 
     Set<String> getWinner() throws GameStatusException;
 
-    void initGame() throws IllegalNumOfPlayersException, GameStatusException, GameBreakingException;
+    void initGame() throws NumOfPlayersException, GameStatusException, GameBreakingException;
 
     void addPlayerToTable(String nickname, PlayerColor colour)
     throws PlayerInitException, GameStatusException, NumOfPlayersException;

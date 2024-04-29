@@ -1,7 +1,10 @@
 package it.polimi.ingsw.am11.controller;
 
 import it.polimi.ingsw.am11.model.GameModel;
-import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.model.exceptions.GameBreakingException;
+import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
+import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
+import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ public class GameController {
         Collections.shuffle(colors);
     }
 
-    public void initGame() throws IllegalNumOfPlayersException,
+    public void initGame() throws NumOfPlayersException,
                                   GameStatusException {
         try {
             model.initGame();

@@ -56,7 +56,7 @@ class GameModelTest {
             model.addPlayerToTable("chen", PlayerColor.BLUE);
             model.addPlayerToTable("osama", PlayerColor.YELLOW);
             model.initGame();
-        } catch (PlayerInitException | GameStatusException | IllegalNumOfPlayersException |
+        } catch (PlayerInitException | GameStatusException |
                  GameBreakingException | NumOfPlayersException e) {
             throw new RuntimeException(e);
         }
@@ -68,7 +68,7 @@ class GameModelTest {
     void testInitGame() {
         model = new GameLogic();
         // Test illegal number of players
-        assertThrows(IllegalNumOfPlayersException.class, () -> model.initGame());
+        assertThrows(NumOfPlayersException.class, () -> model.initGame());
         // Test adding of players
         assertDoesNotThrow(() -> model.addPlayerToTable("edo", PlayerColor.RED));
         assertThrows(PlayerInitException.class,

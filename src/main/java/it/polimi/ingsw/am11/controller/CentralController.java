@@ -56,18 +56,26 @@ public enum CentralController {
         this.playerViews.put(nickname, playerView);
         this.model.addPlayerListener(new PlayerViewUpdater(playerView), nickname);
         this.tableView.addConnector(nickname, tableConnector);
+        if (numOfPlayers == playerViews.size()) {
+            try {
+                gameController.initGame();
+            } catch (NumOfPlayersException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return playerView;
     }
 
     public void setNumOfPlayers(String nickname, int val)
-    throws NotGodPlayerException, NumOfPlayersException {
-        if (nickname.equals(godPlayer)) {
+    throws NotGodPlayerException, GameStatusException,
+           NumOfPlayersException {
+        if (! nickname.equals(godPlayer)) {
             throw new NotGodPlayerException("A not god player is trying to set the num of " +
                                             "players");
         } else if (val <= 1 || val > model.getRuleSet().getMaxPlayers()) {
             throw new NumOfPlayersException("trying to add an illegal number of players");
         } else if (numOfPlayers != - 1) {
-            throw new NumOfPlayersException("num of players already set");
+            throw new GameStatusException("num of players already set");
         }
         numOfPlayers = val;
     }

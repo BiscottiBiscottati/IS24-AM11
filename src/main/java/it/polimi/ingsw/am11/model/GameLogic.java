@@ -303,17 +303,17 @@ public class GameLogic implements GameModel {
      * the first player, it clears the field, the hand and the objectives for each player, it resets
      * the plateau and the pickableTable.
      *
-     * @throws IllegalNumOfPlayersException If there aren't at least two players in the game
-     * @throws GameStatusException          if a game is in progress
+     * @throws NumOfPlayersException If there aren't at least two players in the game
+     * @throws GameStatusException   if a game is in progress
      */
     @Override //
     public void initGame()
-    throws IllegalNumOfPlayersException, GameStatusException, GameBreakingException {
+    throws NumOfPlayersException, GameStatusException, GameBreakingException {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
         if (playerManager.getNumberOfPlayers() < 2) {
-            throw new IllegalNumOfPlayersException(
+            throw new NumOfPlayersException(
                     "You need at least 2 players to play this game, the current number is: " +
                     playerManager.getNumberOfPlayers());
         }
