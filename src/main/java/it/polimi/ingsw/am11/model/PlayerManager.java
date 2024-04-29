@@ -248,12 +248,20 @@ public class PlayerManager {
         });
     }
 
-    public boolean areTheyReady() {
+    public boolean areStarterChoosed() {
         boolean isReady = true;
         for (Player player : players.values()) {
             isReady = isReady &&
-                      player.space().areObjectiveGiven() &&
                       ! player.field().isAvailable(new Position(0, 0));
+        }
+        return isReady;
+    }
+
+    public boolean areObjectiveChoosed() {
+        boolean isReady = true;
+        for (Player player : players.values()) {
+            isReady = isReady &&
+                      player.space().areObjectiveGiven();
         }
         return isReady;
     }

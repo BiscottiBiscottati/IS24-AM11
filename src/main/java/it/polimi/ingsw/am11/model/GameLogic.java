@@ -118,10 +118,11 @@ public class GameLogic implements GameModel {
      * @param nickname Nickname of the player of interest
      * @return a <code>List</code> of the IDs of the <code>PlayableCards</code> in the player hand
      */
-    @Override // DONE
+    @Override
     public @NotNull Set<Integer> getPlayerHand(@NotNull String nickname)
     throws GameStatusException, PlayerInitException {
-        if (Set.of(GameStatus.SETUP, GameStatus.STARTING)
+        //FIXME to be precise cards are dealt in initGame so they are dealt
+        if (Set.of(GameStatus.SETUP, GameStatus.CHOOSING_STARTERS, GameStatus.CHOOSING_OBJECTIVES)
                .contains(plateau.getStatus())) {
             throw new GameStatusException("the game is" +
                                           plateau.getStatus().name() +
@@ -168,7 +169,9 @@ public class GameLogic implements GameModel {
     //TODO model shouldn't return something that has a reference of a Card, it should use ID
     public Map<Position, CardContainer> getPositionedCard(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.STARTING) {
+        if (plateau.getStatus() == GameStatus.SETUP ||
+            plateau.getStatus() == GameStatus.CHOOSING_STARTERS ||
+            plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
             throw new GameStatusException(
                     "the game has not started, there are no positioned cards");
         }
@@ -349,11 +352,13 @@ public class GameLogic implements GameModel {
         }
 
         try {
+            plateau.setStatus(GameStatus.CHOOSING_STARTERS);
             for (String nickname : playerManager.getPlayers()) {
                 pickStarterFor(nickname);
-                pickCandidateObjectives(nickname);
+                //TODO PCS
+                //pickCandidateObjectives(nickname); TODO
             }
-        } catch (IllegalPlayerSpaceActionException | EmptyDeckException |
+        } catch (IllegalPlayerSpaceActionException | GameStatusException | EmptyDeckException |
                  IllegalPickActionException | PlayerInitException e) {
             throw new GameBreakingException("Something broke while dealing starters or objectives");
         }
@@ -375,35 +380,13 @@ public class GameLogic implements GameModel {
     private void pickStarterFor(@NotNull String nickname)
     throws EmptyDeckException, GameStatusException, PlayerInitException,
            IllegalPlayerSpaceActionException, IllegalPickActionException {
-        if (plateau.getStatus() != GameStatus.STARTING) {
+        if (plateau.getStatus() != GameStatus.CHOOSING_STARTERS) {
             throw new GameStatusException("this is not the right time");
         }
         if (playerManager.getStarterCard(nickname).isPresent()) {
             throw new IllegalPickActionException("This payer already has his starter");
         }
         playerManager.setStarterCard(nickname, pickablesTable.pickStarterCard());
-    }
-
-    /**
-     * Pick a <code>ObjectiveCard</code> from the deck on the <code>PickableTable</code>.
-     *
-     * @throws EmptyDeckException  if the deck of  <code>ObjectiveCard</code> is empty
-     * @throws GameStatusException if the game is not ongoing
-     */
-    private void pickCandidateObjectives(@NotNull String nickname)
-    throws EmptyDeckException, GameStatusException, PlayerInitException,
-           IllegalPickActionException {
-        if (plateau.getStatus() != GameStatus.STARTING) {
-            throw new GameStatusException("this is not the right time");
-        }
-        if (! playerManager.getCandidateObjectives(nickname).isEmpty()) {
-            throw new IllegalPickActionException("This player already has his candidate " +
-                                                 "objectives");
-        }
-        int objectiveToChooseFrom = ruleSet.getObjectiveToChooseFrom();
-        for (int i = 0; i < objectiveToChooseFrom; i++) {
-            playerManager.setNewCandidateObjective(nickname, pickablesTable.pickObjectiveCard());
-        }
     }
 
     /**
@@ -460,8 +443,9 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public void setStarterFor(@NotNull String nickname, boolean isRetro)
-    throws IllegalCardPlacingException, GameStatusException, PlayerInitException {
-        if (plateau.getStatus() != GameStatus.STARTING) {
+    throws IllegalCardPlacingException, GameStatusException, PlayerInitException,
+           GameBreakingException {
+        if (plateau.getStatus() != GameStatus.CHOOSING_STARTERS) {
             throw new GameStatusException("the game is not starting");
         }
         Player player = playerManager.getPlayer(nickname)
@@ -469,8 +453,15 @@ public class GameLogic implements GameModel {
                                                                                 "found"));
         player.field().placeStartingCard(playerManager.getStarterCard(nickname).orElseThrow(),
                                          isRetro);
-        if (playerManager.areTheyReady()) {
-            plateau.setStatus(GameStatus.ONGOING);
+        if (playerManager.areStarterChoosed()) {
+            plateau.setStatus(GameStatus.CHOOSING_OBJECTIVES);
+            //TODO pcs
+            try {
+                pickCandidateObjectives(nickname);
+            } catch (EmptyDeckException | IllegalPickActionException e) {
+                throw new GameBreakingException(
+                        "Something broke while dealing starters or objectives");
+            }
         }
     }
 
@@ -485,7 +476,7 @@ public class GameLogic implements GameModel {
     @Override //
     public void setObjectiveFor(@NotNull String nickname, int cardID)
     throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException {
-        if (plateau.getStatus() != GameStatus.STARTING) {
+        if (plateau.getStatus() != GameStatus.CHOOSING_OBJECTIVES) {
             throw new GameStatusException("the game is not starting");
         }
         ObjectiveCard objectiveCard = playerManager.getCandidateObjectiveByID(nickname, cardID);
@@ -495,7 +486,7 @@ public class GameLogic implements GameModel {
                                                  .space();
         playerSpace.removeCandidateObjective(cardID);
         playerSpace.addObjective(objectiveCard);
-        if (playerManager.areTheyReady()) {
+        if (playerManager.areObjectiveChoosed()) {
             plateau.setStatus(GameStatus.ONGOING);
         }
     }
@@ -519,7 +510,8 @@ public class GameLogic implements GameModel {
            GameStatusException,
            NotInHandException, PlayerInitException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
-            plateau.getStatus() == GameStatus.STARTING) {
+            plateau.getStatus() == GameStatus.CHOOSING_STARTERS ||
+            plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
             throw new GameStatusException("the game is not ongoing");
         }
         Player player = playerManager.getPlayer(nickname)
@@ -597,7 +589,8 @@ public class GameLogic implements GameModel {
     private void checkIfDrawAllowed(String nickname)
     throws GameStatusException, TurnsOrderException, IllegalPickActionException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
-            plateau.getStatus() == GameStatus.STARTING) {
+            plateau.getStatus() == GameStatus.CHOOSING_STARTERS ||
+            plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
             throw new GameStatusException("the game is not ongoing");
         }
         // chef if current player not a player
@@ -663,7 +656,8 @@ public class GameLogic implements GameModel {
     @Override
     public void goNextTurn() throws GameBreakingException, GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
-            plateau.getStatus() == GameStatus.STARTING) {
+            plateau.getStatus() == GameStatus.CHOOSING_STARTERS ||
+            plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
             throw new GameStatusException("the game is not ongoing");
         }
         if (Stream.of(PlayableCardType.values())
@@ -754,7 +748,7 @@ public class GameLogic implements GameModel {
     @Override
     public @NotNull Set<Integer> getCandidateObjectives(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
-        if (plateau.getStatus() != GameStatus.STARTING) {
+        if (plateau.getStatus() != GameStatus.CHOOSING_OBJECTIVES) {
             throw new GameStatusException("the game is not in starting phase");
         }
         return playerManager.getCandidateObjectives(nickname)
@@ -791,6 +785,28 @@ public class GameLogic implements GameModel {
     public void addTableListener(TableViewUpdater listener) {
         plateau.addListener(listener);
         pickablesTable.addListener(listener);
+    }
+
+    /**
+     * Pick a <code>ObjectiveCard</code> from the deck on the <code>PickableTable</code>.
+     *
+     * @throws EmptyDeckException  if the deck of  <code>ObjectiveCard</code> is empty
+     * @throws GameStatusException if the game is not ongoing
+     */
+    private void pickCandidateObjectives(@NotNull String nickname)
+    throws EmptyDeckException, GameStatusException, PlayerInitException,
+           IllegalPickActionException {
+        if (plateau.getStatus() != GameStatus.CHOOSING_OBJECTIVES) {
+            throw new GameStatusException("this is not the right time");
+        }
+        if (! playerManager.getCandidateObjectives(nickname).isEmpty()) {
+            throw new IllegalPickActionException("This player already has his candidate " +
+                                                 "objectives");
+        }
+        int objectiveToChooseFrom = ruleSet.getObjectiveToChooseFrom();
+        for (int i = 0; i < objectiveToChooseFrom; i++) {
+            playerManager.setNewCandidateObjective(nickname, pickablesTable.pickObjectiveCard());
+        }
     }
 }
 

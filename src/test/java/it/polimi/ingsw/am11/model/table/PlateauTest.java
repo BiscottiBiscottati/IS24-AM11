@@ -3,8 +3,6 @@ package it.polimi.ingsw.am11.model.table;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.model.table.Plateau;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -177,7 +175,7 @@ class PlateauTest {
 
         plateau.reset();
         GameStatus status = plateau.getStatus();
-        Assertions.assertEquals(GameStatus.STARTING, status);
+        Assertions.assertEquals(GameStatus.CHOOSING_STARTERS, status);
 
         plateau.activateArmageddon();
         status = plateau.getStatus();

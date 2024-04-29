@@ -79,6 +79,8 @@ class GameLogicTest {
             } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
                      IllegalCardPlacingException e) {
                 throw new RuntimeException(e);
+            } catch (GameBreakingException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -210,6 +212,8 @@ class GameLogicTest {
             } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
                      IllegalCardPlacingException e) {
                 throw new RuntimeException(e);
+            } catch (GameBreakingException e) {
+                throw new RuntimeException(e);
             }
         }
         try {
@@ -241,7 +245,7 @@ class GameLogicTest {
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
             } catch (IllegalPlayerSpaceActionException | IllegalCardPlacingException |
-                     PlayerInitException | GameStatusException e) {
+                     PlayerInitException | GameStatusException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -284,7 +288,7 @@ class GameLogicTest {
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
             } catch (IllegalPlayerSpaceActionException | IllegalCardPlacingException |
-                     PlayerInitException | GameStatusException e) {
+                     PlayerInitException | GameStatusException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -342,6 +346,8 @@ class GameLogicTest {
                 model.setStarterFor(nickname, false);
             } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
                      IllegalCardPlacingException e) {
+                throw new RuntimeException(e);
+            } catch (GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -404,7 +410,7 @@ class GameLogicTest {
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, true);
             } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException e) {
+                     IllegalCardPlacingException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -496,7 +502,7 @@ class GameLogicTest {
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
             } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException e) {
+                     IllegalCardPlacingException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -572,7 +578,7 @@ class GameLogicTest {
                 model.setStarterFor(nickname, false);
             }
         } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                 IllegalCardPlacingException e) {
+                 IllegalCardPlacingException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
@@ -691,6 +697,8 @@ class GameLogicTest {
         } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
                  IllegalCardPlacingException e) {
             throw new RuntimeException(e);
+        } catch (GameBreakingException e) {
+            throw new RuntimeException(e);
         }
         assertThrows(GameStatusException.class, () -> model.getWinner());
 
@@ -763,7 +771,7 @@ class GameLogicTest {
 
         assertThrows(GameStatusException.class, () -> model.initGame());
 
-        assertEquals(model.getStatus(), GameStatus.STARTING);
+        assertEquals(model.getStatus(), GameStatus.CHOOSING_STARTERS);
 
 
     }
@@ -888,7 +896,7 @@ class GameLogicTest {
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
             } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException e) {
+                     IllegalCardPlacingException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -923,6 +931,8 @@ class GameLogicTest {
                 model.setStarterFor(nickname, false);
             } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
                      IllegalCardPlacingException e) {
+                throw new RuntimeException(e);
+            } catch (GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -965,7 +975,7 @@ class GameLogicTest {
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
             } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException e) {
+                     IllegalCardPlacingException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -1040,6 +1050,8 @@ class GameLogicTest {
                 model.setStarterFor(nickname, false);
             } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
                      IllegalCardPlacingException e) {
+                throw new RuntimeException(e);
+            } catch (GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -1141,7 +1153,7 @@ class GameLogicTest {
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
             } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException e) {
+                     IllegalCardPlacingException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -1244,7 +1256,7 @@ class GameLogicTest {
             throw new RuntimeException(e);
         }
 
-        assertEquals(model.getStatus(), GameStatus.STARTING);
+        assertEquals(model.getStatus(), GameStatus.CHOOSING_STARTERS);
         model.forceEnd();
         assertEquals(model.getStatus(), GameStatus.SETUP);
         assertDoesNotThrow(() -> model.removePlayer("player1"));
@@ -1270,7 +1282,7 @@ class GameLogicTest {
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
-        assertEquals(model.getStatus(), GameStatus.STARTING);
+        assertEquals(model.getStatus(), GameStatus.CHOOSING_STARTERS);
         model.forceEnd();
         assertEquals(model.getStatus(), GameStatus.SETUP);
     }
@@ -1331,7 +1343,7 @@ class GameLogicTest {
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
             } catch (GameStatusException | PlayerInitException | IllegalPlayerSpaceActionException |
-                     IllegalCardPlacingException e) {
+                     IllegalCardPlacingException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -1374,7 +1386,7 @@ class GameLogicTest {
                         nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
             } catch (GameStatusException | PlayerInitException | IllegalPlayerSpaceActionException |
-                     IllegalCardPlacingException e) {
+                     IllegalCardPlacingException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }

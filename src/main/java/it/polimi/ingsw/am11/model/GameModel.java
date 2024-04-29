@@ -64,7 +64,8 @@ public interface GameModel {
     void removePlayer(@NotNull String nickname) throws GameStatusException;
 
     void setStarterFor(String nickname, boolean isRetro)
-    throws IllegalCardPlacingException, GameStatusException, PlayerInitException;
+    throws IllegalCardPlacingException, GameStatusException, PlayerInitException,
+           GameBreakingException;
 
     void setObjectiveFor(String nickname, int cardID)
     throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException;

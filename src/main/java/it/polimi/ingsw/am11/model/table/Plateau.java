@@ -81,7 +81,7 @@ public class Plateau {
                         .forEach(
                                 player -> counterObjective.put(player, 0)
                         );
-        setStatus(GameStatus.STARTING); // FIXME may create problem if we remove players
+        setStatus(GameStatus.CHOOSING_STARTERS); // FIXME may create problem if we remove players
     }
 
     public void addPlayer(Player newPlayer) {
