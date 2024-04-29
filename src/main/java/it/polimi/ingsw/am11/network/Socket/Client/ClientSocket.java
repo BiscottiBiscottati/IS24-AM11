@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.network.Socket.Client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
@@ -26,34 +28,26 @@ public class ClientSocket {
         }
     }
 
-    public void sendString(String message) {
-        try {
-            out.println(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void startCommunication() {
+        SendCommand sendCommand = new SendCommand(out);
+        sendCommand.setNickname(nickname);
+        new Thread(() -> {
+            while (true) {
+                try {
+                    String message = in.readLine();
+                    readJSON(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 
-    public String receiveString() {
-        try {
-            return in.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void close() {
-        try {
-            in.close();
-            out.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void readJSON(String message) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(message);
+        String jsonString = mapper.writeValueAsString(jsonNode);
+        System.out.println(jsonString);
     }
 }

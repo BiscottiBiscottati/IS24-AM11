@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.network.RMI.GameControllerInterface;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +16,7 @@ public class GameController implements GameControllerInterface {
 
     public GameController(GameModel model) {
         this.model = model;
-        colors = Arrays.asList(PlayerColor.values());
+        colors = new ArrayList<>(Arrays.stream(PlayerColor.values()).toList());
         Collections.shuffle(colors);
     }
 
