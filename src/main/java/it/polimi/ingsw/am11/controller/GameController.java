@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +15,7 @@ public class GameController {
 
     public GameController(GameModel model) {
         this.model = model;
-        colors = Arrays.asList(PlayerColor.values());
+        colors = new ArrayList<>(Arrays.stream(PlayerColor.values()).toList());
         Collections.shuffle(colors);
     }
 
@@ -38,7 +39,7 @@ public class GameController {
     }
 
     public void addPlayer(String nickname)
-    throws PlayerInitException, GameStatusException, MaxPlayersReachedException {
+    throws PlayerInitException, GameStatusException, NumOfPlayersException {
         if (colors.isEmpty()) {
             throw new PlayerInitException("No more colors available");
         }

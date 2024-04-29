@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.network.Socket.Server;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.model.exceptions.MaxPlayersReachedException;
+import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.view.VirtualPlayerView;
 
@@ -50,7 +50,7 @@ public class ClientHandler implements Runnable {
             } catch (GameStatusException e) {
 
                 throw new RuntimeException(e);
-            } catch (MaxPlayersReachedException e) {
+            } catch (NumOfPlayersException e) {
                 throw new RuntimeException(e);
             }
         }
