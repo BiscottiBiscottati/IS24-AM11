@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.network.Socket.Server;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.view.VirtualPlayerView;
+import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 
 import java.io.IOException;
 

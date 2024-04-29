@@ -14,9 +14,9 @@ import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
-import it.polimi.ingsw.am11.view.TableViewUpdater;
 import it.polimi.ingsw.am11.view.events.DeckTopChangeEvent;
 import it.polimi.ingsw.am11.view.events.ShownPlayableEvent;
+import it.polimi.ingsw.am11.view.server.TableViewUpdater;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeSupport;

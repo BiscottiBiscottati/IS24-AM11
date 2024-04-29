@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.view;
+package it.polimi.ingsw.am11.view.server;
 
 import it.polimi.ingsw.am11.view.events.HandChangeEvent;
 import org.jetbrains.annotations.NotNull;

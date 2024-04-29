@@ -8,10 +8,10 @@ import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
-import it.polimi.ingsw.am11.view.PlayerViewUpdater;
-import it.polimi.ingsw.am11.view.TableViewUpdater;
-import it.polimi.ingsw.am11.view.VirtualPlayerView;
-import it.polimi.ingsw.am11.view.VirtualTableView;
+import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
+import it.polimi.ingsw.am11.view.server.TableViewUpdater;
+import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
+import it.polimi.ingsw.am11.view.server.VirtualTableView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

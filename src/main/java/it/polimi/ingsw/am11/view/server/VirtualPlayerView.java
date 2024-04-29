@@ -1,10 +1,11 @@
-package it.polimi.ingsw.am11.view;
+package it.polimi.ingsw.am11.view.server;
 
 import it.polimi.ingsw.am11.controller.CardController;
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.controller.GameController;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.network.PlayerConnector;
+import it.polimi.ingsw.am11.view.PlayerViewInterface;
 import org.jetbrains.annotations.NotNull;
 
 public class VirtualPlayerView implements PlayerViewInterface {

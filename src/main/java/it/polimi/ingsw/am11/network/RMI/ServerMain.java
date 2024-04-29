@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
-import it.polimi.ingsw.am11.view.VirtualPlayerView;
+import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;

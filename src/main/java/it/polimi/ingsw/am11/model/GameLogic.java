@@ -14,10 +14,10 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.model.table.PickablesTable;
 import it.polimi.ingsw.am11.model.table.Plateau;
-import it.polimi.ingsw.am11.view.PlayerViewUpdater;
-import it.polimi.ingsw.am11.view.TableViewUpdater;
 import it.polimi.ingsw.am11.view.events.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.events.HandChangeEvent;
+import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
+import it.polimi.ingsw.am11.view.server.TableViewUpdater;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeSupport;

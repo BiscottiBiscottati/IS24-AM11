@@ -2,9 +2,9 @@ package it.polimi.ingsw.am11.model.table;
 
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
-import it.polimi.ingsw.am11.view.TableViewUpdater;
 import it.polimi.ingsw.am11.view.events.GameStatusChangeEvent;
 import it.polimi.ingsw.am11.view.events.PlayerPointsChangeEvent;
+import it.polimi.ingsw.am11.view.server.TableViewUpdater;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

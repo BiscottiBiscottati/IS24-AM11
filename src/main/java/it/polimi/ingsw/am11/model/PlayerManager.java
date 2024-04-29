@@ -11,10 +11,10 @@ import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.view.PlayerViewUpdater;
 import it.polimi.ingsw.am11.view.events.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.events.HandChangeEvent;
 import it.polimi.ingsw.am11.view.events.TurnChangeEvent;
+import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeSupport;

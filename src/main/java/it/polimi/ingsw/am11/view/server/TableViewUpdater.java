@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.view;
+package it.polimi.ingsw.am11.view.server;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
