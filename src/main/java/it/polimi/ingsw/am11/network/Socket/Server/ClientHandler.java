@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.network.Socket.Server;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
+import it.polimi.ingsw.am11.model.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.view.VirtualPlayerView;
@@ -18,7 +18,6 @@ public class ClientHandler implements Runnable {
     private String nickname;
     private BufferedReader in;
     private PrintWriter out;
-    private ObjectMapper mapper;
     private VirtualPlayerView view;
     private ReceiveCommand receiveCommand;
 
@@ -43,14 +42,22 @@ public class ClientHandler implements Runnable {
                         .connectPlayer(nickname, sendCommand, sendCommand);
                 receiveCommand = new ReceiveCommand(view);
                 validNickname = true;
+                try {
+                    out.println("You");
+                    int numOfPlayers = Integer.parseInt(in.readLine());
+                    CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
+                    System.out.println("God player: " + nickname);
+                    System.out.println("Num of players: " + numOfPlayers);
+                } catch (NotGodPlayerException e) {
+                    out.println("NotYou");
+                    System.out.println("Not god player");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (PlayerInitException e) {
                 out.println("Invalid nickname. Please try again.");
-            } catch (GameStatusException e) {
+            } catch (GameStatusException | NumOfPlayersException e) {
 
-                throw new RuntimeException(e);
-            } catch (NumOfPlayersException e) {
                 throw new RuntimeException(e);
             }
         }

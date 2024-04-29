@@ -4,12 +4,13 @@ import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.concurrent.Executors;
 
 class TestCommunication {
 
     @Test
-    public void testClientServerCommunication() {
+    public void testClientServerCommunication() throws IOException {
 
         // Create a SocketManager instance
         SocketManager server = new SocketManager(12345);
@@ -19,15 +20,14 @@ class TestCommunication {
 
         // Create a ClientSocket instance
         ClientSocket client = new ClientSocket("localhost", 12345, "Ferdi");
+        ClientSocket client2 = new ClientSocket("localhost", 12345, "Edo");
 
-        // Send a message to the server
-        client.startCommunication();
-
-        // Wait for the server to receive the message
+        client.connect();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        client2.connect();
     }
 }

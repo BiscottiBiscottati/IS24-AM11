@@ -15,17 +15,10 @@ public class SendCommand {
         this.out = out;
     }
 
-    public void setNickname(String nickname) {
+    public void setStarterCard(boolean isRetro) {
         ObjectNode json = mapper.createObjectNode();
-        json.put("method", "setNickname");
-        json.put("nickname", nickname);
-        out.println(json);
-    }
-
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        ObjectNode json = mapper.createObjectNode();
-        json.put("method", "setNumberOfPlayers");
-        json.put("numberOfPlayers", numberOfPlayers);
+        json.put("method", "setStarterCard");
+        json.put("isRetro", isRetro);
         out.println(json);
     }
 

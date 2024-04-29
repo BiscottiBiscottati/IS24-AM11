@@ -16,6 +16,7 @@ public class ClientSocket {
     private PrintWriter out;
     private ObjectMapper mapper;
     private String nickname;
+    private SendCommand sendCommand;
 
     public ClientSocket(String ip, int port, String nickname) {
         try {
@@ -28,9 +29,22 @@ public class ClientSocket {
         }
     }
 
+    public void connect() {
+        out.println(nickname);
+        try {
+            String message = in.readLine();
+            if (message.equals("You")) {
+                out.println("2");
+            } else {
+                System.out.println("Not god player");
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void startCommunication() {
-        SendCommand sendCommand = new SendCommand(out);
-        sendCommand.setNickname(nickname);
         new Thread(() -> {
             while (true) {
                 try {
@@ -41,7 +55,6 @@ public class ClientSocket {
                 }
             }
         }).start();
-
     }
 
     public static void readJSON(String message) throws JsonProcessingException {
@@ -49,5 +62,15 @@ public class ClientSocket {
         JsonNode jsonNode = mapper.readTree(message);
         String jsonString = mapper.writeValueAsString(jsonNode);
         System.out.println(jsonString);
+    }
+
+    public void send(String message) {
+        switch (message) {
+            case "setStarterCard":
+                sendCommand.setStarterCard(true);
+                break;
+            default:
+                System.out.println("Invalid message");
+        }
     }
 }
