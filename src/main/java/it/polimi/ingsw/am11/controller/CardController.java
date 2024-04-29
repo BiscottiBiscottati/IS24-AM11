@@ -46,6 +46,10 @@ public class CardController {
     throws GameStatusException,
            PlayerInitException,
            IllegalCardPlacingException {
-        model.setStarterFor(nickname, isRetro);
+        try {
+            model.setStarterFor(nickname, isRetro);
+        } catch (GameBreakingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
