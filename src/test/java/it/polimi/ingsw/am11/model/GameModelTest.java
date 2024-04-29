@@ -130,7 +130,7 @@ class GameModelTest {
                                            .stream()
                                            .findFirst().orElseThrow());
             } catch (IllegalCardPlacingException | GameStatusException | PlayerInitException |
-                     IllegalPlayerSpaceActionException e) {
+                     IllegalPlayerSpaceActionException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -247,8 +247,8 @@ class GameModelTest {
                    .map(positions::containsAll)
                    .forEach(Assertions::assertTrue);
 
-        } catch (PlayerInitException | GameStatusException |
-                 IllegalCardPlacingException e) {
+        } catch (PlayerInitException | GameStatusException | IllegalCardPlacingException |
+                 GameBreakingException e) {
             throw new RuntimeException(e);
         }
 
