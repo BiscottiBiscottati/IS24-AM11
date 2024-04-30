@@ -8,6 +8,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Scanner;
 
 public class ClientMain {
 
@@ -17,18 +18,18 @@ public class ClientMain {
     public static void main(String[] args) throws RemoteException {
         System.out.println("Hello from Client!");
 
-        if (args.length > 0) {
-            nick = args[0];
-        }
-
         try {
             // Getting the registry
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", PORT);
             // Looking up the registry for the remote object
             Loggable stub = (Loggable) registry.lookup("Loggable");
             // Calling the remote method using the obtained object
+            System.out.print("insert nickname: ");
+            Scanner scanner = new Scanner(System.in);
+            String nick = scanner.nextLine();
             stub.login(nick);
             System.out.println("Remote method invoked");
+            new Thread().start();
         } catch (RemoteException | NotBoundException e) {
             System.err.println("Client exception: " + e);
             throw new RuntimeException(e);
@@ -36,4 +37,6 @@ public class ClientMain {
             throw new RuntimeException(e);
         }
     }
+
+
 }
