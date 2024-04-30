@@ -1,8 +1,7 @@
 package it.polimi.ingsw.am11.view.client;
 
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.ClientPlayerConnector;
-
-import java.util.Set;
 
 public class ClientPlayerView {
     private final String playerName;
@@ -17,14 +16,21 @@ public class ClientPlayerView {
     }
 
     void updateHand(int cardId, boolean removeMode) {
+
     }
 
     void updatePersonalObjective(int cardId, boolean removeMode) {
     }
 
-    void sendStarterCard(int cardId) {
+    void setStarterCard(boolean isRetro) {
     }
 
-    void sendCandidateObjective(Set<Integer> cardsId) {
+    void setPersonalObjective(int cardId) {
     }
+
+    void placeCard(Position pos, int cardId, boolean isRetro) {
+
+    }
+
+
 }
