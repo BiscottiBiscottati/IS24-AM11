@@ -37,7 +37,10 @@ public class ClientSocket {
                 out.println("2");
             } else {
                 System.out.println("Not god player");
-
+                JsonNode jsonNode = mapper.readTree(message);
+                if (jsonNode.get("method").asText().equals("Exception")) {
+                    System.out.println(jsonNode.get("message").asText());
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

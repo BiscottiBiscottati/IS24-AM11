@@ -3,18 +3,22 @@ package it.polimi.ingsw.am11.network.Socket.Server;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class ReceiveCommand {
 
     private final VirtualPlayerView playerView;
     private final ObjectMapper mapper;
+    private final SendException sendException;
 
-    public ReceiveCommand(VirtualPlayerView playerView) {
+    public ReceiveCommand(VirtualPlayerView playerView, PrintWriter out) {
         this.playerView = playerView;
         this.mapper = new ObjectMapper();
+        this.sendException = new SendException(out);
     }
 
     public void receive(String message) {
@@ -42,6 +46,36 @@ public class ReceiveCommand {
 
         } catch (IOException e) {
             System.out.println("Received invalid message.");
+        } catch (IllegalPlayerSpaceActionException e) {
+            sendException.IllegalPlayerSpaceActionException();
+            throw new RuntimeException(e);
+        } catch (TurnsOrderException e) {
+            sendException.TurnsOrderException();
+            throw new RuntimeException(e);
+        } catch (PlayerInitException e) {
+            sendException.PlayerInitException();
+            throw new RuntimeException(e);
+        } catch (IllegalCardPlacingException e) {
+            sendException.IllegalCardPlacingException();
+            throw new RuntimeException(e);
+        } catch (IllegalPickActionException e) {
+            sendException.IllegalPickActionException();
+            throw new RuntimeException(e);
+        } catch (NotInHandException e) {
+            sendException.NotInHandException();
+            throw new RuntimeException(e);
+        } catch (EmptyDeckException e) {
+            sendException.EmptyDeckException();
+            throw new RuntimeException(e);
+        } catch (IllegalPlateauActionException e) {
+            sendException.IllegalPlateauActionException();
+            throw new RuntimeException(e);
+        } catch (MaxHandSizeException e) {
+            sendException.MaxHandSizeException();
+            throw new RuntimeException(e);
+        } catch (GameStatusException e) {
+            sendException.GameStatusException();
+            throw new RuntimeException(e);
         }
     }
 
