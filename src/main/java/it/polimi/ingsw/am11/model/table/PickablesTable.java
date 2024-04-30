@@ -14,17 +14,16 @@ import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
-import it.polimi.ingsw.am11.view.events.DeckTopChangeEvent;
-import it.polimi.ingsw.am11.view.events.ShownPlayableEvent;
+import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
+import it.polimi.ingsw.am11.view.events.view.table.DeckTopChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.ShownPlayableEvent;
 import it.polimi.ingsw.am11.view.server.TableViewUpdater;
 import org.jetbrains.annotations.NotNull;
 
-import java.beans.PropertyChangeSupport;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PickablesTable {
@@ -38,7 +37,7 @@ public class PickablesTable {
     private final Set<ObjectiveCard> commonObjectives;
     private final Set<GoldCard> shownGold;
     private final Set<ResourceCard> shownResources;
-    private final PropertyChangeSupport pcs;
+    private final GameListenerSupport pcs;
 
     public PickablesTable() {
         this.goldDeck = GoldDeckFactory.createDeck();
@@ -50,7 +49,7 @@ public class PickablesTable {
         this.shownGold = new HashSet<>(numOfShownPerType << 1);
         this.shownResources = new HashSet<>(numOfShownPerType << 1);
 
-        this.pcs = new PropertyChangeSupport(this);
+        this.pcs = new GameListenerSupport();
     }
 
     public static void setNumOfObjectives(int numOfObjectives) {
@@ -83,30 +82,28 @@ public class PickablesTable {
 
     public @NotNull PlayableCard drawPlayableFrom(@NotNull PlayableCardType type)
     throws EmptyDeckException {
-        return switch (type) {
+        PlayableCard card = null;
+        DeckTopChangeEvent event = null;
+        switch (type) {
             case GOLD -> {
-                GoldCard gold = goldDeck.draw().orElseThrow(
+                card = goldDeck.draw().orElseThrow(
                         () -> new EmptyDeckException("Gold deck is empty!"));
-                pcs.firePropertyChange(new DeckTopChangeEvent(
-                        getDeckTop(PlayableCardType.GOLD),
+                event = new DeckTopChangeEvent(
                         PlayableCardType.GOLD,
-                        gold.getColor(),
-                        getDeckTop(PlayableCardType.GOLD).orElse(null)
-                ));
-                yield gold;
+                        card.getColor(),
+                        getDeckTop(PlayableCardType.GOLD).orElse(null));
             }
             case RESOURCE -> {
-                ResourceCard resource = resourceDeck.draw().orElseThrow(
+                card = resourceDeck.draw().orElseThrow(
                         () -> new EmptyDeckException("Resource deck is empty!"));
-                pcs.firePropertyChange(new DeckTopChangeEvent(
-                        getDeckTop(PlayableCardType.RESOURCE),
+                event = new DeckTopChangeEvent(
                         PlayableCardType.RESOURCE,
-                        resource.getColor(),
-                        getDeckTop(PlayableCardType.RESOURCE).orElse(null)
-                ));
-                yield resource;
+                        card.getColor(),
+                        getDeckTop(PlayableCardType.RESOURCE).orElse(null));
             }
-        };
+        }
+        pcs.fireEvent(event);
+        return card;
     }
 
     public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
@@ -185,16 +182,12 @@ public class PickablesTable {
                 Optional<GoldCard> gold = goldDeck.draw();
                 gold.ifPresent(shownGold::add);
 
-                pcs.firePropertyChange(new ShownPlayableEvent(
-                        this.shownGold.stream()
-                                      .map(PlayableCard::getId)
-                                      .collect(Collectors.toUnmodifiableSet()),
+                pcs.fireEvent(new ShownPlayableEvent(
                         PlayableCardType.GOLD,
                         goldCard.getId(),
                         gold.map(PlayableCard::getId).orElse(null)
                 ));
-                pcs.firePropertyChange(new DeckTopChangeEvent(
-                        getDeckTop(PlayableCardType.GOLD),
+                pcs.fireEvent(new DeckTopChangeEvent(
                         PlayableCardType.GOLD,
                         gold.map(PlayableCard::getColor).orElse(null),
                         getDeckTop(PlayableCardType.GOLD).orElse(null)
@@ -206,16 +199,12 @@ public class PickablesTable {
                 Optional<ResourceCard> resource = resourceDeck.draw();
                 resource.ifPresent(shownResources::add);
 
-                pcs.firePropertyChange(new ShownPlayableEvent(
-                        this.shownResources.stream()
-                                           .map(PlayableCard::getId)
-                                           .collect(Collectors.toUnmodifiableSet()),
+                pcs.fireEvent(new ShownPlayableEvent(
                         PlayableCardType.RESOURCE,
                         resourceCard.getId(),
                         resource.map(PlayableCard::getId).orElse(null)
                 ));
-                pcs.firePropertyChange(new DeckTopChangeEvent(
-                        getDeckTop(PlayableCardType.RESOURCE),
+                pcs.fireEvent(new DeckTopChangeEvent(
                         PlayableCardType.RESOURCE,
                         resource.map(PlayableCard::getColor).orElse(null),
                         getDeckTop(PlayableCardType.RESOURCE).orElse(null)
@@ -240,11 +229,11 @@ public class PickablesTable {
     }
 
     public void addListener(TableViewUpdater listener) {
-        pcs.addPropertyChangeListener(listener);
+        pcs.addListener(listener);
     }
 
     public void removeListener(TableViewUpdater listener) {
-        pcs.removePropertyChangeListener(listener);
+        pcs.removeListener(listener);
     }
 
 }

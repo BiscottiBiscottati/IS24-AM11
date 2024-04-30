@@ -14,13 +14,13 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.model.table.PickablesTable;
 import it.polimi.ingsw.am11.model.table.Plateau;
-import it.polimi.ingsw.am11.view.events.FieldChangeEvent;
-import it.polimi.ingsw.am11.view.events.HandChangeEvent;
+import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
+import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
 import it.polimi.ingsw.am11.view.server.TableViewUpdater;
 import org.jetbrains.annotations.NotNull;
 
-import java.beans.PropertyChangeSupport;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,7 +31,7 @@ public class GameLogic implements GameModel {
     private final PlayerManager playerManager;
     private final PickablesTable pickablesTable;
     private final Plateau plateau;
-    private final PropertyChangeSupport pcs;
+    private final GameListenerSupport pcs;
 
     public GameLogic() {
         ruleSet = new BasicRuleset();
@@ -39,7 +39,7 @@ public class GameLogic implements GameModel {
         this.playerManager = new PlayerManager();
         this.pickablesTable = new PickablesTable();
         this.plateau = new Plateau();
-        this.pcs = new PropertyChangeSupport(this);
+        this.pcs = new GameListenerSupport();
     }
 
     private void setConstants() {
@@ -423,13 +423,13 @@ public class GameLogic implements GameModel {
     @Override // DONE
     public void removePlayer(@NotNull String nickname)
     throws GameStatusException {
+        // FIXME may not even be needed as a method
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
         playerManager.getPlayer(nickname).ifPresent(plateau::removePlayer);
         playerManager.removePlayer(nickname);
-        Arrays.stream(pcs.getPropertyChangeListeners(nickname))
-              .forEach(pcs::removePropertyChangeListener);
+        pcs.removeListener(nickname); // FIXME for table listeners
     }
 
     /**
@@ -485,6 +485,7 @@ public class GameLogic implements GameModel {
                                                  .orElseThrow(() -> new PlayerInitException(
                                                          "Player not found"))
                                                  .space();
+        //TODO pcs
         playerSpace.removeCandidateObjective(cardID);
         playerSpace.addObjective(objectiveCard);
         if (playerManager.areObjectiveChoosed()) {
@@ -544,16 +545,13 @@ public class GameLogic implements GameModel {
                         () -> new NotInHandException("Card not in hand"));
         player.space().pickCard(cardID);
 
-        pcs.firePropertyChange(new HandChangeEvent(playerManager.getHand(nickname), nickname,
-                                                   cardID, null));
+        pcs.fireEvent(new HandChangeEvent(nickname, cardID, null));
 
         points = player.field().place(card, position, isRetro);
 
-        pcs.firePropertyChange(new FieldChangeEvent(player.field().getCardsPositioned(),
-                                                    nickname,
-                                                    null,
-                                                    Map.entry(position,
-                                                              CardContainer.of(card, isRetro))));
+        pcs.fireEvent(new FieldChangeEvent(nickname,
+                                           null,
+                                           Map.entry(position, CardContainer.of(card, isRetro))));
 
         player.space().setCardBeenPlaced(true);
 
@@ -577,8 +575,7 @@ public class GameLogic implements GameModel {
             PlayableCard card = pickablesTable.drawPlayableFrom(type);
             playerSpace.addCardToHand(card);
 
-            pcs.firePropertyChange(new HandChangeEvent(playerManager.getHand(nickname), nickname,
-                                                       null, card.getId()));
+            pcs.fireEvent(new HandChangeEvent(nickname, null, card.getId()));
 
             goNextTurn();
             return card.getId();
@@ -701,9 +698,7 @@ public class GameLogic implements GameModel {
                 PlayableCard card = pickablesTable.pickPlayableVisible(cardID);
                 playerSpace.addCardToHand(card);
 
-                pcs.firePropertyChange(
-                        new HandChangeEvent(playerManager.getHand(nickname), nickname,
-                                            null, card.getId()));
+                pcs.fireEvent(new HandChangeEvent(nickname, null, card.getId()));
 
                 goNextTurn();
             } else {
@@ -783,7 +778,7 @@ public class GameLogic implements GameModel {
 
     @Override
     public void addPlayerListener(PlayerViewUpdater listener, String nickname) {
-        pcs.addPropertyChangeListener(nickname, listener);
+        pcs.addListener(nickname, listener);
     }
 
     @Override

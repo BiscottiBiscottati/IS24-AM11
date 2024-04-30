@@ -2,12 +2,11 @@ package it.polimi.ingsw.am11.model.table;
 
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
-import it.polimi.ingsw.am11.view.events.GameStatusChangeEvent;
-import it.polimi.ingsw.am11.view.events.PlayerPointsChangeEvent;
+import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
+import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.PlayerPointsChangeEvent;
 import it.polimi.ingsw.am11.view.server.TableViewUpdater;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +17,7 @@ public class Plateau {
     private final Map<Player, Integer> playerPoints;
     private final Map<Player, Integer> counterObjective;
     private final Map<Player, Integer> finalLeaderboard;
-    private final PropertyChangeSupport pcs;
+    private final GameListenerSupport pcs;
     private GameStatus status;
 
 
@@ -27,7 +26,7 @@ public class Plateau {
         this.counterObjective = new HashMap<>(3);
         this.status = GameStatus.SETUP;
         this.finalLeaderboard = new HashMap<>(8);
-        this.pcs = new PropertyChangeSupport(this);
+        this.pcs = new GameListenerSupport();
     }
 
     public GameStatus getStatus() {
@@ -37,11 +36,7 @@ public class Plateau {
     public void setStatus(GameStatus status) {
         GameStatus oldValue = this.status;
         this.status = status;
-        pcs.firePropertyChange(new GameStatusChangeEvent(
-                status,
-                oldValue,
-                status
-        ));
+        pcs.fireEvent(new GameStatusChangeEvent(oldValue, status));
     }
 
     public boolean isArmageddonTime() {
@@ -66,8 +61,7 @@ public class Plateau {
         playerPoints.keySet()
                     .forEach(player -> {
                         playerPoints.put(player, 0);
-                        pcs.firePropertyChange(new PlayerPointsChangeEvent(
-                                Map.copyOf(playerPoints),
+                        pcs.fireEvent(new PlayerPointsChangeEvent(
                                 player.nickname(),
                                 null,
                                 0
@@ -97,10 +91,10 @@ public class Plateau {
             temp += points;
             playerPoints.put(player, temp);
 
-            pcs.firePropertyChange(new PlayerPointsChangeEvent(Map.copyOf(playerPoints),
-                                                               player.nickname(),
-                                                               temp - points,
-                                                               temp));
+            pcs.fireEvent(new PlayerPointsChangeEvent(
+                    player.nickname(),
+                    temp - points,
+                    temp));
         }
         if (temp >= armageddonTime && status == GameStatus.ONGOING) {
             setStatus(GameStatus.ARMAGEDDON);
@@ -178,11 +172,11 @@ public class Plateau {
     }
 
     public void addListener(TableViewUpdater listener) {
-        pcs.addPropertyChangeListener(listener);
+        pcs.addListener(listener);
     }
 
-    public void removeListener(PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(listener);
+    public void removeListener(TableViewUpdater listener) {
+        pcs.removeListener(listener);
     }
 
 }

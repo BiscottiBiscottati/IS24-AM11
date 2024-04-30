@@ -1,8 +1,13 @@
 package it.polimi.ingsw.am11.view.server;
 
-import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.TableConnector;
-import it.polimi.ingsw.am11.view.events.*;
+import it.polimi.ingsw.am11.view.events.view.table.PlayerPointsChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.ShownPlayableEvent;
+import it.polimi.ingsw.am11.view.events.view.table.TurnChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.CommonObjectiveChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.DeckTopChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -23,15 +28,8 @@ public class VirtualTableView {
         this.connectors.remove(nickname);
     }
 
+    //TODO methods to finish
     public void updateTable(FieldChangeEvent fieldChangeEvent) {
-        String nickname = fieldChangeEvent.getPropertyName();
-        boolean removeMode = fieldChangeEvent.getNewValue() == null;
-        Position position;
-        int cardId;
-        if (removeMode) {
-
-
-        }
     }
 
     public void updateTable(CommonObjectiveChangeEvent commonObjectiveChangeEvent) {
@@ -48,6 +46,14 @@ public class VirtualTableView {
 
     public void updateTable(ShownPlayableEvent shownPlayableEvent) {
         System.out.println("ShownPlayableEvent");
+    }
+
+    public void updateTable(GameStatusChangeEvent gameStatusChangeEvent) {
+        System.out.println("GameStatusChangeEvent");
+    }
+
+    public void updateTable(TurnChangeEvent turnChangeEvent) {
+        System.out.println("TurnChangeEvent");
     }
 
 }

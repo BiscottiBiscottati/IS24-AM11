@@ -11,13 +11,14 @@ import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.view.events.FieldChangeEvent;
-import it.polimi.ingsw.am11.view.events.HandChangeEvent;
-import it.polimi.ingsw.am11.view.events.TurnChangeEvent;
-import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
+import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
+import it.polimi.ingsw.am11.view.events.listeners.TableListener;
+import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
+import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.TurnChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.beans.PropertyChangeSupport;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class PlayerManager {
     private static int maxNumberOfPlayers;
     private final Map<String, Player> players;
     private final Queue<Player> playerQueue;
-    private final PropertyChangeSupport pcs;
+    private final GameListenerSupport pcs;
     private final Set<Player> unavailablePlayers;
     private Player firstPlayer;
     private Player currentPlaying;
@@ -34,7 +35,7 @@ public class PlayerManager {
         this.players = new HashMap<>(8);
         this.playerQueue = new ArrayDeque<>(maxNumberOfPlayers);
         this.unavailablePlayers = new HashSet<>(8);
-        this.pcs = new PropertyChangeSupport(this);
+        this.pcs = new GameListenerSupport();
     }
 
     public static void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
@@ -212,9 +213,7 @@ public class PlayerManager {
             peeked = playerQueue.element();
         }
         currentPlaying = playerQueue.element();
-        pcs.firePropertyChange(new TurnChangeEvent(List.copyOf(playerQueue),
-                                                   null,
-                                                   currentPlaying.nickname()));
+        pcs.fireEvent(new TurnChangeEvent(null, currentPlaying.nickname()));
     }
 
     public boolean isFirstTheCurrent() {
@@ -230,11 +229,7 @@ public class PlayerManager {
             playerQueue.remove();
             currentPlaying.space().setCardBeenPlaced(false);
 
-            pcs.firePropertyChange(new TurnChangeEvent(List.copyOf(playerQueue),
-                                                       previousPlayer,
-                                                       currentPlaying.nickname()));
-        } while (unavailablePlayers.contains(currentPlaying));
-
+            pcs.fireEvent(new TurnChangeEvent(previousPlayer, currentPlaying.nickname()));} while (unavailablePlayers.contains(currentPlaying));
     }
 
     public void resetAll() {
@@ -248,14 +243,12 @@ public class PlayerManager {
                .forEach(PlayerField::clearAll);
 
         players.forEach((name, player) -> {
-            pcs.firePropertyChange(new HandChangeEvent(
-                    player.space().getPlayerHand(),
+            pcs.fireEvent(new HandChangeEvent(
                     name,
                     null,
                     null
             ));
-            pcs.firePropertyChange(new FieldChangeEvent(
-                    player.field().getCardsPositioned(),
+            pcs.fireEvent(new FieldChangeEvent(
                     name,
                     null,
                     null
@@ -282,12 +275,18 @@ public class PlayerManager {
     }
 
 
-    public void addListener(PlayerViewUpdater listener) {
-        pcs.addPropertyChangeListener(listener);
+    public void addListener(String player, PlayerListener playerListener,
+                            TableListener tableListener) {
+        pcs.addListener(player, playerListener);
+        pcs.addListener(tableListener);
     }
 
-    public void removeListener(PlayerViewUpdater listener) {
-        pcs.removePropertyChangeListener(listener);
+    public void removeListener(PlayerListener listener) {
+        pcs.removeListener(listener);
+    }
+
+    public void removeListener(TableListener listener) {
+        pcs.removeListener(listener);
     }
 
 }

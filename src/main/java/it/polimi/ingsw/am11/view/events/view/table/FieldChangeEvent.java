@@ -1,30 +1,39 @@
-package it.polimi.ingsw.am11.view.events;
+package it.polimi.ingsw.am11.view.events.view.table;
 
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.view.events.TableViewEvent;
+import it.polimi.ingsw.am11.view.server.VirtualTableView;
+import org.jetbrains.annotations.NotNull;
 
-import java.beans.PropertyChangeEvent;
 import java.util.Map;
 
-public class FieldChangeEvent extends PropertyChangeEvent {
+public class FieldChangeEvent extends TableViewEvent {
+
+    private final String player;
     private final Map.Entry<Position, CardContainer> oldValue;
     private final Map.Entry<Position, CardContainer> newValue;
 
-    public FieldChangeEvent(Object source, String player,
+    public FieldChangeEvent(String player,
                             Map.Entry<Position, CardContainer> oldValue,
                             Map.Entry<Position, CardContainer> newValue) {
-        super(source, player, oldValue, newValue);
+        this.player = player;
         this.oldValue = oldValue;
         this.newValue = newValue;
     }
 
     @Override
-    public Map.Entry<Position, CardContainer> getNewValue() {
-        return this.newValue;
+    public void updateView(@NotNull VirtualTableView virtualView) {
+        virtualView.updateTable(this);
     }
 
     @Override
     public Map.Entry<Position, CardContainer> getOldValue() {
         return this.oldValue;
+    }
+
+    @Override
+    public Map.Entry<Position, CardContainer> getNewValue() {
+        return this.newValue;
     }
 }
