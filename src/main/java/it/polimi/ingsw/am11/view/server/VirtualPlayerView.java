@@ -4,6 +4,8 @@ import it.polimi.ingsw.am11.controller.CardController;
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.controller.GameController;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.view.PlayerViewInterface;
 import org.jetbrains.annotations.NotNull;
@@ -25,15 +27,25 @@ public class VirtualPlayerView implements PlayerViewInterface {
         this.nickname = nickname;
     }
 
-    public void setStarterCard(boolean isRetro) {
+    public void setStarterCard(boolean isRetro)
+    throws PlayerInitException, IllegalCardPlacingException, GameStatusException {
+        cardController.setStarterFor(nickname, isRetro);
     }
 
-    public void setObjectiveCard(int cardId) {
+    public void setObjectiveCard(int cardId)
+    throws IllegalPlayerSpaceActionException, PlayerInitException, GameStatusException {
+        cardController.setObjectiveFor(nickname, cardId);
     }
 
-    public void placeCard(int cardId, int x, int y, boolean isRetro) {
+    public void placeCard(int cardId, int x, int y, boolean isRetro)
+    throws TurnsOrderException, PlayerInitException, IllegalCardPlacingException,
+           NotInHandException, IllegalPlateauActionException, GameStatusException {
+        cardController.placeCard(nickname, cardId, Position.of(x, y), isRetro);
     }
 
-    public void drawCard(boolean fromVisible, PlayableCardType type, int cardId) {
+    public void drawCard(boolean fromVisible, PlayableCardType type, int cardId)
+    throws IllegalPlayerSpaceActionException, TurnsOrderException, IllegalPickActionException,
+           PlayerInitException, EmptyDeckException, MaxHandSizeException, GameStatusException {
+        cardController.drawCard(fromVisible, type, nickname, cardId);
     }
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
@@ -64,11 +63,12 @@ public class SendCommand implements PlayerConnector, TableConnector {
     }
 
     @Override
-    public void updateField(String nickname, Position position, int cardId, boolean removeMode) {
+    public void updateField(String nickname, int x, int y, int cardId, boolean removeMode) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateField");
         json.put("nickname", nickname);
-        json.put("position", position.toString());
+        json.put("x", x);
+        json.put("y", y);
         json.put("cardId", cardId);
         json.put("removeMode", removeMode);
         out.println(json);

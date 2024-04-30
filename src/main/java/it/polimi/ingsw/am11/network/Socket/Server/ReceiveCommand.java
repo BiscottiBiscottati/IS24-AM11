@@ -21,6 +21,7 @@ public class ReceiveCommand {
         try {
             JsonNode jsonNode = mapper.readTree(message);
             switch (jsonNode.get("method").asText()) {
+                // FIXME add exception handling for communicating errors to the client
                 case "setStarterCard":
                     playerView.setStarterCard(jsonNode.get("isRetro").asBoolean());
                     break;
