@@ -25,7 +25,6 @@ public class ReceiveCommand {
         try {
             JsonNode jsonNode = mapper.readTree(message);
             switch (jsonNode.get("method").asText()) {
-                // FIXME add exception handling for communicating errors to the client
                 case "setStarterCard":
                     playerView.setStarterCard(jsonNode.get("isRetro").asBoolean());
                     break;
@@ -48,34 +47,24 @@ public class ReceiveCommand {
             System.out.println("Received invalid message.");
         } catch (IllegalPlayerSpaceActionException e) {
             sendException.IllegalPlayerSpaceActionException();
-            throw new RuntimeException(e);
         } catch (TurnsOrderException e) {
             sendException.TurnsOrderException();
-            throw new RuntimeException(e);
         } catch (PlayerInitException e) {
             sendException.PlayerInitException();
-            throw new RuntimeException(e);
         } catch (IllegalCardPlacingException e) {
             sendException.IllegalCardPlacingException();
-            throw new RuntimeException(e);
         } catch (IllegalPickActionException e) {
             sendException.IllegalPickActionException();
-            throw new RuntimeException(e);
         } catch (NotInHandException e) {
             sendException.NotInHandException();
-            throw new RuntimeException(e);
         } catch (EmptyDeckException e) {
             sendException.EmptyDeckException();
-            throw new RuntimeException(e);
         } catch (IllegalPlateauActionException e) {
             sendException.IllegalPlateauActionException();
-            throw new RuntimeException(e);
         } catch (MaxHandSizeException e) {
             sendException.MaxHandSizeException();
-            throw new RuntimeException(e);
         } catch (GameStatusException e) {
             sendException.GameStatusException();
-            throw new RuntimeException(e);
         }
     }
 
