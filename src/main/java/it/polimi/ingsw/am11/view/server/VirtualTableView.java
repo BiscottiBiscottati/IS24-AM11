@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.view.server;
 
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.TableConnector;
 import it.polimi.ingsw.am11.view.events.*;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +24,14 @@ public class VirtualTableView {
     }
 
     public void updateTable(FieldChangeEvent fieldChangeEvent) {
-        System.out.println("FieldChangeEvent");
+        String nickname = fieldChangeEvent.getPropertyName();
+        boolean removeMode = fieldChangeEvent.getNewValue() == null;
+        Position position;
+        int cardId;
+        if (removeMode) {
+
+
+        }
     }
 
     public void updateTable(CommonObjectiveChangeEvent commonObjectiveChangeEvent) {

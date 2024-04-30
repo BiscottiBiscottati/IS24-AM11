@@ -2,7 +2,6 @@ package it.polimi.ingsw.am11.network.RMI;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
@@ -41,7 +40,7 @@ public class MessageManager implements PlayerConnector, TableConnector {
     }
 
     @Override
-    public void updateField(String nickname, Position position, int cardId, boolean removeMode) {
+    public void updateField(String nickname, int x, int y, int cardId, boolean removeMode) {
 
     }
 
