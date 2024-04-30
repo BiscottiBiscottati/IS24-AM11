@@ -81,6 +81,14 @@ public enum CentralController {
         numOfPlayers = val;
     }
 
+    public void playerDisconnected(String nickname) {
+        model.addUnavailablePlayer(nickname);
+    }
+
+    public void playerReconnected(String nickname) {
+        model.playerIsNowAvailable(nickname);
+    }
+
     public @Nullable String getGodPlayer() {
         return godPlayer;
     }

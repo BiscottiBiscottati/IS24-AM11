@@ -300,6 +300,7 @@ public class GameLogic implements GameModel {
                       .collect(Collectors.toUnmodifiableSet());
     }
 
+
     /**
      * This method initialize a new game, it has to be called after all the players have joined the
      * games This method shuffle the players Set in order to randomize the turns order, it chooses
@@ -660,6 +661,8 @@ public class GameLogic implements GameModel {
             plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
             throw new GameStatusException("the game is not ongoing");
         }
+
+        //check if it's armageddon time
         if (Stream.of(PlayableCardType.values())
                   .map(pickablesTable::getDeckTop)
                   .allMatch(Optional::isEmpty) &&
@@ -667,6 +670,8 @@ public class GameLogic implements GameModel {
             plateau.activateArmageddon();
         }
         playerManager.goNextTurn();
+
+        //handle game end
         if (plateau.getStatus() == GameStatus.LAST_TURN && playerManager.isFirstTheCurrent()) {
             plateau.setStatus(GameStatus.ENDED);
             try {
@@ -787,12 +792,34 @@ public class GameLogic implements GameModel {
         pickablesTable.addListener(listener);
     }
 
+    @Override
+    public void addUnavailablePlayer(String nickname) {
+        Player player = playerManager.getPlayer(nickname).orElseThrow();
+        playerManager.addUnavailablePlayer(player);
+        if (Objects.equals(playerManager.getCurrentTurnPlayer().orElse(null), nickname)) {
+            try {
+                goNextTurn();
+            } catch (GameBreakingException e) {
+                throw new RuntimeException(e);
+            } catch (GameStatusException ignored) {
+
+            }
+        }
+    }
+
+    @Override
+    public void playerIsNowAvailable(String nickname) {
+        Player player = playerManager.getPlayer(nickname).orElseThrow();
+        playerManager.playerIsNowAvailable(player);
+    }
+
     /**
      * Pick a <code>ObjectiveCard</code> from the deck on the <code>PickableTable</code>.
      *
      * @throws EmptyDeckException  if the deck of  <code>ObjectiveCard</code> is empty
      * @throws GameStatusException if the game is not ongoing
      */
+
     private void pickCandidateObjectives(@NotNull String nickname)
     throws EmptyDeckException, GameStatusException, PlayerInitException,
            IllegalPickActionException {

@@ -26,12 +26,14 @@ public class PlayerManager {
     private final Map<String, Player> players;
     private final Queue<Player> playerQueue;
     private final PropertyChangeSupport pcs;
+    private final Set<Player> unavailablePlayers;
     private Player firstPlayer;
     private Player currentPlaying;
 
     public PlayerManager() {
         this.players = new HashMap<>(8);
         this.playerQueue = new ArrayDeque<>(maxNumberOfPlayers);
+        this.unavailablePlayers = new HashSet<>(8);
         this.pcs = new PropertyChangeSupport(this);
     }
 
@@ -120,6 +122,14 @@ public class PlayerManager {
         } else {
             throw new PlayerInitException("Player " + nickname + " not found");
         }
+    }
+
+    public void addUnavailablePlayer(Player player) {
+        unavailablePlayers.add(player);
+    }
+
+    public void playerIsNowAvailable(Player player) {
+        unavailablePlayers.remove(player);
     }
 
     public void setStarterCard(@NotNull String nickname, @NotNull StarterCard starter)
@@ -212,14 +222,19 @@ public class PlayerManager {
     }
 
     public void goNextTurn() {
-        String previousPlayer = currentPlaying.nickname();
-        playerQueue.remove();
-        playerQueue.offer(currentPlaying);
-        currentPlaying = playerQueue.element();
-        currentPlaying.space().setCardBeenPlaced(false);
-        pcs.firePropertyChange(new TurnChangeEvent(List.copyOf(playerQueue),
-                                                   previousPlayer,
-                                                   currentPlaying.nickname()));
+
+        do {
+            String previousPlayer = currentPlaying.nickname();
+            playerQueue.offer(currentPlaying);
+            currentPlaying = playerQueue.element();
+            playerQueue.remove();
+            currentPlaying.space().setCardBeenPlaced(false);
+
+            pcs.firePropertyChange(new TurnChangeEvent(List.copyOf(playerQueue),
+                                                       previousPlayer,
+                                                       currentPlaying.nickname()));
+        } while (unavailablePlayers.contains(currentPlaying));
+
     }
 
     public void resetAll() {
@@ -266,6 +281,7 @@ public class PlayerManager {
         return isReady;
     }
 
+
     public void addListener(PlayerViewUpdater listener) {
         pcs.addPropertyChangeListener(listener);
     }
@@ -273,4 +289,5 @@ public class PlayerManager {
     public void removeListener(PlayerViewUpdater listener) {
         pcs.removePropertyChangeListener(listener);
     }
+
 }

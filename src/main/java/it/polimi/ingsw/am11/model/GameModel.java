@@ -102,4 +102,8 @@ public interface GameModel {
     void addPlayerListener(PlayerViewUpdater listener, String nickname);
 
     void addTableListener(TableViewUpdater listener);
+
+    void addUnavailablePlayer(String nickname);
+
+    void playerIsNowAvailable(String nickname);
 }
