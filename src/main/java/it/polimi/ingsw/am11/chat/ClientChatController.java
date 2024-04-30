@@ -1,16 +1,16 @@
 package it.polimi.ingsw.am11.chat;
 
-import it.polimi.ingsw.am11.view.client.ChatClientConnector;
+import it.polimi.ingsw.am11.network.ChatCltToNetConnector;
 
 public class ClientChatController {
 
     private final String nickname;
-    private final ChatClientConnector chatClientConnector;
+    private final ChatCltToNetConnector chatCltToNetConnector;
 
     public ClientChatController(String nickname,
-                                ChatClientConnector chatClientConnector) {
+                                ChatCltToNetConnector chatCltToNetConnector) {
         this.nickname = nickname;
-        this.chatClientConnector = chatClientConnector;
+        this.chatCltToNetConnector = chatCltToNetConnector;
     }
 
 
@@ -30,11 +30,11 @@ public class ClientChatController {
     }
 
     private void pubPrivMsg(String recipient, String msg) {
-        chatClientConnector.pubPrivMsg(nickname, recipient, msg);
+        chatCltToNetConnector.pubPrivMsg(nickname, recipient, msg);
     }
 
     private void pubMsg(String msg) {
-        chatClientConnector.pubMsg(nickname, msg);
+        chatCltToNetConnector.pubMsg(nickname, msg);
     }
 
     public void receiveMsg(String msg) {

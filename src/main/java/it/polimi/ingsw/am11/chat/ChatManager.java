@@ -1,15 +1,15 @@
 package it.polimi.ingsw.am11.chat;
 
-import it.polimi.ingsw.am11.network.ChatConnector;
+import it.polimi.ingsw.am11.network.ChatSrvToCltConnector;
 
 import java.util.Set;
 
 public class ChatManager {
 
     private final Set<String> playerList;
-    private final ChatConnector chatConnector;
+    private final ChatSrvToCltConnector chatConnector;
 
-    public ChatManager(Set<String> playerList, ChatConnector chatConnector) {
+    public ChatManager(Set<String> playerList, ChatSrvToCltConnector chatConnector) {
         this.playerList = playerList;
         this.chatConnector = chatConnector;
     }

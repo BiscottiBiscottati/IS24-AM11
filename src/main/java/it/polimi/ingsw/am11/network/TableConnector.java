@@ -5,7 +5,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 
 public interface TableConnector {
-
+ 
     void updateDeckTop(PlayableCardType type, Color color);
 
     void updateField(String nickname, int x, int y, int cardId, boolean removeMode);

@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.network;
 
 import it.polimi.ingsw.am11.model.players.utils.Position;
 
-public interface ClientPlayerConnector {
+public interface CltToNetConnector {
 
     void updateHand(int cardId, boolean removeMode);
 
