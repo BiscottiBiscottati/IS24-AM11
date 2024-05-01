@@ -2,10 +2,10 @@ package it.polimi.ingsw.am11.model.table;
 
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
+import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.PlayerPointsChangeEvent;
-import it.polimi.ingsw.am11.view.server.TableViewUpdater;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -171,11 +171,11 @@ public class Plateau {
         return winners;
     }
 
-    public void addListener(TableViewUpdater listener) {
+    public void addListener(TableListener listener) {
         pcs.addListener(listener);
     }
 
-    public void removeListener(TableViewUpdater listener) {
+    public void removeListener(TableListener listener) {
         pcs.removeListener(listener);
     }
 

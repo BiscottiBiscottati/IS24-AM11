@@ -40,7 +40,8 @@ public class MessageManager implements PlayerConnector, TableConnector {
     }
 
     @Override
-    public void updateField(String nickname, int x, int y, int cardId, boolean removeMode) {
+    public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
+                            boolean removeMode) {
 
     }
 

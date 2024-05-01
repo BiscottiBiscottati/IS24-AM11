@@ -15,7 +15,8 @@ import java.util.Set;
  * @see PlayableCard
  * @see StarterCard
  */
-public sealed interface FieldCard permits PlayableCard, StarterCard {
+public sealed interface FieldCard extends CardIdentity
+        permits PlayableCard, StarterCard {
     /**
      * Checks whether the card's color is equal to the parameter.
      *

@@ -7,8 +7,8 @@ import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
-import it.polimi.ingsw.am11.view.server.TableViewUpdater;
+import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
+import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -99,9 +99,9 @@ public interface GameModel {
     Optional<Integer> getStarterCard(@NotNull String nickname)
     throws PlayerInitException, GameStatusException;
 
-    void addPlayerListener(PlayerViewUpdater listener, String nickname);
+    void addPlayerListener(String nickname, PlayerListener playerListener);
 
-    void addTableListener(TableViewUpdater listener);
+    void addTableListener(TableListener listener);
 
     void addUnavailablePlayer(String nickname);
 

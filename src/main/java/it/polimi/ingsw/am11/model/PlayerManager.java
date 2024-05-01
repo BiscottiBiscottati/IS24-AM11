@@ -229,7 +229,8 @@ public class PlayerManager {
             playerQueue.remove();
             currentPlaying.space().setCardBeenPlaced(false);
 
-            pcs.fireEvent(new TurnChangeEvent(previousPlayer, currentPlaying.nickname()));} while (unavailablePlayers.contains(currentPlaying));
+            pcs.fireEvent(new TurnChangeEvent(previousPlayer, currentPlaying.nickname()));
+        } while (unavailablePlayers.contains(currentPlaying));
     }
 
     public void resetAll() {
@@ -275,9 +276,11 @@ public class PlayerManager {
     }
 
 
-    public void addListener(String player, PlayerListener playerListener,
-                            TableListener tableListener) {
+    public void addListener(String player, PlayerListener playerListener) {
         pcs.addListener(player, playerListener);
+    }
+
+    public void addListener(TableListener tableListener) {
         pcs.addListener(tableListener);
     }
 

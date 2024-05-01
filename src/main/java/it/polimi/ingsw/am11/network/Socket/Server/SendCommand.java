@@ -63,13 +63,15 @@ public class SendCommand implements PlayerConnector, TableConnector {
     }
 
     @Override
-    public void updateField(String nickname, int x, int y, int cardId, boolean removeMode) {
+    public void updateField(String nickname, int x, int y, int cardId,
+                            boolean isRetro, boolean removeMode) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateField");
         json.put("nickname", nickname);
         json.put("x", x);
         json.put("y", y);
         json.put("cardId", cardId);
+        json.put("isRetro", isRetro);
         json.put("removeMode", removeMode);
         out.println(json);
     }

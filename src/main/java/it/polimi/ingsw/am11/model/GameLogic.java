@@ -14,11 +14,11 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.model.table.PickablesTable;
 import it.polimi.ingsw.am11.model.table.Plateau;
+import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
+import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
-import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
-import it.polimi.ingsw.am11.view.server.TableViewUpdater;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -777,14 +777,15 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void addPlayerListener(PlayerViewUpdater listener, String nickname) {
-        pcs.addListener(nickname, listener);
+    public void addPlayerListener(String nickname, PlayerListener playerListener) {
+        pcs.addListener(nickname, playerListener);
     }
 
     @Override
-    public void addTableListener(TableViewUpdater listener) {
+    public void addTableListener(TableListener listener) {
         plateau.addListener(listener);
         pickablesTable.addListener(listener);
+        playerManager.addListener(listener);
     }
 
     @Override

@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.view.events;
 
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 
-public abstract class PlayerViewEvent {
+public abstract class PlayerViewEvent extends ViewEvent {
 
     private final String player;
 
@@ -15,9 +15,5 @@ public abstract class PlayerViewEvent {
     }
 
     public abstract void updateView(VirtualPlayerView virtualView);
-
-    public abstract Object getOldValue();
-
-    public abstract Object getNewValue();
 
 }

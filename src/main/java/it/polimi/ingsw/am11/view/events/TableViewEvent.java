@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public abstract class TableViewEvent {
+public abstract class TableViewEvent extends ViewEvent {
 
 
     private final String player;
@@ -20,11 +20,8 @@ public abstract class TableViewEvent {
 
     public abstract void updateView(VirtualTableView virtualView);
 
-    public abstract Object getOldValue();
-
-    public abstract Object getNewValue();
-
     public Optional<String> getPlayer() {
         return Optional.ofNullable(player);
     }
+
 }
