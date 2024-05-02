@@ -11,7 +11,7 @@ public class PlayerAddedEvent extends TableViewEvent {
     private final List<String> players;
     private final String player;
 
-    public PlayerAddedEvent(List<String> players, String playerAdded) {
+    public PlayerAddedEvent(List<String> players, @NotNull String playerAdded) {
         super(playerAdded);
         this.player = playerAdded;
         this.players = players;
@@ -29,6 +29,11 @@ public class PlayerAddedEvent extends TableViewEvent {
 
     @Override
     public String getNewValue() {
+        return player;
+    }
+
+    @Override
+    public @NotNull String getValueOfAction() {
         return player;
     }
 }

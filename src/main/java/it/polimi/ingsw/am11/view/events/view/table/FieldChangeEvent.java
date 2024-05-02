@@ -36,4 +36,11 @@ public class FieldChangeEvent extends TableViewEvent {
     public Map.Entry<Position, CardContainer> getNewValue() {
         return this.newValue;
     }
+
+    @Override
+    public @NotNull Map.Entry<Position, CardContainer> getValueOfAction() {
+        if (oldValue != null) return oldValue;
+        if (newValue != null) return newValue;
+        throw new UnsupportedOperationException("both are null cannot be called");
+    }
 }

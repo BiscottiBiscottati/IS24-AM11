@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public class VirtualTableView {
@@ -27,27 +28,33 @@ public class VirtualTableView {
     }
 
     //TODO methods to finish
-    public void updateTable(@NotNull FieldChangeEvent fieldChangeEvent) {
-        Map.Entry<Position, CardContainer> entry = fieldChangeEvent.getNewValue();
-        ActionMode mode = fieldChangeEvent.getAction();
+    public void updateTable(@NotNull FieldChangeEvent event) {
+        AtomicReference<Map.Entry<Position, CardContainer>> entry = new AtomicReference<>();
+        ActionMode mode = event.getAction();
 
-        Consumer<TableConnector> function = null;
+        Consumer<TableConnector> function;
 
         switch (mode) {
-            case INSERTION -> function = connector -> connector.updateField(
-                    fieldChangeEvent.getPlayer().orElseThrow(),
-                    entry.getKey().x(),
-                    entry.getKey().y(),
-                    entry.getValue().getCard().getId(),
-                    entry.getValue().isRetro(),
-                    false);
-            case REMOVAL -> function = connector -> connector.updateField(
-                    fieldChangeEvent.getPlayer().orElseThrow(),
-                    entry.getKey().x(),
-                    entry.getKey().y(),
-                    entry.getValue().getCard().getId(),
-                    entry.getValue().isRetro(),
-                    true);
+            case INSERTION -> {
+                entry.set(event.getNewValue());
+                function = connector -> connector.updateField(
+                        event.getPlayer().orElseThrow(),
+                        entry.get().getKey().x(),
+                        entry.get().getKey().y(),
+                        entry.get().getValue().getCard().getId(),
+                        entry.get().getValue().isRetro(),
+                        false);
+            }
+            case REMOVAL -> function = connector -> {
+                entry.set(event.getOldValue());
+                connector.updateField(
+                        event.getPlayer().orElseThrow(),
+                        entry.get().getKey().x(),
+                        entry.get().getKey().y(),
+                        entry.get().getValue().getCard().getId(),
+                        entry.get().getValue().isRetro(),
+                        true);
+            };
             default -> {
                 System.out.println("Invalid ActionMode");
                 return;
@@ -60,32 +67,44 @@ public class VirtualTableView {
         connectors.values().forEach(action);
     }
 
-    public void updateTable(CommonObjectiveChangeEvent event) {
-        System.out.println("CommonObjectiveChangeEvent");
+    public void updateTable(@NotNull CommonObjectiveChangeEvent event) {
+        switch (event.getAction()) {
+            case INSERTION -> {
+                broadcast(connector -> connector.updateCommonObjective(event.getValueOfAction(),
+                                                                       false));
+            }
+            case REMOVAL -> {
+                broadcast(connector -> connector.updateCommonObjective(event.getValueOfAction(),
+                                                                       true));
+            }
+            default -> System.out.println("Invalid ActionMode");
+        }
     }
 
-    public void updateTable(DeckTopChangeEvent event) {
-        System.out.println("DeckTopChangeEvent");
+    public void updateTable(@NotNull DeckTopChangeEvent event) {
+        broadcast(connector -> connector.updateDeckTop(event.getCardType(),
+                                                       event.getNewValue()));
     }
 
-    public void updateTable(PlayerPointsChangeEvent event) {
-        System.out.println("PlayerPointsChangeEvent");
+    public void updateTable(@NotNull PlayerPointsChangeEvent event) {
+        broadcast(connector -> connector.updatePlayerPoint(event.getPlayer().orElseThrow(),
+                                                           event.getNewValue()));
     }
 
-    public void updateTable(ShownPlayableEvent event) {
-        System.out.println("ShownPlayableEvent");
+    public void updateTable(@NotNull ShownPlayableEvent event) {
+        broadcast(connector -> connector.updateShownPlayable(event.getOldValue(),
+                                                             event.getNewValue()));
     }
 
     public void updateTable(GameStatusChangeEvent event) {
-        System.out.println("GameStatusChangeEvent");
+        broadcast(connector -> connector.updateGameStatus(event.getNewValue()));
     }
 
-    public void updateTable(TurnChangeEvent event) {
-        System.out.println("TurnChangeEvent");
+    public void updateTable(@NotNull TurnChangeEvent event) {
+        broadcast(connector -> connector.updateTurnChange(event.getNewValue()));
     }
 
     public void updateTable(PlayerAddedEvent event) {
-        System.out.println("PlayerAddedEvent");
     }
 
 }

@@ -77,7 +77,7 @@ public class SendCommand implements PlayerConnector, TableConnector {
     }
 
     @Override
-    public void updateShownPlayable(int previousId, int currentId) {
+    public void updateShownPlayable(Integer previousId, Integer currentId) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateShownPlayable");
         json.put("previousId", previousId);

@@ -15,6 +15,7 @@ public class ServerMain implements Loggable, PlayerViewInterface {
 
     static int PORT = 1234;
 
+    // FIXME should not use nulls for VirtualPlayerView
     VirtualPlayerView view = new VirtualPlayerView(null, null);
 
     public static void main(String[] args) {

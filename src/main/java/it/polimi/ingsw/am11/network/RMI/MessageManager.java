@@ -46,7 +46,7 @@ public class MessageManager implements PlayerConnector, TableConnector {
     }
 
     @Override
-    public void updateShownPlayable(int previousId, int currentId) {
+    public void updateShownPlayable(Integer previousId, Integer currentId) {
 
     }
 

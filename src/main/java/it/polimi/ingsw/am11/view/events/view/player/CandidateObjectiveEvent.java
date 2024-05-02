@@ -13,7 +13,7 @@ public class CandidateObjectiveEvent extends PlayerViewEvent {
     private final Set<Integer> newCardsId;
 
     public CandidateObjectiveEvent(String player, Set<Integer> oldCardsId,
-                                   Set<Integer> newCardsId) {
+                                   @NotNull Set<Integer> newCardsId) {
         super(player);
         this.oldCardsId = oldCardsId;
         this.newCardsId = newCardsId;
@@ -30,7 +30,16 @@ public class CandidateObjectiveEvent extends PlayerViewEvent {
     }
 
     @Override
-    public Set<Integer> getNewValue() {
+    public @NotNull Set<Integer> getNewValue() {
         return newCardsId;
     }
+
+    @Override
+    public @NotNull Set<Integer> getValueOfAction() {
+        if (oldCardsId != null) return oldCardsId;
+        if (newCardsId != null) return newCardsId;
+        throw new UnsupportedOperationException("both are null cannot be called");
+    }
+
+
 }

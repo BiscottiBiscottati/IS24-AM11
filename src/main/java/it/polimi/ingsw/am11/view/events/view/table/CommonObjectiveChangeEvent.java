@@ -29,4 +29,13 @@ public class CommonObjectiveChangeEvent extends TableViewEvent {
     public Integer getNewValue() {
         return newCardId;
     }
+
+    @Override
+    public @NotNull Integer getValueOfAction() {
+        if (oldCardId != null) return oldCardId;
+        if (newCardId != null) return newCardId;
+        throw new UnsupportedOperationException("both are null cannot be called");
+    }
+
+
 }

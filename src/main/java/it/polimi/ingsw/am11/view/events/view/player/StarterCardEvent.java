@@ -10,8 +10,8 @@ public class StarterCardEvent extends PlayerViewEvent {
     private final Integer oldCardId;
     private final Integer newCardId;
 
-    public StarterCardEvent(Object source, String player, Integer oldCardId,
-                            Integer newCardId) {
+    public StarterCardEvent(String player, Integer oldCardId,
+                            @NotNull Integer newCardId) {
         super(player);
         this.oldCardId = oldCardId;
         this.newCardId = newCardId;
@@ -28,7 +28,16 @@ public class StarterCardEvent extends PlayerViewEvent {
     }
 
     @Override
-    public Integer getNewValue() {
+    public @NotNull Integer getNewValue() {
         return newCardId;
     }
+
+    @Override
+    public @NotNull Integer getValueOfAction() {
+        if (oldCardId != null) return oldCardId;
+        if (newCardId != null) return newCardId;
+        throw new UnsupportedOperationException("both are null cannot be called");
+    }
+
+
 }

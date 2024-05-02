@@ -29,4 +29,11 @@ public class HandChangeEvent extends PlayerViewEvent {
     public Integer getNewValue() {
         return this.currentCard;
     }
+
+    @Override
+    public @NotNull Integer getValueOfAction() {
+        if (previousCard != null) return previousCard;
+        if (currentCard != null) return currentCard;
+        throw new UnsupportedOperationException("both are null cannot be called");
+    }
 }

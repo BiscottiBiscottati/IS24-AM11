@@ -10,7 +10,7 @@ public class TurnChangeEvent extends TableViewEvent {
     private final String currentPlayer;
 
     public TurnChangeEvent(String previousPlayer,
-                           String currentPlayer) {
+                           @NotNull String currentPlayer) {
         this.previousPlayer = previousPlayer;
         this.currentPlayer = currentPlayer;
     }
@@ -26,7 +26,14 @@ public class TurnChangeEvent extends TableViewEvent {
     }
 
     @Override
-    public String getNewValue() {
+    public @NotNull String getNewValue() {
         return this.currentPlayer;
     }
+
+    @Override
+    public @NotNull Object getValueOfAction() {
+        return this.currentPlayer;
+    }
+
+
 }

@@ -11,7 +11,7 @@ public interface TableConnector {
     void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
                      boolean removeMode);
 
-    void updateShownPlayable(int previousId, int currentId);
+    void updateShownPlayable(Integer previousId, Integer currentId);
 
     void updateTurnChange(String nickname);
 

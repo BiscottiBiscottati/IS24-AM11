@@ -22,12 +22,17 @@ public class GameStatusChangeEvent extends TableViewEvent {
     }
 
     @Override
-    public Object getOldValue() {
+    public GameStatus getOldValue() {
         return this.oldValue;
     }
 
     @Override
-    public Object getNewValue() {
+    public GameStatus getNewValue() {
         return this.newValue;
+    }
+
+    @Override
+    public @NotNull Object getValueOfAction() {
+        return newValue;
     }
 }

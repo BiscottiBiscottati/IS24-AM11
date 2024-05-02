@@ -34,7 +34,14 @@ public class DeckTopChangeEvent extends TableViewEvent {
         return this.newValue;
     }
 
+    @Override
+    public @NotNull Color getValueOfAction() {
+        return newValue;
+    }
+
     public PlayableCardType getCardType() {
         return cardType;
     }
+
+
 }

@@ -9,7 +9,7 @@ public class PlayerPointsChangeEvent extends TableViewEvent {
     private final Integer oldValue;
     private final Integer newValue;
 
-    public PlayerPointsChangeEvent(String player, Integer oldValue, Integer newValue) {
+    public PlayerPointsChangeEvent(String player, Integer oldValue, @NotNull Integer newValue) {
         super(player);
         this.oldValue = oldValue;
         this.newValue = newValue;
@@ -26,8 +26,15 @@ public class PlayerPointsChangeEvent extends TableViewEvent {
     }
 
     @Override
-    public Integer getNewValue() {
+    public @NotNull Integer getNewValue() {
         return newValue;
+    }
+
+    @Override
+    public @NotNull Integer getValueOfAction() {
+        if (oldValue != null) return oldValue;
+        if (newValue != null) return newValue;
+        throw new UnsupportedOperationException("both are null cannot be called");
     }
 
 }

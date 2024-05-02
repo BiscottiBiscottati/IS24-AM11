@@ -37,4 +37,11 @@ public class ShownPlayableEvent extends TableViewEvent {
     public Integer getNewValue() {
         return newValue;
     }
+
+    @Override
+    public @NotNull Object getValueOfAction() {
+        if (oldValue != null) return oldValue;
+        if (newValue != null) return newValue;
+        throw new UnsupportedOperationException("both are null cannot be called");
+    }
 }

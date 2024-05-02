@@ -7,10 +7,11 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.PlayerConnector;
-import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
+import it.polimi.ingsw.am11.view.events.utils.ActionMode;
 import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.player.PersonalObjectiveChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class VirtualPlayerView {
@@ -52,19 +53,31 @@ public class VirtualPlayerView {
         cardController.drawCard(fromVisible, type, nickname, cardId);
     }
 
-    public void updatePlayer(CandidateObjectiveEvent event) {
+    public void updatePlayer(@NotNull CandidateObjectiveEvent event) {
+        connector.sendCandidateObjective(event.getNewValue());
     }
 
-    public void updatePlayer(HandChangeEvent event) {
+    public void updatePlayer(@NotNull HandChangeEvent event) {
+        ActionMode action = event.getAction();
+        if (action == ActionMode.INSERTION) {
+            connector.updateHand(event.getValueOfAction(), false);
+        } else if (action == ActionMode.REMOVAL) {
+            connector.updateHand(event.getValueOfAction(), true);
+        }
+    }
+
+    public void updatePlayer(@NotNull PersonalObjectiveChangeEvent event) {
+        ActionMode action = event.getAction();
+        if (action == ActionMode.INSERTION) {
+            connector.updatePersonalObjective(event.getValueOfAction(), false);
+        } else if (action == ActionMode.REMOVAL) {
+            connector.updatePersonalObjective(event.getValueOfAction(), true);
+        }
 
     }
 
-    public void updatePlayer(PersonalObjectiveChangeEvent event) {
-
-    }
-
-    public void updatePlayer(StarterCardEvent event) {
-
+    public void updatePlayer(@NotNull StarterCardEvent event) {
+        connector.sendStarterCard(event.getNewValue());
     }
 
 }
