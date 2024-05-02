@@ -331,8 +331,6 @@ public class GameLogic implements GameModel {
             plateau.setStatus(GameStatus.CHOOSING_STARTERS);
             for (String nickname : playerManager.getPlayers()) {
                 pickStarterFor(nickname);
-                //TODO PCS
-                //pickCandidateObjectives(nickname); TODO
             }
         } catch (IllegalPlayerSpaceActionException | GameStatusException | EmptyDeckException |
                  IllegalPickActionException | PlayerInitException e) {
@@ -356,14 +354,6 @@ public class GameLogic implements GameModel {
     private void pickStarterFor(@NotNull String nickname)
     throws EmptyDeckException, GameStatusException, PlayerInitException,
            IllegalPlayerSpaceActionException, IllegalPickActionException {
-        // FIXME we can delete this check if it's only used in initGame
-//        if (plateau.getStatus() != GameStatus.CHOOSING_STARTERS) {
-//            throw new GameStatusException("this is not the right time");
-//        }
-        // FIXME if initGame always clears all and resets before starting there's no need
-//        if (playerManager.getStarterCard(nickname).isPresent()) {
-//            throw new IllegalPickActionException("This payer already has his starter");
-//        }
         playerManager.setStarterCard(nickname, pickablesTable.pickStarterCard());
     }
 
@@ -391,6 +381,8 @@ public class GameLogic implements GameModel {
         }
     }
 
+    // FIXME may not even be needed as a method
+
     /**
      * Remove a player from the player list if present, else it does nothing.
      *
@@ -400,7 +392,6 @@ public class GameLogic implements GameModel {
     @Override // DONE
     public void removePlayer(@NotNull String nickname)
     throws GameStatusException {
-        // FIXME may not even be needed as a method
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
@@ -465,7 +456,6 @@ public class GameLogic implements GameModel {
                                                          "Player not found"))
                                                  .space();
         //TODO pcs
-        playerSpace.removeCandidateObjective(cardID);
         playerSpace.addObjective(objectiveCard);
         pcs.fireEvent(new PersonalObjectiveChangeEvent(nickname, null, cardID));
         if (playerManager.areObjectiveChoosed()) {
@@ -838,16 +828,6 @@ public class GameLogic implements GameModel {
     private void pickCandidateObjectives(@NotNull String nickname)
     throws EmptyDeckException, GameStatusException, PlayerInitException,
            IllegalPickActionException {
-        // FIXME we may delete these checks if it's only called in setStarter
-        if (plateau.getStatus() != GameStatus.CHOOSING_OBJECTIVES) {
-            throw new GameStatusException("you cannot give objectives when " + plateau.getStatus() +
-                                          " is the status");
-        }
-        if (! playerManager.getCandidateObjectives(nickname).isEmpty()) {
-            throw new IllegalPickActionException("This player already has his candidate " +
-                                                 "objectives");
-        }
-
         playerManager.setCandidateObjectives(nickname, pickablesTable.pickObjectiveCandidates());
     }
 }
