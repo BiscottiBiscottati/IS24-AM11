@@ -18,6 +18,7 @@ import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
 import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.player.PersonalObjectiveChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -456,7 +457,6 @@ public class GameLogic implements GameModel {
                                          isRetro);
         if (playerManager.areStarterChoosed()) {
             plateau.setStatus(GameStatus.CHOOSING_OBJECTIVES);
-            //TODO pcs
             try {
                 pickCandidateObjectives(nickname);
             } catch (EmptyDeckException | IllegalPickActionException e) {
@@ -488,6 +488,7 @@ public class GameLogic implements GameModel {
         //TODO pcs
         playerSpace.removeCandidateObjective(cardID);
         playerSpace.addObjective(objectiveCard);
+        pcs.fireEvent(new PersonalObjectiveChangeEvent(nickname, null, cardID));
         if (playerManager.areObjectiveChoosed()) {
             plateau.setStatus(GameStatus.ONGOING);
         }
