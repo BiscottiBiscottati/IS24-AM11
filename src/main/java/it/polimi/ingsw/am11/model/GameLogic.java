@@ -50,12 +50,14 @@ public class GameLogic implements GameModel {
 
         PlayerManager.setMaxNumberOfPlayers(ruleSet.getMaxPlayers());
 
-        PickablesTable.setNumOfObjectives(ruleSet.getNumOfCommonObjectives());
+        PickablesTable.setNumOfCommonObjectives(ruleSet.getNumOfCommonObjectives());
         PickablesTable.setNumOfShownPerType(ruleSet.getMaxRevealedCardsPerType());
+        PickablesTable.setNumOfCandidatesObjectives(ruleSet.getObjectiveToChooseFrom());
 
         Plateau.setArmageddonTime(ruleSet.getPointsToArmageddon());
     }
 
+    // FIXME we may not need it just using the specific attribute it needs
     @Override
     public RuleSet getRuleSet() {
         return ruleSet;
@@ -71,7 +73,7 @@ public class GameLogic implements GameModel {
      *
      * @return a set of the nicknames of the players
      */
-    @Override // DONE
+    @Override
     public @NotNull Set<String> getPlayers() {
         return playerManager.getPlayers();
     }
@@ -324,34 +326,6 @@ public class GameLogic implements GameModel {
         }
 
         resetAll();
-        pickablesTable.initialize();
-        playerManager.startingTheGame();
-
-        // TODO give starter first then give objective then hand
-
-        try {
-            PlayableCard card;
-            List<PersonalSpace> spaces = playerManager.getPlayers().stream()
-                                                      .map(playerManager::getPlayer)
-                                                      .filter(Optional::isPresent)
-                                                      .map(Optional::get)
-                                                      .map(Player::space)
-                                                      .toList();
-            for (PersonalSpace space : spaces) {
-                int numOfGolds = ruleSet.getGoldAtStart();
-                for (int i = 0; i < numOfGolds; i++) {
-                    card = pickablesTable.drawPlayableFrom(PlayableCardType.GOLD);
-                    space.addCardToHand(card);
-                }
-                int numOfResources = ruleSet.getResourceAtStart();
-                for (int i = 0; i < numOfResources; i++) {
-                    card = pickablesTable.drawPlayableFrom(PlayableCardType.RESOURCE);
-                    space.addCardToHand(card);
-                }
-            }
-        } catch (EmptyDeckException | MaxHandSizeException e) {
-            throw new GameBreakingException("Something broke while dealing cards");
-        }
 
         try {
             plateau.setStatus(GameStatus.CHOOSING_STARTERS);
@@ -382,12 +356,14 @@ public class GameLogic implements GameModel {
     private void pickStarterFor(@NotNull String nickname)
     throws EmptyDeckException, GameStatusException, PlayerInitException,
            IllegalPlayerSpaceActionException, IllegalPickActionException {
-        if (plateau.getStatus() != GameStatus.CHOOSING_STARTERS) {
-            throw new GameStatusException("this is not the right time");
-        }
-        if (playerManager.getStarterCard(nickname).isPresent()) {
-            throw new IllegalPickActionException("This payer already has his starter");
-        }
+        // FIXME we can delete this check if it's only used in initGame
+//        if (plateau.getStatus() != GameStatus.CHOOSING_STARTERS) {
+//            throw new GameStatusException("this is not the right time");
+//        }
+        // FIXME if initGame always clears all and resets before starting there's no need
+//        if (playerManager.getStarterCard(nickname).isPresent()) {
+//            throw new IllegalPickActionException("This payer already has his starter");
+//        }
         playerManager.setStarterCard(nickname, pickablesTable.pickStarterCard());
     }
 
@@ -448,7 +424,8 @@ public class GameLogic implements GameModel {
     throws IllegalCardPlacingException, GameStatusException, PlayerInitException,
            GameBreakingException {
         if (plateau.getStatus() != GameStatus.CHOOSING_STARTERS) {
-            throw new GameStatusException("the game is not starting");
+            throw new GameStatusException("you cannot give starters when " + plateau.getStatus() +
+                                          " is the status");
         }
         Player player = playerManager.getPlayer(nickname)
                                      .orElseThrow(() -> new PlayerInitException("Player not " +
@@ -476,9 +453,11 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public void setObjectiveFor(@NotNull String nickname, int cardID)
-    throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException {
+    throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException,
+           GameBreakingException {
         if (plateau.getStatus() != GameStatus.CHOOSING_OBJECTIVES) {
-            throw new GameStatusException("the game is not starting");
+            throw new GameStatusException("you cannot give objectives when " + plateau.getStatus() +
+                                          " is the status");
         }
         ObjectiveCard objectiveCard = playerManager.getCandidateObjectiveByID(nickname, cardID);
         PersonalSpace playerSpace = playerManager.getPlayer(nickname)
@@ -490,8 +469,45 @@ public class GameLogic implements GameModel {
         playerSpace.addObjective(objectiveCard);
         pcs.fireEvent(new PersonalObjectiveChangeEvent(nickname, null, cardID));
         if (playerManager.areObjectiveChoosed()) {
+            giveCards();
             plateau.setStatus(GameStatus.ONGOING);
         }
+    }
+
+    private void giveCards() throws GameBreakingException {
+        pickablesTable.initialize();
+
+        try {
+            // giving cards to each player
+            PlayableCard card;
+            List<Player> players = playerManager.getPlayers().stream()
+                                                .map(playerManager::getPlayer)
+                                                .filter(Optional::isPresent)
+                                                .map(Optional::get)
+                                                .toList();
+            for (Player player : players) {
+                int numOfGolds = ruleSet.getGoldAtStart();
+                for (int i = 0; i < numOfGolds; i++) {
+                    card = pickablesTable.drawPlayableFrom(PlayableCardType.GOLD);
+                    player.space().addCardToHand(card);
+                    pcs.fireEvent(new HandChangeEvent(player.nickname(),
+                                                      null,
+                                                      card.getId()));
+                }
+                int numOfResources = ruleSet.getResourceAtStart();
+                for (int i = 0; i < numOfResources; i++) {
+                    card = pickablesTable.drawPlayableFrom(PlayableCardType.RESOURCE);
+                    player.space().addCardToHand(card);
+                    pcs.fireEvent(new HandChangeEvent(player.nickname(),
+                                                      null,
+                                                      card.getId()));
+                }
+            }
+        } catch (EmptyDeckException | MaxHandSizeException e) {
+            throw new GameBreakingException("Something broke while dealing cards");
+        }
+
+        playerManager.chooseFirstPlayer();
     }
 
     /**
@@ -780,6 +796,7 @@ public class GameLogic implements GameModel {
     @Override
     public void addPlayerListener(String nickname, PlayerListener playerListener) {
         pcs.addListener(nickname, playerListener);
+        playerManager.addListener(nickname, playerListener);
     }
 
     @Override
@@ -821,17 +838,17 @@ public class GameLogic implements GameModel {
     private void pickCandidateObjectives(@NotNull String nickname)
     throws EmptyDeckException, GameStatusException, PlayerInitException,
            IllegalPickActionException {
+        // FIXME we may delete these checks if it's only called in setStarter
         if (plateau.getStatus() != GameStatus.CHOOSING_OBJECTIVES) {
-            throw new GameStatusException("this is not the right time");
+            throw new GameStatusException("you cannot give objectives when " + plateau.getStatus() +
+                                          " is the status");
         }
         if (! playerManager.getCandidateObjectives(nickname).isEmpty()) {
             throw new IllegalPickActionException("This player already has his candidate " +
                                                  "objectives");
         }
-        int objectiveToChooseFrom = ruleSet.getObjectiveToChooseFrom();
-        for (int i = 0; i < objectiveToChooseFrom; i++) {
-            playerManager.setNewCandidateObjective(nickname, pickablesTable.pickObjectiveCard());
-        }
+
+        playerManager.setCandidateObjectives(nickname, pickablesTable.pickObjectiveCandidates());
     }
 }
 

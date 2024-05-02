@@ -28,8 +28,9 @@ import java.util.stream.Stream;
 
 public class PickablesTable {
 
-    private static int numOfObjectives;
+    private static int numOfCommonObjectives;
     private static int numOfShownPerType;
+    private static int numOfCandidatesObjectives;
     private final Deck<GoldCard> goldDeck;
     private final Deck<ResourceCard> resourceDeck;
     private final Deck<ObjectiveCard> objectiveDeck;
@@ -45,19 +46,23 @@ public class PickablesTable {
         this.objectiveDeck = ObjectiveDeckFactory.createDeck();
         this.starterDeck = StarterDeckFactory.createDeck();
 
-        this.commonObjectives = new HashSet<>(numOfObjectives << 1);
+        this.commonObjectives = new HashSet<>(numOfCommonObjectives << 1);
         this.shownGold = new HashSet<>(numOfShownPerType << 1);
         this.shownResources = new HashSet<>(numOfShownPerType << 1);
 
         this.pcs = new GameListenerSupport();
     }
 
-    public static void setNumOfObjectives(int numOfObjectives) {
-        PickablesTable.numOfObjectives = numOfObjectives;
+    public static void setNumOfCommonObjectives(int numOfCommonObjectives) {
+        PickablesTable.numOfCommonObjectives = numOfCommonObjectives;
     }
 
     public static void setNumOfShownPerType(int numOfShownPerType) {
         PickablesTable.numOfShownPerType = numOfShownPerType;
+    }
+
+    public static void setNumOfCandidatesObjectives(int numOfCandidatesObjectives) {
+        PickablesTable.numOfCandidatesObjectives = numOfCandidatesObjectives;
     }
 
     //region Getters
@@ -121,6 +126,14 @@ public class PickablesTable {
                           .orElseThrow(() -> new EmptyDeckException("Starter deck is empty!"));
     }
 
+    public Set<ObjectiveCard> pickObjectiveCandidates() throws EmptyDeckException {
+        Set<ObjectiveCard> objs = new HashSet<>(numOfCandidatesObjectives << 1);
+        for (int i = 0; i < numOfCandidatesObjectives; i++) {
+            objs.add(pickObjectiveCard());
+        }
+        return Set.copyOf(objs);
+    }
+
     public ObjectiveCard pickObjectiveCard() throws EmptyDeckException {
         return objectiveDeck.draw()
                             .orElseThrow(() -> new EmptyDeckException("Objective deck is empty!"));
@@ -159,10 +172,8 @@ public class PickablesTable {
     }
 
     public void pickCommonObjectives() throws EmptyDeckException {
-        for (int i = 0; i < numOfObjectives; i++) {
-            commonObjectives.add(objectiveDeck.draw()
-                                              .orElseThrow(() -> new EmptyDeckException(
-                                                      "Objective deck is empty!")));
+        for (int i = 0; i < numOfCommonObjectives; i++) {
+            commonObjectives.add(pickObjectiveCard());
         }
     }
 

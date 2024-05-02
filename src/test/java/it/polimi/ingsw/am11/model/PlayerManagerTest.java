@@ -123,7 +123,7 @@ class PlayerManagerTest {
         } catch (PlayerInitException | NumOfPlayersException e) {
             throw new RuntimeException(e);
         }
-        manager.startingTheGame();
+        manager.chooseFirstPlayer();
 
         ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
         assertEquals(manager.getFirstPlayer(), manager.getCurrentTurnPlayer());
@@ -152,7 +152,7 @@ class PlayerManagerTest {
         } catch (PlayerInitException | NumOfPlayersException e) {
             throw new RuntimeException(e);
         }
-        manager.startingTheGame();
+        manager.chooseFirstPlayer();
 
         ArrayList<String> orderOfPlayers = new ArrayList<>(numOfPlayers);
         assertEquals(manager.getFirstPlayer(), manager.getCurrentTurnPlayer());
@@ -282,7 +282,7 @@ class PlayerManagerTest {
         } catch (PlayerInitException | NumOfPlayersException e) {
             throw new RuntimeException(e);
         }
-        manager.startingTheGame();
+        manager.chooseFirstPlayer();
 
         assertTrue(manager.isFirstTheCurrent());
 
@@ -303,7 +303,7 @@ class PlayerManagerTest {
         } catch (PlayerInitException | NumOfPlayersException e) {
             throw new RuntimeException(e);
         }
-        manager.startingTheGame();
+        manager.chooseFirstPlayer();
 
         int numOfPlayers = players.size();
         ArrayList<Optional<String>> orderOfPlayers = new ArrayList<>(numOfPlayers);
@@ -323,7 +323,7 @@ class PlayerManagerTest {
     }
 
     @Test
-    void startingTheGame() {
+    void chooseFirstPlayer() {
         Set<String> players = Set.of("player1", "player2", "player3", "player4");
         try {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
@@ -337,7 +337,7 @@ class PlayerManagerTest {
         assertTrue(manager.getFirstPlayer().isEmpty());
         assertTrue(manager.getCurrentTurnPlayer().isEmpty());
 
-        manager.startingTheGame();
+        manager.chooseFirstPlayer();
 
         assertTrue(manager.getFirstPlayer().isPresent());
         assertTrue(manager.getCurrentTurnPlayer().isPresent());
@@ -359,7 +359,7 @@ class PlayerManagerTest {
             throw new RuntimeException(e);
         }
 
-        manager.startingTheGame();
+        manager.chooseFirstPlayer();
         manager.goNextTurn();
         manager.goNextTurn();
 

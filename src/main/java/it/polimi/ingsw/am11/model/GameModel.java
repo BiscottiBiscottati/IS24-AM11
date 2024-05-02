@@ -68,7 +68,8 @@ public interface GameModel {
            GameBreakingException;
 
     void setObjectiveFor(String nickname, int cardID)
-    throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException;
+    throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException,
+           GameBreakingException;
 
     void placeCard(String Nickname, int ID, Position position, boolean isRetro)
     throws IllegalCardPlacingException,

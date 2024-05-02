@@ -12,7 +12,6 @@ import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
-import it.polimi.ingsw.am11.model.table.PickablesTable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +41,7 @@ public class PickablesTableTest {
         objectiveCardDeck = ObjectiveDeckFactory.createDeck();
         starterCardDeck = StarterDeckFactory.createDeck();
 
-        PickablesTable.setNumOfObjectives(numOfObjectives);
+        PickablesTable.setNumOfCommonObjectives(numOfObjectives);
         PickablesTable.setNumOfShownPerType(numOfShownPerType);
 
     }

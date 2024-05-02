@@ -16,7 +16,11 @@ public class CardController {
     throws GameStatusException,
            PlayerInitException,
            IllegalPlayerSpaceActionException {
-        model.setObjectiveFor(nickname, cardID);
+        try {
+            model.setObjectiveFor(nickname, cardID);
+        } catch (GameBreakingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void placeCard(String Nickname, int cardId, Position position, boolean isRetro)

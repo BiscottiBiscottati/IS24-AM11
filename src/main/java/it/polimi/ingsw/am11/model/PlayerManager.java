@@ -14,7 +14,9 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
 import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
+import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.PlayerAddedEvent;
 import it.polimi.ingsw.am11.view.events.view.table.TurnChangeEvent;
@@ -136,22 +138,28 @@ public class PlayerManager {
 
     public void setStarterCard(@NotNull String nickname, @NotNull StarterCard starter)
     throws PlayerInitException, IllegalPlayerSpaceActionException {
-        Player player = players.get(nickname);
-        if (player != null) {
-            player.space().setStarterCard(starter);
-        } else {
-            throw new PlayerInitException("Player " + nickname + " not found");
-        }
+        Optional.ofNullable(players.get(nickname))
+                .orElseThrow(() -> new PlayerInitException("Player " + nickname + " not found"))
+                .space()
+                .setStarterCard(starter);
+
+        pcs.fireEvent(new StarterCardEvent(nickname, null, starter.getId()));
     }
 
-    public void setNewCandidateObjective(@NotNull String nickname, @NotNull ObjectiveCard objective)
+    public void setCandidateObjectives(@NotNull String nickname,
+                                       @NotNull Set<ObjectiveCard> objective)
     throws PlayerInitException {
-        Player player = players.get(nickname);
-        if (player != null) {
-            player.space().setNewCandidateObjectives(objective);
-        } else {
-            throw new PlayerInitException("Player " + nickname + " not found");
-        }
+        PersonalSpace space = Optional.ofNullable(players.get(nickname))
+                                      .orElseThrow(() -> new PlayerInitException(
+                                              "Player " + nickname + " not found"))
+                                      .space();
+
+        objective.forEach(space::setNewCandidateObjectives);
+
+        Set<Integer> candidateObjs = objective.stream()
+                                              .map(ObjectiveCard::getId)
+                                              .collect(Collectors.toUnmodifiableSet());
+        pcs.fireEvent(new CandidateObjectiveEvent(nickname, null, candidateObjs));
     }
 
 
@@ -207,7 +215,7 @@ public class PlayerManager {
         players.remove(nickname);
     }
 
-    public void startingTheGame() {
+    public void chooseFirstPlayer() {
         int randomIndex = new Random().nextInt(playerQueue.size());
         firstPlayer = players.values()
                              .toArray(new Player[playerQueue.size()])[randomIndex];
@@ -248,6 +256,7 @@ public class PlayerManager {
                .map(Player::field)
                .forEach(PlayerField::clearAll);
 
+        // FIXME we may not need to fire a clear event
         players.forEach((name, player) -> {
             pcs.fireEvent(new HandChangeEvent(
                     name,
