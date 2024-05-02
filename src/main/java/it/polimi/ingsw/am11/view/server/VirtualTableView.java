@@ -3,8 +3,8 @@ package it.polimi.ingsw.am11.view.server;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.TableConnector;
+import it.polimi.ingsw.am11.view.events.utils.ActionMode;
 import it.polimi.ingsw.am11.view.events.view.table.*;
-import it.polimi.ingsw.am11.view.utils.ActionMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -60,28 +60,32 @@ public class VirtualTableView {
         connectors.values().forEach(action);
     }
 
-    public void updateTable(CommonObjectiveChangeEvent commonObjectiveChangeEvent) {
+    public void updateTable(CommonObjectiveChangeEvent event) {
         System.out.println("CommonObjectiveChangeEvent");
     }
 
-    public void updateTable(DeckTopChangeEvent deckTopChangeEvent) {
+    public void updateTable(DeckTopChangeEvent event) {
         System.out.println("DeckTopChangeEvent");
     }
 
-    public void updateTable(PlayerPointsChangeEvent playerPointsChangeEvent) {
+    public void updateTable(PlayerPointsChangeEvent event) {
         System.out.println("PlayerPointsChangeEvent");
     }
 
-    public void updateTable(ShownPlayableEvent shownPlayableEvent) {
+    public void updateTable(ShownPlayableEvent event) {
         System.out.println("ShownPlayableEvent");
     }
 
-    public void updateTable(GameStatusChangeEvent gameStatusChangeEvent) {
+    public void updateTable(GameStatusChangeEvent event) {
         System.out.println("GameStatusChangeEvent");
     }
 
-    public void updateTable(TurnChangeEvent turnChangeEvent) {
+    public void updateTable(TurnChangeEvent event) {
         System.out.println("TurnChangeEvent");
+    }
+
+    public void updateTable(PlayerAddedEvent event) {
+        System.out.println("PlayerAddedEvent");
     }
 
 }

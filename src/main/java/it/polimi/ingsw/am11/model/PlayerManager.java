@@ -16,6 +16,7 @@ import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.PlayerAddedEvent;
 import it.polimi.ingsw.am11.view.events.view.table.TurnChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -189,6 +190,10 @@ public class PlayerManager {
             Player newPlayer = new Player(nickname, colour);
             players.put(nickname, newPlayer);
             playerQueue.add(newPlayer);
+            pcs.fireEvent(new PlayerAddedEvent(playerQueue.stream()
+                                                          .map(Player::nickname)
+                                                          .toList(),
+                                               newPlayer.nickname()));
             return newPlayer;
         }
     }

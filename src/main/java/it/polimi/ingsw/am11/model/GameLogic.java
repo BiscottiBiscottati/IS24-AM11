@@ -783,6 +783,7 @@ public class GameLogic implements GameModel {
 
     @Override
     public void addTableListener(TableListener listener) {
+        pcs.addListener(listener);
         plateau.addListener(listener);
         pickablesTable.addListener(listener);
         playerManager.addListener(listener);

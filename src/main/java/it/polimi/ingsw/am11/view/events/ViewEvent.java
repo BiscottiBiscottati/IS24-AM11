@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.view.events;
 
-import it.polimi.ingsw.am11.view.utils.ActionMode;
+import it.polimi.ingsw.am11.view.events.utils.ActionMode;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class ViewEvent {
     public ActionMode getAction() {
@@ -10,7 +11,7 @@ public abstract class ViewEvent {
         else return ActionMode.CLEAR;
     }
 
-    public abstract Object getOldValue();
+    public abstract @Nullable Object getOldValue();
 
-    public abstract Object getNewValue();
+    public abstract @Nullable Object getNewValue();
 }

@@ -67,7 +67,7 @@ public enum CentralController {
         return playerView;
     }
 
-    public void setNumOfPlayers(String nickname, int val)
+    public void setNumOfPlayers(@NotNull String nickname, int val)
     throws NotGodPlayerException, GameStatusException,
            NumOfPlayersException {
         if (! nickname.equals(godPlayer)) {
