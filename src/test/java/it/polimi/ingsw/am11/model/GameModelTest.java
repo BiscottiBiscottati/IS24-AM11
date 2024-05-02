@@ -295,8 +295,8 @@ class GameModelTest {
                 Optional<Integer> objCard = model.getPlayerObjective(player).stream().findFirst();
                 assertEquals(Optional.of(objOfPlayer.get(player)), objCard);
             }
-        } catch (GameStatusException |
-                 PlayerInitException | IllegalPlayerSpaceActionException e) {
+        } catch (GameStatusException | PlayerInitException | IllegalPlayerSpaceActionException |
+                 GameBreakingException e) {
             throw new RuntimeException(e);
         }
     }
