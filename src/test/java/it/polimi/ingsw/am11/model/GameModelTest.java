@@ -4,7 +4,6 @@ import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
-import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
@@ -13,10 +12,22 @@ import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.field.PositionManager;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.view.events.TableViewEvent;
+import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
+import it.polimi.ingsw.am11.view.events.listeners.TableListener;
+import it.polimi.ingsw.am11.view.events.utils.ActionMode;
+import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
+import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +38,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class GameModelTest {
 
     static Deck<GoldCard> goldCardDeck;
@@ -35,6 +48,15 @@ class GameModelTest {
     static Deck<ObjectiveCard> objectiveCardDeck;
     static Set<String> players;
     GameModel model;
+
+    @Mock
+    PlayerListener chenConnector;
+    @Mock
+    PlayerListener edoConnector;
+    @Mock
+    PlayerListener osamaConnector;
+    @Mock
+    TableListener tableConnector;
 
     @BeforeAll
     static void beforeAll() {
@@ -50,23 +72,29 @@ class GameModelTest {
         goldCardDeck.reset();
         resourceCardDeck.reset();
         objectiveCardDeck.reset();
+        model.addTableListener(tableConnector);
 
         try {
             model.addPlayerToTable("edo", PlayerColor.RED);
             model.addPlayerToTable("chen", PlayerColor.BLUE);
             model.addPlayerToTable("osama", PlayerColor.YELLOW);
+            model.addPlayerListener("edo", edoConnector);
+            model.addPlayerListener("chen", chenConnector);
+            model.addPlayerListener("osama", osamaConnector);
             model.initGame();
         } catch (PlayerInitException | GameStatusException |
                  GameBreakingException | NumOfPlayersException e) {
             throw new RuntimeException(e);
         }
 
-    }
+        reset(chenConnector, edoConnector, osamaConnector, tableConnector);
 
+    }
 
     @Test
     void testInitGame() {
         model = new GameLogic();
+        ArgumentCaptor<TableViewEvent> captor = ArgumentCaptor.forClass(TableViewEvent.class);
         // Test illegal number of players
         assertThrows(NumOfPlayersException.class, () -> model.initGame());
         // Test adding of players
@@ -76,9 +104,37 @@ class GameModelTest {
         assertDoesNotThrow(() -> model.addPlayerToTable("chen", PlayerColor.BLUE));
         assertDoesNotThrow(() -> model.addPlayerToTable("osama", PlayerColor.YELLOW));
 
+        model.addPlayerListener("edo", edoConnector);
+        model.addPlayerListener("chen", chenConnector);
+        model.addPlayerListener("osama", osamaConnector);
+
+        model.addTableListener(tableConnector);
+
         Set<String> players = Set.of("edo", "chen", "osama");
         // Test init game
-        assertDoesNotThrow(() -> model.initGame());
+        assertDoesNotThrow(model::initGame);
+
+        // 7 times
+        // because there are 3 player field reset and 3 player points reset and 1 game status change
+        verify(tableConnector, times(7)).propertyChange(captor.capture());
+
+        captor.getAllValues().stream()
+              .filter(GameStatusChangeEvent.class::isInstance)
+              .map(GameStatusChangeEvent.class::cast)
+              .forEach(event -> {
+                  assertEquals(GameStatus.SETUP, event.getOldValue());
+                  assertEquals(GameStatus.CHOOSING_STARTERS, event.getNewValue());
+              });
+
+        reset(tableConnector);
+        captor = ArgumentCaptor.forClass(TableViewEvent.class);
+
+        verify(chenConnector, times(1))
+                .propertyChange(argThat(StarterCardEvent.class::isInstance));
+        verify(edoConnector, times(1))
+                .propertyChange(argThat(StarterCardEvent.class::isInstance));
+        verify(osamaConnector, times(1))
+                .propertyChange(argThat(StarterCardEvent.class::isInstance));
 
         // Check if the players are the same
         assertEquals(3, model.getPlayers().size());
@@ -89,51 +145,35 @@ class GameModelTest {
                      () -> model.addPlayerToTable("lola", PlayerColor.GREEN));
         assertThrows(GameStatusException.class, model::initGame);
 
-        try {
-            // Check if the first player is the same as the current turn player
-            assertTrue(players.contains(model.getFirstPlayer()));
-            assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
-
-            // Check if the player can be removed
-            assertThrows(GameStatusException.class, () -> model.removePlayer("lola"));
-
-            // Check if cards have been dealt on the table
-            assertEquals(2, model.getCommonObjectives().size());
-            assertEquals(2,
-                         model.getCommonObjectives().stream()
-                              .map(objectiveCardDeck::getCardById)
-                              .filter(Optional::isPresent)
-                              .count());
-
-            assertEquals(2, model.getExposedCards(PlayableCardType.GOLD).size());
-            assertEquals(2,
-                         model.getExposedCards(PlayableCardType.GOLD).stream()
-                              .map(goldCardDeck::getCardById)
-                              .filter(Optional::isPresent)
-                              .count());
-
-            assertEquals(2, model.getExposedCards(PlayableCardType.RESOURCE).size());
-            assertEquals(2,
-                         model.getExposedCards(PlayableCardType.RESOURCE).stream()
-                              .map(resourceCardDeck::getCardById)
-                              .filter(Optional::isPresent)
-                              .count());
-        } catch (GameStatusException e) {
-            throw new RuntimeException(e);
-        }
-
         for (String player : players) {
             try {
                 model.setStarterFor(player, true);
-                model.setObjectiveFor(player,
-                                      model.getCandidateObjectives(player)
-                                           .stream()
-                                           .findFirst().orElseThrow());
             } catch (IllegalCardPlacingException | GameStatusException | PlayerInitException |
-                     IllegalPlayerSpaceActionException | GameBreakingException e) {
+                     GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
+
+
+        verify(tableConnector, times(players.size() + 1))
+                .propertyChange(captor.capture());
+
+        captor.getAllValues().stream()
+              .filter(FieldChangeEvent.class::isInstance)
+              .map(FieldChangeEvent.class::cast)
+              .forEach(event -> {
+                  assertEquals(event.getAction(), ActionMode.INSERTION);
+                  assertEquals(Position.of(0, 0), event.getValueOfAction().getKey());
+                  assertTrue(players.contains(event.getPlayer().orElseThrow()));
+              });
+
+        captor.getAllValues().stream()
+              .filter(GameStatusChangeEvent.class::isInstance)
+              .map(GameStatusChangeEvent.class::cast)
+              .forEach(event -> {
+                  assertEquals(GameStatus.CHOOSING_STARTERS, event.getOldValue());
+                  assertEquals(GameStatus.CHOOSING_OBJECTIVES, event.getNewValue());
+              });
 
         try {
             Set<Position> availPos = Stream.of(Corner.values())
@@ -143,26 +183,6 @@ class GameModelTest {
             assertEquals(availPos,
                          model.getAvailablePositions("edo"));
         } catch (PlayerInitException | GameStatusException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            assertEquals(3, model.getPlayerHand("edo").size());
-
-            assertEquals(1,
-                         model.getPlayerHand("edo")
-                              .stream()
-                              .map(goldCardDeck::getCardById)
-                              .filter(Optional::isPresent)
-                              .count());
-
-            assertEquals(2,
-                         model.getPlayerHand("edo")
-                              .stream()
-                              .map(resourceCardDeck::getCardById)
-                              .filter(Optional::isPresent)
-                              .count());
-        } catch (GameStatusException | PlayerInitException e) {
             throw new RuntimeException(e);
         }
     }

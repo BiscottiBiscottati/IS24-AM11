@@ -9,15 +9,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 
 public class FieldChangeEvent extends TableViewEvent {
-
-    private final String player;
+    
     private final Map.Entry<Position, CardContainer> oldValue;
     private final Map.Entry<Position, CardContainer> newValue;
 
     public FieldChangeEvent(String player,
                             Map.Entry<Position, CardContainer> oldValue,
                             Map.Entry<Position, CardContainer> newValue) {
-        this.player = player;
+        super(player);
         this.oldValue = oldValue;
         this.newValue = newValue;
     }

@@ -421,8 +421,15 @@ public class GameLogic implements GameModel {
         Player player = playerManager.getPlayer(nickname)
                                      .orElseThrow(() -> new PlayerInitException("Player not " +
                                                                                 "found"));
-        player.field().placeStartingCard(playerManager.getStarterCard(nickname).orElseThrow(),
+        StarterCard starterCard = playerManager.getStarterCard(nickname).orElseThrow();
+        player.field().placeStartingCard(starterCard,
                                          isRetro);
+
+        pcs.fireEvent(new FieldChangeEvent(nickname,
+                                           null,
+                                           Map.entry(Position.of(0, 0),
+                                                     CardContainer.of(starterCard, isRetro))));
+
         if (playerManager.areStarterChoosed()) {
             plateau.setStatus(GameStatus.CHOOSING_OBJECTIVES);
             try {
