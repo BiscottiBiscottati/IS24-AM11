@@ -4,6 +4,8 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 
+import java.util.Map;
+
 public interface TableConnector {
 
     void updateDeckTop(PlayableCardType type, Color color);
@@ -20,4 +22,6 @@ public interface TableConnector {
     void updateGameStatus(GameStatus status);
 
     void updateCommonObjective(int cardId, boolean removeMode);
+
+    void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard);
 }

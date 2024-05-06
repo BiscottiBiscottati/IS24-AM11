@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
+import it.polimi.ingsw.am11.view.events.view.table.FinalLeaderboardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.PlayerPointsChangeEvent;
 
@@ -75,7 +76,7 @@ public class Plateau {
                         .forEach(
                                 player -> counterObjective.put(player, 0)
                         );
-//        setStatus(GameStatus.CHOOSING_STARTERS); // FIXME may create problem if we remove players
+        setStatus(GameStatus.CHOOSING_STARTERS);
     }
 
     public void addPlayer(Player newPlayer) {
@@ -150,6 +151,20 @@ public class Plateau {
                 finalLeaderboard.put(entries.get(i).getKey(), rank++);
             }
         }
+
+        Map<String, Integer> finalLeaderboardString = finalLeaderboard.entrySet()
+                                                                      .stream()
+                                                                      .map(e -> Map.entry(
+                                                                              e.getKey().nickname(),
+                                                                              e.getValue()))
+                                                                      .collect(
+                                                                              HashMap::new,
+                                                                              (m, e) -> m.put(
+                                                                                      e.getKey(),
+                                                                                      e.getValue()),
+                                                                              HashMap::putAll);
+
+        pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboardString));
     }
 
     public int getPlayerFinishingPosition(Player player) throws IllegalPlateauActionException {

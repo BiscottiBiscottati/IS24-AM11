@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
 
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Set;
 
 public class SendCommand implements PlayerConnector, TableConnector {
@@ -117,5 +118,10 @@ public class SendCommand implements PlayerConnector, TableConnector {
         json.put("cardId", cardId);
         json.put("removeMode", removeMode);
         out.println(json);
+    }
+
+    @Override
+    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+        //TODO to implement
     }
 }

@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
 
+import java.util.Map;
 import java.util.Set;
 
 public class MessageManager implements PlayerConnector, TableConnector {
@@ -68,5 +69,9 @@ public class MessageManager implements PlayerConnector, TableConnector {
     @Override
     public void updateCommonObjective(int cardId, boolean removeMode) {
 
+    }
+
+    @Override
+    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
     }
 }
