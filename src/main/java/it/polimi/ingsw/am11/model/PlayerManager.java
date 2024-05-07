@@ -222,7 +222,7 @@ public class PlayerManager {
 
         Player peeked = playerQueue.element();
         while (peeked != firstPlayer) {
-            playerQueue.offer(playerQueue.poll());
+            playerQueue.add(playerQueue.remove());
             peeked = playerQueue.element();
         }
         currentPlaying = playerQueue.element();
@@ -237,9 +237,9 @@ public class PlayerManager {
 
         do {
             String previousPlayer = currentPlaying.nickname();
-            playerQueue.offer(currentPlaying);
-            currentPlaying = playerQueue.element();
             playerQueue.remove();
+            playerQueue.add(currentPlaying);
+            currentPlaying = playerQueue.element();
             currentPlaying.space().setCardBeenPlaced(false);
 
             pcs.fireEvent(new TurnChangeEvent(previousPlayer, currentPlaying.nickname()));

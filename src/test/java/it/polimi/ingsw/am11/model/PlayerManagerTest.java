@@ -243,7 +243,7 @@ class PlayerManagerTest {
         }
 
         //overcoming the limit
-        assertThrows(PlayerInitException.class,
+        assertThrows(NumOfPlayersException.class,
                      () -> manager.addPlayerToTable("player4", PlayerColor.YELLOW));
 
 
