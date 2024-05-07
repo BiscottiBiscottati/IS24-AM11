@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.model;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
+import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.decks.Deck;
@@ -13,13 +14,18 @@ import it.polimi.ingsw.am11.model.players.field.PositionManager;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.view.events.PlayerViewEvent;
 import it.polimi.ingsw.am11.view.events.TableViewEvent;
 import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
 import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.utils.ActionMode;
+import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
+import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.player.PersonalObjectiveChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,10 +35,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -50,13 +53,13 @@ class GameModelTest {
     GameModel model;
 
     @Mock
-    PlayerListener chenConnector;
+    PlayerListener chenListener;
     @Mock
-    PlayerListener edoConnector;
+    PlayerListener edoListener;
     @Mock
-    PlayerListener osamaConnector;
+    PlayerListener osamaListener;
     @Mock
-    TableListener tableConnector;
+    TableListener tableListener;
 
     @BeforeAll
     static void beforeAll() {
@@ -72,22 +75,22 @@ class GameModelTest {
         goldCardDeck.reset();
         resourceCardDeck.reset();
         objectiveCardDeck.reset();
-        model.addTableListener(tableConnector);
+        model.addTableListener(tableListener);
 
         try {
             model.addPlayerToTable("edo", PlayerColor.RED);
             model.addPlayerToTable("chen", PlayerColor.BLUE);
             model.addPlayerToTable("osama", PlayerColor.YELLOW);
-            model.addPlayerListener("edo", edoConnector);
-            model.addPlayerListener("chen", chenConnector);
-            model.addPlayerListener("osama", osamaConnector);
+            model.addPlayerListener("edo", edoListener);
+            model.addPlayerListener("chen", chenListener);
+            model.addPlayerListener("osama", osamaListener);
             model.initGame();
         } catch (PlayerInitException | GameStatusException |
                  GameBreakingException | NumOfPlayersException e) {
             fail(e);
         }
 
-        reset(chenConnector, edoConnector, osamaConnector, tableConnector);
+        reset(chenListener, edoListener, osamaListener, tableListener);
 
     }
 
@@ -97,6 +100,7 @@ class GameModelTest {
         ArgumentCaptor<TableViewEvent> captor = ArgumentCaptor.forClass(TableViewEvent.class);
         // Test illegal number of players
         assertThrows(NumOfPlayersException.class, () -> model.initGame());
+
         // Test adding of players
         assertDoesNotThrow(() -> model.addPlayerToTable("edo", PlayerColor.RED));
         assertThrows(PlayerInitException.class,
@@ -104,19 +108,21 @@ class GameModelTest {
         assertDoesNotThrow(() -> model.addPlayerToTable("chen", PlayerColor.BLUE));
         assertDoesNotThrow(() -> model.addPlayerToTable("osama", PlayerColor.YELLOW));
 
-        model.addPlayerListener("edo", edoConnector);
-        model.addPlayerListener("chen", chenConnector);
-        model.addPlayerListener("osama", osamaConnector);
+        // adding listeners
+        model.addPlayerListener("edo", edoListener);
+        model.addPlayerListener("chen", chenListener);
+        model.addPlayerListener("osama", osamaListener);
 
-        model.addTableListener(tableConnector);
+        model.addTableListener(tableListener);
 
         Set<String> players = Set.of("edo", "chen", "osama");
+
         // Test init game
         assertDoesNotThrow(model::initGame);
 
         // 7 times
         // because there are 3 player field reset and 3 player points reset and 1 game status change
-        verify(tableConnector, times(8)).propertyChange(captor.capture());
+        verify(tableListener, times(8)).propertyChange(captor.capture());
 
         captor.getAllValues().stream()
               .filter(GameStatusChangeEvent.class::isInstance)
@@ -128,14 +134,14 @@ class GameModelTest {
                                 .contains(event.getNewValue()));
               });
 
-        reset(tableConnector);
+        reset(tableListener);
         captor = ArgumentCaptor.forClass(TableViewEvent.class);
 
-        verify(chenConnector, times(1))
+        verify(chenListener, times(1))
                 .propertyChange(argThat(StarterCardEvent.class::isInstance));
-        verify(edoConnector, times(1))
+        verify(edoListener, times(1))
                 .propertyChange(argThat(StarterCardEvent.class::isInstance));
-        verify(osamaConnector, times(1))
+        verify(osamaListener, times(1))
                 .propertyChange(argThat(StarterCardEvent.class::isInstance));
 
         // Check if the players are the same
@@ -157,7 +163,7 @@ class GameModelTest {
         }
 
 
-        verify(tableConnector, times(players.size() + 1))
+        verify(tableListener, times(players.size() + 1))
                 .propertyChange(captor.capture());
 
         captor.getAllValues().stream()
@@ -248,6 +254,28 @@ class GameModelTest {
                              model.getStarterCard(player));
             }
 
+            ArgumentCaptor<TableViewEvent> captor = ArgumentCaptor.forClass(TableViewEvent.class);
+
+            verify(tableListener, times(players.size() + 1))
+                    .propertyChange(captor.capture());
+
+            captor.getAllValues().stream()
+                  .filter(FieldChangeEvent.class::isInstance)
+                  .map(FieldChangeEvent.class::cast)
+                  .forEach(event -> {
+                      assertEquals(event.getAction(), ActionMode.INSERTION);
+                      assertEquals(Position.of(0, 0), event.getValueOfAction().getKey());
+                      assertTrue(players.contains(event.getPlayer().orElseThrow()));
+                  });
+
+            captor.getAllValues().stream()
+                  .filter(GameStatusChangeEvent.class::isInstance)
+                  .map(GameStatusChangeEvent.class::cast)
+                  .forEach(event -> {
+                      assertEquals(GameStatus.CHOOSING_STARTERS, event.getOldValue());
+                      assertEquals(GameStatus.CHOOSING_OBJECTIVES, event.getNewValue());
+                  });
+
             // get all positions around 0,0
             Set<Position> positions = Stream.of(Corner.values())
                                             .map(corner -> PositionManager.getPositionIn(
@@ -278,9 +306,36 @@ class GameModelTest {
     @Test
     void testDealingObjective() {
 
+        ArgumentCaptor<PlayerViewEvent> playerCaptor = ArgumentCaptor.forClass(
+                PlayerViewEvent.class);
+
+        ArgumentCaptor<TableViewEvent> tableCaptor = ArgumentCaptor.forClass(
+                TableViewEvent.class);
+
         for (String player : players) {
             assertDoesNotThrow(() -> model.setStarterFor(player, true));
         }
+
+        verify(chenListener, times(1))
+                .propertyChange(playerCaptor.capture());
+
+        verify(edoListener, times(1))
+                .propertyChange(playerCaptor.capture());
+
+        verify(osamaListener, times(1))
+                .propertyChange(playerCaptor.capture());
+
+        playerCaptor.getAllValues().stream()
+                    .filter(CandidateObjectiveEvent.class::isInstance)
+                    .map(CandidateObjectiveEvent.class::cast)
+                    .forEach(event -> {
+                        assertEquals(2, event.getNewValue().size());
+                        assertTrue(event.getNewValue().stream()
+                                        .map(objectiveCardDeck::getCardById)
+                                        .allMatch(Optional::isPresent));
+                    });
+
+        reset(chenListener, edoListener, osamaListener, tableListener);
 
         Map<String, Integer> objOfPlayer = new HashMap<>(8);
         try {
@@ -290,7 +345,6 @@ class GameModelTest {
 
                 // check the size of candidate objectives
                 assertEquals(2, objCards.size());
-                assertEquals(2, model.getCandidateObjectives(player).size());
                 assertEquals(objCards, model.getCandidateObjectives(player));
 
 
@@ -325,6 +379,57 @@ class GameModelTest {
                  GameBreakingException e) {
             fail(e);
         }
+
+        playerCaptor = ArgumentCaptor.forClass(PlayerViewEvent.class);
+
+        verify(chenListener, times(4))
+                .propertyChange(playerCaptor.capture());
+
+        verify(edoListener, times(4))
+                .propertyChange(playerCaptor.capture());
+
+        verify(osamaListener, times(4))
+                .propertyChange(playerCaptor.capture());
+
+        playerCaptor.getAllValues().stream()
+                    .filter(PersonalObjectiveChangeEvent.class::isInstance)
+                    .map(PersonalObjectiveChangeEvent.class::cast)
+                    .forEach(event -> {
+                        assertEquals(objOfPlayer.get(event.getPlayer()),
+                                     event.getNewValue());
+                    });
+
+        playerCaptor.getAllValues().stream()
+                    .filter(HandChangeEvent.class::isInstance)
+                    .map(HandChangeEvent.class::cast)
+                    .forEach(event -> {
+                        assertEquals(ActionMode.INSERTION, event.getAction());
+                        assertTrue(Stream.of(event.getNewValue())
+                                         .filter(Objects::nonNull)
+                                         .map(GameModelTest::getPlayableFromId)
+                                         .allMatch(Optional::isPresent));
+                    });
+
+        verify(tableListener, times(11))
+                .propertyChange(tableCaptor.capture());
+
+        tableCaptor.getAllValues().stream()
+                   .filter(GameStatusChangeEvent.class::isInstance)
+                   .map(GameStatusChangeEvent.class::cast)
+                   .forEach(event -> {
+                       assertEquals(GameStatus.CHOOSING_OBJECTIVES, event.getOldValue());
+                       assertEquals(GameStatus.ONGOING, event.getNewValue());
+                   });
+
+        List<TableViewEvent> events = tableCaptor.getAllValues();
+    }
+
+    static @NotNull Optional<? extends PlayableCard> getPlayableFromId(int id) {
+        return Stream.of(goldCardDeck, resourceCardDeck)
+                     .map(deck -> deck.getCardById(id))
+                     .filter(Optional::isPresent)
+                     .map(Optional::get)
+                     .findFirst();
     }
 
 

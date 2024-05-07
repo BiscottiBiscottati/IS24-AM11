@@ -151,6 +151,7 @@ public class PickablesTable {
         } catch (EmptyDeckException e) {
             throw new RuntimeException(e);
         }
+        // TODO pcs for cards dealt on the table
         for (int i = 0; i < numOfShownPerType; i++) {
             goldDeck.draw().ifPresent(shownGold::add);
             resourceDeck.draw().ifPresent(shownResources::add);
@@ -175,9 +176,12 @@ public class PickablesTable {
         for (int i = 0; i < numOfCommonObjectives; i++) {
             commonObjectives.add(pickObjectiveCard());
         }
+        //TODO pcs for common obj
     }
 
     public PlayableCard pickPlayableVisible(int cardID) throws IllegalPickActionException {
+
+        //TODO pcs for shown event
         return Stream.concat(shownGold.stream(), shownResources.stream())
                      .filter(card -> card.getId() == cardID)
                      .findFirst()
