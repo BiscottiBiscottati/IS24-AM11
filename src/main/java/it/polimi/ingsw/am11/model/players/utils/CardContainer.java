@@ -60,7 +60,18 @@ public class CardContainer {
         this.isRetro = isRetro;
     }
 
-    // TODO this may be redundant but can be used if preferred to constructor
+
+    /**
+     * Factory method to create a new CardContainer instance.
+     * <p>
+     * This method takes a {@link FieldCard} object and a boolean value as parameters, and returns a
+     * new CardContainer instance with the specified card and the specified boolean value indicating
+     * whether the card is retro.
+     *
+     * @param card    The FieldCard to be stored in the CardContainer.
+     * @param isRetro The boolean value indicating whether the card is retro.
+     * @return a new CardContainer instance with the provided FieldCard and the boolean value.
+     */
     @Contract("_, _ -> new")
     public static @NotNull CardContainer of(@NotNull FieldCard card, boolean isRetro) {
         return new CardContainer(card, isRetro);
@@ -75,33 +86,105 @@ public class CardContainer {
         return card;
     }
 
+    /**
+     * This method returns an immutable <code>EnumMap</code> that maps each {@link Corner} of the
+     * card to a Boolean value indicating whether that corner is covered. The returned map is a
+     * snapshot of the current state and will not reflect any future changes to the covered
+     * corners.
+     *
+     * @return An immutable <code>Map</code> of the covered corners of the card.
+     */
     public Map<Corner, Boolean> getCoveredCorners() {
         return Maps.immutableEnumMap(this.coveredCorners);
     }
 
+    /**
+     * Checks if a specified corner of the card is covered.
+     *
+     * @param corner The corner of the card to check.
+     * @return true if the specified corner is covered, false otherwise.
+     */
     public boolean isCornerCovered(@NotNull Corner corner) {
         return this.coveredCorners.get(corner);
     }
 
+    /**
+     * Covers a specified corner of the card and returns the item on that corner.
+     * <p>
+     * This method takes a {@link Corner} object as a parameter, sets the corresponding
+     * <code>Corner</code> as covered,
+     * and returns the item on the specified corner of the card. If the card is retro, the item on
+     * the retro side of the card is returned.
+     * <p>
+     * If there is no item on the specified corner, this method returns an empty
+     * <code>Optional</code>.
+     *
+     * @param corner The corner of the card to cover.
+     * @return An <code>Optional</code> containing the item on the specified corner of the card, or
+     * an empty
+     * <code>Optional</code> if there is no item on that corner.
+     */
     public Optional<Item> cover(@NotNull Corner corner) {
         this.coveredCorners.put(corner, true);
         return this.card.getItemCorner(corner, isRetro).getItem();
     }
 
+    /**
+     * Checks if the color of the card in the container equals the specified color.
+     * <p>
+     * This method takes a {@link Color} object as a parameter and compares it with the color of the
+     * card in the container. If the specified color is not null and equals the color of the card,
+     * this method returns true; otherwise, it returns false.
+     *
+     * @param color The color to compare with the color of the card.
+     * @return true if the specified color is not null and equals the color of the card, false
+     * otherwise.
+     */
     public boolean isColorEquals(Color color) {
         if (color != null) return this.card.isColorEqual(color);
         return false;
     }
 
+    /**
+     * Checks if the card in the container equals the specified card.
+     * <p>
+     * This method takes a {@link FieldCard} object as a parameter and compares it with the card in
+     * the container. If the specified card is not null and equals the card in the container, this
+     * method returns true; otherwise, it returns false.
+     *
+     * @param card The card to compare with the card in the container.
+     * @return true if the specified card is not null and equals the card in the container, false
+     * otherwise.
+     */
     public boolean isCardEquals(FieldCard card) {
         if (card != null) return this.card.equals(card);
         return false;
     }
 
+    /**
+     * Checks if the card in the container is retro.
+     * <p>
+     * This method returns the boolean value indicating whether the card in the container is retro.
+     *
+     * @return true if the card in the container is retro, false otherwise.
+     */
     public boolean isRetro() {
         return isRetro;
     }
 
+    /**
+     * Returns the item on the specified corner of the card.
+     * <p>
+     * This method takes a {@link Corner} object as a parameter and returns the item on the
+     * specified corner of the card. If the card is retro, the item on the retro side of the card is
+     * returned.
+     * <p>
+     * If there is no item on the specified corner, this method returns an empty {@link Optional}.
+     *
+     * @param corner The corner of the card to get the item from.
+     * @return An {@link Optional} containing the item on the specified corner of the card, or an
+     * empty {@link Optional} if there is no item on that corner.
+     */
     public Optional<Item> getItemOn(Corner corner) {
         return this.card.getItemCorner(corner, isRetro).getItem();
     }
