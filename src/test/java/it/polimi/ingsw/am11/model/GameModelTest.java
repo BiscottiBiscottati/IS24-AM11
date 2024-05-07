@@ -280,7 +280,11 @@ class GameModelTest {
 
     @Test
     void testDealingObjective() {
-        // TODO may need to give starters first
+
+        for (String player : players) {
+            assertDoesNotThrow(() -> model.setStarterFor(player, true));
+        }
+
         Map<String, Integer> objOfPlayer = new HashMap<>(8);
         try {
             for (String player : players) {
