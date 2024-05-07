@@ -191,7 +191,6 @@ class GameModelTest {
 
     @Test
     void testDealingStarter() {
-        int card;
         Map<String, Integer> starterCards = new HashMap<>(8);
 
         try {
@@ -223,9 +222,8 @@ class GameModelTest {
                 try {
                     return model.getStarterCard(player);
                 } catch (PlayerInitException | GameStatusException e) {
-                    fail(e);
+                    throw new RuntimeException(e);
                 }
-                return Optional.empty();
             };
 
             // getting all starters dealt
@@ -260,9 +258,8 @@ class GameModelTest {
                 try {
                     return model.getAvailablePositions(player);
                 } catch (PlayerInitException | GameStatusException e) {
-                    fail(e);
+                    throw new RuntimeException(e);
                 }
-                return Set.of();
             };
 
             // check that available positions are the same as the ones around 0,0
