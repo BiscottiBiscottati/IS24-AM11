@@ -311,17 +311,13 @@ public class PositionManager {
     private boolean isAdjacentClosed(@NotNull Position position) {
         return Stream.of(Corner.values())
                      .map(corner -> PositionManager.getPositionIn(position, corner))
-                     .anyMatch(adjPos -> {
-                         if (! this.cardsPositioned.containsKey(adjPos)) {
-                             return false;
-                         } else {
-                             return this.cardsPositioned.get(adjPos)
-                                                        .isCornerCovered(
-                                                                PositionManager.getCornerFromPositions(
-                                                                        adjPos,
-                                                                        position).orElseThrow());
-                         }
-                     });
+                     .anyMatch(adjPos ->
+                                       Optional.ofNullable(this.cardsPositioned.get(adjPos))
+                                               .map(cardContainer -> cardContainer.isCornerCovered(
+                                                       PositionManager.getCornerFromPositions(
+                                                               adjPos,
+                                                               position).orElseThrow()))
+                                               .orElse(false));
     }
 
     /**
