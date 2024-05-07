@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.model.cards.objective;
 
-import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
 import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
 import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
@@ -15,6 +14,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class ObjectiveCardTest {
 
@@ -40,7 +40,7 @@ class ObjectiveCardTest {
                     .hasSecondaryColor(Color.RED)
                     .build();
         } catch (IllegalCardBuildException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 

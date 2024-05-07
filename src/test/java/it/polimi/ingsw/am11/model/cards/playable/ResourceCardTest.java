@@ -1,7 +1,5 @@
 package it.polimi.ingsw.am11.model.cards.playable;
 
-import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.*;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,7 +32,7 @@ class ResourceCardTest {
                     .hasIn(Corner.DOWN_LX, Color.PURPLE)
                     .build();
         } catch (IllegalCardBuildException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 

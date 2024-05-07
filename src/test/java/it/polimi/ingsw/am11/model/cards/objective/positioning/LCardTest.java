@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.model.cards.objective.positioning;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
@@ -25,8 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("ClassWithTooManyFields")
 @ExtendWith(MockitoExtension.class)
@@ -85,7 +83,7 @@ class LCardTest {
             purpleCard = new ResourceCard.Builder(3, 0, Color.PURPLE).build();
 
         } catch (IllegalCardBuildException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 

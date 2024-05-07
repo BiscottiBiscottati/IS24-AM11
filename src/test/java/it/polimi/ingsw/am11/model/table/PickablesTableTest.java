@@ -164,14 +164,14 @@ public class PickablesTableTest {
             try {
                 assertEquals(pickablesTable.drawPlayableFrom(GOLD).getColor(), goldColor);
             } catch (EmptyDeckException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         });
         pickablesTable.getDeckTop(RESOURCE).ifPresent(resourceColor -> {
             try {
                 assertEquals(pickablesTable.drawPlayableFrom(RESOURCE).getColor(), resourceColor);
             } catch (EmptyDeckException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         });
 
@@ -182,7 +182,7 @@ public class PickablesTableTest {
             try {
                 pickablesTable.drawPlayableFrom(GOLD);
             } catch (EmptyDeckException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         }
         assertTrue(pickablesTable.getDeckTop(GOLD).isEmpty());
@@ -218,7 +218,7 @@ public class PickablesTableTest {
                   try {
                       assertNotNull(pickablesTable.pickPlayableVisible(id));
                   } catch (IllegalPickActionException e) {
-                      throw new RuntimeException(e);
+                      fail(e);
                   }
                   assertThrows(IllegalPickActionException.class,
                                () -> pickablesTable.pickPlayableVisible(id));
@@ -238,7 +238,7 @@ public class PickablesTableTest {
         try {
             pickablesTable.drawPlayableFrom(GOLD);
         } catch (EmptyDeckException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertEquals(numberInDeck - 1,
                      pickablesTable.getRemainingDeckOf(GOLD));

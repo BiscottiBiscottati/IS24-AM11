@@ -7,7 +7,6 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
-import it.polimi.ingsw.am11.model.players.field.PositionManager;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -169,7 +168,7 @@ class PositionManagerTest {
             assertEquals(Set.copyOf(itemsToBeCovered), Set.copyOf(itemCovered.get()));
 
         } catch (IllegalCardPlacingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 

@@ -4,7 +4,6 @@ import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.decks.Deck;
-import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +27,7 @@ class StarterDeckFactoryTest {
         try {
             if (connection != null && ! connection.isClosed()) connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
     }
@@ -43,7 +42,7 @@ class StarterDeckFactoryTest {
                     "SELECT * FROM center_colors WHERE id = ?");
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
     }
@@ -103,7 +102,7 @@ class StarterDeckFactoryTest {
                     }
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         }
     }

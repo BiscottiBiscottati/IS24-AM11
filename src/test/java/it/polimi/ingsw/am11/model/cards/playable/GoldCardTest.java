@@ -1,8 +1,5 @@
 package it.polimi.ingsw.am11.model.cards.playable;
 
-import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
-import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
-import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.*;
 import it.polimi.ingsw.am11.model.decks.Deck;
@@ -50,7 +47,7 @@ class GoldCardTest {
                     .hasPointRequirements(PointsRequirementsType.COVERING_CORNERS)
                     .build();
         } catch (IllegalCardBuildException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         resourceDeck = ResourceDeckFactory.createDeck();
@@ -216,14 +213,14 @@ class GoldCardTest {
             field.place(goldSymbols, Position.of(- 1, - 1), false);
             field.place(goldSymbols, Position.of(- 1, 1), false);
         } catch (IllegalCardPlacingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         assertEquals(4, goldCovering.countPoints(field, Position.of(2, 0)));
         try {
             assertEquals(6, field.place(goldSymbols, Position.of(2, 0), false));
         } catch (IllegalCardPlacingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
     }

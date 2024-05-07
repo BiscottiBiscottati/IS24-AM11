@@ -84,7 +84,7 @@ class GameModelTest {
             model.initGame();
         } catch (PlayerInitException | GameStatusException |
                  GameBreakingException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         reset(chenConnector, edoConnector, osamaConnector, tableConnector);
@@ -152,7 +152,7 @@ class GameModelTest {
                 model.setStarterFor(player, true);
             } catch (IllegalCardPlacingException | GameStatusException | PlayerInitException |
                      GameBreakingException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         }
 
@@ -185,7 +185,7 @@ class GameModelTest {
             assertEquals(availPos,
                          model.getAvailablePositions("edo"));
         } catch (PlayerInitException | GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 
@@ -201,7 +201,7 @@ class GameModelTest {
             starterCards.put("chen", model.getStarterCard("chen").orElseThrow());
 
         } catch (GameStatusException | PlayerInitException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         // Test if the player can't pick a starter card twice
@@ -223,8 +223,9 @@ class GameModelTest {
                 try {
                     return model.getStarterCard(player);
                 } catch (PlayerInitException | GameStatusException e) {
-                    throw new RuntimeException(e);
+                    fail(e);
                 }
+                return Optional.empty();
             };
 
             // getting all starters dealt
@@ -259,8 +260,9 @@ class GameModelTest {
                 try {
                     return model.getAvailablePositions(player);
                 } catch (PlayerInitException | GameStatusException e) {
-                    throw new RuntimeException(e);
+                    fail(e);
                 }
+                return Set.of();
             };
 
             // check that available positions are the same as the ones around 0,0
@@ -271,7 +273,7 @@ class GameModelTest {
 
         } catch (PlayerInitException | GameStatusException | IllegalCardPlacingException |
                  GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
     }
@@ -320,7 +322,7 @@ class GameModelTest {
             }
         } catch (GameStatusException | PlayerInitException | IllegalPlayerSpaceActionException |
                  GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 

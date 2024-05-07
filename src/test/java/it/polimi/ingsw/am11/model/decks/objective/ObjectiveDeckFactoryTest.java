@@ -9,7 +9,6 @@ import it.polimi.ingsw.am11.model.cards.utils.Item;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
-import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
@@ -39,7 +38,7 @@ class ObjectiveDeckFactoryTest {
                 positioningStatement.close();
             if (connection != null && ! connection.isClosed()) connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 
@@ -52,7 +51,7 @@ class ObjectiveDeckFactoryTest {
             positioningStatement = connection.prepareStatement(
                     "SELECT * FROM positioning_cards WHERE global_id = ?");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 
@@ -88,7 +87,7 @@ class ObjectiveDeckFactoryTest {
                     default -> throw new IllegalStateException("Unexpected value: " + card);
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         }
     }

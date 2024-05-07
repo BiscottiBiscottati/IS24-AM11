@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.model.cards.objective.collecting;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
@@ -42,7 +41,7 @@ class SymbolCollectCardTest {
                     .hasSymbol(Symbol.FEATHER)
                     .build();
         } catch (IllegalCardBuildException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 

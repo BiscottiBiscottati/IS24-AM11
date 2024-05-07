@@ -62,7 +62,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         modelPlayers = manager.getPlayers();
@@ -78,25 +78,25 @@ class PlayerManagerTest {
         try {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertEquals(1, manager.getNumberOfPlayers());
         try {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertEquals(2, manager.getNumberOfPlayers());
         try {
             manager.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertEquals(3, manager.getNumberOfPlayers());
         try {
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertEquals(4, manager.getNumberOfPlayers());
         manager.removePlayer("Giorgio");
@@ -121,7 +121,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         manager.chooseFirstPlayer();
 
@@ -150,7 +150,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         manager.chooseFirstPlayer();
 
@@ -170,7 +170,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         for (String nickname : players) {
             assertEquals(nickname,
@@ -189,7 +189,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         //TODO
     }
@@ -208,7 +208,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         assertEquals(manager.getPlayerColor("player1"), Optional.of(PlayerColor.BLUE));
@@ -225,7 +225,7 @@ class PlayerManagerTest {
         try {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         //adding a player with the same name or color
@@ -239,7 +239,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
             manager.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         //overcoming the limit
@@ -257,7 +257,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         //removing a player
@@ -280,7 +280,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         manager.chooseFirstPlayer();
 
@@ -301,7 +301,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         manager.chooseFirstPlayer();
 
@@ -331,7 +331,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player3", PlayerColor.RED);
             manager.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         assertTrue(manager.getFirstPlayer().isEmpty());
@@ -356,7 +356,7 @@ class PlayerManagerTest {
             manager.addPlayerToTable("player1", PlayerColor.BLUE);
             manager.addPlayerToTable("player2", PlayerColor.GREEN);
         } catch (PlayerInitException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         manager.chooseFirstPlayer();

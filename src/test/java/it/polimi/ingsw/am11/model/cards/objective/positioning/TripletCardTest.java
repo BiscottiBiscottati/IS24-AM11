@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.model.cards.objective.positioning;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.model.cards.objective.positioning.TripletCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
@@ -63,7 +62,7 @@ class TripletCardTest {
             greenCard = new ResourceCard.Builder(1, 0, Color.GREEN).build();
             blueCard = new ResourceCard.Builder(2, 0, Color.BLUE).build();
         } catch (IllegalCardBuildException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
     }

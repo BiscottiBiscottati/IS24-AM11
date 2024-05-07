@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.model.cards.objective.collecting;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
@@ -56,7 +55,7 @@ class ColorCollectCardTest {
                     .hasColor(Color.PURPLE)
                     .build();
         } catch (IllegalCardBuildException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 

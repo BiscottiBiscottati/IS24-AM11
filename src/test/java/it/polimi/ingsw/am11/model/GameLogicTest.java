@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         Set<String> modelPlayers = model.getPlayers();
@@ -60,33 +61,16 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class, () -> model.getCurrentTurnPlayer());
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
-        for (String player : players) {
-            try {
-                model.setStarterFor(player, true);
-            } catch (IllegalCardPlacingException | GameBreakingException | PlayerInitException |
-                     GameStatusException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        for (String player : players) {
-            try {
-                model.setObjectiveFor(player, model.getCandidateObjectives(
-                        player).stream().findFirst().orElseThrow());
-            } catch (IllegalPlayerSpaceActionException | GameStatusException |
-                     PlayerInitException | GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        giveStarterAndObjectives(players, model);
 
         assertDoesNotThrow(() -> model.getCurrentTurnPlayer());
 
@@ -97,7 +81,7 @@ class GameLogicTest {
             }
             playerQueue.addLast(playerQueue.removeFirst());
         } catch (GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
 
@@ -118,13 +102,13 @@ class GameLogicTest {
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
                  IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         try {
             assertEquals(model.getCurrentTurnPlayer(), playerQueue.removeFirst());
         } catch (GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         try {
@@ -143,13 +127,13 @@ class GameLogicTest {
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
                  IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         try {
             assertEquals(model.getCurrentTurnPlayer(), playerQueue.removeFirst());
         } catch (GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         while (true) {
             try {
@@ -188,10 +172,24 @@ class GameLogicTest {
                      IllegalPickActionException | NotInHandException | EmptyDeckException |
                      IllegalPlateauActionException | GameBreakingException | MaxHandSizeException |
                      GameStatusException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         }
         assertThrows(GameStatusException.class, () -> model.getCurrentTurnPlayer());
+    }
+
+    static void giveStarterAndObjectives(@NotNull Collection<String> players,
+                                         @NotNull GameModel model) {
+        for (String player : players) {
+            assertDoesNotThrow(() -> model.setStarterFor(player, true));
+        }
+
+        for (String player : players) {
+            assertDoesNotThrow(() -> model.setObjectiveFor(player,
+                                                           model.getCandidateObjectives(player)
+                                                                .stream()
+                                                                .findFirst().orElseThrow()));
+        }
     }
 
     @Test
@@ -203,7 +201,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         try {
             model.initGame();
@@ -211,14 +209,7 @@ class GameLogicTest {
             fail(e);
         }
 
-        players.forEach(player -> assertDoesNotThrow(() -> model.setStarterFor(player, true)));
-
-        for (String player : players) {
-            assertDoesNotThrow(() -> {
-                model.setObjectiveFor(player, model.getCandidateObjectives(
-                        player).stream().findFirst().orElseThrow());
-            });
-        }
+        giveStarterAndObjectives(players, model);
 
         try {
             assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
@@ -235,29 +226,21 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class, () -> model.getPlayerHand("player1"));
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
-        for (String nickname : players) {
-            try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | IllegalCardPlacingException |
-                     PlayerInitException | GameStatusException | GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
-        }
+
+        giveStarterAndObjectives(players, model);
 
         try {
             assertEquals(model.getPlayerHand("player1").size(), 3);
         } catch (GameStatusException | PlayerInitException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
 
@@ -271,35 +254,36 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class, () -> model.getPlayerObjective("player1"));
 
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
+
+        for (String player : players) {
+            assertDoesNotThrow(() -> model.setStarterFor(player, false));
+        }
+
         try {
             assertTrue(model.getPlayerObjective("player1").isEmpty());
         } catch (PlayerInitException | GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         for (String nickname : players) {
-            try {
+            assertDoesNotThrow(() -> {
                 model.setObjectiveFor(nickname, model.getCandidateObjectives(
                         nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | IllegalCardPlacingException |
-                     PlayerInitException | GameStatusException | GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
+            });
         }
         try {
             assertEquals(model.getPlayerObjective("player1").size(), 1);
         } catch (PlayerInitException | GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
 
@@ -316,10 +300,8 @@ class GameLogicTest {
             assertEquals(model.getPlayerColor("player2"), PlayerColor.GREEN);
             assertEquals(model.getPlayerColor("player3"), PlayerColor.RED);
             assertEquals(model.getPlayerColor("player4"), PlayerColor.YELLOW);
-        } catch (PlayerInitException | GameStatusException e) {
-            throw new RuntimeException(e);
-        } catch (NumOfPlayersException e) {
-            throw new RuntimeException(e);
+        } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
+            fail(e);
         }
 
     }
@@ -334,27 +316,17 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
 
         } catch (GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class, () -> model.getPositionedCard("player1"));
-        for (String nickname : players) {
-            try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException e) {
-                throw new RuntimeException(e);
-            } catch (GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
-        }
+
+        giveStarterAndObjectives(players, model);
 
         try {
             model.placeCard(model.getCurrentTurnPlayer(), model.getPlayerHand(
@@ -369,7 +341,7 @@ class GameLogicTest {
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
                  IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         try {
@@ -385,7 +357,7 @@ class GameLogicTest {
                  IllegalPlateauActionException | IllegalPlayerSpaceActionException |
                  EmptyDeckException | GameBreakingException | MaxHandSizeException |
                  IllegalPickActionException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 
@@ -398,26 +370,18 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class, () -> model.getAvailablePositions("player1"));
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertDoesNotThrow(() -> model.getAvailablePositions("player1"));
 
-        for (String nickname : players) {
-            try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, true);
-            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException | GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        giveStarterAndObjectives(players, model);
+
         assertEquals(model.getAvailablePositions(model.getCurrentTurnPlayer()).size(), 4);
         try {
             model.placeCard(model.getCurrentTurnPlayer(), model.getPlayerHand(
@@ -431,7 +395,7 @@ class GameLogicTest {
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
                  IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertEquals(model.getAvailablePositions(model.getCurrentTurnPlayer()).size(), 4);
     }
@@ -440,29 +404,33 @@ class GameLogicTest {
     @Test
     void getCommonObjectives() {
         {
+            Set<String> players = Set.of("player1", "player2", "player3", "player4");
+
             try {
                 model.addPlayerToTable("player1", PlayerColor.BLUE);
                 model.addPlayerToTable("player2", PlayerColor.GREEN);
                 model.addPlayerToTable("player3", PlayerColor.RED);
                 model.addPlayerToTable("player4", PlayerColor.YELLOW);
             } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
 
             try {
                 model.initGame();
             } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
 
-            Set<Integer> listObj;
+            giveStarterAndObjectives(players, model);
+
+            Set<Integer> listObj = null;
 
             try {
                 assertNotNull(model.getCommonObjectives());
                 assertEquals(model.getCommonObjectives().size(), 2);
                 listObj = model.getCommonObjectives();
             } catch (GameStatusException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
 
 
@@ -483,25 +451,16 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class, () -> model.getExposedCards(PlayableCardType.GOLD));
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
-        for (String player : players) {
-            assertDoesNotThrow(() -> model.setStarterFor(player, false));
-        }
-
-        for (String player : players) {
-            assertDoesNotThrow(() -> model.setObjectiveFor(player,
-                                                           model.getCandidateObjectives(player)
-                                                                .stream()
-                                                                .findFirst().orElseThrow()));
-        }
+        giveStarterAndObjectives(players, model);
 
         try {
             assertDoesNotThrow(() -> model.getExposedCards(PlayableCardType.GOLD));
@@ -509,7 +468,7 @@ class GameLogicTest {
             assertDoesNotThrow(() -> model.getExposedCards(PlayableCardType.RESOURCE));
             assertEquals(2, model.getExposedCards(PlayableCardType.RESOURCE).size());
         } catch (GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         try {
@@ -526,7 +485,7 @@ class GameLogicTest {
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
                  IllegalPlayerSpaceActionException | GameBreakingException |
                  IllegalPickActionException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         try {
@@ -543,7 +502,7 @@ class GameLogicTest {
                  IllegalPlateauActionException | IllegalPlayerSpaceActionException |
                  GameBreakingException | IllegalPickActionException | PlayerInitException |
                  GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         model.forceEnd();
         assertThrows(GameStatusException.class, () -> model.getExposedCards(PlayableCardType.GOLD));
@@ -562,7 +521,7 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         assertThrows(GameStatusException.class, () -> model.getPlayerPoints("player1"));
@@ -571,21 +530,12 @@ class GameLogicTest {
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         assertThrows(PlayerInitException.class, () -> model.getPlayerPoints("playerX"));
 
-        try {
-            for (String nickname : players) {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            }
-        } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                 IllegalCardPlacingException | GameBreakingException e) {
-            throw new RuntimeException(e);
-        }
+        giveStarterAndObjectives(players, model);
 
         try {
             assertEquals(model.getPlayerPoints("player1"), 0);
@@ -593,7 +543,7 @@ class GameLogicTest {
             assertEquals(model.getPlayerPoints("player3"), 0);
             assertEquals(model.getPlayerPoints("player4"), 0);
         } catch (PlayerInitException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         model.forceEnd();
         assertThrows(GameStatusException.class, () -> model.getPlayerPoints("player1"));
@@ -611,23 +561,15 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
-        try {
-            for (String nickname : players) {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            }
-        } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                 IllegalCardPlacingException e) {
-            throw new RuntimeException(e);
-        }
+
+        giveStarterAndObjectives(players, model);
 
         assertThrows(GameStatusException.class, () -> model.getPlayerFinishingPosition("player1"));
         while (true) {
@@ -666,7 +608,7 @@ class GameLogicTest {
                      IllegalCardPlacingException | NotInHandException | EmptyDeckException |
                      IllegalPlateauActionException | MaxHandSizeException |
                      IllegalPickActionException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
 
         }
@@ -686,25 +628,16 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
-        try {
-            for (String nickname : players) {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            }
-        } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                 IllegalCardPlacingException e) {
-            throw new RuntimeException(e);
-        } catch (GameBreakingException e) {
-            throw new RuntimeException(e);
-        }
+
+        giveStarterAndObjectives(players, model);
+
         assertThrows(GameStatusException.class, () -> model.getWinner());
 
         while (true) {
@@ -744,7 +677,7 @@ class GameLogicTest {
                      IllegalPlateauActionException | MaxHandSizeException |
                      IllegalPickActionException | GameStatusException | PlayerInitException |
                      GameBreakingException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
 
         }
@@ -758,7 +691,7 @@ class GameLogicTest {
         try {
             model.addPlayerToTable("player1", PlayerColor.BLUE);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(NumOfPlayersException.class, () -> model.initGame());
         try {
@@ -766,12 +699,12 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         assertThrows(GameStatusException.class, () -> model.initGame());
@@ -801,7 +734,7 @@ class GameLogicTest {
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         assertThrows(GameStatusException.class,
@@ -816,14 +749,14 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         //Normal case
         try {
             model.removePlayer("player1");
         } catch (GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         Set<String> players = Set.of("player2", "player3");
         Set<String> modelPlayers = model.getPlayers();
@@ -833,7 +766,7 @@ class GameLogicTest {
         try {
             model.removePlayer("Giorgio");
         } catch (GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         players = Set.of("player2", "player3");
         modelPlayers = model.getPlayers();
@@ -844,7 +777,7 @@ class GameLogicTest {
             model.removePlayer("player3");
             model.removePlayer("player2");
         } catch (GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertTrue(model.getPlayers().isEmpty());
 
@@ -852,7 +785,7 @@ class GameLogicTest {
         try {
             model.removePlayer("Giorgio");
         } catch (GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertTrue(model.getPlayers().isEmpty());
 
@@ -862,14 +795,14 @@ class GameLogicTest {
             model.addPlayerToTable("playerY", PlayerColor.GREEN);
             model.addPlayerToTable("playerZ", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         //Test GameStatusException
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class,
                      () -> model.removePlayer("playerX"));
@@ -886,24 +819,17 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class, () -> model.setStarterFor("player1", false));
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(PlayerInitException.class, () -> model.setStarterFor("playerX", false));
         for (String nickname : players) {
-            try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException | GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
+            assertDoesNotThrow(() -> model.setStarterFor(nickname, false));
         }
         assertDoesNotThrow(() -> model.getStarterCard("player1"));
         assertDoesNotThrow(() -> model.getStarterCard("player2"));
@@ -918,29 +844,32 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class, () -> model.getPlayerObjective("player1"));
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
+
+        for (String player : players) {
+            assertDoesNotThrow(() -> model.setStarterFor(player, false));
+        }
+
         assertThrows(PlayerInitException.class,
                      () -> model.setObjectiveFor("playerX", model.getCandidateObjectives(
                              "playerX").stream().findFirst().orElseThrow()));
-        for (String nickname : players) {
-            try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException e) {
-                throw new RuntimeException(e);
-            } catch (GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
+
+        for (String player : players) {
+            assertDoesNotThrow(() -> model.setObjectiveFor(player,
+                                                           model.getCandidateObjectives(player)
+                                                                .stream()
+                                                                .findFirst()
+                                                                .orElseThrow()));
         }
+
+
         for (String nickname : players) {
             assertDoesNotThrow(() -> model.getPlayerObjective(nickname));
         }
@@ -955,7 +884,7 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class,
                      () -> model.placeCard("player1", model.getPlayerHand(
@@ -966,7 +895,7 @@ class GameLogicTest {
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class,
                      () -> model.placeCard("player1", model.getPlayerHand(
@@ -974,16 +903,9 @@ class GameLogicTest {
                                            model.getAvailablePositions(
                                                    "player1").stream().findFirst().orElseThrow(),
                                            false));
-        for (String nickname : players) {
-            try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException | GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
-        }
+
+        giveStarterAndObjectives(players, model);
+
         String previousPlayer;
         try {
             assertThrows(IllegalCardPlacingException.class,
@@ -1027,7 +949,7 @@ class GameLogicTest {
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
                  IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 
@@ -1039,30 +961,21 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class,
                      () -> model.drawFromDeckOf(PlayableCardType.GOLD, "player1"));
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
-        for (String nickname : players) {
-            try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException e) {
-                throw new RuntimeException(e);
-            } catch (GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
-        }
+
+        giveStarterAndObjectives(players, model);
+
         assertThrows(PlayerInitException.class,
                      () -> model.drawFromDeckOf(PlayableCardType.GOLD, "playerX"));
-        String previousPlayer;
+        String previousPlayer = "";
         try {
             assertThrows(IllegalPickActionException.class,
                          () -> model.drawFromDeckOf(PlayableCardType.GOLD,
@@ -1078,10 +991,11 @@ class GameLogicTest {
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
                  IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
+        String finalPreviousPlayer = previousPlayer;
         assertThrows(TurnsOrderException.class,
-                     () -> model.drawFromDeckOf(PlayableCardType.GOLD, previousPlayer));
+                     () -> model.drawFromDeckOf(PlayableCardType.GOLD, finalPreviousPlayer));
 
         while (true) {
             try {
@@ -1126,7 +1040,7 @@ class GameLogicTest {
                      IllegalPlateauActionException | MaxHandSizeException |
                      IllegalPickActionException | GameStatusException | PlayerInitException |
                      GameBreakingException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
 
         }
@@ -1143,28 +1057,21 @@ class GameLogicTest {
             model.addPlayerToTable("player2", PlayerColor.GREEN);
             model.addPlayerToTable("player3", PlayerColor.RED);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class,
                      () -> model.drawVisibleOf(PlayableCardType.GOLD, "player1", 1));
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
-        for (String nickname : players) {
-            try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException | GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
-        }
+
+        giveStarterAndObjectives(players, model);
+
         assertThrows(PlayerInitException.class,
                      () -> model.drawVisibleOf(PlayableCardType.GOLD, "playerX", 1));
-        String previousPlayer;
+        String previousPlayer = null;
         try {
             assertThrows(IllegalPickActionException.class,
                          () -> model.drawVisibleOf(PlayableCardType.GOLD,
@@ -1184,10 +1091,11 @@ class GameLogicTest {
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
                  IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
+        String finalPreviousPlayer = previousPlayer;
         assertThrows(TurnsOrderException.class,
-                     () -> model.drawVisibleOf(PlayableCardType.GOLD, previousPlayer, 2));
+                     () -> model.drawVisibleOf(PlayableCardType.GOLD, finalPreviousPlayer, 2));
 
         while (true) {
             try {
@@ -1235,7 +1143,7 @@ class GameLogicTest {
                      IllegalPlateauActionException | MaxHandSizeException |
                      IllegalPickActionException | GameStatusException | PlayerInitException |
                      GameBreakingException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         }
         assertThrows(GameStatusException.class,
@@ -1252,13 +1160,13 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         assertEquals(model.getStatus(), GameStatus.CHOOSING_STARTERS);
@@ -1278,14 +1186,14 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         assertEquals(model.getStatus(), GameStatus.SETUP);
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertEquals(model.getStatus(), GameStatus.CHOOSING_STARTERS);
         model.forceEnd();
@@ -1303,12 +1211,12 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertNotNull(model.getDeckTop(PlayableCardType.GOLD));
         assertNotNull(model.getDeckTop(PlayableCardType.RESOURCE));
@@ -1324,13 +1232,13 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class, () -> model.getCandidateObjectives("player1"));
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         for (String player : players) {
@@ -1342,7 +1250,7 @@ class GameLogicTest {
                 assertNotNull(model.getCandidateObjectives(nickname));
                 assertEquals(model.getCandidateObjectives(nickname).size(), 2);
             } catch (GameStatusException | PlayerInitException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         }
 
@@ -1352,7 +1260,7 @@ class GameLogicTest {
                         nickname).stream().findFirst().orElseThrow());
             } catch (GameStatusException | PlayerInitException | IllegalPlayerSpaceActionException |
                      GameBreakingException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         }
         for (String nickname : players) {
@@ -1371,20 +1279,20 @@ class GameLogicTest {
             model.addPlayerToTable("player3", PlayerColor.RED);
             model.addPlayerToTable("player4", PlayerColor.YELLOW);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
         assertThrows(GameStatusException.class, () -> model.getStarterCard("player1"));
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
 
         for (String nickname : players) {
             try {
                 assertNotNull(model.getStarterCard(nickname));
             } catch (GameStatusException | PlayerInitException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         }
 
@@ -1393,7 +1301,7 @@ class GameLogicTest {
                 model.setStarterFor(nickname, false);
             } catch (GameStatusException | PlayerInitException |
                      IllegalCardPlacingException | GameBreakingException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
         }
         for (String nickname : players) {

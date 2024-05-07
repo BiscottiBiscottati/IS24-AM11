@@ -7,7 +7,6 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
-import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +33,7 @@ class GoldDeckFactoryTest {
             if (idQuery != null && ! idQuery.isClosed()) idQuery.close();
             if (connection != null && ! connection.isClosed()) connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 
@@ -47,7 +46,7 @@ class GoldDeckFactoryTest {
             placingReqQuery = connection.prepareStatement(
                     "SELECT * FROM placing_requirements WHERE id = ?");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 
@@ -135,7 +134,7 @@ class GoldDeckFactoryTest {
                     }
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                fail(e);
             }
 
         }
