@@ -11,5 +11,6 @@ public class DatabaseConstants {
      * resources' folder.
      */
     public static final String DATABASE_URL =
-            "jdbc:sqlite:" + DatabaseConstants.class.getResource("/db/cards.sqlite");
+            "jdbc:sqlite:" +
+            DatabaseConstants.class.getResource("/db/cards.sqlite");
 }
