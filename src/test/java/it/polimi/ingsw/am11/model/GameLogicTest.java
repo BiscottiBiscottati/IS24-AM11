@@ -69,20 +69,26 @@ class GameLogicTest {
             throw new RuntimeException(e);
         }
 
-        assertDoesNotThrow(() -> model.getCurrentTurnPlayer());
-        //setting objectives and starter
-        for (String nickname : playerQueue) {
+        for (String player : players) {
             try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException e) {
-                throw new RuntimeException(e);
-            } catch (GameBreakingException e) {
+                model.setStarterFor(player, true);
+            } catch (IllegalCardPlacingException | GameBreakingException | PlayerInitException |
+                     GameStatusException e) {
                 throw new RuntimeException(e);
             }
         }
+
+        for (String player : players) {
+            try {
+                model.setObjectiveFor(player, model.getCandidateObjectives(
+                        player).stream().findFirst().orElseThrow());
+            } catch (IllegalPlayerSpaceActionException | GameStatusException |
+                     PlayerInitException | GameBreakingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        assertDoesNotThrow(() -> model.getCurrentTurnPlayer());
 
         try {
             assertEquals(model.getCurrentTurnPlayer(), model.getFirstPlayer());
@@ -202,24 +208,22 @@ class GameLogicTest {
         try {
             model.initGame();
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
-        for (String nickname : players) {
-            try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException e) {
-                throw new RuntimeException(e);
-            } catch (GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
+
+        players.forEach(player -> assertDoesNotThrow(() -> model.setStarterFor(player, true)));
+
+        for (String player : players) {
+            assertDoesNotThrow(() -> {
+                model.setObjectiveFor(player, model.getCandidateObjectives(
+                        player).stream().findFirst().orElseThrow());
+            });
         }
+
         try {
             assertEquals(model.getFirstPlayer(), model.getCurrentTurnPlayer());
         } catch (GameStatusException e) {
-            throw new RuntimeException(e);
+            fail(e);
         }
     }
 
@@ -487,24 +491,25 @@ class GameLogicTest {
         } catch (NumOfPlayersException | GameStatusException | GameBreakingException e) {
             throw new RuntimeException(e);
         }
-        try {
-            assertDoesNotThrow(() -> model.getExposedCards(PlayableCardType.GOLD));
-            assertEquals(model.getExposedCards(PlayableCardType.GOLD).size(), 2);
-            assertDoesNotThrow(() -> model.getExposedCards(PlayableCardType.RESOURCE));
-            assertEquals(model.getExposedCards(PlayableCardType.RESOURCE).size(), 2);
-        } catch (GameStatusException e) {
-            throw new RuntimeException(e);
+
+        for (String player : players) {
+            assertDoesNotThrow(() -> model.setStarterFor(player, false));
         }
 
-        for (String nickname : players) {
-            try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
-            } catch (IllegalPlayerSpaceActionException | GameStatusException | PlayerInitException |
-                     IllegalCardPlacingException | GameBreakingException e) {
-                throw new RuntimeException(e);
-            }
+        for (String player : players) {
+            assertDoesNotThrow(() -> model.setObjectiveFor(player,
+                                                           model.getCandidateObjectives(player)
+                                                                .stream()
+                                                                .findFirst().orElseThrow()));
+        }
+
+        try {
+            assertDoesNotThrow(() -> model.getExposedCards(PlayableCardType.GOLD));
+            assertEquals(2, model.getExposedCards(PlayableCardType.GOLD).size());
+            assertDoesNotThrow(() -> model.getExposedCards(PlayableCardType.RESOURCE));
+            assertEquals(2, model.getExposedCards(PlayableCardType.RESOURCE).size());
+        } catch (GameStatusException e) {
+            throw new RuntimeException(e);
         }
 
         try {
@@ -1328,6 +1333,10 @@ class GameLogicTest {
             throw new RuntimeException(e);
         }
 
+        for (String player : players) {
+            assertDoesNotThrow(() -> model.setStarterFor(player, false));
+        }
+
         for (String nickname : players) {
             try {
                 assertNotNull(model.getCandidateObjectives(nickname));
@@ -1341,9 +1350,8 @@ class GameLogicTest {
             try {
                 model.setObjectiveFor(nickname, model.getCandidateObjectives(
                         nickname).stream().findFirst().orElseThrow());
-                model.setStarterFor(nickname, false);
             } catch (GameStatusException | PlayerInitException | IllegalPlayerSpaceActionException |
-                     IllegalCardPlacingException | GameBreakingException e) {
+                     GameBreakingException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -1382,10 +1390,8 @@ class GameLogicTest {
 
         for (String nickname : players) {
             try {
-                model.setObjectiveFor(nickname, model.getCandidateObjectives(
-                        nickname).stream().findFirst().orElseThrow());
                 model.setStarterFor(nickname, false);
-            } catch (GameStatusException | PlayerInitException | IllegalPlayerSpaceActionException |
+            } catch (GameStatusException | PlayerInitException |
                      IllegalCardPlacingException | GameBreakingException e) {
                 throw new RuntimeException(e);
             }

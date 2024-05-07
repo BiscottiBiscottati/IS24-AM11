@@ -329,9 +329,7 @@ public class GameLogic implements GameModel {
 
         try {
             plateau.setStatus(GameStatus.CHOOSING_STARTERS);
-            for (String nickname : playerManager.getPlayers()) {
-                pickStarterFor(nickname);
-            }
+            pickStarters();
         } catch (IllegalPlayerSpaceActionException | GameStatusException | EmptyDeckException |
                  IllegalPickActionException | PlayerInitException e) {
             throw new GameBreakingException("Something broke while dealing starters or objectives");
@@ -351,10 +349,12 @@ public class GameLogic implements GameModel {
      * @throws GameStatusException if the game is not ongoing
      */
 
-    private void pickStarterFor(@NotNull String nickname)
+    private void pickStarters()
     throws EmptyDeckException, GameStatusException, PlayerInitException,
            IllegalPlayerSpaceActionException, IllegalPickActionException {
-        playerManager.setStarterCard(nickname, pickablesTable.pickStarterCard());
+        for (String nickname : playerManager.getPlayers()) {
+            playerManager.setStarterCard(nickname, pickablesTable.pickStarterCard());
+        }
     }
 
     /**
@@ -430,10 +430,10 @@ public class GameLogic implements GameModel {
                                            Map.entry(Position.of(0, 0),
                                                      CardContainer.of(starterCard, isRetro))));
 
-        if (playerManager.areStarterChoosed()) {
+        if (playerManager.areStarterSet()) {
             plateau.setStatus(GameStatus.CHOOSING_OBJECTIVES);
             try {
-                pickCandidateObjectives(nickname);
+                pickCandidateObjectives();
             } catch (EmptyDeckException | IllegalPickActionException e) {
                 throw new GameBreakingException(
                         "Something broke while dealing starters or objectives");
@@ -465,7 +465,7 @@ public class GameLogic implements GameModel {
         //TODO pcs
         playerSpace.addObjective(objectiveCard);
         pcs.fireEvent(new PersonalObjectiveChangeEvent(nickname, null, cardID));
-        if (playerManager.areObjectiveChoosed()) {
+        if (playerManager.areObjectiveSet()) {
             giveCards();
             plateau.setStatus(GameStatus.ONGOING);
         }
@@ -828,14 +828,16 @@ public class GameLogic implements GameModel {
     /**
      * Pick a <code>ObjectiveCard</code> from the deck on the <code>PickableTable</code>.
      *
-     * @throws EmptyDeckException  if the deck of  <code>ObjectiveCard</code> is empty
-     * @throws GameStatusException if the game is not ongoing
+     * @throws EmptyDeckException if the deck of  <code>ObjectiveCard</code> is empty
      */
 
-    private void pickCandidateObjectives(@NotNull String nickname)
-    throws EmptyDeckException, GameStatusException, PlayerInitException,
+    private void pickCandidateObjectives()
+    throws EmptyDeckException, PlayerInitException,
            IllegalPickActionException {
-        playerManager.setCandidateObjectives(nickname, pickablesTable.pickObjectiveCandidates());
+        for (String nickname : playerManager.getPlayers()) {
+            playerManager.setCandidateObjectives(nickname,
+                                                 pickablesTable.pickObjectiveCandidates());
+        }
     }
 }
 

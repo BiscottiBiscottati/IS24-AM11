@@ -147,18 +147,18 @@ public class PlayerManager {
     }
 
     public void setCandidateObjectives(@NotNull String nickname,
-                                       @NotNull Set<ObjectiveCard> objective)
+                                       @NotNull Set<ObjectiveCard> objectives)
     throws PlayerInitException {
         PersonalSpace space = Optional.ofNullable(players.get(nickname))
                                       .orElseThrow(() -> new PlayerInitException(
                                               "Player " + nickname + " not found"))
                                       .space();
 
-        objective.forEach(space::setNewCandidateObjectives);
+        objectives.forEach(space::setNewCandidateObjectives);
 
-        Set<Integer> candidateObjs = objective.stream()
-                                              .map(ObjectiveCard::getId)
-                                              .collect(Collectors.toUnmodifiableSet());
+        Set<Integer> candidateObjs = objectives.stream()
+                                               .map(ObjectiveCard::getId)
+                                               .collect(Collectors.toUnmodifiableSet());
         pcs.fireEvent(new CandidateObjectiveEvent(nickname, null, candidateObjs));
     }
 
@@ -271,7 +271,7 @@ public class PlayerManager {
         });
     }
 
-    public boolean areStarterChoosed() {
+    public boolean areStarterSet() {
         boolean isReady = true;
         for (Player player : players.values()) {
             isReady = isReady &&
@@ -280,7 +280,7 @@ public class PlayerManager {
         return isReady;
     }
 
-    public boolean areObjectiveChoosed() {
+    public boolean areObjectiveSet() {
         boolean isReady = true;
         for (Player player : players.values()) {
             isReady = isReady &&

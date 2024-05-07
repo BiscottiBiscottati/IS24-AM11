@@ -116,14 +116,16 @@ class GameModelTest {
 
         // 7 times
         // because there are 3 player field reset and 3 player points reset and 1 game status change
-        verify(tableConnector, times(7)).propertyChange(captor.capture());
+        verify(tableConnector, times(8)).propertyChange(captor.capture());
 
         captor.getAllValues().stream()
               .filter(GameStatusChangeEvent.class::isInstance)
               .map(GameStatusChangeEvent.class::cast)
               .forEach(event -> {
-                  assertEquals(GameStatus.SETUP, event.getOldValue());
-                  assertEquals(GameStatus.CHOOSING_STARTERS, event.getNewValue());
+                  assertTrue(Set.of(GameStatus.SETUP, GameStatus.CHOOSING_STARTERS)
+                                .contains(event.getOldValue()));
+                  assertTrue(Set.of(GameStatus.CHOOSING_STARTERS, GameStatus.CHOOSING_OBJECTIVES)
+                                .contains(event.getNewValue()));
               });
 
         reset(tableConnector);
@@ -276,6 +278,7 @@ class GameModelTest {
 
     @Test
     void testDealingObjective() {
+        // TODO may need to give starters first
         Map<String, Integer> objOfPlayer = new HashMap<>(8);
         try {
             for (String player : players) {
