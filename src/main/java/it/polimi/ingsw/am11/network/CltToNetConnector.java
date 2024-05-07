@@ -13,4 +13,6 @@ public interface CltToNetConnector {
     void setPersonalObjective(int cardId);
 
     void placeCard(Position pos, int cardId, boolean isRetro);
+
+    void setNumOfPlayers(int numOfPlayers);
 }
