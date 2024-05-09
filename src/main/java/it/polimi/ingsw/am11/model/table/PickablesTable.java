@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.decks.Deck;
@@ -16,6 +17,7 @@ import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
 import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
+import it.polimi.ingsw.am11.view.events.view.table.CommonObjectiveChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.DeckTopChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.ShownPlayableEvent;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +26,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PickablesTable {
@@ -151,10 +154,25 @@ public class PickablesTable {
         } catch (EmptyDeckException e) {
             throw new RuntimeException(e);
         }
-        // TODO pcs for cards dealt on the table
         for (int i = 0; i < numOfShownPerType; i++) {
-            goldDeck.draw().ifPresent(shownGold::add);
-            resourceDeck.draw().ifPresent(shownResources::add);
+            goldDeck.draw()
+                    .ifPresent(goldCard -> {
+                        shownGold.add(goldCard);
+                        pcs.fireEvent(new ShownPlayableEvent(
+                                PlayableCardType.GOLD,
+                                null,
+                                goldCard.getId()
+                        ));
+                    });
+            resourceDeck.draw()
+                        .ifPresent(resourceCard -> {
+                            shownResources.add(resourceCard);
+                            pcs.fireEvent(new ShownPlayableEvent(
+                                    PlayableCardType.RESOURCE,
+                                    null,
+                                    resourceCard.getId()
+                            ));
+                        });
         }
     }
 
@@ -163,6 +181,13 @@ public class PickablesTable {
         resourceDeck.reset();
         objectiveDeck.reset();
         starterDeck.reset();
+
+        Stream.of(PlayableCardType.values())
+              .forEach(type -> pcs.fireEvent(new DeckTopChangeEvent(
+                      type,
+                      null,
+                      getDeckTop(type).orElse(null)
+              )));
     }
 
     private void shuffleDecks() {
@@ -170,18 +195,27 @@ public class PickablesTable {
         resourceDeck.shuffle();
         objectiveDeck.shuffle();
         starterDeck.shuffle();
+
+        Stream.of(PlayableCardType.values())
+              .forEach(type -> pcs.fireEvent(new DeckTopChangeEvent(
+                      type,
+                      null,
+                      getDeckTop(type).orElse(null)
+              )));
     }
 
     public void pickCommonObjectives() throws EmptyDeckException {
         for (int i = 0; i < numOfCommonObjectives; i++) {
             commonObjectives.add(pickObjectiveCard());
         }
-        //TODO pcs for common obj
+
+        pcs.fireEvent(new CommonObjectiveChangeEvent(null,
+                                                     commonObjectives.stream()
+                                                                     .map(CardIdentity::getId)
+                                                                     .collect(Collectors.toSet())));
     }
 
     public PlayableCard pickPlayableVisible(int cardID) throws IllegalPickActionException {
-
-        //TODO pcs for shown event
         return Stream.concat(shownGold.stream(), shownResources.stream())
                      .filter(card -> card.getId() == cardID)
                      .findFirst()

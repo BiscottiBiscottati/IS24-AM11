@@ -4,13 +4,15 @@ import it.polimi.ingsw.am11.view.events.TableViewEvent;
 import it.polimi.ingsw.am11.view.server.VirtualTableView;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Set;
+
 public class CommonObjectiveChangeEvent extends TableViewEvent {
 
     // TODO to add to model
-    private final Integer oldCardId;
-    private final Integer newCardId;
+    private final Set<Integer> oldCardId;
+    private final Set<Integer> newCardId;
 
-    public CommonObjectiveChangeEvent(Integer oldCardId, Integer newCardId) {
+    public CommonObjectiveChangeEvent(Set<Integer> oldCardId, Set<Integer> newCardId) {
         this.oldCardId = oldCardId;
         this.newCardId = newCardId;
     }
@@ -21,17 +23,17 @@ public class CommonObjectiveChangeEvent extends TableViewEvent {
     }
 
     @Override
-    public Integer getOldValue() {
+    public Set<Integer> getOldValue() {
         return oldCardId;
     }
 
     @Override
-    public Integer getNewValue() {
+    public Set<Integer> getNewValue() {
         return newCardId;
     }
 
     @Override
-    public @NotNull Integer getValueOfAction() {
+    public @NotNull Set<Integer> getValueOfAction() {
         if (oldCardId != null) return oldCardId;
         if (newCardId != null) return newCardId;
         throw new UnsupportedOperationException("both are null cannot be called");
