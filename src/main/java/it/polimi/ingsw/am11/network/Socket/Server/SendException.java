@@ -9,6 +9,8 @@ public class SendException {
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
+    // FIXME to order better use a argument to dynamically launch exceptions
+
     public SendException(PrintWriter out) {
         this.out = out;
     }
