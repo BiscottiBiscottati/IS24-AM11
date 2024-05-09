@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 
 import java.util.Map;
+import java.util.Set;
 
 public interface TableConnector {
 
@@ -21,7 +22,7 @@ public interface TableConnector {
 
     void updateGameStatus(GameStatus status);
 
-    void updateCommonObjective(int cardId, boolean removeMode);
+    void updateCommonObjective(Set<Integer> cardsId, boolean removeMode);
 
     void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard);
 }

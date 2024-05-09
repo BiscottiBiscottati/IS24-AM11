@@ -67,7 +67,7 @@ public class MessageManager implements PlayerConnector, TableConnector {
     }
 
     @Override
-    public void updateCommonObjective(int cardId, boolean removeMode) {
+    public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
 
     }
 

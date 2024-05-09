@@ -112,10 +112,10 @@ public class SendCommand implements PlayerConnector, TableConnector {
     }
 
     @Override
-    public void updateCommonObjective(int cardId, boolean removeMode) {
+    public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateCommonObjective");
-        json.put("cardId", cardId);
+//        json.put("cardId", cardId); // FIXME changed to set need change
         json.put("removeMode", removeMode);
         out.println(json);
     }
