@@ -25,11 +25,12 @@ class TestCommunication {
         }
 
         // Create a ClientSocket instance
-        ClientSocket client = new ClientSocket("localhost", 12345, new ClientPlayerView("Ferdi")
-        );
-        ClientSocket client2 = new ClientSocket("localhost", 12345, new ClientPlayerView("Edo");
-        ClientSocket client3 = new ClientSocket("localhost", 12345, new ClientPlayerView("Chen")
-        );
+        ClientSocket client = new ClientSocket("localhost", 12345,
+                                               new ClientPlayerView("Ferdi"));
+        ClientSocket client2 = new ClientSocket("localhost", 12345,
+                                                new ClientPlayerView("Edo"));
+        ClientSocket client3 = new ClientSocket("localhost", 12345,
+                                                new ClientPlayerView("Chen"));
 
         client.connect();
         try {
