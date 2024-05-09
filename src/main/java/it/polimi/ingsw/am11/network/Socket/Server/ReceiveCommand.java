@@ -45,26 +45,11 @@ public class ReceiveCommand {
 
         } catch (IOException e) {
             System.out.println("Received invalid message.");
-        } catch (IllegalPlayerSpaceActionException e) {
-            sendException.IllegalPlayerSpaceActionException();
-        } catch (TurnsOrderException e) {
-            sendException.TurnsOrderException();
-        } catch (PlayerInitException e) {
-            sendException.PlayerInitException();
-        } catch (IllegalCardPlacingException e) {
-            sendException.IllegalCardPlacingException();
-        } catch (IllegalPickActionException e) {
-            sendException.IllegalPickActionException();
-        } catch (NotInHandException e) {
-            sendException.NotInHandException();
-        } catch (EmptyDeckException e) {
-            sendException.EmptyDeckException();
-        } catch (IllegalPlateauActionException e) {
-            sendException.IllegalPlateauActionException();
-        } catch (MaxHandSizeException e) {
-            sendException.MaxHandSizeException();
-        } catch (GameStatusException e) {
-            sendException.GameStatusException();
+        } catch (IllegalPlayerSpaceActionException | TurnsOrderException | PlayerInitException |
+                 IllegalCardPlacingException | IllegalPickActionException | NotInHandException |
+                 EmptyDeckException | IllegalPlateauActionException | MaxHandSizeException |
+                 GameStatusException e) {
+            sendException.Exception(e);
         }
     }
 
