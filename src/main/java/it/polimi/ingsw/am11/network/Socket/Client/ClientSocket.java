@@ -9,10 +9,12 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ClientSocket {
+    ClientPlayerView clientPlayerView;
     private BufferedReader in;
     private PrintWriter out;
     private String nickname;
     private ReceiveCommand receiveCommand;
+    private SendCommand sendCommand;
 
     public ClientSocket(String ip, int port, String nickname) {
         try {
@@ -20,8 +22,8 @@ public class ClientSocket {
             Socket socket = new Socket(ip, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            SendCommand sendCommand = new SendCommand(out);
-            ClientPlayerView clientPlayerView = new ClientPlayerView(nickname);
+            sendCommand = new SendCommand(out);
+            clientPlayerView = new ClientPlayerView(nickname);
             receiveCommand = new ReceiveCommand(clientPlayerView);
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,9 +36,10 @@ public class ClientSocket {
             String message = in.readLine();
             if (message.equals("You")) {
                 //TODO implement listener
-                out.println("2");
+                sendCommand.setNumOfPlayers(3);
                 startCommunication();
             } else if (message.equals("NotYou")) {
+                out.println("not me");
                 startCommunication();
             }
         } catch (IOException e) {

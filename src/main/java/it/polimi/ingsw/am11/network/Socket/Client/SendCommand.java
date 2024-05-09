@@ -65,9 +65,6 @@ public class SendCommand implements CltToNetConnector {
 
     @Override
     public void setNumOfPlayers(int numOfPlayers) {
-        ObjectNode json = mapper.createObjectNode();
-        json.put("method", "setNumOfPlayers");
-        json.put("numOfPlayers", numOfPlayers);
-        out.println(json);
+        out.println(numOfPlayers);
     }
 }

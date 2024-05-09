@@ -17,6 +17,11 @@ class TestCommunication {
 
         // Start the server in a separate thread
         Executors.newSingleThreadExecutor().execute(server::start);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Create a ClientSocket instance
         ClientSocket client = new ClientSocket("localhost", 12345, "Ferdi");
@@ -29,5 +34,6 @@ class TestCommunication {
             e.printStackTrace();
         }
         client2.connect();
+
     }
 }

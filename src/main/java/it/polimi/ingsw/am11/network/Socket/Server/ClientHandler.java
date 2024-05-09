@@ -14,7 +14,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
-    private final Socket clientSocket;
     private String nickname;
     private BufferedReader in;
     private PrintWriter out;
@@ -22,7 +21,6 @@ public class ClientHandler implements Runnable {
     private ReceiveCommand receiveCommand;
 
     public ClientHandler(Socket clientSocket) {
-        this.clientSocket = clientSocket;
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -44,6 +42,7 @@ public class ClientHandler implements Runnable {
                 validNickname = true;
                 try {
                     out.println("You");
+                    System.out.println("Sent You");
                     int numOfPlayers = Integer.parseInt(in.readLine());
                     CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
                     System.out.println("God player: " + nickname);
