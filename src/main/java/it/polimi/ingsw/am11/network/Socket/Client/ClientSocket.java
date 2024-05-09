@@ -34,6 +34,7 @@ public class ClientSocket {
             String message = in.readLine();
             if (message.equals("You")) {
                 //TODO implement listener
+                out.println("2");
                 startCommunication();
             } else if (message.equals("NotYou")) {
                 startCommunication();
