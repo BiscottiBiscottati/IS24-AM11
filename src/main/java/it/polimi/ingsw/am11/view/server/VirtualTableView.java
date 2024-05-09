@@ -68,6 +68,8 @@ public class VirtualTableView {
         connectors.values().forEach(action);
     }
 
+    //FIXME may use commander pattern or other
+
     public void updateTable(@NotNull CommonObjectiveChangeEvent event) {
         switch (event.getAction()) {
             case INSERTION -> {

@@ -21,9 +21,9 @@ public class ReceiveException {
             if (jsonNode.get("method").asText().equals("Exception")) {
                 switch (jsonNode.get("message").asText()) {
                     case "IllegalPlayerSpaceActionException":
-                        exception = new IllegalPlayerSpaceActionException(jsonNode.
-                                                                                  get("description")
-                                                                                  .asText());
+                        exception = new IllegalPlayerSpaceActionException(
+                                jsonNode.get("description")
+                                        .asText());
                     case "TurnsOrderException":
                         exception = new TurnsOrderException(jsonNode.get("description").asText());
                     case "PlayerInitException":
