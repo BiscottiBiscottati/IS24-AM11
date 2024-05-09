@@ -22,4 +22,8 @@ module it.polimi.ingsw.am11 {
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
     exports it.polimi.ingsw.am11;
+
+    opens it.polimi.ingsw.am11.view.client.window to javafx.fxml;
+    exports it.polimi.ingsw.am11.view.client.window;
+
 }
