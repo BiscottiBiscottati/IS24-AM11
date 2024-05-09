@@ -26,6 +26,7 @@ class TestCommunication {
         // Create a ClientSocket instance
         ClientSocket client = new ClientSocket("localhost", 12345, "Ferdi");
         ClientSocket client2 = new ClientSocket("localhost", 12345, "Edo");
+        ClientSocket client3 = new ClientSocket("localhost", 12345, "Ale");
 
         client.connect();
         try {
@@ -34,6 +35,7 @@ class TestCommunication {
             e.printStackTrace();
         }
         client2.connect();
+        client3.connect();
 
     }
 }

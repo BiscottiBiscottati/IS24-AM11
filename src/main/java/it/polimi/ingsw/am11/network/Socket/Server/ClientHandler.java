@@ -40,7 +40,7 @@ public class ClientHandler implements Runnable {
                         .connectPlayer(nickname, sendCommand, sendCommand);
                 receiveCommand = new ReceiveCommand(view, out);
                 validNickname = true;
-                if (CentralController.INSTANCE.getGodPlayer() == null) {
+                if (CentralController.INSTANCE.getGodPlayer().equals(nickname)) {
                     try {
                         out.println("You");
                         System.out.println("Sent You");

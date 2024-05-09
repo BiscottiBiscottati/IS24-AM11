@@ -26,7 +26,7 @@ public enum CentralController {
     private final CardController cardController;
     private final GameController gameController;
     private final Map<String, VirtualPlayerView> playerViews;
-    private String godPlayer;
+    private String godPlayer = null;
     private int numOfPlayers;
 
     CentralController() {
