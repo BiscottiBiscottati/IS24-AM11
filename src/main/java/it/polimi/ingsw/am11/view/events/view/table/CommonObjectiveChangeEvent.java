@@ -8,7 +8,6 @@ import java.util.Set;
 
 public class CommonObjectiveChangeEvent extends TableViewEvent {
 
-    // TODO to add to model
     private final Set<Integer> oldCardId;
     private final Set<Integer> newCardId;
 

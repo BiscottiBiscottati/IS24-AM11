@@ -33,7 +33,6 @@ public interface GameModel {
 
     PlayerColor getPlayerColor(String nickname) throws PlayerInitException;
 
-    //FIXME this interface has to be changed, it can't return a map
     Map<Position, CardContainer> getPositionedCard(String nickname)
     throws PlayerInitException, GameStatusException;
 

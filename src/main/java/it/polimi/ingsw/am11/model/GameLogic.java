@@ -57,7 +57,6 @@ public class GameLogic implements GameModel {
         Plateau.setArmageddonTime(ruleSet.getPointsToArmageddon());
     }
 
-    // FIXME we may not need it just using the specific attribute it needs
     @Override
     public RuleSet getRuleSet() {
         return ruleSet;
@@ -462,7 +461,6 @@ public class GameLogic implements GameModel {
                                                  .orElseThrow(() -> new PlayerInitException(
                                                          "Player not found"))
                                                  .space();
-        //TODO pcs
         playerSpace.addObjective(objectiveCard);
         pcs.fireEvent(new PersonalObjectiveChangeEvent(nickname, null, cardID));
         if (playerManager.areObjectiveSet()) {

@@ -57,7 +57,6 @@ public class ClientHandler implements Runnable {
             } catch (PlayerInitException e) {
                 out.println("Invalid nickname. Please try again.");
             } catch (GameStatusException | NumOfPlayersException e) {
-
                 throw new RuntimeException(e);
             }
         }
