@@ -14,7 +14,7 @@ import java.util.Set;
 public class ReceiveCommand {
     private final ClientViewUpdater clientPlayerView;
     private final ObjectMapper mapper;
-    ReceiveException receiveException;
+    private final ReceiveException receiveException;
 
     public ReceiveCommand(ClientViewUpdater clientPlayerView) {
         this.clientPlayerView = clientPlayerView;
