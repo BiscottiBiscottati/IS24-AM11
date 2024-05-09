@@ -56,8 +56,8 @@ public class VirtualTableView {
                         true);
             };
             default -> {
-                System.out.println("Invalid ActionMode " + mode + " in FieldChangeEvent " +
-                                   event.getOldValue() + " " + event.getNewValue());
+//                System.out.println("Invalid ActionMode " + mode + " in FieldChangeEvent " +
+//                                   event.getOldValue() + " " + event.getNewValue());
                 return;
             }
         }
