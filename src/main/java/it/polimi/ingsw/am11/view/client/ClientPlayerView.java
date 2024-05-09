@@ -1,74 +1,39 @@
 package it.polimi.ingsw.am11.view.client;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
-import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.model.table.GameStatus;
-
-import java.util.Set;
-
 // net to client connector
+
+import it.polimi.ingsw.am11.network.CltToNetConnector;
 
 // the network handlers will use (directly) these methods to modify the client view
 public class ClientPlayerView {
     private final String playerName;
+    private final ClientViewUpdater clientViewUpdater;
+    private final CltToNetConnector cltToNetConnector;
 
 
+    public ClientPlayerView(String playerName, ClientViewUpdater clientViewUpdater,
+                            CltToNetConnector cltToNetConnector) {
+        this.playerName = playerName;
+        this.clientViewUpdater = clientViewUpdater;
+        this.cltToNetConnector = cltToNetConnector;
+    }
+
+    // FIXME: temporary constructor for testing
     public ClientPlayerView(String playerName) {
         this.playerName = playerName;
+        this.clientViewUpdater = null;
+        this.cltToNetConnector = null;
     }
 
-
-    public void updateHand(int cardId, boolean removeMode) {
-
+    public String getPlayerName() {
+        return playerName;
     }
 
-
-    public void updatePersonalObjective(int cardId, boolean removeMode) {
-
+    public ClientViewUpdater getClientViewUpdater() {
+        return clientViewUpdater;
     }
 
-
-    public void sendStarterCard(int cardId) {
-
-    }
-
-
-    public void sendCandidateObjective(Set<Integer> cardsId) {
-
-    }
-
-
-    public void updateDeckTop(PlayableCardType type, Color color) {
-
-    }
-
-
-    public void updateField(String nickname, int x, int y, int cardId, boolean removeMode) {
-
-    }
-
-
-    public void updateShownPlayable(int previousId, int currentId) {
-
-    }
-
-
-    public void updateTurnChange(String nickname) {
-
-    }
-
-
-    public void updatePlayerPoint(String nickname, int points) {
-
-    }
-
-
-    public void updateGameStatus(GameStatus status) {
-
-    }
-
-
-    public void updateCommonObjective(int cardId, boolean removeMode) {
-
+    public void sendCommand() {
+        //TODO to implement
     }
 }

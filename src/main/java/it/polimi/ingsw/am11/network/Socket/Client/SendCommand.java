@@ -17,25 +17,6 @@ public class SendCommand implements CltToNetConnector {
         this.out = out;
     }
 
-
-    @Override
-    public void updateHand(int cardId, boolean removeMode) {
-        ObjectNode json = mapper.createObjectNode();
-        json.put("method", "updateHand");
-        json.put("cardId", cardId);
-        json.put("removeMode", removeMode);
-        out.println(json);
-    }
-
-    @Override
-    public void updatePersonalObjective(int cardId, boolean removeMode) {
-        ObjectNode json = mapper.createObjectNode();
-        json.put("method", "updatePersonalObjective");
-        json.put("cardId", cardId);
-        json.put("removeMode", removeMode);
-        out.println(json);
-    }
-
     @Override
     public void setStarterCard(boolean isRetro) {
         ObjectNode json = mapper.createObjectNode();

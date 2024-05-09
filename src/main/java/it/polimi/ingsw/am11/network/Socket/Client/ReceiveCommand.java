@@ -5,17 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.view.client.ClientPlayerView;
+import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
 public class ReceiveCommand {
-    private final ClientPlayerView clientPlayerView;
+    private final ClientViewUpdater clientPlayerView;
     private final ObjectMapper mapper;
 
-    public ReceiveCommand(ClientPlayerView clientPlayerView) {
+    public ReceiveCommand(ClientViewUpdater clientPlayerView) {
         this.clientPlayerView = clientPlayerView;
         this.mapper = new ObjectMapper();
     }
@@ -36,14 +36,14 @@ public class ReceiveCommand {
                                                                      "removeMode").asBoolean());
                     break;
                 case "sendStarterCard":
-                    clientPlayerView.sendStarterCard(jsonNode.get("cardId").asInt());
+                    clientPlayerView.receiveStarterCard(jsonNode.get("cardId").asInt());
                     break;
                 case "sendCandidateObjective":
                     Set<Integer> cardsId = new HashSet<>();
                     for (JsonNode cardId : jsonNode.get("cardsId")) {
                         cardsId.add(cardId.asInt());
                     }
-                    clientPlayerView.sendCandidateObjective(cardsId);
+                    clientPlayerView.receiveCandidateObjective(cardsId);
                     break;
                 case "updateDeckTop":
                     clientPlayerView.

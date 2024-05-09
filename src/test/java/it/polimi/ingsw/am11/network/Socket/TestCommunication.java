@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.network.Socket;
 
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
+import it.polimi.ingsw.am11.view.client.ClientPlayerView;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -24,9 +25,11 @@ class TestCommunication {
         }
 
         // Create a ClientSocket instance
-        ClientSocket client = new ClientSocket("localhost", 12345, "Ferdi");
-        ClientSocket client2 = new ClientSocket("localhost", 12345, "Edo");
-        ClientSocket client3 = new ClientSocket("localhost", 12345, "Ale");
+        ClientSocket client = new ClientSocket("localhost", 12345, new ClientPlayerView("Ferdi")
+        );
+        ClientSocket client2 = new ClientSocket("localhost", 12345, new ClientPlayerView("Edo");
+        ClientSocket client3 = new ClientSocket("localhost", 12345, new ClientPlayerView("Chen")
+        );
 
         client.connect();
         try {
