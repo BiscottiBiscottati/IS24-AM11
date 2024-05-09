@@ -40,16 +40,20 @@ public class ClientHandler implements Runnable {
                         .connectPlayer(nickname, sendCommand, sendCommand);
                 receiveCommand = new ReceiveCommand(view, out);
                 validNickname = true;
-                try {
-                    out.println("You");
-                    System.out.println("Sent You");
-                    int numOfPlayers = Integer.parseInt(in.readLine());
-                    CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
-                    System.out.println("God player: " + nickname);
-                    System.out.println("Num of players: " + numOfPlayers);
-                } catch (NotGodPlayerException e) {
+                if (CentralController.INSTANCE.getGodPlayer() == null) {
+                    try {
+                        out.println("You");
+                        System.out.println("Sent You");
+                        int numOfPlayers = Integer.parseInt(in.readLine());
+                        CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
+                        System.out.println("God player: " + nickname);
+                        System.out.println("Num of players: " + numOfPlayers);
+                    } catch (NotGodPlayerException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
                     out.println("NotYou");
-                    System.out.println("Not god player");
+                    System.out.println("Sent NotYou");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
