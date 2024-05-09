@@ -100,5 +100,10 @@ public class ClientMain implements ConnectorServerInterface {
         System.out.println("sendFinalLeaderboard: " + finalLeaderboard);
     }
 
+    @Override
+    public void updateCommonObjective(Set<Integer> cardsId, boolean removeMode) {
+
+    }
+
 
 }
