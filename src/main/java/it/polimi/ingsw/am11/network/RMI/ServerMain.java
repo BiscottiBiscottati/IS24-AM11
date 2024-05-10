@@ -1,34 +1,48 @@
 package it.polimi.ingsw.am11.network.RMI;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
-import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
+import java.rmi.ServerException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-public class ServerMain implements Loggable, PlayerViewInterface {
+public class ServerMain implements Loggable, PlayerViewInterface, CentralControllerInterface {
 
     static int PORT = 1234;
-    ConnectorServerInterface connector;
+    static
     VirtualPlayerView view;
-    private List<String> registeredClients;
+    private static ServerMain obj = null;
+    private final CentralControllerInterface centralController = null;
+    List<String> registeredClients;
+    ConnectorImplementation connector;
+
+    public ServerMain() {
+        super();
+        this.connector = new ConnectorImplementation();
+    }
+
+    public synchronized static ServerMain getInstance() {
+        if (obj == null) {
+            obj = new ServerMain();
+        }
+        return obj;
+    }
 
     public static void main(String[] args) {
         System.out.println("Hello from Server!");
-        Loggable stub = null;
-        ServerMain obj = new ServerMain();
+        Loggable log = null;
+        PlayerViewInterface view = null;
+        obj = new ServerMain();
         try {
-            stub = (Loggable) UnicastRemoteObject.exportObject(obj, PORT);
+            log = (Loggable) UnicastRemoteObject.exportObject(obj, 0);
+            view = (PlayerViewInterface) UnicastRemoteObject.exportObject(obj, 0);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -40,7 +54,8 @@ public class ServerMain implements Loggable, PlayerViewInterface {
             e.printStackTrace();
         }
         try {
-            registry.bind("Loggable", stub);
+            registry.bind("Loggable", log);
+            registry.bind("PlayerView", view);
         } catch (RemoteException | AlreadyBoundException e) {
             e.printStackTrace();
         }
@@ -48,21 +63,7 @@ public class ServerMain implements Loggable, PlayerViewInterface {
     }
 
     @Override
-    public void login(String nick)
-    throws ServerException {
-        try {
-            view = new VirtualPlayerView(connector, nick);
-            view = CentralController.INSTANCE
-                    .connectPlayer(nick, connector, connector);
-            registeredClients.add(nick);
-            System.out.println(nick + " connected");
-        } catch (PlayerInitException e) {
-            throw new ServerException("Invalid player init.");
-        } catch (GameStatusException e) {
-            throw new ServerException("Game status exception.");
-        } catch (NumOfPlayersException e) {
-            throw new ServerException("Max players reached.");
-        }
+    public void login(String nick) throws RemoteException {
     }
 
     @Override
@@ -158,69 +159,16 @@ public class ServerMain implements Loggable, PlayerViewInterface {
         }
     }
 
-    public void updateHand(int cardId, boolean removeMode) throws RemoteException {
-        connector.updateHand(cardId, removeMode);
+    public CentralControllerInterface playerDisconnected() throws RemoteException {
+        return null;
     }
 
-    public void updatePersonalObjective(int cardId, boolean removeMode) throws RemoteException {
-        connector.updatePersonalObjective(cardId, removeMode);
+    public CentralControllerInterface playerReconnected(String nickname) throws RemoteException {
+        return null;
     }
 
-    public void sendStarterCard(int cardId) throws RemoteException {
-        connector.sendStarterCard(cardId);
-    }
-
-    public void sendCandidateObjective(Set<Integer> cardsId) throws RemoteException {
-        connector.sendCandidateObjective(cardsId);
-    }
-
-    public void updateDeckTop(PlayableCardType type, Color color) throws RemoteException {
-        registeredClients.forEach(nick -> {
-            connector.updateDeckTop(type, color);
-        });
-    }
-
-    public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
-                            boolean removeMode) throws RemoteException {
-        registeredClients.forEach(nick -> {
-            connector.updateField(nickname, x, y, cardId, isRetro, removeMode);
-        });
-    }
-
-    public void updateShownPlayable(Integer previousId, Integer currentId) throws RemoteException {
-        registeredClients.forEach(nick -> {
-            connector.updateShownPlayable(previousId, currentId);
-        });
-    }
-
-    public void updateTurnChange(String nickname) throws RemoteException {
-        registeredClients.forEach(nick -> {
-            connector.updateTurnChange(nickname);
-        });
-    }
-
-    public void updatePlayerPoint(String nickname, int points) throws RemoteException {
-        registeredClients.forEach(nick -> {
-            connector.updatePlayerPoint(nickname, points);
-        });
-    }
-
-    public void updateGameStatus(GameStatus status) throws RemoteException {
-        registeredClients.forEach(nick -> {
-            connector.updateGameStatus(status);
-        });
-    }
-
-    public void updateCommonObjective(int cardId, boolean removeMode) throws RemoteException {
-        registeredClients.forEach(nick -> {
-            connector.updateCommonObjective(cardId, removeMode);
-        });
-    }
-
-    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) throws RemoteException {
-        registeredClients.forEach(nick -> {
-            connector.sendFinalLeaderboard(finalLeaderboard);
-        });
+    public CentralControllerInterface connectPlayer(String nickname) throws RemoteException {
+        return null;
     }
 
 }

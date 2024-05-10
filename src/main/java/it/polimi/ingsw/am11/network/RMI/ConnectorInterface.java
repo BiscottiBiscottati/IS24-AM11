@@ -5,13 +5,12 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
-import org.jetbrains.annotations.NotNull;
 
 import java.rmi.Remote;
 import java.util.Map;
 import java.util.Set;
 
-public interface ConnectorServerInterface extends Remote, @NotNull PlayerConnector, TableConnector {
+public interface ConnectorInterface extends Remote, PlayerConnector, TableConnector {
 
     void updateHand(int cardId, boolean removeMode);
 
@@ -34,7 +33,7 @@ public interface ConnectorServerInterface extends Remote, @NotNull PlayerConnect
 
     void updateGameStatus(GameStatus status);
 
-    void updateCommonObjective(int cardId, boolean removeMode);
-
     void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard);
+
+    void updateCommonObjective(int cardId, boolean removeMode);
 }
