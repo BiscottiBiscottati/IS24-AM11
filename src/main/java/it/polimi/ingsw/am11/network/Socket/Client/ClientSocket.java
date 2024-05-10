@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.Socket.Client;
 
+import it.polimi.ingsw.am11.network.CltToNetConnector;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,9 +19,9 @@ public class ClientSocket {
     private SendCommand sendCommand;
 
     public ClientSocket(String ip, int port, String nickname,
-                        @NotNull ClientViewUpdater clientPlayerView) {
+                        @NotNull ClientViewUpdater clientViewUpdater) {
         this.nickname = nickname;
-        this.clientViewUpdater = clientPlayerView;
+        this.clientViewUpdater = clientViewUpdater;
         try {
             Socket socket = new Socket(ip, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -73,4 +74,9 @@ public class ClientSocket {
             }
         }).start();
     }
+
+    public CltToNetConnector getConnector() {
+        return sendCommand;
+    }
+
 }

@@ -30,7 +30,7 @@ public class ClientChatController {
     }
 
     private void pubPrivMsg(String recipient, String msg) {
-        chatCltToNetConnector.pubPrivMsg(nickname, recipient, msg);
+        chatCltToNetConnector.pubPrivateMsg(nickname, recipient, msg);
     }
 
     private void pubMsg(String msg) {
