@@ -12,7 +12,7 @@ import java.net.Socket;
 
 public class ClientSocket {
     private final ClientViewUpdater clientViewUpdater;
-    private final String nickname;
+    private String nickname;
     private BufferedReader in;
     private PrintWriter out;
     private ReceiveCommand receiveCommand;
@@ -44,22 +44,32 @@ public class ClientSocket {
         }
     }
 
-    public void connect() {
+    public void connect() throws IOException {
         out.println(nickname);
-        // FIXME missing logic if nickname is not valid
-        try {
-            String message = in.readLine();
-            if (message.equals("You")) {
-                //TODO implement listener
-                sendCommand.setNumOfPlayers(3);
-                startCommunication();
-            } else if (message.equals("NotYou")) {
-                out.println("not me");
-                startCommunication();
+        String response = in.readLine();
+        while (true) {
+            boolean validNickname = response.equals("VALID_NICKNAME");
+            if (validNickname) {
+                break;
+            } else if (response.equals("NOT_VALID_NICKNAME")) {
+                System.out.println("Nickname already taken, please choose another one");
+                //TODO: implement the nickname selection
+                out.println(nickname);
+                response = in.readLine();
+            } else {
+                throw new IOException("Invalid nickname response");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        if (in.readLine().equals("YOU_GOD_PLAYER")) {
+            //TODO: implement the number of players selection
+            sendCommand.setNumOfPlayers(3);
+            startCommunication();
+        } else if (in.readLine().equals("YOU_NOT_GOD_PLAYER")) {
+            startCommunication();
+        } else {
+            throw new IOException("Invalid god player");
+        }
+
     }
 
     private void startCommunication() {
@@ -77,6 +87,10 @@ public class ClientSocket {
 
     public CltToNetConnector getConnector() {
         return sendCommand;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
 }
