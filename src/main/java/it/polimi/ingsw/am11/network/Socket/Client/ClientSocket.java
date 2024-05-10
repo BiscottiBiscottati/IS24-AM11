@@ -57,6 +57,7 @@ public class ClientSocket {
                 out.println(nickname);
                 response = in.readLine();
             } else {
+                // FIXME not to throw
                 throw new IOException("Invalid nickname response");
             }
         }
@@ -67,6 +68,7 @@ public class ClientSocket {
         } else if (in.readLine().equals("YOU_NOT_GOD_PLAYER")) {
             startCommunication();
         } else {
+            // FIXME not to throw
             throw new IOException("Invalid god player");
         }
 
