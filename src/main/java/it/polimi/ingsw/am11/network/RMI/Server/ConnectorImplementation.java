@@ -1,8 +1,9 @@
-package it.polimi.ingsw.am11.network.RMI;
+package it.polimi.ingsw.am11.network.RMI.Server;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 
 import java.util.Map;
 import java.util.Set;

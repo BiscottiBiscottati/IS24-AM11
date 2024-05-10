@@ -18,12 +18,14 @@ module it.polimi.ingsw.am11 {
     requires java.rmi;
     requires java.desktop;
     requires com.fasterxml.jackson.databind;
-    exports it.polimi.ingsw.am11.network.RMI to java.rmi;
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
     exports it.polimi.ingsw.am11;
 
     opens it.polimi.ingsw.am11.view.client.window to javafx.fxml;
     exports it.polimi.ingsw.am11.view.client.window;
+    exports it.polimi.ingsw.am11.network.RMI.Client to java.rmi;
+    exports it.polimi.ingsw.am11.network.RMI.RemoteInterfaces to java.rmi;
+    exports it.polimi.ingsw.am11.network.RMI.Server to java.rmi;
 
 }

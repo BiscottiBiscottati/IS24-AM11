@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.network.RMI;
+package it.polimi.ingsw.am11.network.RMI.RemoteInterfaces;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 

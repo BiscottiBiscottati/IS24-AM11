@@ -1,6 +1,8 @@
-package it.polimi.ingsw.am11.network.RMI;
+package it.polimi.ingsw.am11.network.RMI.Client;
 
 import it.polimi.ingsw.am11.controller.CentralController;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -41,11 +43,6 @@ public class ClientMain {
             System.out.println("God player: " + nickname);
             stub3.setNumofPlayers(nickname, numOfPlayers);
         }
-    }
-
-    @Override
-    public void updateCommonObjective(Set<Integer> cardsId, boolean removeMode) {
-
     }
 
 

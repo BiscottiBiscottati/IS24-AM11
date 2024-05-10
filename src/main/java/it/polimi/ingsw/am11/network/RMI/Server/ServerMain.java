@@ -1,8 +1,11 @@
-package it.polimi.ingsw.am11.network.RMI;
+package it.polimi.ingsw.am11.network.RMI.Server;
 
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.CentralControllerInterface;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 
 import java.rmi.AlreadyBoundException;
