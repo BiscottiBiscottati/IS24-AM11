@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.network.RMI.Server;
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.CentralControllerInterface;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
@@ -16,26 +16,19 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public class ServerMain implements Loggable, PlayerViewInterface, CentralControllerInterface {
+public class ServerMain implements Loggable, PlayerViewInterface {
 
     static int PORT = 1234;
     static
     VirtualPlayerView view;
     private static ServerMain obj = null;
-    private final CentralControllerInterface centralController = null;
+    private final CentralController centralController = CentralController.INSTANCE;
     List<String> registeredClients;
-    ConnectorImplementation connector;
+    ConnectorInterface connector = null;
 
     public ServerMain() {
         super();
-        this.connector = new ConnectorImplementation();
-    }
 
-    public synchronized static ServerMain getInstance() {
-        if (obj == null) {
-            obj = new ServerMain();
-        }
-        return obj;
     }
 
     public static void main(String[] args) {
@@ -45,7 +38,6 @@ public class ServerMain implements Loggable, PlayerViewInterface, CentralControl
         obj = new ServerMain();
         try {
             log = (Loggable) UnicastRemoteObject.exportObject(obj, 0);
-            view = (PlayerViewInterface) UnicastRemoteObject.exportObject(obj, 0);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -53,12 +45,7 @@ public class ServerMain implements Loggable, PlayerViewInterface, CentralControl
         Registry registry = null;
         try {
             registry = LocateRegistry.createRegistry(PORT);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        try {
             registry.bind("Loggable", log);
-            registry.bind("PlayerView", view);
         } catch (RemoteException | AlreadyBoundException e) {
             e.printStackTrace();
         }
@@ -67,6 +54,20 @@ public class ServerMain implements Loggable, PlayerViewInterface, CentralControl
 
     @Override
     public void login(String nick) throws RemoteException {
+
+        PlayerViewInterface view = null;
+        try {
+            view = (PlayerViewInterface) obj.centralController.connectPlayer(nick,
+                                                                             connector,
+                                                                             connector);
+        } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            UnicastRemoteObject.exportObject(view, 0);
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -160,18 +161,6 @@ public class ServerMain implements Loggable, PlayerViewInterface, CentralControl
         } catch (NumOfPlayersException e) {
             throw new ServerException("Max players reached.");
         }
-    }
-
-    public CentralControllerInterface playerDisconnected() throws RemoteException {
-        return null;
-    }
-
-    public CentralControllerInterface playerReconnected(String nickname) throws RemoteException {
-        return null;
-    }
-
-    public CentralControllerInterface connectPlayer(String nickname) throws RemoteException {
-        return null;
     }
 
 }

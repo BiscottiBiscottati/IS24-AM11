@@ -27,5 +27,6 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.network.RMI.Client to java.rmi;
     exports it.polimi.ingsw.am11.network.RMI.RemoteInterfaces to java.rmi;
     exports it.polimi.ingsw.am11.network.RMI.Server to java.rmi;
+    exports it.polimi.ingsw.am11.network.RMI.Chat to java.rmi;
 
 }

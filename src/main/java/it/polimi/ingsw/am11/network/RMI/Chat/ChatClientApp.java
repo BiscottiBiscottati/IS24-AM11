@@ -1,7 +1,4 @@
-package it.polimi.ingsw.am11.network.RMI.Client;
-
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ChatClient;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ChatServer;
+package it.polimi.ingsw.am11.network.RMI.Chat;
 
 import java.io.BufferedReader;
 import java.io.IOException;

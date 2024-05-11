@@ -1,6 +1,9 @@
 package it.polimi.ingsw.am11.network.RMI.Client;
 
 import it.polimi.ingsw.am11.controller.CentralController;
+import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
+import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
+import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 
@@ -8,6 +11,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Objects;
 
 public class ClientMain {
 
@@ -31,15 +35,19 @@ public class ClientMain {
     public void login(String nick) throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry("127.0.0.1", PORT);
         Loggable stub1 = (Loggable) registry.lookup("Loggable");
-        stub1.login(nick);
-        nickname = nick;
+        try {
+            stub1.login(nick);
+            nickname = nick;
+        } catch (NumOfPlayersException | PlayerInitException | GameStatusException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setNumOfPlayers(int numOfPlayers) throws RemoteException,
                                                          NotBoundException {
         Registry registry = LocateRegistry.getRegistry("127.0.0.1", PORT);
         PlayerViewInterface stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
-        if (CentralController.INSTANCE.getGodPlayer() == nickname) {
+        if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nickname)) {
             System.out.println("God player: " + nickname);
             stub3.setNumofPlayers(nickname, numOfPlayers);
         }
