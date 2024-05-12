@@ -22,6 +22,7 @@ public class SocketManager {
     }
 
     public void start() {
+        // FIXME start may create a thread to handle connection to not block the main thread
         while (isRunning) {
             try {
                 System.out.println("Server open on port: " + serverSocket.getLocalPort());
