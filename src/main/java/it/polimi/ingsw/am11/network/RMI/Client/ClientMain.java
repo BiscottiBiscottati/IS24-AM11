@@ -18,10 +18,13 @@ public class ClientMain {
     static int PORT = 1234;
     static String nickname;
 
+    //TODO to create and send to Server ConnectorInterface
+
     public static void main(String[] args) throws RemoteException {
         System.out.println("Hello from Client!");
 
         try {
+            // FIXME needs a way to dynamically set the ip address
             // Getting the registry
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", PORT);
             // Looking up the registry for the remote object
@@ -33,6 +36,7 @@ public class ClientMain {
     }
 
     public void login(String nick) throws RemoteException, NotBoundException {
+        // FIXME registry may be a private variable of the entire class
         Registry registry = LocateRegistry.getRegistry("127.0.0.1", PORT);
         Loggable stub1 = (Loggable) registry.lookup("Loggable");
         try {

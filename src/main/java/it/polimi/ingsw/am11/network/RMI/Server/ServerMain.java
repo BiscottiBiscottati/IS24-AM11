@@ -19,17 +19,20 @@ import java.util.List;
 public class ServerMain implements Loggable, PlayerViewInterface {
 
     static int PORT = 1234;
-    static
-    VirtualPlayerView view;
+    static VirtualPlayerView view;
     private static ServerMain obj = null;
     private final CentralController centralController = CentralController.INSTANCE;
     List<String> registeredClients;
     ConnectorInterface connector = null;
 
+    //TODO to save the connector in the server
+
     public ServerMain() {
         super();
 
     }
+
+    // FIXME construction process have to be in the constructor since we don't call main from here
 
     public static void main(String[] args) {
         System.out.println("Hello from Server!");
@@ -37,6 +40,7 @@ public class ServerMain implements Loggable, PlayerViewInterface {
         PlayerViewInterface view = null;
         obj = new ServerMain();
         try {
+            // FIXME port 0 will choose a port automatically not sure if it will create problems
             log = (Loggable) UnicastRemoteObject.exportObject(obj, 0);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -57,10 +61,14 @@ public class ServerMain implements Loggable, PlayerViewInterface {
 
         PlayerViewInterface view = null;
         try {
+            // FIXME should create a implementation of PlayerViewInterface to map each call to
+            //  VirtualPlayerView then to package it into remote exception to handle it in the
+            //  client
             view = (PlayerViewInterface) obj.centralController.connectPlayer(nick,
                                                                              connector,
                                                                              connector);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
+            // FIXME these exceptions should be handled to send back to client
             throw new RuntimeException(e);
         }
         try {
