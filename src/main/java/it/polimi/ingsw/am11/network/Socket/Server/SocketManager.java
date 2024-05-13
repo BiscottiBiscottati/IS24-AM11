@@ -14,7 +14,7 @@ public class SocketManager {
     public SocketManager(int port) {
         try {
             serverSocket = new ServerSocket(port);
-            threadPool = Executors.newFixedThreadPool(10); // Pool with 10 threads
+            threadPool = Executors.newFixedThreadPool(4); // Pool with 10 threads
             isRunning = true;
         } catch (IOException e) {
             e.printStackTrace();
