@@ -15,7 +15,7 @@ import java.util.EnumMap;
 
 public class TripletCard extends PositioningCard {
     private final boolean flippedFlag;
-    private final Color colorOfPattern;
+    private final @Nullable Color colorOfPattern;
     private final @NotNull PatternCounter counter;
 
     private TripletCard(@NotNull Builder builder) {

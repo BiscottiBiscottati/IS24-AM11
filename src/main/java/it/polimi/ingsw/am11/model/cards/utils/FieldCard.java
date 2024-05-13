@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
@@ -27,6 +28,7 @@ public sealed interface FieldCard extends CardIdentity
 
     boolean isAvailable(Corner corner, boolean isRetro);
 
+    @Nullable
     CornerContainer getItemCorner(Corner corner, boolean isRetro);
 
     Set<Color> getCenter(boolean isRetro);

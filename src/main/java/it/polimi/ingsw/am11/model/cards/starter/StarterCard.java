@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import it.polimi.ingsw.am11.model.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Availability;
@@ -39,7 +38,7 @@ import java.util.*;
  * <code>StarterCard</code> object.
  */
 @SuppressWarnings("DataFlowIssue")
-public final class StarterCard implements FieldCard, CardIdentity {
+public final class StarterCard implements FieldCard {
 
     private final int id;
     private final @NotNull ImmutableMap<Corner, CornerContainer> availableCornersFront;
@@ -147,7 +146,7 @@ public final class StarterCard implements FieldCard, CardIdentity {
     }
 
     // TODO may need cleanup of methods
-    public Set<Color> getCenter(boolean isRetro) {
+    public @NotNull Set<Color> getCenter(boolean isRetro) {
         if (isRetro) return EnumSet.noneOf(Color.class);
         else return centerColorsFront;
     }

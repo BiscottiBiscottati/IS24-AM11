@@ -18,8 +18,8 @@ public class LCard extends PositioningCard {
 
     private final boolean isFlippedFlag;
     private final boolean isRotatedFlag;
-    private final Color primaryColor;
-    private final Color secondaryColor;
+    private final @Nullable Color primaryColor;
+    private final @Nullable Color secondaryColor;
 
     private final @NotNull PatternCounter counter;
 
