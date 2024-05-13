@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.model.cards.starter;
 
-import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Availability;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
@@ -85,7 +84,7 @@ class StarterCardTest {
     void checkBuilderNulls() {
         // if JetBrain Annotator is not set, it will throw NullPointerException
         assertThrows(
-                IllegalArgumentException.class,
+                RuntimeException.class,
                 () -> new StarterCard.Builder(1)
                         .hasCenterColor(null)
                         .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
@@ -94,7 +93,7 @@ class StarterCardTest {
                         .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
         );
         assertThrows(
-                IllegalArgumentException.class,
+                RuntimeException.class,
                 () -> new StarterCard.Builder(1)
                         .hasItemFrontIn(null, Color.BLUE)
                         .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
@@ -103,7 +102,7 @@ class StarterCardTest {
                         .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
         );
         assertThrows(
-                IllegalArgumentException.class,
+                RuntimeException.class,
                 () -> new StarterCard.Builder(2)
                         .hasCenterColors(null)
                         .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
@@ -112,7 +111,7 @@ class StarterCardTest {
                         .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
         );
         assertThrows(
-                IllegalArgumentException.class,
+                RuntimeException.class,
                 () -> new StarterCard.Builder(3)
                         .hasColorRetroIn(null, Color.BLUE)
                         .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
@@ -135,11 +134,11 @@ class StarterCardTest {
     void checkNulls() {
         // if JetBrain Annotator is not set, it will throw NullPointerException
         assertThrows(
-                IllegalArgumentException.class,
+                RuntimeException.class,
                 () -> starter.checkRetroColorIn(null)
         );
         assertThrows(
-                IllegalArgumentException.class,
+                RuntimeException.class,
                 () -> starter.isFrontAvail(null)
         );
     }

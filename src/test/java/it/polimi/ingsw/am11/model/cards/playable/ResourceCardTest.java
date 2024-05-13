@@ -119,17 +119,17 @@ class ResourceCardTest {
 
     @Test
     void checkNulls() {
-        assertThrows(IllegalArgumentException.class, () -> playable.getItemCorner(null));
-        assertThrows(IllegalArgumentException.class, () -> playable.isFrontAvailable(null));
-        assertThrows(IllegalArgumentException.class, () -> resource.getItemCorner(null));
-        assertThrows(IllegalArgumentException.class, () -> resource.isFrontAvailable(null));
+        assertThrows(RuntimeException.class, () -> playable.getItemCorner(null));
+        assertThrows(RuntimeException.class, () -> playable.isFrontAvailable(null));
+        assertThrows(RuntimeException.class, () -> resource.getItemCorner(null));
+        assertThrows(RuntimeException.class, () -> resource.isFrontAvailable(null));
     }
 
     @Test
     void checkBuilderNulls() {
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(RuntimeException.class,
                      () -> new ResourceCard.Builder(5, 10, null));
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(RuntimeException.class,
                      () -> new ResourceCard.Builder(4, 10, Color.RED)
                              .hasIn(null, Color.RED)
         );
