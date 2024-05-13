@@ -49,7 +49,7 @@ public class ClientToServerConnector implements ConnectorInterface {
     @Override
     public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
                             boolean removeMode) {
-        clientUpdater.updateField(nickname, x, y, cardId, removeMode);
+        clientUpdater.updateField(nickname, x, y, cardId, isRetro, removeMode);
 
     }
 
