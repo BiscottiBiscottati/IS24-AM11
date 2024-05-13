@@ -15,5 +15,6 @@ public interface CltToNetConnector {
 
     void setNumOfPlayers(int numOfPlayers);
 
-    void connect(String nickname);
+    // FIXME connect is implemented in the main class for rmi and socket
+//    void connect(String nickname);
 }

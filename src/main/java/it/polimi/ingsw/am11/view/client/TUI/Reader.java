@@ -179,7 +179,8 @@ public class Reader {
         if (args.hasNext()) {
             invalidArguments();
         } else {
-            connector.connect(nickname);
+            //FIXME to fix
+//            connector.connect(nickname);
         }
     }
 
