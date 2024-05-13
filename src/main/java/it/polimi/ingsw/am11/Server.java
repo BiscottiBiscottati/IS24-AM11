@@ -18,7 +18,12 @@ public class Server {
             System.out.println("Invalid port number " + e.getMessage().toLowerCase());
             System.exit(1);
         }
-        new SocketManager(socketPort).start();
+        SocketManager socketManager = new SocketManager(socketPort);
+        Thread socketThread = new Thread(socketManager::start);
+
+        socketThread.start();
+
+        System.out.println("Server started on port " + socketPort + " and " + rmiPort);
         // TODO rmi start
     }
 }

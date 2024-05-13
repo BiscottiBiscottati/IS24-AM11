@@ -19,10 +19,21 @@ public class SocketManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
+    }
+
+    public void stop() {
+        isRunning = false;
+        try {
+            threadPool.shutdown(); // Stop accepting new tasks
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void start() {
-        // FIXME start may create a thread to handle connection to not block the main thread
         while (isRunning) {
             try {
                 System.out.println("Server open on port: " + serverSocket.getLocalPort());
@@ -36,19 +47,8 @@ public class SocketManager {
                 // Execute the client handler in a separate thread
                 threadPool.execute(clientHandler);
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Socket Manager closed");
             }
         }
-    }
-
-    public void stop() {
-        isRunning = false;
-        try {
-            serverSocket.close();
-            threadPool.shutdown(); // Stop accepting new tasks
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Server stopped");
     }
 }
