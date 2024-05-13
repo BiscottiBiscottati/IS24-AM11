@@ -58,10 +58,12 @@ public class ReceiveCommand {
                                         Color.valueOf(jsonNode.get("color").asText()));
                         break;
                     case "updateField":
+                        //TODO
                         clientPlayerView.updateField(jsonNode.get("nickname").asText(), jsonNode.
                                                              get("x").asInt(), jsonNode.get("y").
                                                                                        asInt(),
-                                                     jsonNode.get("cardId").asInt(), jsonNode.
+                                                     jsonNode.get("cardId").asInt(), false,
+                                                     jsonNode.
                                                              get("removeMode").asBoolean());
                         break;
                     case "updateShownPlayable":

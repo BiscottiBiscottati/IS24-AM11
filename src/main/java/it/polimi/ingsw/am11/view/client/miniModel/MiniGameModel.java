@@ -82,30 +82,30 @@ public class MiniGameModel {
         return null;
     }
 
-    public void addCardInHand(String nickname, int cardId) {
-        playerMap.get(nickname).getSpace().addCardInHand(cardId);
+    public void addCardInHand(int cardId) {
+        playerMap.get(myName).getSpace().addCardInHand(cardId);
     }
 
-    public void removeCardFromHand(String nickname, int cardId) {
-        playerMap.get(nickname).getSpace().removeCardFromHand(cardId);
+    public void removeCardFromHand(int cardId) {
+        playerMap.get(myName).getSpace().removeCardFromHand(cardId);
     }
 
-    public void addPersonalObjective(String nickname, int cardId) {
-        playerMap.get(nickname).getSpace().addPersonalObjective(cardId);
-
-    }
-
-    public void rmPersonalObjective(String nickname, int cardId) {
-        playerMap.get(nickname).getSpace().rmPersonalObjective(cardId);
+    public void addPersonalObjective(int cardId) {
+        playerMap.get(myName).getSpace().addPersonalObjective(cardId);
 
     }
 
-    public void addStarterCard(String nickname, int cardId) {
-        playerMap.get(nickname).getSpace().setStarterCard(cardId);
+    public void rmPersonalObjective(int cardId) {
+        playerMap.get(myName).getSpace().rmPersonalObjective(cardId);
+
     }
 
-    public void addCandidateObjectives(String nickname, Set<Integer> candidates) {
-        playerMap.get(nickname).getSpace().addCandidateObjectives(candidates);
+    public void addStarterCard(int cardId) {
+        playerMap.get(myName).getSpace().setStarterCard(cardId);
+    }
+
+    public void addCandidateObjectives(Set<Integer> candidates) {
+        playerMap.get(myName).getSpace().addCandidateObjectives(candidates);
     }
 
     public void place(String nickname, Position pos, int cardId, boolean isRetro) {

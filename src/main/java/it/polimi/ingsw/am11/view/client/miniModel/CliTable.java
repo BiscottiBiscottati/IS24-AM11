@@ -53,7 +53,7 @@ public class CliTable {
         shownCards.remove(cardId);
     }
 
-    public void addVisible(PlayableCardType type, int cardId) {
+    public void addVisible(int cardId) {
         shownCards.add(cardId);
     }
 
