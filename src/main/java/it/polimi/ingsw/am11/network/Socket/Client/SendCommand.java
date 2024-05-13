@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.network.Socket.Client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
 
@@ -45,7 +46,14 @@ public class SendCommand implements CltToNetConnector {
     }
 
     @Override
+    public void drawCard(boolean fromVisible, PlayableCardType type, int cardId) {
+        //TODO
+    }
+
+    @Override
     public void setNumOfPlayers(int numOfPlayers) {
         out.println(numOfPlayers);
     }
+
+
 }

@@ -20,4 +20,9 @@ public record Position(int x, int y) {
         return new Position(x, y);
     }
 
+    @Override
+    public String toString() {
+        return "(X: " + x + "; Y: " + y + ")";
+    }
+
 }

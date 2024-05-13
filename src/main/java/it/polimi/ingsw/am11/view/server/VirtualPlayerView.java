@@ -14,6 +14,7 @@ import it.polimi.ingsw.am11.view.events.view.player.PersonalObjectiveChangeEvent
 import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
 import org.jetbrains.annotations.NotNull;
 
+// I think this class calls the server controller methods
 public class VirtualPlayerView {
     private static final CardController cardController;
     private static final GameController gameController;

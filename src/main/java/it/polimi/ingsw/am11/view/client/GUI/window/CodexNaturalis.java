@@ -1,20 +1,19 @@
-package it.polimi.ingsw.am11.view.client.window;
+package it.polimi.ingsw.am11.view.client.GUI.window;
 
+import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
+import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import javafx.animation.*;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
@@ -22,12 +21,17 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-import java.awt.*;
-import java.awt.Taskbar.Feature;
 import java.io.IOException;
-import java.net.URL;
 
 public class CodexNaturalis extends Application {
+
+    private final GuiResources guiResources;
+    private FrameHandler frameHandler;
+
+
+    public CodexNaturalis() {
+        this.guiResources = new GuiResources();
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -35,21 +39,7 @@ public class CodexNaturalis extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        //Set title
-        stage.setTitle("CodexNaturalis");
 
-        //Set icon on the application bar
-        stage.getIcons().add(getTheImage("Icon.png"));
-
-        //Set icon on the taskbar/dock
-        if (Taskbar.isTaskbarSupported()) {
-            var taskbar = Taskbar.getTaskbar();
-            if (taskbar.isSupported(Feature.ICON_IMAGE)) {
-                final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-                var dockIcon = defaultToolkit.getImage(getClass().getResource("Icon.png"));
-                taskbar.setIconImage(dockIcon);
-            }
-        }
         // Proportions
         int size = (int) (Math.min(Screen.getPrimary().getBounds().getHeight(),
                                    Screen.getPrimary().getBounds().getWidth()) * 0.7);
@@ -57,38 +47,37 @@ public class CodexNaturalis extends Application {
         int halfButtonSize = size / 48;
         int distanceToBorder = halfButtonSize >> 2;
 
-        //Let's get the custom font
 
-        Font font = Font.loadFont(String.valueOf(CodexNaturalis.class.getResource(
-                "CloisterBlack.ttf")), 1.5 * halfButtonSize);
+        //Let's get the custom font
+        Font font = Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
+                                  1.5 * halfButtonSize);
         Font fontBig =
-                Font.loadFont(String.valueOf(CodexNaturalis.class.getResource("CloisterBlack" +
-                                                                              ".ttf")),
+                Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
                               3 * halfButtonSize);
+
         //Let's build the loading screen
         StackPane root = new StackPane();
 
-
-        ImageView lDBackground = getTheImageView("LDBackGround.png");
+        ImageView lDBackground = guiResources.getTheImageView(GuiResEnum.LGIN_BACKGROUND);
         lDBackground.setFitHeight(size);
         lDBackground.setPreserveRatio(true);
 
-        ImageView lDSquare = getTheImageView("LDSquare.png");
+        ImageView lDSquare = guiResources.getTheImageView(GuiResEnum.LGIN_SQUARE);
         lDSquare.setFitHeight(size);
         lDSquare.setPreserveRatio(true);
 
-        ImageView lDWritings = getTheImageView("LDWritings.png");
+        ImageView lDWritings = guiResources.getTheImageView(GuiResEnum.LGIN_WRITINGS);
         lDWritings.setFitHeight(size);
         lDWritings.setPreserveRatio(true);
 
-        ImageView lDDisks = getTheImageView("LDDisks.png");
+        ImageView lDDisks = guiResources.getTheImageView(GuiResEnum.LGIN_DISK);
         lDDisks.setFitHeight(size);
         lDDisks.setPreserveRatio(true);
 
-        ImageView wolf = getTheImageView("Wolf.png");
-        ImageView butterfly = getTheImageView("Butterfly.png");
-        ImageView mushroom = getTheImageView("Mushroom.png");
-        ImageView leaf = getTheImageView("Leaf.png");
+        ImageView wolf = guiResources.getTheImageView(GuiResEnum.WOLF_ICON);
+        ImageView butterfly = guiResources.getTheImageView(GuiResEnum.BUTTERLFY_ICON);
+        ImageView mushroom = guiResources.getTheImageView(GuiResEnum.MUSHROOM_ICON);
+        ImageView leaf = guiResources.getTheImageView(GuiResEnum.LEAF_ICON);
 
 
         root.getChildren().add(lDBackground);
@@ -207,6 +196,8 @@ public class CodexNaturalis extends Application {
         leaf.getTransforms().add(rotate);
         butterfly.getTransforms().add(rotate);
 
+        //TODO -----------------
+
         // Socket text field
 
         VBox theBox = new VBox(2 * halfButtonSize);
@@ -216,7 +207,8 @@ public class CodexNaturalis extends Application {
         ipAddress.setAlignment(Pos.CENTER);
         ipAddress.setPromptText("Ip Address");
         ipAddress.setFont(font);
-        ipAddress.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5;" +
+        ipAddress.setStyle("-fx-background-color: #D7BC49; " +
+                           "-fx-background-radius: 5;" +
                            " -fx-max-width: " + 20 * halfButtonSize);
 
         javafx.scene.control.TextField port = new javafx.scene.control.TextField();
@@ -265,7 +257,6 @@ public class CodexNaturalis extends Application {
         yourName.setBackground(Background.EMPTY);
         yourName.setFont(fontBig);
         yourName.setTranslateY(- 4 * halfButtonSize);
-        //yourName.setStyle("-fs-font: CloisterBlack " + 3 * halfButtonSize);
 
 
         Label nameAlreadyTaken = new Label();
@@ -451,86 +442,18 @@ public class CodexNaturalis extends Application {
             theBox.setVisible(true);
         });
 
-        // Draggable Area
-
-
-        Rectangle draggableRect = new Rectangle(size, halfButtonSize << 2);
-        draggableRect.setFill(Color.TRANSPARENT);
-        draggableRect.setTranslateY(- size / 2 + halfButtonSize);
-        draggableRect.setOnMousePressed(pressEvent -> {
-            draggableRect.setOnMouseDragged(dragEvent -> {
-                stage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
-                stage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
-            });
-        });
-
-        root.getChildren().add(draggableRect);
-
-
-        //Close Button
-
-        ImageView closeCross = getTheImageView("close.png");
-        closeCross.setFitHeight(2 * halfButtonSize);
-        closeCross.setPreserveRatio(true);
-        closeCross.setOpacity(0.5);
-
-        Button closeButton = new Button("_Cancel");
-        closeButton.setPrefSize(2 * halfButtonSize, 2 * halfButtonSize);
-        closeButton.setGraphic(closeCross);
-        closeButton.setTranslateX(size / 2 - halfButtonSize);
-        closeButton.setTranslateY(- size / 2 + halfButtonSize + 2 * distanceToBorder);
-        closeButton.setBackground(Background.EMPTY);
-        closeButton.setOnMouseEntered(event -> closeCross.setOpacity(0.7));
-        closeButton.setOnMouseExited(event -> closeCross.setOpacity(0.5));
-        closeButton.setOnMousePressed(event -> closeCross.setOpacity(1));
-
-        closeButton.setOnAction(event -> {Platform.exit();});
-        root.getChildren().add(closeButton);
-
-        //Minimize Button
-
-        ImageView minimizeBar = getTheImageView("minus.png");
-        minimizeBar.setFitHeight(2 * halfButtonSize);
-        minimizeBar.setPreserveRatio(true);
-        minimizeBar.setOpacity(0.5);
-
-        Button minimizeButton = new Button("_Cancel");
-        minimizeButton.setPrefSize(2 * halfButtonSize, 2 * halfButtonSize);
-        minimizeButton.setGraphic(minimizeBar);
-        minimizeButton.setTranslateX(size / 2 - 3 * halfButtonSize - 4 * distanceToBorder);
-        minimizeButton.setTranslateY(- size / 2 + halfButtonSize + 2 * distanceToBorder);
-        minimizeButton.setBackground(Background.EMPTY);
-        minimizeButton.setOnMouseEntered(event -> minimizeBar.setOpacity(0.7));
-        minimizeButton.setOnMouseExited(event -> minimizeBar.setOpacity(0.5));
-        minimizeButton.setOnMousePressed(event -> minimizeBar.setOpacity(1));
-
-        minimizeButton.setOnAction(event -> {stage.setIconified(true);});
-        root.getChildren().add(minimizeButton);
-        stage.setOnShowing(event -> {stage.setIconified(false);});
+        // Let's set the frame of the stage and the icons and add it
+        FrameHandler frameHandler = new FrameHandler(guiResources, stage, root);
 
         // Set scene and stage
 
         Scene scene = new Scene(root, size, size, Color.BLACK);
 
-        //scene.getStylesheets().add(CodexNaturalis.class.getResource("CloisterBlack.ttf")
-        // .toExternalForm());
         stage.setScene(scene);
         stage.setResizable(false);
 
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
-    }
-
-    private static Image getTheImage(String fileName) {
-        URL imageURL = CodexNaturalis.class.getResource(fileName);
-        Image image = new Image(String.valueOf(imageURL));
-        return image;
-    }
-
-    private static ImageView getTheImageView(String fileName) {
-        Image image = new Image(String.valueOf(CodexNaturalis.class.getResource(
-                fileName)));
-        return new ImageView(image);
     }
 
 }
