@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.view.client.TUI;
 import it.polimi.ingsw.am11.chat.ClientChatController;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -117,12 +118,23 @@ public class Reader {
     }
 
     private static void help() {
+        System.out.println("Commands are not case sensitive");
         System.out.println("These are all possible commands with their attributes:");
+
         System.out.println("connect type-of-connection ip-address port");
-        System.out.println("setnick nickname");
-        System.out.println("setnumofplayers number");
-        System.out.println("setstarter front/retro");
-        //TODO
+        System.out.println("setNick nickname");
+        System.out.println("setNumOfPlayers number");
+        System.out.println("setStarter front/retro");
+        System.out.println("setObjective cardID");
+        System.out.println("getPlayers");
+        System.out.println("getMyHand");
+        System.out.println("getField");
+        System.out.println("getObjectives");
+        System.out.println("getCandidateObjectives");
+        System.out.println("getTable");
+        System.out.println("help");
+
+
         System.out.println("place X Y cardID front/retro");
         System.out.println("draw visible/deck res/gold cardID");
     }
@@ -167,7 +179,7 @@ public class Reader {
         if (args.hasNext()) {
             invalidArguments();
         } else {
-            //TODO
+            connector.connect(nickname);
         }
     }
 
@@ -181,7 +193,7 @@ public class Reader {
 
         switch (word) {
             case "setnumofplayers": {
-                setNick(args);
+                setNumOfPlayers(args);
                 break;
             }
             case "help": {
@@ -197,6 +209,21 @@ public class Reader {
 
     }
 
+    private void setNumOfPlayers(Scanner args) {
+        int num;
+        if (args.hasNextInt()) {
+            num = args.nextInt();
+        } else {
+            invalidArguments();
+            return;
+        }
+        if (args.hasNext()) {
+            invalidArguments();
+        } else {
+            connector.setNumOfPlayers(num);
+        }
+    }
+
     public void listen() {
 
         command = input.nextLine();
@@ -208,31 +235,50 @@ public class Reader {
 
         switch (word) {
             case "connect": {
-                connect(args);
+                System.out.println("You are already connected");
                 break;
             }
             case "setnick": {
-
-                setNick(args);
+                System.out.println("You already hava a name, it's good enough for you");
                 break;
             }
             case "setnumofplayers": {
-                setNumOfPlayers(args);
+                System.out.println("Number of players already set");
                 break;
             }
             case "setobjective": {
+                if (! model.table().getStatus().equals(GameStatus.CHOOSING_OBJECTIVES)) {
+                    System.out.println("There's a time and place for everything, but not now");
+                }
                 setObjective(args);
                 break;
             }
             case "setstarter": {
+                if (! model.table().getStatus().equals(GameStatus.CHOOSING_OBJECTIVES)) {
+                    System.out.println("There's a time and place for everything, but not now");
+                }
                 setStarter(args);
                 break;
             }
             case "place": {
+                if (! model.getCurrentTurn().equals(model.myName())) {
+                    System.out.println("It's not your turn");
+                    break;
+                }
+                if (model.getiPlaced()) {
+                    System.out.println("You already placed");
+                    break;
+                }
                 place(args);
                 break;
             }
             case "draw": {
+                if (! model.getCurrentTurn().equals(model.myName())) {
+                    System.out.println("It's not your turn");
+                }
+                if (! model.getiPlaced()) {
+                    System.out.println("You first need to place a card");
+                }
                 draw(args);
                 break;
             }
@@ -255,11 +301,20 @@ public class Reader {
                 break;
             }
             case "getcandideteobjectives": {
-                //TODO
+                model.getCliPlayer(model.myName()).getSpace().getCandidateObjectives().forEach(
+                        System.out::print);
                 break;
             }
             case "gettable": {
-                //TODO
+                System.out.println("Here's the table:");
+                System.out.println("Decks -> RESOURCE: " +
+                                   model.table().getDeckTop(PlayableCardType.RESOURCE) +
+                                   "; GOLD: " +
+                                   model.table().getDeckTop(PlayableCardType.GOLD));
+                System.out.println("Visibles -> " + model.table().getShownCards().toString());
+                System.out.println(
+                        "Common objectives -> " + model.table().getCommonObjectives().toString());
+                System.out.println("Game status -> " + model.table().getStatus().toString());
                 break;
             }
             case "chat": {
@@ -274,21 +329,6 @@ public class Reader {
                 System.out.println("command not found, type help to get al list of all commands " +
                                    "and arguments");
             }
-        }
-    }
-
-    private void setNumOfPlayers(Scanner args) {
-        int num;
-        if (args.hasNextInt()) {
-            num = args.nextInt();
-        } else {
-            invalidArguments();
-            return;
-        }
-        if (args.hasNext()) {
-            invalidArguments();
-        } else {
-            connector.setNumOfPlayers(num);
         }
     }
 

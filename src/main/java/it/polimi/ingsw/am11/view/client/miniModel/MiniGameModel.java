@@ -15,12 +15,14 @@ public class MiniGameModel {
     private String currentTurn;
     private String godPlayer;
     private String myName;
+    private boolean iPlaced;
 
 
     public MiniGameModel() {
         this.playerMap = new HashMap();
         this.table = new CliTable();
         this.finalLeaderboard = null;
+        this.iPlaced = false;
     }
 
     public CliPlayer getCliPlayer(String nickname) {
@@ -114,5 +116,13 @@ public class MiniGameModel {
 
     public void removePlaced(String nickname, Position pos) {
         playerMap.get(nickname).getField().remove(pos);
+    }
+
+    public boolean getiPlaced() {
+        return iPlaced;
+    }
+
+    public void setiPlaced(boolean iPlaced) {
+        this.iPlaced = iPlaced;
     }
 }

@@ -46,6 +46,7 @@ public class TuiUpdater implements ClientViewUpdater {
         if (! removeMode) {
             model.getCliPlayer(nickname).getField().place(pos, cardId, isRetro);
             if (nickname.equals(model.myName())) {
+                model.setiPlaced(true);
                 System.out.println("You placed the card " + cardId + " in " + pos + " on his " +
                                    frontOrRetro);
             } else {
@@ -166,6 +167,7 @@ public class TuiUpdater implements ClientViewUpdater {
             System.out.println("Removed the card: " + cardId + " from your hand");
         } else {
             model.addCardInHand(cardId);
+            model.setiPlaced(false);
             System.out.println("You picked the card: " + cardId);
         }
     }
@@ -191,8 +193,6 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
-//        model.getCliPlayer(model.myName()).getSpace().getCandidateObjectives().forEach(
-//                System.out::print);
         System.out.println("The objective " + cardId + " is now one of the candidate objectives " +
                            "you can choose from.");
     }

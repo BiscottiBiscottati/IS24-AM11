@@ -38,6 +38,10 @@ public class TuiHandler {
             reader.listenForNumOfP();
         }
 
+        while (true) {
+            reader.listen();
+        }
+
 
     }
 

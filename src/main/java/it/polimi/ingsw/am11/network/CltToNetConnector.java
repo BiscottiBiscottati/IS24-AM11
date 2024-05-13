@@ -14,4 +14,6 @@ public interface CltToNetConnector {
     void drawCard(boolean fromVisible, PlayableCardType type, int cardId);
 
     void setNumOfPlayers(int numOfPlayers);
+
+    void connect(String nickname);
 }
