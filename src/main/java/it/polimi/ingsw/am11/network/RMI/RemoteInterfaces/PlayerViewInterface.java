@@ -19,5 +19,6 @@ public interface PlayerViewInterface extends Remote {
     void drawCard(String nick, boolean fromVisible, PlayableCardType type, int cardId)
     throws RemoteException;
 
-    void setNumofPlayers(String nick, int numOfPlayers) throws RemoteException;
+    void setNumOfPlayers(String nick, int numOfPlayers)
+    throws RemoteException;
 }

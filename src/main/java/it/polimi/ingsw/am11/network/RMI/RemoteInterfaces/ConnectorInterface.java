@@ -3,37 +3,36 @@ package it.polimi.ingsw.am11.network.RMI.RemoteInterfaces;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.network.PlayerConnector;
-import it.polimi.ingsw.am11.network.TableConnector;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
-public interface ConnectorInterface extends Remote, PlayerConnector, TableConnector {
+public interface ConnectorInterface extends Remote {
 
-    void updateHand(int cardId, boolean removeMode);
+    void updateHand(int cardId, boolean removeMode) throws RemoteException;
 
-    void updatePersonalObjective(int cardId, boolean removeMode);
+    void updatePersonalObjective(int cardId, boolean removeMode) throws RemoteException;
 
-    void sendStarterCard(int cardId);
+    void receiveStarterCard(int cardId) throws RemoteException;
 
-    void sendCandidateObjective(Set<Integer> cardsId);
+    void receiveCandidateObjective(Set<Integer> cardsId) throws RemoteException;
 
-    void updateDeckTop(PlayableCardType type, Color color);
+    void updateDeckTop(PlayableCardType type, Color color) throws RemoteException;
 
     void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
-                     boolean removeMode);
+                     boolean removeMode) throws RemoteException;
 
-    void updateShownPlayable(Integer previousId, Integer currentId);
+    void updateShownPlayable(Integer previousId, Integer currentId) throws RemoteException;
 
-    void updateTurnChange(String nickname);
+    void updateTurnChange(String nickname) throws RemoteException;
 
-    void updatePlayerPoint(String nickname, int points);
+    void updatePlayerPoint(String nickname, int points) throws RemoteException;
 
-    void updateGameStatus(GameStatus status);
+    void updateGameStatus(GameStatus status) throws RemoteException;
 
-    void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard);
+    void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) throws RemoteException;
 
-    void updateCommonObjective(int cardId, boolean removeMode);
+    void updateCommonObjective(int cardId, boolean removeMode) throws RemoteException;
 }
