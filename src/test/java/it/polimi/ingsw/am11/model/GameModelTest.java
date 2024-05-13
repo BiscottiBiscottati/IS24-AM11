@@ -306,6 +306,8 @@ class GameModelTest {
     @Test
     void testDealingObjective() {
 
+        // FIXME to fix events calls
+
         ArgumentCaptor<PlayerViewEvent> playerCaptor = ArgumentCaptor.forClass(
                 PlayerViewEvent.class);
 
@@ -394,10 +396,8 @@ class GameModelTest {
         playerCaptor.getAllValues().stream()
                     .filter(PersonalObjectiveChangeEvent.class::isInstance)
                     .map(PersonalObjectiveChangeEvent.class::cast)
-                    .forEach(event -> {
-                        assertEquals(objOfPlayer.get(event.getPlayer()),
-                                     event.getNewValue());
-                    });
+                    .forEach(event -> assertEquals(objOfPlayer.get(event.getPlayer()),
+                                                   event.getNewValue()));
 
         playerCaptor.getAllValues().stream()
                     .filter(HandChangeEvent.class::isInstance)
