@@ -48,6 +48,7 @@ public class ClientHandler implements Runnable {
                         CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
                         System.out.println("God player: " + nickname);
                         System.out.println("Num of players: " + numOfPlayers);
+                        out.println("NUM_OF_PLAYERS_SET");
                     } catch (NotGodPlayerException e) {
                         throw new RuntimeException(e);
                     }

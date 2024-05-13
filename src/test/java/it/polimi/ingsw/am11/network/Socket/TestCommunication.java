@@ -27,21 +27,6 @@ class TestCommunication {
         }
 
         // Create a ClientSocket instance
-        ClientSocket client = new ClientSocket("localhost", 12345, "ferdi",
-                                               updater);
-        ClientSocket client2 = new ClientSocket("localhost", 12345, "edo",
-                                                updater);
-        ClientSocket client3 = new ClientSocket("localhost", 12345, "chen",
-                                                updater);
-
-        client.connect();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        client2.connect();
-        client3.connect();
 
     }
 }

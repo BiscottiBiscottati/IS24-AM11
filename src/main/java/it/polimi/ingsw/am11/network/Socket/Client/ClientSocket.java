@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.Socket.Client;
 
+import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
@@ -10,17 +11,15 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ClientSocket {
+public class ClientSocket implements ClientNetworkHandler {
     private final ClientViewUpdater clientViewUpdater;
-    private String nickname;
     private BufferedReader in;
     private PrintWriter out;
     private ReceiveCommand receiveCommand;
     private SendCommand sendCommand;
 
-    public ClientSocket(String ip, int port, String nickname,
+    public ClientSocket(String ip, int port,
                         @NotNull ClientViewUpdater clientViewUpdater) {
-        this.nickname = nickname;
         this.clientViewUpdater = clientViewUpdater;
         try {
             Socket socket = new Socket(ip, port);
@@ -44,34 +43,32 @@ public class ClientSocket {
         }
     }
 
-    public void connect() throws IOException {
+    @Override
+    public void connect(String nickname) throws IOException {
         out.println(nickname);
         String response = in.readLine();
-        while (true) {
-            boolean validNickname = response.equals("VALID_NICKNAME");
-            if (validNickname) {
-                break;
-            } else if (response.equals("NOT_VALID_NICKNAME")) {
-                System.out.println("Nickname already taken, please choose another one");
-                //TODO: implement the nickname selection
-                out.println(nickname);
-                response = in.readLine();
-            } else {
-                // FIXME not to throw
-                throw new IOException("Invalid nickname response");
+        if (response.equals("NOT_VALID_NICKNAME")) {
+                // TODO: implement the nickname retry logic
+        } else if (response.equals("VALID_NICKNAME")) {
+            response = in.readLine();
+            if (response.equals("YOU_GOD_PLAYER")) {
+                //TODO: implement the number of players setting logic
+            }
+            else if (response.equals("YOU_NOT_GOD_PLAYER")) {
+                startCommunication();
             }
         }
-        if (in.readLine().equals("YOU_GOD_PLAYER")) {
-            //TODO: implement the number of players selection
-            sendCommand.setNumOfPlayers(3);
-            startCommunication();
-        } else if (in.readLine().equals("YOU_NOT_GOD_PLAYER")) {
+    }
+
+    @Override
+    public void setNumOfPlayers(int numOfPlayers) throws IOException {
+        out.println(numOfPlayers);
+        String response = in.readLine();
+        if (response.equals("NUM_OF_PLAYERS_SET")) {
             startCommunication();
         } else {
-            // FIXME not to throw
-            throw new IOException("Invalid god player");
+            //TODO: implement the logic for the case where the number of players is not set
         }
-
     }
 
     private void startCommunication() {
@@ -89,10 +86,6 @@ public class ClientSocket {
 
     public CltToNetConnector getConnector() {
         return sendCommand;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 
 }
