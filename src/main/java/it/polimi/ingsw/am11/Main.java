@@ -12,8 +12,8 @@ public class Main {
         final String HELP_MESSAGE = """
                 Usage: java -jar <jar file> <server|client> [options]
                 Options:
-                  -rmi <port>    RMI port to use
-                  -socket <port> Socket port to use
+                  -rmi <port>    RMI port to use for the server
+                  -socket <port> Socket port to use for the server
                   -mode <mode>   Mode to run the application in (gui|tui) (only for client)
                 """;
 
@@ -43,10 +43,10 @@ public class Main {
     private static @NotNull ArgParser setUpOptions() {
         ArgParser argParser = new ArgParser();
         argParser.addOption("rmi",
-                            "RMI port to use",
+                            "RMI port to use for the server",
                             String.valueOf(Constants.DEFAULT_RMI_PORT));
         argParser.addOption("socket",
-                            "Socket port to use",
+                            "Socket port to use for the server",
                             String.valueOf(Constants.DEFAULT_SOCKET_PORT));
         argParser.addOption("ui",
                             "Mode to run the application in (gui|tui)",
