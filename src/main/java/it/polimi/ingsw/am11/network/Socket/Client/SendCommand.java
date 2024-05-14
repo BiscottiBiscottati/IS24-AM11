@@ -47,7 +47,12 @@ public class SendCommand implements CltToNetConnector {
 
     @Override
     public void drawCard(boolean fromVisible, PlayableCardType type, int cardId) {
-        //TODO
+        ObjectNode json = mapper.createObjectNode();
+        json.put("method", "drawCard");
+        json.put("fromVisible", fromVisible);
+        json.put("type", type.toString());
+        json.put("cardId", cardId);
+        out.println(json);
     }
 
     @Override

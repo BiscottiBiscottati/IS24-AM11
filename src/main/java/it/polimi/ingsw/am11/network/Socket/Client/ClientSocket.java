@@ -27,6 +27,7 @@ public class ClientSocket implements ClientNetworkHandler {
             out = new PrintWriter(socket.getOutputStream(), true);
             sendCommand = new SendCommand(out);
             receiveCommand = new ReceiveCommand(this.clientViewUpdater);
+            new Thread(this::run).start();
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 try {
