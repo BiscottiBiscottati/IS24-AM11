@@ -18,6 +18,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class ServerMain implements Loggable {
 
     private final int port;
+    PlayerViewImpl playerView;
     private VirtualPlayerView view;
     private Registry registry;
 
@@ -35,8 +36,10 @@ public class ServerMain implements Loggable {
 
     public void start() {
         Loggable log;
+        PlayerViewInterface view;
         try {
             log = (Loggable) UnicastRemoteObject.exportObject(this, 0);
+            view = (PlayerViewInterface) UnicastRemoteObject.exportObject(playerView, 0);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -44,6 +47,7 @@ public class ServerMain implements Loggable {
         try {
             registry = LocateRegistry.createRegistry(port);
             registry.bind("Loggable", log);
+            registry.bind("PlayerView", view);
 
             System.out.println("RMI: Server open on port: " + port);
         } catch (RemoteException | AlreadyBoundException e) {
@@ -53,25 +57,18 @@ public class ServerMain implements Loggable {
 
     @Override
     public void login(String nick, ConnectorInterface remoteConnector) throws RemoteException {
-        PlayerViewInterface view;
-
         try {
             ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
-            view = new PlayerViewImpl(CentralController.INSTANCE.connectPlayer(nick, connector,
-                                                                               connector));
+            CentralController.INSTANCE.connectPlayer(nick, connector, connector);
+            playerView.addPlayer(nick, view);
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
             throw new ServerException(e.getClass().getCanonicalName(), e);
         } catch (NotSetNumOfPlayerException e) {
             throw new RuntimeException(e);
         }
         try {
-            UnicastRemoteObject.exportObject(view, 0);
+            UnicastRemoteObject.exportObject(playerView, 0);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            registry.bind("PlayerView" + nick, view);
-        } catch (AlreadyBoundException e) {
             throw new RuntimeException(e);
         }
     }

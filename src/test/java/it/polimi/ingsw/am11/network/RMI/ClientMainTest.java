@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.network.RMI;
 
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.network.RMI.Client.ClientMain;
+import it.polimi.ingsw.am11.network.RMI.Client.ClientToServerConnector;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.network.RMI.Server.ServerMain;
@@ -14,8 +15,7 @@ import java.rmi.RemoteException;
 import java.rmi.ServerException;
 import java.rmi.registry.Registry;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
 class ClientMainTest {
@@ -47,7 +47,18 @@ class ClientMainTest {
         clientMain1.login("nick1", updater1);
 
         assertEquals("nick", CentralController.INSTANCE.getGodPlayer());
+        assertNotEquals("nick1", CentralController.INSTANCE.getGodPlayer());
         assertThrows(ServerException.class, () -> serverMain.setNumOfPlayers("nick1", 2));
+
+        clientMain.setStarterCard("nick", true);
+        assertThrows(ServerException.class, () -> clientMain.setStarterCard("bob", true));
+        assertThrows(ServerException.class, () -> clientMain.setStarterCard("nick", false));
+        clientMain1.setStarterCard("nick1", true);
+        ClientToServerConnector clientToServer = new ClientToServerConnector(updater);
+        clientMain.setObjectiveCard("nick", 1);
+        assertThrows(ServerException.class, () -> clientMain.setObjectiveCard("bob", 1));
+        assertThrows(ServerException.class, () -> clientMain1.setObjectiveCard("nick1", 1));
+        clientMain1.setObjectiveCard("nick1", 2);
 
     }
 }

@@ -2,12 +2,14 @@ package it.polimi.ingsw.am11.network.RMI.Server;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.TableConnector;
 
 import java.rmi.RemoteException;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -127,5 +129,9 @@ public class ConnectorImplementation implements PlayerConnector, TableConnector 
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void updatePlayers(EnumMap<PlayerColor, String> currentPlayers, String newPlayer) {
     }
 }

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am11.network.RMI.Client;
 
+import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 
 import java.rmi.NotBoundException;
@@ -64,5 +66,55 @@ public class ClientMain {
     }
 
     public void setStarterCard(String nick, boolean isRetro) throws RemoteException {
+        PlayerViewInterface stub3;
+        try {
+            stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+        stub3.setStarterCard(nick, isRetro);
+    }
+
+    public void setObjectiveCard(String nick, int cardId) throws RemoteException {
+        PlayerViewInterface stub3;
+        try {
+            stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+        stub3.setObjectiveCard(nick, cardId);
+    }
+
+    public void placeCard(String nick, int cardId, int x, int y, boolean isRetro)
+    throws RemoteException {
+        PlayerViewInterface stub3;
+        try {
+            stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+        stub3.placeCard(nick, cardId, x, y, isRetro);
+    }
+
+    public void drawCard(String nick, boolean fromVisible, PlayableCardType type, int cardId)
+    throws RemoteException {
+        PlayerViewInterface stub3;
+        try {
+            stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+        stub3.drawCard(nick, fromVisible, type, cardId);
+    }
+
+    public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
+                            boolean removeMode) throws RemoteException {
+        ConnectorInterface stub2;
+        try {
+            stub2 = (ConnectorInterface) registry.lookup("Connector");
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+        stub2.updateField(nickname, x, y, cardId, isRetro, removeMode);
     }
 }
