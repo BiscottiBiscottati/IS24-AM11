@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.network.Socket;
 
-import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,7 @@ class TestCommunication {
 
         // Start the server in a separate thread
         Executors.newSingleThreadExecutor().execute(server::start);
+        //clientSocket.con
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

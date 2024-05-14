@@ -196,4 +196,9 @@ public class TuiUpdater implements ClientViewUpdater {
         System.out.println("The objective " + cardId + " is now one of the candidate objectives " +
                            "you can choose from.");
     }
+
+    @Override
+    public void notifyGodPlayer() {
+        //TODO
+    }
 }

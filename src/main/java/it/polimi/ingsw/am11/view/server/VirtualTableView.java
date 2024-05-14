@@ -107,12 +107,12 @@ public class VirtualTableView {
         broadcast(connector -> connector.updateTurnChange(event.getNewValue()));
     }
 
-    public void updateTable(PlayerAddedEvent event) {
-
-    }
 
     public void updateTable(FinalLeaderboardEvent event) {
         broadcast(connector -> connector.sendFinalLeaderboard(event.getNewValue()));
     }
 
+    public void updateTable(PlayerAddedEvent event) {
+        
+    }
 }

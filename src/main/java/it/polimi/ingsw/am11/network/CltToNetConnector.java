@@ -3,6 +3,9 @@ package it.polimi.ingsw.am11.network;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 
+
+//This is the interface used by the view to send commands to the server
+//It should be initialized by the implementation of ClientNetworkHandler
 public interface CltToNetConnector {
 
     void setStarterCard(boolean isRetro);
@@ -15,6 +18,5 @@ public interface CltToNetConnector {
 
     void setNumOfPlayers(int numOfPlayers);
 
-    // FIXME connect is implemented in the main class for rmi and socket
-//    void connect(String nickname);
+    void setNickname(String nickname);
 }

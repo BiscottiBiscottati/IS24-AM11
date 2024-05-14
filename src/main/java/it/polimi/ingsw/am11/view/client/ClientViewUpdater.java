@@ -43,4 +43,6 @@ public interface ClientViewUpdater {
 
 
     void receiveCandidateObjective(Set<Integer> cardId);
+
+    void notifyGodPlayer();
 }

@@ -5,11 +5,17 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
+import it.polimi.ingsw.am11.network.ConnectionType;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
 import java.util.Scanner;
 
+
+// this class will read the stdin and do the parsing of commands, then it calls the methods
+// of the CltToNetConnector that will send the specific action to the server.
+// Due to the fact that we can use different network technologies you should see the comments in
+// the private void connect() method to learn more
 public class Reader {
 
     private final Scanner input;
@@ -56,7 +62,12 @@ public class Reader {
         return connector;
     }
 
+    // The idea is that the connection to the server will be started by creating a new
+    // ClientNetworkHandler that will have a method called getConnector() that will return
+    // a CltToNetConnector that will then be used by all the other methods to sent commands
+    // to the server.
     private void connect(Scanner args) {
+        ConnectionType connectionType;
         String type;
         String ip;
         int port;
@@ -66,6 +77,7 @@ public class Reader {
             invalidArguments();
             return;
         }
+
         switch (type) {
             case "rmi": {
                 if (args.hasNext()) {
@@ -104,11 +116,8 @@ public class Reader {
                     invalidArguments();
                     break;
                 }
-                System.out.print("");
-                //FIXME
                 ClientSocket clientSocket = new ClientSocket(ip, port, tuiUpdater);
                 connector = clientSocket.getConnector();
-                //TODO add chat
                 break;
             }
             default: {
@@ -293,7 +302,7 @@ public class Reader {
                 break;
             }
             case "getfield": {
-                getthefield(args);
+                getTheField(args);
                 break;
             }
             case "getobjectives": {
@@ -493,7 +502,7 @@ public class Reader {
 
     }
 
-    private void getthefield(Scanner args) {
+    private void getTheField(Scanner args) {
         String name;
         if (args.hasNext()) {
             name = args.next();

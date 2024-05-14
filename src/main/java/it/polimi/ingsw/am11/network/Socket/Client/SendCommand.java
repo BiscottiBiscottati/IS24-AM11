@@ -60,6 +60,7 @@ public class SendCommand implements CltToNetConnector {
         out.println(numOfPlayers);
     }
 
+    @Override
     public void setNickname(String nickname) {
         out.println(nickname);
     }
