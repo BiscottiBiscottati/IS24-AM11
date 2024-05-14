@@ -20,20 +20,20 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ServerMain implements Loggable {
 
-    static int PORT = 1234;
-    static VirtualPlayerView view;
-    Registry registry;
+    private final int port;
+    private VirtualPlayerView view;
+    private Registry registry;
 
     //TODO to save the connector in the server
 
-    public ServerMain() {
-        super();
+    public ServerMain(int port) {
+        this.port = port;
     }
 
     // FIXME construction process have to be in the constructor since we don't call main from here
 
     public static void main(String[] args) {
-        System.err.println("Server ready");
+        System.out.println("Server ready");
     }
 
     public void start() {
@@ -45,8 +45,10 @@ public class ServerMain implements Loggable {
         }
         // Bind the remote object's stub in the registry
         try {
-            registry = LocateRegistry.createRegistry(PORT);
+            registry = LocateRegistry.createRegistry(port);
             registry.bind("Loggable", log);
+
+            System.out.println("RMI: Server ready");
         } catch (RemoteException | AlreadyBoundException e) {
             throw new RuntimeException(e);
         }

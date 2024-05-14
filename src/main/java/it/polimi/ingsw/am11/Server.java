@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11;
 
 import it.polimi.ingsw.am11.controller.CentralController;
+import it.polimi.ingsw.am11.network.RMI.Server.ServerMain;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +21,9 @@ public class Server {
         }
         SocketManager socketManager = new SocketManager(socketPort);
         Thread socketThread = new Thread(socketManager::start);
+
+        ServerMain serverMain = new ServerMain(rmiPort);
+        serverMain.start();
 
         socketThread.start();
 

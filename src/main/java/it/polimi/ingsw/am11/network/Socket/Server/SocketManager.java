@@ -36,9 +36,9 @@ public class SocketManager {
     public void start() {
         while (isRunning) {
             try {
-                System.out.println("Server open on port: " + serverSocket.getLocalPort());
+                System.out.println("TCP: Server open on port: " + serverSocket.getLocalPort());
                 //System.out.println("Server address: " + serverSocket.getInetAddress());
-                System.out.println("Waiting fo connections...");
+                System.out.println("TCP: Waiting fo connections...");
                 // Accept a new connection from a client
                 Socket clientSocket = serverSocket.accept();
                 //System.out.println("Nuova connessione: " + clientSocket);
@@ -47,7 +47,7 @@ public class SocketManager {
                 // Execute the client handler in a separate thread
                 threadPool.execute(clientHandler);
             } catch (IOException e) {
-                System.out.println("Socket Manager closed");
+                System.out.println("TCP: Socket Manager closed");
             }
         }
     }

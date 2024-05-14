@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class ClientHandler implements Runnable {
     private VirtualPlayerView view;
     private ReceiveCommand receiveCommand;
 
-    public ClientHandler(Socket clientSocket) {
+    public ClientHandler(@NotNull Socket clientSocket) {
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
