@@ -12,4 +12,8 @@ public interface Loggable extends Remote {
 
     void logout(String nick) throws RemoteException;
 
+    default void setNumOfPlayers(String nick, int numOfPlayers) throws RemoteException {
+
+    }
+
 }

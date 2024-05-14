@@ -14,7 +14,7 @@ public class Main {
                 Options:
                   -rmi <port>    RMI port to use for the server
                   -socket <port> Socket port to use for the server
-                  -mode <mode>   Mode to run the application in (gui|tui) (only for client)
+                  -mode <mode>   Mode to start the application in (gui|tui) (only for client)
                 """;
 
         ArgParser parser = setUpOptions();
@@ -49,7 +49,7 @@ public class Main {
                             "Socket port to use for the server",
                             String.valueOf(Constants.DEFAULT_SOCKET_PORT));
         argParser.addOption("ui",
-                            "Mode to run the application in (gui|tui)",
+                            "Mode to start the application in (gui|tui)",
                             "tui");
         return argParser;
     }

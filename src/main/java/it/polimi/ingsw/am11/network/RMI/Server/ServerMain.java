@@ -21,14 +21,12 @@ public class ServerMain implements Loggable {
 
     static int PORT = 1234;
     static VirtualPlayerView view;
-    private final CentralController centralController;
+    Registry registry;
 
     //TODO to save the connector in the server
 
     public ServerMain() {
         super();
-        centralController = CentralController.INSTANCE;
-        view = null;
     }
 
     // FIXME construction process have to be in the constructor since we don't call main from here
@@ -37,24 +35,17 @@ public class ServerMain implements Loggable {
         System.err.println("Server ready");
     }
 
-    public static void run() {
+    public void start() {
         Loggable log;
-        PlayerViewInterface playerV;
-        PlayerViewImpl playerView = new PlayerViewImpl(view);
-        ServerMain obj;
-        obj = new ServerMain();
         try {
-            log = (Loggable) UnicastRemoteObject.exportObject(obj, 0);
-            playerV = (PlayerViewInterface) UnicastRemoteObject.exportObject(playerView, 0);
+            log = (Loggable) UnicastRemoteObject.exportObject(this, 0);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
         // Bind the remote object's stub in the registry
-        Registry registry;
         try {
             registry = LocateRegistry.createRegistry(PORT);
             registry.bind("Loggable", log);
-            registry.bind("PlayerView", playerV);
         } catch (RemoteException | AlreadyBoundException e) {
             throw new RuntimeException(e);
         }
@@ -66,14 +57,19 @@ public class ServerMain implements Loggable {
 
         try {
             ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
-            view = new PlayerViewImpl(centralController.connectPlayer(nick, connector,
-                                                                      connector));
+            view = new PlayerViewImpl(CentralController.INSTANCE.connectPlayer(nick, connector,
+                                                                               connector));
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
             throw new ServerException(e.getClass().getCanonicalName(), e);
         }
         try {
             UnicastRemoteObject.exportObject(view, 0);
         } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            registry.bind("PlayerView" + nick, view);
+        } catch (AlreadyBoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -86,7 +82,7 @@ public class ServerMain implements Loggable {
 
     public void setNumOfPlayers(String nick, int val) throws RemoteException {
         try {
-            centralController.setNumOfPlayers(nick, val);
+            CentralController.INSTANCE.setNumOfPlayers(nick, val);
         } catch (NotGodPlayerException | GameStatusException | NumOfPlayersException e) {
             throw new ServerException(e.getClass().getCanonicalName(), e);
         }

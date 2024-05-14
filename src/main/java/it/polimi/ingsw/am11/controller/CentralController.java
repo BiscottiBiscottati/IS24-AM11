@@ -42,8 +42,8 @@ public enum CentralController {
     public @NotNull VirtualPlayerView connectPlayer(String nickname,
                                                     PlayerConnector playerConnector,
                                                     TableConnector tableConnector)
-    throws PlayerInitException,
-           GameStatusException, NumOfPlayersException {
+    throws
+    GameStatusException, NumOfPlayersException, PlayerInitException {
         if (godPlayer == null) {
             godPlayer = nickname;
         } else if (numOfPlayers == - 1) {
