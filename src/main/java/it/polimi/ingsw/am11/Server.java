@@ -26,8 +26,5 @@ public class Server {
         serverMain.start();
 
         socketThread.start();
-
-        System.out.println("Server started on port " + socketPort + " and " + rmiPort);
-        // TODO rmi start
     }
 }

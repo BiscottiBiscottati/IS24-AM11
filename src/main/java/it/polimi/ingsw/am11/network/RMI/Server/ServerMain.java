@@ -48,7 +48,7 @@ public class ServerMain implements Loggable {
             registry = LocateRegistry.createRegistry(port);
             registry.bind("Loggable", log);
 
-            System.out.println("RMI: Server ready");
+            System.out.println("RMI: Server open on port: " + port);
         } catch (RemoteException | AlreadyBoundException e) {
             throw new RuntimeException(e);
         }

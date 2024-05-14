@@ -33,7 +33,7 @@ class ClientMainTest {
         Mockito.when(registry.lookup(any())).thenReturn(stub1);
         Mockito.when(registry.lookup(any())).thenReturn(stub3);
 
-        ServerMain serverMain = new ServerMain();
+        ServerMain serverMain = new ServerMain(1234);
         ClientMain clientMain = new ClientMain("localhost", 1234);
         serverMain.start();
         ClientViewUpdater updater = Mockito.mock(ClientViewUpdater.class);
