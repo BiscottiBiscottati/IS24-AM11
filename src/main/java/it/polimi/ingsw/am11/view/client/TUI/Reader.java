@@ -188,8 +188,7 @@ public class Reader {
         if (args.hasNext()) {
             invalidArguments();
         } else {
-            //FIXME to fix
-//            connector.connect(nickname);
+            connector.setNickname(nickname);
         }
     }
 
