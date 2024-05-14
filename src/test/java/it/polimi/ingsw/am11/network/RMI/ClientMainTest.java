@@ -34,7 +34,7 @@ class ClientMainTest {
         Mockito.when(registry.lookup(any())).thenReturn(stub3);
 
         ServerMain serverMain = new ServerMain();
-        ClientMain clientMain = new ClientMain();
+        ClientMain clientMain = new ClientMain("localhost", 1234);
         serverMain.start();
         ClientViewUpdater updater = Mockito.mock(ClientViewUpdater.class);
 
@@ -42,7 +42,7 @@ class ClientMainTest {
         clientMain.setNumOfPlayers("nick", 2);
 
         ClientViewUpdater updater1 = Mockito.mock(ClientViewUpdater.class);
-        ClientMain clientMain1 = new ClientMain();
+        ClientMain clientMain1 = new ClientMain("localhost", 1234);
 
         clientMain1.login("nick1", updater1);
 

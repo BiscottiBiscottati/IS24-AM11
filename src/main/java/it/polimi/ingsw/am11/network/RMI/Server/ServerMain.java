@@ -11,6 +11,7 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 
 import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.ServerException;
 import java.rmi.registry.LocateRegistry;
@@ -77,6 +78,11 @@ public class ServerMain implements Loggable {
     @Override
     public void logout(String nick) throws RemoteException {
         CentralController.INSTANCE.playerDisconnected(nick);
+        try {
+            registry.unbind("PlayerView" + nick);
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println(nick + " disconnected");
     }
 

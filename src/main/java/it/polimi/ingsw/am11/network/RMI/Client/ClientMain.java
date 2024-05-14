@@ -12,16 +12,14 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ClientMain {
 
-    static int PORT = 1234;
-    static String ip = "127.0.0.1";
     static String nickname;
     private static Registry registry;
 
-    public ClientMain() {
+    public ClientMain(String ip, int port) {
         super();
         try {
             // Getting the registry
-            registry = LocateRegistry.getRegistry(ip, PORT);
+            registry = LocateRegistry.getRegistry(ip, port);
             // Looking up the registry for the remote object
             System.out.println("Remote method invoked");
         } catch (RemoteException e) {
@@ -36,7 +34,6 @@ public class ClientMain {
 
     public void login(String nick, ClientViewUpdater updater) throws RemoteException,
                                                                      NotBoundException {
-        registry = LocateRegistry.getRegistry(ip, PORT);
         Loggable stub1 = (Loggable) registry.lookup("Loggable");
         ClientToServerConnector clientObject = new ClientToServerConnector(updater);
         ConnectorInterface connector = (ConnectorInterface) UnicastRemoteObject.exportObject(
@@ -47,7 +44,6 @@ public class ClientMain {
     }
 
     public void setNumOfPlayers(String nick, int numOfPlayers) throws RemoteException {
-        registry = LocateRegistry.getRegistry(ip, PORT);
         Loggable stub1;
         try {
             stub1 = (Loggable) registry.lookup("Loggable");
@@ -55,5 +51,18 @@ public class ClientMain {
             throw new RuntimeException(e);
         }
         stub1.setNumOfPlayers(nick, numOfPlayers);
+    }
+
+    public void logout(String nick) throws RemoteException {
+        Loggable stub1;
+        try {
+            stub1 = (Loggable) registry.lookup("Loggable");
+        } catch (RemoteException | NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+        stub1.logout(nick);
+    }
+
+    public void setStarterCard(String nick, boolean isRetro) throws RemoteException {
     }
 }
