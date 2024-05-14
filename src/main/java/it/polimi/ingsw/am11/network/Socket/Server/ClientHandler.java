@@ -33,17 +33,20 @@ public class ClientHandler implements Runnable {
         SendException sendException = new SendException(out);
         while (! validNickname) {
             try {
+                System.out.println("TCP: Waiting for nickname...");
                 nickname = in.readLine();
                 SendCommand sendCommand = new SendCommand(out);
                 view = CentralController.INSTANCE
                         .connectPlayer(nickname, sendCommand, sendCommand);
                 receiveCommand = new ReceiveCommand(view, out);
                 validNickname = true;
+                System.out.println("TCP: Connected: " + nickname);
                 if (CentralController.INSTANCE.getGodPlayer().equals(nickname)) {
                     boolean validNumOfPlayers = false;
                     while (! validNumOfPlayers) {
                         try {
                             sendCommand.youGodPlayer();
+                            System.out.println("TCP: Waiting for number of players...");
                             int numOfPlayers = Integer.parseInt(in.readLine());
                             CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
                             System.out.println("God player: " + nickname);
@@ -60,13 +63,15 @@ public class ClientHandler implements Runnable {
             } catch (GameStatusException | PlayerInitException | NumOfPlayersException |
                      NotSetNumOfPlayerException e) {
                 sendException.Exception(e);
+                System.out.println("TCP: Problem with nickname: " + nickname);
             }
         }
-        System.out.println("Connected: " + nickname);
         while (true) {
             try {
                 String message = in.readLine();
-                receiveCommand.receive(message);
+                if (message != null && ! message.isEmpty()) {
+                    receiveCommand.receive(message);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 break;

@@ -1,7 +1,8 @@
 package it.polimi.ingsw.am11.network.Socket;
 
-import it.polimi.ingsw.am11.network.CltToNetConnector;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
+import it.polimi.ingsw.am11.network.Socket.Client.ReceiveCommand;
+import it.polimi.ingsw.am11.network.Socket.Client.SendCommand;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.junit.jupiter.api.Test;
@@ -13,28 +14,30 @@ import java.util.concurrent.Executors;
 class TestCommunication {
 
     @Test
-    public void testClientServerCommunication() throws IOException {
-        // Create a SocketManager instance
+    public void testClientServerCommunication() throws IOException, InterruptedException {
         SocketManager server = new SocketManager(12345);
-        // Start the server in a separate thread
         Executors.newSingleThreadExecutor().execute(server::start);
-        //clientSocket.con
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        // Creare un mock di ClientViewUpdater
         ClientViewUpdater clientViewUpdaterMock = Mockito.mock(ClientViewUpdater.class);
         ClientViewUpdater clientViewUpdaterMock2 = Mockito.mock(ClientViewUpdater.class);
 
-        // Utilizzare il mock per instanziare un ClientSocket
         ClientSocket clientSocket = new ClientSocket("localhost", 12345, clientViewUpdaterMock);
-        ClientSocket clientSocket2 = new ClientSocket("localhost", 12345, clientViewUpdaterMock2);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // Create SendCommand and ReceiveCommand instances
+        SendCommand sendCommand = new SendCommand(clientSocket.getOut());
+        ReceiveCommand receiveCommand = new ReceiveCommand(clientViewUpdaterMock);
 
-        CltToNetConnector connector = clientSocket.getConnector();
-        connector.setNumOfPlayers(2);
+        // Send a message to the server
+        sendCommand.setNickname("Francesco");
+        sendCommand.setNumOfPlayers(2);
 
 
     }

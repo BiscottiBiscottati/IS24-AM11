@@ -41,6 +41,7 @@ public class ClientSocket implements ClientNetworkHandler {
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Connection error");
         }
     }
 
@@ -50,7 +51,9 @@ public class ClientSocket implements ClientNetworkHandler {
         try {
             while (true) {
                 message = in.readLine();
-                receiveCommand.receive(message);
+                if (message != null && ! message.isEmpty()) {
+                    receiveCommand.receive(message);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,4 +64,7 @@ public class ClientSocket implements ClientNetworkHandler {
         return sendCommand;
     }
 
+    public PrintWriter getOut() {
+        return out;
+    }
 }

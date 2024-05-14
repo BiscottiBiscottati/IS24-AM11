@@ -41,13 +41,14 @@ public class SocketManager {
                 System.out.println("TCP: Waiting fo connections...");
                 // Accept a new connection from a client
                 Socket clientSocket = serverSocket.accept();
-                //System.out.println("Nuova connessione: " + clientSocket);
+                System.out.println("TCP: Nuova connessione: " + clientSocket);
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
 
                 // Execute the client handler in a separate thread
                 threadPool.execute(clientHandler);
             } catch (IOException e) {
                 System.out.println("TCP: Socket Manager closed");
+                e.printStackTrace();
             }
         }
     }
