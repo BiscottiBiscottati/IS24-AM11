@@ -17,6 +17,7 @@ module it.polimi.ingsw.am11 {
     requires java.sql;
     requires java.rmi;
     requires com.fasterxml.jackson.databind;
+    requires java.desktop;
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
     exports it.polimi.ingsw.am11;
