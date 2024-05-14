@@ -55,7 +55,6 @@ public class ReceiveCommand {
                                         Color.valueOf(jsonNode.get("color").asText()));
                         break;
                     case "updateField":
-                        //TODO
                         clientPlayerView.updateField(jsonNode.get("nickname").asText(), jsonNode.
                                                              get("x").asInt(), jsonNode.get("y").
                                                                                        asInt(),
@@ -87,7 +86,7 @@ public class ReceiveCommand {
             } else if (jsonNode.get("method").asText().equals("Exception")) {
                 receiveException.receive(message);
             } else if (jsonNode.get("method").asText().equals("youGodPlayer")) {
-                //TODO
+                clientPlayerView.notifyGodPlayer();
             }
         } catch (IOException e) {
             System.out.println("Received invalid message.");
