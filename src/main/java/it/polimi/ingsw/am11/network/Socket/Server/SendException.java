@@ -47,6 +47,8 @@ public class SendException {
                 break;
             case "NumOfPlayersException":
                 NumOfPlayersException(e);
+            case "NotSetNumOfPlayerException":
+                NotSetNumOfPlayerException(e);
         }
     }
 
@@ -134,6 +136,14 @@ public class SendException {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "NumOfPlayersException");
+        json.put("description", e.getMessage());
+        out.println(json);
+    }
+
+    private void NotSetNumOfPlayerException(Exception e) {
+        ObjectNode json = mapper.createObjectNode();
+        json.put("method", "Exception");
+        json.put("message", "NotSetNumOfPlayerException");
         json.put("description", e.getMessage());
         out.println(json);
     }

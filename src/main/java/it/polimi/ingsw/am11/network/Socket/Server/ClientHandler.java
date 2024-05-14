@@ -1,10 +1,7 @@
 package it.polimi.ingsw.am11.network.Socket.Server;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.model.exceptions.NotGodPlayerException;
-import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
-import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.jetbrains.annotations.NotNull;
 
@@ -60,7 +57,8 @@ public class ClientHandler implements Runnable {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (PlayerInitException | NumOfPlayersException | GameStatusException e) {
+            } catch (GameStatusException | PlayerInitException | NumOfPlayersException |
+                     NotSetNumOfPlayerException e) {
                 sendException.Exception(e);
             }
         }

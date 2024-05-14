@@ -44,6 +44,9 @@ public class ReceiveException {
                         exception = new NotGodPlayerException(jsonNode.get("description").asText());
                     case "GameStatusException":
                         exception = new GameStatusException(jsonNode.get("description").asText());
+                    case "NotSetNumOfPlayerException":
+                        exception = new NotSetNumOfPlayerException(jsonNode.get("description")
+                                                                           .asText());
                 }
                 //TODO: Throw the exception
             }

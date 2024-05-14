@@ -1,10 +1,7 @@
 package it.polimi.ingsw.am11.network.RMI.Server;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.model.exceptions.NotGodPlayerException;
-import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
-import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
@@ -64,6 +61,8 @@ public class ServerMain implements Loggable {
                                                                                connector));
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
             throw new ServerException(e.getClass().getCanonicalName(), e);
+        } catch (NotSetNumOfPlayerException e) {
+            throw new RuntimeException(e);
         }
         try {
             UnicastRemoteObject.exportObject(view, 0);

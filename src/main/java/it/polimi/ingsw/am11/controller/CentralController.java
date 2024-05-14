@@ -2,10 +2,7 @@ package it.polimi.ingsw.am11.controller;
 
 import it.polimi.ingsw.am11.model.GameLogic;
 import it.polimi.ingsw.am11.model.GameModel;
-import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.model.exceptions.NotGodPlayerException;
-import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
-import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
 import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
@@ -42,12 +39,12 @@ public enum CentralController {
     public @NotNull VirtualPlayerView connectPlayer(String nickname,
                                                     PlayerConnector playerConnector,
                                                     TableConnector tableConnector)
-    throws
-    GameStatusException, NumOfPlayersException, PlayerInitException {
+    throws GameStatusException, NumOfPlayersException, PlayerInitException,
+           NotSetNumOfPlayerException {
         if (godPlayer == null) {
             godPlayer = nickname;
         } else if (numOfPlayers == - 1) {
-            throw new GameStatusException("NumOfPlayers not yet set by godPlayer");
+            throw new NotSetNumOfPlayerException("NumOfPlayers not yet set by godPlayer");
         } else if (playerViews.size() >= numOfPlayers) {
             throw new NumOfPlayersException("Max num of players reached");
         }

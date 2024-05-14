@@ -55,5 +55,9 @@ public class SendCommand implements CltToNetConnector {
         out.println(numOfPlayers);
     }
 
+    public void setNickname(String nickname) {
+        out.println(nickname);
+    }
+
 
 }
