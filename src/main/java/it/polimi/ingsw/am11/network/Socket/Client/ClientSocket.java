@@ -47,14 +47,16 @@ public class ClientSocket implements ClientNetworkHandler {
     public void connect(String nickname) throws IOException {
         out.println(nickname);
         String response = in.readLine();
-        if (response.equals("NOT_VALID_NICKNAME")) {
-                // TODO: implement the nickname retry logic
+        if (response.equals("MAX_NUM_OF_PLAYERS_REACHED")) {
+            // TODO: implement the nickname retry logic
+        } else if (response.equals("NICKNAME_ALREADY_TAKEN")) {
+            //TODO: implement the nickname retry logic
         } else if (response.equals("VALID_NICKNAME")) {
+            //TODO: implement the logic for the case where the nickname is valid
             response = in.readLine();
             if (response.equals("YOU_GOD_PLAYER")) {
                 //TODO: implement the number of players setting logic
-            }
-            else if (response.equals("YOU_NOT_GOD_PLAYER")) {
+            } else if (response.equals("YOU_NOT_GOD_PLAYER")) {
                 startCommunication();
             }
         }

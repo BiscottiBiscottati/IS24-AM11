@@ -58,9 +58,11 @@ public class ClientHandler implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (PlayerInitException e) {
-                out.println("NOT_VALID_NICKNAME");
-            } catch (GameStatusException | NumOfPlayersException e) {
+                out.println("NICKNAME_ALREADY_TAKEN");
+            } catch (GameStatusException e) {
                 throw new RuntimeException(e);
+            } catch (NumOfPlayersException e) {
+                out.println("MAX_NUM_OF_PLAYERS_REACHED");
             }
         }
         System.out.println("Connected: " + nickname);
