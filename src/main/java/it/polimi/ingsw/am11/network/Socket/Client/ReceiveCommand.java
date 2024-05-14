@@ -26,10 +26,7 @@ public class ReceiveCommand {
         try {
             // Parse the message
             JsonNode jsonNode = mapper.readTree(message);
-            // Switch on the method
             // TODO final leaderboard receive missing
-            // FIXME we may use command pattern
-            //  to simplify and make the code more readable
             if (jsonNode.get("method").asText().equals("Method")) {
                 switch (jsonNode.get("method").asText()) {
                     case "updateHand":
@@ -89,6 +86,8 @@ public class ReceiveCommand {
                 }
             } else if (jsonNode.get("method").asText().equals("Exception")) {
                 receiveException.receive(message);
+            } else if (jsonNode.get("method").asText().equals("youGodPlayer")) {
+                //TODO
             }
         } catch (IOException e) {
             System.out.println("Received invalid message.");

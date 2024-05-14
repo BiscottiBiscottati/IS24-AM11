@@ -131,4 +131,10 @@ public class SendCommand implements PlayerConnector, TableConnector {
     public void updatePlayers(EnumMap<PlayerColor, String> currentPlayers, String newPlayer) {
         //TODO to implement
     }
+
+    public void youGodPlayer() {
+        ObjectNode json = mapper.createObjectNode();
+        json.put("method", "youGodPlayer");
+        out.println(json);
+    }
 }

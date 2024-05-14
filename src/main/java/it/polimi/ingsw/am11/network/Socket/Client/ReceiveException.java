@@ -38,6 +38,12 @@ public class ReceiveException {
                         exception = new NotInHandException(jsonNode.get("description").asText());
                     case "EmptyDeckException":
                         exception = new EmptyDeckException(jsonNode.get("description").asText());
+                    case "NumOfPlayersException":
+                        exception = new NumOfPlayersException(jsonNode.get("description").asText());
+                    case "NotGodPlayerException":
+                        exception = new NotGodPlayerException(jsonNode.get("description").asText());
+                    case "GameStatusException":
+                        exception = new GameStatusException(jsonNode.get("description").asText());
                 }
                 //TODO: Throw the exception
             }

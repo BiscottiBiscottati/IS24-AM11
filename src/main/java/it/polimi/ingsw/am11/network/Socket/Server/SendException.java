@@ -9,8 +9,6 @@ public class SendException {
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    // FIXME to order better use a argument to dynamically launch exceptions
-
     public SendException(PrintWriter out) {
         this.out = out;
     }
@@ -47,6 +45,8 @@ public class SendException {
             case "GameStatusException":
                 GameStatusException(e);
                 break;
+            case "NumOfPlayersException":
+                NumOfPlayersException(e);
         }
     }
 
@@ -126,6 +126,14 @@ public class SendException {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "GameStatusException");
+        json.put("description", e.getMessage());
+        out.println(json);
+    }
+
+    private void NumOfPlayersException(Exception e) {
+        ObjectNode json = mapper.createObjectNode();
+        json.put("method", "Exception");
+        json.put("message", "NumOfPlayersException");
         json.put("description", e.getMessage());
         out.println(json);
     }

@@ -33,6 +33,7 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         boolean validNickname = false;
+        SendException sendException = new SendException(out);
         while (! validNickname) {
             try {
                 nickname = in.readLine();
@@ -40,30 +41,27 @@ public class ClientHandler implements Runnable {
                 view = CentralController.INSTANCE
                         .connectPlayer(nickname, sendCommand, sendCommand);
                 receiveCommand = new ReceiveCommand(view, out);
-                out.println("VALID_NICKNAME");
                 validNickname = true;
                 if (CentralController.INSTANCE.getGodPlayer().equals(nickname)) {
-                    try {
-                        out.println("YOU_GOD_PLAYER");
-                        int numOfPlayers = Integer.parseInt(in.readLine());
-                        CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
-                        System.out.println("God player: " + nickname);
-                        System.out.println("Num of players: " + numOfPlayers);
-                        out.println("NUM_OF_PLAYERS_SET");
-                    } catch (NotGodPlayerException e) {
-                        throw new RuntimeException(e);
+                    boolean validNumOfPlayers = false;
+                    while (! validNumOfPlayers) {
+                        try {
+                            sendCommand.youGodPlayer();
+                            int numOfPlayers = Integer.parseInt(in.readLine());
+                            CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
+                            System.out.println("God player: " + nickname);
+                            System.out.println("Num of players: " + numOfPlayers);
+                            validNumOfPlayers = true;
+                        } catch (NotGodPlayerException | NumOfPlayersException |
+                                 GameStatusException e) {
+                            sendException.Exception(e);
+                        }
                     }
-                } else {
-                    out.println("YOU_NOT_GOD_PLAYER");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (PlayerInitException e) {
-                out.println("NICKNAME_ALREADY_TAKEN");
-            } catch (GameStatusException e) {
-                throw new RuntimeException(e);
-            } catch (NumOfPlayersException e) {
-                out.println("MAX_NUM_OF_PLAYERS_REACHED");
+            } catch (PlayerInitException | NumOfPlayersException | GameStatusException e) {
+                sendException.Exception(e);
             }
         }
         System.out.println("Connected: " + nickname);
