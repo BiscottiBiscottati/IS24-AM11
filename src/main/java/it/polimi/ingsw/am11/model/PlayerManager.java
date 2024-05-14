@@ -198,9 +198,12 @@ public class PlayerManager {
             Player newPlayer = new Player(nickname, colour);
             players.put(nickname, newPlayer);
             playerQueue.add(newPlayer);
-            pcs.fireEvent(new PlayerAddedEvent(playerQueue.stream()
-                                                          .map(Player::nickname)
-                                                          .toList(),
+
+            EnumMap<PlayerColor, String> currentPlayers = new EnumMap<>(PlayerColor.class);
+            for (Player p : playerQueue) {
+                currentPlayers.put(p.color(), p.nickname());
+            }
+            pcs.fireEvent(new PlayerAddedEvent(currentPlayers,
                                                newPlayer.nickname()));
             return newPlayer;
         }

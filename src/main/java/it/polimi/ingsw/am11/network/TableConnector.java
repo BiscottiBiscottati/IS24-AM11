@@ -2,8 +2,10 @@ package it.polimi.ingsw.am11.network;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,4 +27,7 @@ public interface TableConnector {
     void updateCommonObjective(Set<Integer> cardsId, boolean removeMode);
 
     void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard);
+
+    void updatePlayers(EnumMap<PlayerColor, String> currentPlayers, String newPlayer);
+
 }

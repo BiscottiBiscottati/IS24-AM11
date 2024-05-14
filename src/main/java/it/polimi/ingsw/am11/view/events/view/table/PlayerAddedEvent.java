@@ -1,17 +1,19 @@
 package it.polimi.ingsw.am11.view.events.view.table;
 
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.view.events.TableViewEvent;
 import it.polimi.ingsw.am11.view.server.VirtualTableView;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.EnumMap;
 
 public class PlayerAddedEvent extends TableViewEvent {
 
-    private final List<String> players;
+    private final EnumMap<PlayerColor, String> players;
     private final String player;
 
-    public PlayerAddedEvent(List<String> players, @NotNull String playerAdded) {
+    public PlayerAddedEvent(EnumMap<PlayerColor, String> players,
+                            @NotNull String playerAdded) {
         super(playerAdded);
         this.player = playerAdded;
         this.players = players;
