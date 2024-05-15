@@ -14,16 +14,16 @@ import java.net.UnknownHostException;
 
 public class ClientSocket implements ClientNetworkHandler {
     private final ClientViewUpdater clientViewUpdater;
-    private BufferedReader in;
-    private PrintWriter out;
-    private ReceiveCommand receiveCommand;
-    private SendCommand sendCommand;
-    private Socket socket;
-    private Thread thread;
+    private final BufferedReader in;
+    private final PrintWriter out;
+    private final ReceiveCommand receiveCommand;
+    private final SendCommand sendCommand;
+    private final Socket socket;
+    private final Thread thread;
     private boolean isRunning;
 
     public ClientSocket(String ip, int port,
-                        @NotNull ClientViewUpdater clientViewUpdater) throws UnknownHostException {
+                        @NotNull ClientViewUpdater clientViewUpdater) throws IOException {
         this.clientViewUpdater = clientViewUpdater;
         try {
             isRunning = true;
@@ -50,6 +50,7 @@ public class ClientSocket implements ClientNetworkHandler {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Connection error");
+            throw new IOException("Connection error");
         }
     }
 

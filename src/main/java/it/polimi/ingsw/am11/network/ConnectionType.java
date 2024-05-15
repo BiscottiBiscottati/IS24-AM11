@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.network;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.function.BiFunction;
 
@@ -13,6 +14,8 @@ public enum ConnectionType {
         try {
             return new ClientSocket("localhost", port, updater);
         } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     });
