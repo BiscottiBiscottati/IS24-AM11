@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.network.ConnectionType;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 
@@ -36,7 +37,7 @@ public class Reader {
         System.out.println("There's a Time and Place for Everything, But Not Now!");
     }
 
-    public CltToNetConnector listenForConnect() {
+    public CltToNetConnector listenForConnect() throws UnknownHostException {
         command = input.nextLine();
         command = command.replaceAll("\\s+", " ");
         command = command.strip();
@@ -66,7 +67,7 @@ public class Reader {
     // ClientNetworkHandler that will have a method called getConnector() that will return
     // a CltToNetConnector that will then be used by all the other methods to sent commands
     // to the server.
-    private void connect(Scanner args) {
+    private void connect(Scanner args) throws UnknownHostException {
         ConnectionType connectionType;
         String type;
         String ip;

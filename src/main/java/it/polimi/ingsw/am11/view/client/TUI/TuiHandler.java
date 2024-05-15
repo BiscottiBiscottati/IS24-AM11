@@ -5,6 +5,8 @@ import it.polimi.ingsw.am11.network.ChatCltToNetConnector;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
+import java.net.UnknownHostException;
+
 public class TuiHandler {
 
     private final MiniGameModel model;
@@ -21,7 +23,7 @@ public class TuiHandler {
         this.tuiUpdater = new TuiUpdater(model);
     }
 
-    public void start() {
+    public void start() throws UnknownHostException {
 
         reader = new Reader(model, tuiUpdater);
 
