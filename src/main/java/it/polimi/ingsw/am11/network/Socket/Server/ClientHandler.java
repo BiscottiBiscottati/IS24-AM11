@@ -17,6 +17,7 @@ public class ClientHandler implements Runnable {
     private PrintWriter out;
     private VirtualPlayerView view;
     private ReceiveCommandS receiveCommandS;
+    private boolean isRunning;
 
     public ClientHandler(@NotNull Socket clientSocket) {
         try {
@@ -30,6 +31,7 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         boolean validNickname = false;
+        isRunning = true;
         SendException sendException = new SendException(out);
         while (! validNickname) {
             try {
@@ -66,7 +68,7 @@ public class ClientHandler implements Runnable {
                 System.out.println("TCP: Problem with nickname: " + nickname);
             }
         }
-        while (true) {
+        while (isRunning) {
             try {
                 String message = in.readLine();
                 if (message != null && ! message.isEmpty()) {
@@ -77,5 +79,11 @@ public class ClientHandler implements Runnable {
                 break;
             }
         }
+    }
+
+    public void stop() throws IOException {
+        isRunning = false;
+        in.close();
+        out.close();
     }
 }

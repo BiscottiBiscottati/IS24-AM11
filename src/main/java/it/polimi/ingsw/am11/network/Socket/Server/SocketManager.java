@@ -3,10 +3,13 @@ package it.polimi.ingsw.am11.network.Socket.Server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SocketManager {
+    private final List<ClientHandler> clientHandlers = new ArrayList<>();
     private ServerSocket serverSocket;
     private ExecutorService threadPool;
     private boolean isRunning;
@@ -26,6 +29,9 @@ public class SocketManager {
     public void stop() {
         isRunning = false;
         try {
+            for (ClientHandler clientHandler : clientHandlers) {
+                clientHandler.stop();
+            }
             threadPool.shutdown(); // Stop accepting new tasks
             serverSocket.close();
         } catch (IOException e) {
@@ -43,7 +49,7 @@ public class SocketManager {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("TCP: Nuova connessione: " + clientSocket);
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
-
+                clientHandlers.add(clientHandler);
                 // Execute the client handler in a separate thread
                 threadPool.execute(clientHandler);
             } catch (IOException e) {

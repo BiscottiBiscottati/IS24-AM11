@@ -2,7 +2,6 @@ package it.polimi.ingsw.am11.network.Socket;
 
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
-import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.network.Socket.Client.ReceiveCommandC;
 import it.polimi.ingsw.am11.network.Socket.Client.SendCommandC;
@@ -58,12 +57,10 @@ class TestCommunication {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Position pos = new Position(0, 0);
-        sendCommandC.placeCard(pos, 1, false);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).notifyGodPlayer();
+        Mockito.verify(clientViewUpdaterMock2, Mockito.times(0)).notifyGodPlayer();
+
+        server.stop();
     }
 }
