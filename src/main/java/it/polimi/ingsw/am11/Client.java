@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11;
 
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.view.client.GUI.window.CodexNaturalis;
+import it.polimi.ingsw.am11.view.client.TUI.TuiHandler;
 import javafx.application.Application;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +13,7 @@ public class Client {
         // TODO gui or tui and setup connection to server
         switch (uiMode) {
             case "gui" -> Application.launch(CodexNaturalis.class);
-            case "tui" -> System.out.println("TUI not implemented yet");
+            case "tui" -> new TuiHandler().start();
             default -> System.out.println("Invalid UI mode " + uiMode + ". Please choose between " +
                                           "'gui' and 'tui'");
         }
