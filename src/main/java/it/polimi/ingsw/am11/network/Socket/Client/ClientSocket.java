@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class ClientSocket implements ClientNetworkHandler {
     private final ClientViewUpdater clientViewUpdater;
@@ -22,7 +23,7 @@ public class ClientSocket implements ClientNetworkHandler {
     private boolean isRunning;
 
     public ClientSocket(String ip, int port,
-                        @NotNull ClientViewUpdater clientViewUpdater) {
+                        @NotNull ClientViewUpdater clientViewUpdater) throws UnknownHostException {
         this.clientViewUpdater = clientViewUpdater;
         try {
             isRunning = true;
@@ -43,6 +44,9 @@ public class ClientSocket implements ClientNetworkHandler {
                 }
             }));
 
+        } catch (UnknownHostException e) {
+            System.out.println("Unknown host");
+            throw new UnknownHostException("Unknown host");
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Connection error");
