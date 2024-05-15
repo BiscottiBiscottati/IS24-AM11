@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
 import java.util.Map;
@@ -12,9 +13,11 @@ import java.util.Set;
 
 public class TuiUpdater implements ClientViewUpdater {
     private final MiniGameModel model;
+    private TUIState tuiState;
 
-    public TuiUpdater(MiniGameModel model) {
+    public TuiUpdater(MiniGameModel model, TUIState tuiState) {
         this.model = model;
+        this.tuiState = tuiState;
     }
 
     @Override
@@ -121,6 +124,8 @@ public class TuiUpdater implements ClientViewUpdater {
                 System.out.println("The game has ended");
             }
             case ONGOING -> {
+                //TODO
+                //model.setMyName();
                 System.out.println("The game has began, fight with honor");
             }
             case ARMAGEDDON -> {
@@ -200,5 +205,13 @@ public class TuiUpdater implements ClientViewUpdater {
     @Override
     public void notifyGodPlayer() {
         //TODO
+    }
+
+    public TUIState getTuiState() {
+        return tuiState;
+    }
+
+    public void setTuiState(TUIState state) {
+        tuiState = state;
     }
 }
