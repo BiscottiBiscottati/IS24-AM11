@@ -6,6 +6,8 @@ import it.polimi.ingsw.am11.network.CltToNetConnector;
 import it.polimi.ingsw.am11.view.client.TUI.states.Connecting;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
+import java.io.IOException;
+
 public class TuiHandler {
 
     private final MiniGameModel model;
@@ -22,7 +24,7 @@ public class TuiHandler {
         this.tuiUpdater = new TuiUpdater(model, new Connecting());
     }
 
-    public void start() {
+    public void start() throws IOException {
 
         reader = new Reader(model, tuiUpdater);
 

@@ -11,12 +11,12 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ReceiveCommand {
+public class ReceiveCommandC {
     private final ClientViewUpdater clientPlayerView;
     private final ObjectMapper mapper;
     private final ReceiveException receiveException;
 
-    public ReceiveCommand(ClientViewUpdater clientPlayerView) {
+    public ReceiveCommandC(ClientViewUpdater clientPlayerView) {
         this.clientPlayerView = clientPlayerView;
         this.mapper = new ObjectMapper();
         this.receiveException = new ReceiveException();

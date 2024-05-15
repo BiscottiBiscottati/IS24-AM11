@@ -13,11 +13,11 @@ import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Set;
 
-public class SendCommand implements PlayerConnector, TableConnector {
+public class SendCommandS implements PlayerConnector, TableConnector {
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public SendCommand(PrintWriter out) {
+    public SendCommandS(PrintWriter out) {
         this.out = out;
     }
 

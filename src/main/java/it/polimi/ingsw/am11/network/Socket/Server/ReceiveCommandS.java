@@ -9,13 +9,13 @@ import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class ReceiveCommand {
+public class ReceiveCommandS {
 
     private final VirtualPlayerView playerView;
     private final ObjectMapper mapper;
     private final SendException sendException;
 
-    public ReceiveCommand(VirtualPlayerView playerView, PrintWriter out) {
+    public ReceiveCommandS(VirtualPlayerView playerView, PrintWriter out) {
         this.playerView = playerView;
         this.mapper = new ObjectMapper();
         this.sendException = new SendException(out);

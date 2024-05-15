@@ -5,9 +5,11 @@ import it.polimi.ingsw.am11.utils.Constants;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) throws ParsingErrorException {
+    public static void main(String[] args) throws ParsingErrorException, IOException {
 
         final String HELP_MESSAGE = """
                 Usage: java -jar <jar file> <server|client> [options]

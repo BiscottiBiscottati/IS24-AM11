@@ -8,13 +8,13 @@ import it.polimi.ingsw.am11.network.CltToNetConnector;
 
 import java.io.PrintWriter;
 
-public class SendCommand implements CltToNetConnector {
+public class SendCommandC implements CltToNetConnector {
     // This class is used to send commands to the server
     // It is used by the client to send commands to the server
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public SendCommand(PrintWriter out) {
+    public SendCommandC(PrintWriter out) {
         this.out = out;
     }
 

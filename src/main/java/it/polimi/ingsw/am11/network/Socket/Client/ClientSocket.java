@@ -16,8 +16,8 @@ public class ClientSocket implements ClientNetworkHandler {
     private final ClientViewUpdater clientViewUpdater;
     private final BufferedReader in;
     private final PrintWriter out;
-    private final ReceiveCommand receiveCommand;
-    private final SendCommand sendCommand;
+    private final ReceiveCommandC receiveCommandC;
+    private final SendCommandC sendCommandC;
     private final Socket socket;
     private final Thread thread;
     private boolean isRunning;
@@ -30,8 +30,8 @@ public class ClientSocket implements ClientNetworkHandler {
             socket = new Socket(ip, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            sendCommand = new SendCommand(out);
-            receiveCommand = new ReceiveCommand(this.clientViewUpdater);
+            sendCommandC = new SendCommandC(out);
+            receiveCommandC = new ReceiveCommandC(this.clientViewUpdater);
             thread = new Thread(this::run);
             thread.start();
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -61,7 +61,7 @@ public class ClientSocket implements ClientNetworkHandler {
             while (isRunning) {
                 message = in.readLine();
                 if (message != null && ! message.isEmpty()) {
-                    receiveCommand.receive(message);
+                    receiveCommandC.receive(message);
                 }
             }
         } catch (IOException e) {
@@ -70,7 +70,7 @@ public class ClientSocket implements ClientNetworkHandler {
     }
 
     public CltToNetConnector getConnector() {
-        return sendCommand;
+        return sendCommandC;
     }
 
     public PrintWriter getOut() {

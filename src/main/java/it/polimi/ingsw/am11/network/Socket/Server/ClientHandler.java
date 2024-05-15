@@ -16,7 +16,7 @@ public class ClientHandler implements Runnable {
     private BufferedReader in;
     private PrintWriter out;
     private VirtualPlayerView view;
-    private ReceiveCommand receiveCommand;
+    private ReceiveCommandS receiveCommandS;
 
     public ClientHandler(@NotNull Socket clientSocket) {
         try {
@@ -35,17 +35,17 @@ public class ClientHandler implements Runnable {
             try {
                 System.out.println("TCP: Waiting for nickname...");
                 nickname = in.readLine();
-                SendCommand sendCommand = new SendCommand(out);
+                SendCommandS sendCommandS = new SendCommandS(out);
                 view = CentralController.INSTANCE
-                        .connectPlayer(nickname, sendCommand, sendCommand);
-                receiveCommand = new ReceiveCommand(view, out);
+                        .connectPlayer(nickname, sendCommandS, sendCommandS);
+                receiveCommandS = new ReceiveCommandS(view, out);
                 validNickname = true;
                 System.out.println("TCP: Connected: " + nickname);
                 if (CentralController.INSTANCE.getGodPlayer().equals(nickname)) {
                     boolean validNumOfPlayers = false;
                     while (! validNumOfPlayers) {
                         try {
-                            sendCommand.youGodPlayer();
+                            sendCommandS.youGodPlayer();
                             System.out.println("TCP: Waiting for number of players...");
                             int numOfPlayers = Integer.parseInt(in.readLine());
                             CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
@@ -70,7 +70,7 @@ public class ClientHandler implements Runnable {
             try {
                 String message = in.readLine();
                 if (message != null && ! message.isEmpty()) {
-                    receiveCommand.receive(message);
+                    receiveCommandS.receive(message);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
