@@ -18,7 +18,6 @@ import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
-import it.polimi.ingsw.am11.view.events.view.table.PlayerAddedEvent;
 import it.polimi.ingsw.am11.view.events.view.table.TurnChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -199,12 +198,6 @@ public class PlayerManager {
             players.put(nickname, newPlayer);
             playerQueue.add(newPlayer);
 
-            EnumMap<PlayerColor, String> currentPlayers = new EnumMap<>(PlayerColor.class);
-            for (Player p : playerQueue) {
-                currentPlayers.put(p.color(), p.nickname());
-            }
-            pcs.fireEvent(new PlayerAddedEvent(currentPlayers,
-                                               newPlayer.nickname()));
             return newPlayer;
         }
     }

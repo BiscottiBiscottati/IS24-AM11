@@ -20,6 +20,7 @@ import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.player.PersonalObjectiveChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.PlayerInfoEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -325,6 +326,16 @@ public class GameLogic implements GameModel {
         }
 
         resetAll();
+
+        Map<PlayerColor, String> collected = playerManager.getPlayers()
+                                                          .stream()
+                                                          .map(playerManager::getPlayer)
+                                                          .filter(Optional::isPresent)
+                                                          .map(Optional::get)
+                                                          .collect(Collectors.toMap(
+                                                                  Player::color,
+                                                                  Player::nickname));
+        pcs.fireEvent(new PlayerInfoEvent(collected));
 
         try {
             plateau.setStatus(GameStatus.CHOOSING_STARTERS);

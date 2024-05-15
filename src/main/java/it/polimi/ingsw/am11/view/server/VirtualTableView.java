@@ -64,11 +64,15 @@ public class VirtualTableView {
         broadcast(function);
     }
 
-    private void broadcast(Consumer<TableConnector> action) {
+    private void broadcast(@NotNull Consumer<TableConnector> action) {
         connectors.values().forEach(action);
     }
 
     //FIXME may use commander pattern or other
+
+    public void updateTable(@NotNull GameStatusChangeEvent event) {
+        broadcast(connector -> connector.updateGameStatus(event.getNewValue()));
+    }
 
     public void updateTable(@NotNull CommonObjectiveChangeEvent event) {
         switch (event.getAction()) {
@@ -99,20 +103,15 @@ public class VirtualTableView {
                                                              event.getNewValue()));
     }
 
-    public void updateTable(GameStatusChangeEvent event) {
-        broadcast(connector -> connector.updateGameStatus(event.getNewValue()));
-    }
-
     public void updateTable(@NotNull TurnChangeEvent event) {
         broadcast(connector -> connector.updateTurnChange(event.getNewValue()));
     }
 
-
-    public void updateTable(FinalLeaderboardEvent event) {
+    public void updateTable(@NotNull FinalLeaderboardEvent event) {
         broadcast(connector -> connector.sendFinalLeaderboard(event.getNewValue()));
     }
 
-    public void updateTable(PlayerAddedEvent event) {
-        
+    public void updateTable(@NotNull PlayerInfoEvent event) {
+        broadcast(connector -> connector.updatePlayers(event.getNewValue()));
     }
 }

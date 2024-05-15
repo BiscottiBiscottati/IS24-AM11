@@ -9,7 +9,6 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.TableConnector;
 
 import java.rmi.RemoteException;
-import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -132,6 +131,7 @@ public class ConnectorImplementation implements PlayerConnector, TableConnector 
     }
 
     @Override
-    public void updatePlayers(EnumMap<PlayerColor, String> currentPlayers, String newPlayer) {
+    public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+
     }
 }

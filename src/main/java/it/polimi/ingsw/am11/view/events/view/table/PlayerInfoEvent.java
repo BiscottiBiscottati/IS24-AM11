@@ -5,17 +5,14 @@ import it.polimi.ingsw.am11.view.events.TableViewEvent;
 import it.polimi.ingsw.am11.view.server.VirtualTableView;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.EnumMap;
+import java.util.Map;
 
-public class PlayerAddedEvent extends TableViewEvent {
+public class PlayerInfoEvent extends TableViewEvent {
 
-    private final EnumMap<PlayerColor, String> players;
-    private final String player;
+    private final Map<PlayerColor, String> players;
 
-    public PlayerAddedEvent(EnumMap<PlayerColor, String> players,
-                            @NotNull String playerAdded) {
-        super(playerAdded);
-        this.player = playerAdded;
+    public PlayerInfoEvent(Map<PlayerColor, String> players) {
+        super();
         this.players = players;
     }
 
@@ -25,17 +22,17 @@ public class PlayerAddedEvent extends TableViewEvent {
     }
 
     @Override
-    public String getOldValue() {
+    public Map<PlayerColor, String> getOldValue() {
         return null;
     }
 
     @Override
-    public String getNewValue() {
-        return player;
+    public Map<PlayerColor, String> getNewValue() {
+        return players;
     }
 
     @Override
-    public @NotNull String getValueOfAction() {
-        return player;
+    public @NotNull Map<PlayerColor, String> getValueOfAction() {
+        return players;
     }
 }
