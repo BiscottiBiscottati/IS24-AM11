@@ -123,12 +123,18 @@ public class SendCommandS implements PlayerConnector, TableConnector {
 
     @Override
     public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
-        //TODO to implement
+        ObjectNode json = mapper.createObjectNode();
+        json.put("method", "receiveFinalLeaderboard");
+        json.put("finalLeaderboard", finalLeaderboard.toString());
+        out.println(json);
     }
 
     @Override
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
-        //TODO to implement
+        ObjectNode json = mapper.createObjectNode();
+        json.put("method", "updatePlayers");
+        json.put("currentPlayers", currentPlayers.toString());
+        out.println(json);
     }
 
     public void youGodPlayer() {

@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import java.io.IOException;
@@ -47,20 +48,35 @@ class TestCommunication {
         sendCommandC.setNickname("Francesco");
         sendCommandC.setNumOfPlayers(2);
         try {
-            Thread.sleep(1000); // Wait for 2 seconds
+            Thread.sleep(5000); // Wait for 2 seconds
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         sendCommandC2.setNickname("Giovanni");
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+        sendCommandC.setStarterCard(true);
+        sendCommandC2.setStarterCard(false);
         Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).notifyGodPlayer();
         Mockito.verify(clientViewUpdaterMock2, Mockito.times(0)).notifyGodPlayer();
+        Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).receiveStarterCard(
+                ArgumentMatchers.anyInt());
+        Mockito.verify(clientViewUpdaterMock2, Mockito.times(1)).receiveStarterCard(
+                ArgumentMatchers.anyInt());
+        Mockito.verify(clientViewUpdaterMock, Mockito.times(2)).receiveCandidateObjective(
+                ArgumentMatchers.anySet());
+        Mockito.verify(clientViewUpdaterMock2, Mockito.times(2)).receiveCandidateObjective(
+                ArgumentMatchers.anySet());
+        //sendCommandC.setPersonalObjective(1);
+        //sendCommandC2.setPersonalObjective(2);
 
         server.stop();
+        clientSocket.close();
+        clientSocket2.close();
+
     }
 }

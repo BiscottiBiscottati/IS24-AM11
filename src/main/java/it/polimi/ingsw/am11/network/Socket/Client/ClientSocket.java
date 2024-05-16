@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class ClientSocket implements ClientNetworkHandler {
@@ -27,7 +28,6 @@ public class ClientSocket implements ClientNetworkHandler {
     throws IOException {
         this.clientViewUpdater = clientViewUpdater;
         try {
-            isRunning = true;
             socket = new Socket(ip, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
@@ -57,6 +57,7 @@ public class ClientSocket implements ClientNetworkHandler {
 
 
     public void run() {
+        isRunning = true;
         String message;
         try {
             while (isRunning) {
@@ -65,6 +66,8 @@ public class ClientSocket implements ClientNetworkHandler {
                     receiveCommandC.receive(message);
                 }
             }
+        } catch (SocketException e) {
+            System.out.println("Client: Connection closed");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,10 +84,9 @@ public class ClientSocket implements ClientNetworkHandler {
     public void close() {
         isRunning = false;
         try {
+            socket.close();
             in.close();
             out.close();
-            socket.close();
-            thread.interrupt();
         } catch (IOException e) {
             e.printStackTrace();
         }

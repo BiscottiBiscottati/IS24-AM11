@@ -79,7 +79,7 @@ public class ClientToServerConnector implements ConnectorInterface {
 
     @Override
     public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
-        clientUpdater.sendFinalLeaderboard(finalLeaderboard);
+        clientUpdater.receiveFinalLeaderboard(finalLeaderboard);
 
     }
 

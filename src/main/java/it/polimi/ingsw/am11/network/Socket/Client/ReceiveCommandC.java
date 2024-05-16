@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class ReceiveCommandC {
@@ -84,6 +86,16 @@ public class ReceiveCommandC {
                                                                jsonNode.get(
                                                                        "removeMode").asBoolean());
                         break;
+                    case "receiveFinalLeaderboard":
+                        Map<String, Integer> finalLeaderboard = mapper.convertValue(
+                                jsonNode.get("finalLeaderboard"),
+                                Map.class);
+                        clientPlayerView.receiveFinalLeaderboard(finalLeaderboard);
+                        break;
+                    case "updatePlayers":
+                        Map<PlayerColor, String> currentPlayers = mapper.convertValue(
+                                jsonNode.get("currentPlayers"),
+                                Map.class);
                 }
             } else if (jsonNode.get("method").asText().equals("Exception")) {
                 receiveException.receive(message);

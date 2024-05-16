@@ -30,7 +30,7 @@ public interface ClientViewUpdater {
     void updateCommonObjective(int cardId, boolean removeMode);
 
 
-    void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard);
+    void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard);
 
 
     void updateHand(int cardId, boolean removeMode);

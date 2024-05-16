@@ -169,7 +169,7 @@ public class TuiUpdater implements ClientViewUpdater {
     }
 
     @Override
-    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+    public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
         model.setFinalLeaderboard(finalLeaderboard);
         System.out.println("The final leaderboard is:");
         for (int i = 1; i <= finalLeaderboard.size(); i++) {
