@@ -11,7 +11,6 @@ public class ReaderV2 {
     private final Scanner input;
     private final TuiUpdater tuiUpdater;
     private final MiniGameModel model;
-    private final ArgParser parser;
     private final Actuator actuator;
 
 
@@ -19,7 +18,6 @@ public class ReaderV2 {
         this.input = new Scanner(System.in);
         this.model = model;
         this.tuiUpdater = tuiUpdater;
-        this.parser = setUpOptions();
         this.actuator = new Actuator(tuiUpdater);
     }
 
@@ -33,6 +31,7 @@ public class ReaderV2 {
     }
 
     public void listen() {
+        ArgParser parser = new ArgParser();
         try {
             parser.parse(input.nextLine().strip().split("\\s+"));
         } catch (ParsingErrorException e) {

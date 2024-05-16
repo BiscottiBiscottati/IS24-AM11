@@ -18,7 +18,12 @@ public class Connecting implements TUIState {
                 case "connecting" -> actuator.connect(positionalArgs);
                 case "help" -> help();
                 case "exit" -> Actuator.close();
-                default -> specificHelp();
+                default -> {
+                    System.out.println("Wrong input 0");
+                    for (String st : positionalArgs) {
+                        System.out.println(">" + st);
+                    }
+                }
             }
         } catch (InvalidArgumetsException ex) {
             //TODO
@@ -46,7 +51,7 @@ public class Connecting implements TUIState {
     }
 
     private void specificHelp() {
-
+        System.out.println("Wrong input 1");
     }
 
 }
