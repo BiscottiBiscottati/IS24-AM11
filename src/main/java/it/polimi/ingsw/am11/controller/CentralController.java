@@ -12,8 +12,10 @@ import it.polimi.ingsw.am11.view.server.VirtualTableView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public enum CentralController {
     INSTANCE;
@@ -23,59 +25,71 @@ public enum CentralController {
     private final CardController cardController;
     private final GameController gameController;
     private final Map<String, VirtualPlayerView> playerViews;
-    private String godPlayer = null;
-    private int numOfPlayers;
+    private final AtomicInteger maxNumOfPlayer;
+    private final AtomicReference<String> godPlayer;
 
     CentralController() {
         this.model = new GameLogic();
         this.tableView = new VirtualTableView();
         this.cardController = new CardController(model);
         this.gameController = new GameController(model);
-        this.playerViews = new HashMap<>(8);
+        this.playerViews = new ConcurrentHashMap<>(8);
         this.model.addTableListener(new TableViewUpdater(tableView));
-        this.numOfPlayers = - 1;
+        this.maxNumOfPlayer = new AtomicInteger(- 1);
+        this.godPlayer = new AtomicReference<>(null);
     }
 
-    public @NotNull VirtualPlayerView connectPlayer(String nickname,
-                                                    PlayerConnector playerConnector,
-                                                    TableConnector tableConnector)
+    @NotNull
+    public VirtualPlayerView connectPlayer(@NotNull String nickname,
+                                           @NotNull PlayerConnector playerConnector,
+                                           @NotNull TableConnector tableConnector)
     throws GameStatusException, NumOfPlayersException, PlayerInitException,
            NotSetNumOfPlayerException {
-        if (godPlayer == null) {
-            godPlayer = nickname;
-        } else if (numOfPlayers == - 1) {
+
+        int currentMaxPlayers = maxNumOfPlayer.get();
+
+        if (! godPlayer.compareAndSet(null, nickname) && currentMaxPlayers == - 1) {
             throw new NotSetNumOfPlayerException("NumOfPlayers not yet set by godPlayer");
-        } else if (playerViews.size() >= numOfPlayers) {
-            throw new NumOfPlayersException("Max num of players reached");
         }
-        this.gameController.addPlayer(nickname);
-        VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
-        this.playerViews.put(nickname, playerView);
-        this.model.addPlayerListener(nickname,
-                                     new PlayerViewUpdater(playerView));
-        this.tableView.addConnector(nickname, tableConnector);
-        if (numOfPlayers == playerViews.size()) {
-            try {
-                gameController.initGame();
-            } catch (NumOfPlayersException e) {
-                throw new RuntimeException(e);
+
+        synchronized (playerViews) {
+            if (playerViews.size() >= currentMaxPlayers) {
+                throw new NumOfPlayersException("Max num of players reached");
             }
+
+            this.gameController.addPlayer(nickname);
+            VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
+            this.playerViews.put(nickname, playerView);
+            this.model.addPlayerListener(nickname,
+                                         new PlayerViewUpdater(playerView));
+            this.tableView.addConnector(nickname, tableConnector);
+
+            if (currentMaxPlayers == playerViews.size()) {
+                try {
+                    gameController.initGame();
+                } catch (NumOfPlayersException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return playerView;
         }
-        return playerView;
     }
 
     public void setNumOfPlayers(@NotNull String nickname, int val)
     throws NotGodPlayerException, GameStatusException,
            NumOfPlayersException {
-        if (! nickname.equals(godPlayer)) {
+
+        if (val <= 1 || val > model.getRuleSet().getMaxPlayers())
+            throw new NumOfPlayersException("Trying to add an illegal number of players");
+
+        if (! godPlayer.get().equals(nickname)) {
             throw new NotGodPlayerException("A not god player is trying to set the num of " +
                                             "players");
-        } else if (val <= 1 || val > model.getRuleSet().getMaxPlayers()) {
-            throw new NumOfPlayersException("trying to add an illegal number of players");
-        } else if (numOfPlayers != - 1) {
+        }
+
+        if (! maxNumOfPlayer.compareAndSet(- 1, val)) {
             throw new GameStatusException("num of players already set");
         }
-        numOfPlayers = val;
     }
 
     public void playerDisconnected(String nickname) {
@@ -87,7 +101,7 @@ public enum CentralController {
     }
 
     public @Nullable String getGodPlayer() {
-        return godPlayer;
+        return godPlayer.get();
     }
 
 
