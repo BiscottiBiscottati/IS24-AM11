@@ -27,7 +27,9 @@ public class ReceiveCommandC {
             // Parse the message
             JsonNode jsonNode = mapper.readTree(message);
             // TODO final leaderboard receive missing
-            if (jsonNode.get("method").asText().equals("Method")) {
+            if (! jsonNode.get("method").asText().equals("Exception")
+                && ! jsonNode.get("method").
+                             asText().equals("youGodPlayer")) {
                 switch (jsonNode.get("method").asText()) {
                     case "updateHand":
                         clientPlayerView.updateHand(jsonNode.get("cardId").asInt(),
