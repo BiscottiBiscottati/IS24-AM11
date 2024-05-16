@@ -20,11 +20,16 @@ import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.TurnChangeEvent;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class PlayerManager {
+
+    private final static Logger logger = LoggerFactory.getLogger(PlayerManager.class);
+
     private static int maxNumberOfPlayers;
     private final Map<String, Player> players;
     private final Queue<Player> playerQueue;
@@ -41,6 +46,9 @@ public class PlayerManager {
     }
 
     public static void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
+
+        logger.debug("Setting max number of players to {}", maxNumberOfPlayers);
+
         PlayerManager.maxNumberOfPlayers = maxNumberOfPlayers;
     }
 
@@ -216,12 +224,18 @@ public class PlayerManager {
         firstPlayer = players.values()
                              .toArray(new Player[playerQueue.size()])[randomIndex];
 
+        logger.debug("Players are: {}", players.values());
+
         Player peeked = playerQueue.element();
         while (peeked != firstPlayer) {
             playerQueue.add(playerQueue.remove());
             peeked = playerQueue.element();
         }
         currentPlaying = playerQueue.element();
+
+        logger.debug("First player is {}", firstPlayer.nickname());
+        logger.debug("Current player is {}", currentPlaying.nickname());
+
         pcs.fireEvent(new TurnChangeEvent(null, currentPlaying.nickname()));
     }
 
@@ -237,6 +251,8 @@ public class PlayerManager {
             playerQueue.add(currentPlaying);
             currentPlaying = playerQueue.element();
             currentPlaying.space().setCardBeenPlaced(false);
+
+            logger.info("Player {} is now playing", currentPlaying.nickname());
 
             pcs.fireEvent(new TurnChangeEvent(previousPlayer, currentPlaying.nickname()));
         } while (unavailablePlayers.contains(currentPlaying));
