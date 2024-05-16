@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 public class PlayerManager {
 
-    private final static Logger logger = LoggerFactory.getLogger(PlayerManager.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(PlayerManager.class);
 
     private static int maxNumberOfPlayers;
     private final Map<String, Player> players;
@@ -47,7 +47,7 @@ public class PlayerManager {
 
     public static void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
 
-        logger.debug("Setting max number of players to {}", maxNumberOfPlayers);
+        LOGGER.debug("Setting max number of players to {}", maxNumberOfPlayers);
 
         PlayerManager.maxNumberOfPlayers = maxNumberOfPlayers;
     }
@@ -150,6 +150,8 @@ public class PlayerManager {
                 .space()
                 .setStarterCard(starter);
 
+        LOGGER.info("Starter {} given to {}", starter.getId(), nickname);
+
         pcs.fireEvent(new StarterCardEvent(nickname, null, starter.getId()));
     }
 
@@ -166,6 +168,9 @@ public class PlayerManager {
         Set<Integer> candidateObjs = objectives.stream()
                                                .map(ObjectiveCard::getId)
                                                .collect(Collectors.toUnmodifiableSet());
+
+        LOGGER.info("Candidate objectives {} given to {}", candidateObjs, nickname);
+
         pcs.fireEvent(new CandidateObjectiveEvent(nickname, null, candidateObjs));
     }
 
@@ -224,7 +229,7 @@ public class PlayerManager {
         firstPlayer = players.values()
                              .toArray(new Player[playerQueue.size()])[randomIndex];
 
-        logger.debug("Players are: {}", players.values());
+        LOGGER.debug("Players are: {}", players.values());
 
         Player peeked = playerQueue.element();
         while (peeked != firstPlayer) {
@@ -233,8 +238,8 @@ public class PlayerManager {
         }
         currentPlaying = playerQueue.element();
 
-        logger.debug("First player is {}", firstPlayer.nickname());
-        logger.debug("Current player is {}", currentPlaying.nickname());
+        LOGGER.debug("First player is {}", firstPlayer.nickname());
+        LOGGER.debug("Current player is {}", currentPlaying.nickname());
 
         pcs.fireEvent(new TurnChangeEvent(null, currentPlaying.nickname()));
     }
@@ -252,7 +257,7 @@ public class PlayerManager {
             currentPlaying = playerQueue.element();
             currentPlaying.space().setCardBeenPlaced(false);
 
-            logger.info("Player {} is now playing", currentPlaying.nickname());
+            LOGGER.info("Player {} is now playing", currentPlaying.nickname());
 
             pcs.fireEvent(new TurnChangeEvent(previousPlayer, currentPlaying.nickname()));
         } while (unavailablePlayers.contains(currentPlaying));

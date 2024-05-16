@@ -21,6 +21,9 @@ import it.polimi.ingsw.am11.view.events.view.table.CommonObjectiveChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.DeckTopChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.ShownPlayableEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -30,6 +33,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PickablesTable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PickablesTable.class);
 
     private static int numOfCommonObjectives;
     private static int numOfShownPerType;
@@ -110,6 +115,11 @@ public class PickablesTable {
                         getDeckTop(PlayableCardType.RESOURCE).orElse(null));
             }
         }
+
+        LOGGER.info("Card color on top of the {} deck changed to: {}",
+                    event.getCardType(),
+                    event.getNewValue());
+
         pcs.fireEvent(event);
         return card;
     }
@@ -158,6 +168,10 @@ public class PickablesTable {
             goldDeck.draw()
                     .ifPresent(goldCard -> {
                         shownGold.add(goldCard);
+
+                        LOGGER.info("Gold card with ID {} is shown on the table",
+                                    goldCard.getId());
+
                         pcs.fireEvent(new ShownPlayableEvent(
                                 PlayableCardType.GOLD,
                                 null,
@@ -167,6 +181,10 @@ public class PickablesTable {
             resourceDeck.draw()
                         .ifPresent(resourceCard -> {
                             shownResources.add(resourceCard);
+
+                            LOGGER.info("Resource card with ID {} is shown on the table",
+                                        resourceCard.getId());
+
                             pcs.fireEvent(new ShownPlayableEvent(
                                     PlayableCardType.RESOURCE,
                                     null,
@@ -191,6 +209,9 @@ public class PickablesTable {
     }
 
     private void shuffleDecks() {
+
+        LOGGER.debug("Shuffling decks...");
+
         goldDeck.shuffle();
         resourceDeck.shuffle();
         objectiveDeck.shuffle();
@@ -209,10 +230,14 @@ public class PickablesTable {
             commonObjectives.add(pickObjectiveCard());
         }
 
+        Set<Integer> objsID = commonObjectives.stream()
+                                              .map(CardIdentity::getId)
+                                              .collect(Collectors.toSet());
+
+        LOGGER.info("Common objectives are picked: {}", objsID);
+
         pcs.fireEvent(new CommonObjectiveChangeEvent(null,
-                                                     commonObjectives.stream()
-                                                                     .map(CardIdentity::getId)
-                                                                     .collect(Collectors.toSet())));
+                                                     objsID));
     }
 
     public PlayableCard pickPlayableVisible(int cardID) throws IllegalPickActionException {
@@ -224,43 +249,62 @@ public class PickablesTable {
                              "Card with ID " + cardID + " is not visible!"));
     }
 
-    private @NotNull PlayableCard removePlayable(@NotNull PlayableCard playableCard) {
+    private @Nullable PlayableCard removePlayable(@NotNull PlayableCard playableCard) {
         switch (playableCard) {
             case GoldCard goldCard -> {
-                shownGold.remove(goldCard);
+
+                if (! shownGold.remove(goldCard)) return null;
+
                 Optional<GoldCard> gold = goldDeck.draw();
                 gold.ifPresent(shownGold::add);
+
+                LOGGER.info("Shown gold card with ID {} is substituted with {}",
+                            goldCard.getId(),
+                            gold.map(PlayableCard::getId).orElse(null));
 
                 pcs.fireEvent(new ShownPlayableEvent(
                         PlayableCardType.GOLD,
                         goldCard.getId(),
                         gold.map(PlayableCard::getId).orElse(null)
                 ));
+
+                LOGGER.info("Gold deck top color changed to: {}",
+                            getDeckTop(PlayableCardType.GOLD).orElse(null));
+
                 pcs.fireEvent(new DeckTopChangeEvent(
                         PlayableCardType.GOLD,
                         gold.map(PlayableCard::getColor).orElse(null),
                         getDeckTop(PlayableCardType.GOLD).orElse(null)
                 ));
-                return goldCard;
             }
             case ResourceCard resourceCard -> {
-                shownResources.remove(resourceCard);
+
+                if (! shownResources.remove(resourceCard)) return null;
+
                 Optional<ResourceCard> resource = resourceDeck.draw();
                 resource.ifPresent(shownResources::add);
+
+                LOGGER.info("Shown resource card with ID {} is substituted with {}",
+                            resourceCard.getId(),
+                            resource.map(PlayableCard::getId).orElse(null));
 
                 pcs.fireEvent(new ShownPlayableEvent(
                         PlayableCardType.RESOURCE,
                         resourceCard.getId(),
                         resource.map(PlayableCard::getId).orElse(null)
                 ));
+
+                LOGGER.info("Resource deck top color changed to: {}",
+                            getDeckTop(PlayableCardType.RESOURCE).orElse(null));
+
                 pcs.fireEvent(new DeckTopChangeEvent(
                         PlayableCardType.RESOURCE,
                         resource.map(PlayableCard::getColor).orElse(null),
                         getDeckTop(PlayableCardType.RESOURCE).orElse(null)
                 ));
-                return resourceCard;
             }
         }
+        return playableCard;
     }
 
     public Set<PlayableCard> getShownPlayable(@NotNull PlayableCardType type) {

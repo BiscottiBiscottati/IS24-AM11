@@ -18,4 +18,9 @@ public enum PlayableCardType {
     public String getName() {
         return this.typeName;
     }
+
+    @Override
+    public String toString() {
+        return this.typeName;
+    }
 }

@@ -7,6 +7,8 @@ import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.table.FinalLeaderboardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.PlayerPointsChangeEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Plateau {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Plateau.class);
+
     private static int armageddonTime;
     private final Map<Player, Integer> playerPoints;
     private final Map<Player, Integer> counterObjective;
@@ -37,7 +41,31 @@ public class Plateau {
     public void setStatus(GameStatus status) {
         GameStatus oldValue = this.status;
         this.status = status;
+
+        LOGGER.info("Game status changed from {} to {}", oldValue, status);
+
         pcs.fireEvent(new GameStatusChangeEvent(oldValue, status));
+    }
+
+    public void addPlayerPoints(Player player, int points) throws IllegalPlateauActionException {
+        Integer temp = playerPoints.getOrDefault(player, null);
+        if (temp == null) {
+            throw new IllegalPlateauActionException("Player not found");
+        } else {
+            temp += points;
+            playerPoints.put(player, temp);
+
+            LOGGER.info("Player {} gained {} points, total: {}", player.nickname(), points, temp);
+
+            pcs.fireEvent(new PlayerPointsChangeEvent(
+                    player.nickname(),
+                    temp - points,
+                    temp));
+        }
+        if (temp >= armageddonTime && status == GameStatus.ONGOING) {
+            setStatus(GameStatus.ARMAGEDDON);
+        }
+
     }
 
     public boolean isArmageddonTime() {
@@ -82,25 +110,6 @@ public class Plateau {
     public void addPlayer(Player newPlayer) {
         playerPoints.put(newPlayer, 0);
         counterObjective.put(newPlayer, 0);
-    }
-
-    public void addPlayerPoints(Player player, int points) throws IllegalPlateauActionException {
-        Integer temp = playerPoints.getOrDefault(player, null);
-        if (temp == null) {
-            throw new IllegalPlateauActionException("Player not found");
-        } else {
-            temp += points;
-            playerPoints.put(player, temp);
-
-            pcs.fireEvent(new PlayerPointsChangeEvent(
-                    player.nickname(),
-                    temp - points,
-                    temp));
-        }
-        if (temp >= armageddonTime && status == GameStatus.ONGOING) {
-            setStatus(GameStatus.ARMAGEDDON);
-        }
-
     }
 
     public void addCounterObjective(Player player)
@@ -163,6 +172,8 @@ public class Plateau {
                                                                                       e.getKey(),
                                                                                       e.getValue()),
                                                                               HashMap::putAll);
+
+        LOGGER.info("Final leaderboard set: {}", finalLeaderboardString);
 
         pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboardString));
     }
