@@ -18,13 +18,12 @@ import java.rmi.server.UnicastRemoteObject;
 public class ServerMain implements Loggable {
 
     private final int port;
-    PlayerViewImpl playerView;
-    private VirtualPlayerView view;
+    PlayerViewImpl playerView = new PlayerViewImpl();
     private Registry registry;
 
     //TODO to save the connector in the server
 
-    public ServerMain(int port) {
+    public ServerMain(int port) throws RemoteException {
         this.port = port;
     }
 
@@ -59,17 +58,12 @@ public class ServerMain implements Loggable {
     public void login(String nick, ConnectorInterface remoteConnector) throws RemoteException {
         try {
             ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
+            VirtualPlayerView view = new VirtualPlayerView(connector, nick);
             CentralController.INSTANCE.connectPlayer(nick, connector, connector);
             playerView.addPlayer(nick, view);
-        } catch (PlayerInitException | GameStatusException | NumOfPlayersException e) {
+        } catch (PlayerInitException | GameStatusException | NumOfPlayersException |
+                 NotSetNumOfPlayerException e) {
             throw new ServerException(e.getClass().getCanonicalName(), e);
-        } catch (NotSetNumOfPlayerException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            UnicastRemoteObject.exportObject(playerView, 0);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
         }
     }
 
