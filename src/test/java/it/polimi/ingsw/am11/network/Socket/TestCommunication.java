@@ -58,23 +58,53 @@ class TestCommunication {
         sendCommandC.setNickname("Francesco");
         sendCommandC.setNumOfPlayers(4);
         try {
-            Thread.sleep(2000); // Wait for 2 seconds
+            Thread.sleep(1000); // Wait for 2 seconds
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         sendCommandC2.setNickname("Giovanni");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         sendCommandC3.setNickname("Giuseppe");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         sendCommandC4.setNickname("Giacomo");
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         sendCommandC.setStarterCard(true);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         sendCommandC2.setStarterCard(false);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         sendCommandC3.setStarterCard(false);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         sendCommandC4.setStarterCard(false);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).notifyGodPlayer();
         Mockito.verify(clientViewUpdaterMock2, Mockito.times(0)).notifyGodPlayer();
         Mockito.verify(clientViewUpdaterMock3, Mockito.times(0)).notifyGodPlayer();
@@ -83,26 +113,27 @@ class TestCommunication {
                 ArgumentMatchers.anyInt());
         Mockito.verify(clientViewUpdaterMock2, Mockito.times(1)).receiveStarterCard(
                 ArgumentMatchers.anyInt());
-        Mockito.verify(clientViewUpdaterMock3, Mockito.times(0)).receiveStarterCard(
+        Mockito.verify(clientViewUpdaterMock3, Mockito.times(1)).receiveStarterCard(
                 ArgumentMatchers.anyInt());
-        Mockito.verify(clientViewUpdaterMock4, Mockito.times(0)).receiveStarterCard(
+        Mockito.verify(clientViewUpdaterMock4, Mockito.times(1)).receiveStarterCard(
                 ArgumentMatchers.anyInt());
-        Mockito.verify(clientViewUpdaterMock, Mockito.times(2)).receiveCandidateObjective(
+        Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).receiveCandidateObjective(
                 ArgumentMatchers.anySet());
-        Mockito.verify(clientViewUpdaterMock2, Mockito.times(2)).receiveCandidateObjective(
+        Mockito.verify(clientViewUpdaterMock2, Mockito.times(1)).receiveCandidateObjective(
                 ArgumentMatchers.anySet());
-        Mockito.verify(clientViewUpdaterMock3, Mockito.times(0)).receiveCandidateObjective(
+        Mockito.verify(clientViewUpdaterMock3, Mockito.times(1)).receiveCandidateObjective(
                 ArgumentMatchers.anySet());
-        Mockito.verify(clientViewUpdaterMock4, Mockito.times(0)).receiveCandidateObjective(
+        Mockito.verify(clientViewUpdaterMock4, Mockito.times(1)).receiveCandidateObjective(
                 ArgumentMatchers.anySet());
         //sendCommandC.setPersonalObjective(1);
         //sendCommandC2.setPersonalObjective(2);
 
-        server.stop();
+
         clientSocket.close();
         clientSocket2.close();
         clientSocket3.close();
         clientSocket4.close();
+        server.stop();
 
     }
 }
