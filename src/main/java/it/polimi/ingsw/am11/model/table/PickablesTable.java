@@ -59,7 +59,52 @@ public class PickablesTable {
         this.shownResources = new HashSet<>(numOfShownPerType << 1);
 
         this.pcs = new GameListenerSupport();
+
+        resetDecks();
+        shuffleDecks();
     }
+
+    private void resetDecks() {
+        goldDeck.reset();
+        resourceDeck.reset();
+        objectiveDeck.reset();
+        starterDeck.reset();
+
+        Stream.of(PlayableCardType.values())
+              .forEach(type -> pcs.fireEvent(new DeckTopChangeEvent(
+                      type,
+                      null,
+                      getDeckTop(type).orElse(null)
+              )));
+    }
+
+    private void shuffleDecks() {
+
+        LOGGER.debug("Shuffling decks...");
+
+        goldDeck.shuffle();
+        resourceDeck.shuffle();
+        objectiveDeck.shuffle();
+        starterDeck.shuffle();
+
+        Stream.of(PlayableCardType.values())
+              .forEach(type -> pcs.fireEvent(new DeckTopChangeEvent(
+                      type,
+                      null,
+                      getDeckTop(type).orElse(null)
+              )));
+    }
+
+    public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
+        return switch (type) {
+            case GOLD -> goldDeck.peekTop()
+                                 .map(PlayableCard::getColor);
+            case RESOURCE -> resourceDeck.peekTop()
+                                         .map(PlayableCard::getColor);
+        };
+    }
+
+    //region Getters
 
     public static void setNumOfCommonObjectives(int numOfCommonObjectives) {
         PickablesTable.numOfCommonObjectives = numOfCommonObjectives;
@@ -72,8 +117,6 @@ public class PickablesTable {
     public static void setNumOfCandidatesObjectives(int numOfCandidatesObjectives) {
         PickablesTable.numOfCandidatesObjectives = numOfCandidatesObjectives;
     }
-
-    //region Getters
 
     public Set<ObjectiveCard> getCommonObjectives() {
         return Collections.unmodifiableSet(commonObjectives);
@@ -122,15 +165,6 @@ public class PickablesTable {
 
         pcs.fireEvent(event);
         return card;
-    }
-
-    public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
-        return switch (type) {
-            case GOLD -> goldDeck.peekTop()
-                                 .map(PlayableCard::getColor);
-            case RESOURCE -> resourceDeck.peekTop()
-                                         .map(PlayableCard::getColor);
-        };
     }
 
     public StarterCard pickStarterCard()
@@ -192,37 +226,6 @@ public class PickablesTable {
                             ));
                         });
         }
-    }
-
-    private void resetDecks() {
-        goldDeck.reset();
-        resourceDeck.reset();
-        objectiveDeck.reset();
-        starterDeck.reset();
-
-        Stream.of(PlayableCardType.values())
-              .forEach(type -> pcs.fireEvent(new DeckTopChangeEvent(
-                      type,
-                      null,
-                      getDeckTop(type).orElse(null)
-              )));
-    }
-
-    private void shuffleDecks() {
-
-        LOGGER.debug("Shuffling decks...");
-
-        goldDeck.shuffle();
-        resourceDeck.shuffle();
-        objectiveDeck.shuffle();
-        starterDeck.shuffle();
-
-        Stream.of(PlayableCardType.values())
-              .forEach(type -> pcs.fireEvent(new DeckTopChangeEvent(
-                      type,
-                      null,
-                      getDeckTop(type).orElse(null)
-              )));
     }
 
     public void pickCommonObjectives() throws EmptyDeckException {

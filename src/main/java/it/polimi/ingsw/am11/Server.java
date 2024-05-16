@@ -6,6 +6,8 @@ import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class Server {
     static final CentralController centralController = CentralController.INSTANCE;
 
@@ -13,8 +15,10 @@ public class Server {
         int socketPort = 0;
         int rmiPort = 0;
         try {
-            socketPort = Integer.parseInt(parser.getOption("socket").orElseThrow().getValue());
-            rmiPort = Integer.parseInt(parser.getOption("rmi").orElseThrow().getValue());
+            socketPort = Integer.parseInt(
+                    Objects.requireNonNull(parser.getOption("socket").orElseThrow().getValue()));
+            rmiPort = Integer.parseInt(
+                    Objects.requireNonNull(parser.getOption("rmi").orElseThrow().getValue()));
         } catch (NumberFormatException e) {
             System.out.println("Invalid port number " + e.getMessage().toLowerCase());
             System.exit(1);
