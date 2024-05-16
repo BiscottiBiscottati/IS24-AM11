@@ -6,6 +6,8 @@ import it.polimi.ingsw.am11.network.TableConnector;
 import it.polimi.ingsw.am11.view.events.utils.ActionMode;
 import it.polimi.ingsw.am11.view.events.view.table.*;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public class VirtualTableView {
+    private static final Logger LOGGER = LoggerFactory.getLogger(VirtualTableView.class);
     private final Map<String, TableConnector> connectors;
 
     public VirtualTableView() {
@@ -37,6 +40,10 @@ public class VirtualTableView {
         switch (mode) {
             case INSERTION -> {
                 entry.set(event.getNewValue());
+                LOGGER.debug("EVENT: Field change for {} on ({}, {}). Added card {}",
+                             event.getPlayer().orElseThrow(),
+                             entry.get().getKey().x(), entry.get().getKey().y(),
+                             entry.get().getValue().getCard().getId());
                 function = connector -> connector.updateField(
                         event.getPlayer().orElseThrow(),
                         entry.get().getKey().x(),
@@ -47,6 +54,10 @@ public class VirtualTableView {
             }
             case REMOVAL -> function = connector -> {
                 entry.set(event.getOldValue());
+                LOGGER.debug("EVENT: Field change for {} on ({}, {}). Removed card {}",
+                             event.getPlayer().orElseThrow(),
+                             entry.get().getKey().x(), entry.get().getKey().y(),
+                             entry.get().getValue().getCard().getId());
                 connector.updateField(
                         event.getPlayer().orElseThrow(),
                         entry.get().getKey().x(),
@@ -71,47 +82,60 @@ public class VirtualTableView {
     //FIXME may use commander pattern or other
 
     public void updateTable(@NotNull GameStatusChangeEvent event) {
+        LOGGER.debug("EVENT: Game status change from {} to {}", event.getOldValue(),
+                     event.getNewValue());
         broadcast(connector -> connector.updateGameStatus(event.getNewValue()));
     }
 
     public void updateTable(@NotNull CommonObjectiveChangeEvent event) {
         switch (event.getAction()) {
             case INSERTION -> {
+                LOGGER.debug("EVENT: Common objective {} added", event.getValueOfAction());
                 broadcast(connector -> connector.updateCommonObjective(event.getValueOfAction(),
                                                                        false));
             }
             case REMOVAL -> {
+                LOGGER.debug("EVENT: Common objective {} removed", event.getValueOfAction());
                 broadcast(connector -> connector.updateCommonObjective(event.getValueOfAction(),
                                                                        true));
             }
-            default -> System.out.println("Invalid ActionMode");
+            default -> LOGGER.debug("Invalid ActionMode in CommonObjectiveChangeEvent");
         }
     }
 
     public void updateTable(@NotNull DeckTopChangeEvent event) {
+        LOGGER.debug("EVENT: {} deck top card color change to {}", event.getCardType(),
+                     event.getNewValue());
         broadcast(connector -> connector.updateDeckTop(event.getCardType(),
                                                        event.getNewValue()));
     }
 
     public void updateTable(@NotNull PlayerPointsChangeEvent event) {
+        LOGGER.debug("EVENT: Player {} points change to {}", event.getPlayer().orElseThrow(),
+                     event.getNewValue());
         broadcast(connector -> connector.updatePlayerPoint(event.getPlayer().orElseThrow(),
                                                            event.getNewValue()));
     }
 
     public void updateTable(@NotNull ShownPlayableEvent event) {
+        LOGGER.debug("EVENT: Shown playable card change from {} to {}", event.getOldValue(),
+                     event.getNewValue());
         broadcast(connector -> connector.updateShownPlayable(event.getOldValue(),
                                                              event.getNewValue()));
     }
 
     public void updateTable(@NotNull TurnChangeEvent event) {
+        LOGGER.debug("EVENT: Turn change from {} to {}", event.getOldValue(), event.getNewValue());
         broadcast(connector -> connector.updateTurnChange(event.getNewValue()));
     }
 
     public void updateTable(@NotNull FinalLeaderboardEvent event) {
+        LOGGER.debug("EVENT: Final leaderboard sent: {}", event.getNewValue());
         broadcast(connector -> connector.sendFinalLeaderboard(event.getNewValue()));
     }
 
     public void updateTable(@NotNull PlayerInfoEvent event) {
+        LOGGER.debug("EVENT: Player info sent: {}", event.getNewValue());
         broadcast(connector -> connector.updatePlayers(event.getNewValue()));
     }
 }

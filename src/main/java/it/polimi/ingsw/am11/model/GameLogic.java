@@ -346,7 +346,7 @@ public class GameLogic implements GameModel {
                                                                   Player::color,
                                                                   Player::nickname));
 
-        LOGGER.info("Fire PlayerInfoEvent with players: {}", collected);
+        LOGGER.info("EVENT: Players info: {}", collected);
 
         pcs.fireEvent(new PlayerInfoEvent(collected));
 
@@ -405,10 +405,10 @@ public class GameLogic implements GameModel {
             throw new GameStatusException("A game is in progress");
         }
 
-        LOGGER.info("Adding player {} with color {}", nickname, colour);
-
         Player newPlayer = playerManager.addPlayerToTable(nickname, colour);
         plateau.addPlayer(newPlayer);
+
+        LOGGER.info("Added player {} with color {}", nickname, colour);
     }
 
     // FIXME may not even be needed as a method
@@ -458,7 +458,8 @@ public class GameLogic implements GameModel {
         player.field().placeStartingCard(starterCard,
                                          isRetro);
 
-        LOGGER.info("Placing starter card {} for {} on its {}", starterCard.getId(), nickname,
+        LOGGER.info("Placing starter card {} for {} on its {}", starterCard.getId(),
+                    nickname,
                     isRetro ? "back" : "front");
 
         pcs.fireEvent(new FieldChangeEvent(nickname,
@@ -512,50 +513,6 @@ public class GameLogic implements GameModel {
             giveCards();
             plateau.setStatus(GameStatus.ONGOING);
         }
-    }
-
-    private void giveCards() throws GameBreakingException {
-        pickablesTable.initialize();
-
-        try {
-            // giving cards to each player
-            PlayableCard card;
-            List<Player> players = playerManager.getPlayers().stream()
-                                                .map(playerManager::getPlayer)
-                                                .filter(Optional::isPresent)
-                                                .map(Optional::get)
-                                                .toList();
-            for (Player player : players) {
-                int numOfGolds = ruleSet.getGoldAtStart();
-                for (int i = 0; i < numOfGolds; i++) {
-                    card = pickablesTable.drawPlayableFrom(PlayableCardType.GOLD);
-                    player.space().addCardToHand(card);
-
-                    LOGGER.debug("Giving gold card {} to {}", card.getId(), player.nickname());
-
-                    pcs.fireEvent(new HandChangeEvent(player.nickname(),
-                                                      null,
-                                                      card.getId()));
-                }
-                int numOfResources = ruleSet.getResourceAtStart();
-                for (int i = 0; i < numOfResources; i++) {
-                    card = pickablesTable.drawPlayableFrom(PlayableCardType.RESOURCE);
-                    player.space().addCardToHand(card);
-
-                    LOGGER.debug("Giving resource card {} to {}", card.getId(), player.nickname());
-
-                    pcs.fireEvent(new HandChangeEvent(player.nickname(),
-                                                      null,
-                                                      card.getId()));
-                }
-            }
-        } catch (EmptyDeckException | MaxHandSizeException e) {
-            throw new GameBreakingException("Something broke while dealing cards");
-        }
-
-        LOGGER.info("All cards have been given to players, choosing first player");
-
-        playerManager.chooseFirstPlayer();
     }
 
     /**
@@ -650,6 +607,9 @@ public class GameLogic implements GameModel {
 
             PlayableCard card = pickablesTable.drawPlayableFrom(type);
             playerSpace.addCardToHand(card);
+
+            LOGGER.debug("Added in hand card {} of type {} for {}", card.getId(), type,
+                         nickname);
 
             pcs.fireEvent(new HandChangeEvent(nickname, null, card.getId()));
 
@@ -888,7 +848,7 @@ public class GameLogic implements GameModel {
     @Override
     public void addPlayerListener(String nickname, PlayerListener playerListener) {
 
-        LOGGER.info("Adding player listener for {}", nickname);
+        LOGGER.debug("Adding player listener for {}", nickname);
 
         pcs.addListener(nickname, playerListener);
         playerManager.addListener(nickname, playerListener);
@@ -897,7 +857,7 @@ public class GameLogic implements GameModel {
     @Override
     public void addTableListener(TableListener listener) {
 
-        LOGGER.info("Adding table listener");
+        LOGGER.debug("Adding table listener");
 
         pcs.addListener(listener);
         plateau.addListener(listener);
@@ -930,6 +890,52 @@ public class GameLogic implements GameModel {
         LOGGER.info("Reconnected player {}", nickname);
 
         playerManager.playerIsNowAvailable(player);
+    }
+
+    private void giveCards() throws GameBreakingException {
+        pickablesTable.initialize();
+
+        try {
+            // giving cards to each player
+            PlayableCard card;
+            List<Player> players = playerManager.getPlayers().stream()
+                                                .map(playerManager::getPlayer)
+                                                .filter(Optional::isPresent)
+                                                .map(Optional::get)
+                                                .toList();
+            for (Player player : players) {
+                int numOfGolds = ruleSet.getGoldAtStart();
+                for (int i = 0; i < numOfGolds; i++) {
+                    card = pickablesTable.drawPlayableFrom(PlayableCardType.GOLD);
+                    player.space().addCardToHand(card);
+
+                    LOGGER.debug("Giving gold card {} to {}", card.getId(),
+                                 player.nickname());
+
+                    pcs.fireEvent(new HandChangeEvent(player.nickname(),
+                                                      null,
+                                                      card.getId()));
+                }
+                int numOfResources = ruleSet.getResourceAtStart();
+                for (int i = 0; i < numOfResources; i++) {
+                    card = pickablesTable.drawPlayableFrom(PlayableCardType.RESOURCE);
+                    player.space().addCardToHand(card);
+
+                    LOGGER.debug("EVENT: Giving resource card {} to {}", card.getId(),
+                                 player.nickname());
+
+                    pcs.fireEvent(new HandChangeEvent(player.nickname(),
+                                                      null,
+                                                      card.getId()));
+                }
+            }
+        } catch (EmptyDeckException | MaxHandSizeException e) {
+            throw new GameBreakingException("Something broke while dealing cards");
+        }
+
+        LOGGER.info("All cards have been given to players, choosing first player");
+
+        playerManager.chooseFirstPlayer();
     }
 
     /**
