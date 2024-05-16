@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration>
 
-<configuration debug="true">
+<configuration>
     <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
     <import class="ch.qos.logback.core.ConsoleAppender"/>
 
