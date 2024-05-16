@@ -10,15 +10,23 @@ import java.util.Scanner;
 public class ReaderV2 {
     private final Scanner input;
     private final TuiUpdater tuiUpdater;
-    private final MiniGameModel model;
     private final Actuator actuator;
 
 
     public ReaderV2(MiniGameModel model, TuiUpdater tuiUpdater) {
         this.input = new Scanner(System.in);
-        this.model = model;
         this.tuiUpdater = tuiUpdater;
         this.actuator = new Actuator(tuiUpdater);
+    }
+
+    public void listen() {
+        ArgParser parser = setUpOptions();
+        try {
+            parser.parse(input.nextLine().strip().split("\\s+"));
+        } catch (ParsingErrorException e) {
+            System.out.println(e.getMessage());
+        }
+        tuiUpdater.getTuiState().passArgs(actuator, new ArrayList<>(parser.getPositionalArgs()));
     }
 
     private static ArgParser setUpOptions() {
@@ -28,16 +36,6 @@ public class ReaderV2 {
 //                            String.valueOf(Constants.DEFAULT_RMI_PORT));
 
         return argParser;
-    }
-
-    public void listen() {
-        ArgParser parser = new ArgParser();
-        try {
-            parser.parse(input.nextLine().strip().split("\\s+"));
-        } catch (ParsingErrorException e) {
-            System.out.println(e.getMessage());
-        }
-        tuiUpdater.getTuiState().passArgs(actuator, new ArrayList<>(parser.getPositionalArgs()));
     }
 }
 
