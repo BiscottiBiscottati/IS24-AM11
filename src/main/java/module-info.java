@@ -18,6 +18,8 @@ module it.polimi.ingsw.am11 {
     requires java.rmi;
     requires com.fasterxml.jackson.databind;
     requires java.desktop;
+    requires org.slf4j;
+    requires org.fusesource.jansi;
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
     exports it.polimi.ingsw.am11;
