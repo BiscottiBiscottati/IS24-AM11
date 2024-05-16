@@ -145,4 +145,11 @@ public class SendCommandS implements PlayerConnector, TableConnector {
         json.put("method", "youGodPlayer");
         out.println(json);
     }
+
+    public void updateNumOfPlayers(int numOfPlayers) {
+        ObjectNode json = mapper.createObjectNode();
+        json.put("method", "updateNumOfPlayers");
+        json.put("numOfPlayers", numOfPlayers);
+        out.println(json);
+    }
 }

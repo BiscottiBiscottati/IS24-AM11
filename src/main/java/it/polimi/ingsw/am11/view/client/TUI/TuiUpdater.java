@@ -243,6 +243,11 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
 
     }
 
+    @Override
+    public void updateNumOfPlayers(int numOfPlayers) {
+        //TODO: implement
+    }
+
     public String getCandidateNick() {
         return candidateNick;
     }
@@ -261,6 +266,6 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
 
     @Override
     public void throwException(Exception e) {
-        
+
     }
 }

@@ -102,6 +102,9 @@ public class ReceiveCommandC {
                                 .convertValue(currentPlayersNode,
                                               new TypeReference<Map<PlayerColor, String>>() {});
                         clientPlayerView.updatePlayers(currentPlayers);
+                    case "updateNumOfPlayers":
+                        clientPlayerView.updateNumOfPlayers(jsonNode.get("numOfPlayers").asInt());
+                        break;
                 }
             } else if (jsonNode.get("method").asText().equals("Exception")) {
                 receiveException.receive(message);

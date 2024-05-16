@@ -49,4 +49,6 @@ public interface ClientViewUpdater {
 
 
     void updatePlayers(Map<PlayerColor, String> currentPlayers);
+
+    void updateNumOfPlayers(int numOfPlayers);
 }

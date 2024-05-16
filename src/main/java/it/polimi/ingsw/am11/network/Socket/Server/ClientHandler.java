@@ -57,6 +57,7 @@ public class ClientHandler implements Runnable {
                             System.out.println("God player: " + nickname);
                             System.out.println("Num of players: " + numOfPlayers);
                             validNumOfPlayers = true;
+                            sendCommandS.updateNumOfPlayers(numOfPlayers);
                         } catch (NotGodPlayerException | NumOfPlayersException |
                                  GameStatusException e) {
                             sendException.Exception(e);
