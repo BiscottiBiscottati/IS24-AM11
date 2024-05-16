@@ -97,5 +97,4 @@ public class VirtualPlayerView {
         LOGGER.debug("EVENT: Starter card {} sent to {}", event.getNewValue(), nickname);
         connector.sendStarterCard(event.getNewValue());
     }
-
 }

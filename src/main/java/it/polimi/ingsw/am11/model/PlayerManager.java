@@ -275,6 +275,7 @@ public class PlayerManager {
 
         // FIXME we may not need to fire a clear event
         players.forEach((name, player) -> {
+            LOGGER.debug("Clearing player {} hand and field", name);
             pcs.fireEvent(new HandChangeEvent(
                     name,
                     null,

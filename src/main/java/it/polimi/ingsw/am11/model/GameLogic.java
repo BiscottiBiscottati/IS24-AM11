@@ -344,7 +344,7 @@ public class GameLogic implements GameModel {
                                                                   Player::color,
                                                                   Player::nickname));
 
-        LOGGER.info("EVENT: Players info: {}", collected);
+        LOGGER.debug("Players info: {}", collected);
 
         pcs.fireEvent(new PlayerInfoEvent(collected));
 
@@ -951,7 +951,11 @@ public class GameLogic implements GameModel {
         for (String nickname : playerManager.getPlayers()) {
             Set<ObjectiveCard> objectives = pickablesTable.pickObjectiveCandidates();
 
-            LOGGER.debug("Picking candidate objectives {} for {}", objectives, nickname);
+            LOGGER.debug("Picking candidate objectives {} for {}",
+                         objectives.stream()
+                                   .map(ObjectiveCard::getType)
+                                   .toList(),
+                         nickname);
 
             playerManager.setCandidateObjectives(nickname,
                                                  objectives);

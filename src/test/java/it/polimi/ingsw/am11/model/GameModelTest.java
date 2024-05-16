@@ -25,6 +25,7 @@ import it.polimi.ingsw.am11.view.events.view.player.PersonalObjectiveChangeEvent
 import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.table.PlayerInfoEvent;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -117,9 +118,10 @@ class GameModelTest {
         // Test init game
         assertDoesNotThrow(model::initGame);
 
-        // 7 times
-        // because there are 3 player field reset and 3 player points reset and 1 game status change
-        verify(tableListener, times(8)).propertyChange(captor.capture());
+        // 9 times
+        // because there are 3 player field reset and 3 player points reset, 2 game status change
+        // and 1 player info sent
+        verify(tableListener, times(9)).propertyChange(captor.capture());
 
         captor.getAllValues().stream()
               .filter(GameStatusChangeEvent.class::isInstance)
@@ -130,6 +132,14 @@ class GameModelTest {
                   assertTrue(Set.of(GameStatus.CHOOSING_STARTERS, GameStatus.CHOOSING_OBJECTIVES)
                                 .contains(event.getNewValue()));
               });
+
+        captor.getAllValues().stream()
+              .filter(PlayerInfoEvent.class::isInstance)
+              .map(PlayerInfoEvent.class::cast)
+              .findFirst()
+              .ifPresentOrElse(event -> assertEquals(players,
+                                                     new HashSet<>(event.getNewValue().values())),
+                               () -> fail("Player info event not found"));
 
         reset(tableListener);
         captor = ArgumentCaptor.forClass(TableViewEvent.class);
