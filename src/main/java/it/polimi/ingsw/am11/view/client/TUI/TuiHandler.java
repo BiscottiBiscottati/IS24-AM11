@@ -16,7 +16,7 @@ public class TuiHandler {
     private CltToNetConnector connector;
     private ClientChatController chatController;
     private ChatCltToNetConnector chatConnector;
-    private Reader reader;
+    private ReaderV2 reader;
 
     public TuiHandler() {
         this.model = new MiniGameModel();
@@ -26,21 +26,7 @@ public class TuiHandler {
 
     public void start() throws IOException {
 
-        reader = new Reader(model, tuiUpdater);
-
-        while (connector == null) {
-            connector = reader.listenForConnect();
-        }
-        //TODO create chat connector
-
-        while (model.myName() == null) {
-            reader.listenForNick();
-        }
-
-        while (model.myName().equals(model.getGodPlayer())) {
-            reader.listenForNumOfP();
-        }
-
+        reader = new ReaderV2(model, tuiUpdater);
 
         while (true) {
             reader.listen();
