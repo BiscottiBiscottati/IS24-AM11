@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.Socket.Server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
@@ -122,18 +123,20 @@ public class SendCommandS implements PlayerConnector, TableConnector {
     }
 
     @Override
-    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard)
+    throws JsonProcessingException {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "receiveFinalLeaderboard");
-        json.put("finalLeaderboard", finalLeaderboard.toString());
+        json.put("finalLeaderboard", mapper.writeValueAsString(finalLeaderboard));
         out.println(json);
     }
 
     @Override
-    public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+    public void updatePlayers(Map<PlayerColor, String> currentPlayers)
+    throws JsonProcessingException {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updatePlayers");
-        json.put("currentPlayers", currentPlayers.toString());
+        json.put("currentPlayers", mapper.writeValueAsString(currentPlayers));
         out.println(json);
     }
 

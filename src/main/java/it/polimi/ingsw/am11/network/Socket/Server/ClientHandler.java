@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ClientHandler implements Runnable {
     private String nickname;
@@ -18,9 +19,11 @@ public class ClientHandler implements Runnable {
     private VirtualPlayerView view;
     private ReceiveCommandS receiveCommandS;
     private boolean isRunning;
+    private Socket clientSocket;
 
     public ClientHandler(@NotNull Socket clientSocket) {
         try {
+            this.clientSocket = clientSocket;
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
         } catch (IOException e) {
@@ -60,12 +63,14 @@ public class ClientHandler implements Runnable {
                         }
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             } catch (GameStatusException | PlayerInitException | NumOfPlayersException |
                      NotSetNumOfPlayerException e) {
                 sendException.Exception(e);
                 System.out.println("TCP: Problem with nickname: " + nickname);
+            } catch (SocketException e) {
+                System.out.println("TCP: Connection closed");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         while (isRunning) {
@@ -83,6 +88,7 @@ public class ClientHandler implements Runnable {
 
     public void stop() throws IOException {
         isRunning = false;
+        clientSocket.close();
         in.close();
         out.close();
     }

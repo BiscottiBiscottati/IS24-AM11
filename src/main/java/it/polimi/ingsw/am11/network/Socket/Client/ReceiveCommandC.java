@@ -96,6 +96,7 @@ public class ReceiveCommandC {
                         Map<PlayerColor, String> currentPlayers = mapper.convertValue(
                                 jsonNode.get("currentPlayers"),
                                 Map.class);
+                        clientPlayerView.updatePlayers(currentPlayers);
                 }
             } else if (jsonNode.get("method").asText().equals("Exception")) {
                 receiveException.receive(message);

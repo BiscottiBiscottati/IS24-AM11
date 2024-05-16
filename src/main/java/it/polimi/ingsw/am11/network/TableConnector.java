@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
@@ -25,8 +26,8 @@ public interface TableConnector {
 
     void updateCommonObjective(Set<Integer> cardsId, boolean removeMode);
 
-    void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard);
+    void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) throws JsonProcessingException;
 
-    void updatePlayers(Map<PlayerColor, String> currentPlayers);
+    void updatePlayers(Map<PlayerColor, String> currentPlayers) throws JsonProcessingException;
 
 }
