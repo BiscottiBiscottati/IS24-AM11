@@ -327,6 +327,7 @@ public class GameLogic implements GameModel {
         if (plateau.getStatus() != GameStatus.SETUP) {
             throw new GameStatusException("A game is in progress");
         }
+
         if (playerManager.getNumberOfPlayers() < 2) {
             throw new NumOfPlayersException(
                     "You need at least 2 players to play this game, the current number is: " +
@@ -352,9 +353,8 @@ public class GameLogic implements GameModel {
 
         try {
             LOGGER.info("Picking starters...");
-
-            plateau.setStatus(GameStatus.CHOOSING_STARTERS);
             pickStarters();
+            plateau.setStatus(GameStatus.CHOOSING_STARTERS);
         } catch (IllegalPlayerSpaceActionException | GameStatusException | EmptyDeckException |
                  IllegalPickActionException | PlayerInitException e) {
             throw new GameBreakingException("Something broke while dealing starters or objectives");

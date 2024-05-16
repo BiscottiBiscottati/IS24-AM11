@@ -27,7 +27,10 @@ import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.PlayerInfoEvent;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -137,8 +140,11 @@ class GameModelTest {
               .filter(PlayerInfoEvent.class::isInstance)
               .map(PlayerInfoEvent.class::cast)
               .findFirst()
-              .ifPresentOrElse(event -> assertEquals(players,
-                                                     new HashSet<>(event.getNewValue().values())),
+              .ifPresentOrElse(event -> {
+                                   assert event.getNewValue() != null;
+                                   assertEquals(players,
+                                                new HashSet<>(event.getNewValue().values()));
+                               },
                                () -> fail("Player info event not found"));
 
         reset(tableListener);
@@ -310,7 +316,6 @@ class GameModelTest {
 
     }
 
-    @Disabled("not working yet")
     @Test
     void testDealingObjective() {
 
@@ -335,6 +340,9 @@ class GameModelTest {
         verify(osamaListener, times(1))
                 .propertyChange(playerCaptor.capture());
 
+        verify(tableListener, times(1))
+                .propertyChange(tableCaptor.capture());
+
         playerCaptor.getAllValues().stream()
                     .filter(CandidateObjectiveEvent.class::isInstance)
                     .map(CandidateObjectiveEvent.class::cast)
@@ -344,6 +352,14 @@ class GameModelTest {
                                         .map(objectiveCardDeck::getCardById)
                                         .allMatch(Optional::isPresent));
                     });
+
+        tableCaptor.getAllValues().stream()
+                   .filter(GameStatusChangeEvent.class::isInstance)
+                   .map(GameStatusChangeEvent.class::cast)
+                   .forEach(event -> {
+                       assertEquals(GameStatus.CHOOSING_STARTERS, event.getOldValue());
+                       assertEquals(GameStatus.CHOOSING_OBJECTIVES, event.getNewValue());
+                   });
 
         reset(chenListener, edoListener, osamaListener, tableListener);
 

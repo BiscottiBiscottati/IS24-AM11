@@ -290,12 +290,8 @@ public class PlayerManager {
     }
 
     public boolean areStarterSet() {
-        boolean isReady = true;
-        for (Player player : players.values()) {
-            isReady = isReady &&
-                      ! player.field().isAvailable(new Position(0, 0));
-        }
-        return isReady;
+        return players.values().parallelStream()
+                      .noneMatch(player -> player.field().isAvailable(Position.of(0, 0)));
     }
 
     public boolean areObjectiveSet() {

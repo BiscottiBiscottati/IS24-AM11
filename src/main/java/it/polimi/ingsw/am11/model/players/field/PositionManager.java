@@ -240,7 +240,7 @@ public class PositionManager {
      *
      * @return A copy of the set of available positions.
      */
-    public Set<Position> getAvailablePositions() {
+    Set<Position> getAvailablePositions() {
         return Set.copyOf(availablePositions);
     }
 
@@ -255,7 +255,7 @@ public class PositionManager {
      * @param position The position to check.
      * @return True if the position is available for placing a card, false otherwise.
      */
-    public boolean isAvailable(@NotNull Position position) {
+    boolean isAvailable(@NotNull Position position) {
         return availablePositions.contains(position);
     }
 
@@ -273,12 +273,13 @@ public class PositionManager {
      * @param card The card to check.
      * @return True if the card is already placed on the field, false otherwise.
      */
-    public boolean containsCard(@NotNull FieldCard card) {
+    boolean containsCard(@NotNull FieldCard card) {
         return cardsPositioned.values()
                               .stream()
                               .anyMatch(cardContainer -> cardContainer.isCardEquals(card));
     }
 
+    // TODO to remove
     public FieldCard resetLastMove() {
         this.cardsPositioned.entrySet()
                             .stream()
@@ -329,7 +330,7 @@ public class PositionManager {
      *
      * @return A copy of the map of positioned cards.
      */
-    public Map<Position, CardContainer> getCardsPositioned() {
+    Map<Position, CardContainer> getCardsPositioned() {
         return Map.copyOf(cardsPositioned);
     }
 }
