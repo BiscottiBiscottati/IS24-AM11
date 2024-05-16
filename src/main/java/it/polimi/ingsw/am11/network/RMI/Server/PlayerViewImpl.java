@@ -87,4 +87,8 @@ public class PlayerViewImpl implements PlayerViewInterface {
             throw new ServerException(e.getClass().getCanonicalName(), e);
         }
     }
+
+    public boolean containsPlayer(String nick) {
+        return views.containsKey(nick);
+    }
 }

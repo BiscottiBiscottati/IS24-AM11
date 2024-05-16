@@ -8,7 +8,6 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 
 import java.rmi.AlreadyBoundException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.ServerException;
 import java.rmi.registry.LocateRegistry;
@@ -30,6 +29,13 @@ public class ServerMain implements Loggable {
     // FIXME construction process have to be in the constructor since we don't call main from here
 
     public static void main(String[] args) {
+        ServerMain server;
+        try {
+            server = new ServerMain(1234);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        server.start();
         System.out.println("Server ready");
     }
 
@@ -57,10 +63,14 @@ public class ServerMain implements Loggable {
     @Override
     public void login(String nick, ConnectorInterface remoteConnector) throws RemoteException {
         try {
-            ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
-            VirtualPlayerView view = new VirtualPlayerView(connector, nick);
-            CentralController.INSTANCE.connectPlayer(nick, connector, connector);
-            playerView.addPlayer(nick, view);
+            if (playerView.containsPlayer(nick)) {
+                CentralController.INSTANCE.playerReconnected(nick);
+            } else {
+                ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
+                VirtualPlayerView view = new VirtualPlayerView(connector, nick);
+                CentralController.INSTANCE.connectPlayer(nick, connector, connector);
+                playerView.addPlayer(nick, view);
+            }
         } catch (PlayerInitException | GameStatusException | NumOfPlayersException |
                  NotSetNumOfPlayerException e) {
             throw new ServerException(e.getClass().getCanonicalName(), e);
@@ -70,11 +80,6 @@ public class ServerMain implements Loggable {
     @Override
     public void logout(String nick) throws RemoteException {
         CentralController.INSTANCE.playerDisconnected(nick);
-        try {
-            registry.unbind("PlayerView" + nick);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        }
         System.out.println(nick + " disconnected");
     }
 

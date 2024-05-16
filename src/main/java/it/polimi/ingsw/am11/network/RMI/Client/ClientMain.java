@@ -5,6 +5,8 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import it.polimi.ingsw.am11.view.client.TUI.TuiUpdater;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -15,10 +17,9 @@ import java.rmi.server.UnicastRemoteObject;
 public class ClientMain {
 
     static String nickname;
-    private static Registry registry;
+    private final Registry registry;
 
     public ClientMain(String ip, int port) {
-        super();
         try {
             // Getting the registry
             registry = LocateRegistry.getRegistry(ip, port);
@@ -32,6 +33,18 @@ public class ClientMain {
 
     public static void main(String[] args) throws RemoteException {
         System.out.println("Hello from Client!");
+        // Create an instance of ClientMain
+        ClientMain clientMain = new ClientMain("localhost", 1234);
+
+        // Create an instance of ClientViewUpdater
+        ClientViewUpdater updater = new TuiUpdater(new MiniGameModel(), null);
+
+        // Call the login method with the first command-line argument as nick
+        try {
+            clientMain.login("nick", updater);
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void login(String nick, ClientViewUpdater updater) throws RemoteException,
@@ -42,7 +55,6 @@ public class ClientMain {
                 clientObject, 0);
 
         stub1.login(nick, connector);
-        nickname = nick;
     }
 
     public void setNumOfPlayers(String nick, int numOfPlayers) throws RemoteException {
