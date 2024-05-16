@@ -15,7 +15,7 @@ public class Connecting implements TUIState {
         String word = positionalArgs.getFirst();
         try {
             switch (word.toLowerCase()) {
-                case "connecting" -> actuator.connect(positionalArgs);
+                case "connect" -> actuator.connect(positionalArgs);
                 case "help" -> help();
                 case "exit" -> Actuator.close();
                 default -> {

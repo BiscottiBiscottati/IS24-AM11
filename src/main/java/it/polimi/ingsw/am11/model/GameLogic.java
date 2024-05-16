@@ -335,8 +335,6 @@ public class GameLogic implements GameModel {
 
         LOGGER.info("Initializing the game...");
 
-        resetAll();
-
         Map<PlayerColor, String> collected = playerManager.getPlayers()
                                                           .stream()
                                                           .map(playerManager::getPlayer)
@@ -350,6 +348,8 @@ public class GameLogic implements GameModel {
 
         pcs.fireEvent(new PlayerInfoEvent(collected));
 
+        resetAll();
+        
         try {
             LOGGER.info("Picking starters...");
 

@@ -2,18 +2,23 @@ package it.polimi.ingsw.am11.view.client.TUI;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
 public class TuiUpdater implements ClientViewUpdater {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
+
     private final MiniGameModel model;
     private final EnumMap<TuiStates, TUIState> tuiStates;
     private TUIState currentState;
@@ -204,6 +209,7 @@ public class TuiUpdater implements ClientViewUpdater {
     @Override
     public void receiveStarterCard(int cardId) {
         model.addStarterCard(cardId);
+        LOGGER.debug("The card {} is now your starter card.", cardId);
         System.out.println("The card " + cardId + " is now your starter card.");
     }
 
@@ -218,6 +224,16 @@ public class TuiUpdater implements ClientViewUpdater {
         model.setMyName(candidateNick);
         model.setGodPlayer(candidateNick);
         currentState = tuiStates.get(TuiStates.SETTING_NUM);
+    }
+
+    @Override
+    public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+        System.out.print("You are going to play with the following players:");
+        for (PlayerColor pc : currentPlayers.keySet()) {
+            model.addPlayer(currentPlayers.get(pc), pc);
+            System.out.println(pc.toString() + " - " + currentPlayers.get(pc));
+        }
+        
     }
 
     public String getCandidateNick() {

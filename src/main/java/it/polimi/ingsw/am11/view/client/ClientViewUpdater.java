@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.view.client;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 
 import java.util.Map;
@@ -13,7 +14,6 @@ public interface ClientViewUpdater {
 
     void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
                      boolean removeMode);
-
 
     void updateShownPlayable(int previousId, int currentId);
 
@@ -44,5 +44,9 @@ public interface ClientViewUpdater {
 
     void receiveCandidateObjective(Set<Integer> cardId);
 
+
     void notifyGodPlayer();
+
+
+    void updatePlayers(Map<PlayerColor, String> currentPlayers);
 }
