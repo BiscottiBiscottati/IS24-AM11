@@ -12,6 +12,7 @@ import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
+import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,7 @@ public class PickablesTableTest {
 
     @BeforeEach
     public void setUp() {
-        pickablesTable = new PickablesTable();
+        pickablesTable = new PickablesTable(new GameListenerSupport());
         pickablesTable.initialize();
         resourceCardDeck.reset();
 

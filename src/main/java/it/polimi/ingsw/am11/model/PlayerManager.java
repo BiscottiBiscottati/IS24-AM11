@@ -38,11 +38,11 @@ public class PlayerManager {
     private Player firstPlayer;
     private Player currentPlaying;
 
-    public PlayerManager() {
+    public PlayerManager(GameListenerSupport pcs) {
         this.players = new HashMap<>(8);
         this.playerQueue = new ArrayDeque<>(maxNumberOfPlayers);
         this.unavailablePlayers = new HashSet<>(8);
-        this.pcs = new GameListenerSupport();
+        this.pcs = pcs;
     }
 
     public static void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
@@ -229,7 +229,7 @@ public class PlayerManager {
         firstPlayer = players.values()
                              .toArray(new Player[playerQueue.size()])[randomIndex];
 
-        LOGGER.debug("Players are: {}", players.values());
+        LOGGER.debug("Players are: {}", players.values().stream().map(Player::nickname).toList());
 
         Player peeked = playerQueue.element();
         while (peeked != firstPlayer) {

@@ -42,12 +42,12 @@ public class GameLogic implements GameModel {
     public GameLogic() {
         LOGGER.info("Creating a new GameLogic instance");
 
+        this.pcs = new GameListenerSupport();
         ruleSet = new BasicRuleset();
         setConstants();
-        this.playerManager = new PlayerManager();
-        this.pickablesTable = new PickablesTable();
-        this.plateau = new Plateau();
-        this.pcs = new GameListenerSupport();
+        this.playerManager = new PlayerManager(this.pcs);
+        this.pickablesTable = new PickablesTable(this.pcs);
+        this.plateau = new Plateau(this.pcs);
     }
 
     private void setConstants() {
@@ -349,7 +349,7 @@ public class GameLogic implements GameModel {
         pcs.fireEvent(new PlayerInfoEvent(collected));
 
         resetAll();
-        
+
         try {
             LOGGER.info("Picking starters...");
 
@@ -851,7 +851,6 @@ public class GameLogic implements GameModel {
         LOGGER.debug("Adding player listener for {}", nickname);
 
         pcs.addListener(nickname, playerListener);
-        playerManager.addListener(nickname, playerListener);
     }
 
     @Override
@@ -860,9 +859,6 @@ public class GameLogic implements GameModel {
         LOGGER.debug("Adding table listener");
 
         pcs.addListener(listener);
-        plateau.addListener(listener);
-        pickablesTable.addListener(listener);
-        playerManager.addListener(listener);
     }
 
     @Override
@@ -921,7 +917,7 @@ public class GameLogic implements GameModel {
                     card = pickablesTable.drawPlayableFrom(PlayableCardType.RESOURCE);
                     player.space().addCardToHand(card);
 
-                    LOGGER.debug("EVENT: Giving resource card {} to {}", card.getId(),
+                    LOGGER.debug("Giving resource card {} to {}", card.getId(),
                                  player.nickname());
 
                     pcs.fireEvent(new HandChangeEvent(player.nickname(),

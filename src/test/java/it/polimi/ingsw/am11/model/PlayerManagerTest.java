@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.model;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ class PlayerManagerTest {
 
     @BeforeEach
     void setUp() {
-        manager = new PlayerManager();
+        manager = new PlayerManager(new GameListenerSupport());
         PlayerManager.setMaxNumberOfPlayers(ruleSet.getMaxPlayers());
     }
 

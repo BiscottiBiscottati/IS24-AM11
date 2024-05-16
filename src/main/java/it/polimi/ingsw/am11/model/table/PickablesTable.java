@@ -15,6 +15,7 @@ import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
+import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
 import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.table.CommonObjectiveChangeEvent;
@@ -48,7 +49,7 @@ public class PickablesTable {
     private final Set<ResourceCard> shownResources;
     private final GameListenerSupport pcs;
 
-    public PickablesTable() {
+    public PickablesTable(GameListenerSupport pcs) {
         this.goldDeck = GoldDeckFactory.createDeck();
         this.resourceDeck = ResourceDeckFactory.createDeck();
         this.objectiveDeck = ObjectiveDeckFactory.createDeck();
@@ -58,7 +59,7 @@ public class PickablesTable {
         this.shownGold = new HashSet<>(numOfShownPerType << 1);
         this.shownResources = new HashSet<>(numOfShownPerType << 1);
 
-        this.pcs = new GameListenerSupport();
+        this.pcs = pcs;
 
         resetDecks();
         shuffleDecks();
@@ -191,8 +192,6 @@ public class PickablesTable {
         commonObjectives.clear();
         shownGold.clear();
         shownResources.clear();
-        resetDecks();
-        shuffleDecks();
         try {
             pickCommonObjectives();
         } catch (EmptyDeckException e) {
@@ -326,6 +325,10 @@ public class PickablesTable {
 
     public void addListener(TableListener listener) {
         pcs.addListener(listener);
+    }
+
+    public void addListener(String nickname, PlayerListener listener) {
+        pcs.addListener(nickname, listener);
     }
 
     public void removeListener(TableListener listener) {

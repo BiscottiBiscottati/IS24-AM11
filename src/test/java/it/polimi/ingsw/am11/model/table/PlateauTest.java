@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.model.table;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ class PlateauTest {
 
     @BeforeEach
     void setUp() {
-        plateau = new Plateau();
+        plateau = new Plateau(new GameListenerSupport());
     }
 
 

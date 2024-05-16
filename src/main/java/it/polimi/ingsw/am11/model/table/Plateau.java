@@ -26,12 +26,12 @@ public class Plateau {
     private GameStatus status;
 
 
-    public Plateau() {
+    public Plateau(GameListenerSupport pcs) {
         this.playerPoints = new HashMap<>(8);
         this.counterObjective = new HashMap<>(3);
         this.status = GameStatus.SETUP;
         this.finalLeaderboard = new HashMap<>(8);
-        this.pcs = new GameListenerSupport();
+        this.pcs = pcs;
     }
 
     public GameStatus getStatus() {
