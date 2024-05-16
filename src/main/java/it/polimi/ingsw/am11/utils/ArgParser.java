@@ -24,11 +24,14 @@ public class ArgParser {
                         .orElseThrow(
                                 () -> new ParsingErrorException("Invalid option: " + args[tempI]));
 
-                if (i + 1 >= args.length) {
-                    throw new ParsingErrorException("Missing value for option: " + args[i]);
+                if (option.hasValue()) {
+                    if (i + 1 >= args.length) {
+                        throw new ParsingErrorException("Missing value for option: " + args[i]);
+                    }
+                    option.setValue(args[++ i]);
+                } else {
+                    option.setValue("");
                 }
-
-                option.setValue(args[++ i]);
 
             } else {
                 this.positionalArgs.add(args[i]);
@@ -55,5 +58,9 @@ public class ArgParser {
 
     public void addOption(String name, String description, String defaultValue) {
         this.options.add(new Option(name, description, defaultValue));
+    }
+
+    public void addOption(String name, String description, boolean hasValue) {
+        this.options.add(new Option(name, description, hasValue));
     }
 }
