@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.view.server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.TableConnector;
@@ -131,11 +132,23 @@ public class VirtualTableView {
 
     public void updateTable(@NotNull FinalLeaderboardEvent event) {
         LOGGER.debug("EVENT: Final leaderboard sent: {}", event.getNewValue());
-        broadcast(connector -> connector.sendFinalLeaderboard(event.getNewValue()));
+        broadcast(connector -> {
+            try {
+                connector.sendFinalLeaderboard(event.getNewValue());
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void updateTable(@NotNull PlayerInfoEvent event) {
         LOGGER.debug("EVENT: Player info sent: {}", event.getNewValue());
-        broadcast(connector -> connector.updatePlayers(event.getNewValue()));
+        broadcast(connector -> {
+            try {
+                connector.updatePlayers(event.getNewValue());
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }
