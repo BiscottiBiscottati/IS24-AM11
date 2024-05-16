@@ -54,7 +54,6 @@ public class SocketManager {
                 threadPool.execute(clientHandler);
             } catch (IOException e) {
                 System.out.println("TCP: Socket Manager closed");
-                e.printStackTrace();
             }
         }
     }

@@ -80,8 +80,7 @@ public class ClientHandler implements Runnable {
                     receiveCommandS.receive(message);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
-                break;
+                System.out.println("TCP: Connection closed");
             }
         }
     }
