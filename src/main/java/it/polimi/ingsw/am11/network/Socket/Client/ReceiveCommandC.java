@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.Socket.Client;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
@@ -87,15 +88,19 @@ public class ReceiveCommandC {
                                                                        "removeMode").asBoolean());
                         break;
                     case "receiveFinalLeaderboard":
+                        String finalLeaderboardJson = jsonNode.get("finalLeaderboard").asText();
+                        JsonNode finalLeaderboardNode = mapper.readTree(finalLeaderboardJson);
                         Map<String, Integer> finalLeaderboard = mapper.convertValue(
-                                jsonNode.get("finalLeaderboard"),
-                                Map.class);
+                                finalLeaderboardNode,
+                                new TypeReference<Map<String, Integer>>() {});
                         clientPlayerView.receiveFinalLeaderboard(finalLeaderboard);
                         break;
                     case "updatePlayers":
-                        Map<PlayerColor, String> currentPlayers = mapper.convertValue(
-                                jsonNode.get("currentPlayers"),
-                                Map.class);
+                        String currentPlayersJson = jsonNode.get("currentPlayers").asText();
+                        JsonNode currentPlayersNode = mapper.readTree(currentPlayersJson);
+                        Map<PlayerColor, String> currentPlayers = mapper
+                                .convertValue(currentPlayersNode,
+                                              new TypeReference<Map<PlayerColor, String>>() {});
                         clientPlayerView.updatePlayers(currentPlayers);
                 }
             } else if (jsonNode.get("method").asText().equals("Exception")) {
