@@ -6,18 +6,27 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
+import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
 public class TuiUpdater implements ClientViewUpdater {
     private final MiniGameModel model;
-    private TUIState tuiState;
+    private final EnumMap<TuiStates, TUIState> tuiStates;
+    private TUIState currentState;
+    private String candidateNick;
 
-    public TuiUpdater(MiniGameModel model, TUIState tuiState) {
+    public TuiUpdater(MiniGameModel model, TuiStates startingState) {
         this.model = model;
-        this.tuiState = tuiState;
+        this.tuiStates = new EnumMap<>(TuiStates.class);
+        for (TuiStates state : TuiStates.values()) {
+            tuiStates.put(state, state.getNewState());
+        }
+        this.currentState = tuiStates.get(startingState);
+
     }
 
     @Override
@@ -113,10 +122,13 @@ public class TuiUpdater implements ClientViewUpdater {
                 System.out.println("Waiting for all players to be ready");
             }
             case CHOOSING_STARTERS -> {
+                model.setMyName(candidateNick);
+                currentState = tuiStates.get(TuiStates.CHOOSING_STARTER);
                 System.out.println("Choose if you want you want to place your starter card on his" +
                                    " front of his back");
             }
             case CHOOSING_OBJECTIVES -> {
+
                 System.out.print("Choose you the personal objective you like the most");
 
             }
@@ -124,8 +136,7 @@ public class TuiUpdater implements ClientViewUpdater {
                 System.out.println("The game has ended");
             }
             case ONGOING -> {
-                //TODO
-                //model.setMyName();
+
                 System.out.println("The game has began, fight with honor");
             }
             case ARMAGEDDON -> {
@@ -204,14 +215,24 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void notifyGodPlayer() {
-        //TODO
+        model.setMyName(candidateNick);
+        model.setGodPlayer(candidateNick);
+        currentState = tuiStates.get(TuiStates.SETTING_NUM);
+    }
+
+    public String getCandidateNick() {
+        return candidateNick;
+    }
+
+    public void setCandidateNick(String candidateNick) {
+        this.candidateNick = candidateNick;
     }
 
     public TUIState getTuiState() {
-        return tuiState;
+        return currentState;
     }
 
-    public void setTuiState(TUIState state) {
-        tuiState = state;
+    public void setTuiState(TuiStates state) {
+        currentState = tuiStates.get(state);
     }
 }

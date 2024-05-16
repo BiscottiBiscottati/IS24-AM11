@@ -8,5 +8,21 @@ public class Ended implements TUIState {
     @Override
     public void passArgs(Actuator actuator, List<String> positionalArgs) {
 
+        String word = positionalArgs.getFirst();
+
+        switch (word) {
+            case "help" -> help();
+            case "exit" -> Actuator.close();
+            default -> specificHelp();
+        }
+
+    }
+
+    private void help() {
+
+    }
+
+    private void specificHelp() {
+
     }
 }

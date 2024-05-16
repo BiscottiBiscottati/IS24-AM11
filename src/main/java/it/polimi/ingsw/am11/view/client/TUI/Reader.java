@@ -37,7 +37,7 @@ public class Reader {
         System.out.println("There's a Time and Place for Everything, But Not Now!");
     }
 
-    public CltToNetConnector listenForConnect() throws IOException {
+    public CltToNetConnector listenForConnect() {
         command = input.nextLine();
         command = command.replaceAll("\\s+", " ");
         command = command.strip();
@@ -47,7 +47,11 @@ public class Reader {
 
         switch (word) {
             case "connect": {
-                connect(args);
+                try {
+                    connect(args);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             }
             case "help": {

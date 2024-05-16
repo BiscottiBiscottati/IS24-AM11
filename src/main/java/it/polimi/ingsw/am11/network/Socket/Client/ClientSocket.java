@@ -23,7 +23,8 @@ public class ClientSocket implements ClientNetworkHandler {
     private boolean isRunning;
 
     public ClientSocket(String ip, int port,
-                        @NotNull ClientViewUpdater clientViewUpdater) throws IOException {
+                        @NotNull ClientViewUpdater clientViewUpdater)
+    throws IOException {
         this.clientViewUpdater = clientViewUpdater;
         try {
             isRunning = true;

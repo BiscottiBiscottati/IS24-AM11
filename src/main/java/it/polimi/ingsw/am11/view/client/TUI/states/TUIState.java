@@ -7,3 +7,4 @@ import java.util.List;
 public interface TUIState {
     void passArgs(Actuator actuator, List<String> positionalArgs);
 }
+

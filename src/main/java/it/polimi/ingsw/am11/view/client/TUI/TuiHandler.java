@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.view.client.TUI;
 import it.polimi.ingsw.am11.chat.ClientChatController;
 import it.polimi.ingsw.am11.network.ChatCltToNetConnector;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
-import it.polimi.ingsw.am11.view.client.TUI.states.Connecting;
+import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class TuiHandler {
     public TuiHandler() {
         this.model = new MiniGameModel();
 
-        this.tuiUpdater = new TuiUpdater(model, new Connecting());
+        this.tuiUpdater = new TuiUpdater(model, TuiStates.CONNECTIONG);
     }
 
     public void start() throws IOException {
