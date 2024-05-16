@@ -8,6 +8,8 @@ import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
 import java.io.IOException;
 
+// This class is basically the main class that initialize the tui
+
 public class TuiHandler {
 
     private final MiniGameModel model;

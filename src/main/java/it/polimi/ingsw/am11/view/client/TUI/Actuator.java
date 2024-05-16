@@ -11,7 +11,11 @@ import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import java.io.IOException;
 import java.util.List;
 
-//Its purpose is to effectively actuate the commands parsed by the reader
+// Its purpose is to effectively actuate the commands parsed by the reader. This is an
+// "intermediate class" between the classes that read input and the interface of the network
+// (CltToNetConnector). It's needed because the connector is not initialized at the beginning of
+// the communication.
+
 public class Actuator {
     private final TuiUpdater tuiUpdater;
     private CltToNetConnector connector;

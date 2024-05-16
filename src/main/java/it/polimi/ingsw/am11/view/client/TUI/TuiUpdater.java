@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -16,7 +17,13 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
-public class TuiUpdater implements ClientViewUpdater {
+// This class is the implementation of the ClientViewUpdater and the ExceptionConnector.
+// The classes that handle the interpretation of the messages from the net will call these methods
+// There are also methods designed to be used by the Actuator ( and possibly other classes) to
+// update and get the TUIState and to save the candidateNick (the nickname that the player try to
+// send to the server)
+
+public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
 
     private final MiniGameModel model;
@@ -233,7 +240,7 @@ public class TuiUpdater implements ClientViewUpdater {
             model.addPlayer(currentPlayers.get(pc), pc);
             System.out.println(pc.toString() + " - " + currentPlayers.get(pc));
         }
-        
+
     }
 
     public String getCandidateNick() {
@@ -250,5 +257,10 @@ public class TuiUpdater implements ClientViewUpdater {
 
     public void setTuiState(TuiStates state) {
         currentState = tuiStates.get(state);
+    }
+
+    @Override
+    public void throwException(Exception e) {
+        
     }
 }
