@@ -295,12 +295,9 @@ public class PlayerManager {
     }
 
     public boolean areObjectiveSet() {
-        boolean isReady = true;
-        for (Player player : players.values()) {
-            isReady = isReady &&
-                      player.space().areObjectiveGiven();
-        }
-        return isReady;
+        return players.values().parallelStream()
+                      .map(Player::space)
+                      .allMatch(PersonalSpace::areObjectiveGiven);
     }
 
 

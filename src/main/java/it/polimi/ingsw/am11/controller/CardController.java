@@ -12,7 +12,7 @@ public class CardController {
         this.model = model;
     }
 
-    public void setObjectiveFor(String nickname, int cardID)
+    public synchronized void setObjectiveFor(String nickname, int cardID)
     throws GameStatusException,
            PlayerInitException,
            IllegalPlayerSpaceActionException {
@@ -23,7 +23,8 @@ public class CardController {
         }
     }
 
-    public void placeCard(String Nickname, int cardId, Position position, boolean isRetro)
+    public synchronized void placeCard(String Nickname, int cardId, Position position,
+                                       boolean isRetro)
     throws GameStatusException,
            PlayerInitException,
            IllegalCardPlacingException,
@@ -33,7 +34,8 @@ public class CardController {
         model.placeCard(Nickname, cardId, position, isRetro);
     }
 
-    public int drawCard(boolean fromVisible, PlayableCardType type, String nickname, int cardID)
+    public synchronized int drawCard(boolean fromVisible, PlayableCardType type, String nickname,
+                                     int cardID)
     throws IllegalPlayerSpaceActionException, TurnsOrderException, IllegalPickActionException,
            PlayerInitException, GameStatusException, EmptyDeckException,
            MaxHandSizeException {
@@ -46,7 +48,7 @@ public class CardController {
         }
     }
 
-    public void setStarterFor(String nickname, boolean isRetro)
+    public synchronized void setStarterFor(String nickname, boolean isRetro)
     throws GameStatusException,
            PlayerInitException,
            IllegalCardPlacingException {

@@ -22,8 +22,8 @@ public class GameController {
         Collections.shuffle(colors);
     }
 
-    public void initGame() throws NumOfPlayersException,
-                                  GameStatusException {
+    void initGame() throws NumOfPlayersException,
+                           GameStatusException {
         try {
             model.initGame();
         } catch (GameBreakingException e) {
@@ -31,8 +31,8 @@ public class GameController {
         }
     }
 
-    public void goNextTurn() throws
-                             GameStatusException {
+    void goNextTurn() throws
+                      GameStatusException {
         try {
             // TODO to handle disconnection in the model
             model.goNextTurn();
@@ -41,7 +41,7 @@ public class GameController {
         }
     }
 
-    public void addPlayer(String nickname)
+    void addPlayer(String nickname)
     throws PlayerInitException, GameStatusException, NumOfPlayersException {
         if (colors.isEmpty()) {
             throw new PlayerInitException("No more colors available");
