@@ -23,11 +23,12 @@ import java.util.Set;
 // update and get the TUIState and to save the candidateNick (the nickname that the player try to
 // send to the server)
 
-public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
+public class TuiUpdater implements ClientViewUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
 
     private final MiniGameModel model;
     private final EnumMap<TuiStates, TUIState> tuiStates;
+    private final TuiExceptionReceiver exceptionReceiver;
     private TUIState currentState;
     private String candidateNick;
 
@@ -38,7 +39,7 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
             tuiStates.put(state, state.getNewState());
         }
         this.currentState = tuiStates.get(startingState);
-
+        this.exceptionReceiver = new TuiExceptionReceiver(model, this);
     }
 
     @Override
@@ -73,6 +74,7 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
                 model.setiPlaced(true);
                 System.out.println("You placed the card " + cardId + " in " + pos + " on his " +
                                    frontOrRetro);
+                currentState = tuiStates.get(TuiStates.DRAWING);
             } else {
                 System.out.println(
                         nickname + " placed the card " + cardId + " in " + pos + " on his " +
@@ -111,9 +113,13 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
     @Override
     public void updateTurnChange(String nickname) {
         model.setCurrentTurn(nickname);
-        if (nickname.equals(model.myName()))
+        if (nickname.equals(model.myName())) {
             System.out.println("It's now your turn, good luck");
-        else System.out.println("It's now " + nickname + " turn");
+            currentState = tuiStates.get(TuiStates.PLACING);
+        } else {
+            System.out.println("It's now " + nickname + " turn");
+            currentState = tuiStates.get(TuiStates.WAITING);
+        }
     }
 
     @Override
@@ -140,11 +146,12 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
                                    " front of his back");
             }
             case CHOOSING_OBJECTIVES -> {
-
-                System.out.print("Choose you the personal objective you like the most");
+                currentState = tuiStates.get(TuiStates.CHOOSING_OBJECTIVE);
+                System.out.println("Choose you the personal objective you like the most");
 
             }
             case ENDED -> {
+                currentState = tuiStates.get(TuiStates.ENDED);
                 System.out.println("The game has ended");
             }
             case ONGOING -> {
@@ -165,13 +172,15 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
     }
 
     @Override
-    public void updateCommonObjective(int cardId, boolean removeMode) {
+    public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
         if (removeMode) {
-            model.table().removeCommonObjective(cardId);
-            System.out.println("The card: " + cardId + " is no longer a common objective");
+            cardId.stream().forEach(x -> model.table().removeCommonObjective(x));
+            cardId.stream().forEach(x -> System.out.println("The card: " + x + " is no longer a " +
+                                                            "common objective"));
         } else {
-            model.table().addCommonObjectives(cardId);
-            System.out.println("New common objective added to the table: " + cardId);
+            cardId.stream().forEach(x -> model.table().addCommonObjectives(x));
+            cardId.stream().forEach(x -> System.out.println("New common objective added to the " +
+                                                            "table: " + x));
         }
     }
 
@@ -216,14 +225,15 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
     @Override
     public void receiveStarterCard(int cardId) {
         model.addStarterCard(cardId);
-        LOGGER.debug("The card {} is now your starter card.", cardId);
+        // LOGGER.debug("The card {} is now your starter card.", cardId);
         System.out.println("The card " + cardId + " is now your starter card.");
     }
 
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
-        System.out.println("The objective " + cardId + " is now one of the candidate objectives " +
-                           "you can choose from.");
+        System.out.println("Should go");
+        System.out.println(cardId.size());
+        cardId.stream().forEach(System.out::println);
     }
 
     @Override
@@ -235,7 +245,8 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
 
     @Override
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
-        System.out.print("You are going to play with the following players:");
+        model.setMyName(candidateNick);
+        System.out.println("You are going to play with the following players:");
         for (PlayerColor pc : currentPlayers.keySet()) {
             model.addPlayer(currentPlayers.get(pc), pc);
             System.out.println(pc.toString() + " - " + currentPlayers.get(pc));
@@ -245,7 +256,13 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
 
     @Override
     public void updateNumOfPlayers(int numOfPlayers) {
-        //TODO: implement
+        System.out.println("The moderator has set " + numOfPlayers + " players");
+        System.out.println("Please choose your nickname");
+    }
+
+    @Override
+    public ExceptionConnector getExceptionConnector() {
+        return exceptionReceiver;
     }
 
     public String getCandidateNick() {
@@ -256,7 +273,7 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
         this.candidateNick = candidateNick;
     }
 
-    public TUIState getTuiState() {
+    public TUIState getCurrentTuiState() {
         return currentState;
     }
 
@@ -264,8 +281,4 @@ public class TuiUpdater implements ClientViewUpdater, ExceptionConnector {
         currentState = tuiStates.get(state);
     }
 
-    @Override
-    public void throwException(Exception e) {
-
-    }
 }

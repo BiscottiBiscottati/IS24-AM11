@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.view.client.TUI.states;
 import java.lang.reflect.InvocationTargetException;
 
 public enum TuiStates {
-    CONNECTIONG(Connecting.class),
+    CONNECTING(Connecting.class),
     SETTING_NAME(SettingName.class),
     SETTING_NUM(SettingNum.class),
     WAITING(Waiting.class),

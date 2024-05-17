@@ -140,16 +140,17 @@ public class SendCommandS implements PlayerConnector, TableConnector {
         out.println(json);
     }
 
-    public void youGodPlayer() {
-        ObjectNode json = mapper.createObjectNode();
-        json.put("method", "youGodPlayer");
-        out.println(json);
-    }
-
-    public void updateNumOfPlayers(int numOfPlayers) {
+    @Override
+    public void updateNumOfPlayers(Integer numOfPlayers) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateNumOfPlayers");
         json.put("numOfPlayers", numOfPlayers);
+        out.println(json);
+    }
+
+    public void youGodPlayer() {
+        ObjectNode json = mapper.createObjectNode();
+        json.put("method", "youGodPlayer");
         out.println(json);
     }
 }

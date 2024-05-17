@@ -11,7 +11,7 @@ public class SettingNum implements TUIState {
     public void passArgs(Actuator actuator, List<String> positionalArgs) {
         String word = positionalArgs.getFirst();
         try {
-            switch (word) {
+            switch (word.toLowerCase()) {
                 case "setnumofplayers" -> actuator.setNumOfPlayers(positionalArgs);
                 case "exit" -> Actuator.close();
                 case "help" -> help();

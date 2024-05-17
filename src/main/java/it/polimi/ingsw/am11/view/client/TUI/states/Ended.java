@@ -10,7 +10,7 @@ public class Ended implements TUIState {
 
         String word = positionalArgs.getFirst();
 
-        switch (word) {
+        switch (word.toLowerCase()) {
             case "help" -> help();
             case "exit" -> Actuator.close();
             default -> specificHelp();

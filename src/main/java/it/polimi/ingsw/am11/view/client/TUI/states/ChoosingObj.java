@@ -12,14 +12,14 @@ public class ChoosingObj implements TUIState {
         String word = positionalArgs.getFirst();
 
         try {
-            switch (word) {
+            switch (word.toLowerCase()) {
                 case "setobjective" -> actuator.setObjective(positionalArgs);
                 case "help" -> help();
                 case "exit" -> Actuator.close();
                 default -> specificHelp();
             }
         } catch (InvalidArgumetsException e) {
-            //TODO
+            System.out.println("TODO");
         }
     }
 

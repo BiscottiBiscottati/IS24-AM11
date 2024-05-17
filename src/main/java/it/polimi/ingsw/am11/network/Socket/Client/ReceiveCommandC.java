@@ -22,7 +22,7 @@ public class ReceiveCommandC {
     public ReceiveCommandC(ClientViewUpdater clientPlayerView) {
         this.clientPlayerView = clientPlayerView;
         this.mapper = new ObjectMapper();
-        this.receiveException = new ReceiveException();
+        this.receiveException = new ReceiveException(clientPlayerView.getExceptionConnector());
     }
 
     public void receive(String message) {

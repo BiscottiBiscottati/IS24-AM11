@@ -134,4 +134,9 @@ public class ConnectorImplementation implements PlayerConnector, TableConnector 
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
 
     }
+
+    @Override
+    public void updateNumOfPlayers(Integer numOfPlayers) {
+        //TODO
+    }
 }

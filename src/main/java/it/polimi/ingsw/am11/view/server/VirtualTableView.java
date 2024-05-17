@@ -151,4 +151,11 @@ public class VirtualTableView {
             }
         });
     }
+
+    public void updateTable(@NotNull ReportNumOfPlEvent event) {
+        LOGGER.debug("EVENT: Report num of pl sent: {}", event.getNewValue());
+        broadcast(connector -> {
+            connector.updateNumOfPlayers(event.getNewValue());
+        });
+    }
 }

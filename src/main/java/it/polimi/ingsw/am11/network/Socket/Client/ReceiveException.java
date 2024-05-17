@@ -4,13 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 
 public class ReceiveException {
     private final ObjectMapper mapper;
-    private Exception exception;
+    private final ExceptionConnector exceptionConnector;
 
-    public ReceiveException() {
+    public ReceiveException(ExceptionConnector exceptionConnector) {
         this.mapper = new ObjectMapper();
+        this.exceptionConnector = exceptionConnector;
     }
 
     public void receive(String message) {
@@ -21,34 +23,49 @@ public class ReceiveException {
             if (jsonNode.get("method").asText().equals("Exception")) {
                 switch (jsonNode.get("message").asText()) {
                     case "IllegalPlayerSpaceActionException":
-                        exception = new IllegalPlayerSpaceActionException(
+                        exceptionConnector.throwException(new IllegalPlayerSpaceActionException(
                                 jsonNode.get("description")
-                                        .asText());
+                                        .asText()));
                     case "TurnsOrderException":
-                        exception = new TurnsOrderException(jsonNode.get("description").asText());
+                        exceptionConnector.throwException(
+                                new TurnsOrderException(jsonNode.get("description").asText()));
+
                     case "PlayerInitException":
-                        exception = new PlayerInitException(jsonNode.get("description").asText());
+                        exceptionConnector.throwException(
+                                new PlayerInitException(jsonNode.get("description").asText()));
+
                     case "IllegalCardPlacingException":
-                        exception = new IllegalCardPlacingException(jsonNode.get("description")
-                                                                            .asText());
+                        exceptionConnector.throwException(
+                                new IllegalCardPlacingException(jsonNode.get("description")
+                                                                        .asText()));
+
                     case "IllegalPickActionException":
-                        exception = new IllegalPickActionException(jsonNode.get("description")
-                                                                           .asText());
+                        exceptionConnector.throwException(
+                                new IllegalPickActionException(jsonNode.get("description")
+                                                                       .asText()));
                     case "NotInHandException":
-                        exception = new NotInHandException(jsonNode.get("description").asText());
+                        exceptionConnector.throwException(
+                                new NotInHandException(jsonNode.get("description").asText()));
+
                     case "EmptyDeckException":
-                        exception = new EmptyDeckException(jsonNode.get("description").asText());
+                        exceptionConnector.throwException(
+                                new EmptyDeckException(jsonNode.get("description").asText()));
+
                     case "NumOfPlayersException":
-                        exception = new NumOfPlayersException(jsonNode.get("description").asText());
+                        exceptionConnector.throwException(
+                                new NumOfPlayersException(jsonNode.get("description").asText()));
                     case "NotGodPlayerException":
-                        exception = new NotGodPlayerException(jsonNode.get("description").asText());
+                        exceptionConnector.throwException(
+                                new NotGodPlayerException(jsonNode.get("description").asText()));
+
                     case "GameStatusException":
-                        exception = new GameStatusException(jsonNode.get("description").asText());
+                        exceptionConnector.throwException(new GameStatusException(jsonNode.get(
+                                "description").asText()));
                     case "NotSetNumOfPlayerException":
-                        exception = new NotSetNumOfPlayerException(jsonNode.get("description")
-                                                                           .asText());
+                        exceptionConnector.throwException(
+                                new NotSetNumOfPlayerException(jsonNode.get("description")
+                                                                       .asText()));
                 }
-                //TODO: Throw the exception
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();

@@ -30,6 +30,12 @@ public class Actuator {
 
     public void connect(List<String> positionalArgs)
     throws InvalidArgumetsException, IOException {
+        if (positionalArgs.get(1).equalsIgnoreCase("default")) {
+            ClientSocket clientSocket = new ClientSocket("localhost", 12345, tuiUpdater);
+            connector = clientSocket.getConnector();
+            tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
+            return;
+        }
         if (positionalArgs.size() != 4) {
             throw new InvalidArgumetsException("Invalid Arguments");
         }

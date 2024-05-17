@@ -18,22 +18,30 @@ public class ReaderV2 {
     private final Scanner input;
     private final TuiUpdater tuiUpdater;
     private final Actuator actuator;
+    private final MiniGameModel model;
 
 
     public ReaderV2(MiniGameModel model, TuiUpdater tuiUpdater) {
         this.input = new Scanner(System.in);
         this.tuiUpdater = tuiUpdater;
         this.actuator = new Actuator(tuiUpdater);
+        this.model = model;
     }
 
     public void listen() {
         ArgParser parser = setUpOptions();
+        String string = input.nextLine().strip();
+        if (string.isEmpty()) {
+            System.out.print("\b");
+            return;
+        }
         try {
-            parser.parse(input.nextLine().strip().split("\\s+"));
+            parser.parse(string.split("\\s+"));
         } catch (ParsingErrorException e) {
             System.out.println(e.getMessage());
         }
-        tuiUpdater.getTuiState().passArgs(actuator, new ArrayList<>(parser.getPositionalArgs()));
+        tuiUpdater.getCurrentTuiState().passArgs(actuator,
+                                                 new ArrayList<>(parser.getPositionalArgs()));
     }
 
     private static ArgParser setUpOptions() {

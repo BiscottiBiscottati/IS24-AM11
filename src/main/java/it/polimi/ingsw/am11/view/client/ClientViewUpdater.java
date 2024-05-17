@@ -27,7 +27,7 @@ public interface ClientViewUpdater {
     void updateGameStatus(GameStatus status);
 
 
-    void updateCommonObjective(int cardId, boolean removeMode);
+    void updateCommonObjective(Set<Integer> cardId, boolean removeMode);
 
 
     void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard);
@@ -50,5 +50,9 @@ public interface ClientViewUpdater {
 
     void updatePlayers(Map<PlayerColor, String> currentPlayers);
 
+
     void updateNumOfPlayers(int numOfPlayers);
+
+
+    ExceptionConnector getExceptionConnector();
 }

@@ -18,6 +18,7 @@ public class ArgParser {
 
     public void parse(String @NotNull [] args) throws ParsingErrorException {
         for (int i = 0; i < args.length; i++) {
+            if (args[i].isEmpty()) throw new ParsingErrorException("Argument " + i + " is empty");
             if (args[i].charAt(0) == '-') {
                 int tempI = i;
                 Option option = getOption(args[i].substring(1))

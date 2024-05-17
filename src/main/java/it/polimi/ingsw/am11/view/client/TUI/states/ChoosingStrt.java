@@ -11,14 +11,14 @@ public class ChoosingStrt implements TUIState {
         String word = positionalArgs.getFirst();
 
         try {
-            switch (word) {
+            switch (word.toLowerCase()) {
                 case "setstarter" -> actuator.setStarter(positionalArgs);
                 case "help" -> help();
                 case "exit" -> Actuator.close();
                 default -> specificHelp();
             }
         } catch (InvalidArgumetsException e) {
-            //TODO
+            System.out.println("TODO");
         }
     }
 
@@ -27,6 +27,5 @@ public class ChoosingStrt implements TUIState {
     }
 
     private void specificHelp() {
-
     }
 }

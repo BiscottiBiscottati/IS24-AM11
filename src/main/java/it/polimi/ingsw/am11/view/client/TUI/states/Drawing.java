@@ -11,7 +11,7 @@ public class Drawing implements TUIState {
         String word = positionalArgs.getFirst();
 
         try {
-            switch (word) {
+            switch (word.toLowerCase()) {
                 case "draw" -> actuator.draw(positionalArgs);
                 case "help" -> help();
                 case "exit" -> Actuator.close();

@@ -11,7 +11,7 @@ public class SettingName implements TUIState {
     public void passArgs(Actuator actuator, List<String> positionalArgs) {
         String word = positionalArgs.getFirst();
         try {
-            switch (word) {
+            switch (word.toLowerCase()) {
                 case "setnick" -> actuator.setName(positionalArgs);
                 case "help" -> help();
                 case "exit" -> Actuator.close();

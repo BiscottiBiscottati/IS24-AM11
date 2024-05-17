@@ -30,4 +30,7 @@ public interface TableConnector {
 
     void updatePlayers(Map<PlayerColor, String> currentPlayers) throws JsonProcessingException;
 
+    void updateNumOfPlayers(Integer numOfPlayers);
+
+
 }

@@ -23,7 +23,7 @@ public class TuiHandler {
     public TuiHandler() {
         this.model = new MiniGameModel();
 
-        this.tuiUpdater = new TuiUpdater(model, TuiStates.CONNECTIONG);
+        this.tuiUpdater = new TuiUpdater(model, TuiStates.CONNECTING);
     }
 
     public void start() throws IOException {

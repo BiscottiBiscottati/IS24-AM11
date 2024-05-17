@@ -11,7 +11,7 @@ public class Placing implements TUIState {
         String word = positionalArgs.getFirst();
 
         try {
-            switch (word) {
+            switch (word.toLowerCase()) {
                 case "place" -> actuator.place(positionalArgs);
                 case "help" -> help();
                 case "exit" -> Actuator.close();
