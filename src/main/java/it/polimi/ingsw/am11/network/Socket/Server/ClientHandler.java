@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Objects;
 
 public class ClientHandler implements Runnable {
     private String nickname;
@@ -46,7 +47,7 @@ public class ClientHandler implements Runnable {
                 receiveCommandS = new ReceiveCommandS(view, out);
                 validNickname = true;
                 System.out.println("TCP: Connected: " + nickname);
-                if (CentralController.INSTANCE.getGodPlayer().equals(nickname)) {
+                if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nickname)) {
                     boolean validNumOfPlayers = false;
                     while (! validNumOfPlayers) {
                         try {
