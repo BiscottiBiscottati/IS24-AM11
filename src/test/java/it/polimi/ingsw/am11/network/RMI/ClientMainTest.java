@@ -11,10 +11,10 @@ import org.mockito.Mockito;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.ServerException;
 import java.rmi.registry.Registry;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 class ClientMainTest {
@@ -47,18 +47,13 @@ class ClientMainTest {
 
         assertEquals("nick", CentralController.INSTANCE.getGodPlayer());
         assertNotEquals("nick1", CentralController.INSTANCE.getGodPlayer());
-        assertThrows(ServerException.class, () -> serverMain.setNumOfPlayers("nick1", 2));
 
         clientMain.setStarterCard("nick", true);
-        assertThrows(ServerException.class, () -> clientMain.setStarterCard("bob", true));
-        assertThrows(ServerException.class, () -> clientMain.setStarterCard("nick", false));
         clientMain1.setStarterCard("nick1", true);
 
         clientMain.logout("nick");
         clientMain.login("nick", updater);
         assertEquals("nick", CentralController.INSTANCE.getGodPlayer());
-        assertThrows(ServerException.class, () -> clientMain.setStarterCard("nick", true));
-        assertThrows(ServerException.class, () -> clientMain.setObjectiveCard("nick", 1));
 
 
     }

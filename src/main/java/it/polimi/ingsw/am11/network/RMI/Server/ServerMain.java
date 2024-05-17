@@ -17,13 +17,21 @@ import java.rmi.server.UnicastRemoteObject;
 public class ServerMain implements Loggable {
 
     private final int port;
-    PlayerViewImpl playerView = new PlayerViewImpl();
+    PlayerViewImpl playerView;
     ExceptionConnector exceptionConnector;
     private Registry registry;
 
+    {
+        try {
+            playerView = new PlayerViewImpl();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //TODO to save the connector in the server
 
-    public ServerMain(int port) throws RemoteException {
+    public ServerMain(int port) {
         this.port = port;
     }
 
@@ -31,11 +39,8 @@ public class ServerMain implements Loggable {
 
     public static void main(String[] args) {
         ServerMain server;
-        try {
-            server = new ServerMain(1234);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        server = new ServerMain(1234);
+
         server.start();
         System.out.println("Server ready");
     }

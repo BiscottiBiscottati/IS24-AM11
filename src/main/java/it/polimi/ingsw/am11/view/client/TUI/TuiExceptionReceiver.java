@@ -88,4 +88,14 @@ public class TuiExceptionReceiver implements ExceptionConnector {
                            "match");
         System.out.println("MESSAGE: " + ex.getMessage());
     }
+
+    @Override
+    public void throwException(IllegalPlateauActionException description) {
+        //TODO
+    }
+
+    @Override
+    public void throwException(MaxHandSizeException description) {
+        //TODO
+    }
 }
