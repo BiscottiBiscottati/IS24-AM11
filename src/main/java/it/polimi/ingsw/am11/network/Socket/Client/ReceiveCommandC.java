@@ -27,89 +27,88 @@ public class ReceiveCommandC {
 
     public void receive(String message) {
         try {
-            // Parse the message
             JsonNode jsonNode = mapper.readTree(message);
-            // TODO final leaderboard receive missing
-            if (! jsonNode.get("method").asText().equals("Exception")
-                && ! jsonNode.get("method").
-                             asText().equals("youGodPlayer")) {
-                switch (jsonNode.get("method").asText()) {
-                    case "updateHand":
-                        clientPlayerView.updateHand(jsonNode.get("cardId").asInt(),
-                                                    jsonNode.get("removeMode").asBoolean());
-                        break;
-                    case "updatePersonalObjective":
-                        clientPlayerView.updatePersonalObjective(jsonNode.get("cardId").asInt(),
-                                                                 jsonNode.get(
-                                                                         "removeMode").asBoolean());
-                        break;
-                    case "sendStarterCard":
-                        clientPlayerView.receiveStarterCard(jsonNode.get("cardId").asInt());
-                        break;
-                    case "sendCandidateObjective":
-                        Set<Integer> cardsId = new HashSet<>();
-                        for (JsonNode cardId : jsonNode.get("cardsId")) {
-                            cardsId.add(cardId.asInt());
-                        }
-                        clientPlayerView.receiveCandidateObjective(cardsId);
-                        break;
-                    case "updateDeckTop":
-                        clientPlayerView.
-                                updateDeckTop(
-                                        PlayableCardType.valueOf(jsonNode.get("type").asText()),
-                                        Color.valueOf(jsonNode.get("color").asText()));
-                        break;
-                    case "updateField":
-                        clientPlayerView.updateField(jsonNode.get("nickname").asText(), jsonNode.
-                                                             get("x").asInt(), jsonNode.get("y").
-                                                                                       asInt(),
-                                                     jsonNode.get("cardId").asInt(), false,
-                                                     jsonNode.
-                                                             get("removeMode").asBoolean());
-                        break;
-                    case "updateShownPlayable":
-                        clientPlayerView.updateShownPlayable(jsonNode.get("previousId").asInt(),
-                                                             jsonNode.get("currentId").asInt());
-                        break;
-                    case "updateTurnChange":
-                        clientPlayerView.updateTurnChange(jsonNode.get("nickname").asText());
-                        break;
-                    case "updatePlayerPoint":
-                        clientPlayerView.updatePlayerPoint(jsonNode.get("nickname").asText(),
-                                                           jsonNode.get("points").asInt());
-                        break;
-                    case "updateGameStatus":
-                        clientPlayerView.updateGameStatus(
-                                GameStatus.valueOf(jsonNode.get("status").asText()));
-                        break;
-                    case "updateCommonObjective":
-                        clientPlayerView.updateCommonObjective(jsonNode.get("cardId").asInt(),
-                                                               jsonNode.get(
-                                                                       "removeMode").asBoolean());
-                        break;
-                    case "receiveFinalLeaderboard":
-                        String finalLeaderboardJson = jsonNode.get("finalLeaderboard").asText();
-                        JsonNode finalLeaderboardNode = mapper.readTree(finalLeaderboardJson);
-                        Map<String, Integer> finalLeaderboard = mapper.convertValue(
-                                finalLeaderboardNode,
-                                new TypeReference<Map<String, Integer>>() {});
-                        clientPlayerView.receiveFinalLeaderboard(finalLeaderboard);
-                        break;
-                    case "updatePlayers":
-                        String currentPlayersJson = jsonNode.get("currentPlayers").asText();
-                        JsonNode currentPlayersNode = mapper.readTree(currentPlayersJson);
-                        Map<PlayerColor, String> currentPlayers = mapper
-                                .convertValue(currentPlayersNode,
-                                              new TypeReference<Map<PlayerColor, String>>() {});
-                        clientPlayerView.updatePlayers(currentPlayers);
-                    case "updateNumOfPlayers":
-                        clientPlayerView.updateNumOfPlayers(jsonNode.get("numOfPlayers").asInt());
-                        break;
-                }
-            } else if (jsonNode.get("method").asText().equals("Exception")) {
-                receiveException.receive(message);
-            } else if (jsonNode.get("method").asText().equals("youGodPlayer")) {
-                clientPlayerView.notifyGodPlayer();
+            switch (jsonNode.get("method").asText()) {
+                case "updateHand":
+                    clientPlayerView.updateHand(jsonNode.get("cardId").asInt(),
+                                                jsonNode.get("removeMode").asBoolean());
+                    break;
+                case "updatePersonalObjective":
+                    clientPlayerView.updatePersonalObjective(jsonNode.get("cardId").asInt(),
+                                                             jsonNode.get(
+                                                                     "removeMode").asBoolean());
+                    break;
+                case "sendStarterCard":
+                    clientPlayerView.receiveStarterCard(jsonNode.get("cardId").asInt());
+                    break;
+                case "sendCandidateObjective":
+                    Set<Integer> cardsId = new HashSet<>();
+                    for (JsonNode cardId : jsonNode.get("cardsId")) {
+                        cardsId.add(cardId.asInt());
+                    }
+                    clientPlayerView.receiveCandidateObjective(cardsId);
+                    break;
+                case "updateDeckTop":
+                    clientPlayerView.
+                            updateDeckTop(
+                                    PlayableCardType.valueOf(jsonNode.get("type").asText()),
+                                    Color.valueOf(jsonNode.get("color").asText()));
+                    break;
+                case "updateField":
+                    clientPlayerView.updateField(jsonNode.get("nickname").asText(), jsonNode.
+                                                         get("x").asInt(), jsonNode.get("y").
+                                                                                   asInt(),
+                                                 jsonNode.get("cardId").asInt(), false,
+                                                 jsonNode.
+                                                         get("removeMode").asBoolean());
+                    break;
+                case "updateShownPlayable":
+                    clientPlayerView.updateShownPlayable(jsonNode.get("previousId").asInt(),
+                                                         jsonNode.get("currentId").asInt());
+                    break;
+                case "updateTurnChange":
+                    clientPlayerView.updateTurnChange(jsonNode.get("nickname").asText());
+                    break;
+                case "updatePlayerPoint":
+                    clientPlayerView.updatePlayerPoint(jsonNode.get("nickname").asText(),
+                                                       jsonNode.get("points").asInt());
+                    break;
+                case "updateGameStatus":
+                    clientPlayerView.updateGameStatus(
+                            GameStatus.valueOf(jsonNode.get("status").asText()));
+                    break;
+                case "updateCommonObjective":
+                    clientPlayerView.updateCommonObjective(jsonNode.get("cardId").asInt(),
+                                                           jsonNode.get(
+                                                                   "removeMode").asBoolean());
+                    break;
+                case "receiveFinalLeaderboard":
+                    String finalLeaderboardJson = jsonNode.get("finalLeaderboard").asText();
+                    JsonNode finalLeaderboardNode = mapper.readTree(finalLeaderboardJson);
+                    Map<String, Integer> finalLeaderboard = mapper.convertValue(
+                            finalLeaderboardNode,
+                            new TypeReference<Map<String, Integer>>() {});
+                    clientPlayerView.receiveFinalLeaderboard(finalLeaderboard);
+                    break;
+                case "updatePlayers":
+                    String currentPlayersJson = jsonNode.get("currentPlayers").asText();
+                    JsonNode currentPlayersNode = mapper.readTree(currentPlayersJson);
+                    Map<PlayerColor, String> currentPlayers = mapper
+                            .convertValue(currentPlayersNode,
+                                          new TypeReference<Map<PlayerColor, String>>() {});
+                    clientPlayerView.updatePlayers(currentPlayers);
+                case "updateNumOfPlayers":
+                    JsonNode numOfPlayers = jsonNode.get("numOfPlayers");
+                    if (numOfPlayers != null) {
+                        clientPlayerView.updateNumOfPlayers(numOfPlayers.asInt());
+                    }
+                    break;
+                case "youGodPlayer":
+                    clientPlayerView.notifyGodPlayer();
+                    break;
+                case ("Exception"):
+                    receiveException.receive(message);
+                    break;
             }
         } catch (IOException e) {
             System.out.println("Received invalid message.");
