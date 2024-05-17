@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 
+import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public interface TableConnector {
 
     void updateGameStatus(GameStatus status);
 
-    void updateCommonObjective(Set<Integer> cardsId, boolean removeMode);
+    void updateCommonObjective(Set<Integer> cardsId, boolean removeMode) throws RemoteException;
 
     void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) throws JsonProcessingException;
 

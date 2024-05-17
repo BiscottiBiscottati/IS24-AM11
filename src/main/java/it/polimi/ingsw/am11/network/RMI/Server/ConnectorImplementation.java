@@ -111,14 +111,9 @@ public class ConnectorImplementation implements PlayerConnector, TableConnector 
     }
 
     @Override
-    public void updateCommonObjective(Set<Integer> cardsId, boolean removeMode) {
-        try {
-            for (int cardId : cardsId) {
-                remoteConnector.updateCommonObjective(cardId, removeMode);
-            }
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+    public void updateCommonObjective(Set<Integer> cardsId, boolean removeMode)
+    throws RemoteException {
+        remoteConnector.updateCommonObjective(cardsId, removeMode);
     }
 
     @Override

@@ -84,7 +84,7 @@ public class ClientToServerConnector implements ConnectorInterface {
     }
 
     @Override
-    public void updateCommonObjective(int cardId, boolean removeMode) {
+    public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
         clientUpdater.updateCommonObjective(cardId, removeMode);
 
     }

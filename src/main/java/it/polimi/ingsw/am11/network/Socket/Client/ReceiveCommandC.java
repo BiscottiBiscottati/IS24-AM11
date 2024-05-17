@@ -42,10 +42,9 @@ public class ReceiveCommandC {
                     clientPlayerView.receiveStarterCard(jsonNode.get("cardId").asInt());
                     break;
                 case "sendCandidateObjective":
-                    Set<Integer> cardsId = new HashSet<>();
-                    for (JsonNode cardId : jsonNode.get("cardsId")) {
-                        cardsId.add(cardId.asInt());
-                    }
+                    String cardsIdJson = jsonNode.get("cardsId").asText();
+                    Set<Integer> cardsId = mapper.readValue(cardsIdJson,
+                                                            new TypeReference<Set<Integer>>() {});
                     clientPlayerView.receiveCandidateObjective(cardsId);
                     break;
                 case "updateDeckTop":
@@ -78,9 +77,12 @@ public class ReceiveCommandC {
                             GameStatus.valueOf(jsonNode.get("status").asText()));
                     break;
                 case "updateCommonObjective":
-                    clientPlayerView.updateCommonObjective(jsonNode.get("cardId").asInt(),
-                                                           jsonNode.get(
-                                                                   "removeMode").asBoolean());
+                    String commonObjectiveJson = jsonNode.get("cardId").asText();
+                    Set<Integer> commonObjective = mapper.
+                            readValue(commonObjectiveJson,
+                                      new TypeReference<HashSet<Integer>>() {});
+                    clientPlayerView.updateCommonObjective(commonObjective,
+                                                           jsonNode.get("removeMode").asBoolean());
                     break;
                 case "receiveFinalLeaderboard":
                     String finalLeaderboardJson = jsonNode.get("finalLeaderboard").asText();

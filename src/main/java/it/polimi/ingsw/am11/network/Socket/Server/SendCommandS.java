@@ -50,10 +50,15 @@ public class SendCommandS implements PlayerConnector, TableConnector {
 
     @Override
     public void sendCandidateObjective(Set<Integer> cardsId) {
-        ObjectNode json = mapper.createObjectNode();
-        json.put("method", "sendCandidateObjective");
-        json.put("cardsId", cardsId.toString());
-        out.println(json);
+        try {
+            ObjectNode json = mapper.createObjectNode();
+            json.put("method", "sendCandidateObjective");
+            String cardsIdJson = mapper.writeValueAsString(cardsId);
+            json.put("cardsId", cardsIdJson);
+            out.println(json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -115,11 +120,16 @@ public class SendCommandS implements PlayerConnector, TableConnector {
 
     @Override
     public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
-        ObjectNode json = mapper.createObjectNode();
-        json.put("method", "updateCommonObjective");
-//        json.put("cardId", cardId); // FIXME changed to set need change
-        json.put("removeMode", removeMode);
-        out.println(json);
+        try {
+            ObjectNode json = mapper.createObjectNode();
+            json.put("method", "updateCommonObjective");
+            String cardIdJson = mapper.writeValueAsString(cardId);
+            json.put("cardId", cardIdJson);
+            json.put("removeMode", removeMode);
+            out.println(json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -92,13 +93,25 @@ public class VirtualTableView {
         switch (event.getAction()) {
             case INSERTION -> {
                 LOGGER.debug("EVENT: Common objective {} added", event.getValueOfAction());
-                broadcast(connector -> connector.updateCommonObjective(event.getValueOfAction(),
-                                                                       false));
+                broadcast(connector -> {
+                    try {
+                        connector.updateCommonObjective(event.getValueOfAction(),
+                                                        false);
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             }
             case REMOVAL -> {
                 LOGGER.debug("EVENT: Common objective {} removed", event.getValueOfAction());
-                broadcast(connector -> connector.updateCommonObjective(event.getValueOfAction(),
-                                                                       true));
+                broadcast(connector -> {
+                    try {
+                        connector.updateCommonObjective(event.getValueOfAction(),
+                                                        true);
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             }
             default -> LOGGER.debug("Invalid ActionMode in CommonObjectiveChangeEvent");
         }
