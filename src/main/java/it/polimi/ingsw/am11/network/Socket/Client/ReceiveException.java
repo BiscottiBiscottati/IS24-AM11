@@ -25,52 +25,65 @@ public class ReceiveException {
                     exceptionConnector.throwException(new IllegalPlayerSpaceActionException(
                             jsonNode.get("description")
                                     .asText()));
+                    break;
                 case "TurnsOrderException":
                     exceptionConnector.throwException(
                             new TurnsOrderException(jsonNode.get("description").asText()));
+                    break;
 
                 case "PlayerInitException":
                     exceptionConnector.throwException(
                             new PlayerInitException(jsonNode.get("description").asText()));
+                    break;
 
                 case "IllegalCardPlacingException":
                     exceptionConnector.throwException(
                             new IllegalCardPlacingException(jsonNode.get("description")
                                                                     .asText()));
+                    break;
 
                 case "IllegalPickActionException":
                     exceptionConnector.throwException(
                             new IllegalPickActionException(jsonNode.get("description")
                                                                    .asText()));
+                    break;
                 case "NotInHandException":
                     exceptionConnector.throwException(
                             new NotInHandException(jsonNode.get("description").asText()));
+                    break;
 
                 case "EmptyDeckException":
                     exceptionConnector.throwException(
                             new EmptyDeckException(jsonNode.get("description").asText()));
+                    break;
 
                 case "NumOfPlayersException":
                     exceptionConnector.throwException(
                             new NumOfPlayersException(jsonNode.get("description").asText()));
+                    break;
                 case "NotGodPlayerException":
                     exceptionConnector.throwException(
                             new NotGodPlayerException(jsonNode.get("description").asText()));
+                    break;
 
                 case "GameStatusException":
                     exceptionConnector.throwException(new GameStatusException(jsonNode.get(
                             "description").asText()));
+                    break;
                 case "NotSetNumOfPlayerException":
                     exceptionConnector.throwException(
                             new NotSetNumOfPlayerException(jsonNode.get("description")
                                                                    .asText()));
+                    break;
                 case "IllegalPlateauActionException":
                     exceptionConnector.throwException(
                             new IllegalPlateauActionException(jsonNode.get("description")
                                                                       .asText()));
+                    break;
                 case "MaxHandSizeException":
                     exceptionConnector.throwException(
                             new MaxHandSizeException(jsonNode.get("description").asText()));
+                    break;
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();

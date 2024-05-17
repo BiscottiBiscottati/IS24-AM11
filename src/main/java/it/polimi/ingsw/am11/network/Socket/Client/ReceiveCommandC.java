@@ -99,6 +99,7 @@ public class ReceiveCommandC {
                             .convertValue(currentPlayersNode,
                                           new TypeReference<Map<PlayerColor, String>>() {});
                     clientPlayerView.updatePlayers(currentPlayers);
+                    break;
                 case "updateNumOfPlayers":
                     JsonNode numOfPlayers = jsonNode.get("numOfPlayers");
                     if (numOfPlayers != null) {
