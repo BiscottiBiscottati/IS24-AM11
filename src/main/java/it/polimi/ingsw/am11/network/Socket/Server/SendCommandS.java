@@ -65,8 +65,8 @@ public class SendCommandS implements PlayerConnector, TableConnector {
     public void updateDeckTop(PlayableCardType type, Color color) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateDeckTop");
-        json.put("type", type.toString());
-        json.put("color", color.toString());
+        json.put("type", type.toString().toUpperCase());
+        json.put("color", color.toString().toUpperCase());
         out.println(json);
     }
 
