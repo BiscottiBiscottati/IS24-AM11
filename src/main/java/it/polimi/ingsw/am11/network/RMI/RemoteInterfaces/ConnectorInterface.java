@@ -40,4 +40,6 @@ public interface ConnectorInterface extends Remote {
     void updatePlayers(Map<PlayerColor, String> currentPlayers) throws RemoteException;
 
     void notifyGodPlayer() throws RemoteException;
+
+    void updateNumOfPlayers(int numberOfPlayers) throws RemoteException;
 }

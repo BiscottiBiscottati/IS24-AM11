@@ -137,6 +137,10 @@ public class ConnectorImplementation implements PlayerConnector, TableConnector 
 
     @Override
     public void updateNumOfPlayers(Integer numOfPlayers) {
-        //TODO
+        try {
+            remoteConnector.updateNumOfPlayers(numOfPlayers);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

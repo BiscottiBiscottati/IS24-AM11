@@ -100,4 +100,9 @@ public class ClientToServerConnector implements ConnectorInterface {
     public void notifyGodPlayer() throws RemoteException {
         clientUpdater.notifyGodPlayer();
     }
+
+    @Override
+    public void updateNumOfPlayers(int numberOfPlayers) throws RemoteException {
+        clientUpdater.updateNumOfPlayers(numberOfPlayers);
+    }
 }

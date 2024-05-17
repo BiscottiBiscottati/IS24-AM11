@@ -47,13 +47,12 @@ public class ClientMain {
         }
     }
 
-    public void login(String nick, ClientViewUpdater updater) throws RemoteException,
-                                                                     NotBoundException {
+    public void login(String nick, ClientViewUpdater updater)
+    throws RemoteException, NotBoundException {
         Loggable stub1 = (Loggable) registry.lookup("Loggable");
         ClientToServerConnector clientObject = new ClientToServerConnector(updater);
         ConnectorInterface connector = (ConnectorInterface) UnicastRemoteObject.exportObject(
                 clientObject, 0);
-
         stub1.login(nick, connector);
     }
 

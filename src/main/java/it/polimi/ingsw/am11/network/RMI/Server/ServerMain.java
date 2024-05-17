@@ -5,11 +5,11 @@ import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
+import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
-import java.rmi.ServerException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -18,6 +18,7 @@ public class ServerMain implements Loggable {
 
     private final int port;
     PlayerViewImpl playerView = new PlayerViewImpl();
+    ExceptionConnector exceptionConnector;
     private Registry registry;
 
     //TODO to save the connector in the server
@@ -71,9 +72,14 @@ public class ServerMain implements Loggable {
                 CentralController.INSTANCE.connectPlayer(nick, connector, connector);
                 playerView.addPlayer(nick, view);
             }
-        } catch (PlayerInitException | GameStatusException | NumOfPlayersException |
-                 NotSetNumOfPlayerException e) {
-            throw new ServerException(e.getClass().getCanonicalName(), e);
+        } catch (PlayerInitException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
+        } catch (NumOfPlayersException e) {
+            exceptionConnector.throwException(e);
+        } catch (NotSetNumOfPlayerException e) {
+            exceptionConnector.throwException(e);
         }
     }
 
@@ -86,8 +92,12 @@ public class ServerMain implements Loggable {
     public void setNumOfPlayers(String nick, int val) throws RemoteException {
         try {
             CentralController.INSTANCE.setNumOfPlayers(nick, val);
-        } catch (NotGodPlayerException | GameStatusException | NumOfPlayersException e) {
-            throw new ServerException(e.getClass().getCanonicalName(), e);
+        } catch (NotGodPlayerException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
+        } catch (NumOfPlayersException e) {
+            exceptionConnector.throwException(e);
         }
     }
 

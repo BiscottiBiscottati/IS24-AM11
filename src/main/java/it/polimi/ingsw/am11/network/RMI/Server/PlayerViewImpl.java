@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.network.RMI.Server;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
+import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 
 import java.rmi.RemoteException;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 public class PlayerViewImpl implements PlayerViewInterface {
     private final Map<String, VirtualPlayerView> views;
+    ExceptionConnector exceptionConnector;
 
     public PlayerViewImpl() throws RemoteException {
         this.views = new HashMap<>(8);
@@ -31,9 +33,12 @@ public class PlayerViewImpl implements PlayerViewInterface {
             } else {
                 throw new ServerException("Player not found");
             }
-        } catch (PlayerInitException | GameStatusException |
-                 IllegalCardPlacingException e) {
-            throw new ServerException(e.getClass().getCanonicalName(), e);
+        } catch (PlayerInitException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
+        } catch (IllegalCardPlacingException e) {
+            exceptionConnector.throwException(e);
         }
     }
 
@@ -47,8 +52,12 @@ public class PlayerViewImpl implements PlayerViewInterface {
             } else {
                 throw new ServerException("Player not found");
             }
-        } catch (IllegalPlayerSpaceActionException | PlayerInitException | GameStatusException e) {
-            throw new ServerException(e.getClass().getCanonicalName(), e);
+        } catch (IllegalPlayerSpaceActionException e) {
+            exceptionConnector.throwException(e);
+        } catch (PlayerInitException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
         }
 
     }
@@ -63,9 +72,18 @@ public class PlayerViewImpl implements PlayerViewInterface {
             } else {
                 throw new ServerException("Player not found");
             }
-        } catch (TurnsOrderException | PlayerInitException | IllegalCardPlacingException |
-                 NotInHandException | IllegalPlateauActionException | GameStatusException e) {
-            throw new ServerException(e.getClass().getCanonicalName(), e);
+        } catch (TurnsOrderException e) {
+            exceptionConnector.throwException(e);
+        } catch (PlayerInitException e) {
+            exceptionConnector.throwException(e);
+        } catch (IllegalCardPlacingException e) {
+            exceptionConnector.throwException(e);
+        } catch (NotInHandException e) {
+            exceptionConnector.throwException(e);
+        } catch (IllegalPlateauActionException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
         }
 
     }
@@ -80,11 +98,20 @@ public class PlayerViewImpl implements PlayerViewInterface {
             } else {
                 throw new ServerException("Player not found");
             }
-        } catch (IllegalPlayerSpaceActionException | TurnsOrderException |
-                 IllegalPickActionException |
-                 PlayerInitException | EmptyDeckException | MaxHandSizeException |
-                 GameStatusException e) {
-            throw new ServerException(e.getClass().getCanonicalName(), e);
+        } catch (IllegalPlayerSpaceActionException e) {
+            exceptionConnector.throwException(e);
+        } catch (TurnsOrderException e) {
+            exceptionConnector.throwException(e);
+        } catch (IllegalPickActionException e) {
+            exceptionConnector.throwException(e);
+        } catch (PlayerInitException e) {
+            exceptionConnector.throwException(e);
+        } catch (EmptyDeckException e) {
+            exceptionConnector.throwException(e);
+        } catch (MaxHandSizeException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
         }
     }
 
