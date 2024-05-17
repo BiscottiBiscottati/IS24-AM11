@@ -50,7 +50,7 @@ public class SendCommandC implements CltToNetConnector {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "drawCard");
         json.put("fromVisible", fromVisible);
-        json.put("type", type.toString());
+        json.put("type", type.toString().toUpperCase());
         json.put("cardId", cardId);
         out.println(json);
     }
