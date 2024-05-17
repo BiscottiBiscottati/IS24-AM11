@@ -64,6 +64,13 @@ public class ReceiveException {
                     exceptionConnector.throwException(
                             new NotSetNumOfPlayerException(jsonNode.get("description")
                                                                    .asText()));
+                case "IllegalPlateauActionException":
+                    exceptionConnector.throwException(
+                            new IllegalPlateauActionException(jsonNode.get("description")
+                                                                      .asText()));
+                case "MaxHandSizeException":
+                    exceptionConnector.throwException(
+                            new MaxHandSizeException(jsonNode.get("description").asText()));
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();

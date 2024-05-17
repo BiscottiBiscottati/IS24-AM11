@@ -26,4 +26,7 @@ public interface ExceptionConnector {
 
     void throwException(NotSetNumOfPlayerException ex);
 
+    void throwException(IllegalPlateauActionException description);
+
+    void throwException(MaxHandSizeException description);
 }
