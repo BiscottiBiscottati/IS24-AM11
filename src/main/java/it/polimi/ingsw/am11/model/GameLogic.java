@@ -341,7 +341,7 @@ public class GameLogic implements GameModel {
                                                           .map(playerManager::getPlayer)
                                                           .filter(Optional::isPresent)
                                                           .map(Optional::get)
-                                                          .collect(Collectors.toMap(
+                                                          .collect(Collectors.toUnmodifiableMap(
                                                                   Player::color,
                                                                   Player::nickname));
 
@@ -471,13 +471,13 @@ public class GameLogic implements GameModel {
 
             LOGGER.info("All starters have been placed, moving to objectives");
 
-            plateau.setStatus(GameStatus.CHOOSING_OBJECTIVES);
             try {
                 pickCandidateObjectives();
             } catch (EmptyDeckException | IllegalPickActionException e) {
                 throw new GameBreakingException(
                         "Something broke while dealing starters or objectives");
             }
+            plateau.setStatus(GameStatus.CHOOSING_OBJECTIVES);
         }
     }
 

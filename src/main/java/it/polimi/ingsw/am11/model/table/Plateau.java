@@ -2,7 +2,6 @@ package it.polimi.ingsw.am11.model.table;
 
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
-import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.table.FinalLeaderboardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Plateau {
     private static final Logger LOGGER = LoggerFactory.getLogger(Plateau.class);
@@ -23,24 +23,24 @@ public class Plateau {
     private final Map<Player, Integer> counterObjective;
     private final Map<Player, Integer> finalLeaderboard;
     private final GameListenerSupport pcs;
-    private GameStatus status;
+    private final AtomicReference<GameStatus> status;
 
 
     public Plateau(GameListenerSupport pcs) {
         this.playerPoints = new HashMap<>(8);
         this.counterObjective = new HashMap<>(3);
-        this.status = GameStatus.SETUP;
+        this.status = new AtomicReference<>(GameStatus.SETUP);
         this.finalLeaderboard = new HashMap<>(8);
         this.pcs = pcs;
     }
 
     public GameStatus getStatus() {
-        return status;
+        return status.get();
     }
 
     public void setStatus(GameStatus status) {
-        GameStatus oldValue = this.status;
-        this.status = status;
+        GameStatus oldValue = this.status.get();
+        this.status.compareAndSet(oldValue, status);
 
         LOGGER.info("Game status changed from {} to {}", oldValue, status);
 
@@ -62,14 +62,14 @@ public class Plateau {
                     temp - points,
                     temp));
         }
-        if (temp >= armageddonTime && status == GameStatus.ONGOING) {
+        if (temp >= armageddonTime && this.status.get() == GameStatus.ONGOING) {
             setStatus(GameStatus.ARMAGEDDON);
         }
 
     }
 
     public boolean isArmageddonTime() {
-        return status == GameStatus.ARMAGEDDON;
+        return status.get() == GameStatus.ARMAGEDDON;
     }
 
     public static void setArmageddonTime(int armageddonTime) {
@@ -195,14 +195,6 @@ public class Plateau {
             }
         }
         return winners;
-    }
-
-    public void addListener(TableListener listener) {
-        pcs.addListener(listener);
-    }
-
-    public void removeListener(TableListener listener) {
-        pcs.removeListener(listener);
     }
 
 }
