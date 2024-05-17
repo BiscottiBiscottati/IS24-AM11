@@ -2,10 +2,12 @@ package it.polimi.ingsw.am11.network.RMI.Client;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 
+import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
@@ -87,5 +89,15 @@ public class ClientToServerConnector implements ConnectorInterface {
     public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
         clientUpdater.updateCommonObjective(cardId, removeMode);
 
+    }
+
+    @Override
+    public void updatePlayers(Map<PlayerColor, String> currentPlayers) throws RemoteException {
+        clientUpdater.updatePlayers(currentPlayers);
+    }
+
+    @Override
+    public void notifyGodPlayer() throws RemoteException {
+        clientUpdater.notifyGodPlayer();
     }
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.network.RMI.RemoteInterfaces;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 
 import java.rmi.Remote;
@@ -34,5 +35,9 @@ public interface ConnectorInterface extends Remote {
 
     void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) throws RemoteException;
 
-    void updateCommonObjective(Set<Integer> cardId, boolean removeMode) throws RemoteException;
+    void updateCommonObjective(int cardId, boolean removeMode) throws RemoteException;
+
+    void updatePlayers(Map<PlayerColor, String> currentPlayers) throws RemoteException;
+
+    void notifyGodPlayer() throws RemoteException;
 }

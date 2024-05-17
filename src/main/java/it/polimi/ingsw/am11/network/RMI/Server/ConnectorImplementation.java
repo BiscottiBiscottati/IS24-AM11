@@ -127,6 +127,11 @@ public class ConnectorImplementation implements PlayerConnector, TableConnector 
 
     @Override
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+        try {
+            remoteConnector.updatePlayers(currentPlayers);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
