@@ -35,7 +35,7 @@ public interface ConnectorInterface extends Remote {
 
     void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) throws RemoteException;
 
-    void updateCommonObjective(int cardId, boolean removeMode) throws RemoteException;
+    void updateCommonObjective(Set<Integer> cardID, boolean removeMode) throws RemoteException;
 
     void updatePlayers(Map<PlayerColor, String> currentPlayers) throws RemoteException;
 
