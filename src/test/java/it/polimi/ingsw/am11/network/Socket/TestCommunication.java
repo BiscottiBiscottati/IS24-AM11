@@ -47,6 +47,7 @@ class TestCommunication {
         clientSocket3 = new ClientSocket("localhost", 12345, clientViewUpdaterMock3);
         clientSocket4 = new ClientSocket("localhost", 12345, clientViewUpdaterMock4);
         // Create SendCommand and ReceiveCommand instances
+
         SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
         ReceiveCommandC receiveCommandC = new ReceiveCommandC(clientViewUpdaterMock);
         SendCommandC sendCommandC2 = new SendCommandC(clientSocket2.getOut());

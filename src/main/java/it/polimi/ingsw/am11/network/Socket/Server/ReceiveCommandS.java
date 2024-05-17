@@ -28,7 +28,7 @@ public class ReceiveCommandS {
                 case "setStarterCard":
                     playerView.setStarterCard(jsonNode.get("isRetro").asBoolean());
                     break;
-                case "setObjectiveCard":
+                case "setPersonalObjective":
                     playerView.setObjectiveCard(jsonNode.get("cardId").asInt());
                     break;
                 case "placeCard":
