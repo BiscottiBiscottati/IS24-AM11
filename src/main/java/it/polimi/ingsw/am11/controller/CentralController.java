@@ -11,14 +11,19 @@ import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import it.polimi.ingsw.am11.view.server.VirtualTableView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public enum CentralController {
     INSTANCE;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CentralController.class);
 
     private final GameModel model;
     private final VirtualTableView tableView;
@@ -53,7 +58,7 @@ public enum CentralController {
         }
 
         synchronized (playerViews) {
-            if (playerViews.size() >= currentMaxPlayers) {
+            if (currentMaxPlayers != - 1 && playerViews.size() >= currentMaxPlayers) {
                 throw new NumOfPlayersException("Max num of players reached");
             }
 
@@ -82,7 +87,7 @@ public enum CentralController {
         if (val <= 1 || val > model.getRuleSet().getMaxPlayers())
             throw new NumOfPlayersException("Trying to add an illegal number of players");
 
-        if (! godPlayer.get().equals(nickname)) {
+        if (! Objects.equals(godPlayer.get(), nickname)) {
             throw new NotGodPlayerException("A not god player is trying to set the num of " +
                                             "players");
         }
@@ -90,6 +95,8 @@ public enum CentralController {
         if (! maxNumOfPlayer.compareAndSet(- 1, val)) {
             throw new GameStatusException("num of players already set");
         }
+
+        LOGGER.info("Num of players set to {} by {}", val, nickname);
     }
 
     public void playerDisconnected(String nickname) {
