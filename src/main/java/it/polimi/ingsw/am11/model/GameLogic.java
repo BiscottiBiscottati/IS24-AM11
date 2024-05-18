@@ -890,11 +890,12 @@ public class GameLogic implements GameModel {
 
     @Override
     public void forceReset() {
-        LOGGER.info("Forcing the reset of the game");
+        LOGGER.info("RESET: Forcing the reset of the game");
         pcs.clearListeners();
         plateau.hardReset();
         pickablesTable.hardReset();
         playerManager.hardReset();
+        plateau.setStatus(GameStatus.SETUP);
     }
 
     private void giveCards() throws GameBreakingException {
