@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.Socket;
 
+import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
@@ -7,31 +8,40 @@ import it.polimi.ingsw.am11.network.Socket.Client.ReceiveCommandC;
 import it.polimi.ingsw.am11.network.Socket.Client.SendCommandC;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.util.concurrent.Executors;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 class TestCommunication {
 
-    private static SocketManager server;
+    private static CentralController centralController;
     private static ClientSocket clientSocket;
     private static ClientSocket clientSocket2;
     private static ClientSocket clientSocket3;
     private static ClientSocket clientSocket4;
+    private static CountDownLatch latch;
+    private Thread server;
 
     @BeforeAll
     public static void setupServer() {
-        server = new SocketManager(12345);
-        Executors.newSingleThreadExecutor().execute(server::start);
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        centralController = CentralController.INSTANCE;
+        latch = new CountDownLatch(1);
+    }
+
+    @BeforeEach
+    void setUp() {
+        centralController.forceReset();
+        server = new Thread(() -> {
+            new SocketManager(12345).start();
+        });
+        server.start();
     }
 
     @Test
@@ -135,7 +145,6 @@ class TestCommunication {
         clientSocket2.close();
         clientSocket3.close();
         clientSocket4.close();
-        server.stop();
 
     }
 
@@ -160,19 +169,92 @@ class TestCommunication {
         SendCommandC sendCommandC4 = new SendCommandC(clientSocket4.getOut());
         ReceiveCommandC receiveCommandC4 = new ReceiveCommandC(clientViewUpdaterMock4);
         // Send a message to the server
+
+        Mockito.doAnswer(invocation -> {
+            sendCommandC.setNumOfPlayers(4);
+            latch.countDown();
+            return 0;
+        }).when(clientViewUpdaterMock).notifyGodPlayer();
+        Mockito.doAnswer(invocation -> {
+            sendCommandC.setStarterCard(true);
+            latch.countDown();
+            return 0;
+        }).when(clientViewUpdaterMock).receiveStarterCard(ArgumentMatchers.anyInt());
+
+        Mockito.doAnswer(invocation -> {
+            sendCommandC2.setStarterCard(false);
+            latch.countDown();
+            return 0;
+        }).when(clientViewUpdaterMock2).receiveStarterCard(ArgumentMatchers.anyInt());
+
+        Mockito.doAnswer(invocation -> {
+            sendCommandC3.setStarterCard(false);
+            latch.countDown();
+            return 0;
+        }).when(clientViewUpdaterMock3).receiveStarterCard(ArgumentMatchers.anyInt());
+
+        Mockito.doAnswer(invocation -> {
+            sendCommandC4.setStarterCard(false);
+            latch.countDown();
+            return 0;
+        }).when(clientViewUpdaterMock4).receiveStarterCard(ArgumentMatchers.anyInt());
+
+        Mockito.doAnswer(invocation -> {
+            Set<Integer> objsID = invocation.getArgument(0);
+            sendCommandC.setPersonalObjective(objsID.stream().findAny().orElseThrow());
+            latch.countDown();
+            return 0;
+        }).when(clientViewUpdaterMock).receiveCandidateObjective(ArgumentMatchers.anySet());
+
+        Mockito.doAnswer(invocation -> {
+            Set<Integer> objsID = invocation.getArgument(0);
+            sendCommandC2.setPersonalObjective(objsID.stream().findAny().orElseThrow());
+            latch.countDown();
+            return 0;
+        }).when(clientViewUpdaterMock2).receiveCandidateObjective(ArgumentMatchers.anySet());
+
+        Mockito.doAnswer(invocation -> {
+            Set<Integer> objsID = invocation.getArgument(0);
+            sendCommandC3.setPersonalObjective(objsID.stream().findAny().orElseThrow());
+            latch.countDown();
+            return 0;
+        }).when(clientViewUpdaterMock3).receiveCandidateObjective(ArgumentMatchers.anySet());
+
+        Mockito.doAnswer(invocation -> {
+            Set<Integer> objsID = invocation.getArgument(0);
+            sendCommandC4.setPersonalObjective(objsID.stream().findAny().orElseThrow());
+            latch.countDown();
+            return 0;
+        }).when(clientViewUpdaterMock4).receiveCandidateObjective(ArgumentMatchers.anySet());
+
         sendCommandC.setNickname("Francesco");
-        sendCommandC.setNumOfPlayers(4);
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        latch = new CountDownLatch(8);
+
         sendCommandC2.setNickname("Giovanni");
-        sendCommandC3.setNickname("Giuseppe");
-        sendCommandC4.setNickname("Giacomo");
-        sendCommandC.setStarterCard(true);
-        sendCommandC2.setStarterCard(false);
-        sendCommandC3.setStarterCard(false);
-        sendCommandC4.setStarterCard(false);
-        Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).notifyGodPlayer();
         Mockito.verify(clientViewUpdaterMock2, Mockito.times(0)).notifyGodPlayer();
+        sendCommandC3.setNickname("Giuseppe");
         Mockito.verify(clientViewUpdaterMock3, Mockito.times(0)).notifyGodPlayer();
+        sendCommandC4.setNickname("Giacomo");
         Mockito.verify(clientViewUpdaterMock4, Mockito.times(0)).notifyGodPlayer();
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        clientSocket.close();
+        clientSocket2.close();
+        clientSocket3.close();
+        clientSocket4.close();
+
         Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).receiveStarterCard(
                 ArgumentMatchers.anyInt());
         Mockito.verify(clientViewUpdaterMock2, Mockito.times(1)).receiveStarterCard(
@@ -189,12 +271,10 @@ class TestCommunication {
                 ArgumentMatchers.anySet());
         Mockito.verify(clientViewUpdaterMock4, Mockito.times(1)).receiveCandidateObjective(
                 ArgumentMatchers.anySet());
+    }
 
-
-        clientSocket.close();
-        clientSocket2.close();
-        clientSocket3.close();
-        clientSocket4.close();
-        server.stop();
+    @AfterEach
+    void tearDown() {
+        server.interrupt();
     }
 }

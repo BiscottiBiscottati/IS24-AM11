@@ -90,8 +90,8 @@ public class ClientHandler implements Runnable {
 
     public void stop() throws IOException {
         isRunning = false;
-        clientSocket.close();
         in.close();
         out.close();
+        clientSocket.close();
     }
 }

@@ -11,6 +11,7 @@ import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import it.polimi.ingsw.am11.view.server.VirtualTableView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.TestOnly;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,13 +26,13 @@ public enum CentralController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CentralController.class);
 
-    private final GameModel model;
-    private final VirtualTableView tableView;
-    private final CardController cardController;
-    private final GameController gameController;
-    private final Map<String, VirtualPlayerView> playerViews;
-    private final AtomicInteger maxNumOfPlayer;
-    private final AtomicReference<String> godPlayer;
+    private GameModel model;
+    private VirtualTableView tableView;
+    private CardController cardController;
+    private GameController gameController;
+    private Map<String, VirtualPlayerView> playerViews;
+    private AtomicInteger maxNumOfPlayer;
+    private AtomicReference<String> godPlayer;
 
     CentralController() {
         this.model = new GameLogic();
@@ -118,5 +119,17 @@ public enum CentralController {
 
     public GameController getGameController() {
         return gameController;
+    }
+
+    @TestOnly
+    public void forceReset() {
+        this.model = new GameLogic();
+        this.tableView = new VirtualTableView();
+        this.cardController = new CardController(model);
+        this.gameController = new GameController(model);
+        this.playerViews = new ConcurrentHashMap<>(8);
+        this.model.addTableListener(new TableViewUpdater(tableView));
+        this.maxNumOfPlayer = new AtomicInteger(- 1);
+        this.godPlayer = new AtomicReference<>(null);
     }
 }
