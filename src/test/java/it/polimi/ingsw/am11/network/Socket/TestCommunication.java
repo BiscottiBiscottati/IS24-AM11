@@ -155,10 +155,12 @@ class TestCommunication {
         ClientViewUpdater clientViewUpdaterMock3 = Mockito.mock(ClientViewUpdater.class);
         ClientViewUpdater clientViewUpdaterMock4 = Mockito.mock(ClientViewUpdater.class);
 
+        // Create clientSocket
         clientSocket = new ClientSocket("localhost", 12345, clientViewUpdaterMock);
         clientSocket2 = new ClientSocket("localhost", 12345, clientViewUpdaterMock2);
         clientSocket3 = new ClientSocket("localhost", 12345, clientViewUpdaterMock3);
         clientSocket4 = new ClientSocket("localhost", 12345, clientViewUpdaterMock4);
+
         // Create SendCommand and ReceiveCommand instances
         SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
         ReceiveCommandC receiveCommandC = new ReceiveCommandC(clientViewUpdaterMock);
@@ -168,13 +170,15 @@ class TestCommunication {
         ReceiveCommandC receiveCommandC3 = new ReceiveCommandC(clientViewUpdaterMock3);
         SendCommandC sendCommandC4 = new SendCommandC(clientSocket4.getOut());
         ReceiveCommandC receiveCommandC4 = new ReceiveCommandC(clientViewUpdaterMock4);
-        // Send a message to the server
 
+        // Setup Mockito chain invocation for sending num of player
         Mockito.doAnswer(invocation -> {
             sendCommandC.setNumOfPlayers(4);
             latch.countDown();
             return 0;
         }).when(clientViewUpdaterMock).notifyGodPlayer();
+
+        // Setup Mockito chain invocations for setting Starters and PersonalObjectives
         Mockito.doAnswer(invocation -> {
             sendCommandC.setStarterCard(true);
             latch.countDown();
@@ -227,6 +231,7 @@ class TestCommunication {
             return 0;
         }).when(clientViewUpdaterMock4).receiveCandidateObjective(ArgumentMatchers.anySet());
 
+        // sending first player nickname
         sendCommandC.setNickname("Francesco");
 
         try {
@@ -237,6 +242,7 @@ class TestCommunication {
 
         latch = new CountDownLatch(8);
 
+        // sending other players nickname
         sendCommandC2.setNickname("Giovanni");
         Mockito.verify(clientViewUpdaterMock2, Mockito.times(0)).notifyGodPlayer();
         sendCommandC3.setNickname("Giuseppe");
@@ -250,11 +256,13 @@ class TestCommunication {
             throw new RuntimeException(e);
         }
 
+        // Close the sockets
         clientSocket.close();
         clientSocket2.close();
         clientSocket3.close();
         clientSocket4.close();
 
+        // Verify the invocations from Server
         Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).receiveStarterCard(
                 ArgumentMatchers.anyInt());
         Mockito.verify(clientViewUpdaterMock2, Mockito.times(1)).receiveStarterCard(
