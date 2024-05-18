@@ -106,4 +106,6 @@ public interface GameModel {
     void addUnavailablePlayer(String nickname);
 
     void playerIsNowAvailable(String nickname);
+
+    void forceReset();
 }

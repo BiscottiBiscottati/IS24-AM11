@@ -57,4 +57,9 @@ public class GameListenerSupport {
         }
     }
 
+    public void clearListeners() {
+        this.playerListeners.clear();
+        this.tableListeners.clear();
+    }
+
 }

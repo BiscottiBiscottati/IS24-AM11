@@ -57,4 +57,9 @@ public class GameController {
     public void forceEnd() {
         model.forceEnd();
     }
+
+    void reset() {
+        colors.clear();
+        colors.addAll(Arrays.asList(PlayerColor.values()));
+    }
 }

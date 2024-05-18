@@ -42,6 +42,8 @@ public class PlayerManager {
         this.players = new HashMap<>(8);
         this.playerQueue = new ArrayDeque<>(maxNumberOfPlayers);
         this.unavailablePlayers = new HashSet<>(8);
+        this.firstPlayer = null;
+        this.currentPlaying = null;
         this.pcs = pcs;
     }
 
@@ -317,4 +319,13 @@ public class PlayerManager {
         pcs.removeListener(listener);
     }
 
+    public void hardReset() {
+        LOGGER.debug("Hard reset on player manager");
+
+        players.clear();
+        playerQueue.clear();
+        unavailablePlayers.clear();
+        firstPlayer = null;
+        currentPlaying = null;
+    }
 }

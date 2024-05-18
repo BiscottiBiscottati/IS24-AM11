@@ -189,9 +189,7 @@ public class PickablesTable {
     }
 
     public void initialize() {
-        commonObjectives.clear();
-        shownGold.clear();
-        shownResources.clear();
+        clearTable();
         try {
             pickCommonObjectives();
         } catch (EmptyDeckException e) {
@@ -225,6 +223,12 @@ public class PickablesTable {
                             ));
                         });
         }
+    }
+
+    private void clearTable() {
+        commonObjectives.clear();
+        shownGold.clear();
+        shownResources.clear();
     }
 
     public void pickCommonObjectives() throws EmptyDeckException {
@@ -335,4 +339,10 @@ public class PickablesTable {
         pcs.removeListener(listener);
     }
 
+    public void hardReset() {
+        LOGGER.debug("Hard resetting PickablesTable");
+
+        resetDecks();
+        clearTable();
+    }
 }

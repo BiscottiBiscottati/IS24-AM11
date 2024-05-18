@@ -196,4 +196,12 @@ public class Plateau {
         return winners;
     }
 
+    public void hardReset() {
+        LOGGER.debug("Hard reset on plateau");
+        playerPoints.clear();
+        counterObjective.clear();
+        finalLeaderboard.clear();
+        status.set(GameStatus.SETUP);
+    }
+
 }

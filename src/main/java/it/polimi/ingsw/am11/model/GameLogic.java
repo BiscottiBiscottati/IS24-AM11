@@ -888,6 +888,15 @@ public class GameLogic implements GameModel {
         playerManager.playerIsNowAvailable(player);
     }
 
+    @Override
+    public void forceReset() {
+        LOGGER.info("Forcing the reset of the game");
+        pcs.clearListeners();
+        plateau.hardReset();
+        pickablesTable.hardReset();
+        playerManager.hardReset();
+    }
+
     private void giveCards() throws GameBreakingException {
         pickablesTable.initialize();
 
