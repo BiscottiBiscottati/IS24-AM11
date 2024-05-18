@@ -9,8 +9,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class CentralControllerTest {
@@ -26,6 +31,7 @@ class CentralControllerTest {
     @BeforeEach
     void setUp() {
         centralController = CentralController.INSTANCE;
+        centralController.forceReset();
     }
 
     @Test
@@ -45,6 +51,50 @@ class CentralControllerTest {
     }
 
     @Test
-    void setNumOfPlayers() {
+    void threadSafetyTest() {
+        Set<String> nicknames = Set.of("edo", "osama", "ferdi");
+
+        assertDoesNotThrow(() -> {
+            centralController.connectPlayer("chen", playerConnector, tableConnector);
+        });
+
+        try {
+
+            ExecutorService executor = Executors.newFixedThreadPool(8);
+
+            CountDownLatch playerLatch = new CountDownLatch(nicknames.size());
+
+            for (String nickname : nicknames) {
+                executor.submit(() -> {
+                    playerLatch.countDown();
+                    assertThrows(NotSetNumOfPlayerException.class,
+                                 () -> centralController.connectPlayer(
+                                         nickname, playerConnector, tableConnector));
+                });
+            }
+            playerLatch.await();
+
+            CountDownLatch latch = new CountDownLatch(1);
+
+            assertDoesNotThrow(() -> centralController.setNumOfPlayers("chen", 4));
+
+            for (String nickname : nicknames) {
+                executor.submit(() -> {
+                    try {
+                        latch.await();
+                        assertDoesNotThrow(() -> centralController.connectPlayer(
+                                nickname, playerConnector, tableConnector));
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                });
+            }
+            latch.countDown();
+            executor.shutdown();
+            if (! executor.awaitTermination(10, TimeUnit.SECONDS)) fail("Timeout");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
