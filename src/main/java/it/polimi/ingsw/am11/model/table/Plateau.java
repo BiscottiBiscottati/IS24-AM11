@@ -104,7 +104,6 @@ public class Plateau {
                         .forEach(
                                 player -> counterObjective.put(player, 0)
                         );
-        setStatus(GameStatus.CHOOSING_STARTERS);
     }
 
     public void addPlayer(Player newPlayer) {
