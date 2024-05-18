@@ -28,6 +28,7 @@ class TestCommunication {
     private static ClientSocket clientSocket4;
     private static CountDownLatch latch;
     private Thread server;
+    private SocketManager serverSocket;
 
     @BeforeAll
     public static void setupServer() {
@@ -35,11 +36,13 @@ class TestCommunication {
         latch = new CountDownLatch(1);
     }
 
+    // FIXME there are side effects when doing the tests together
     @BeforeEach
     void setUp() {
         centralController.forceReset();
+        serverSocket = new SocketManager(12345);
         server = new Thread(() -> {
-            new SocketManager(12345).start();
+            serverSocket.start();
         });
         server.start();
     }
@@ -68,6 +71,13 @@ class TestCommunication {
         ReceiveCommandC receiveCommandC4 = new ReceiveCommandC(clientViewUpdaterMock4);
         // Send a message to the server
         sendCommandC.setNickname("Francesco");
+
+        try {
+            Thread.sleep(1000); // Wait for 2 seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         sendCommandC.setNumOfPlayers(4);
         try {
             Thread.sleep(1000); // Wait for 2 seconds
@@ -283,6 +293,11 @@ class TestCommunication {
 
     @AfterEach
     void tearDown() {
+        serverSocket.stop();
         server.interrupt();
+        try {
+            server.join();
+        } catch (InterruptedException ignored) {
+        }
     }
 }
