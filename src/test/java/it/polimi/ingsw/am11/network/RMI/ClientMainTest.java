@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.network.RMI.Server.ServerMain;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -18,6 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 class ClientMainTest {
+
+    @BeforeEach
+    void setUp() {
+        CentralController.INSTANCE.forceReset();
+    }
 
     @Test
     void main() {

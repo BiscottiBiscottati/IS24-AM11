@@ -47,6 +47,7 @@ class TestCommunication {
         server.start();
     }
 
+    // FIXME test doesn't finish
     @Test
     public void testSetupPlayersWithWait() throws IOException, NumOfPlayersException,
                                                   GameStatusException {
