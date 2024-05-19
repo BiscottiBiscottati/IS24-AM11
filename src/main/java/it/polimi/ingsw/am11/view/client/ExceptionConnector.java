@@ -29,4 +29,6 @@ public interface ExceptionConnector {
     void throwException(IllegalPlateauActionException description);
 
     void throwException(MaxHandSizeException description);
+
+    void throwException(LostConnectionException description);
 }

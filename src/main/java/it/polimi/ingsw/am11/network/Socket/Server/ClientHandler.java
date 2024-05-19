@@ -83,15 +83,20 @@ public class ClientHandler implements Runnable {
                 }
             } catch (IOException e) {
                 System.out.println("TCP: Connection closed");
-                //e.printStackTrace();
+                try {
+                    stop();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                CentralController.INSTANCE.playerDisconnected(nickname);
             }
         }
     }
 
     public void stop() throws IOException {
         isRunning = false;
-        in.close();
-        out.close();
-        clientSocket.close();
+        if (in != null) in.close();
+        if (out != null) out.close();
+        if (clientSocket != null) clientSocket.close();
     }
 }

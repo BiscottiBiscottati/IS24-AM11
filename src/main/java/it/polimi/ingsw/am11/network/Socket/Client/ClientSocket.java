@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class ClientSocket implements ClientNetworkHandler {
@@ -20,7 +19,6 @@ public class ClientSocket implements ClientNetworkHandler {
     private final ReceiveCommandC receiveCommandC;
     private final SendCommandC sendCommandC;
     private final Socket socket;
-    private final Thread thread;
     private boolean isRunning;
 
     public ClientSocket(String ip, int port,
@@ -33,7 +31,7 @@ public class ClientSocket implements ClientNetworkHandler {
             out = new PrintWriter(socket.getOutputStream(), true);
             sendCommandC = new SendCommandC(out);
             receiveCommandC = new ReceiveCommandC(this.clientViewUpdater);
-            thread = new Thread(this::run);
+            Thread thread = new Thread(this::run);
             thread.start();
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 try {
@@ -59,36 +57,39 @@ public class ClientSocket implements ClientNetworkHandler {
     public void run() {
         isRunning = true;
         String message;
-        try {
-            while (isRunning) {
+        while (isRunning) {
+            try {
                 message = in.readLine();
                 if (message != null && ! message.isEmpty()) {
                     receiveCommandC.receive(message);
                 }
+            } catch (IOException e) {
+                System.out.println("Connection closed");
+                ReceiveException receiveException = receiveCommandC.getReceiveException();
+                receiveException.sendDisconnectionException();
+                //TODO: handle disconnection
+                try {
+                    close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
-        } catch (SocketException e) {
-            System.out.println("Client: Connection closed");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+    }
+
+    public void close() throws IOException {
+        isRunning = false;
+        if (in != null) in.close();
+        if (out != null) out.close();
+        if (socket != null) socket.close();
     }
 
     public CltToNetConnector getConnector() {
         return sendCommandC;
     }
 
+    // For testing purposes
     public PrintWriter getOut() {
         return out;
-    }
-
-    public void close() {
-        isRunning = false;
-        try {
-            socket.close();
-            in.close();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

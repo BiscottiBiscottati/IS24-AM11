@@ -117,4 +117,8 @@ public class ReceiveCommandC {
             System.out.println("Received invalid message.");
         }
     }
+
+    public ReceiveException getReceiveException() {
+        return receiveException;
+    }
 }

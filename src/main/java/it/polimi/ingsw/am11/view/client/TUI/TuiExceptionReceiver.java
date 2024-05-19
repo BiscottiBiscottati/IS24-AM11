@@ -98,4 +98,9 @@ public class TuiExceptionReceiver implements ExceptionConnector {
     public void throwException(MaxHandSizeException description) {
         //TODO
     }
+
+    @Override
+    public void throwException(LostConnectionException description) {
+        //TODO
+    }
 }

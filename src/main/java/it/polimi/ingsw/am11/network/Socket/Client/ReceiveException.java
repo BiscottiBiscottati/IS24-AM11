@@ -84,9 +84,15 @@ public class ReceiveException {
                     exceptionConnector.throwException(
                             new MaxHandSizeException(jsonNode.get("description").asText()));
                     break;
+
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendDisconnectionException() {
+        exceptionConnector
+                .throwException(new LostConnectionException("Lost connection from server"));
     }
 }
