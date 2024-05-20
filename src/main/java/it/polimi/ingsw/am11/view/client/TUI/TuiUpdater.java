@@ -252,7 +252,7 @@ public class TuiUpdater implements ClientViewUpdater {
         model.addStarterCard(cardId);
         LOGGER.debug("Receive starter event, card id: {}", cardId);
         try {
-            CardPrinter.printCardFeB(cardId);
+            CardPrinter.printCardFrontAndBack(cardId);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }

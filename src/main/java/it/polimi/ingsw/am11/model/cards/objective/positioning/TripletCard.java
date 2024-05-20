@@ -6,17 +6,22 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.model.cards.utils.helpers.MatrixFiller;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
+import java.util.List;
+import java.util.Set;
 
-public class TripletCard extends PositioningCard {
+public final class TripletCard extends PositioningCard {
     private final boolean flippedFlag;
     private final @Nullable Color colorOfPattern;
     private final @NotNull PatternCounter counter;
+    private final @NotNull List<List<Color>> pattern;
 
     private TripletCard(@NotNull Builder builder) {
         super(builder, builder.colorRequirements);
@@ -44,6 +49,14 @@ public class TripletCard extends PositioningCard {
             }
         }
         this.counter = new TripletPatternCounter(this.colorOfPattern, cornersPurpose);
+
+        Set<Position> positions = getType().getPositions(flippedFlag, false).orElseThrow();
+
+        this.pattern = MatrixFiller.fillMatrixWithNull(4, 3, Color.class);
+
+        positions.forEach(position -> {
+            this.pattern.get(position.y()).set(position.x(), colorOfPattern);
+        });
     }
 
     @Override
@@ -62,6 +75,11 @@ public class TripletCard extends PositioningCard {
 
     public boolean isFlipped() {
         return flippedFlag;
+    }
+
+    @Override
+    public @NotNull List<List<Color>> getPattern() {
+        return pattern;
     }
 
     public static class Builder extends PositioningCard.Builder<TripletCard> {

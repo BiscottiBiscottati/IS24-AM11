@@ -6,20 +6,24 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.model.cards.utils.helpers.MatrixFiller;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Set;
 
-public class LCard extends PositioningCard {
+public final class LCard extends PositioningCard {
 
     private final boolean isFlippedFlag;
     private final boolean isRotatedFlag;
     private final @Nullable Color primaryColor;
     private final @Nullable Color secondaryColor;
+    private final List<List<Color>> pattern;
 
     private final @NotNull PatternCounter counter;
 
@@ -66,6 +70,17 @@ public class LCard extends PositioningCard {
             }
         }
         this.counter = new LPatternCounter(this.primaryColor, this.secondaryColor, cornersPurpose);
+
+        Set<Position> positions = getType().getPositions(isFlippedFlag,
+                                                         isRotatedFlag).orElseThrow();
+
+        this.pattern = MatrixFiller.fillMatrixWithNull(4, 3, Color.class);
+
+        for (Position position : positions) {
+            this.pattern.get(position.y()).set(position.x(), position.x() == 1 ?
+                                                             this.primaryColor :
+                                                             this.secondaryColor);
+        }
     }
 
     @Override
@@ -76,7 +91,9 @@ public class LCard extends PositioningCard {
 
     @Override
     public int countPoints(@NotNull PlayerField playerField) {
+        assert this.primaryColor != null;
         if (playerField.getNumberOf(this.primaryColor) < 2) return 0;
+        assert this.secondaryColor != null;
         if (playerField.getNumberOf(this.secondaryColor) < 1) return 0;
         return this.counter.count(playerField) * this.getPoints();
     }
@@ -89,6 +106,11 @@ public class LCard extends PositioningCard {
         return this.isRotatedFlag;
     }
 
+    @Override
+    public @NotNull List<List<Color>> getPattern() {
+
+        return pattern;
+    }
 
     public static class Builder extends PositioningCard.Builder<LCard> {
 

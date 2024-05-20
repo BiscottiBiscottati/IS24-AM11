@@ -1,6 +1,13 @@
 package it.polimi.ingsw.am11.view.client.TUI;
 
+import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
+import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
+import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
+import it.polimi.ingsw.am11.model.cards.objective.positioning.TripletCard;
+import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
+import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.enums.*;
@@ -10,22 +17,27 @@ import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.view.client.TUI.utils.Line;
+import it.polimi.ingsw.am11.view.client.TUI.utils.Matrix;
+import it.polimi.ingsw.am11.view.client.TUI.utils.Part;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 
 public class CardPrinter {
 
-    private static final Deck goldDeck = GoldDeckFactory.createDeck();
-    private static final Deck starterDeck = StarterDeckFactory.createDeck();
-    private static final Deck resDeck = ResourceDeckFactory.createDeck();
-    private static final Deck objDeck = ObjectiveDeckFactory.createDeck();
+    private static final Deck<GoldCard> goldDeck = GoldDeckFactory.createDeck();
+    private static final Deck<StarterCard> starterDeck = StarterDeckFactory.createDeck();
+    private static final Deck<ResourceCard> resDeck = ResourceDeckFactory.createDeck();
+    private static final Deck<ObjectiveCard> objDeck = ObjectiveDeckFactory.createDeck();
 
-    public static void printCardFeB(int id) throws Throwable {
+    public static void printCardFrontAndBack(int id) throws IllegalCardBuildException {
         if (starterDeck.getCardById(id).isPresent()) {
             StarterCard sCard = getStarterCard(id);
 
@@ -75,7 +87,148 @@ public class CardPrinter {
 //                                       """);
 
         } else if (objDeck.getCardById(id).isPresent()) {
-            //TODO
+            ObjectiveCard objectiveCard = objDeck.getCardById(id).orElseThrow();
+
+            List<Line> lines = new ArrayList<>(7);
+
+            Line topLine = new Line(List.of(new Part("╔"),
+                                            new Part("═".repeat(19)),
+                                            new Part("╗")));
+
+            Line botLine = new Line(List.of(new Part("╚"),
+                                            new Part("═".repeat(19)),
+                                            new Part("╝")));
+
+            Line emptyCenterBorder = new Line(List.of(new Part("║"),
+                                                      new Part(" ".repeat(19)),
+                                                      new Part("║")));
+            lines.add(topLine);
+
+            int points = objectiveCard.getPoints();
+            Line pointsLine = new Line(List.of(new Part("║"),
+                                               new Part(" ".repeat(9)),
+                                               new Part(String.valueOf(points)),
+                                               new Part(" ".repeat(9)),
+                                               new Part("║")));
+            lines.add(pointsLine);
+
+            switch (objectiveCard) {
+                case ColorCollectCard colorCollectCard -> {
+                    Map.Entry<Color, Integer> colorToCollect =
+                            colorCollectCard.getColorRequirements()
+                                            .entrySet()
+                                            .stream().filter(
+                                                    entry -> entry.getValue() > 0).findFirst()
+                                            .orElseThrow();
+                    char colorLetter = getColorLetter(colorToCollect.getKey());
+                    lines.add(emptyCenterBorder);
+                    lines.add(new Line(List.of(new Part("║"),
+                                               new Part(" ".repeat(8)),
+                                               new Part(colorToCollect.getValue().toString()),
+                                               new Part("x"),
+                                               new Part(String.valueOf(colorLetter)),
+                                               new Part(" ".repeat(8)),
+                                               new Part("║"))));
+                    lines.add(emptyCenterBorder);
+                }
+                case SymbolCollectCard symbolCollectCard -> {
+                    for (Map.Entry<Symbol, Integer> entry :
+                            symbolCollectCard.getSymbolRequirements().entrySet()) {
+                        if (entry.getValue() == 0) {
+                            continue;
+                        }
+                        char symbolLetter = getLetter(entry.getKey());
+                        lines.add(new Line(List.of(new Part("║"),
+                                                   new Part(" ".repeat(8)),
+                                                   new Part(entry.getValue().toString()),
+                                                   new Part("x"),
+                                                   new Part(String.valueOf(symbolLetter)),
+                                                   new Part(" ".repeat(8)),
+                                                   new Part("║"))));
+                    }
+                    if (5 - lines.size() > 0) {
+                        IntStream.range(0, 5 - lines.size())
+                                 .forEach(i -> lines.add(emptyCenterBorder));
+                    }
+                    lines.add(emptyCenterBorder);
+                }
+                case TripletCard tripletCard -> {
+                    boolean isFlipped = tripletCard.isFlipped();
+                    char colorOfPattern =
+                            Stream.of(Color.values())
+                                  .filter(color -> tripletCard.hasItemRequirements(color) > 0)
+                                  .map(CardPrinter::getLetter)
+                                  .findFirst().orElseThrow();
+                    List<List<String>> pattern = new ArrayList<>(4);
+                    for (int i = 0; i < 4; i++) {
+                        pattern.add(new ArrayList<>(3));
+                    }
+
+                    // fill with " " a 4x3 matrix
+                    IntStream.range(0, 4).forEach(i -> {
+                        IntStream.range(0, 3).forEach(j -> {
+                            pattern.get(i).add(j, " ");
+                        });
+                    });
+
+
+                    tripletCard.getType().getPositions(isFlipped, false)
+                               .orElseThrow()
+                               .forEach(position -> {
+                                   int x = position.x();
+                                   int y = position.y();
+                                   pattern.get(x)
+                                          .set(y, String.valueOf(colorOfPattern));
+                               });
+
+                    for (int i = 0; i < 4; i++) {
+                        List<Part> parts = new ArrayList<>(4);
+                        parts.add(new Part("║"));
+                        parts.add(new Part(" ".repeat(7)));
+
+                        parts.add(new Part(String.join(" ", pattern.get(i))));
+
+                        parts.add(new Part(" ".repeat(7)));
+                        parts.add(new Part("║"));
+                        lines.add(new Line(parts));
+                    }
+
+                }
+                case LCard lCard -> {
+                    boolean isFlipped = lCard.isFlipped();
+                    boolean isRotated = lCard.isRotated();
+
+                    List<List<String>> pattern =
+                            IntStream.range(0, 4)
+                                     .mapToObj(i -> lCard.getPattern().get(i)
+                                                         .stream()
+                                                         .map(color -> color == null ?
+                                                                       " " :
+                                                                       String.valueOf(
+                                                                               getLetter(color)))
+                                                         .toList())
+                                     .toList();
+
+                    for (int i = 0; i < 4; i++) {
+                        List<Part> parts = new ArrayList<>(4);
+                        parts.add(new Part("║"));
+                        parts.add(new Part(" ".repeat(7)));
+
+                        parts.add(new Part(String.join(" ", pattern.get(i))));
+
+                        parts.add(new Part(" ".repeat(7)));
+                        parts.add(new Part("║"));
+                        lines.add(new Line(parts));
+                    }
+                }
+                default -> IntStream.range(0, 3).forEach(i -> lines.add(emptyCenterBorder));
+
+            }
+
+            lines.add(botLine);
+
+            new Matrix(lines).print();
+
 
         } else {
             PlayableCard pCard = getCard(id);
@@ -114,8 +267,8 @@ public class CardPrinter {
         }
     }
 
-    public static StarterCard getStarterCard(int id) throws Throwable {
-        return (StarterCard) starterDeck.getCardById(id).orElseThrow(
+    public static StarterCard getStarterCard(int id) throws IllegalCardBuildException {
+        return starterDeck.getCardById(id).orElseThrow(
                 () -> new IllegalCardBuildException(
                         "Starter Card not found"));
     }
@@ -132,14 +285,14 @@ public class CardPrinter {
             return ' ';
         }
 
-        switch (container.getItem().orElseThrow().getColumnName()) {
-            case "red" -> {return 'R';}
-            case "blue" -> {return 'B';}
-            case "green" -> {return 'G';}
-            case "purple" -> {return 'P';}
-            case "feather" -> {return 'F';}
-            case "glass" -> {return 'I';}
-            case "paper" -> {return 'S';}
+        switch (container.getItem().orElseThrow()) {
+            case Color.RED -> {return 'R';}
+            case Color.BLUE -> {return 'B';}
+            case Color.GREEN -> {return 'G';}
+            case Color.PURPLE -> {return 'P';}
+            case Symbol.FEATHER -> {return 'F';}
+            case Symbol.GLASS -> {return 'I';}
+            case Symbol.PAPER -> {return 'S';}
             default -> throw new RuntimeException("Item is not one of the default ones: "
                                                   + container.getItem().orElseThrow());
         }
@@ -152,6 +305,7 @@ public class CardPrinter {
         String line2 = "";
         String line3 = "";
 
+        List<Line> linesComposite = new ArrayList<>(3);
         List<String> lines = new ArrayList<>(3);
         lines.add(line1);
         lines.add(line2);
@@ -161,19 +315,26 @@ public class CardPrinter {
         String centralPart;
         String rightPart;
 
+        List<Part> parts = new ArrayList<>(3);
+
         if (isTop) {
             // LINE 1
             if (left == 'X') {
                 leftPart = "╔════";
+                parts.add(new Part("╔════"));
             } else {
                 leftPart = "╔═══╤";
+                parts.add(new Part("╔═══╤"));
             }
             if (left == 'X') {
                 rightPart = "═══════════════╗";
+                parts.add(new Part("═══════════════╗"));
             } else {
                 rightPart = "═══════════╤═══╗";
+                parts.add(new Part("═══════════╤═══╗"));
             }
             line1 = leftPart + rightPart;
+            linesComposite.add(new Line(parts));
             //LINE 2
             if (left == 'X') {
                 leftPart = "║    ";
@@ -198,9 +359,9 @@ public class CardPrinter {
                 leftPart = "╟───┘";
             }
             if (card != null) {
-                centralPart = (card.getType() == PlayableCardType.GOLD) ? ("    GOLD   ") : ("  " +
-                                                                                             "RESOURCE" +
-                                                                                             " ");
+                centralPart = (card.getType() == PlayableCardType.GOLD) ?
+                              ("    GOLD   ") :
+                              ("  RESOURCE ");
             } else {
                 centralPart = spaces(11);
             }
@@ -287,13 +448,22 @@ public class CardPrinter {
         return " ".repeat(Math.max(0, num));
     }
 
-    public static PlayableCard getCard(int id) throws Throwable {
-        PlayableCard card = (PlayableCard) resDeck.getCardById(id)
-                                                  .map(PlayableCard.class::cast)
-                                                  .or(() -> goldDeck.getCardById(id)).orElseThrow(
-                        () -> new IllegalCardBuildException(
-                                "Card not found"));
-        return card;
+    public static char getColorLetter(Color color) {
+        switch (color.getColumnName()) {
+            case "red" -> {return 'R';}
+            case "blue" -> {return 'B';}
+            case "green" -> {return 'G';}
+            case "purple" -> {return 'P';}
+            default -> throw new RuntimeException("Color is not one of the default ones: "
+                                                  + color.getItem().orElseThrow());
+        }
+    }
+
+    public static PlayableCard getCard(int id) throws IllegalCardBuildException {
+        return resDeck.getCardById(id)
+                      .map(PlayableCard.class::cast)
+                      .or(() -> goldDeck.getCardById(id))
+                      .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
     }
 
     public static String buildRequirementsString(Map<Color, Integer> requirements) {
@@ -336,17 +506,6 @@ public class CardPrinter {
                 return spaces(1) + string;
             default:
                 throw new RuntimeException("Invalid number of requirements");
-        }
-    }
-
-    public static char getColorLetter(Color color) {
-        switch (color.getColumnName()) {
-            case "red" -> {return 'R';}
-            case "blue" -> {return 'B';}
-            case "green" -> {return 'G';}
-            case "purple" -> {return 'P';}
-            default -> throw new RuntimeException("Color is not one of the default ones: "
-                                                  + color.getItem().orElseThrow());
         }
     }
 

@@ -31,7 +31,8 @@ public enum ObjectiveCardType {
     )
     );
 
-    private static final int MAX_LENGTH = 3;
+    private static final int MAX_LENGTH_X = 3;
+    private static final int MAX_LENGTH_Y = 4;
     private final Set<Position> positions;
 
     ObjectiveCardType(Set<Position> positions) {
@@ -72,7 +73,7 @@ public enum ObjectiveCardType {
      */
     private static @NotNull Set<Position> flipX(@NotNull Set<Position> positions) {
         return positions.stream()
-                        .map(position -> Position.of(MAX_LENGTH - position.x() - 1, position.y()))
+                        .map(position -> Position.of(MAX_LENGTH_X - position.x() - 1, position.y()))
                         .collect(Collectors.toSet());
     }
 
@@ -84,7 +85,7 @@ public enum ObjectiveCardType {
      */
     private static @NotNull Set<Position> flipY(@NotNull Set<Position> positions) {
         return positions.stream()
-                        .map(position -> Position.of(position.x(), MAX_LENGTH - position.y() - 1))
+                        .map(position -> Position.of(position.x(), MAX_LENGTH_Y - position.y() - 1))
                         .collect(Collectors.toSet());
     }
 }

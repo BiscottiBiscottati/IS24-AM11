@@ -17,7 +17,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class ColorCollectCard extends CollectingCard {
+public final class ColorCollectCard extends CollectingCard {
     private static final ImmutableMap<Symbol, Integer> SYMBOL_TO_COLLECT = Maps.immutableEnumMap(
             EnumMapUtils.Init(Symbol.class, 0)
     );

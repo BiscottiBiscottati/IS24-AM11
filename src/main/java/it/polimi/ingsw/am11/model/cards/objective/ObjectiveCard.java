@@ -26,7 +26,8 @@ import java.util.Objects;
  * The actual implementation of the card's functionality is left to subclasses. These subclasses
  * must provide implementations for the abstract methods defined in this class.
  */
-public abstract class ObjectiveCard implements CardIdentity {
+public abstract sealed class ObjectiveCard implements CardIdentity
+        permits CollectingCard, PositioningCard {
     private final int points;
 
     private final int id;
