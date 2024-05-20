@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SettingName implements TUIState {
 
-    private static final String askYourName = "What's your name? >>> ";
+    private static final String askYourName = "What's your name? >>> \033[K";
     private boolean isQuote = false;
     private boolean isBlocked = false;
     private boolean alreadyError = false;
@@ -29,7 +29,7 @@ public class SettingName implements TUIState {
 
         //Empty string
         if (args[0].isEmpty()) {
-            System.out.print("\033[A");
+            System.out.print("\033[F" + askYourName);
             return;
         }
 

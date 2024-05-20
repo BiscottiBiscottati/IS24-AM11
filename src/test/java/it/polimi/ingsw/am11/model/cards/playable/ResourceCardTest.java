@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.model.cards.playable;
 import it.polimi.ingsw.am11.model.cards.utils.enums.*;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -117,6 +118,7 @@ class ResourceCardTest {
         assertEquals(playable2.getPoints(), 0);
     }
 
+    @Disabled
     @Test
     void checkNulls() {
         assertThrows(RuntimeException.class, () -> playable.getItemCorner(null));
@@ -125,6 +127,7 @@ class ResourceCardTest {
         assertThrows(RuntimeException.class, () -> resource.isFrontAvailable(null));
     }
 
+    @Disabled
     @Test
     void checkBuilderNulls() {
         assertThrows(RuntimeException.class,

@@ -7,7 +7,6 @@ import it.polimi.ingsw.am11.view.client.TUI.Actuator;
 import it.polimi.ingsw.am11.view.client.TUI.ConsUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -24,6 +23,7 @@ public class Connecting implements TUIState {
     private String type = "";
     private String ip = "";
     private int port = - 1;
+    private int count = 0;
 
     @Override
     public void passArgs(Actuator actuator, String[] args) {
@@ -32,10 +32,9 @@ public class Connecting implements TUIState {
         // Handel empty string
         if (args[0].isEmpty()) {
             if (type.isEmpty()) {
-                System.out.print("\033[A");
+                System.out.print("\033[F" + chooseSocketOrRmi);
                 return;
             } else if (ip.isEmpty()) {
-                System.out.println("localhost");
                 ip = "localhost";
                 upClearDownThenFalse();
                 System.out.println(setIp + ip);
@@ -56,11 +55,8 @@ public class Connecting implements TUIState {
                     default ->
                             throw new RuntimeException("type is set neither to rmi nor to socket");
                 }
-                try {
-                    actuator.connect(type, ip, port);
-                } catch (IOException e) {
-                    restart(true, e);
-                }
+                actuator.connect(type, ip, port);
+                return;
             }
 
         }
@@ -145,7 +141,7 @@ public class Connecting implements TUIState {
             if (ip.isEmpty()) {
                 upClearDownThenFalse();
                 System.out.println(setSocketOrRmi + type);
-                if (port == - 1) {
+                if (port != - 1) {
                     System.out.println(setPort + port);
                 }
                 System.out.print(chooseIp);
@@ -192,11 +188,7 @@ public class Connecting implements TUIState {
         }
 
 
-        try {
-            actuator.connect(type, ip, port);
-        } catch (IOException e) {
-            restart(true, e);
-        }
+        actuator.connect(type, ip, port);
 
 
     }
@@ -211,7 +203,7 @@ public class Connecting implements TUIState {
                             "");
         argParser.addOption("ip",
                             "IP address to connect to",
-                            "localhost");
+                            "");
         return argParser;
     }
 
@@ -254,6 +246,7 @@ public class Connecting implements TUIState {
 
     @Override
     public void restart(boolean dueToEx, Exception exception) {
+        count++;
         alreadyError = false;
         type = "";
         ip = "";
@@ -272,7 +265,7 @@ public class Connecting implements TUIState {
             System.out.println("ERROR DURING CONNECTION: " + exception.getMessage());
         }
         System.out.println("To join a new game you need to connect to the server, enter the " +
-                           "information");
+                           "information" + count + ":");
 
         System.out.print(chooseSocketOrRmi);
     }

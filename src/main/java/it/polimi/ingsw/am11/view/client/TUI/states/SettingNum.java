@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class SettingNum implements TUIState {
-    private static final String askForNum = "How many players will play? >>> ";
+    private static final String askForNum = "How many players will play? >>> \033[K";
     private boolean alreadyError = false;
     private boolean isBlocked = false;
 
@@ -28,7 +28,7 @@ public class SettingNum implements TUIState {
 
         //Empty string
         if (args[0].isEmpty()) {
-            System.out.print("\033[A");
+            System.out.print("\033[F" + askForNum);
             return;
         }
 

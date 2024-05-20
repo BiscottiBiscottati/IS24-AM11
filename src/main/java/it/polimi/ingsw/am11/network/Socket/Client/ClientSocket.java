@@ -27,6 +27,9 @@ public class ClientSocket implements ClientNetworkHandler {
         this.clientViewUpdater = clientViewUpdater;
         try {
             socket = new Socket(ip, port);
+            if (! socket.isConnected()) {
+                throw new IOException("Connection error");
+            }
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             sendCommandC = new SendCommandC(out);
@@ -44,11 +47,8 @@ public class ClientSocket implements ClientNetworkHandler {
             }));
 
         } catch (UnknownHostException e) {
-            System.out.println("Unknown host");
             throw new UnknownHostException("Unknown host");
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Connection error");
             throw new IOException("Connection error");
         }
     }

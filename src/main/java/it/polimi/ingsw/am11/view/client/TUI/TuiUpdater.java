@@ -322,7 +322,6 @@ public class TuiUpdater implements ClientViewUpdater {
 
     public void setTuiState(TuiStates state) {
         currentState = tuiStates.get(state);
-        System.out.println("TUI STATUS: " + state.toString());
     }
 
     public TUIState getState(TuiStates state) {

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ChoosingStrt implements TUIState {
-    private static final String askForSide = "Place it on its front or on its back >>> ";
+    private static final String askForSide = "Place it on its front or on its back >>> \033[K";
     private boolean alreadyError = false;
     private boolean isBlocked = false;
 
@@ -23,7 +23,7 @@ public class ChoosingStrt implements TUIState {
 
         //Empty string
         if (args[0].isEmpty()) {
-            System.out.print("\033[A");
+            System.out.print("\033[F" + askForSide);
             return;
         }
 

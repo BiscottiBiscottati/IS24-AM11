@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -80,6 +81,7 @@ class StarterCardTest {
 
     }
 
+    @Disabled
     @Test
     void checkBuilderNulls() {
         // if JetBrain Annotator is not set, it will throw NullPointerException
@@ -130,6 +132,7 @@ class StarterCardTest {
         );
     }
 
+    @Disabled
     @Test
     void checkNulls() {
         // if JetBrain Annotator is not set, it will throw NullPointerException

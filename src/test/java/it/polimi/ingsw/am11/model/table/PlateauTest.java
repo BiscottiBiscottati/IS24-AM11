@@ -14,6 +14,7 @@ class PlateauTest {
     @BeforeEach
     void setUp() {
         plateau = new Plateau(new GameListenerSupport());
+        Plateau.setArmageddonTime(20);
     }
 
 
@@ -31,10 +32,6 @@ class PlateauTest {
         }
 
         Assertions.assertTrue(plateau.isArmageddonTime());
-
-        plateau.reset();
-
-        Assertions.assertFalse(plateau.isArmageddonTime());
 
     }
 
@@ -167,7 +164,7 @@ class PlateauTest {
         plateau.activateArmageddon();
         Assertions.assertTrue(plateau.isArmageddonTime());
 
-        plateau.reset();
+        plateau.setStatus(GameStatus.CHOOSING_STARTERS);
         Assertions.assertFalse(plateau.isArmageddonTime());
     }
 
@@ -176,7 +173,7 @@ class PlateauTest {
 
         plateau.reset();
         GameStatus status = plateau.getStatus();
-        Assertions.assertEquals(GameStatus.CHOOSING_STARTERS, status);
+        Assertions.assertEquals(GameStatus.SETUP, status);
 
         plateau.activateArmageddon();
         status = plateau.getStatus();

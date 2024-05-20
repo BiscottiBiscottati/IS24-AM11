@@ -59,7 +59,7 @@ public class TuiHandler {
                                                                                                                                                                                     \s
                                    """);
         System.out.println("by Osama Atiqi, Edoardo Bergamo, Ferdinando Cioffi and Zining Chen");
-        printLoadingBar(3);
+        printLoadingBar(1);
         ConsUtils.clear();
         reader = new ReaderV2(tuiUpdater);
 

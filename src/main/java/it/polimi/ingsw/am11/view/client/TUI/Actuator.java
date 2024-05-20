@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.view.client.TUI;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
 import it.polimi.ingsw.am11.network.RMI.Client.ClientMain;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.List;
 
 // Its purpose is to effectively actuate the commands parsed by the reader. This is an
@@ -38,18 +40,31 @@ public class Actuator {
         //TODO
     }
 
-    public void connect(String type, String ip, int port) throws IOException {
+    public void connect(String type, String ip, int port) {
+
         switch (type) {
             case "rmi": {
-                ClientMain clientMain = new ClientMain(ip, port, tuiUpdater);
-                connector = clientMain.getConnector();
+                ClientNetworkHandler clientHandler = null;
+                try {
+                    clientHandler = new ClientMain(ip, port, tuiUpdater);
+                } catch (RemoteException e) {
+                    tuiUpdater.getCurrentTuiState().restart(true, e);
+                    return;
+                }
+                connector = clientHandler.getConnector();
                 tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
                 tuiUpdater.getCurrentTuiState().restart(false, null);
                 break;
             }
             case "socket": {
-                ClientSocket clientSocket = new ClientSocket(ip, port, tuiUpdater);
-                connector = clientSocket.getConnector();
+                ClientNetworkHandler clientHandler = null;
+                try {
+                    clientHandler = new ClientSocket(ip, port, tuiUpdater);
+                } catch (IOException e) {
+                    tuiUpdater.getCurrentTuiState().restart(true, e);
+                    return;
+                }
+                connector = clientHandler.getConnector();
                 tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
                 tuiUpdater.getCurrentTuiState().restart(false, null);
                 break;
@@ -58,7 +73,6 @@ public class Actuator {
                 throw new RuntimeException("Type is set neither to rmi nor to socket");
             }
         }
-        tuiUpdater.getCurrentTuiState().restart(false, null);
 
     }
 

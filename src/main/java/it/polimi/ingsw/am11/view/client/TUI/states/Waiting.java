@@ -7,12 +7,14 @@ import it.polimi.ingsw.am11.view.client.TUI.ConsUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class Waiting implements TUIState {
+    public static final String askLine = "To ask is permissible , to reply is polite >>> \033[K";
+
     @Override
     public void passArgs(Actuator actuator, String[] args) {
         ArgParser parser = setUpOptions();
 
         if (args[0].isEmpty()) {
-            System.out.print("\033[A");
+            System.out.print("\033[F" + askLine);
             return;
         }
 
@@ -20,7 +22,7 @@ public class Waiting implements TUIState {
         try {
             parser.parse(args);
         } catch (ParsingErrorException e) {
-            errorsHappens("To ask is permissible , to reply is polite >>>");
+            errorsHappens(askLine);
             return;
         }
 
@@ -29,7 +31,7 @@ public class Waiting implements TUIState {
             case "help" -> Actuator.help();
             case "exit" -> Actuator.close();
             case "kira" -> kiraIsAGoodGirl();
-            default -> errorsHappens("To ask is permissible , to reply is polite >>>");
+            default -> errorsHappens(askLine);
         }
     }
 
@@ -48,7 +50,7 @@ public class Waiting implements TUIState {
             System.out.println("ERROR: " + exception.getMessage());
         }
         System.out.println("Everybody is waiting for something...");
-        System.out.print("To ask is permissible , to reply is polite >>>");
+        System.out.print(askLine);
     }
 
     private static @NotNull ArgParser setUpOptions() {
@@ -56,7 +58,7 @@ public class Waiting implements TUIState {
     }
 
     private static void errorsHappens(String text) {
-        System.out.println("\033[F" + "\033[K" + text);
+        System.out.print("\033[F" + "\033[K" + text);
     }
 
     private static void kiraIsAGoodGirl() {

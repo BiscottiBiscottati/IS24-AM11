@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ChoosingObj implements TUIState {
-    private static final String askForObj = "Choose one of the objectives above >>> ";
+    private static final String askForObj = "Choose one of the objectives above >>> \033[K";
     private boolean alreadyError = false;
     private boolean isBlocked = false;
 
@@ -24,7 +24,7 @@ public class ChoosingObj implements TUIState {
 
         //Empty string
         if (args[0].isEmpty()) {
-            System.out.print("\033[A");
+            System.out.print("\033[F" + askForObj);
             return;
         }
 
