@@ -41,7 +41,7 @@ public class Actuator {
     public void connect(String type, String ip, int port) throws IOException {
         switch (type) {
             case "rmi": {
-                ClientMain clientMain = new ClientMain(ip, port);
+                ClientMain clientMain = new ClientMain(ip, port, tuiUpdater);
                 connector = clientMain.getConnector();
                 tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
                 tuiUpdater.getCurrentTuiState().restart(false, null);

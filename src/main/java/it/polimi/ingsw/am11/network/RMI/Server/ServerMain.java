@@ -29,21 +29,13 @@ public class ServerMain implements Loggable {
         }
     }
 
-    //TODO to save the connector in the server
-
     public ServerMain(int port) {
         this.port = port;
     }
 
-    // FIXME construction process have to be in the constructor since we don't call main from here
-
-//    public static void main(String[] args) {
-//        ServerMain server;
-//        server = new ServerMain(1234);
-//
-//        server.start();
-//        System.out.println("Server ready");
-//    }
+    public static void main(String[] args) {
+        System.out.println("Server ready");
+    }
 
     public void start() {
         Loggable log;

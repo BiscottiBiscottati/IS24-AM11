@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.network.RMI.Client;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
@@ -12,13 +13,14 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ClientMain {
+public class ClientMain implements ClientNetworkHandler {
 
     static String nickname;
     private final Registry registry;
-    private ClientViewUpdater updater;
+    private final ClientViewUpdater updater;
+    private final NetworkConnector nConnector;
 
-    public ClientMain(String ip, int port) {
+    public ClientMain(String ip, int port, ClientViewUpdater updater) {
         try {
             // Getting the registry
             registry = LocateRegistry.getRegistry(ip, port);
@@ -28,6 +30,8 @@ public class ClientMain {
             System.err.println("Client exception: " + e);
             throw new RuntimeException(e);
         }
+        this.updater = updater;
+        this.nConnector = new NetworkConnector(this);
     }
 
 //    public static void main(String[] args) throws RemoteException {
@@ -46,7 +50,7 @@ public class ClientMain {
 //        }
 //    }
 
-    public void login(String nick, ClientViewUpdater updater)
+    public void login(String nick)
     throws RemoteException, NotBoundException {
         Loggable stub1 = (Loggable) registry.lookup("Loggable");
         ClientToServerConnector clientObject = new ClientToServerConnector(updater);
@@ -129,7 +133,6 @@ public class ClientMain {
     }
 
     public NetworkConnector getConnector() {
-        //TODO
-        return new NetworkConnector();
+        return nConnector;
     }
 }
