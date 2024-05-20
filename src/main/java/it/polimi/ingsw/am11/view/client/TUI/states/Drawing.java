@@ -1,32 +1,17 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
-import it.polimi.ingsw.am11.view.client.TUI.exceptions.InvalidArgumetsException;
-
-import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public class Drawing implements TUIState {
     @Override
-    public void passArgs(Actuator actuator, List<String> positionalArgs) {
-        String word = positionalArgs.getFirst();
-
-        try {
-            switch (word.toLowerCase()) {
-                case "draw" -> actuator.draw(positionalArgs);
-                case "help" -> help();
-                case "exit" -> Actuator.close();
-                default -> specificHelp();
-            }
-        } catch (InvalidArgumetsException e) {
-            //TODO
-        }
-    }
-
-    private void help() {
+    public void passArgs(Actuator actuator, String[] args) {
+        //TODO
 
     }
 
-    private void specificHelp() {
+    @Override
+    public void restart(boolean dueToEx, @Nullable Exception exception) {
 
     }
 }

@@ -3,10 +3,13 @@ package it.polimi.ingsw.am11.view.client.TUI;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
+import it.polimi.ingsw.am11.network.RMI.Client.ClientMain;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.InvalidArgumetsException;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,105 +20,75 @@ import java.util.List;
 // the communication.
 
 public class Actuator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
+
     private final TuiUpdater tuiUpdater;
     private CltToNetConnector connector;
 
     public Actuator(TuiUpdater tuiUpdater) {
         this.tuiUpdater = tuiUpdater;
+        this.connector = null;
     }
 
     public static void close() {
         System.exit(0);
     }
 
-    public void connect(List<String> positionalArgs)
-    throws InvalidArgumetsException, IOException {
-        if (positionalArgs.get(1).equalsIgnoreCase("default")) {
-            ClientSocket clientSocket = new ClientSocket("localhost", 12345, tuiUpdater);
-            connector = clientSocket.getConnector();
-            tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
-            return;
-        }
-        if (positionalArgs.size() != 4) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
-        String type = positionalArgs.get(1);
-        String ip = positionalArgs.get(2);
-        int port;
-        try {
-            port = Integer.parseInt(positionalArgs.get(3));
-        } catch (NumberFormatException e) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
+    public static void help() {
+        //TODO
+    }
+
+    public void connect(String type, String ip, int port) throws IOException {
         switch (type) {
             case "rmi": {
-                //TODO
+                ClientMain clientMain = new ClientMain(ip, port);
+                connector = clientMain.getConnector();
+                tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
+                tuiUpdater.getCurrentTuiState().restart(false, null);
                 break;
             }
             case "socket": {
                 ClientSocket clientSocket = new ClientSocket(ip, port, tuiUpdater);
                 connector = clientSocket.getConnector();
                 tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
+                tuiUpdater.getCurrentTuiState().restart(false, null);
                 break;
             }
             default: {
-                throw new InvalidArgumetsException("Invalid Arguments");
+                throw new RuntimeException("Type is set neither to rmi nor to socket");
             }
         }
+        tuiUpdater.getCurrentTuiState().restart(false, null);
+
     }
 
-
-    public void setName(List<String> positionalArgs)
-    throws InvalidArgumetsException, TooManyRequestsException {
+    public void setName(String nick)
+    throws TooManyRequestsException {
         if (tuiUpdater.getCandidateNick() != null) {
             throw new TooManyRequestsException("You already sent a nickname, wait for results");
         }
-        if (positionalArgs.size() != 2) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
-        String nick = positionalArgs.get(1);
         connector.setNickname(nick);
         tuiUpdater.setCandidateNick(nick);
         tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
-    public void setNumOfPlayers(List<String> positionalArgs) throws InvalidArgumetsException {
-        if (positionalArgs.size() != 2) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
-        int num;
-        try {
-            num = Integer.parseInt(positionalArgs.get(1));
-        } catch (NumberFormatException e) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
+    public void setNumOfPlayers(int num) {
         connector.setNumOfPlayers(num);
         tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
-    public void setStarter(List<String> positionalArgs) throws InvalidArgumetsException {
-        if (positionalArgs.size() != 2) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
-        String frontOrRetro = positionalArgs.get(1);
-        switch (frontOrRetro) {
-            case "front" -> connector.setStarterCard(false);
-            case "retro" -> connector.setStarterCard(true);
-            default -> throw new InvalidArgumetsException("Invalid Arguments");
-        }
+    public void setStarter(boolean isRetro) {
+        connector.setStarterCard(isRetro);
+        tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
-    public void setObjective(List<String> positionalArgs) throws InvalidArgumetsException {
-        if (positionalArgs.size() != 2) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
-        int cardId;
-        try {
-            cardId = Integer.parseInt(positionalArgs.get(1));
-        } catch (NumberFormatException e) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
+    public void setObjective(int cardId) {
         connector.setPersonalObjective(cardId);
+        tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void place(List<String> positionalArgs) throws InvalidArgumetsException {
@@ -184,6 +157,5 @@ public class Actuator {
             default -> throw new InvalidArgumetsException("Invalid Arguments");
         }
     }
-
 
 }

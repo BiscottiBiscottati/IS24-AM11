@@ -16,6 +16,7 @@ public class MiniGameModel {
     private String godPlayer;
     private String myName;
     private boolean iPlaced;
+    private String startingPlayer = "";
 
 
     public MiniGameModel() {
@@ -23,6 +24,7 @@ public class MiniGameModel {
         this.table = new CliTable();
         this.finalLeaderboard = null;
         this.iPlaced = false;
+        this.currentTurn = "";
     }
 
     public CliPlayer getCliPlayer(String nickname) {
@@ -53,7 +55,7 @@ public class MiniGameModel {
         playerMap.put(nickname, new CliPlayer(nickname, color));
     }
 
-    public String getCurrentTurn() {
+    public @Nullable String getCurrentTurn() {
         return currentTurn;
     }
 
@@ -124,5 +126,13 @@ public class MiniGameModel {
 
     public void setiPlaced(boolean iPlaced) {
         this.iPlaced = iPlaced;
+    }
+
+    public String getStartingPlayer() {
+        return startingPlayer;
+    }
+
+    public void setStartingPlayer(String startingPlayer) {
+        this.startingPlayer = startingPlayer;
     }
 }

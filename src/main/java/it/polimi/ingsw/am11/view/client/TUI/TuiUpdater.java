@@ -13,6 +13,7 @@ import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
@@ -38,12 +39,13 @@ public class TuiUpdater implements ClientViewUpdater {
         for (TuiStates state : TuiStates.values()) {
             tuiStates.put(state, state.getNewState());
         }
-        this.currentState = tuiStates.get(startingState);
+        this.currentState = tuiStates.get(TuiStates.CONNECTING);
         this.exceptionReceiver = new TuiExceptionReceiver(model, this);
     }
 
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
+        //TODO
         model.table().refreshDeckTop(type, color);
         if (model.getCurrentTurn().equals(model.myName())) {
             System.out.println("You picked a card from the " + type.getName() +
@@ -60,7 +62,20 @@ public class TuiUpdater implements ClientViewUpdater {
     @Override
     public void updateField(String nickname, int x, int y, int cardId,
                             boolean isRetro, boolean removeMode) {
+        //TODO
+
         Position pos = new Position(x, y);
+
+        if (isCurrentState(TuiStates.CHOOSING_STARTER)) {
+            //DONE
+            if (! removeMode) {
+                model.getCliPlayer(nickname).getField().place(pos, cardId, isRetro);
+            } else {
+                model.getCliPlayer(nickname).getField().remove(pos);
+            }
+            return;
+        }
+
         String frontOrRetro;
 
         if (isRetro) {
@@ -75,6 +90,8 @@ public class TuiUpdater implements ClientViewUpdater {
                 System.out.println("You placed the card " + cardId + " in " + pos + " on his " +
                                    frontOrRetro);
                 currentState = tuiStates.get(TuiStates.DRAWING);
+                System.out.println("TUI STATUS: " + TuiStates.DRAWING);
+
             } else {
                 System.out.println(
                         nickname + " placed the card " + cardId + " in " + pos + " on his " +
@@ -97,8 +114,13 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateShownPlayable(int previousId, int currentId) {
+        //TODO
         model.table().pickVisible(previousId);
         model.table().addVisible(currentId);
+        if (model.getCurrentTurn().isEmpty()) {
+            System.out.println("Added visible card to the table: " + currentId);
+            return;
+        }
         if (model.getCurrentTurn().equals(model.myName())) {
             System.out.println("You picked " + previousId + " from the visible " +
                                "cards, it has been replaced by " + currentId);
@@ -112,18 +134,22 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateTurnChange(String nickname) {
+        //TODO
         model.setCurrentTurn(nickname);
         if (nickname.equals(model.myName())) {
             System.out.println("It's now your turn, good luck");
             currentState = tuiStates.get(TuiStates.PLACING);
+            System.out.println("TUI STATUS: " + TuiStates.PLACING);
         } else {
             System.out.println("It's now " + nickname + " turn");
             currentState = tuiStates.get(TuiStates.WAITING);
+            System.out.println("TUI STATUS: " + TuiStates.WAITING);
         }
     }
 
     @Override
     public void updatePlayerPoint(String nickname, int points) {
+        //TODO
         model.getCliPlayer(nickname).addPoints(points);
         if (nickname.equals(model.myName()))
             System.out.println("You gained " + points + " points, now your score is " +
@@ -135,27 +161,25 @@ public class TuiUpdater implements ClientViewUpdater {
     @Override
     public void updateGameStatus(GameStatus status) {
         model.table().setStatus(status);
+        LOGGER.debug("Game status event:" + status);
         switch (status) {
             case SETUP -> {
-                System.out.println("Waiting for all players to be ready");
             }
             case CHOOSING_STARTERS -> {
-                model.setMyName(candidateNick);
+                //DONE
                 currentState = tuiStates.get(TuiStates.CHOOSING_STARTER);
-                System.out.println("Choose if you want you want to place your starter card on his" +
-                                   " front of his back");
+                currentState.restart(false, null);
             }
             case CHOOSING_OBJECTIVES -> {
+                //DONE
                 currentState = tuiStates.get(TuiStates.CHOOSING_OBJECTIVE);
-                System.out.println("Choose you the personal objective you like the most");
-
+                currentState.restart(false, null);
             }
             case ENDED -> {
                 currentState = tuiStates.get(TuiStates.ENDED);
-                System.out.println("The game has ended");
+                currentState.restart(false, null);
             }
             case ONGOING -> {
-
                 System.out.println("The game has began, fight with honor");
             }
             case ARMAGEDDON -> {
@@ -173,6 +197,7 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
+        //TODO
         if (removeMode) {
             cardId.stream().forEach(x -> model.table().removeCommonObjective(x));
             cardId.stream().forEach(x -> System.out.println("The card: " + x + " is no longer a " +
@@ -186,6 +211,7 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+        //TODO
         model.setFinalLeaderboard(finalLeaderboard);
         System.out.println("The final leaderboard is:");
         for (int i = 1; i <= finalLeaderboard.size(); i++) {
@@ -199,6 +225,7 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateHand(int cardId, boolean removeMode) {
+        //TODO
         if (removeMode) {
             model.removeCardFromHand(cardId);
             System.out.println("Removed the card: " + cardId + " from your hand");
@@ -211,58 +238,74 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
+        //DONE
         if (removeMode) {
             model.rmPersonalObjective(cardId);
-            System.out.println("Removed the objective: " + cardId + " from your personal " +
-                               "objectives");
         } else {
             model.addPersonalObjective(cardId);
-            System.out.println("The objective " + cardId + " is now one of your personal " +
-                               "objectives");
         }
     }
 
     @Override
     public void receiveStarterCard(int cardId) {
+        //DONE
         model.addStarterCard(cardId);
-        // LOGGER.debug("The card {} is now your starter card.", cardId);
-        System.out.println("The card " + cardId + " is now your starter card.");
+        LOGGER.debug("Receive starter event, card id: {}", cardId);
+        try {
+            CardPrinter.printCardFeB(cardId);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+        System.out.print("Place it on its front or on its back >>> ");
     }
 
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
-        System.out.println("Should go");
-        System.out.println(cardId.size());
-        cardId.stream().forEach(System.out::println);
+        //DONE
+        model.getCliPlayer(model.myName()).getSpace().addCandidateObjectives(cardId);
+        cardId.stream().forEach(
+                x -> LOGGER.debug("Receive candidate objective event, card id: {}", x));
+        try {
+            CardPrinter.printObjectives(new ArrayList<>(cardId));
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+        System.out.print("Choose one of the objectives above >>> ");
     }
 
     @Override
     public void notifyGodPlayer() {
+        //DONE
         model.setMyName(candidateNick);
         model.setGodPlayer(candidateNick);
         currentState = tuiStates.get(TuiStates.SETTING_NUM);
+        currentState.restart(false, null);
     }
 
     @Override
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+        //DONE
         model.setMyName(candidateNick);
-        System.out.println("You are going to play with the following players:");
         for (PlayerColor pc : currentPlayers.keySet()) {
             model.addPlayer(currentPlayers.get(pc), pc);
-            System.out.println(pc.toString() + " - " + currentPlayers.get(pc));
         }
 
     }
 
     @Override
     public void updateNumOfPlayers(int numOfPlayers) {
-        System.out.println("The moderator has set " + numOfPlayers + " players");
-        System.out.println("Please choose your nickname");
+        //DONE
+        currentState = tuiStates.get(TuiStates.CHOOSING_STARTER);
+        currentState.restart(false, null);
     }
 
     @Override
     public ExceptionConnector getExceptionConnector() {
         return exceptionReceiver;
+    }
+
+    public boolean isCurrentState(TuiStates state) {
+        return currentState.equals(tuiStates.get(state));
     }
 
     public String getCandidateNick() {
@@ -279,6 +322,11 @@ public class TuiUpdater implements ClientViewUpdater {
 
     public void setTuiState(TuiStates state) {
         currentState = tuiStates.get(state);
+        System.out.println("TUI STATUS: " + state.toString());
+    }
+
+    public TUIState getState(TuiStates state) {
+        return tuiStates.get(state);
     }
 
 }

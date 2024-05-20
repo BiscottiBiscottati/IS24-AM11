@@ -4,8 +4,11 @@ import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TuiExceptionReceiver implements ExceptionConnector {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
 
     private final MiniGameModel model;
     private final TuiUpdater tuiUpdater;
@@ -25,14 +28,24 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(TurnsOrderException ex) {
-        model.setCurrentTurn(null);
+        model.setCurrentTurn("Error in turns order");
         System.out.println("It's not your turn");
         System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(PlayerInitException ex) {
-        System.out.println("Something went wrong while trying to join a new game");
+        if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
+            //DONE
+            tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
+            tuiUpdater.getCurrentTuiState().restart(true, ex);
+            return;
+        }
+        //TODO
+
+
+        // Should be unreachable
+        System.out.println("PlayerInitException received");
         System.out.println("MESSAGE: " + ex.getMessage());
     }
 
@@ -62,30 +75,38 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(NumOfPlayersException ex) {
+        //DONE
         tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
-        System.out.println("The number of players you chose is not valid");
-        System.out.println("MESSAGE: " + ex.getMessage());
+        tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
     public void throwException(NotGodPlayerException ex) {
+        //DONE
         model.setGodPlayer(null);
         tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
-        System.out.println("Your are not the moderator, wait for the moderator");
-        System.out.println("MESSAGE: " + ex.getMessage());
+        tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
     public void throwException(GameStatusException ex) {
+        LOGGER.debug("GameStatusException received: {}" + ex.getMessage());
         System.out.println(ex.getMessage());
     }
 
     @Override
     public void throwException(NotSetNumOfPlayerException ex) {
-        tuiUpdater.setCandidateNick(null);
-        tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
-        System.out.println("Please wait until the moderator set the number of players for this " +
-                           "match");
+        LOGGER.debug("NotSetNumOfPlayersException received: {}" + ex.getMessage());
+        if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
+            //DONE
+            tuiUpdater.setCandidateNick(null);
+            tuiUpdater.getCurrentTuiState().restart(true, ex);
+            return;
+        }
+
+
+        // Should be unreachable
+        System.out.println("NotSetNumOfPlayersException received: ");
         System.out.println("MESSAGE: " + ex.getMessage());
     }
 

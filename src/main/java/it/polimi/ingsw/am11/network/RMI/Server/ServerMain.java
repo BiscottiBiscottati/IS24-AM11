@@ -37,13 +37,13 @@ public class ServerMain implements Loggable {
 
     // FIXME construction process have to be in the constructor since we don't call main from here
 
-    public static void main(String[] args) {
-        ServerMain server;
-        server = new ServerMain(1234);
-
-        server.start();
-        System.out.println("Server ready");
-    }
+//    public static void main(String[] args) {
+//        ServerMain server;
+//        server = new ServerMain(1234);
+//
+//        server.start();
+//        System.out.println("Server ready");
+//    }
 
     public void start() {
         Loggable log;

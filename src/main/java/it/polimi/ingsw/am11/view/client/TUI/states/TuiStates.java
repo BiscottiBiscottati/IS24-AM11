@@ -9,6 +9,7 @@ public enum TuiStates {
     WAITING(Waiting.class),
     CHOOSING_STARTER(ChoosingStrt.class),
     CHOOSING_OBJECTIVE(ChoosingObj.class),
+    WAITING_FOR_TURN(WaitingForTurn.class),
     PLACING(Placing.class),
     DRAWING(Drawing.class),
     ENDED(Ended.class);

@@ -1,10 +1,5 @@
 package it.polimi.ingsw.am11.view.client.TUI;
 
-import it.polimi.ingsw.am11.utils.ArgParser;
-import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
-import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 // This class will read the stdin and then use an argParser to extract the arguments from the
@@ -18,40 +13,22 @@ public class ReaderV2 {
     private final Scanner input;
     private final TuiUpdater tuiUpdater;
     private final Actuator actuator;
-    private final MiniGameModel model;
 
-
-    public ReaderV2(MiniGameModel model, TuiUpdater tuiUpdater) {
+    public ReaderV2(TuiUpdater tuiUpdater) {
         this.input = new Scanner(System.in);
         this.tuiUpdater = tuiUpdater;
         this.actuator = new Actuator(tuiUpdater);
-        this.model = model;
     }
 
     public void listen() {
-        ArgParser parser = setUpOptions();
         String string = input.nextLine().strip();
-        if (string.isEmpty()) {
-            System.out.print("\b");
-            return;
-        }
-        try {
-            parser.parse(string.split("\\s+"));
-        } catch (ParsingErrorException e) {
-            System.out.println(e.getMessage());
-        }
-        tuiUpdater.getCurrentTuiState().passArgs(actuator,
-                                                 new ArrayList<>(parser.getPositionalArgs()));
+//        if (string.isEmpty()) {
+//            System.out.print("\033[A");
+//            return;
+//        }
+        tuiUpdater.getCurrentTuiState().passArgs(actuator, string.split("\\s+"));
     }
 
-    private static ArgParser setUpOptions() {
-        ArgParser argParser = new ArgParser();
-//        argParser.addOption("rmi",
-//                            "RMI port to use for the server",
-//                            String.valueOf(Constants.DEFAULT_RMI_PORT));
-
-        return argParser;
-    }
 }
 
 

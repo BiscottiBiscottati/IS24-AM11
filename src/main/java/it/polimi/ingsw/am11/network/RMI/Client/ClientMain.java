@@ -5,8 +5,6 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
-import it.polimi.ingsw.am11.view.client.TUI.TuiUpdater;
-import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -31,21 +29,21 @@ public class ClientMain {
         }
     }
 
-    public static void main(String[] args) throws RemoteException {
-        System.out.println("Hello from Client!");
-        // Create an instance of ClientMain
-        ClientMain clientMain = new ClientMain("localhost", 1234);
-
-        // Create an instance of ClientViewUpdater
-        ClientViewUpdater updater = new TuiUpdater(new MiniGameModel(), null);
-
-        // Call the login method with the first command-line argument as nick
-        try {
-            clientMain.login("nick", updater);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public static void main(String[] args) throws RemoteException {
+//        System.out.println("Hello from Client!");
+//        // Create an instance of ClientMain
+//        ClientMain clientMain = new ClientMain("localhost", 1234);
+//
+//        // Create an instance of ClientViewUpdater
+//        ClientViewUpdater updater = new TuiUpdater(new MiniGameModel(), null);
+//
+//        // Call the login method with the first command-line argument as nick
+//        try {
+//            clientMain.login("nick", updater);
+//        } catch (NotBoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public void login(String nick, ClientViewUpdater updater)
     throws RemoteException, NotBoundException {
@@ -127,5 +125,10 @@ public class ClientMain {
             throw new RuntimeException(e);
         }
         stub2.updateField(nickname, x, y, cardId, isRetro, removeMode);
+    }
+
+    public NetworkConnector getConnector() {
+        //TODO
+        return new NetworkConnector();
     }
 }

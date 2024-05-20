@@ -23,6 +23,7 @@ public enum Symbol implements CornerContainer, Item {
         this.columnName = columnName;
     }
 
+    @Override
     public String getColumnName() {
         return this.columnName;
     }
