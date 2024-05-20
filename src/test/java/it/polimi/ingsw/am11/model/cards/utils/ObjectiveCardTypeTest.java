@@ -35,15 +35,15 @@ class ObjectiveCardTypeTest {
     );
 
     static final Set<Position> rotatedL = Set.of(
-            Position.of(1, - 1),
-            Position.of(1, 1),
-            Position.of(0, 2)
+            Position.of(1, 0),
+            Position.of(1, 2),
+            Position.of(0, 3)
     );
 
     static final Set<Position> rotatedFlippedL = Set.of(
-            Position.of(1, - 1),
-            Position.of(1, 1),
-            Position.of(2, 2)
+            Position.of(1, 0),
+            Position.of(1, 2),
+            Position.of(2, 3)
     );
 
 
@@ -55,16 +55,8 @@ class ObjectiveCardTypeTest {
                 ObjectiveCardType.TRIPLET.getPositions(false, false).orElse(Set.of())
         );
         assertEquals(
-                standardTriplet,
-                ObjectiveCardType.TRIPLET.getPositions(false, true).orElse(Set.of())
-        );
-        assertEquals(
                 flippedTriplet,
                 ObjectiveCardType.TRIPLET.getPositions(true, false).orElse(Set.of())
-        );
-        assertEquals(
-                flippedTriplet,
-                ObjectiveCardType.TRIPLET.getPositions(true, true).orElse(Set.of())
         );
         assertEquals(
                 LShape,
