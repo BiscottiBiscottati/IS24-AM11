@@ -23,6 +23,7 @@ public class NetworkConnector implements CltToNetConnector {
     public void setNickname(String nickname) {
         try {
             main.login(nickname);
+            this.nickname = nickname;
         } catch (RemoteException | NotBoundException e) {
             throw new RuntimeException(e);
             // disconnection problem?

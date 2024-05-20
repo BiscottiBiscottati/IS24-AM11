@@ -23,7 +23,7 @@ public class ClientMain implements ClientNetworkHandler {
     public ClientMain(String ip, int port, ClientViewUpdater updater) throws RemoteException {
         // Getting the registry
         registry = LocateRegistry.getRegistry(ip, port);
-        // check if connection is working
+        // Check if connection is working
         registry.list();
         // Looking up the registry for the remote object
         System.out.println("Remote method invoked");
@@ -104,17 +104,6 @@ public class ClientMain implements ClientNetworkHandler {
             throw new RuntimeException(e);
         }
         stub3.drawCard(nick, fromVisible, type, cardId);
-    }
-
-    public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
-                            boolean removeMode) throws RemoteException {
-        ConnectorInterface stub2;
-        try {
-            stub2 = (ConnectorInterface) registry.lookup("Connector");
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        }
-        stub2.updateField(nickname, x, y, cardId, isRetro, removeMode);
     }
 
     public NetworkConnector getConnector() {
