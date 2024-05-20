@@ -23,8 +23,8 @@ public class VirtualPlayerView {
     private static final Logger LOGGER = LoggerFactory.getLogger(VirtualPlayerView.class);
 
     static {
-        cardController = CentralController.INSTANCE.getCardController();
-        gameController = CentralController.INSTANCE.getGameController();
+        gameController = CentralController.INSTANCE.getAnyGame();
+        cardController = gameController.getCardController();
     }
 
     private final PlayerConnector connector;
