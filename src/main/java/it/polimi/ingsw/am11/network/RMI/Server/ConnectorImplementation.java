@@ -8,15 +8,12 @@ import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.TableConnector;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.Map;
 import java.util.Set;
 
 public class ConnectorImplementation implements PlayerConnector, TableConnector {
-    private ConnectorInterface remoteConnector;
+    private final ConnectorInterface remoteConnector;
 
     public ConnectorImplementation(ConnectorInterface remoteConnector) {
         this.remoteConnector = remoteConnector;
@@ -149,17 +146,6 @@ public class ConnectorImplementation implements PlayerConnector, TableConnector 
 
     public void notifyGodPlayer() {
         System.out.println("ci siamo");
-        Registry registry;
-        try {
-            registry = LocateRegistry.getRegistry("localhost", 54321);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            remoteConnector = (ConnectorInterface) registry.lookup("Connector");
-        } catch (RemoteException | NotBoundException e) {
-            throw new RuntimeException(e);
-        }
         try {
             remoteConnector.notifyGodPlayer();
         } catch (RemoteException e) {
