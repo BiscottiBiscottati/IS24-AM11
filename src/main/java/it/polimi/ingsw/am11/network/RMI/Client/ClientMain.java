@@ -20,16 +20,11 @@ public class ClientMain implements ClientNetworkHandler {
     private final ClientViewUpdater updater;
     private final NetworkConnector nConnector;
 
-    public ClientMain(String ip, int port, ClientViewUpdater updater) {
-        try {
-            // Getting the registry
-            registry = LocateRegistry.getRegistry(ip, port);
-            // Looking up the registry for the remote object
-            System.out.println("Remote method invoked");
-        } catch (RemoteException e) {
-            System.err.println("Client exception: " + e);
-            throw new RuntimeException(e);
-        }
+    public ClientMain(String ip, int port, ClientViewUpdater updater) throws RemoteException {
+        // Getting the registry
+        registry = LocateRegistry.getRegistry(ip, port);
+        // Looking up the registry for the remote object
+        System.out.println("Remote method invoked");
         this.updater = updater;
         this.nConnector = new NetworkConnector(this);
     }

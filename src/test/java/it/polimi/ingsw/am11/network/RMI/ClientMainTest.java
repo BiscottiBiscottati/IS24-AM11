@@ -42,13 +42,19 @@ class ClientMainTest {
         ClientViewUpdater updater = Mockito.mock(ClientViewUpdater.class);
         ClientMain clientMain = new ClientMain("localhost", 1234, updater);
         clientMain.login("nick");
-        clientMain.setNumOfPlayers("nick", 5);
-        clientMain.setNumOfPlayers("nick", 4);
+        clientMain.setNumOfPlayers("nick", 2);
 
         ClientViewUpdater updater2 = Mockito.mock(ClientViewUpdater.class);
         ClientMain clientMain2 = new ClientMain("localhost", 1234, updater2);
         clientMain2.login("nick");
         clientMain2.login("nicks");
+
+        clientMain.logout("nick");
+
+        clientMain.reconnect("nick");
+
+        clientMain.setStarterCard("nick", true);
+        clientMain.setStarterCard("nicks", false);
 
 
     }
