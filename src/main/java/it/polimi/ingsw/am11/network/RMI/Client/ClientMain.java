@@ -15,7 +15,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ClientMain implements ClientNetworkHandler {
 
-    static String nickname;
+
     private final Registry registry;
     private final ClientViewUpdater updater;
     private final NetworkConnector nConnector;
@@ -34,21 +34,9 @@ public class ClientMain implements ClientNetworkHandler {
         this.nConnector = new NetworkConnector(this);
     }
 
-//    public static void main(String[] args) throws RemoteException {
-//        System.out.println("Hello from Client!");
-//        // Create an instance of ClientMain
-//        ClientMain clientMain = new ClientMain("localhost", 1234);
-//
-//        // Create an instance of ClientViewUpdater
-//        ClientViewUpdater updater = new TuiUpdater(new MiniGameModel(), null);
-//
-//        // Call the login method with the first command-line argument as nick
-//        try {
-//            clientMain.login("nick", updater);
-//        } catch (NotBoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public static void main(String[] args) throws RemoteException {
+        System.out.println("Hello from Client!");
+    }
 
     public void login(String nick)
     throws RemoteException, NotBoundException {
@@ -134,5 +122,15 @@ public class ClientMain implements ClientNetworkHandler {
 
     public NetworkConnector getConnector() {
         return nConnector;
+    }
+
+    public void reconnect(String nick) throws RemoteException {
+        Loggable stub1;
+        try {
+            stub1 = (Loggable) registry.lookup("Loggable");
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+        stub1.reconnect(nick);
     }
 }

@@ -19,7 +19,6 @@ public class ServerMain implements Loggable {
     private final int port;
     PlayerViewImpl playerView;
     ExceptionConnector exceptionConnector;
-    private Registry registry;
 
     {
         try {
@@ -48,7 +47,7 @@ public class ServerMain implements Loggable {
         }
         // Bind the remote object's stub in the registry
         try {
-            registry = LocateRegistry.createRegistry(port);
+            Registry registry = LocateRegistry.createRegistry(port);
             registry.bind("Loggable", log);
             registry.bind("PlayerView", view);
 
@@ -98,4 +97,10 @@ public class ServerMain implements Loggable {
         }
     }
 
+    @Override
+    public void reconnect(String nick) throws RemoteException {
+        if (playerView.containsPlayer(nick)) {
+            CentralController.INSTANCE.playerReconnected(nick);
+        }
+    }
 }
