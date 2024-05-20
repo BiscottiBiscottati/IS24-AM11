@@ -350,20 +350,44 @@ public class CardPrinter {
         }
     }
 
-    public static List<String> buildDeck(Color color, PlayableCardType type) {
-        List<String> deck = new ArrayList<>();
-        List<Color> center = new ArrayList<>();
-        center.add(color);
+    public static void printTable(List<Integer> visiblesId, Color goldColor, Color resColor)
+    throws Throwable {
 
-        List<String> topLines = buildCornerLines(' ', ' ', true, null);
+        List<String> goldDeckLines = buildDeck(goldColor, PlayableCardType.GOLD);
+        List<String> resDeckLines = buildDeck(resColor, PlayableCardType.RESOURCE);
 
-        String CenterLineFont = buildCenterString(center);
+        List<String> card1 = buildCard(visiblesId.get(0));
+        List<String> card2 = buildCard(visiblesId.get(1));
+        List<String> card3 = buildCard(visiblesId.get(2));
+        List<String> card4 = buildCard(visiblesId.get(3));
 
-        List<String> bottomLines = buildCornerLines(' ', ' ', false, null);
+        int i;
 
-        //TODO
+        for (i = 0; i < 8; i++) {
+            System.out.println(
+                    card1.get(i) + spaces(4) + card2.get(i) + spaces(4) + goldDeckLines.get(i));
+        }
 
-        return deck;
+        System.out.println(" ");
+
+        for (i = 0; i < 8; i++) {
+            System.out.println(
+                    card3.get(i) + spaces(4) + card4.get(i) + spaces(4) + resDeckLines.get(i));
+        }
+    }
+
+    public static void printHand(List<Integer> cardIds) throws Throwable {
+
+        List<String> card1 = buildCard(cardIds.get(0));
+        List<String> card2 = buildCard(cardIds.get(1));
+        List<String> card3 = buildCard(cardIds.get(2));
+
+        int i;
+
+        for (i = 0; i < 8; i++) {
+            System.out.println(
+                    card1.get(i) + spaces(4) + card2.get(i) + spaces(4) + card3.get(i));
+        }
     }
 
     public static List<String> buildCard(int id) throws Throwable {
@@ -400,6 +424,33 @@ public class CardPrinter {
         return card;
     }
 
+    public static List<String> buildDeck(Color color, PlayableCardType type) {
+        List<String> deck = new ArrayList<>();
+        List<Color> center = new ArrayList<>();
+        center.add(color);
+
+        List<String> topLines = buildCornerLines(' ', ' ', true, null);
+
+        String typeLine = "╟───┘" +
+                          ((type == PlayableCardType.GOLD) ? ("    GOLD   ") : ("  " +
+                                                                                "RESOURCE" +
+                                                                                " ")) +
+                          "└───╢";
+
+        String centerLine = buildCenterString(center);
+
+        List<String> bottomLines = buildCornerLines(' ', ' ', false, null);
+
+        deck.add(topLines.get(0));
+        deck.add(topLines.get(1));
+        deck.add(typeLine);
+        deck.add(centerLine);
+        deck.add(bottomLines.get(0));
+        deck.add(bottomLines.get(1));
+        deck.add(bottomLines.get(2));
+        deck.add(spaces(9) + "Deck" + spaces(8));
+        return deck;
+    }
 
     public static void printObjectives(List<Integer> ids) throws Throwable {
         //TODO;
