@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.RMI.Client;
 
+import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.network.RMI.Server.ServerMain;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,7 @@ class ClientToServerConnectorTest {
 
     @BeforeEach
     void setUp() {
+        CentralController.INSTANCE.forceReset();
         serverMain = new ServerMain(54321);
         serverMain.start();
     }
