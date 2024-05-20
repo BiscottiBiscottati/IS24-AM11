@@ -23,6 +23,8 @@ public class ClientMain implements ClientNetworkHandler {
     public ClientMain(String ip, int port, ClientViewUpdater updater) throws RemoteException {
         // Getting the registry
         registry = LocateRegistry.getRegistry(ip, port);
+        // check if connection is working
+        registry.list();
         // Looking up the registry for the remote object
         System.out.println("Remote method invoked");
         this.updater = updater;
