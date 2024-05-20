@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Objects;
 
 public class ServerMain implements Loggable {
 
@@ -60,13 +61,13 @@ public class ServerMain implements Loggable {
     @Override
     public void login(String nick, ConnectorInterface remoteConnector) throws RemoteException {
         try {
-            if (playerView.containsPlayer(nick)) {
-                CentralController.INSTANCE.playerReconnected(nick);
-            } else {
-                ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
-                VirtualPlayerView view = new VirtualPlayerView(connector, nick);
-                CentralController.INSTANCE.connectPlayer(nick, connector, connector);
-                playerView.addPlayer(nick, view);
+            ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
+            VirtualPlayerView view = new VirtualPlayerView(connector, nick);
+            CentralController.INSTANCE.connectPlayer(nick, connector, connector);
+            playerView.addPlayer(nick, view);
+            if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nick)) {
+                System.out.println("ok");
+                connector.notifyGodPlayer();
             }
         } catch (PlayerInitException e) {
             exceptionConnector.throwException(e);

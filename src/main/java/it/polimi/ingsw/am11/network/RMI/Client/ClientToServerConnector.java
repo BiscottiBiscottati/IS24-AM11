@@ -99,6 +99,7 @@ public class ClientToServerConnector implements ConnectorInterface {
     @Override
     public void notifyGodPlayer() throws RemoteException {
         clientUpdater.notifyGodPlayer();
+        System.out.println("fine");
     }
 
     @Override

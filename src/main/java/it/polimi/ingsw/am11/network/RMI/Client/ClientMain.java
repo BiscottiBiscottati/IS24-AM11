@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 
+import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -17,7 +18,7 @@ public class ClientMain implements ClientNetworkHandler {
 
 
     private final Registry registry;
-    private final ClientViewUpdater updater;
+    private final ConnectorInterface connector;
     private final NetworkConnector nConnector;
 
     public ClientMain(String ip, int port, ClientViewUpdater updater) throws RemoteException {
@@ -27,8 +28,15 @@ public class ClientMain implements ClientNetworkHandler {
         registry.list();
         // Looking up the registry for the remote object
         System.out.println("Remote method invoked");
-        this.updater = updater;
         this.nConnector = new NetworkConnector(this);
+        ClientToServerConnector clientObject = new ClientToServerConnector(updater);
+        connector = (ConnectorInterface) UnicastRemoteObject.exportObject(
+                clientObject, 0);
+        try {
+            registry.bind("Connector", connector);
+        } catch (AlreadyBoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) throws RemoteException {
@@ -38,9 +46,6 @@ public class ClientMain implements ClientNetworkHandler {
     public void login(String nick)
     throws RemoteException, NotBoundException {
         Loggable stub1 = (Loggable) registry.lookup("Loggable");
-        ClientToServerConnector clientObject = new ClientToServerConnector(updater);
-        ConnectorInterface connector = (ConnectorInterface) UnicastRemoteObject.exportObject(
-                clientObject, 0);
         stub1.login(nick, connector);
     }
 
