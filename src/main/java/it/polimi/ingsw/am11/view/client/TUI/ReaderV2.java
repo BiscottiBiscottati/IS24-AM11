@@ -22,10 +22,6 @@ public class ReaderV2 {
 
     public void listen() {
         String string = input.nextLine().strip();
-//        if (string.isEmpty()) {
-//            System.out.print("\033[A");
-//            return;
-//        }
         tuiUpdater.getCurrentTuiState().passArgs(actuator, string.split("\\s+"));
     }
 

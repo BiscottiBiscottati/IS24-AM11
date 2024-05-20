@@ -16,6 +16,7 @@ public class ClientMain {
 
     static String nickname;
     private final Registry registry;
+    private ClientViewUpdater updater;
 
     public ClientMain(String ip, int port) {
         try {
