@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 
 public class CardPrinter {
@@ -153,33 +152,17 @@ public class CardPrinter {
                     lines.add(emptyCenterBorder);
                 }
                 case TripletCard tripletCard -> {
-                    boolean isFlipped = tripletCard.isFlipped();
-                    char colorOfPattern =
-                            Stream.of(Color.values())
-                                  .filter(color -> tripletCard.hasItemRequirements(color) > 0)
-                                  .map(CardPrinter::getLetter)
-                                  .findFirst().orElseThrow();
-                    List<List<String>> pattern = new ArrayList<>(4);
-                    for (int i = 0; i < 4; i++) {
-                        pattern.add(new ArrayList<>(3));
-                    }
-
-                    // fill with " " a 4x3 matrix
-                    IntStream.range(0, 4).forEach(i -> {
-                        IntStream.range(0, 3).forEach(j -> {
-                            pattern.get(i).add(j, " ");
-                        });
-                    });
-
-
-                    tripletCard.getType().getPositions(isFlipped, false)
-                               .orElseThrow()
-                               .forEach(position -> {
-                                   int x = position.x();
-                                   int y = position.y();
-                                   pattern.get(x)
-                                          .set(y, String.valueOf(colorOfPattern));
-                               });
+                    List<List<String>> pattern =
+                            IntStream.range(0, 4)
+                                     .mapToObj(i -> tripletCard.getPattern().get(i)
+                                                               .stream()
+                                                               .map(color -> color == null ?
+                                                                             " " :
+                                                                             String.valueOf(
+                                                                                     getLetter(
+                                                                                             color)))
+                                                               .toList())
+                                     .toList();
 
                     for (int i = 0; i < 4; i++) {
                         List<Part> parts = new ArrayList<>(4);
@@ -195,8 +178,6 @@ public class CardPrinter {
 
                 }
                 case LCard lCard -> {
-                    boolean isFlipped = lCard.isFlipped();
-                    boolean isRotated = lCard.isRotated();
 
                     List<List<String>> pattern =
                             IntStream.range(0, 4)
