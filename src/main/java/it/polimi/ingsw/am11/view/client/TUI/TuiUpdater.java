@@ -245,7 +245,7 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void notifyGodPlayer() {
-
+        LOGGER.debug("EVENT: God player notification");
         model.setMyName(candidateNick);
         model.setGodPlayer(candidateNick);
         currentState = tuiStates.get(TuiStates.SETTING_NUM);

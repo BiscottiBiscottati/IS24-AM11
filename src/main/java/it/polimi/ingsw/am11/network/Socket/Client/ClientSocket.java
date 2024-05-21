@@ -4,6 +4,8 @@ import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +15,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class ClientSocket implements ClientNetworkHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientSocket.class);
+
     private final ClientViewUpdater clientViewUpdater;
     private final BufferedReader in;
     private final PrintWriter out;
@@ -38,6 +42,7 @@ public class ClientSocket implements ClientNetworkHandler {
                     in.close();
                     out.close();
                     socket.close();
+                    LOGGER.info("TCP: Client closed");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

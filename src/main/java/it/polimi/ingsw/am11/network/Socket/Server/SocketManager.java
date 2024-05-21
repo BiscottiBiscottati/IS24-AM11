@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am11.network.Socket.Server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,6 +12,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SocketManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SocketManager.class);
+
     private final List<ClientHandler> clientHandlers = new ArrayList<>();
     private ServerSocket serverSocket;
     private ExecutorService threadPool;
@@ -23,7 +28,10 @@ public class SocketManager {
             e.printStackTrace();
         }
 
-        Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            this.stop();
+            LOGGER.info("TCP: Server closed");
+        }));
     }
 
     public void stop() {

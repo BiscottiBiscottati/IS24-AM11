@@ -6,8 +6,9 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -16,27 +17,22 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ClientMain implements ClientNetworkHandler {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientMain.class);
 
     private final Registry registry;
     private final ConnectorInterface connector;
     private final NetworkConnector nConnector;
 
     public ClientMain(String ip, int port, ClientViewUpdater updater) throws RemoteException {
+
         // Getting the registry
         registry = LocateRegistry.getRegistry(ip, port);
-        // Check if connection is working
+        // Check if the connection is working
         registry.list();
         // Looking up the registry for the remote object
-        System.out.println("Remote method invoked");
         this.nConnector = new NetworkConnector(this);
         ClientToServerConnector clientObject = new ClientToServerConnector(updater);
-        connector = (ConnectorInterface) UnicastRemoteObject.exportObject(
-                clientObject, 0);
-        try {
-            registry.bind("Connector", connector);
-        } catch (AlreadyBoundException e) {
-            throw new RuntimeException(e);
-        }
+        connector = (ConnectorInterface) UnicastRemoteObject.exportObject(clientObject, 0);
     }
 
     public static void main(String[] args) throws RemoteException {
@@ -45,6 +41,7 @@ public class ClientMain implements ClientNetworkHandler {
 
     public void login(String nick)
     throws RemoteException, NotBoundException {
+        LOGGER.debug("Sending login request to server");
         Loggable stub1 = (Loggable) registry.lookup("Loggable");
         stub1.login(nick, connector);
     }

@@ -6,12 +6,16 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
 public class ClientToServerConnector implements ConnectorInterface {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientToServerConnector.class);
 
     private final ClientViewUpdater clientUpdater;
 
@@ -98,8 +102,8 @@ public class ClientToServerConnector implements ConnectorInterface {
 
     @Override
     public void notifyGodPlayer() throws RemoteException {
+        LOGGER.debug("Notifying god player");
         clientUpdater.notifyGodPlayer();
-        System.out.println("fine");
     }
 
     @Override

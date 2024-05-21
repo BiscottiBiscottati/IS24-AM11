@@ -7,12 +7,17 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.TableConnector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
 public class ConnectorImplementation implements PlayerConnector, TableConnector {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectorImplementation.class);
+
     private final ConnectorInterface remoteConnector;
 
     public ConnectorImplementation(ConnectorInterface remoteConnector) {
@@ -145,7 +150,7 @@ public class ConnectorImplementation implements PlayerConnector, TableConnector 
     }
 
     public void notifyGodPlayer() {
-        System.out.println("ci siamo");
+        LOGGER.info("RMI: Notifying god player");
         try {
             remoteConnector.notifyGodPlayer();
         } catch (RemoteException e) {

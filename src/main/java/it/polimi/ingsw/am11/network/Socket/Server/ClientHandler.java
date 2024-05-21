@@ -4,6 +4,8 @@ import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +16,8 @@ import java.net.SocketException;
 import java.util.Objects;
 
 public class ClientHandler implements Runnable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
+
     private String nickname;
     private BufferedReader in;
     private PrintWriter out;
@@ -30,6 +34,21 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                stop();
+                LOGGER.info("TCP: Server ClientHandler {} closed", nickname);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
+    }
+
+    public void stop() throws IOException {
+        isRunning = false;
+        if (in != null) in.close();
+        if (out != null) out.close();
+        if (clientSocket != null) clientSocket.close();
     }
 
     @Override
@@ -91,12 +110,5 @@ public class ClientHandler implements Runnable {
                 CentralController.INSTANCE.playerDisconnected(nickname);
             }
         }
-    }
-
-    public void stop() throws IOException {
-        isRunning = false;
-        if (in != null) in.close();
-        if (out != null) out.close();
-        if (clientSocket != null) clientSocket.close();
     }
 }

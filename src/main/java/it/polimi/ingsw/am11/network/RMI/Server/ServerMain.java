@@ -7,8 +7,11 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -16,6 +19,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Objects;
 
 public class ServerMain implements Loggable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerMain.class);
 
     private final int port;
     PlayerViewImpl playerView;
@@ -52,7 +56,21 @@ public class ServerMain implements Loggable {
             registry.bind("Loggable", log);
             registry.bind("PlayerView", view);
 
-            System.out.println("RMI: Server open on port: " + port);
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                try {
+                    registry.unbind("Loggable");
+                    registry.unbind("PlayerView");
+
+                    UnicastRemoteObject.unexportObject(this, true);
+                    UnicastRemoteObject.unexportObject(playerView, true);
+
+                    LOGGER.info("RMI: Server closed");
+                } catch (RemoteException | NotBoundException e) {
+                    e.printStackTrace();
+                }
+            }));
+
+            LOGGER.info("RMI: Server open on port: {}", port);
         } catch (RemoteException | AlreadyBoundException e) {
             throw new RuntimeException(e);
         }
@@ -61,12 +79,14 @@ public class ServerMain implements Loggable {
     @Override
     public void login(String nick, ConnectorInterface remoteConnector) throws RemoteException {
         try {
+            LOGGER.debug("RMI: login: {}, {}", nick, remoteConnector);
             ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
             VirtualPlayerView view = new VirtualPlayerView(connector, nick);
             CentralController.INSTANCE.connectPlayer(nick, connector, connector);
             playerView.addPlayer(nick, view);
+            LOGGER.info("RMI: Player connected: {}", nick);
             if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nick)) {
-                System.out.println("ok");
+                LOGGER.info("RMI: God player: {}", nick);
                 connector.notifyGodPlayer();
             }
         } catch (PlayerInitException e) {
