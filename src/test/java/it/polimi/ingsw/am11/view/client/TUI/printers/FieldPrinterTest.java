@@ -51,9 +51,5 @@ class FieldPrinterTest {
     void render() throws IllegalCardBuildException {
         when(field.getCardsPositioned()).thenReturn(testField);
         renderer.render();
-        CardPrinter.printCardFrontAndBack(100);
-        CardPrinter.printCardFrontAndBack(2);
-        CardPrinter.printCardFrontAndBack(3);
-        CardPrinter.printCardFrontAndBack(5);
     }
 }

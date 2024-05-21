@@ -78,7 +78,7 @@ public class Actuator {
 
     public void setName(String nick)
     throws TooManyRequestsException {
-        if (tuiUpdater.getCandidateNick() != null) {
+        if (!tuiUpdater.getCandidateNick().isEmpty()) {
             throw new TooManyRequestsException("You already sent a nickname, wait for results");
         }
         connector.setNickname(nick);
