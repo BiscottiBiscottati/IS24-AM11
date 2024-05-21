@@ -12,13 +12,15 @@ import java.util.Optional;
  * Can be <code>USABLE</code> OR <code>NOT_USABLE</code>
  */
 public enum Availability implements CornerContainer {
-    USABLE(true),
-    NOT_USABLE(false);
+    USABLE(true, "+"),
+    NOT_USABLE(false, "X");
 
     private final boolean isAvailable;
+    private final String TUICode;
 
-    Availability(boolean isAvailable) {
+    Availability(boolean isAvailable, String TUICode) {
         this.isAvailable = isAvailable;
+        this.TUICode = TUICode;
     }
 
     @Override
@@ -29,6 +31,11 @@ public enum Availability implements CornerContainer {
     @Override
     public @NotNull Optional<Item> getItem() {
         return Optional.empty();
+    }
+
+    @Override
+    public String getTUICode() {
+        return TUICode;
     }
 
 

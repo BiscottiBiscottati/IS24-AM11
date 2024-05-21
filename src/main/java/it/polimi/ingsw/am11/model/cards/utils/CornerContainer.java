@@ -50,4 +50,6 @@ public sealed interface CornerContainer permits Availability, Color, Symbol {
     boolean isAvailable();
 
     Optional<Item> getItem();
+
+    String getTUICode();
 }

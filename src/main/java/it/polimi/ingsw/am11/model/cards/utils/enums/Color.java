@@ -15,15 +15,17 @@ import java.util.Optional;
  * Can be <code>RED</code>, <code>BLUE</code>, <code>GREEN</code> or <code>PURPLE</code>.
  */
 public enum Color implements CornerContainer, Item, DatabaseSearchable {
-    RED("red"),
-    BLUE("blue"),
-    GREEN("green"),
-    PURPLE("purple");
+    RED("red", "R"),
+    BLUE("blue", "B"),
+    GREEN("green", "G"),
+    PURPLE("purple", "P");
 
     private final String columnName;
+    private final String TUIRepresentation;
 
-    Color(String columnName) {
+    Color(String columnName, String TUIRepresentation) {
         this.columnName = columnName;
+        this.TUIRepresentation = TUIRepresentation;
     }
 
     @Override
@@ -38,9 +40,12 @@ public enum Color implements CornerContainer, Item, DatabaseSearchable {
     }
 
     @Override
+    public String getTUICode() {
+        return TUIRepresentation;
+    }
+
+    @Override
     public String getColumnName() {
         return this.columnName;
     }
-
-
 }

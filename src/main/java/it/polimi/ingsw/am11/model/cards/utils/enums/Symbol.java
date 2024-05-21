@@ -13,14 +13,16 @@ import java.util.Optional;
  * Can be <code>FEATHER</code>, <code>GLASS</code> or <code>PAPER</code>.
  */
 public enum Symbol implements CornerContainer, Item {
-    FEATHER("feather"),
-    GLASS("glass"),
-    PAPER("paper");
+    FEATHER("feather", "F"),
+    GLASS("glass", "I"),
+    PAPER("paper", "S");
 
     private final String columnName;
+    private final String TUIRepresentation;
 
-    Symbol(String columnName) {
+    Symbol(String columnName, String TUIRepresentation) {
         this.columnName = columnName;
+        this.TUIRepresentation = TUIRepresentation;
     }
 
     @Override
@@ -39,5 +41,9 @@ public enum Symbol implements CornerContainer, Item {
         return Optional.of(this);
     }
 
+    @Override
+    public String getTUICode() {
+        return TUIRepresentation;
+    }
 
 }
