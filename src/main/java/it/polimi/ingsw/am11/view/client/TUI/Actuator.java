@@ -102,6 +102,7 @@ public class Actuator {
     }
 
     public void setStarter(boolean isRetro) {
+        //DONE
         tuiUpdater.setTuiState(TuiStates.WAITING);
         connector.setStarterCard(isRetro);
         tuiUpdater.getCurrentTuiState().restart(false, null);

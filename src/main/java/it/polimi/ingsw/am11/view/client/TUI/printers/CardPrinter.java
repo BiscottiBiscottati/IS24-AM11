@@ -38,6 +38,14 @@ public class CardPrinter {
     private static final Deck<ResourceCard> resDeck = ResourceDeckFactory.createDeck();
     private static final Deck<ObjectiveCard> objDeck = ObjectiveDeckFactory.createDeck();
 
+    public static void printObjectives(List<Integer> ids) throws Throwable {
+
+        for (Integer id : ids) {
+            printCardFrontAndBack(id);
+        }
+
+    }
+
     public static void printCardFrontAndBack(int id) throws IllegalCardBuildException {
         if (starterDeck.getCardById(id).isPresent()) {
 
@@ -526,9 +534,6 @@ public class CardPrinter {
             default:
                 throw new RuntimeException("Invalid number of requirements");
         }
-    }
-
-    public static void printObjectives(List<Integer> ids) throws Throwable {
     }
 
     public static void printTable(List<Integer> visiblesId, Color goldColor, Color resColor)
