@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.view.client.TUI.printers;
 
+import com.google.common.base.Strings;
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
 import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
@@ -218,6 +219,12 @@ public class CardPrinter {
             }
 
             lines.add(botLine);
+
+            lines.add(new Line(
+                    List.of(new Part(" ".repeat(8)),
+                            new Part(Strings.padStart(String.valueOf(id), 3, ' ')),
+                            new Part(" ".repeat(10))
+                    )));
 
             new Matrix(lines).print();
 

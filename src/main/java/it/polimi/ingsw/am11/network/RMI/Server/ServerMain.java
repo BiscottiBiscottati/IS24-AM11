@@ -43,10 +43,6 @@ public class ServerMain implements Loggable {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println("Server ready");
-    }
-
     public void start() {
         Loggable log;
         PlayerViewInterface view;

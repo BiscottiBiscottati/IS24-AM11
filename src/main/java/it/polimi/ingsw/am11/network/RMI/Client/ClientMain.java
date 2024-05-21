@@ -42,10 +42,6 @@ public class ClientMain implements ClientNetworkHandler {
         exceptionConnector = updater.getExceptionConnector();
     }
 
-    public static void main(String[] args) {
-        System.out.println("Hello from Client!");
-    }
-
     public void login(String nick)
     throws RemoteException {
         LOGGER.debug("Sending login request to server");
