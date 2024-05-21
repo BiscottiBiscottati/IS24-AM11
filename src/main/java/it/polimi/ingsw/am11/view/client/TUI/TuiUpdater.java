@@ -250,8 +250,9 @@ public class TuiUpdater implements ClientViewUpdater {
         model.setMyName(candidateNick);
         model.setGodPlayer(candidateNick);
 
-        currentState.set(tuiStates.get(TuiStates.SETTING_NUM));
-        currentState.get().restart(false, null);
+
+//        currentState.set(tuiStates.get(TuiStates.SETTING_NUM));
+//        currentState.get().restart(false, null);
     }
 
     @Override

@@ -22,16 +22,21 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(IllegalPlayerSpaceActionException ex) {
+        System.out.println("IllegalPlayerSpaceActionException");
+        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(TurnsOrderException ex) {
+        model.setCurrentTurn("Error in turns order");
+        System.out.println("It's not your turn");
+        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(PlayerInitException ex) {
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
-
+            //DONE
             tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
             return;
@@ -46,33 +51,38 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(IllegalCardPlacingException ex) {
+        System.out.println("You can't place that card there");
+        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(IllegalPickActionException ex) {
+        System.out.println("You can't do that");
+        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(NotInHandException ex) {
+        System.out.println("The card you chose is not in your hand");
+        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(EmptyDeckException ex) {
+        System.out.println("The deck you chose is empty");
+        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(NumOfPlayersException ex) {
-
-        if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
-            tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
-            tuiUpdater.getCurrentTuiState().restart(true, ex);
-        }
-
+        //DONE
+        tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
+        tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
     public void throwException(NotGodPlayerException ex) {
-
+        //DONE
         model.setGodPlayer(null);
         tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
         tuiUpdater.getCurrentTuiState().restart(true, ex);
@@ -88,8 +98,8 @@ public class TuiExceptionReceiver implements ExceptionConnector {
     public void throwException(NotSetNumOfPlayerException ex) {
         LOGGER.debug("NotSetNumOfPlayersException received: {}" + ex.getMessage());
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
-
-            tuiUpdater.setCandidateNick("");
+            //DONE
+            tuiUpdater.setCandidateNick(null);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
             return;
         }

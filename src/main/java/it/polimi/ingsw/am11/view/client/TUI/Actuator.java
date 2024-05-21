@@ -22,8 +22,8 @@ import java.util.List;
 // the communication.
 
 public class Actuator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Actuator.class);
-    private static ClientNetworkHandler clientHandler;
+    private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
+
     private final TuiUpdater tuiUpdater;
     private CltToNetConnector connector;
 
@@ -32,19 +32,19 @@ public class Actuator {
         this.connector = null;
     }
 
+    public static void close() {
+        System.exit(0);
+    }
+
     public static void help() {
         //TODO
     }
 
-    public static void close() {
-        if (clientHandler != null) clientHandler.close();
-        System.exit(0);
-    }
-
     public void connect(String type, String ip, int port) {
-        //DONE
+
         switch (type) {
             case "rmi": {
+                ClientNetworkHandler clientHandler = null;
                 try {
                     clientHandler = new ClientMain(ip, port, tuiUpdater);
                 } catch (RemoteException e) {
@@ -57,6 +57,7 @@ public class Actuator {
                 break;
             }
             case "socket": {
+                ClientNetworkHandler clientHandler = null;
                 try {
                     clientHandler = new ClientSocket(ip, port, tuiUpdater);
                 } catch (IOException e) {
@@ -77,40 +78,30 @@ public class Actuator {
 
     public void setName(String nick)
     throws TooManyRequestsException {
-        //DONE
-        if (! tuiUpdater.getCandidateNick().isEmpty()) {
+        if (tuiUpdater.getCandidateNick() != null) {
             throw new TooManyRequestsException("You already sent a nickname, wait for results");
         }
-        tuiUpdater.setTuiState(TuiStates.WAITING);
-        tuiUpdater.getCurrentTuiState().restart(false, null);
-
         connector.setNickname(nick);
         tuiUpdater.setCandidateNick(nick);
-        //TOREMOVE
-        if (nick.equals("god")) {
-            tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
-            tuiUpdater.getCurrentTuiState().restart(false, null);
-        }
-        //----f
+        tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void setNumOfPlayers(int num) {
-        //DONE
-        tuiUpdater.setTuiState(TuiStates.WAITING);
         connector.setNumOfPlayers(num);
+        tuiUpdater.setTuiState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void setStarter(boolean isRetro) {
-        //DONE
-        tuiUpdater.setTuiState(TuiStates.WAITING);
         connector.setStarterCard(isRetro);
+        tuiUpdater.setTuiState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void setObjective(int cardId) {
-        tuiUpdater.setTuiState(TuiStates.WAITING);
         connector.setPersonalObjective(cardId);
+        tuiUpdater.setTuiState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
@@ -120,18 +111,18 @@ public class Actuator {
         }
         int x;
         int y;
-        int cardId;
+        int cardid;
         String frontOrRetro = positionalArgs.get(4);
         try {
             x = Integer.parseInt(positionalArgs.get(1));
             y = Integer.parseInt(positionalArgs.get(2));
-            cardId = Integer.parseInt(positionalArgs.get(3));
+            cardid = Integer.parseInt(positionalArgs.get(3));
         } catch (NumberFormatException e) {
             throw new InvalidArgumetsException("Invalid Arguments");
         }
         switch (frontOrRetro) {
-            case "front" -> connector.placeCard(new Position(x, y), cardId, false);
-            case "retro" -> connector.placeCard(new Position(x, y), cardId, true);
+            case "front" -> connector.placeCard(new Position(x, y), cardid, false);
+            case "retro" -> connector.placeCard(new Position(x, y), cardid, true);
             default -> throw new InvalidArgumetsException("Invalid Arguments");
         }
     }

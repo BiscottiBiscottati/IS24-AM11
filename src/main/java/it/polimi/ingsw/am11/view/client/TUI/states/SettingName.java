@@ -85,7 +85,6 @@ public class SettingName implements TUIState {
     @Override
     public void restart(boolean dueToEx, Exception exception) {
         isBlocked = false;
-        alreadyError = false;
 
         ConsUtils.clear();
         System.out.println("""
@@ -98,7 +97,6 @@ public class SettingName implements TUIState {
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
-            alreadyError = true;
         }
         System.out.println("You can now choose your nickname, it can't contain spaces");
         System.out.print(askYourName);

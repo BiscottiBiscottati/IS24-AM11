@@ -77,9 +77,6 @@ public class ChoosingStrt implements TUIState {
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
-            alreadyError = true;
-        } else {
-            alreadyError = false;
         }
         System.out.println("You received this starter card:");
     }

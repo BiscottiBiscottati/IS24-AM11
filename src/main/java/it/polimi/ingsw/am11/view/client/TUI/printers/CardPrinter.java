@@ -48,7 +48,6 @@ public class CardPrinter {
 
     public static void printCardFrontAndBack(int id) throws IllegalCardBuildException {
         if (starterDeck.getCardById(id).isPresent()) {
-
             StarterCard sCard = getStarterCard(id);
 
             char tlf = getLetter(sCard.getItemCorner(Corner.TOP_LX, false));
@@ -63,10 +62,7 @@ public class CardPrinter {
 
             List<Color> center = new ArrayList<>(sCard.getCenter(false));
 
-            //List<String> topLinesFront = buildCornerLines(tlf, trf, true, null);
-
-            List<String> topLinesFront = new ArrayList<>(buildCornerLines(tlf, trf, true, null));
-
+            List<String> topLinesFront = buildCornerLines(tlf, trf, true, null);
             List<String> topLinesBack = buildCornerLines(tlb, trb, true, null);
 
             String centerLineFront = buildCenterString(center);
@@ -240,7 +236,6 @@ public class CardPrinter {
             List<Color> center = new ArrayList<>(pCard.getCenter(true));
 
             List<String> topLinesFront = buildCornerLines(tlf, trf, true, null);
-
             List<String> topLinesBack = buildCornerLines(tlb, trb, true, null);
 
             String centerLineFront = buildCenterString(center);
@@ -303,6 +298,9 @@ public class CardPrinter {
 
         List<Line> linesComposite = new ArrayList<>(3);
         List<String> lines = new ArrayList<>(3);
+        lines.add(line1);
+        lines.add(line2);
+        lines.add(line3);
 
         String leftPart;
         String centralPart;
@@ -335,16 +333,16 @@ public class CardPrinter {
                 leftPart = "║ " + left + " │";
             }
             if (card != null) {
-                centralPart = buildPointsString(card);
+                centralPart = buildRequirementsString(card.getPlacingRequirements());
             } else {
                 centralPart = spaces(11);
             }
             if (left == 'X') {
-                rightPart = "    ║";
+                rightPart = "               ║";
             } else {
-                rightPart = "│ " + right + " ║";
+                rightPart = "           │ " + right + " ║";
             }
-            line2 = leftPart + centralPart + rightPart;
+            line2 = leftPart + rightPart;
             //LINE 3
             if (left == 'X') {
                 leftPart = "║    ";
@@ -363,7 +361,7 @@ public class CardPrinter {
             } else {
                 rightPart = "└───╢";
             }
-            line3 = leftPart + centralPart + rightPart;
+            line3 = leftPart + rightPart;
         } else {
             //LINE 1
             if (left == 'X') {
@@ -408,6 +406,7 @@ public class CardPrinter {
             line3 = leftPart + rightPart;
         }
 
+
         lines.add(line1);
         lines.add(line2);
         lines.add(line3);
@@ -416,23 +415,20 @@ public class CardPrinter {
 
     // FIXME the center does not print as it says there's a null
     public static String buildCenterString(@Nullable List<Color> center) {
-        char center1;
+        char center1 = getColorLetter(center.get(0));
         char center2;
         char center3;
         if (center == null || center.isEmpty()) {
             return "║                   ║";
         }
         if (center.size() == 1) {
-            center1 = getColorLetter(center.get(0));
             return "║         " + center1 + "         ║";
         }
         if (center.size() == 2) {
-            center1 = getColorLetter(center.get(0));
             center2 = getColorLetter(center.get(1));
             return "║       " + center1 + "   " + center2 + "       ║";
         }
         if (center.size() == 3) {
-            center1 = getColorLetter(center.get(0));
             center2 = getColorLetter(center.get(1));
             center3 = getColorLetter(center.get(2));
             return "║     " + center1 + " │ " + center2 + " │ " + center3 + "     ║";
@@ -460,37 +456,6 @@ public class CardPrinter {
                       .map(PlayableCard.class::cast)
                       .or(() -> goldDeck.getCardById(id))
                       .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
-    }
-
-    public static String buildPointsString(PlayableCard card) {
-        int points = card.getPoints();
-        PointsRequirementsType type = card.getPointsRequirements();
-        Optional<Symbol> symbol = card.getSymbolToCollect();
-
-        if (type == PointsRequirementsType.CLASSIC) {
-            if (points == 0) {
-                return spaces(11);
-            }
-            return spaces(5) + points + spaces(5);
-        }
-        if (type == PointsRequirementsType.SYMBOLS) {
-            if (symbol.isEmpty()) {
-                return spaces(11);
-            }
-            if (symbol.orElseThrow() == Symbol.PAPER) {
-                return " 1:Scroll  ";
-            }
-            if (symbol.orElseThrow() == Symbol.GLASS) {
-                return "   1:Ink   ";
-            }
-            if (symbol.orElseThrow() == Symbol.FEATHER) {
-                return "  1:Quill  ";
-            }
-        }
-        if (type == PointsRequirementsType.COVERING_CORNERS) {
-            return " 2xCorner  ";
-        }
-        return "   error   ";
     }
 
     public static String buildRequirementsString(Map<Color, Integer> requirements) {
@@ -636,6 +601,37 @@ public class CardPrinter {
         deck.add(bottomLines.get(2));
         deck.add(spaces(9) + "Deck" + spaces(8));
         return deck;
+    }
+
+    public static String buildPointsString(PlayableCard card) {
+        int points = card.getPoints();
+        PointsRequirementsType type = card.getPointsRequirements();
+        Optional<Symbol> symbol = card.getSymbolToCollect();
+
+        if (type == PointsRequirementsType.CLASSIC) {
+            if (points == 0) {
+                return spaces(11);
+            }
+            return spaces(5) + points + spaces(5);
+        }
+        if (type == PointsRequirementsType.SYMBOLS) {
+            if (symbol.isEmpty()) {
+                return spaces(11);
+            }
+            if (symbol.orElseThrow() == Symbol.PAPER) {
+                return " 1:Scroll  ";
+            }
+            if (symbol.orElseThrow() == Symbol.GLASS) {
+                return "   1:Ink   ";
+            }
+            if (symbol.orElseThrow() == Symbol.FEATHER) {
+                return "  1:Quill  ";
+            }
+        }
+        if (type == PointsRequirementsType.COVERING_CORNERS) {
+            return " 2xCorner  ";
+        }
+        return "   error   ";
     }
 
 }

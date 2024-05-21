@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class Waiting implements TUIState {
     public static final String askLine = "To ask is permissible , to reply is polite >>> \033[K";
-    private boolean alreadyError = false;
 
     @Override
     public void passArgs(Actuator actuator, String[] args) {
@@ -23,9 +22,7 @@ public class Waiting implements TUIState {
         try {
             parser.parse(args);
         } catch (ParsingErrorException e) {
-            errorsHappensEvenTwice("ERROR: " + e.getMessage());
-            alreadyError = true;
-            System.out.print(askLine);
+            errorsHappens(askLine);
             return;
         }
 
@@ -33,18 +30,13 @@ public class Waiting implements TUIState {
         switch (word.toLowerCase()) {
             case "help" -> Actuator.help();
             case "exit" -> Actuator.close();
-            default -> {
-                errorsHappensEvenTwice("ERROR: " + word + " is not a valid option");
-                alreadyError = true;
-                System.out.print(askLine);
-            }
+            case "kira" -> kiraIsAGoodGirl();
+            default -> errorsHappens(askLine);
         }
     }
 
     @Override
     public void restart(boolean dueToEx, Exception exception) {
-        alreadyError = false;
-
         ConsUtils.clear();
         System.out.println("""
                                    ++++++++++++++++++++++++++++
@@ -56,7 +48,6 @@ public class Waiting implements TUIState {
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
-            alreadyError = true;
         }
         System.out.println("Everybody is waiting for something...");
         System.out.print(askLine);
@@ -66,10 +57,12 @@ public class Waiting implements TUIState {
         return new ArgParser();
     }
 
-    private void errorsHappensEvenTwice(String text) {
-        if (alreadyError) {
-            System.out.print("\033[F" + "\033[K");
-        }
-        System.out.println("\033[F" + "\033[K" + text);
+    private static void errorsHappens(String text) {
+        System.out.print("\033[F" + "\033[K" + text);
+    }
+
+    private static void kiraIsAGoodGirl() {
+        System.out.println("Kira is the best dog one could ever have!! ");
+        System.out.print("To ask is permissible , to reply is polite >>>");
     }
 }

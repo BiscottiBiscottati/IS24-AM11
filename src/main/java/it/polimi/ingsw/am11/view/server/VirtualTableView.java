@@ -171,8 +171,4 @@ public class VirtualTableView {
             connector.updateNumOfPlayers(event.getNewValue());
         });
     }
-
-    public void updateTable(NotifyGodPlayerEvent notifyGodPlayerEvent) {
-        LOGGER.debug("EVENT: Notify god player:");
-    }
 }

@@ -82,9 +82,6 @@ public class ChoosingObj implements TUIState {
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
-            alreadyError = true;
-        } else {
-            alreadyError = false;
         }
         System.out.println("You received this objectives:");
     }
