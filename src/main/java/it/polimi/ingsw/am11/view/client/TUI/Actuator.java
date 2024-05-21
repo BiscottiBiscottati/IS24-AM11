@@ -82,17 +82,17 @@ public class Actuator {
         if (! tuiUpdater.getCandidateNick().isEmpty()) {
             throw new TooManyRequestsException("You already sent a nickname, wait for results");
         }
+        tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.getCurrentTuiState().restart(false, null);
+
         connector.setNickname(nick);
         tuiUpdater.setCandidateNick(nick);
         //TOREMOVE
         if (nick.equals("god")) {
             tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
             tuiUpdater.getCurrentTuiState().restart(false, null);
-            return;
         }
         //----f
-        tuiUpdater.setTuiState(TuiStates.WAITING);
-        tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void setNumOfPlayers(int num) {

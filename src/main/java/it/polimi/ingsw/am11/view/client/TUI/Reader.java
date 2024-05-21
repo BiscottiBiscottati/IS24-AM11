@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.view.client.TUI;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 // This class will read the stdin and then use an argParser to extract the arguments from the
 // received command. The list of arguments will be passed to current TuiState that is saved in
@@ -10,6 +11,7 @@ import java.util.Scanner;
 // communicate with the server.
 
 public class Reader {
+    private static final Pattern SPACE_SPLIT = Pattern.compile("\\s+");
     private final Scanner input;
     private final TuiUpdater tuiUpdater;
     private final Actuator actuator;
@@ -22,7 +24,7 @@ public class Reader {
 
     public void listen() {
         String string = input.nextLine().strip();
-        tuiUpdater.getCurrentTuiState().passArgs(actuator, string.split("\\s+"));
+        tuiUpdater.getCurrentTuiState().passArgs(actuator, SPACE_SPLIT.split(string));
     }
 
 }

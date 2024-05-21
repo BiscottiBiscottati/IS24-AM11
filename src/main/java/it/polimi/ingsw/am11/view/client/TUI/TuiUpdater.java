@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 // This class is the implementation of the ClientViewUpdater and the ExceptionConnector.
 // The classes that handle the interpretation of the messages from the net will call these methods
@@ -31,7 +32,7 @@ public class TuiUpdater implements ClientViewUpdater {
     private final MiniGameModel model;
     private final EnumMap<TuiStates, TUIState> tuiStates;
     private final TuiExceptionReceiver exceptionReceiver;
-    private TUIState currentState;
+    private final AtomicReference<TUIState> currentState;
     private String candidateNick = "";
 
     public TuiUpdater(MiniGameModel model, TuiStates startingState) {
@@ -40,7 +41,7 @@ public class TuiUpdater implements ClientViewUpdater {
         for (TuiStates state : TuiStates.values()) {
             tuiStates.put(state, state.getNewState());
         }
-        this.currentState = tuiStates.get(TuiStates.CONNECTING);
+        this.currentState = new AtomicReference<>(tuiStates.get(TuiStates.CONNECTING));
         this.exceptionReceiver = new TuiExceptionReceiver(model, this);
     }
 
@@ -104,11 +105,11 @@ public class TuiUpdater implements ClientViewUpdater {
         model.setCurrentTurn(nickname);
         if (nickname.equals(model.myName())) {
             System.out.println("It's now your turn, good luck");
-            currentState = tuiStates.get(TuiStates.PLACING);
+            currentState.set(tuiStates.get(TuiStates.PLACING));
             System.out.println("TUI STATUS: " + TuiStates.PLACING);
         } else {
             System.out.println("It's now " + nickname + " turn");
-            currentState = tuiStates.get(TuiStates.WAITING);
+            currentState.set(tuiStates.get(TuiStates.WAITING));
             System.out.println("TUI STATUS: " + TuiStates.WAITING);
         }
     }
@@ -132,8 +133,8 @@ public class TuiUpdater implements ClientViewUpdater {
             }
             case CHOOSING_STARTERS -> {
                 //DONE
-                currentState = tuiStates.get(TuiStates.CHOOSING_STARTER);
-                currentState.restart(false, null);
+                currentState.set(tuiStates.get(TuiStates.CHOOSING_STARTER));
+                currentState.get().restart(false, null);
                 try {
                     CardPrinter.printCardFrontAndBack(
                             model.getCliPlayer(model.myName()).getSpace().getStarterCard());
@@ -143,8 +144,8 @@ public class TuiUpdater implements ClientViewUpdater {
                 System.out.print("Place it on its front or on its back >>> ");
             }
             case CHOOSING_OBJECTIVES -> {
-                currentState = tuiStates.get(TuiStates.CHOOSING_OBJECTIVE);
-                currentState.restart(false, null);
+                currentState.set(tuiStates.get(TuiStates.CHOOSING_OBJECTIVE));
+                currentState.get().restart(false, null);
                 try {
                     CardPrinter.printObjectives(new ArrayList<>(model.getCliPlayer(
                             model.myName()).getSpace().getCandidateObjectives()));
@@ -154,8 +155,8 @@ public class TuiUpdater implements ClientViewUpdater {
                 System.out.print("Choose one of the objectives above >>> ");
             }
             case ENDED -> {
-                currentState = tuiStates.get(TuiStates.ENDED);
-                currentState.restart(false, null);
+                currentState.set(tuiStates.get(TuiStates.ENDED));
+                currentState.get().restart(false, null);
             }
             case ONGOING -> {
                 System.out.println("The game has began, fight with honor");
@@ -248,24 +249,24 @@ public class TuiUpdater implements ClientViewUpdater {
         LOGGER.debug("EVENT: God player notification");
         model.setMyName(candidateNick);
         model.setGodPlayer(candidateNick);
-        currentState = tuiStates.get(TuiStates.SETTING_NUM);
-        currentState.restart(false, null);
+        currentState.set(tuiStates.get(TuiStates.SETTING_NUM));
+        currentState.get().restart(false, null);
     }
 
     @Override
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
         //DONE
         model.setMyName(candidateNick);
-        for (PlayerColor pc : currentPlayers.keySet()) {
-            model.addPlayer(currentPlayers.get(pc), pc);
+        for (Map.Entry<PlayerColor, String> entry : currentPlayers.entrySet()) {
+            model.addPlayer(entry.getValue(), entry.getKey());
         }
     }
 
     @Override
     public void updateNumOfPlayers(int numOfPlayers) {
         if (isCurrentState(TuiStates.WAITING) && ! model.getGodPlayer().equals(model.myName())) {
-            currentState = tuiStates.get(TuiStates.SETTING_NAME);
-            currentState.restart(false, null);
+            currentState.set(tuiStates.get(TuiStates.SETTING_NAME));
+            currentState.get().restart(false, null);
         }
     }
 
@@ -287,11 +288,11 @@ public class TuiUpdater implements ClientViewUpdater {
     }
 
     public TUIState getCurrentTuiState() {
-        return currentState;
+        return currentState.get();
     }
 
     public void setTuiState(TuiStates state) {
-        currentState = tuiStates.get(state);
+        currentState.set(tuiStates.get(state));
     }
 
     public TUIState getState(TuiStates state) {
