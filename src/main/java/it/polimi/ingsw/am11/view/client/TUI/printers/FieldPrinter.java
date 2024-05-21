@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class FieldPrinter {
+    public static final String HORIZONTAL_SEPARATOR = "─";
+    public static final String VERTICAL_SEPARATOR = "│";
     public static final int CARD_WIDTH = 3;
     private final CliField field;
 
@@ -98,17 +100,17 @@ public class FieldPrinter {
                                 int columnIndex, @NotNull MiniCardContainer card) {
         setCorner(printMatrix, rowIndex - 1, columnIndex, card, Corner.TOP_LX);
 
-        String separator = "-".repeat(CARD_WIDTH);
+        String separator = HORIZONTAL_SEPARATOR.repeat(CARD_WIDTH);
 
         printMatrix.get(rowIndex - 1).set(columnIndex + 1, separator);
         setCorner(printMatrix, rowIndex - 1, columnIndex + 2, card, Corner.TOP_RX);
 
-        printMatrix.get(rowIndex).set(columnIndex, "|");
+        printMatrix.get(rowIndex).set(columnIndex, VERTICAL_SEPARATOR);
         printMatrix.get(rowIndex).set(columnIndex + 1,
                                       Strings.padStart(String.valueOf(card.getCardId()),
                                                        CARD_WIDTH,
                                                        ' '));
-        printMatrix.get(rowIndex).set(columnIndex + 2, "|");
+        printMatrix.get(rowIndex).set(columnIndex + 2, VERTICAL_SEPARATOR);
 
         setCorner(printMatrix, rowIndex + 1, columnIndex, card, Corner.DOWN_LX);
         printMatrix.get(rowIndex + 1).set(columnIndex + 1, separator);
