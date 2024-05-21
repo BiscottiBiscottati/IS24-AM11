@@ -1,10 +1,8 @@
-package it.polimi.ingsw.am11.view.client.TUI.field;
+package it.polimi.ingsw.am11.view.client.TUI.printers;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
-import it.polimi.ingsw.am11.view.client.TUI.printers.FieldPrinter;
 import it.polimi.ingsw.am11.view.client.miniModel.CliField;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniCardContainer;
 import org.junit.jupiter.api.BeforeAll;
