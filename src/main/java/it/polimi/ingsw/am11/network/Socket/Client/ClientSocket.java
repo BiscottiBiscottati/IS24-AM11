@@ -31,6 +31,8 @@ public class ClientSocket implements ClientNetworkHandler {
     throws IOException {
         this.clientViewUpdater = clientViewUpdater;
         try {
+            //FIXME: If I try to connect to a random ip and port the method Socket() will not
+            // terminate and the program will hang;
             socket = new Socket(ip, port);
             if (! socket.isConnected()) {
                 throw new IOException("Connection error");

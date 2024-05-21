@@ -31,6 +31,7 @@ public class ClientMain implements ClientNetworkHandler {
 
         // Getting the registry
         registry = LocateRegistry.getRegistry(ip, port);
+        System.out.println("RMI: Registry obtained");
         // Check if the connection is working
         registry.list();
         // Looking up the registry for the remote object

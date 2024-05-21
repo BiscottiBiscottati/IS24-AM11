@@ -79,7 +79,7 @@ public class SettingNum implements TUIState {
         System.out.println("""
                                    ++++++++++++++++++++++++++++
                                    \s
-                                    STATUS: Choosing a nickname...
+                                    STATUS: Choosing numbers of players...
                                    \s
                                    ++++++++++++++++++++++++++++
                                    \s""");

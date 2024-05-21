@@ -42,7 +42,6 @@ public class Actuator {
     }
 
     public void connect(String type, String ip, int port) {
-
         switch (type) {
             case "rmi": {
                 ClientNetworkHandler clientHandler = null;

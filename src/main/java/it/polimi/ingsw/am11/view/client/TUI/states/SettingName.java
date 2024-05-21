@@ -22,14 +22,15 @@ public class SettingName implements TUIState {
     public void passArgs(Actuator actuator, String[] args) {
         ArgParser parser = setUpOptions();
 
-        if (isBlocked) {
-            System.out.print("\033[A");
-            return;
-        }
 
         //Empty string
         if (args[0].isEmpty()) {
             System.out.print("\033[F" + askYourName);
+            return;
+        }
+
+        if (isBlocked) {
+            System.out.print("\033[A");
             return;
         }
 
@@ -85,6 +86,7 @@ public class SettingName implements TUIState {
     @Override
     public void restart(boolean dueToEx, Exception exception) {
         isBlocked = false;
+        alreadyError = false;
 
         ConsUtils.clear();
         System.out.println("""
@@ -97,6 +99,7 @@ public class SettingName implements TUIState {
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
+            alreadyError = true;
         }
         System.out.println("You can now choose your nickname, it can't contain spaces");
         System.out.print(askYourName);

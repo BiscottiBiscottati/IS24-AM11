@@ -45,12 +45,14 @@ public class Connecting implements TUIState {
             } else if (port == - 1) {
                 switch (type) {
                     case "socket" -> {
-                        System.out.println(Constants.DEFAULT_SOCKET_PORT);
                         port = Constants.DEFAULT_SOCKET_PORT;
+                        upClearDownThenFalse();
+                        System.out.println(setPort + port);
                     }
                     case "rmi" -> {
-                        System.out.println(Constants.DEFAULT_RMI_PORT);
                         port = Constants.DEFAULT_RMI_PORT;
+                        upClearDownThenFalse();
+                        System.out.println(setPort + port);
                     }
                     default ->
                             throw new RuntimeException("type is set neither to rmi nor to socket");
@@ -75,12 +77,13 @@ public class Connecting implements TUIState {
                 System.out.print(chooseSocketOrRmi);
                 alreadyError = true;
             } else if (ip.isEmpty()) {
-                System.out.println(chooseIp);
+                System.out.print(chooseIp);
                 alreadyError = true;
             } else if (port == - 1) {
                 System.out.print(choosePort);
                 alreadyError = true;
             }
+            return;
         }
 
         String word = parser.getPositionalArgs().getFirst();
@@ -100,6 +103,7 @@ public class Connecting implements TUIState {
                     errorsHappensEvenTwice("ERROR: " + word + " is not a valid argument");
                     System.out.print(chooseSocketOrRmi);
                     alreadyError = true;
+                    return;
                 }
             }
 
@@ -181,10 +185,11 @@ public class Connecting implements TUIState {
                 errorsHappensEvenTwice("ERROR: " + word + " is not a valid value for port");
                 System.out.print(choosePort);
                 alreadyError = true;
+                return;
             }
 
             upClearDownThenFalse();
-            System.out.println(setPort + ip);
+            System.out.println(setPort + port);
         }
 
 
@@ -210,7 +215,7 @@ public class Connecting implements TUIState {
     private void upClearDownThenFalse() {
         if (alreadyError) {
             System.out.print("\033[F" + "\033[K");
-            System.out.print("\033[2F" + "\033[K");
+            System.out.print("\033[F" + "\033[K");
             alreadyError = false;
         } else {
             System.out.print("\033[F" + "\033[K");
