@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.view.client.TUI;
+package it.polimi.ingsw.am11.view.client.TUI.printers;
 
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;

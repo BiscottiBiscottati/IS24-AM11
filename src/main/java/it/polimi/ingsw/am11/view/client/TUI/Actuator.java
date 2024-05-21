@@ -22,7 +22,7 @@ import java.util.List;
 // the communication.
 
 public class Actuator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Actuator.class);
 
     private final TuiUpdater tuiUpdater;
     private CltToNetConnector connector;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.view.client.TUI;
+package it.polimi.ingsw.am11.view.client.TUI.utils;
 
 public abstract class ConsUtils {
 

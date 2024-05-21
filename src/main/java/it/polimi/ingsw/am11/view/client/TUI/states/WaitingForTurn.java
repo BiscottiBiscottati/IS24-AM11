@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
-import it.polimi.ingsw.am11.view.client.TUI.ConsUtils;
+import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import org.jetbrains.annotations.Nullable;
 
 public class WaitingForTurn implements TUIState {

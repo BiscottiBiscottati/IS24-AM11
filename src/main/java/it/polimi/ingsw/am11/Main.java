@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.Constants;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
+import org.fusesource.jansi.AnsiConsole;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -23,6 +24,8 @@ public class Main {
                 """;
 
         ArgParser parser = setUpOptions();
+
+        AnsiConsole.systemInstall();
 
 
         if (args == null || args.length < 1) {
@@ -52,6 +55,8 @@ public class Main {
             case "help" -> System.out.println(HELP_MESSAGE);
             default -> System.out.println("Invalid mode: " + mode + ". Use 'server' or 'client'.");
         }
+
+        AnsiConsole.systemUninstall();
     }
 
     private static @NotNull ArgParser setUpOptions() {

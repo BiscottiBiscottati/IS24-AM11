@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.chat.ClientChatController;
 import it.polimi.ingsw.am11.network.ChatCltToNetConnector;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
+import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class TuiHandler {
     private CltToNetConnector connector;
     private ClientChatController chatController;
     private ChatCltToNetConnector chatConnector;
-    private ReaderV2 reader;
+    private Reader reader;
 
     public TuiHandler() {
         this.model = new MiniGameModel();
@@ -61,7 +62,7 @@ public class TuiHandler {
         System.out.println("by Osama Atiqi, Edoardo Bergamo, Ferdinando Cioffi and Zining Chen");
         printLoadingBar(1);
         ConsUtils.clear();
-        reader = new ReaderV2(tuiUpdater);
+        reader = new Reader(tuiUpdater);
 
         tuiUpdater.getCurrentTuiState().restart(false, null);
 

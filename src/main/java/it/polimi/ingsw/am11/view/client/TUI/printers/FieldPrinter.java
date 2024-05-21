@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.view.client.TUI.field;
+package it.polimi.ingsw.am11.view.client.TUI.printers;
 
 import com.google.common.base.Strings;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class FieldRenderer {
+public class FieldPrinter {
     public static final int CARD_WIDTH = 3;
     private final CliField field;
 
-    public FieldRenderer(@NotNull CliField field) {
+    public FieldPrinter(@NotNull CliField field) {
         this.field = field;
     }
 

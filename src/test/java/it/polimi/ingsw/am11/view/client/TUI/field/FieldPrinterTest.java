@@ -1,7 +1,10 @@
 package it.polimi.ingsw.am11.view.client.TUI.field;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
+import it.polimi.ingsw.am11.view.client.TUI.printers.FieldPrinter;
 import it.polimi.ingsw.am11.view.client.miniModel.CliField;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniCardContainer;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,11 +20,11 @@ import java.util.stream.Stream;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class FieldRendererTest {
+class FieldPrinterTest {
 
     static Map<Position, MiniCardContainer> testField;
 
-    FieldRenderer renderer;
+    FieldPrinter renderer;
 
     @Mock
     CliField field;
@@ -42,12 +45,16 @@ class FieldRendererTest {
 
     @BeforeEach
     void setUp() {
-        renderer = new FieldRenderer(field);
+        renderer = new FieldPrinter(field);
     }
 
     @Test
-    void render() {
+    void render() throws IllegalCardBuildException {
         when(field.getCardsPositioned()).thenReturn(testField);
         renderer.render();
+        CardPrinter.printCardFrontAndBack(100);
+        CardPrinter.printCardFrontAndBack(2);
+        CardPrinter.printCardFrontAndBack(3);
+        CardPrinter.printCardFrontAndBack(5);
     }
 }
