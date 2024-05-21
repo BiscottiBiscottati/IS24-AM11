@@ -23,6 +23,7 @@ public class ServerMain implements Loggable {
 
     private final int port;
     PlayerViewImpl playerView;
+    Registry registry;
     ExceptionConnector exceptionConnector;
 
     {
@@ -35,6 +36,11 @@ public class ServerMain implements Loggable {
 
     public ServerMain(int port) {
         this.port = port;
+        try {
+            registry = LocateRegistry.createRegistry(port);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) {
@@ -52,27 +58,30 @@ public class ServerMain implements Loggable {
         }
         // Bind the remote object's stub in the registry
         try {
-            Registry registry = LocateRegistry.createRegistry(port);
             registry.bind("Loggable", log);
             registry.bind("PlayerView", view);
 
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                try {
-                    registry.unbind("Loggable");
-                    registry.unbind("PlayerView");
-
-                    UnicastRemoteObject.unexportObject(this, true);
-                    UnicastRemoteObject.unexportObject(playerView, true);
-
-                    LOGGER.info("RMI: Server closed");
-                } catch (RemoteException | NotBoundException e) {
-                    e.printStackTrace();
-                }
-            }));
+            Runtime.getRuntime().addShutdownHook(new Thread(this::close));
 
             LOGGER.info("RMI: Server open on port: {}", port);
         } catch (RemoteException | AlreadyBoundException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void close() {
+        try {
+            registry.unbind("Loggable");
+            registry.unbind("PlayerView");
+
+            UnicastRemoteObject.unexportObject(this, true);
+            UnicastRemoteObject.unexportObject(playerView, true);
+
+            LOGGER.info("RMI: Server closed");
+        } catch (RemoteException e) {
+            LOGGER.error("RMI: Error while closing server", e);
+        } catch (NotBoundException e) {
+            LOGGER.debug("RMI: Not bound (probably already closed)");
         }
     }
 
