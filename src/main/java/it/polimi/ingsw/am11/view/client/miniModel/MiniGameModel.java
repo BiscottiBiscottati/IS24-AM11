@@ -13,8 +13,8 @@ public class MiniGameModel {
     private final CliTable table;
     private Map<String, Integer> finalLeaderboard;
     private String currentTurn;
-    private String godPlayer;
-    private String myName;
+    private String godPlayer = "";
+    private String myName = "";
     private boolean iPlaced;
     private String startingPlayer = "";
 

@@ -45,12 +45,14 @@ public class Connecting implements TUIState {
             } else if (port == - 1) {
                 switch (type) {
                     case "socket" -> {
-                        System.out.println(Constants.DEFAULT_SOCKET_PORT);
                         port = Constants.DEFAULT_SOCKET_PORT;
+                        upClearDownThenFalse();
+                        System.out.println(setPort + Constants.DEFAULT_SOCKET_PORT);
                     }
                     case "rmi" -> {
-                        System.out.println(Constants.DEFAULT_RMI_PORT);
                         port = Constants.DEFAULT_RMI_PORT;
+                        upClearDownThenFalse();
+                        System.out.println(setPort + Constants.DEFAULT_RMI_PORT);
                     }
                     default ->
                             throw new RuntimeException("type is set neither to rmi nor to socket");
@@ -75,7 +77,7 @@ public class Connecting implements TUIState {
                 System.out.print(chooseSocketOrRmi);
                 alreadyError = true;
             } else if (ip.isEmpty()) {
-                System.out.println(chooseIp);
+                System.out.print(chooseIp);
                 alreadyError = true;
             } else if (port == - 1) {
                 System.out.print(choosePort);
@@ -184,7 +186,7 @@ public class Connecting implements TUIState {
             }
 
             upClearDownThenFalse();
-            System.out.println(setPort + ip);
+            System.out.println(setPort + port);
         }
 
 
@@ -263,6 +265,7 @@ public class Connecting implements TUIState {
 
         if (dueToEx) {
             System.out.println("ERROR DURING CONNECTION: " + exception.getMessage());
+            alreadyError = true;
         }
         System.out.println("To join a new game you need to connect to the server, enter the " +
                            "information" + count + ":");

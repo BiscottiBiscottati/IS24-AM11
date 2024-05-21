@@ -27,9 +27,6 @@ public class ClientSocket implements ClientNetworkHandler {
         this.clientViewUpdater = clientViewUpdater;
         try {
             socket = new Socket(ip, port);
-            if (! socket.isConnected()) {
-                throw new IOException("Connection error");
-            }
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             sendCommandC = new SendCommandC(out);
