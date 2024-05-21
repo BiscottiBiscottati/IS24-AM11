@@ -4,7 +4,6 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class NetworkConnector implements CltToNetConnector {
@@ -24,7 +23,7 @@ public class NetworkConnector implements CltToNetConnector {
         try {
             main.login(nickname);
             this.nickname = nickname;
-        } catch (RemoteException | NotBoundException e) {
+        } catch (RemoteException e) {
             throw new RuntimeException(e);
             // disconnection problem?
         }

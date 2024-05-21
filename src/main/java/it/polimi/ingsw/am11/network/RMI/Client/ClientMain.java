@@ -1,11 +1,13 @@
 package it.polimi.ingsw.am11.network.RMI.Client;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ public class ClientMain implements ClientNetworkHandler {
     private final Registry registry;
     private final ConnectorInterface connector;
     private final NetworkConnector nConnector;
+    private final ExceptionConnector exceptionConnector;
 
     public ClientMain(String ip, int port, ClientViewUpdater updater) throws RemoteException {
 
@@ -34,27 +37,48 @@ public class ClientMain implements ClientNetworkHandler {
         this.nConnector = new NetworkConnector(this);
         ClientToServerConnector clientObject = new ClientToServerConnector(updater);
         connector = (ConnectorInterface) UnicastRemoteObject.exportObject(clientObject, 0);
+
+        exceptionConnector = updater.getExceptionConnector();
     }
 
-    public static void main(String[] args) throws RemoteException {
+    public static void main(String[] args) {
         System.out.println("Hello from Client!");
     }
 
     public void login(String nick)
-    throws RemoteException, NotBoundException {
+    throws RemoteException {
         LOGGER.debug("Sending login request to server");
-        Loggable stub1 = (Loggable) registry.lookup("Loggable");
-        stub1.login(nick, connector);
+        Loggable stub1;
+        try {
+            stub1 = (Loggable) registry.lookup("Loggable");
+            stub1.login(nick, connector);
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        } catch (NumOfPlayersException e) {
+            exceptionConnector.throwException(e);
+        } catch (NotSetNumOfPlayerException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
+        } catch (PlayerInitException e) {
+            exceptionConnector.throwException(e);
+        }
     }
 
     public void setNumOfPlayers(String nick, int numOfPlayers) throws RemoteException {
         Loggable stub1;
         try {
             stub1 = (Loggable) registry.lookup("Loggable");
+            stub1.setNumOfPlayers(nick, numOfPlayers);
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
+        } catch (NumOfPlayersException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
+        } catch (NotGodPlayerException e) {
+            exceptionConnector.throwException(e);
         }
-        stub1.setNumOfPlayers(nick, numOfPlayers);
     }
 
     public void logout(String nick) throws RemoteException {
@@ -71,20 +95,32 @@ public class ClientMain implements ClientNetworkHandler {
         PlayerViewInterface stub3;
         try {
             stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
+            stub3.setStarterCard(nick, isRetro);
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
+        } catch (PlayerInitException e) {
+            exceptionConnector.throwException(e);
+        } catch (IllegalCardPlacingException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
         }
-        stub3.setStarterCard(nick, isRetro);
     }
 
     public void setObjectiveCard(String nick, int cardId) throws RemoteException {
         PlayerViewInterface stub3;
         try {
             stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
+            stub3.setObjectiveCard(nick, cardId);
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
+        } catch (IllegalPlayerSpaceActionException e) {
+            exceptionConnector.throwException(e);
+        } catch (PlayerInitException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
         }
-        stub3.setObjectiveCard(nick, cardId);
     }
 
     public void placeCard(String nick, int cardId, int x, int y, boolean isRetro)
@@ -92,10 +128,22 @@ public class ClientMain implements ClientNetworkHandler {
         PlayerViewInterface stub3;
         try {
             stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
+            stub3.placeCard(nick, cardId, x, y, isRetro);
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
+        } catch (TurnsOrderException e) {
+            exceptionConnector.throwException(e);
+        } catch (PlayerInitException e) {
+            exceptionConnector.throwException(e);
+        } catch (IllegalCardPlacingException e) {
+            exceptionConnector.throwException(e);
+        } catch (NotInHandException e) {
+            exceptionConnector.throwException(e);
+        } catch (IllegalPlateauActionException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
         }
-        stub3.placeCard(nick, cardId, x, y, isRetro);
     }
 
     public void drawCard(String nick, boolean fromVisible, PlayableCardType type, int cardId)
@@ -103,10 +151,24 @@ public class ClientMain implements ClientNetworkHandler {
         PlayerViewInterface stub3;
         try {
             stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
+            stub3.drawCard(nick, fromVisible, type, cardId);
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
+        } catch (IllegalPlayerSpaceActionException e) {
+            exceptionConnector.throwException(e);
+        } catch (TurnsOrderException e) {
+            exceptionConnector.throwException(e);
+        } catch (IllegalPickActionException e) {
+            exceptionConnector.throwException(e);
+        } catch (PlayerInitException e) {
+            exceptionConnector.throwException(e);
+        } catch (EmptyDeckException e) {
+            exceptionConnector.throwException(e);
+        } catch (MaxHandSizeException e) {
+            exceptionConnector.throwException(e);
+        } catch (GameStatusException e) {
+            exceptionConnector.throwException(e);
         }
-        stub3.drawCard(nick, fromVisible, type, cardId);
     }
 
     public NetworkConnector getConnector() {

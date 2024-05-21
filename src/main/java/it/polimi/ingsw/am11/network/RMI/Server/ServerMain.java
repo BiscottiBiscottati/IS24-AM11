@@ -77,26 +77,18 @@ public class ServerMain implements Loggable {
     }
 
     @Override
-    public void login(String nick, ConnectorInterface remoteConnector) throws RemoteException {
-        try {
-            LOGGER.debug("RMI: login: {}, {}", nick, remoteConnector);
-            ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
-            VirtualPlayerView view = new VirtualPlayerView(connector, nick);
-            CentralController.INSTANCE.connectPlayer(nick, connector, connector);
-            playerView.addPlayer(nick, view);
-            LOGGER.info("RMI: Player connected: {}", nick);
-            if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nick)) {
-                LOGGER.info("RMI: God player: {}", nick);
-                connector.notifyGodPlayer();
-            }
-        } catch (PlayerInitException e) {
-            exceptionConnector.throwException(e);
-        } catch (GameStatusException e) {
-            exceptionConnector.throwException(e);
-        } catch (NumOfPlayersException e) {
-            exceptionConnector.throwException(e);
-        } catch (NotSetNumOfPlayerException e) {
-            exceptionConnector.throwException(e);
+    public void login(String nick, ConnectorInterface remoteConnector)
+    throws RemoteException, NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
+           GameStatusException {
+        LOGGER.debug("RMI: login: {}, {}", nick, remoteConnector);
+        ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
+        VirtualPlayerView view = new VirtualPlayerView(connector, nick);
+        CentralController.INSTANCE.connectPlayer(nick, connector, connector);
+        playerView.addPlayer(nick, view);
+        LOGGER.info("RMI: Player connected: {}", nick);
+        if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nick)) {
+            LOGGER.info("RMI: God player: {}", nick);
+            connector.notifyGodPlayer();
         }
     }
 
@@ -106,16 +98,9 @@ public class ServerMain implements Loggable {
         System.out.println(nick + " disconnected");
     }
 
-    public void setNumOfPlayers(String nick, int val) throws RemoteException {
-        try {
-            CentralController.INSTANCE.setNumOfPlayers(nick, val);
-        } catch (NotGodPlayerException e) {
-            exceptionConnector.throwException(e);
-        } catch (GameStatusException e) {
-            exceptionConnector.throwException(e);
-        } catch (NumOfPlayersException e) {
-            exceptionConnector.throwException(e);
-        }
+    public void setNumOfPlayers(String nick, int val)
+    throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException {
+        CentralController.INSTANCE.setNumOfPlayers(nick, val);
     }
 
     @Override
