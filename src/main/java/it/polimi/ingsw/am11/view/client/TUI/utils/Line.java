@@ -13,4 +13,12 @@ public class Line extends PrintComposite {
     protected void printThisAfter() {
         System.out.println();
     }
+
+    public void addPart(@NotNull Part part) {
+        add(part);
+    }
+
+    public void addParts(@NotNull List<Part> parts) {
+        parts.forEach(this::add);
+    }
 }
