@@ -31,10 +31,11 @@ class FieldPrinterTest {
     static void beforeAll() {
         MiniCardContainer starter = new MiniCardContainer(100, true);
         Stream.of(Corner.values())
+              .filter(corner -> corner != Corner.DOWN_RX)
               .forEach(starter::cover);
 
         testField = Map.of(
-                new Position(0, 0), new MiniCardContainer(100, true),
+                new Position(0, 0), starter,
                 new Position(- 1, - 1), new MiniCardContainer(2, false),
                 new Position(1, 1), new MiniCardContainer(3, false),
                 new Position(- 1, 1), new MiniCardContainer(5, false)

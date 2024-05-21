@@ -1,10 +1,9 @@
-package it.polimi.ingsw.am11.view.client.TUI;
+package it.polimi.ingsw.am11.view.client.TUI.printers;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
 import org.junit.jupiter.api.Test;
 
 class CardPrinterTest {
