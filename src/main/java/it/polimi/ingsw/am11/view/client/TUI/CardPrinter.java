@@ -31,6 +31,7 @@ import java.util.stream.IntStream;
 
 public class CardPrinter {
 
+    // FIXME we should use a dedicated class for decoding is better for understanding
     private static final Deck<GoldCard> goldDeck = GoldDeckFactory.createDeck();
     private static final Deck<StarterCard> starterDeck = StarterDeckFactory.createDeck();
     private static final Deck<ResourceCard> resDeck = ResourceDeckFactory.createDeck();
