@@ -404,6 +404,7 @@ public class CardPrinter {
         return lines;
     }
 
+    // FIXME the center does not print as it says there's a null
     public static String buildCenterString(@Nullable List<Color> center) {
         char center1 = getColorLetter(center.get(0));
         char center2;
