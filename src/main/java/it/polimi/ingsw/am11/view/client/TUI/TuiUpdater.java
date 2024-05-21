@@ -240,7 +240,7 @@ public class TuiUpdater implements ClientViewUpdater {
     public void receiveCandidateObjective(Set<Integer> cardId) {
         //DONE
         model.getCliPlayer(model.myName()).getSpace().addCandidateObjectives(cardId);
-        cardId.stream().forEach(
+        cardId.forEach(
                 x -> LOGGER.debug("Receive candidate objective event, card id: {}", x));
     }
 
@@ -251,8 +251,8 @@ public class TuiUpdater implements ClientViewUpdater {
         model.setGodPlayer(candidateNick);
 
 
-//        currentState.set(tuiStates.get(TuiStates.SETTING_NUM));
-//        currentState.get().restart(false, null);
+        currentState.set(tuiStates.get(TuiStates.SETTING_NUM));
+        currentState.get().restart(false, null);
     }
 
     @Override

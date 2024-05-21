@@ -42,6 +42,8 @@ public class ClientSocket implements ClientNetworkHandler {
             clientThread = new Thread(this::run);
             Runtime.getRuntime().addShutdownHook(new Thread(this::close));
 
+            clientThread.start();
+
         } catch (UnknownHostException e) {
             throw new UnknownHostException("Unknown host");
         } catch (IOException e) {
@@ -49,13 +51,13 @@ public class ClientSocket implements ClientNetworkHandler {
         }
     }
 
-
-    public void run() {
+    private void run() {
         isRunning = true;
         String message;
         while (isRunning) {
             try {
                 message = in.readLine();
+                LOGGER.debug("TCP: Client received message: {}", message);
                 if (message != null && ! message.isEmpty()) {
                     receiveCommandC.receive(message);
                 }

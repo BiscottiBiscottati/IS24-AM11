@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.InvalidArgumetsException;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +28,7 @@ public class Actuator {
     private final TuiUpdater tuiUpdater;
     private CltToNetConnector connector;
 
-    public Actuator(TuiUpdater tuiUpdater) {
+    public Actuator(@NotNull TuiUpdater tuiUpdater) {
         this.tuiUpdater = tuiUpdater;
         this.connector = null;
     }
@@ -78,13 +79,13 @@ public class Actuator {
 
     public void setName(String nick)
     throws TooManyRequestsException {
-        if (!tuiUpdater.getCandidateNick().isEmpty()) {
+        tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.getCurrentTuiState().restart(false, null);
+        if (! tuiUpdater.getCandidateNick().isEmpty()) {
             throw new TooManyRequestsException("You already sent a nickname, wait for results");
         }
         connector.setNickname(nick);
         tuiUpdater.setCandidateNick(nick);
-        tuiUpdater.setTuiState(TuiStates.WAITING);
-        tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void setNumOfPlayers(int num) {
@@ -94,15 +95,15 @@ public class Actuator {
     }
 
     public void setStarter(boolean isRetro) {
-        connector.setStarterCard(isRetro);
         tuiUpdater.setTuiState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
+        connector.setStarterCard(isRetro);
     }
 
     public void setObjective(int cardId) {
-        connector.setPersonalObjective(cardId);
         tuiUpdater.setTuiState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
+        connector.setPersonalObjective(cardId);
     }
 
     public void place(List<String> positionalArgs) throws InvalidArgumetsException {

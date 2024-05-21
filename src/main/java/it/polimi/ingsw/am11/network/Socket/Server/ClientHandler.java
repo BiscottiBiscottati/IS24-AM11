@@ -60,6 +60,8 @@ public class ClientHandler implements Runnable {
             try {
                 System.out.println("TCP: Waiting for nickname...");
                 nickname = in.readLine();
+                LOGGER.info("TCP: Received nickname: {}", nickname);
+
                 SendCommandS sendCommandS = new SendCommandS(out);
                 view = CentralController.INSTANCE
                         .connectPlayer(nickname, sendCommandS, sendCommandS);
@@ -68,16 +70,22 @@ public class ClientHandler implements Runnable {
                 System.out.println("TCP: Connected: " + nickname);
                 if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nickname)) {
                     boolean validNumOfPlayers = false;
+                    LOGGER.debug("Notifying god player: {}", nickname);
+                    sendCommandS.youGodPlayer();
                     while (! validNumOfPlayers) {
                         try {
-                            sendCommandS.youGodPlayer();
                             System.out.println("TCP: Waiting for number of players...");
-                            int numOfPlayers = Integer.parseInt(in.readLine());
-                            CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
-                            System.out.println("God player: " + nickname);
-                            System.out.println("Num of players: " + numOfPlayers);
-                            validNumOfPlayers = true;
-                            sendCommandS.updateNumOfPlayers(numOfPlayers);
+                            String input = in.readLine();
+                            LOGGER.debug("Received message from god player: {}", input);
+                            if (input == null) return;
+                            if (! input.isBlank()) {
+                                int numOfPlayers = Integer.parseInt(input);
+                                CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
+                                System.out.println("God player: " + nickname);
+                                System.out.println("Num of players: " + numOfPlayers);
+                                validNumOfPlayers = true;
+                                sendCommandS.updateNumOfPlayers(numOfPlayers);
+                            }
                         } catch (NotGodPlayerException | NumOfPlayersException |
                                  GameStatusException e) {
                             sendException.Exception(e);

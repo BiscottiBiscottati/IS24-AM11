@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -19,7 +20,7 @@ public class ReceiveCommandC {
     private final ObjectMapper mapper;
     private final ReceiveException receiveException;
 
-    public ReceiveCommandC(ClientViewUpdater clientPlayerView) {
+    public ReceiveCommandC(@NotNull ClientViewUpdater clientPlayerView) {
         this.clientPlayerView = clientPlayerView;
         this.mapper = new ObjectMapper();
         this.receiveException = new ReceiveException(clientPlayerView.getExceptionConnector());
