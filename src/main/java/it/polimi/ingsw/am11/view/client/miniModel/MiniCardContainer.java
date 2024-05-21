@@ -1,7 +1,10 @@
 package it.polimi.ingsw.am11.view.client.miniModel;
 
+import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.view.client.TUI.utils.CardDecoder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -29,8 +32,17 @@ public class MiniCardContainer {
         return coveredCorners;
     }
 
+    public boolean isCovered(Corner corner) {
+        return coveredCorners.get(corner);
+    }
+
     public boolean isRetro() {
         return isRetro;
+    }
+
+    public CornerContainer getContainerOn(Corner corner) {
+        FieldCard fieldCard = CardDecoder.decodeFieldCard(cardId).orElseThrow();
+        return fieldCard.getItemCorner(corner, isRetro);
     }
 
     @Override

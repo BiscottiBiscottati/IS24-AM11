@@ -31,14 +31,18 @@ public class CliField {
         cardsPositioned.remove(pos);
     }
 
+    public Map<Position, MiniCardContainer> getCardsPositioned() {
+        return Map.copyOf(cardsPositioned);
+    }
+
     @Override
     public String toString() {
-        String result;
-        result = "";
+        StringBuilder result;
+        result = new StringBuilder();
         for (MiniCardContainer miniCardContainer : cardsPositioned.values()) {
-            result = result + "\n" + miniCardContainer.toString();
+            result.append("\n").append(miniCardContainer.toString());
         }
-        return result;
+        return result.toString();
     }
 
 }
