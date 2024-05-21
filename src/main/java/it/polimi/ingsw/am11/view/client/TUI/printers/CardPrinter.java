@@ -29,6 +29,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 
+// FIXME playable cards doesn't show symbols on their corners
 public class CardPrinter {
 
     // FIXME we should use a dedicated class for decoding is better for understanding
