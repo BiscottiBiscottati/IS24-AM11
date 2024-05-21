@@ -23,6 +23,7 @@ public class ClientSocket implements ClientNetworkHandler {
     private final ReceiveCommandC receiveCommandC;
     private final SendCommandC sendCommandC;
     private final Socket socket;
+    private final Thread clientThread;
     private boolean isRunning;
 
     public ClientSocket(String ip, int port,
@@ -35,18 +36,8 @@ public class ClientSocket implements ClientNetworkHandler {
             out = new PrintWriter(socket.getOutputStream(), true);
             sendCommandC = new SendCommandC(out);
             receiveCommandC = new ReceiveCommandC(this.clientViewUpdater);
-            Thread thread = new Thread(this::run);
-            thread.start();
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                try {
-                    in.close();
-                    out.close();
-                    socket.close();
-                    LOGGER.info("TCP: Client closed");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }));
+            clientThread = new Thread(this::run);
+            Runtime.getRuntime().addShutdownHook(new Thread(this::close));
 
         } catch (UnknownHostException e) {
             throw new UnknownHostException("Unknown host");
@@ -70,24 +61,28 @@ public class ClientSocket implements ClientNetworkHandler {
                 ReceiveException receiveException = receiveCommandC.getReceiveException();
                 receiveException.sendDisconnectionException();
                 //TODO: handle disconnection
-                try {
-                    close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                close();
             }
         }
     }
 
-    public void close() throws IOException {
-        isRunning = false;
-        if (in != null) in.close();
-        if (out != null) out.close();
-        if (socket != null) socket.close();
-    }
-
     public CltToNetConnector getConnector() {
         return sendCommandC;
+    }
+
+    @Override
+    public void close() {
+        LOGGER.debug("TCP: Closing client");
+        clientThread.interrupt();
+        isRunning = false;
+        try {
+            if (socket != null) socket.close();
+            if (in != null) in.close();
+            if (out != null) out.close();
+        } catch (IOException e) {
+            LOGGER.error("TCP: Error while closing the connection");
+        }
+        LOGGER.debug("TCP: Client closed");
     }
 
     // For testing purposes

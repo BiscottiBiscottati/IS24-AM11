@@ -5,4 +5,6 @@ package it.polimi.ingsw.am11.network;
 //for example ip and port, and the clientViewUpdater that will modify the view
 public interface ClientNetworkHandler {
     CltToNetConnector getConnector();
+
+    void close();
 }

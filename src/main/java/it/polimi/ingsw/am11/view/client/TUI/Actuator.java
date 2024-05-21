@@ -23,7 +23,7 @@ import java.util.List;
 
 public class Actuator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Actuator.class);
-
+    private static ClientNetworkHandler clientHandler;
     private final TuiUpdater tuiUpdater;
     private CltToNetConnector connector;
 
@@ -32,19 +32,19 @@ public class Actuator {
         this.connector = null;
     }
 
-    public static void close() {
-        System.exit(0);
-    }
-
     public static void help() {
         //TODO
+    }
+
+    public static void close() {
+        if (clientHandler != null) clientHandler.close();
+        System.exit(0);
     }
 
     public void connect(String type, String ip, int port) {
         //DONE
         switch (type) {
             case "rmi": {
-                ClientNetworkHandler clientHandler = null;
                 try {
                     clientHandler = new ClientMain(ip, port, tuiUpdater);
                 } catch (RemoteException e) {
@@ -57,7 +57,6 @@ public class Actuator {
                 break;
             }
             case "socket": {
-                ClientNetworkHandler clientHandler = null;
                 try {
                     clientHandler = new ClientSocket(ip, port, tuiUpdater);
                 } catch (IOException e) {
@@ -97,20 +96,20 @@ public class Actuator {
 
     public void setNumOfPlayers(int num) {
         //DONE
-        connector.setNumOfPlayers(num);
         tuiUpdater.setTuiState(TuiStates.WAITING);
+        connector.setNumOfPlayers(num);
         tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void setStarter(boolean isRetro) {
-        connector.setStarterCard(isRetro);
         tuiUpdater.setTuiState(TuiStates.WAITING);
+        connector.setStarterCard(isRetro);
         tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void setObjective(int cardId) {
-        connector.setPersonalObjective(cardId);
         tuiUpdater.setTuiState(TuiStates.WAITING);
+        connector.setPersonalObjective(cardId);
         tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
@@ -120,18 +119,18 @@ public class Actuator {
         }
         int x;
         int y;
-        int cardid;
+        int cardId;
         String frontOrRetro = positionalArgs.get(4);
         try {
             x = Integer.parseInt(positionalArgs.get(1));
             y = Integer.parseInt(positionalArgs.get(2));
-            cardid = Integer.parseInt(positionalArgs.get(3));
+            cardId = Integer.parseInt(positionalArgs.get(3));
         } catch (NumberFormatException e) {
             throw new InvalidArgumetsException("Invalid Arguments");
         }
         switch (frontOrRetro) {
-            case "front" -> connector.placeCard(new Position(x, y), cardid, false);
-            case "retro" -> connector.placeCard(new Position(x, y), cardid, true);
+            case "front" -> connector.placeCard(new Position(x, y), cardId, false);
+            case "retro" -> connector.placeCard(new Position(x, y), cardId, true);
             default -> throw new InvalidArgumetsException("Invalid Arguments");
         }
     }

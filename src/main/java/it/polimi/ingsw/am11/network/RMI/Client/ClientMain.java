@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -110,6 +111,16 @@ public class ClientMain implements ClientNetworkHandler {
 
     public NetworkConnector getConnector() {
         return nConnector;
+    }
+
+    @Override
+    public void close() {
+        try {
+            UnicastRemoteObject.unexportObject(connector, true);
+        } catch (NoSuchObjectException e) {
+            LOGGER.error("No Connector to un-export");
+        }
+        LOGGER.debug("RMI: Client closed");
     }
 
     public void reconnect(String nick) throws RemoteException {
