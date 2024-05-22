@@ -118,7 +118,7 @@ class ResourceCardTest {
         assertEquals(playable2.getPoints(), 0);
     }
 
-    @Disabled
+    @Disabled("Disabled because it depends on IDE settings")
     @Test
     void checkNulls() {
         assertThrows(RuntimeException.class, () -> playable.getItemCorner(null));
@@ -127,7 +127,7 @@ class ResourceCardTest {
         assertThrows(RuntimeException.class, () -> resource.isFrontAvailable(null));
     }
 
-    @Disabled
+    @Disabled("Disabled because it depends on IDE settings")
     @Test
     void checkBuilderNulls() {
         assertThrows(RuntimeException.class,

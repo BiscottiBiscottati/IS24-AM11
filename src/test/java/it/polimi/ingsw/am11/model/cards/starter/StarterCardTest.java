@@ -81,7 +81,7 @@ class StarterCardTest {
 
     }
 
-    @Disabled
+    @Disabled("Disabled because of not null assertions depends on IDE settings")
     @Test
     void checkBuilderNulls() {
         // if JetBrain Annotator is not set, it will throw NullPointerException
@@ -132,7 +132,7 @@ class StarterCardTest {
         );
     }
 
-    @Disabled
+    @Disabled("Disabled because of not null assertions depends on IDE settings")
     @Test
     void checkNulls() {
         // if JetBrain Annotator is not set, it will throw NullPointerException

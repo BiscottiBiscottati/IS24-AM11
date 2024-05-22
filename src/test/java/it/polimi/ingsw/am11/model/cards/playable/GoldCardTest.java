@@ -119,7 +119,7 @@ class GoldCardTest {
         assertSame(Symbol.FEATHER, goldSymbols.getItemCorner(Corner.DOWN_RX));
     }
 
-    @Disabled
+    @Disabled("Disabled because of not null assertions depends on IDE settings")
     @Test
     void checkNulls() {
         assertThrows(IllegalArgumentException.class, () -> goldClassic.getItemCorner(null));
@@ -128,7 +128,7 @@ class GoldCardTest {
         assertThrows(IllegalArgumentException.class, () -> goldSymbols.isFrontAvailable(null));
     }
 
-    @Disabled
+    @Disabled("Disabled because of not null assertions depends on IDE settings")
     @Test
     void checkBuilderNulls() {
         assertThrows(IllegalArgumentException.class,
