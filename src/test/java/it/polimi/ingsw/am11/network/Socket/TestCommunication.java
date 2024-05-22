@@ -1,65 +1,83 @@
 package it.polimi.ingsw.am11.network.Socket;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.network.Socket.Client.ReceiveCommandC;
 import it.polimi.ingsw.am11.network.Socket.Client.SendCommandC;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
-import org.junit.jupiter.api.*;
+import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
-@Disabled("Test doesn't finish")
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 class TestCommunication {
 
     //TODO
 
-    private static CentralController centralController;
-    private static ClientSocket clientSocket;
-    private static ClientSocket clientSocket2;
-    private static ClientSocket clientSocket3;
-    private static ClientSocket clientSocket4;
-    private static CountDownLatch latch;
-    private Thread server;
-    private SocketManager serverSocket;
+    static CentralController centralController;
+    static ClientSocket clientSocket;
+    static ClientSocket clientSocket2;
+    static ClientSocket clientSocket3;
+    static ClientSocket clientSocket4;
+    static CountDownLatch latch;
+    @Mock
+    ClientViewUpdater clientViewUpdaterMock;
+    @Mock
+    ClientViewUpdater clientViewUpdaterMock2;
+    @Mock
+    ClientViewUpdater clientViewUpdaterMock3;
+    @Mock
+    ClientViewUpdater clientViewUpdaterMock4;
+    @Mock
+    ExceptionConnector exceptionConnectorMock;
+    Thread server;
+    SocketManager serverSocket;
 
     @BeforeAll
     public static void setupServer() {
         centralController = CentralController.INSTANCE;
-        latch = new CountDownLatch(1);
     }
 
     // FIXME there are side effects when doing the tests together
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
+        when(clientViewUpdaterMock.getExceptionConnector()).thenReturn(exceptionConnectorMock);
+        when(clientViewUpdaterMock2.getExceptionConnector()).thenReturn(exceptionConnectorMock);
+        when(clientViewUpdaterMock3.getExceptionConnector()).thenReturn(exceptionConnectorMock);
+        when(clientViewUpdaterMock4.getExceptionConnector()).thenReturn(exceptionConnectorMock);
+
         centralController.forceReset();
         serverSocket = new SocketManager(12345);
         server = new Thread(() -> {
             serverSocket.start();
         });
         server.start();
-    }
-
-    // FIXME test doesn't finish
-    @Test
-    public void testSetupPlayersWithWait() throws IOException, NumOfPlayersException,
-                                                  GameStatusException {
-        ClientViewUpdater clientViewUpdaterMock = Mockito.mock(ClientViewUpdater.class);
-        ClientViewUpdater clientViewUpdaterMock2 = Mockito.mock(ClientViewUpdater.class);
-        ClientViewUpdater clientViewUpdaterMock3 = Mockito.mock(ClientViewUpdater.class);
-        ClientViewUpdater clientViewUpdaterMock4 = Mockito.mock(ClientViewUpdater.class);
-
         clientSocket = new ClientSocket("localhost", 12345, clientViewUpdaterMock);
         clientSocket2 = new ClientSocket("localhost", 12345, clientViewUpdaterMock2);
         clientSocket3 = new ClientSocket("localhost", 12345, clientViewUpdaterMock3);
         clientSocket4 = new ClientSocket("localhost", 12345, clientViewUpdaterMock4);
+
+    }
+
+    // FIXME test doesn't finish
+    @Test
+    public void testSetupPlayersWithWait() {
+
         // Create SendCommand and ReceiveCommand instances
 
         SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
@@ -148,30 +166,12 @@ class TestCommunication {
                 ArgumentMatchers.anySet());
         Mockito.verify(clientViewUpdaterMock4, Mockito.times(1)).receiveCandidateObjective(
                 ArgumentMatchers.anySet());
-        //sendCommandC.setPersonalObjective(1);
-        //sendCommandC2.setPersonalObjective(2);
 
-
-        clientSocket.close();
-        clientSocket2.close();
-        clientSocket3.close();
-        clientSocket4.close();
 
     }
 
     @Test
     public void testSetupPlayersWithoutWait() throws IOException {
-        ClientViewUpdater clientViewUpdaterMock = Mockito.mock(ClientViewUpdater.class);
-        ClientViewUpdater clientViewUpdaterMock2 = Mockito.mock(ClientViewUpdater.class);
-        ClientViewUpdater clientViewUpdaterMock3 = Mockito.mock(ClientViewUpdater.class);
-        ClientViewUpdater clientViewUpdaterMock4 = Mockito.mock(ClientViewUpdater.class);
-
-        // Create clientSocket
-        clientSocket = new ClientSocket("localhost", 12345, clientViewUpdaterMock);
-        clientSocket2 = new ClientSocket("localhost", 12345, clientViewUpdaterMock2);
-        clientSocket3 = new ClientSocket("localhost", 12345, clientViewUpdaterMock3);
-        clientSocket4 = new ClientSocket("localhost", 12345, clientViewUpdaterMock4);
-
         // Create SendCommand and ReceiveCommand instances
         SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
         ReceiveCommandC receiveCommandC = new ReceiveCommandC(clientViewUpdaterMock);
@@ -188,6 +188,11 @@ class TestCommunication {
             latch.countDown();
             return 0;
         }).when(clientViewUpdaterMock).notifyGodPlayer();
+
+        Mockito.doAnswer(invocation -> {
+            latch.countDown();
+            return 0;
+        }).when(clientViewUpdaterMock).updateNumOfPlayers(4);
 
         // Setup Mockito chain invocations for setting Starters and PersonalObjectives
         Mockito.doAnswer(invocation -> {
@@ -242,6 +247,8 @@ class TestCommunication {
             return 0;
         }).when(clientViewUpdaterMock4).receiveCandidateObjective(ArgumentMatchers.anySet());
 
+        latch = new CountDownLatch(2);
+
         // sending first player nickname
         sendCommandC.setNickname("Francesco");
 
@@ -267,12 +274,6 @@ class TestCommunication {
             throw new RuntimeException(e);
         }
 
-        // Close the sockets
-        clientSocket.close();
-        clientSocket2.close();
-        clientSocket3.close();
-        clientSocket4.close();
-
         // Verify the invocations from Server
         Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).receiveStarterCard(
                 ArgumentMatchers.anyInt());
@@ -294,11 +295,18 @@ class TestCommunication {
 
     @AfterEach
     void tearDown() {
+
+        clientSocket.close();
+        clientSocket2.close();
+        clientSocket3.close();
+        clientSocket4.close();
         serverSocket.stop();
         server.interrupt();
         try {
             server.join();
         } catch (InterruptedException ignored) {
         }
+        reset(clientViewUpdaterMock, clientViewUpdaterMock2, clientViewUpdaterMock3,
+              clientViewUpdaterMock4, exceptionConnectorMock);
     }
 }
