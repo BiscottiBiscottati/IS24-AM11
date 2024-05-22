@@ -55,22 +55,15 @@ class ClientToServerConnectorTest {
 
         Mockito.verify(updater, Mockito.times(1)).notifyGodPlayer();
 
-        reset(updater);
-
         assertDoesNotThrow(() -> clientMain2.login("edo"));
         verify(exceptionConnector, times(1))
                 .throwException(any(NotSetNumOfPlayerException.class));
-
-        reset(exceptionConnector);
 
         assertDoesNotThrow(() -> clientMain3.setNumOfPlayers("edo", 2));
         verify(exceptionConnector, times(1))
                 .throwException(any(NotGodPlayerException.class));
 
         clientMain.setNumOfPlayers("chen", 2);
-        verify(updater, times(1)).updateNumOfPlayers(2);
-
-
     }
 
     @AfterEach

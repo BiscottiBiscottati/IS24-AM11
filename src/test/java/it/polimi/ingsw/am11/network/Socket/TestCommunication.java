@@ -7,10 +7,7 @@ import it.polimi.ingsw.am11.network.Socket.Client.SendCommandC;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -171,6 +168,7 @@ class TestCommunication {
     }
 
     @Test
+    @Timeout(value = 10)
     public void testSetupPlayersWithoutWait() throws IOException {
         // Create SendCommand and ReceiveCommand instances
         SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
