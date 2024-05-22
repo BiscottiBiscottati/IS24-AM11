@@ -26,9 +26,9 @@ public enum CentralController {
     }
 
     @NotNull
-    public VirtualPlayerView connectPlayer(@NotNull String nickname,
-                                           @NotNull PlayerConnector playerConnector,
-                                           @NotNull TableConnector tableConnector)
+    public synchronized VirtualPlayerView connectPlayer(@NotNull String nickname,
+                                                        @NotNull PlayerConnector playerConnector,
+                                                        @NotNull TableConnector tableConnector)
     throws GameStatusException, NumOfPlayersException, PlayerInitException,
            NotSetNumOfPlayerException {
         if (gameControllers.isEmpty()) initGame();
@@ -40,14 +40,14 @@ public enum CentralController {
     }
 
     @Contract(" -> new")
-    public @NotNull GameController initGame() {
+    public synchronized @NotNull GameController initGame() {
         LOGGER.info("Creating new game");
         GameController newGame = new GameController();
         this.gameControllers.add(newGame);
         return newGame;
     }
 
-    public void setNumOfPlayers(@NotNull String nickname, int val)
+    public synchronized void setNumOfPlayers(@NotNull String nickname, int val)
     throws NotGodPlayerException, GameStatusException,
            NumOfPlayersException {
         gameControllers.stream().findFirst()
@@ -63,13 +63,13 @@ public enum CentralController {
         //TODO to implement
     }
 
-    public @Nullable String getGodPlayer() {
+    public synchronized @Nullable String getGodPlayer() {
         return gameControllers.stream().findFirst()
                               .orElseThrow()
                               .getGodPlayer();
     }
 
-    public GameController getAnyGame() {
+    public synchronized GameController getAnyGame() {
         if (gameControllers.isEmpty()) initGame();
 
         return gameControllers.stream().findFirst().orElseThrow();
