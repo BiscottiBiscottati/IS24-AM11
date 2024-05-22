@@ -5,11 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 public class ReceiveCommandS {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReceiveCommandS.class);
 
     private final VirtualPlayerView playerView;
     private final ObjectMapper mapper;
@@ -49,6 +52,7 @@ public class ReceiveCommandS {
                  IllegalCardPlacingException | IllegalPickActionException | NotInHandException |
                  EmptyDeckException | IllegalPlateauActionException | MaxHandSizeException |
                  GameStatusException e) {
+            LOGGER.info("SERVER TCP: Exception to send: {}", e.getMessage());
             sendException.Exception(e);
         }
     }

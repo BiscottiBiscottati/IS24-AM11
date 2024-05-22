@@ -9,12 +9,16 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Set;
 
 public class SendCommandS implements PlayerConnector, TableConnector {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SendCommandS.class);
+
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -57,7 +61,7 @@ public class SendCommandS implements PlayerConnector, TableConnector {
             json.put("cardsId", cardsIdJson);
             out.println(json);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            LOGGER.error("Error while sending candidate objective", e);
         }
     }
 
@@ -128,26 +132,32 @@ public class SendCommandS implements PlayerConnector, TableConnector {
             json.put("removeMode", removeMode);
             out.println(json);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            LOGGER.error("Error while sending common objective", e);
         }
     }
 
     @Override
-    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard)
-    throws JsonProcessingException {
-        ObjectNode json = mapper.createObjectNode();
-        json.put("method", "receiveFinalLeaderboard");
-        json.put("finalLeaderboard", mapper.writeValueAsString(finalLeaderboard));
-        out.println(json);
+    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+        try {
+            ObjectNode json = mapper.createObjectNode();
+            json.put("method", "receiveFinalLeaderboard");
+            json.put("finalLeaderboard", mapper.writeValueAsString(finalLeaderboard));
+            out.println(json);
+        } catch (JsonProcessingException e) {
+            LOGGER.error("Error while sending final leaderboard", e);
+        }
     }
 
     @Override
-    public void updatePlayers(Map<PlayerColor, String> currentPlayers)
-    throws JsonProcessingException {
-        ObjectNode json = mapper.createObjectNode();
-        json.put("method", "updatePlayers");
-        json.put("currentPlayers", mapper.writeValueAsString(currentPlayers));
-        out.println(json);
+    public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+        try {
+            ObjectNode json = mapper.createObjectNode();
+            json.put("method", "updatePlayers");
+            json.put("currentPlayers", mapper.writeValueAsString(currentPlayers));
+            out.println(json);
+        } catch (JsonProcessingException e) {
+            LOGGER.error("Error while sending current players", e);
+        }
     }
 
     @Override

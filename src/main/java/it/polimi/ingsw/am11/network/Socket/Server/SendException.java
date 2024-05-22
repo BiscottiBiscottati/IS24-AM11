@@ -2,10 +2,15 @@ package it.polimi.ingsw.am11.network.Socket.Server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 
 public class SendException {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SendException.class);
+
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -13,7 +18,8 @@ public class SendException {
         this.out = out;
     }
 
-    public void Exception(Exception e) {
+    public void Exception(@NotNull Exception e) {
+        LOGGER.info("SERVER TCP: Exception to send: {}", e.getMessage());
         switch (e.getClass().getSimpleName()) {
             case "IllegalPlayerSpaceActionException":
                 IllegalPlayerSpaceActionException(e);

@@ -17,14 +17,12 @@ import java.util.Objects;
 
 public class ClientHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
-
+    private final Socket clientSocket;
+    private final BufferedReader in;
+    private final PrintWriter out;
     private String nickname;
-    private BufferedReader in;
-    private PrintWriter out;
-    private VirtualPlayerView view;
     private ReceiveCommandS receiveCommandS;
     private boolean isRunning;
-    private Socket clientSocket;
 
     public ClientHandler(@NotNull Socket clientSocket) {
         try {
@@ -32,14 +30,15 @@ public class ClientHandler implements Runnable {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("SERVER TCP: Error while creating client handler", e);
+            throw new RuntimeException(e);
         }
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 stop();
-                LOGGER.info("TCP: Server ClientHandler {} closed", nickname);
+                LOGGER.info("SERVER TCP: Server ClientHandler {} closed", nickname);
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("SERVER TCP: Error while closing client handler", e);
             }
         }));
     }
@@ -58,48 +57,52 @@ public class ClientHandler implements Runnable {
         SendException sendException = new SendException(out);
         while (! validNickname) {
             try {
-                System.out.println("TCP: Waiting for nickname...");
+                System.out.println("SERVER TCP: Waiting for nickname...");
                 nickname = in.readLine();
-                LOGGER.info("TCP: Received nickname: {}", nickname);
+                LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
+
+                if (nickname == null) return; // FIXME when client disconnects
 
                 SendCommandS sendCommandS = new SendCommandS(out);
-                view = CentralController.INSTANCE
+                VirtualPlayerView view = CentralController.INSTANCE
                         .connectPlayer(nickname, sendCommandS, sendCommandS);
                 receiveCommandS = new ReceiveCommandS(view, out);
                 validNickname = true;
-                System.out.println("TCP: Connected: " + nickname);
+                LOGGER.info("SERVER TCP: Player connected: {}", nickname);
                 if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nickname)) {
                     boolean validNumOfPlayers = false;
-                    LOGGER.debug("Notifying god player: {}", nickname);
+                    LOGGER.debug("SERVER TCP: Notifying god player: {}", nickname);
                     sendCommandS.youGodPlayer();
                     while (! validNumOfPlayers) {
                         try {
-                            System.out.println("TCP: Waiting for number of players...");
+                            LOGGER.info("SERVER TCP: waiting for number of players...");
                             String input = in.readLine();
-                            LOGGER.debug("Received message from god player: {}", input);
+                            LOGGER.debug("SERVER TCP: Received message from god player: {}", input);
                             if (input == null) return;
                             if (! input.isBlank()) {
                                 int numOfPlayers = Integer.parseInt(input);
                                 CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
-                                System.out.println("God player: " + nickname);
-                                System.out.println("Num of players: " + numOfPlayers);
+                                LOGGER.info("SERVER TCP: Number of players set to {} by {}",
+                                            numOfPlayers, nickname);
                                 validNumOfPlayers = true;
                                 sendCommandS.updateNumOfPlayers(numOfPlayers);
                             }
                         } catch (NotGodPlayerException | NumOfPlayersException |
                                  GameStatusException e) {
+                            LOGGER.error("SERVER TCP: Error while setting number of players", e);
                             sendException.Exception(e);
                         }
                     }
                 }
             } catch (GameStatusException | PlayerInitException | NumOfPlayersException |
                      NotSetNumOfPlayerException e) {
+                LOGGER.error("SERVER TCP: Error while connecting player", e);
                 sendException.Exception(e);
-                System.out.println("TCP: Problem with nickname: " + nickname);
             } catch (SocketException e) {
-                System.out.println("TCP: Connection closed");
+                LOGGER.error("SERVER TCP: Error the socket might be closed", e);
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("TCP: Error while reading nickname", e);
+                throw new RuntimeException(e);
             }
         }
         while (isRunning) {
@@ -109,13 +112,14 @@ public class ClientHandler implements Runnable {
                     receiveCommandS.receive(message);
                 }
             } catch (IOException e) {
-                System.out.println("TCP: Connection closed");
+                LOGGER.info("SERVER TCP: Player disconnected: {}", nickname);
                 try {
                     stop();
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    LOGGER.error("SERVER TCP: Error while closing connection", ex);
                 }
                 CentralController.INSTANCE.playerDisconnected(nickname);
+                isRunning = false;
             }
         }
     }

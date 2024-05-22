@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class ClientSocket implements ClientNetworkHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientSocket.class);
@@ -46,10 +45,9 @@ public class ClientSocket implements ClientNetworkHandler {
 
             clientThread.start();
 
-        } catch (UnknownHostException e) {
-            throw new UnknownHostException("Unknown host");
         } catch (IOException e) {
-            throw new IOException("Connection error");
+            LOGGER.debug("CLIENT TCP: connection error", e);
+            throw e;
         }
     }
 
@@ -59,14 +57,13 @@ public class ClientSocket implements ClientNetworkHandler {
         while (isRunning) {
             try {
                 message = in.readLine();
-                LOGGER.debug("TCP: Client received message: {}", message);
+                LOGGER.debug("CLIENT TCP: Client received message: {}", message);
                 if (message != null && ! message.isEmpty()) {
                     receiveCommandC.receive(message);
                 }
             } catch (IOException e) {
-                System.out.println("Connection closed");
-                ReceiveException receiveException = receiveCommandC.getReceiveException();
-                receiveException.sendDisconnectionException();
+                LOGGER.debug("CLIENT TCP: Error while receiving message because {}",
+                             e.getMessage());
                 //TODO: handle disconnection
                 close();
             }
@@ -79,17 +76,21 @@ public class ClientSocket implements ClientNetworkHandler {
 
     @Override
     public void close() {
-        LOGGER.debug("TCP: Closing client");
+        LOGGER.debug("CLIENT TCP: Closing client");
         clientThread.interrupt();
         isRunning = false;
         try {
             if (socket != null) socket.close();
             if (in != null) in.close();
             if (out != null) out.close();
+            clientThread.join();
         } catch (IOException e) {
-            LOGGER.error("TCP: Error while closing the connection");
+            LOGGER.debug("CLIENT TCP: Error while closing the connection (likely already closed)");
+        } catch (InterruptedException e) {
+            LOGGER.debug("CLIENT TCP: Error while closing the client thread (likely already " +
+                         "closed)");
         }
-        LOGGER.debug("TCP: Client closed");
+        LOGGER.debug("CLIENT TCP: Client closed");
     }
 
     // For testing purposes

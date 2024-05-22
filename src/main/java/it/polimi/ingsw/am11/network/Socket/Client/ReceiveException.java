@@ -5,12 +5,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ReceiveException {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReceiveException.class);
+
     private final ObjectMapper mapper;
     private final ExceptionConnector exceptionConnector;
 
-    public ReceiveException(ExceptionConnector exceptionConnector) {
+    public ReceiveException(@NotNull ExceptionConnector exceptionConnector) {
         this.mapper = new ObjectMapper();
         this.exceptionConnector = exceptionConnector;
     }
@@ -87,7 +92,7 @@ public class ReceiveException {
 
             }
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            LOGGER.error("Error while parsing the message", e);
         }
     }
 
