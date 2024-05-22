@@ -18,19 +18,15 @@ import org.slf4j.LoggerFactory;
 
 // I think this class calls the server controller methods
 public class VirtualPlayerView {
-    private static final CardController cardController;
-    private static final GameController gameController;
     private static final Logger LOGGER = LoggerFactory.getLogger(VirtualPlayerView.class);
-
-    static {
-        gameController = CentralController.INSTANCE.getAnyGame();
-        cardController = gameController.getCardController();
-    }
-
+    private final CardController cardController;
+    private final GameController gameController;
     private final PlayerConnector connector;
     private final String nickname;
 
     public VirtualPlayerView(@NotNull PlayerConnector connector, @NotNull String nickname) {
+        gameController = CentralController.INSTANCE.getAnyGame();
+        cardController = gameController.getCardController();
         this.connector = connector;
         this.nickname = nickname;
     }
