@@ -31,7 +31,7 @@ public class ClientMain implements ClientNetworkHandler {
 
         // Getting the registry
         registry = LocateRegistry.getRegistry(ip, port);
-        System.out.println("RMI: Registry obtained");
+        LOGGER.debug("CLIENT RMI: Registry located {}", registry.toString());
         // Check if the connection is working
         registry.list();
         // Looking up the registry for the remote object
@@ -44,7 +44,7 @@ public class ClientMain implements ClientNetworkHandler {
 
     public void login(String nick)
     throws RemoteException {
-        LOGGER.debug("Sending login request to server");
+        LOGGER.debug("CLIENT RMI: Sending login request to server");
         Loggable stub1;
         try {
             stub1 = (Loggable) registry.lookup("Loggable");
@@ -177,9 +177,9 @@ public class ClientMain implements ClientNetworkHandler {
         try {
             UnicastRemoteObject.unexportObject(connector, true);
         } catch (NoSuchObjectException e) {
-            LOGGER.error("No Connector to un-export");
+            LOGGER.error("CLIENT RMI: No Connector to un-export");
         }
-        LOGGER.debug("RMI: Client closed");
+        LOGGER.debug("CLIENT RMI: Client closed");
     }
 
     public void reconnect(String nick) throws RemoteException {

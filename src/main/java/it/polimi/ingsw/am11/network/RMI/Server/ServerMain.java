@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.AlreadyBoundException;
+import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -59,7 +60,7 @@ public class ServerMain implements Loggable {
 
             Runtime.getRuntime().addShutdownHook(new Thread(this::close));
 
-            LOGGER.info("RMI: Server open on port: {}", port);
+            LOGGER.info("SERVER RMI: Server open on port: {}", port);
         } catch (RemoteException | AlreadyBoundException e) {
             throw new RuntimeException(e);
         }
@@ -70,14 +71,18 @@ public class ServerMain implements Loggable {
             registry.unbind("Loggable");
             registry.unbind("PlayerView");
 
-            UnicastRemoteObject.unexportObject(this, true);
-            UnicastRemoteObject.unexportObject(playerView, true);
+            try {
+                UnicastRemoteObject.unexportObject(this, true);
+                UnicastRemoteObject.unexportObject(playerView, true);
+            } catch (NoSuchObjectException e) {
+                LOGGER.debug("SERVER RMI: Object already un-exported");
+            }
 
-            LOGGER.info("RMI: Server closed");
+            LOGGER.info("SERVER RMI: Server closed");
         } catch (RemoteException e) {
-            LOGGER.error("RMI: Error while closing server", e);
+            LOGGER.error("SERVER RMI: Error while closing server", e);
         } catch (NotBoundException e) {
-            LOGGER.debug("RMI: Not bound (probably already closed)");
+            LOGGER.debug("SERVER RMI: Not bound (probably already closed)");
         }
     }
 
@@ -85,14 +90,14 @@ public class ServerMain implements Loggable {
     public void login(String nick, ConnectorInterface remoteConnector)
     throws RemoteException, NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException {
-        LOGGER.debug("RMI: login: {}, {}", nick, remoteConnector);
+        LOGGER.debug("SERVER RMI: login: {}, {}", nick, remoteConnector);
         ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
         VirtualPlayerView view = new VirtualPlayerView(connector, nick);
         CentralController.INSTANCE.connectPlayer(nick, connector, connector);
         playerView.addPlayer(nick, view);
-        LOGGER.info("RMI: Player connected: {}", nick);
+        LOGGER.info("SERVER RMI: Player connected: {}", nick);
         if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nick)) {
-            LOGGER.info("RMI: God player: {}", nick);
+            LOGGER.info("SERVER RMI: God player: {}", nick);
             connector.notifyGodPlayer();
         }
     }
