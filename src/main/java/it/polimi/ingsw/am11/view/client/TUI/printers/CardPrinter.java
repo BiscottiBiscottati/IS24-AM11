@@ -11,7 +11,10 @@ import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
-import it.polimi.ingsw.am11.model.cards.utils.enums.*;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
@@ -39,7 +42,7 @@ public class CardPrinter {
     private static final Deck<ResourceCard> resDeck = ResourceDeckFactory.createDeck();
     private static final Deck<ObjectiveCard> objDeck = ObjectiveDeckFactory.createDeck();
 
-    public static void printObjectives(List<Integer> ids) throws Throwable {
+    public static void printObjectives(List<Integer> ids) throws IllegalCardBuildException {
         for (Integer id : ids) {
             printCardFrontAndBack(id);
         }
@@ -319,10 +322,11 @@ public class CardPrinter {
     }
 
     public static ObjectiveCard getObjective(int id) throws IllegalCardBuildException {
-        return objDeck.getCardById(id).orElseThrow(() -> new IllegalCardBuildException("Card not found"));
+        return objDeck.getCardById(id).orElseThrow(
+                () -> new IllegalCardBuildException("Card not found"));
     }
 
-    public static void printWaitingForTrn(MiniGameModel model){
+    public static void printWaitingForTrn(MiniGameModel model) {
         List<String> playersInfo = PlayersPrinter.buildPlayers(model);
         try {
             List<String> table =
@@ -332,7 +336,7 @@ public class CardPrinter {
         } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
-        List<Integer> commObjs= new ArrayList<>(model.table().getCommonObjectives());
+        List<Integer> commObjs = new ArrayList<>(model.table().getCommonObjectives());
         List<Integer> persOnj =
                 new ArrayList<>(model.getCliPlayer(model.myName()).getSpace().getPlayerObjective());
 
@@ -347,7 +351,8 @@ public class CardPrinter {
 
         try {
             List<String> handList =
-                    CardArchitect.buildHand(new ArrayList<>(model.getCliPlayer(model.myName()).getSpace().getPlayerHand()));
+                    CardArchitect.buildHand(new ArrayList<>(
+                            model.getCliPlayer(model.myName()).getSpace().getPlayerHand()));
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }

@@ -2,13 +2,13 @@ package it.polimi.ingsw.am11.view.client.TUI;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
-import it.polimi.ingsw.am11.view.client.TUI.printers.PlayersPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -113,7 +113,7 @@ public class TuiUpdater implements ClientViewUpdater {
                 try {
                     CardPrinter.printCardFrontAndBack(
                             model.getCliPlayer(model.myName()).getSpace().getStarterCard());
-                } catch (Throwable e) {
+                } catch (IllegalCardBuildException e) {
                     throw new RuntimeException(e);
                 }
                 System.out.print("Place it on its front or on its retro >>> \033[K");
@@ -124,7 +124,7 @@ public class TuiUpdater implements ClientViewUpdater {
                 try {
                     CardPrinter.printObjectives(new ArrayList<>(model.getCliPlayer(
                             model.myName()).getSpace().getCandidateObjectives()));
-                } catch (Throwable e) {
+                } catch (IllegalCardBuildException e) {
                     throw new RuntimeException(e);
                 }
                 System.out.print("Choose one of the objectives above >>> \033[K");
