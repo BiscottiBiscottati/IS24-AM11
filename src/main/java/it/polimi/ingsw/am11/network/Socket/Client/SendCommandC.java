@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintWriter;
 
@@ -35,7 +36,7 @@ public class SendCommandC implements CltToNetConnector {
     }
 
     @Override
-    public void placeCard(Position pos, int cardId, boolean isRetro) {
+    public void placeCard(@NotNull Position pos, int cardId, boolean isRetro) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "placeCard");
         json.put("x", pos.x());
@@ -46,7 +47,7 @@ public class SendCommandC implements CltToNetConnector {
     }
 
     @Override
-    public void drawCard(boolean fromVisible, PlayableCardType type, int cardId) {
+    public void drawCard(boolean fromVisible, @NotNull PlayableCardType type, int cardId) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "drawCard");
         json.put("fromVisible", fromVisible);

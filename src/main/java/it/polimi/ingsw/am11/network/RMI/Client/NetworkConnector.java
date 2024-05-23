@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.network.RMI.Client;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.CltToNetConnector;
+import org.jetbrains.annotations.NotNull;
 
 import java.rmi.RemoteException;
 
@@ -51,7 +52,7 @@ public class NetworkConnector implements CltToNetConnector {
     }
 
     @Override
-    public void placeCard(Position pos, int cardId, boolean isRetro) {
+    public void placeCard(@NotNull Position pos, int cardId, boolean isRetro) {
         try {
             main.placeCard(nickname, cardId, pos.x(), pos.y(), isRetro);
         } catch (RemoteException e) {

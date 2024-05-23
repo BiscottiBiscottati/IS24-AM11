@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,7 +123,7 @@ public class SendCommandS implements PlayerConnector, TableConnector {
     }
 
     @Override
-    public void updateGameStatus(GameStatus status) {
+    public void updateGameStatus(@NotNull GameStatus status) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateGameStatus");
         json.put("status", status.toString());
