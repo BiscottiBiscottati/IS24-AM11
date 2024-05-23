@@ -1,10 +1,6 @@
 package it.polimi.ingsw.am11.view.client.TUI.printers;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
-import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
-import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
-import it.polimi.ingsw.am11.model.cards.objective.positioning.TripletCard;
 import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
@@ -15,8 +11,11 @@ import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class CardPrinterTest {
+    static final Logger LOGGER = LoggerFactory.getLogger(CardPrinterTest.class);
 
     @Test
     void printObjectiveCards() throws IllegalCardBuildException {
@@ -25,7 +24,7 @@ class CardPrinterTest {
         int remainingCards = objDeck.getRemainingCards();
         for (int i = 0; i < remainingCards; i++) {
             int id = objDeck.draw().orElseThrow().getId();
-            System.out.println("Card id: " + id);
+            LOGGER.info("Objective Card id : {}", id);
             CardPrinter.printCardFrontAndBack(id);
         }
     }
@@ -37,7 +36,7 @@ class CardPrinterTest {
         int remainingCards = starterDeck.getRemainingCards();
         for (int i = 0; i < remainingCards; i++) {
             int id = starterDeck.draw().orElseThrow().getId();
-            System.out.println("Card id : " + id);
+            LOGGER.info("Starter Card id : {}", id);
             CardPrinter.printCardFrontAndBack(id);
         }
     }
@@ -49,7 +48,7 @@ class CardPrinterTest {
         int remainingCards = resourceDeck.getRemainingCards();
         for (int i = 0; i < remainingCards; i++) {
             int id = resourceDeck.draw().orElseThrow().getId();
-            System.out.println("Card id : " + id);
+            LOGGER.info("Resource Card id : {}", id);
             CardPrinter.printCardFrontAndBack(id);
         }
     }
@@ -61,30 +60,8 @@ class CardPrinterTest {
         int remainingCards = goldDeck.getRemainingCards();
         for (int i = 0; i < remainingCards; i++) {
             int id = goldDeck.draw().orElseThrow().getId();
-            System.out.println("Card id : " + id);
+            LOGGER.info("Gold Card id : {}", id);
             CardPrinter.printCardFrontAndBack(id);
-            //FIXME
-            ObjectiveCard obj = objDeck.draw().orElseThrow();
-            //------ Idk
-            id = obj.getId();
-            CardPrinter.printCardFrontAndBack(id);
-            System.out.print("ID: " + id);
-
-            switch (obj){
-                case ColorCollectCard colorCollectCard -> {
-                    System.out.println(" ");
-                }
-                case SymbolCollectCard symbolCollectCard ->{
-                    System.out.println(" ");
-                }
-                case TripletCard tripletCard -> {
-                    System.out.println("Flipped: " +  tripletCard.isFlipped());
-                }
-                case LCard lCard -> {
-                    System.out.println("Flipped: " +  lCard.isFlipped() + "Rotated" + lCard.isRotated());
-                }
-            }
-
         }
     }
 }
