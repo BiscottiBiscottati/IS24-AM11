@@ -83,14 +83,14 @@ public class Actuator {
         if (! tuiUpdater.getCandidateNick().isEmpty()) {
             throw new TooManyRequestsException("You already sent a nickname, wait for results");
         }
-        connector.setNickname(nick);
         tuiUpdater.setCandidateNick(nick);
+        connector.setNickname(nick);
     }
 
     public void setNumOfPlayers(int num) {
-        connector.setNumOfPlayers(num);
         tuiUpdater.setTuiState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
+        connector.setNumOfPlayers(num);
     }
 
     public void setStarter(boolean isRetro) {

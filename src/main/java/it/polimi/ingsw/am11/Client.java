@@ -16,8 +16,9 @@ public class Client {
         switch (uiMode) {
             case "gui" -> Application.launch(CodexNaturalis.class);
             case "tui" -> new TuiHandler().start();
-            default -> System.out.println("Invalid UI mode " + uiMode + ". Please choose between " +
-                                          "'gui' and 'tui'");
+            case null, default -> System.out.println("Invalid UI mode " + uiMode + ". Please " +
+                                                     "choose between " +
+                                                     "'gui' and 'tui'");
         }
     }
 }

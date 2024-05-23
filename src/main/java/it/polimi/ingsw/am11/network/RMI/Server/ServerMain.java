@@ -98,11 +98,10 @@ public class ServerMain implements Loggable {
         System.out.println(nick + " disconnected");
     }
 
+    @Override
     public void setNumOfPlayers(String nick, int val)
     throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException {
         CentralController.INSTANCE.setNumOfPlayers(nick, val);
-
-
     }
 
     @Override
