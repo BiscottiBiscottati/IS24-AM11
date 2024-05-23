@@ -22,15 +22,10 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(IllegalPlayerSpaceActionException ex) {
-        System.out.println("IllegalPlayerSpaceActionException");
-        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(TurnsOrderException ex) {
-        model.setCurrentTurn("Error in turns order");
-        System.out.println("It's not your turn");
-        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
@@ -51,26 +46,18 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(IllegalCardPlacingException ex) {
-        System.out.println("You can't place that card there");
-        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(IllegalPickActionException ex) {
-        System.out.println("You can't do that");
-        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(NotInHandException ex) {
-        System.out.println("The card you chose is not in your hand");
-        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
     public void throwException(EmptyDeckException ex) {
-        System.out.println("The deck you chose is empty");
-        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
@@ -98,8 +85,8 @@ public class TuiExceptionReceiver implements ExceptionConnector {
     public void throwException(NotSetNumOfPlayerException ex) {
         LOGGER.debug("NotSetNumOfPlayersException received: {}" + ex.getMessage());
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
-            //DONE
-            tuiUpdater.setCandidateNick(null);
+
+            tuiUpdater.setCandidateNick("");
             tuiUpdater.getCurrentTuiState().restart(true, ex);
             return;
         }

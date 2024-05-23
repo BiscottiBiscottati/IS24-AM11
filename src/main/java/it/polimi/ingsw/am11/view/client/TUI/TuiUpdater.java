@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
+import it.polimi.ingsw.am11.view.client.TUI.printers.PlayersPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -47,18 +48,11 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
-        //TODO
+        LOGGER.debug(model.getCurrentTurn() + "picked a card from the " + type.getName() +
+                     " deck, the " + type.getName() + " deck top card is now " +
+                     color.getColumnName());
+
         model.table().refreshDeckTop(type, color);
-        if (model.getCurrentTurn().equals(model.myName())) {
-            System.out.println("You picked a card from the " + type.getName() +
-                               " deck, the " + type.getName() + " deck top card is now " +
-                               color.getColumnName());
-        } else {
-            System.out.println(
-                    model.getCurrentTurn() + "picked a card from the " + type.getName() +
-                    " deck, the " + type.getName() + " deck top card is now " +
-                    color.getColumnName());
-        }
     }
 
     @Override
@@ -81,37 +75,18 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateShownPlayable(int previousId, int currentId) {
-        //TODO
         model.table().pickVisible(previousId);
         model.table().addVisible(currentId);
-        if (model.getCurrentTurn().isEmpty()) {
-            System.out.println("Added visible card to the table: " + currentId);
-            return;
-        }
-        if (model.getCurrentTurn().equals(model.myName())) {
-            System.out.println("You picked " + previousId + " from the visible " +
-                               "cards, it has been replaced by " + currentId);
-        } else {
-            System.out.println(
-                    model.getCurrentTurn() + "picked " + previousId + " from the visible " +
-                    "cards, it has been replaced by " + currentId);
-        }
+        LOGGER.debug("Removed from visible: {}, Added: {}", previousId, currentId);
 
     }
 
     @Override
     public void updateTurnChange(String nickname) {
-        //TODO
+        //FIXME
+
         model.setCurrentTurn(nickname);
-        if (nickname.equals(model.myName())) {
-            System.out.println("It's now your turn, good luck");
-            currentState.set(tuiStates.get(TuiStates.PLACING));
-            System.out.println("TUI STATUS: " + TuiStates.PLACING);
-        } else {
-            System.out.println("It's now " + nickname + " turn");
-            currentState.set(tuiStates.get(TuiStates.WAITING));
-            System.out.println("TUI STATUS: " + TuiStates.WAITING);
-        }
+        LOGGER.debug("It's {} turn", nickname);
     }
 
     @Override
@@ -141,7 +116,7 @@ public class TuiUpdater implements ClientViewUpdater {
                 } catch (Throwable e) {
                     throw new RuntimeException(e);
                 }
-                System.out.print("Place it on its front or on its back >>> ");
+                System.out.print("Place it on its front or on its retro >>> \033[K");
             }
             case CHOOSING_OBJECTIVES -> {
                 currentState.set(tuiStates.get(TuiStates.CHOOSING_OBJECTIVE));
@@ -152,14 +127,17 @@ public class TuiUpdater implements ClientViewUpdater {
                 } catch (Throwable e) {
                     throw new RuntimeException(e);
                 }
-                System.out.print("Choose one of the objectives above >>> ");
+                System.out.print("Choose one of the objectives above >>> \033[K");
             }
             case ENDED -> {
                 currentState.set(tuiStates.get(TuiStates.ENDED));
                 currentState.get().restart(false, null);
             }
             case ONGOING -> {
-                System.out.println("The game has began, fight with honor");
+                //FIXME
+                currentState.set(tuiStates.get(TuiStates.WAITING_FOR_TURN));
+                currentState.get().restart(false, null);
+
             }
             case ARMAGEDDON -> {
                 System.out.println("The final phase of the game has began, the next turn will be " +
@@ -176,15 +154,12 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
-        //TODO
         if (removeMode) {
             cardId.stream().forEach(x -> model.table().removeCommonObjective(x));
-            cardId.stream().forEach(x -> System.out.println("The card: " + x + " is no longer a " +
-                                                            "common objective"));
+            LOGGER.debug("CommonObjRm: {}", cardId);
         } else {
             cardId.stream().forEach(x -> model.table().addCommonObjectives(x));
-            cardId.stream().forEach(x -> System.out.println("New common objective added to the " +
-                                                            "table: " + x));
+            LOGGER.debug("CommonObjAdd: {}", cardId);
         }
     }
 

@@ -74,18 +74,20 @@ public class SettingNum implements TUIState {
     @Override
     public void restart(boolean dueToEx, @Nullable Exception exception) {
         isBlocked = false;
+        alreadyError = false;
 
         ConsUtils.clear();
         System.out.println("""
                                    ++++++++++++++++++++++++++++
                                    \s
-                                    STATUS: Choosing numbers of players...
+                                    STATUS: Choosing the number of players...
                                    \s
                                    ++++++++++++++++++++++++++++
                                    \s""");
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
+            alreadyError = true;
         }
         System.out.println("You are the moderator of the game, you have to choose the number of " +
                            "players:");

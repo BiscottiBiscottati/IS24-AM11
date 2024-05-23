@@ -85,6 +85,7 @@ public class ClientHandler implements Runnable {
                                 LOGGER.info("SERVER TCP: Number of players set to {} by {}",
                                             numOfPlayers, nickname);
                                 validNumOfPlayers = true;
+                                //FIXME: it has to send it to all currently connected players
                                 sendCommandS.updateNumOfPlayers(numOfPlayers);
                             }
                         } catch (NotGodPlayerException | NumOfPlayersException |
@@ -104,6 +105,7 @@ public class ClientHandler implements Runnable {
                 LOGGER.error("TCP: Error while reading nickname", e);
                 throw new RuntimeException(e);
             }
+
         }
         while (isRunning) {
             try {

@@ -8,11 +8,12 @@ import java.util.List;
 
 public class PlayersPrinter {
 
-    public static void printPlayers(MiniGameModel model) {
-        //Players INFO: Name, color, points, isStarte
+    public static List<String> buildPlayers(MiniGameModel model) {
+        //Players INFO: Name, color, points, isStarter
 
         String startingPlayer = model.getStartingPlayer();
         List<String> playersList = new ArrayList<>(model.getplayers());
+        List<String> res = new ArrayList<>();
 
 
         String lineStartingPlayer = spaces(7) + startingPlayer;
@@ -54,23 +55,26 @@ public class PlayersPrinter {
                 }
             }
         }
+        
+        
+        res.add(lineStartingPlayer);
+        res.add(line1);
+        res.add(line2.toString());
+        res.add(line3.toString());
+        res.add(line4.toString());
+        res.add(line5);
+        res.add(line6);
 
-        System.out.println(lineStartingPlayer);
-        System.out.println(line1);
-        System.out.println(line2);
-        System.out.println(line3);
-        System.out.println(line4);
-        System.out.println(line5);
-        System.out.println(line6);
+        return res;
 
 
 //        System.out.println("""
 //                                          STARTER
-//                                   1╔═══╤═══════════╤═══╗    ╔═══╤═══════════╤═══╗
+//                                   1╔═══════════════════╗    ╔═══╤═══════════╤═══╗
 //                                   2║      Franco       ║    ║ W │           │ W ║
-//                                   3╟       BLUE        ╢    ╟───┘           └───╢
+//                                   3║       BLUE        ║    ╟───┘           └───╢
 //                                   4║        3          ║    ║                   ║
-//                                   5╚═══╧═══════════╧═══╝    ╚═══╧═══════════╧═══╝
+//                                   5╚═══════════════════╝    ╚═══╧═══════════╧═══╝
 //                                   6      Playing ^
 //                                   """);
     }

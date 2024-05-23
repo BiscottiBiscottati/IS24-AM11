@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ChoosingStrt implements TUIState {
-    private static final String askForSide = "Place it on its front or on its back >>> \033[K";
+    private static final String askForSide = "Place it on its front or on its retro >>> \033[K";
     private boolean alreadyError = false;
     private boolean isBlocked = false;
 
@@ -77,6 +77,9 @@ public class ChoosingStrt implements TUIState {
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
+            alreadyError = true;
+        } else {
+            alreadyError = false;
         }
         System.out.println("You received this starter card:");
     }

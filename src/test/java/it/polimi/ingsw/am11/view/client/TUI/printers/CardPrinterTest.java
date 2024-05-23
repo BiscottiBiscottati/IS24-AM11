@@ -1,6 +1,10 @@
 package it.polimi.ingsw.am11.view.client.TUI.printers;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
+import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
+import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
+import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
+import it.polimi.ingsw.am11.model.cards.objective.positioning.TripletCard;
 import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
@@ -59,6 +63,28 @@ class CardPrinterTest {
             int id = goldDeck.draw().orElseThrow().getId();
             System.out.println("Card id : " + id);
             CardPrinter.printCardFrontAndBack(id);
+            //FIXME
+            ObjectiveCard obj = objDeck.draw().orElseThrow();
+            //------ Idk
+            id = obj.getId();
+            CardPrinter.printCardFrontAndBack(id);
+            System.out.print("ID: " + id);
+
+            switch (obj){
+                case ColorCollectCard colorCollectCard -> {
+                    System.out.println(" ");
+                }
+                case SymbolCollectCard symbolCollectCard ->{
+                    System.out.println(" ");
+                }
+                case TripletCard tripletCard -> {
+                    System.out.println("Flipped: " +  tripletCard.isFlipped());
+                }
+                case LCard lCard -> {
+                    System.out.println("Flipped: " +  lCard.isFlipped() + "Rotated" + lCard.isRotated());
+                }
+            }
+
         }
     }
 }
