@@ -62,7 +62,6 @@ public class ClientToServerConnector implements ConnectorInterface {
     @Override
     public void updateShownPlayable(Integer previousId, Integer currentId) {
         clientUpdater.updateShownPlayable(previousId, currentId);
-
     }
 
     @Override

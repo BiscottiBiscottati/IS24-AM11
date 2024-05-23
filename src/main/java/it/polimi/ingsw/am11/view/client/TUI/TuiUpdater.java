@@ -12,6 +12,7 @@ import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +48,7 @@ public class TuiUpdater implements ClientViewUpdater {
     }
 
     @Override
-    public void updateDeckTop(PlayableCardType type, Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
         LOGGER.debug(model.getCurrentTurn() + "picked a card from the " + type.getName() +
                      " deck, the " + type.getName() + " deck top card is now " +
                      color.getColumnName());
@@ -74,11 +75,10 @@ public class TuiUpdater implements ClientViewUpdater {
     }
 
     @Override
-    public void updateShownPlayable(int previousId, int currentId) {
-        model.table().pickVisible(previousId);
-        model.table().addVisible(currentId);
+    public void updateShownPlayable(Integer previousId, Integer currentId) {
+        if (previousId != null) model.table().pickVisible(previousId);
+        if (currentId != null) model.table().addVisible(currentId);
         LOGGER.debug("Removed from visible: {}, Added: {}", previousId, currentId);
-
     }
 
     @Override
