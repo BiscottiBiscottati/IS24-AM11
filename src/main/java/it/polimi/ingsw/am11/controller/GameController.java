@@ -1,10 +1,13 @@
 package it.polimi.ingsw.am11.controller;
 
+import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
+import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.GameLogic;
 import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
+import it.polimi.ingsw.am11.view.events.view.table.NumOfPlayerEvent;
 import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
 import it.polimi.ingsw.am11.view.server.TableViewUpdater;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;

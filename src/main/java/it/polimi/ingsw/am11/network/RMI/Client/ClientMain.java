@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.network.RMI.Client;
 
+import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
+import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
@@ -68,7 +70,7 @@ public class ClientMain implements ClientNetworkHandler {
             stub1 = (Loggable) registry.lookup("Loggable");
             stub1.setNumOfPlayers(nick, numOfPlayers);
         } catch (NotBoundException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // FIXME should check for connection issues
         } catch (NumOfPlayersException e) {
             exceptionConnector.throwException(e);
         } catch (GameStatusException e) {

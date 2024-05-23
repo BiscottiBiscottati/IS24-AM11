@@ -1,6 +1,10 @@
 package it.polimi.ingsw.am11.network.RMI.RemoteInterfaces;
 
-import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
+import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
+import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
+import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
+import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
