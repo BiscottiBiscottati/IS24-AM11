@@ -20,17 +20,26 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class ClientMain implements ClientNetworkHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientMain.class);
 
+    private final ExecutorService executor;
     private final Registry registry;
     private final ConnectorInterface connector;
     private final NetworkConnector nConnector;
     private final @NotNull ExceptionConnector exceptionConnector;
+    private Future<?> future;
 
     public ClientMain(String ip, int port, ClientViewUpdater updater) throws RemoteException {
+
+        executor = Executors.newSingleThreadExecutor();
+        future = null;
 
         // Getting the registry
         registry = LocateRegistry.getRegistry(ip, port);
@@ -45,40 +54,44 @@ public class ClientMain implements ClientNetworkHandler {
         exceptionConnector = updater.getExceptionConnector();
     }
 
-    public synchronized void login(String nick)
+    public void login(String nick)
     throws RemoteException {
         LOGGER.debug("CLIENT RMI: Sending login request to server");
-        Loggable stub1;
-        try {
-            stub1 = (Loggable) registry.lookup("Loggable");
-            stub1.login(nick, connector);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (NumOfPlayersException e) {
-            exceptionConnector.throwException(e);
-        } catch (NotSetNumOfPlayerException e) {
-            exceptionConnector.throwException(e);
-        } catch (GameStatusException e) {
-            exceptionConnector.throwException(e);
-        } catch (PlayerInitException e) {
-            exceptionConnector.throwException(e);
-        }
+        future = executor.submit(() -> {
+            try {
+                ((Loggable) registry.lookup("Loggable")).login(nick, connector);
+            } catch (NotBoundException e) {
+                throw new RuntimeException(e);
+            } catch (NumOfPlayersException e) {
+                exceptionConnector.throwException(e);
+            } catch (NotSetNumOfPlayerException e) {
+                exceptionConnector.throwException(e);
+            } catch (GameStatusException e) {
+                exceptionConnector.throwException(e);
+            } catch (PlayerInitException e) {
+                exceptionConnector.throwException(e);
+            } catch (RemoteException e) {
+                LOGGER.error("CLIENT RMI: Connection error", e);
+            }
+        });
     }
 
-    public synchronized void setNumOfPlayers(String nick, int numOfPlayers) throws RemoteException {
-        Loggable stub1;
-        try {
-            stub1 = (Loggable) registry.lookup("Loggable");
-            stub1.setNumOfPlayers(nick, numOfPlayers);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e); // FIXME should check for connection issues
-        } catch (NumOfPlayersException e) {
-            exceptionConnector.throwException(e);
-        } catch (GameStatusException e) {
-            exceptionConnector.throwException(e);
-        } catch (NotGodPlayerException e) {
-            exceptionConnector.throwException(e);
-        }
+    public void setNumOfPlayers(String nick, int numOfPlayers) throws RemoteException {
+        LOGGER.debug("CLIENT RMI: Sending setNumOfPlayers request to server");
+
+        future = executor.submit(() -> {
+            try {
+                ((Loggable) registry.lookup("Loggable")).setNumOfPlayers(nick, numOfPlayers);
+            } catch (NotBoundException | RemoteException e) {
+                throw new RuntimeException(e); // FIXME should check for connection issues
+            } catch (NumOfPlayersException e) {
+                exceptionConnector.throwException(e);
+            } catch (GameStatusException e) {
+                exceptionConnector.throwException(e);
+            } catch (NotGodPlayerException e) {
+                exceptionConnector.throwException(e);
+            }
+        });
     }
 
     public synchronized void logout(String nick) throws RemoteException {
@@ -91,85 +104,96 @@ public class ClientMain implements ClientNetworkHandler {
         stub1.logout(nick);
     }
 
-    public synchronized void setStarterCard(String nick, boolean isRetro) throws RemoteException {
-        PlayerViewInterface stub3;
-        try {
-            stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
-            stub3.setStarterCard(nick, isRetro);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (PlayerInitException e) {
-            exceptionConnector.throwException(e);
-        } catch (IllegalCardPlacingException e) {
-            exceptionConnector.throwException(e);
-        } catch (GameStatusException e) {
-            exceptionConnector.throwException(e);
-        }
+    public void setStarterCard(String nick, boolean isRetro) throws RemoteException {
+        LOGGER.debug("CLIENT RMI: Sending setStarterCard request to server");
+
+        future = executor.submit(() -> {
+            try {
+                ((PlayerViewInterface) registry.lookup("PlayerView")).setStarterCard(nick, isRetro);
+            } catch (NotBoundException | RemoteException e) {
+                throw new RuntimeException(e);
+            } catch (PlayerInitException e) {
+                exceptionConnector.throwException(e);
+            } catch (IllegalCardPlacingException e) {
+                exceptionConnector.throwException(e);
+            } catch (GameStatusException e) {
+                exceptionConnector.throwException(e);
+            }
+        });
     }
 
-    public synchronized void setObjectiveCard(String nick, int cardId) throws RemoteException {
-        PlayerViewInterface stub3;
-        try {
-            stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
-            stub3.setObjectiveCard(nick, cardId);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalPlayerSpaceActionException e) {
-            exceptionConnector.throwException(e);
-        } catch (PlayerInitException e) {
-            exceptionConnector.throwException(e);
-        } catch (GameStatusException e) {
-            exceptionConnector.throwException(e);
-        }
+    public void setObjectiveCard(String nick, int cardId) throws RemoteException {
+        LOGGER.debug("CLIENT RMI: Sending setObjectiveCard request to server");
+
+        future = executor.submit(() -> {
+            try {
+                ((PlayerViewInterface) registry.lookup("PlayerView"))
+                        .setObjectiveCard(nick, cardId);
+            } catch (NotBoundException | RemoteException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalPlayerSpaceActionException e) {
+                exceptionConnector.throwException(e);
+            } catch (PlayerInitException e) {
+                exceptionConnector.throwException(e);
+            } catch (GameStatusException e) {
+                exceptionConnector.throwException(e);
+            }
+        });
     }
 
-    public synchronized void placeCard(String nick, int cardId, int x, int y, boolean isRetro)
+    public void placeCard(String nick, int cardId, int x, int y, boolean isRetro)
     throws RemoteException {
-        PlayerViewInterface stub3;
-        try {
-            stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
-            stub3.placeCard(nick, cardId, x, y, isRetro);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (TurnsOrderException e) {
-            exceptionConnector.throwException(e);
-        } catch (PlayerInitException e) {
-            exceptionConnector.throwException(e);
-        } catch (IllegalCardPlacingException e) {
-            exceptionConnector.throwException(e);
-        } catch (NotInHandException e) {
-            exceptionConnector.throwException(e);
-        } catch (IllegalPlateauActionException e) {
-            exceptionConnector.throwException(e);
-        } catch (GameStatusException e) {
-            exceptionConnector.throwException(e);
-        }
+        LOGGER.debug("CLIENT RMI: Sending placeCard request to server");
+
+        future = executor.submit(() -> {
+            try {
+                ((PlayerViewInterface) registry.lookup("PlayerView"))
+                        .placeCard(nick, cardId, x, y, isRetro);
+            } catch (NotBoundException | RemoteException e) {
+                throw new RuntimeException(e);
+            } catch (TurnsOrderException e) {
+                exceptionConnector.throwException(e);
+            } catch (PlayerInitException e) {
+                exceptionConnector.throwException(e);
+            } catch (IllegalCardPlacingException e) {
+                exceptionConnector.throwException(e);
+            } catch (NotInHandException e) {
+                exceptionConnector.throwException(e);
+            } catch (IllegalPlateauActionException e) {
+                exceptionConnector.throwException(e);
+            } catch (GameStatusException e) {
+                exceptionConnector.throwException(e);
+            }
+        });
     }
 
-    public synchronized void drawCard(String nick, boolean fromVisible, PlayableCardType type,
-                                      int cardId)
+    public void drawCard(String nick, boolean fromVisible, PlayableCardType type,
+                         int cardId)
     throws RemoteException {
-        PlayerViewInterface stub3;
-        try {
-            stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
-            stub3.drawCard(nick, fromVisible, type, cardId);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalPlayerSpaceActionException e) {
-            exceptionConnector.throwException(e);
-        } catch (TurnsOrderException e) {
-            exceptionConnector.throwException(e);
-        } catch (IllegalPickActionException e) {
-            exceptionConnector.throwException(e);
-        } catch (PlayerInitException e) {
-            exceptionConnector.throwException(e);
-        } catch (EmptyDeckException e) {
-            exceptionConnector.throwException(e);
-        } catch (MaxHandSizeException e) {
-            exceptionConnector.throwException(e);
-        } catch (GameStatusException e) {
-            exceptionConnector.throwException(e);
-        }
+        LOGGER.debug("CLIENT RMI: Sending drawCard request to server");
+
+        future = executor.submit(() -> {
+            try {
+                ((PlayerViewInterface) registry.lookup("PlayerView"))
+                        .drawCard(nick, fromVisible, type, cardId);
+            } catch (NotBoundException | RemoteException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalPlayerSpaceActionException e) {
+                exceptionConnector.throwException(e);
+            } catch (TurnsOrderException e) {
+                exceptionConnector.throwException(e);
+            } catch (IllegalPickActionException e) {
+                exceptionConnector.throwException(e);
+            } catch (PlayerInitException e) {
+                exceptionConnector.throwException(e);
+            } catch (EmptyDeckException e) {
+                exceptionConnector.throwException(e);
+            } catch (MaxHandSizeException e) {
+                exceptionConnector.throwException(e);
+            } catch (GameStatusException e) {
+                exceptionConnector.throwException(e);
+            }
+        });
     }
 
     public NetworkConnector getConnector() {
@@ -179,6 +203,7 @@ public class ClientMain implements ClientNetworkHandler {
     @Override
     public void close() {
         try {
+            executor.shutdown();
             UnicastRemoteObject.unexportObject(connector, true);
         } catch (NoSuchObjectException e) {
             LOGGER.error("CLIENT RMI: No Connector to un-export");
@@ -194,5 +219,15 @@ public class ClientMain implements ClientNetworkHandler {
             throw new RuntimeException(e);
         }
         stub1.reconnect(nick);
+    }
+
+    public void await() {
+        if (future != null) {
+            try {
+                future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
