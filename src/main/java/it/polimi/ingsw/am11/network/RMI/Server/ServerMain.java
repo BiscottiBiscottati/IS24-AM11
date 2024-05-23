@@ -21,28 +21,20 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Objects;
 
 public class ServerMain implements Loggable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerMain.class);
 
     private final int port;
-    PlayerViewImpl playerView;
-    Registry registry;
-    ExceptionConnector exceptionConnector;
-
-    {
-        try {
-            playerView = new PlayerViewImpl();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private final PlayerViewImpl playerView;
+    private final Registry registry;
+    private ExceptionConnector exceptionConnector;
 
     public ServerMain(int port) {
         this.port = port;
         try {
             registry = LocateRegistry.createRegistry(port);
+            playerView = new PlayerViewImpl();
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -78,6 +70,7 @@ public class ServerMain implements Loggable {
             try {
                 UnicastRemoteObject.unexportObject(this, true);
                 UnicastRemoteObject.unexportObject(playerView, true);
+                UnicastRemoteObject.unexportObject(registry, true);
             } catch (NoSuchObjectException e) {
                 LOGGER.debug("SERVER RMI: Object already un-exported");
             }
@@ -100,10 +93,6 @@ public class ServerMain implements Loggable {
         CentralController.INSTANCE.connectPlayer(nick, connector, connector);
         playerView.addPlayer(nick, view);
         LOGGER.info("SERVER RMI: Player connected: {}", nick);
-        if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nick)) {
-            LOGGER.info("SERVER RMI: God player: {}", nick);
-            connector.notifyGodPlayer();
-        }
     }
 
     @Override
@@ -115,6 +104,8 @@ public class ServerMain implements Loggable {
     public void setNumOfPlayers(String nick, int val)
     throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException {
         CentralController.INSTANCE.setNumOfPlayers(nick, val);
+
+
     }
 
     @Override

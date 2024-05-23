@@ -72,11 +72,9 @@ public class ClientHandler implements Runnable {
                         .connectPlayer(nickname, sendCommandS, sendCommandS);
                 receiveCommandS = new ReceiveCommandS(view, out);
                 validNickname = true;
-                LOGGER.info("SERVER TCP: Player connected: {}", nickname);
+                LOGGER.info("SERVER TCP: Player connected with name: {}", nickname);
                 if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nickname)) {
                     boolean validNumOfPlayers = false;
-                    LOGGER.debug("SERVER TCP: Notifying god player: {}", nickname);
-                    sendCommandS.youGodPlayer();
                     while (! validNumOfPlayers) {
                         try {
                             LOGGER.info("SERVER TCP: waiting for number of players...");
@@ -89,8 +87,6 @@ public class ClientHandler implements Runnable {
                                 LOGGER.info("SERVER TCP: Number of players set to {} by {}",
                                             numOfPlayers, nickname);
                                 validNumOfPlayers = true;
-                                //FIXME: it has to send it to all currently connected players
-                                sendCommandS.updateNumOfPlayers(numOfPlayers);
                             }
                         } catch (NotGodPlayerException | NumOfPlayersException |
                                  GameStatusException e) {
@@ -109,7 +105,6 @@ public class ClientHandler implements Runnable {
                 LOGGER.error("TCP: Error while reading nickname", e);
                 throw new RuntimeException(e);
             }
-
         }
         while (isRunning) {
             try {

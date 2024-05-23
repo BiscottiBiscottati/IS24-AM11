@@ -39,8 +39,6 @@ public class GameController {
 
         this.maxNumOfPlayer = new AtomicInteger(- 1);
         this.godPlayer = new AtomicReference<>(null);
-
-
     }
 
     VirtualPlayerView connectPlayer(@NotNull String nickname,
@@ -50,7 +48,9 @@ public class GameController {
            NotSetNumOfPlayerException {
         int currentMaxPlayers = maxNumOfPlayer.get();
 
-        if (! godPlayer.compareAndSet(null, nickname) && currentMaxPlayers == - 1) {
+        boolean isGod = godPlayer.compareAndSet(null, nickname);
+
+        if (! isGod && currentMaxPlayers == - 1) {
             throw new NotSetNumOfPlayerException("NumOfPlayers not yet set by godPlayer");
         }
 
@@ -59,11 +59,18 @@ public class GameController {
                 throw new NumOfPlayersException("Max num of players reached");
             }
 
+            LOGGER.info("Adding player {} to model", nickname);
             model.addPlayerToTable(nickname, playerColor.pullAnyColor());
 
             VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
             model.addPlayerListener(nickname, new PlayerViewUpdater(playerView));
             tableView.addConnector(nickname, tableConnector);
+
+            // TODO notify god player that the player has connected
+            if (isGod) {
+                LOGGER.info("Notifying god player {}", nickname);
+                playerConnector.notifyGodPlayer();
+            }
 
             if (currentMaxPlayers == model.getPlayers().size()) {
                 try {
@@ -89,8 +96,10 @@ public class GameController {
         }
 
         if (! maxNumOfPlayer.compareAndSet(- 1, val)) {
-            throw new GameStatusException("num of players already set");
+            throw new GameStatusException("Num of players already set");
         }
+
+        tableView.updateTable(new NumOfPlayerEvent(val));
 
         LOGGER.info("Num of players set to {} by {}", val, nickname);
 

@@ -61,6 +61,16 @@ public class ConnectorImplementation implements PlayerConnector, TableConnector 
     }
 
     @Override
+    public void notifyGodPlayer() {
+        LOGGER.info("SERVER RMI: Notifying god player");
+        try {
+            remoteConnector.notifyGodPlayer();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
         try {
             remoteConnector.updateDeckTop(type, color);
@@ -147,16 +157,5 @@ public class ConnectorImplementation implements PlayerConnector, TableConnector 
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void notifyGodPlayer() {
-        LOGGER.info("RMI: Notifying god player");
-        try {
-            remoteConnector.notifyGodPlayer();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-
     }
 }

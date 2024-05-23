@@ -66,6 +66,13 @@ public class SendCommandS implements PlayerConnector, TableConnector {
     }
 
     @Override
+    public void notifyGodPlayer() {
+        ObjectNode json = mapper.createObjectNode();
+        json.put("method", "youGodPlayer");
+        out.println(json);
+    }
+
+    @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateDeckTop");
@@ -165,12 +172,6 @@ public class SendCommandS implements PlayerConnector, TableConnector {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateNumOfPlayers");
         json.put("numOfPlayers", numOfPlayers);
-        out.println(json);
-    }
-
-    public void youGodPlayer() {
-        ObjectNode json = mapper.createObjectNode();
-        json.put("method", "youGodPlayer");
         out.println(json);
     }
 }

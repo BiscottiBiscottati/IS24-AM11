@@ -10,4 +10,6 @@ public interface PlayerConnector {
     void sendStarterCard(int cardId);
 
     void sendCandidateObjective(Set<Integer> cardsId);
+
+    void notifyGodPlayer();
 }

@@ -166,8 +166,11 @@ public class VirtualTableView {
 
     public void updateTable(@NotNull ReportNumOfPlEvent event) {
         LOGGER.debug("EVENT: Report num of pl sent: {}", event.getNewValue());
-        broadcast(connector -> {
-            connector.updateNumOfPlayers(event.getNewValue());
-        });
+        broadcast(connector -> connector.updateNumOfPlayers(event.getNewValue()));
+    }
+
+    public void updateTable(@NotNull NumOfPlayerEvent event) {
+        LOGGER.debug("EVENT: Num of players set: {}", event.getValueOfAction());
+        broadcast(connector -> connector.updateNumOfPlayers(event.getValueOfAction()));
     }
 }
