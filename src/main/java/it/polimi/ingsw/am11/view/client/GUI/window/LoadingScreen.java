@@ -1,9 +1,7 @@
 package it.polimi.ingsw.am11.view.client.GUI.window;
 
-import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import javafx.animation.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -11,9 +9,11 @@ public class LoadingScreen {
 
     public void animateLoadingScreen(int size, ImageView wolf, ImageView butterfly,
                                      ImageView mushroom, ImageView leaf, ImageView lDWritings,
-                                     int symbolSize, ImageView lDDisks, ImageView lDSquare,
+                                     ImageView lDDisks, ImageView lDSquare,
                                      ImageView lDBackground, ParallelTransition prT,
                                      SequentialTransition sqT) {
+        int symbolSize = size / 8;
+
         wolf.setFitHeight(symbolSize);
         wolf.setPreserveRatio(true);
         wolf.setTranslateX(117.0 * size / 512.0);

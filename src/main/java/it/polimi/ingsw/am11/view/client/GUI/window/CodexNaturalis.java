@@ -80,17 +80,17 @@ public class CodexNaturalis extends Application {
         ImageView mushroom = guiResources.getTheImageView(GuiResEnum.MUSHROOM_ICON);
         ImageView leaf = guiResources.getTheImageView(GuiResEnum.LEAF_ICON);
 
-
-        root.getChildren().addAll(lDBackground, lDSquare, lDWritings, lDDisks);
-
         LoadingScreen loadingScreen = new LoadingScreen();
 
         SequentialTransition sqT = new SequentialTransition();
         ParallelTransition prT = new ParallelTransition();
 
         loadingScreen.animateLoadingScreen(size, wolf, butterfly, mushroom, leaf, lDWritings,
-                                           halfButtonSize, lDDisks, lDSquare, lDBackground, prT,
+                                           lDDisks, lDSquare, lDBackground, prT,
                                            sqT);
+
+        root.getChildren().addAll(lDBackground, lDSquare, lDWritings, lDDisks,
+                                  wolf, butterfly, mushroom, leaf);
 
         //TODO -----------------
 
@@ -243,11 +243,14 @@ public class CodexNaturalis extends Application {
             goBack.setVisible(false);
         });
 
+        AtomicInteger totalPlayers = new AtomicInteger();
 
         enterNumOfPlayers.setOnMouseClicked(event -> {
             if (writeNumOfPlayers.getCharacters().toString().equals("Fail")) {
                 invalidNumOfPlayers.setVisible(true);
             } else {
+
+                totalPlayers.set(Integer.parseInt(writeNumOfPlayers.getCharacters().toString()));
                 enterNumOfPlayers.setVisible(false);
                 goBack.setVisible(false);
                 numOfPlayers.setVisible(false);
@@ -280,13 +283,12 @@ public class CodexNaturalis extends Application {
         ProgressBar progressBar = new ProgressBar();
 
         WaitingRoom waitingRoom = new WaitingRoom();
-        waitingRoom.createWaitingRoom(waitingForPlayers, progressBar);
+        waitingRoom.createWaitingRoom(waitingForPlayers, progressBar, font);
 
         root.getChildren().addAll(waitingForPlayers, progressBar);
+        StackPane.setAlignment(waitingForPlayers, Pos.CENTER);
 
-        int totalPlayers = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
-
-        waitingRoom.updateProgressBar(currentPlayers.get(), totalPlayers);
+        waitingRoom.updateProgressBar(currentPlayers.get(), totalPlayers.get());
 
         waitingForPlayers.setVisible(false);
         progressBar.setVisible(false);
