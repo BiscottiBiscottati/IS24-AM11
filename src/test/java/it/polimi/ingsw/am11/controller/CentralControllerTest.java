@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.controller;
 
-import it.polimi.ingsw.am11.model.exceptions.NotSetNumOfPlayerException;
+import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.network.PlayerConnector;
 import it.polimi.ingsw.am11.network.TableConnector;
 import org.junit.jupiter.api.BeforeEach;

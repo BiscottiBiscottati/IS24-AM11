@@ -1,14 +1,14 @@
 package it.polimi.ingsw.am11.network.RMI.Client;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.model.exceptions.NotGodPlayerException;
-import it.polimi.ingsw.am11.model.exceptions.NotSetNumOfPlayerException;
+import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
+import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.network.RMI.Server.ServerMain;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -49,9 +49,9 @@ class ClientToServerConnectorTest {
         clientMain4 = new ClientMain("localhost", 54321, updater);
     }
 
-    @Test
-    void notifyGodPlayer() throws RemoteException {
-        clientMain.login("chen");
+    @RepeatedTest(10)
+    void notifyGodPlayer() {
+        assertDoesNotThrow(() -> clientMain.login("chen"));
 
         Mockito.verify(updater, Mockito.times(1)).notifyGodPlayer();
 
@@ -63,7 +63,18 @@ class ClientToServerConnectorTest {
         verify(exceptionConnector, times(1))
                 .throwException(any(NotGodPlayerException.class));
 
-        clientMain.setNumOfPlayers("chen", 2);
+        assertDoesNotThrow(() -> clientMain.setNumOfPlayers("chen", 2));
+    }
+
+    @RepeatedTest(10)
+    void setNumOfPlayers() throws RemoteException {
+        assertDoesNotThrow(() -> clientMain.login("chen"));
+
+        assertDoesNotThrow(() -> clientMain.setNumOfPlayers("chen", 2));
+        verify(updater, times(1)).updateNumOfPlayers(2);
+
+        assertDoesNotThrow(() -> clientMain2.setNumOfPlayers("chen", 3));
+
     }
 
     @AfterEach

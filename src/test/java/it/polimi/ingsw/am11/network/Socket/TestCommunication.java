@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.network.Socket;
 
 import it.polimi.ingsw.am11.controller.CentralController;
+import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.network.Socket.Client.ReceiveCommandC;
 import it.polimi.ingsw.am11.network.Socket.Client.SendCommandC;
@@ -13,10 +14,13 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
@@ -25,6 +29,8 @@ import static org.mockito.Mockito.when;
 class TestCommunication {
 
     //TODO
+
+    static final Logger LOGGER = LoggerFactory.getLogger(TestCommunication.class);
 
     static CentralController centralController;
     static ClientSocket clientSocket;
@@ -89,57 +95,57 @@ class TestCommunication {
         sendCommandC.setNickname("Francesco");
 
         try {
-            Thread.sleep(1000); // Wait for 2 seconds
+            Thread.sleep(100); // Wait for 2 seconds
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         sendCommandC.setNumOfPlayers(4);
         try {
-            Thread.sleep(1000); // Wait for 2 seconds
+            Thread.sleep(100); // Wait for 2 seconds
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         sendCommandC2.setNickname("Giovanni");
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         sendCommandC3.setNickname("Giuseppe");
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         sendCommandC4.setNickname("Giacomo");
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         sendCommandC.setStarterCard(true);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         sendCommandC2.setStarterCard(false);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         sendCommandC3.setStarterCard(false);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         sendCommandC4.setStarterCard(false);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -167,8 +173,8 @@ class TestCommunication {
 
     }
 
-    @Test
-    @Timeout(value = 10)
+    @RepeatedTest(10)
+    @Timeout(value = 3)
     public void testSetupPlayersWithoutWait() throws IOException {
         // Create SendCommand and ReceiveCommand instances
         SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
@@ -180,107 +186,178 @@ class TestCommunication {
         SendCommandC sendCommandC4 = new SendCommandC(clientSocket4.getOut());
         ReceiveCommandC receiveCommandC4 = new ReceiveCommandC(clientViewUpdaterMock4);
 
+        CountDownLatch latchForGod = new CountDownLatch(2);
+        CountDownLatch latchForFinish = new CountDownLatch(8);
+
         // Setup Mockito chain invocation for sending num of player
         Mockito.doAnswer(invocation -> {
             sendCommandC.setNumOfPlayers(4);
-            latch.countDown();
+            LOGGER.info("God notified");
+            latchForGod.countDown();
             return 0;
         }).when(clientViewUpdaterMock).notifyGodPlayer();
 
         Mockito.doAnswer(invocation -> {
-            latch.countDown();
+            LOGGER.info("Num of player Set");
+            latchForGod.countDown();
             return 0;
         }).when(clientViewUpdaterMock).updateNumOfPlayers(4);
 
-        // Setup Mockito chain invocations for setting Starters and PersonalObjectives
+
+        // Setup Mockito chain invocations for setting Starters
         Mockito.doAnswer(invocation -> {
-            sendCommandC.setStarterCard(true);
-            latch.countDown();
-            return 0;
-        }).when(clientViewUpdaterMock).receiveStarterCard(ArgumentMatchers.anyInt());
+                   sendCommandC.setStarterCard(true);
+                   LOGGER.info("Setting starter card for player 1");
+                   latchForFinish.countDown();
+                   return 0;
+               }).when(clientViewUpdaterMock)
+               .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_STARTERS));
 
         Mockito.doAnswer(invocation -> {
-            sendCommandC2.setStarterCard(false);
-            latch.countDown();
-            return 0;
-        }).when(clientViewUpdaterMock2).receiveStarterCard(ArgumentMatchers.anyInt());
+                   sendCommandC2.setStarterCard(false);
+                   LOGGER.info("Setting starter card for player 2");
+                   latchForFinish.countDown();
+                   return 0;
+               }).when(clientViewUpdaterMock2)
+               .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_STARTERS));
 
         Mockito.doAnswer(invocation -> {
-            sendCommandC3.setStarterCard(false);
-            latch.countDown();
-            return 0;
-        }).when(clientViewUpdaterMock3).receiveStarterCard(ArgumentMatchers.anyInt());
+                   sendCommandC3.setStarterCard(false);
+                   LOGGER.info("Setting starter card for player 3");
+                   latchForFinish.countDown();
+                   return 0;
+               }).when(clientViewUpdaterMock3)
+               .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_STARTERS));
 
         Mockito.doAnswer(invocation -> {
-            sendCommandC4.setStarterCard(false);
-            latch.countDown();
-            return 0;
-        }).when(clientViewUpdaterMock4).receiveStarterCard(ArgumentMatchers.anyInt());
+                   sendCommandC4.setStarterCard(false);
+                   LOGGER.info("Setting starter card for player 4");
+                   latchForFinish.countDown();
+                   return 0;
+               }).when(clientViewUpdaterMock4)
+               .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_STARTERS));
+
+        AtomicInteger obj1 = new AtomicInteger();
+        AtomicInteger obj2 = new AtomicInteger();
+        AtomicInteger obj3 = new AtomicInteger();
+        AtomicInteger obj4 = new AtomicInteger();
+
+        // Mockito chain invocations for setting personal objectives
+        Mockito.doAnswer(invocation -> {
+                   Set<Integer> objsID = invocation.getArgument(0);
+                   obj1.set(objsID.stream().findAny().orElseThrow());
+                   LOGGER.info("Received candidate objectives for player 1");
+                   return 0;
+               }).when(clientViewUpdaterMock)
+               .receiveCandidateObjective(ArgumentMatchers.anySet());
 
         Mockito.doAnswer(invocation -> {
             Set<Integer> objsID = invocation.getArgument(0);
-            sendCommandC.setPersonalObjective(objsID.stream().findAny().orElseThrow());
-            latch.countDown();
-            return 0;
-        }).when(clientViewUpdaterMock).receiveCandidateObjective(ArgumentMatchers.anySet());
-
-        Mockito.doAnswer(invocation -> {
-            Set<Integer> objsID = invocation.getArgument(0);
-            sendCommandC2.setPersonalObjective(objsID.stream().findAny().orElseThrow());
-            latch.countDown();
+            obj2.set(objsID.stream().findAny().orElseThrow());
+            LOGGER.info("Received candidate objectives for player 2");
             return 0;
         }).when(clientViewUpdaterMock2).receiveCandidateObjective(ArgumentMatchers.anySet());
 
         Mockito.doAnswer(invocation -> {
-            Set<Integer> objsID = invocation.getArgument(0);
-            sendCommandC3.setPersonalObjective(objsID.stream().findAny().orElseThrow());
-            latch.countDown();
-            return 0;
-        }).when(clientViewUpdaterMock3).receiveCandidateObjective(ArgumentMatchers.anySet());
+                   Set<Integer> objsID = invocation.getArgument(0);
+                   obj3.set(objsID.stream().findAny().orElseThrow());
+                   LOGGER.info("Received candidate objectives for player 3");
+                   return 0;
+               }).when(clientViewUpdaterMock3)
+               .receiveCandidateObjective(ArgumentMatchers.anySet());
 
         Mockito.doAnswer(invocation -> {
-            Set<Integer> objsID = invocation.getArgument(0);
-            sendCommandC4.setPersonalObjective(objsID.stream().findAny().orElseThrow());
-            latch.countDown();
-            return 0;
-        }).when(clientViewUpdaterMock4).receiveCandidateObjective(ArgumentMatchers.anySet());
+                   Set<Integer> objsID = invocation.getArgument(0);
+                   obj4.set(objsID.stream().findAny().orElseThrow());
+                   LOGGER.info("Received candidate objectives for player 4");
+                   return 0;
+               }).when(clientViewUpdaterMock4)
+               .receiveCandidateObjective(ArgumentMatchers.anySet());
 
-        latch = new CountDownLatch(2);
+        // Setup chain invocation for choosing objectives
+        Mockito.doAnswer(invocation -> {
+                   int obj = obj1.get();
+                   while (obj == 0) {
+                       obj = obj1.get();
+                   }
+                   sendCommandC.setPersonalObjective(obj);
+                   latchForFinish.countDown();
+                   return 0;
+               }).when(clientViewUpdaterMock)
+               .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_OBJECTIVES));
+        Mockito.doAnswer(invocation -> {
+                   int obj = obj2.get();
+                   while (obj == 0) {
+                       obj = obj2.get();
+                   }
+                   sendCommandC2.setPersonalObjective(obj);
+                   latchForFinish.countDown();
+                   return 0;
+               }).when(clientViewUpdaterMock2)
+               .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_OBJECTIVES));
+        Mockito.doAnswer(invocation -> {
+                   int obj = obj3.get();
+                   while (obj == 0) {
+                       obj = obj3.get();
+                   }
+                   sendCommandC3.setPersonalObjective(obj);
+                   latchForFinish.countDown();
+                   return 0;
+               })
+               .when(clientViewUpdaterMock3)
+               .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_OBJECTIVES));
+        Mockito.doAnswer(invocation -> {
+                   int obj = obj4.get();
+                   while (obj == 0) {
+                       obj = obj4.get();
+                   }
+                   sendCommandC4.setPersonalObjective(obj);
+                   latchForFinish.countDown();
+                   return 0;
+               })
+               .when(clientViewUpdaterMock4)
+               .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_OBJECTIVES));
 
         // sending first player nickname
         sendCommandC.setNickname("Francesco");
 
         try {
-            latch.await();
+            latchForGod.await();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        latch = new CountDownLatch(8);
 
         // sending other players nickname
         sendCommandC2.setNickname("Giovanni");
-        Mockito.verify(clientViewUpdaterMock2, Mockito.times(0)).notifyGodPlayer();
         sendCommandC3.setNickname("Giuseppe");
-        Mockito.verify(clientViewUpdaterMock3, Mockito.times(0)).notifyGodPlayer();
         sendCommandC4.setNickname("Giacomo");
-        Mockito.verify(clientViewUpdaterMock4, Mockito.times(0)).notifyGodPlayer();
 
+
+        // Wait for the end of the test
         try {
-            latch.await();
+            latchForFinish.await();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
         // Verify the invocations from Server
-        Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).receiveStarterCard(
-                ArgumentMatchers.anyInt());
-        Mockito.verify(clientViewUpdaterMock2, Mockito.times(1)).receiveStarterCard(
-                ArgumentMatchers.anyInt());
-        Mockito.verify(clientViewUpdaterMock3, Mockito.times(1)).receiveStarterCard(
-                ArgumentMatchers.anyInt());
-        Mockito.verify(clientViewUpdaterMock4, Mockito.times(1)).receiveStarterCard(
-                ArgumentMatchers.anyInt());
+
+        // Verify no one has been notified as god player except Francesco
+        Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).notifyGodPlayer();
+        Mockito.verify(clientViewUpdaterMock2, Mockito.times(0)).notifyGodPlayer();
+        Mockito.verify(clientViewUpdaterMock3, Mockito.times(0)).notifyGodPlayer();
+        Mockito.verify(clientViewUpdaterMock4, Mockito.times(0)).notifyGodPlayer();
+        // Verify starters given
+        Mockito.verify(clientViewUpdaterMock, Mockito.times(1))
+               .receiveStarterCard(ArgumentMatchers.anyInt());
+        Mockito.verify(clientViewUpdaterMock2, Mockito.times(1))
+               .receiveStarterCard(ArgumentMatchers.anyInt());
+        Mockito.verify(clientViewUpdaterMock3, Mockito.times(1))
+               .receiveStarterCard(ArgumentMatchers.anyInt());
+        Mockito.verify(clientViewUpdaterMock4, Mockito.times(1))
+               .receiveStarterCard(ArgumentMatchers.anyInt());
+        // Verify candidate objectives given
         Mockito.verify(clientViewUpdaterMock, Mockito.times(1)).receiveCandidateObjective(
                 ArgumentMatchers.anySet());
         Mockito.verify(clientViewUpdaterMock2, Mockito.times(1)).receiveCandidateObjective(
