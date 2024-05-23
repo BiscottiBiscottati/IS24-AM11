@@ -10,7 +10,6 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
-import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,9 +88,7 @@ public class ServerMain implements Loggable {
            GameStatusException {
         LOGGER.debug("SERVER RMI: login: {}, {}", nick, remoteConnector);
         ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
-        VirtualPlayerView view = new VirtualPlayerView(connector, nick);
-        CentralController.INSTANCE.connectPlayer(nick, connector, connector);
-        playerView.addPlayer(nick, view);
+        playerView.addPlayer(nick, connector);
         LOGGER.info("SERVER RMI: Player connected: {}", nick);
     }
 

@@ -1,34 +1,47 @@
 package it.polimi.ingsw.am11.network.RMI.Server;
 
+import it.polimi.ingsw.am11.controller.CentralController;
+import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.ServerException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerViewImpl implements PlayerViewInterface {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerViewImpl.class);
     private final Map<String, VirtualPlayerView> views;
 
     public PlayerViewImpl() throws RemoteException {
-        this.views = new HashMap<>(8);
+        this.views = new ConcurrentHashMap<>(8);
     }
 
-    public void addPlayer(String nick, VirtualPlayerView view) {
-        views.put(nick, view);
+    public void addPlayer(String nick, ConnectorImplementation connector)
+    throws NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
+           GameStatusException {
+        synchronized (views) {
+            VirtualPlayerView view =
+                    CentralController.INSTANCE.connectPlayer(nick, connector, connector);
+            views.put(nick, view);
+        }
     }
 
     @Override
     public void setStarterCard(String nick, boolean isRetro)
     throws RemoteException, PlayerInitException, IllegalCardPlacingException, GameStatusException {
-        if (views.containsKey(nick)) {
-            VirtualPlayerView view = views.get(nick);
-            view.setStarterCard(isRetro);
-        } else {
-            throw new ServerException("Player not found");
+        synchronized (views) {
+            if (views.containsKey(nick)) {
+                VirtualPlayerView view = views.get(nick);
+                view.setStarterCard(isRetro);
+            } else {
+                throw new ServerException("Player not found");
+            }
         }
     }
 
@@ -36,11 +49,13 @@ public class PlayerViewImpl implements PlayerViewInterface {
     public void setObjectiveCard(String nick, int cardId)
     throws RemoteException, IllegalPlayerSpaceActionException, PlayerInitException,
            GameStatusException {
-        if (views.containsKey(nick)) {
-            VirtualPlayerView view = views.get(nick);
-            view.setObjectiveCard(cardId);
-        } else {
-            throw new ServerException("Player not found");
+        synchronized (views) {
+            if (views.containsKey(nick)) {
+                VirtualPlayerView view = views.get(nick);
+                view.setObjectiveCard(cardId);
+            } else {
+                throw new ServerException("Player not found");
+            }
         }
 
     }
@@ -50,11 +65,13 @@ public class PlayerViewImpl implements PlayerViewInterface {
     throws RemoteException, TurnsOrderException, PlayerInitException, IllegalCardPlacingException,
            NotInHandException, IllegalPlateauActionException, GameStatusException {
 
-        if (views.containsKey(nick)) {
-            VirtualPlayerView view = views.get(nick);
-            view.placeCard(cardId, x, y, isRetro);
-        } else {
-            throw new ServerException("Player not found");
+        synchronized (views) {
+            if (views.containsKey(nick)) {
+                VirtualPlayerView view = views.get(nick);
+                view.placeCard(cardId, x, y, isRetro);
+            } else {
+                throw new ServerException("Player not found");
+            }
         }
     }
 
@@ -64,15 +81,17 @@ public class PlayerViewImpl implements PlayerViewInterface {
            IllegalPickActionException, PlayerInitException, EmptyDeckException,
            MaxHandSizeException, GameStatusException {
 
-        if (views.containsKey(nick)) {
-            VirtualPlayerView view = views.get(nick);
-            view.drawCard(fromVisible, type, cardId);
-        } else {
-            throw new ServerException("Player not found");
+        synchronized (views) {
+            if (views.containsKey(nick)) {
+                VirtualPlayerView view = views.get(nick);
+                view.drawCard(fromVisible, type, cardId);
+            } else {
+                throw new ServerException("Player not found");
+            }
         }
     }
 
     public boolean containsPlayer(String nick) {
-        return views.containsKey(nick);
+        synchronized (views) {return views.containsKey(nick);}
     }
 }

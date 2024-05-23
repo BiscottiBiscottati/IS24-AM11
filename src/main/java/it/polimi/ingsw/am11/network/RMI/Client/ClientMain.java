@@ -10,6 +10,7 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +28,7 @@ public class ClientMain implements ClientNetworkHandler {
     private final Registry registry;
     private final ConnectorInterface connector;
     private final NetworkConnector nConnector;
-    private final ExceptionConnector exceptionConnector;
+    private final @NotNull ExceptionConnector exceptionConnector;
 
     public ClientMain(String ip, int port, ClientViewUpdater updater) throws RemoteException {
 
@@ -44,7 +45,7 @@ public class ClientMain implements ClientNetworkHandler {
         exceptionConnector = updater.getExceptionConnector();
     }
 
-    public void login(String nick)
+    public synchronized void login(String nick)
     throws RemoteException {
         LOGGER.debug("CLIENT RMI: Sending login request to server");
         Loggable stub1;
@@ -64,7 +65,7 @@ public class ClientMain implements ClientNetworkHandler {
         }
     }
 
-    public void setNumOfPlayers(String nick, int numOfPlayers) throws RemoteException {
+    public synchronized void setNumOfPlayers(String nick, int numOfPlayers) throws RemoteException {
         Loggable stub1;
         try {
             stub1 = (Loggable) registry.lookup("Loggable");
@@ -80,7 +81,7 @@ public class ClientMain implements ClientNetworkHandler {
         }
     }
 
-    public void logout(String nick) throws RemoteException {
+    public synchronized void logout(String nick) throws RemoteException {
         Loggable stub1;
         try {
             stub1 = (Loggable) registry.lookup("Loggable");
@@ -90,7 +91,7 @@ public class ClientMain implements ClientNetworkHandler {
         stub1.logout(nick);
     }
 
-    public void setStarterCard(String nick, boolean isRetro) throws RemoteException {
+    public synchronized void setStarterCard(String nick, boolean isRetro) throws RemoteException {
         PlayerViewInterface stub3;
         try {
             stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
@@ -106,7 +107,7 @@ public class ClientMain implements ClientNetworkHandler {
         }
     }
 
-    public void setObjectiveCard(String nick, int cardId) throws RemoteException {
+    public synchronized void setObjectiveCard(String nick, int cardId) throws RemoteException {
         PlayerViewInterface stub3;
         try {
             stub3 = (PlayerViewInterface) registry.lookup("PlayerView");
@@ -122,7 +123,7 @@ public class ClientMain implements ClientNetworkHandler {
         }
     }
 
-    public void placeCard(String nick, int cardId, int x, int y, boolean isRetro)
+    public synchronized void placeCard(String nick, int cardId, int x, int y, boolean isRetro)
     throws RemoteException {
         PlayerViewInterface stub3;
         try {
@@ -145,7 +146,8 @@ public class ClientMain implements ClientNetworkHandler {
         }
     }
 
-    public void drawCard(String nick, boolean fromVisible, PlayableCardType type, int cardId)
+    public synchronized void drawCard(String nick, boolean fromVisible, PlayableCardType type,
+                                      int cardId)
     throws RemoteException {
         PlayerViewInterface stub3;
         try {
@@ -184,7 +186,7 @@ public class ClientMain implements ClientNetworkHandler {
         LOGGER.debug("CLIENT RMI: Client closed");
     }
 
-    public void reconnect(String nick) throws RemoteException {
+    public synchronized void reconnect(String nick) throws RemoteException {
         Loggable stub1;
         try {
             stub1 = (Loggable) registry.lookup("Loggable");
