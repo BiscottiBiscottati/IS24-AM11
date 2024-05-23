@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
-import java.rmi.ServerException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -40,7 +39,7 @@ public class PlayerViewImpl implements PlayerViewInterface {
                 VirtualPlayerView view = views.get(nick);
                 view.setStarterCard(isRetro);
             } else {
-                throw new ServerException("Player not found");
+                throw new RemoteException("Use login method to add player first.");
             }
         }
     }
@@ -54,7 +53,7 @@ public class PlayerViewImpl implements PlayerViewInterface {
                 VirtualPlayerView view = views.get(nick);
                 view.setObjectiveCard(cardId);
             } else {
-                throw new ServerException("Player not found");
+                throw new RemoteException("Use login method to add player first.");
             }
         }
 
@@ -70,7 +69,7 @@ public class PlayerViewImpl implements PlayerViewInterface {
                 VirtualPlayerView view = views.get(nick);
                 view.placeCard(cardId, x, y, isRetro);
             } else {
-                throw new ServerException("Player not found");
+                throw new RemoteException("Use login method to add player first.");
             }
         }
     }
@@ -86,7 +85,7 @@ public class PlayerViewImpl implements PlayerViewInterface {
                 VirtualPlayerView view = views.get(nick);
                 view.drawCard(fromVisible, type, cardId);
             } else {
-                throw new ServerException("Player not found");
+                throw new RemoteException("Use login method to add player first.");
             }
         }
     }
