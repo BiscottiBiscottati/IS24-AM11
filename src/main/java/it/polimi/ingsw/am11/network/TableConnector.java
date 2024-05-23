@@ -1,12 +1,10 @@
 package it.polimi.ingsw.am11.network;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 
-import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,11 +23,11 @@ public interface TableConnector {
 
     void updateGameStatus(GameStatus status);
 
-    void updateCommonObjective(Set<Integer> cardsId, boolean removeMode) throws RemoteException;
+    void updateCommonObjective(Set<Integer> cardsId, boolean removeMode);
 
-    void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) throws JsonProcessingException;
+    void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard);
 
-    void updatePlayers(Map<PlayerColor, String> currentPlayers) throws JsonProcessingException;
+    void updatePlayers(Map<PlayerColor, String> currentPlayers);
 
     void updateNumOfPlayers(Integer numOfPlayers);
 

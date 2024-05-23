@@ -65,6 +65,4 @@ public class SendCommandC implements CltToNetConnector {
     public void setNickname(String nickname) {
         out.println(nickname);
     }
-
-
 }

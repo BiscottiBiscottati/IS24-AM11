@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.view.server;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.TableConnector;
@@ -10,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -93,23 +91,15 @@ public class VirtualTableView {
             case INSERTION -> {
                 LOGGER.debug("EVENT: Common objective {} added", event.getValueOfAction());
                 broadcast(connector -> {
-                    try {
-                        connector.updateCommonObjective(event.getValueOfAction(),
-                                                        false);
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
-                    }
+                    connector.updateCommonObjective(event.getValueOfAction(),
+                                                    false);
                 });
             }
             case REMOVAL -> {
                 LOGGER.debug("EVENT: Common objective {} removed", event.getValueOfAction());
                 broadcast(connector -> {
-                    try {
-                        connector.updateCommonObjective(event.getValueOfAction(),
-                                                        true);
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
-                    }
+                    connector.updateCommonObjective(event.getValueOfAction(),
+                                                    true);
                 });
             }
             default -> LOGGER.debug("Invalid ActionMode in CommonObjectiveChangeEvent");
@@ -145,22 +135,14 @@ public class VirtualTableView {
     public void updateTable(@NotNull FinalLeaderboardEvent event) {
         LOGGER.debug("EVENT: Final leaderboard sent: {}", event.getNewValue());
         broadcast(connector -> {
-            try {
-                connector.sendFinalLeaderboard(event.getNewValue());
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
+            connector.sendFinalLeaderboard(event.getNewValue());
         });
     }
 
     public void updateTable(@NotNull PlayerInfoEvent event) {
         LOGGER.debug("EVENT: Player info sent: {}", event.getNewValue());
         broadcast(connector -> {
-            try {
-                connector.updatePlayers(event.getNewValue());
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
+            connector.updatePlayers(event.getNewValue());
         });
     }
 
