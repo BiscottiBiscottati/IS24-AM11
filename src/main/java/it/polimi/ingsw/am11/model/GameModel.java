@@ -103,9 +103,11 @@ public interface GameModel {
 
     void addTableListener(TableListener listener);
 
-    void addUnavailablePlayer(String nickname);
+    void disconnectPlayer(String nickname);
 
-    void playerIsNowAvailable(String nickname);
+    void reconnectPlayer(String nickname);
+
+    boolean isDisconnected(@NotNull String nickname);
 
     void forceReset();
 }

@@ -862,30 +862,33 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void addUnavailablePlayer(String nickname) {
+    public void disconnectPlayer(String nickname) {
         Player player = playerManager.getPlayer(nickname).orElseThrow();
 
         LOGGER.info("Adding {} to unavailable players", nickname);
 
-        playerManager.addUnavailablePlayer(player);
+        playerManager.disconnectPlayer(player);
         if (Objects.equals(playerManager.getCurrentTurnPlayer().orElse(null), nickname)) {
             try {
                 goNextTurn();
-            } catch (GameBreakingException e) {
+            } catch (GameBreakingException | GameStatusException e) {
                 throw new RuntimeException(e);
-            } catch (GameStatusException ignored) {
-
             }
         }
     }
 
     @Override
-    public void playerIsNowAvailable(String nickname) {
+    public void reconnectPlayer(String nickname) {
         Player player = playerManager.getPlayer(nickname).orElseThrow();
 
         LOGGER.info("Reconnected player {}", nickname);
 
-        playerManager.playerIsNowAvailable(player);
+        playerManager.reconnectPlayer(player);
+    }
+
+    @Override
+    public boolean isDisconnected(@NotNull String nickname) {
+        return playerManager.isDisconnected(nickname);
     }
 
     @Override

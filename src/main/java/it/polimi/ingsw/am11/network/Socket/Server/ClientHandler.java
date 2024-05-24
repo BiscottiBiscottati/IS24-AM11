@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Objects;
 
 public class ClientHandler implements Runnable {
@@ -51,7 +51,7 @@ public class ClientHandler implements Runnable {
         isRunning = false;
         if (in != null) in.close();
         if (out != null) out.close();
-        if (clientSocket != null) clientSocket.close();
+        if (clientSocket != null && ! clientSocket.isClosed()) clientSocket.close();
     }
 
     @Override
@@ -86,10 +86,7 @@ public class ClientHandler implements Runnable {
                      NotSetNumOfPlayerException e) {
                 LOGGER.error("SERVER TCP: Error while connecting player", e);
                 sendException.Exception(e);
-            } catch (SocketException e) {
-                LOGGER.error("SERVER TCP: Error the socket might be closed", e);
             } catch (IOException e) {
-                LOGGER.error("TCP: Error while reading nickname", e);
                 throw new RuntimeException(e);
             }
         }
@@ -101,11 +98,11 @@ public class ClientHandler implements Runnable {
         while (! validNumOfPlayers) {
             try {
                 LOGGER.info("SERVER TCP: waiting for number of players...");
-                String input = in.readLine();
-                LOGGER.debug("SERVER TCP: Received message from god player: {}", input);
-                if (input == null) return false;
-                if (! input.isBlank()) {
-                    int numOfPlayers = Integer.parseInt(input);
+                String message = readInput();
+                LOGGER.debug("SERVER TCP: Received message from god player: {}", message);
+                if (message == null) return false;
+                if (! message.isBlank()) {
+                    int numOfPlayers = Integer.parseInt(message);
                     CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
                     LOGGER.info("SERVER TCP: Number of players set to {} by {}",
                                 numOfPlayers, nickname);
@@ -114,9 +111,6 @@ public class ClientHandler implements Runnable {
             } catch (NotGodPlayerException | NumOfPlayersException | GameStatusException e) {
                 LOGGER.error("SERVER TCP: Error while setting number of players", e);
                 sendException.Exception(e);
-            } catch (IOException e) {
-                LOGGER.error("SERVER TCP: Error while reading number of players", e);
-                throw new RuntimeException(e);
             }
         }
         return true;
@@ -124,21 +118,27 @@ public class ClientHandler implements Runnable {
 
     private void readJSONs() {
         while (isRunning) {
-            try {
-                String message = in.readLine();
-                if (message != null && ! message.isEmpty()) {
-                    receiveCommandS.receive(message);
-                }
-            } catch (IOException e) {
-                LOGGER.info("SERVER TCP: Player disconnected: {}", nickname);
-                CentralController.INSTANCE.playerDisconnected(nickname);
-                isRunning = false;
-                try {
-                    stop();
-                } catch (IOException ex) {
-                    LOGGER.error("SERVER TCP: Error while closing connection", ex);
-                }
+            String message = readInput();
+            if (message == null) return;
+            if (! message.isEmpty()) {
+                receiveCommandS.receive(message);
             }
+        }
+    }
+
+    private @Nullable String readInput() {
+        try {
+            String message = null;
+            if (! clientSocket.isClosed()) message = in.readLine();
+            if (message == null) {
+                LOGGER.info("SERVER TCP: Client {} disconnected", nickname);
+                CentralController.INSTANCE.disconnectPlayer(nickname);
+                isRunning = false;
+            }
+            return message;
+        } catch (IOException e) {
+            LOGGER.error("SERVER TCP: Error while reading input", e);
+            throw new RuntimeException(e);
         }
     }
 }

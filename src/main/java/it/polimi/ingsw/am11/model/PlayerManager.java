@@ -11,8 +11,6 @@ import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
-import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
@@ -137,12 +135,18 @@ public class PlayerManager {
         }
     }
 
-    public void addUnavailablePlayer(Player player) {
-        unavailablePlayers.add(player);
+    public void reconnectPlayer(Player player) {
+        unavailablePlayers.remove(player);
     }
 
-    public void playerIsNowAvailable(Player player) {
-        unavailablePlayers.remove(player);
+    public boolean isDisconnected(@NotNull String nickname) {
+        return unavailablePlayers.parallelStream()
+                                 .map(Player::nickname)
+                                 .anyMatch(nickname::equals);
+    }
+
+    public void disconnectPlayer(Player player) {
+        unavailablePlayers.add(player);
     }
 
     public void setStarterCard(@NotNull String nickname, @NotNull StarterCard starter)
@@ -300,23 +304,6 @@ public class PlayerManager {
         return players.values().parallelStream()
                       .map(Player::space)
                       .allMatch(PersonalSpace::areObjectiveGiven);
-    }
-
-
-    public void addListener(String player, PlayerListener playerListener) {
-        pcs.addListener(player, playerListener);
-    }
-
-    public void addListener(TableListener tableListener) {
-        pcs.addListener(tableListener);
-    }
-
-    public void removeListener(PlayerListener listener) {
-        pcs.removeListener(listener);
-    }
-
-    public void removeListener(TableListener listener) {
-        pcs.removeListener(listener);
     }
 
     public void hardReset() {

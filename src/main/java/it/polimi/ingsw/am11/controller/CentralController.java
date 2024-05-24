@@ -56,8 +56,11 @@ public enum CentralController {
                        .setNumOfPlayers(nickname, val);
     }
 
-    public void playerDisconnected(String nickname) {
-        //TODO to implement
+    public void disconnectPlayer(String nickname) {
+        LOGGER.info("Player {} disconnected", nickname);
+        gameControllers.stream().findFirst()
+                       .orElseThrow()
+                       .disconnectPlayer(nickname);
     }
 
     public void playerReconnected(String nickname) {

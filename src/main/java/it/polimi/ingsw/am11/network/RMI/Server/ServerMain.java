@@ -94,7 +94,7 @@ public class ServerMain implements Loggable {
 
     @Override
     public void logout(String nick) throws RemoteException {
-        CentralController.INSTANCE.playerDisconnected(nick);
+        CentralController.INSTANCE.disconnectPlayer(nick);
         System.out.println(nick + " disconnected");
     }
 

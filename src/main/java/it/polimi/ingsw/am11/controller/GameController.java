@@ -19,7 +19,9 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -28,6 +30,7 @@ public class GameController {
 
     private final GameModel model;
     private final CardController cardController;
+    private final Map<String, VirtualPlayerView> playerViews;
     private final PlayerColorManager playerColor;
     private final AtomicInteger maxNumOfPlayer;
     private final AtomicReference<String> godPlayer;
@@ -39,6 +42,7 @@ public class GameController {
         this.cardController = new CardController(model);
         this.model.addTableListener(new TableViewUpdater(tableView));
         this.playerColor = new PlayerColorManager();
+        this.playerViews = new ConcurrentHashMap<>(8);
 
         this.maxNumOfPlayer = new AtomicInteger(- 1);
         this.godPlayer = new AtomicReference<>(null);
@@ -54,10 +58,21 @@ public class GameController {
         boolean isGod = godPlayer.compareAndSet(null, nickname);
 
         if (! isGod && currentMaxPlayers == - 1) {
+            if (model.isDisconnected(nickname) && godPlayer.get().equals(nickname)) {
+                LOGGER.info("God player {} trying to reconnect", nickname);
+                model.reconnectPlayer(nickname);
+                return playerViews.get(nickname);
+            }
             throw new NotSetNumOfPlayerException("NumOfPlayers not yet set by godPlayer");
         }
 
         synchronized (model) {
+            if (model.isDisconnected(nickname)) {
+                LOGGER.info("Player {} trying to reconnect", nickname);
+                model.reconnectPlayer(nickname);
+                return playerViews.get(nickname);
+            }
+
             if (currentMaxPlayers != - 1 && model.getPlayers().size() >= currentMaxPlayers) {
                 throw new NumOfPlayersException("Max num of players reached");
             }
@@ -66,6 +81,7 @@ public class GameController {
             model.addPlayerToTable(nickname, playerColor.pullAnyColor());
 
             VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
+            playerViews.put(nickname, playerView);
             model.addPlayerListener(nickname, new PlayerViewUpdater(playerView));
             tableView.addConnector(nickname, tableConnector);
 
@@ -120,6 +136,10 @@ public class GameController {
 
     void removePlayer(String nickname) throws GameStatusException {
         model.removePlayer(nickname);
+    }
+
+    void disconnectPlayer(String nickname) {
+        model.disconnectPlayer(nickname);
     }
 
     public CardController getCardController() {
