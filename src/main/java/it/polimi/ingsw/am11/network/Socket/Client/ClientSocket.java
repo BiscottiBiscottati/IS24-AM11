@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ClientSocket implements ClientNetworkHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientSocket.class);
@@ -22,7 +24,7 @@ public class ClientSocket implements ClientNetworkHandler {
     private final ReceiveCommandC receiveCommandC;
     private final SendCommandC sendCommandC;
     private final Socket socket;
-    private final Thread clientThread;
+    private final ExecutorService clientThread;
     private boolean isRunning;
 
     public ClientSocket(String ip, int port,
@@ -40,10 +42,10 @@ public class ClientSocket implements ClientNetworkHandler {
             out = new PrintWriter(socket.getOutputStream(), true);
             sendCommandC = new SendCommandC(out);
             receiveCommandC = new ReceiveCommandC(this.clientViewUpdater);
-            clientThread = new Thread(this::run);
+            clientThread = Executors.newFixedThreadPool(1);
             Runtime.getRuntime().addShutdownHook(new Thread(this::close));
 
-            clientThread.start();
+            clientThread.submit(this::run);
 
         } catch (IOException e) {
             LOGGER.debug("CLIENT TCP: connection error", e);
@@ -58,7 +60,11 @@ public class ClientSocket implements ClientNetworkHandler {
             try {
                 message = in.readLine();
                 LOGGER.debug("CLIENT TCP: Client received message: {}", message);
-                if (message != null && ! message.isEmpty()) {
+                if (message == null) {
+                    LOGGER.debug("CLIENT TCP: Connection closed by the server");
+                    // TODO handle disconnection
+                    close();
+                } else if (! message.isBlank()) {
                     receiveCommandC.receive(message);
                 }
             } catch (IOException e) {
@@ -77,18 +83,14 @@ public class ClientSocket implements ClientNetworkHandler {
     @Override
     public void close() {
         LOGGER.debug("CLIENT TCP: Closing client");
-        clientThread.interrupt();
+        clientThread.shutdown();
         isRunning = false;
         try {
-            if (socket != null) socket.close();
+            if (socket != null && ! socket.isClosed()) socket.close();
             if (in != null) in.close();
             if (out != null) out.close();
-            clientThread.join();
         } catch (IOException e) {
             LOGGER.debug("CLIENT TCP: Error while closing the connection (likely already closed)");
-        } catch (InterruptedException e) {
-            LOGGER.debug("CLIENT TCP: Error while closing the client thread (likely already " +
-                         "closed)");
         }
         LOGGER.debug("CLIENT TCP: Client closed");
     }

@@ -7,11 +7,14 @@ import it.polimi.ingsw.am11.utils.ArgParser;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
-    static final CentralController centralController = CentralController.INSTANCE;
+    static final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     static void start(@NotNull ArgParser parser) {
+        CentralController.INSTANCE.createNewGame();
         int socketPort = 0;
         int rmiPort = 0;
         try {
@@ -23,12 +26,13 @@ public class Server {
             System.out.println("Invalid port number " + e.getMessage().toLowerCase());
             System.exit(1);
         }
+
         SocketManager socketManager = new SocketManager(socketPort);
-        Thread socketThread = new Thread(socketManager::start);
+        executorService.submit(socketManager::start);
 
         ServerMain serverMain = new ServerMain(rmiPort);
         serverMain.start();
 
-        socketThread.start();
+        Runtime.getRuntime().addShutdownHook(new Thread(executorService::shutdown));
     }
 }

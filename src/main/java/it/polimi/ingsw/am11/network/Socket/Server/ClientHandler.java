@@ -56,16 +56,25 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        boolean validNickname = false;
         isRunning = true;
         SendException sendException = new SendException(out);
+        if (! readNickname(sendException)) return;// FIXME disconnection
+        if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nickname)) {
+            if (! readNumOfPlayers(sendException)) return; //FIXME disconnection
+        }
+        readJSONs();
+
+    }
+
+    private boolean readNickname(SendException sendException) {
+        boolean validNickname = false;
         while (! validNickname) {
             try {
                 System.out.println("SERVER TCP: Waiting for nickname...");
                 nickname = in.readLine();
                 LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
 
-                if (nickname == null) return; // FIXME when client disconnects
+                if (nickname == null) return false;
 
                 SendCommandS sendCommandS = new SendCommandS(out);
                 VirtualPlayerView view = CentralController.INSTANCE
@@ -73,28 +82,6 @@ public class ClientHandler implements Runnable {
                 receiveCommandS = new ReceiveCommandS(view, out);
                 validNickname = true;
                 LOGGER.info("SERVER TCP: Player connected with name: {}", nickname);
-                if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nickname)) {
-                    boolean validNumOfPlayers = false;
-                    while (! validNumOfPlayers) {
-                        try {
-                            LOGGER.info("SERVER TCP: waiting for number of players...");
-                            String input = in.readLine();
-                            LOGGER.debug("SERVER TCP: Received message from god player: {}", input);
-                            if (input == null) return;
-                            if (! input.isBlank()) {
-                                int numOfPlayers = Integer.parseInt(input);
-                                CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
-                                LOGGER.info("SERVER TCP: Number of players set to {} by {}",
-                                            numOfPlayers, nickname);
-                                validNumOfPlayers = true;
-                            }
-                        } catch (NotGodPlayerException | NumOfPlayersException |
-                                 GameStatusException e) {
-                            LOGGER.error("SERVER TCP: Error while setting number of players", e);
-                            sendException.Exception(e);
-                        }
-                    }
-                }
             } catch (GameStatusException | PlayerInitException | NumOfPlayersException |
                      NotSetNumOfPlayerException e) {
                 LOGGER.error("SERVER TCP: Error while connecting player", e);
@@ -106,6 +93,36 @@ public class ClientHandler implements Runnable {
                 throw new RuntimeException(e);
             }
         }
+        return true;
+    }
+
+    private boolean readNumOfPlayers(SendException sendException) {
+        boolean validNumOfPlayers = false;
+        while (! validNumOfPlayers) {
+            try {
+                LOGGER.info("SERVER TCP: waiting for number of players...");
+                String input = in.readLine();
+                LOGGER.debug("SERVER TCP: Received message from god player: {}", input);
+                if (input == null) return false;
+                if (! input.isBlank()) {
+                    int numOfPlayers = Integer.parseInt(input);
+                    CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
+                    LOGGER.info("SERVER TCP: Number of players set to {} by {}",
+                                numOfPlayers, nickname);
+                    validNumOfPlayers = true;
+                }
+            } catch (NotGodPlayerException | NumOfPlayersException | GameStatusException e) {
+                LOGGER.error("SERVER TCP: Error while setting number of players", e);
+                sendException.Exception(e);
+            } catch (IOException e) {
+                LOGGER.error("SERVER TCP: Error while reading number of players", e);
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
+    }
+
+    private void readJSONs() {
         while (isRunning) {
             try {
                 String message = in.readLine();
@@ -114,13 +131,13 @@ public class ClientHandler implements Runnable {
                 }
             } catch (IOException e) {
                 LOGGER.info("SERVER TCP: Player disconnected: {}", nickname);
+                CentralController.INSTANCE.playerDisconnected(nickname);
+                isRunning = false;
                 try {
                     stop();
                 } catch (IOException ex) {
                     LOGGER.error("SERVER TCP: Error while closing connection", ex);
                 }
-                CentralController.INSTANCE.playerDisconnected(nickname);
-                isRunning = false;
             }
         }
     }
