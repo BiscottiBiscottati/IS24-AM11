@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.Socket.Server;
 
+import jdk.net.ExtendedSocketOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class SocketManager {
             }
             threadPool.shutdown(); // Stop accepting new tasks
             if (! threadPool.awaitTermination(10, TimeUnit.SECONDS)) throw new RuntimeException();
-            serverSocket.close();
+            if (! serverSocket.isClosed()) serverSocket.close();
         } catch (IOException e) {
             LOGGER.error("SERVER TCP: Error while closing server because of {}", e.getMessage());
         } catch (InterruptedException e) {
@@ -62,6 +63,10 @@ public class SocketManager {
                 LOGGER.info("SERVER TCP: Waiting for connection...");
                 // Accept a new connection from a client
                 Socket clientSocket = serverSocket.accept();
+                clientSocket.setKeepAlive(true);
+                clientSocket.setOption(ExtendedSocketOptions.TCP_KEEPIDLE, 5);
+                clientSocket.setOption(ExtendedSocketOptions.TCP_KEEPCOUNT, 2);
+                clientSocket.setOption(ExtendedSocketOptions.TCP_KEEPINTERVAL, 1);
                 LOGGER.info("SERVER TCP: Connection accepted from: {}",
                             clientSocket.getInetAddress());
 
