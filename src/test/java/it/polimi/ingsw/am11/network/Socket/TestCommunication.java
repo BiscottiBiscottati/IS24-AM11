@@ -77,20 +77,15 @@ class TestCommunication {
 
     }
 
-    // FIXME test doesn't finish
     @Test
-    public void testSetupPlayersWithWait() {
+    void testSetupPlayersWithWait() {
 
         // Create SendCommand and ReceiveCommand instances
 
         SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
-        ReceiveCommandC receiveCommandC = new ReceiveCommandC(clientViewUpdaterMock);
         SendCommandC sendCommandC2 = new SendCommandC(clientSocket2.getOut());
-        ReceiveCommandC receiveCommandC2 = new ReceiveCommandC(clientViewUpdaterMock2);
         SendCommandC sendCommandC3 = new SendCommandC(clientSocket3.getOut());
-        ReceiveCommandC receiveCommandC3 = new ReceiveCommandC(clientViewUpdaterMock3);
         SendCommandC sendCommandC4 = new SendCommandC(clientSocket4.getOut());
-        ReceiveCommandC receiveCommandC4 = new ReceiveCommandC(clientViewUpdaterMock4);
         // Send a message to the server
         sendCommandC.setNickname("Francesco");
 
@@ -175,7 +170,7 @@ class TestCommunication {
 
     @RepeatedTest(10)
     @Timeout(value = 3)
-    public void testSetupPlayersWithoutWait() throws IOException {
+    void testSetupPlayersWithoutWait() {
         // Create SendCommand and ReceiveCommand instances
         SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
         ReceiveCommandC receiveCommandC = new ReceiveCommandC(clientViewUpdaterMock);
@@ -368,9 +363,32 @@ class TestCommunication {
                 ArgumentMatchers.anySet());
     }
 
+    @Disabled(" for now")
+    @Test
+    @Timeout(value = 30)
+    void testTCPKeepAlive() throws InterruptedException, IOException {
+        SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
+        SendCommandC sendCommandC2 = new SendCommandC(clientSocket2.getOut());
+
+        sendCommandC2.setNickname("chen");
+
+        clientSocket.close();
+
+        Thread clientThread = new Thread(() -> {
+            try {
+                clientSocket = new ClientSocket("localhost", 12345, clientViewUpdaterMock);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        clientSocket2.close();
+        Thread.sleep(5000);
+
+
+    }
+
     @AfterEach
     void tearDown() {
-
         clientSocket.close();
         clientSocket2.close();
         clientSocket3.close();

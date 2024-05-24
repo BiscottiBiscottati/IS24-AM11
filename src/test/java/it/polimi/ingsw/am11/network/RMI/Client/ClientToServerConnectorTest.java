@@ -196,7 +196,7 @@ class ClientToServerConnectorTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws InterruptedException {
         executor.shutdown();
         clientMain.close();
         clientMain2.close();

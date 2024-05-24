@@ -57,7 +57,7 @@ public class ClientMain implements ClientNetworkHandler {
     public void login(String nick)
     throws RemoteException {
         LOGGER.debug("CLIENT RMI: Sending login request to server");
-        future = executor.submit(() -> {
+        Future<?> tempFuture = executor.submit(() -> {
             try {
                 ((Loggable) registry.lookup("Loggable")).login(nick, connector);
             } catch (NotBoundException e) {
@@ -74,12 +74,15 @@ public class ClientMain implements ClientNetworkHandler {
                 LOGGER.error("CLIENT RMI: Connection error", e);
             }
         });
+        synchronized (executor) {
+            future = tempFuture;
+        }
     }
 
     public void setNumOfPlayers(String nick, int numOfPlayers) throws RemoteException {
         LOGGER.debug("CLIENT RMI: Sending setNumOfPlayers request to server");
 
-        future = executor.submit(() -> {
+        Future<?> tempFuture = executor.submit(() -> {
             try {
                 ((Loggable) registry.lookup("Loggable")).setNumOfPlayers(nick, numOfPlayers);
             } catch (NotBoundException | RemoteException e) {
@@ -92,6 +95,9 @@ public class ClientMain implements ClientNetworkHandler {
                 exceptionConnector.throwException(e);
             }
         });
+        synchronized (executor) {
+            future = tempFuture;
+        }
     }
 
     public synchronized void logout(String nick) throws RemoteException {
@@ -107,7 +113,7 @@ public class ClientMain implements ClientNetworkHandler {
     public void setStarterCard(String nick, boolean isRetro) throws RemoteException {
         LOGGER.debug("CLIENT RMI: Sending setStarterCard request to server");
 
-        future = executor.submit(() -> {
+        Future<?> tempFuture = executor.submit(() -> {
             try {
                 ((PlayerViewInterface) registry.lookup("PlayerView")).setStarterCard(nick, isRetro);
             } catch (NotBoundException | RemoteException e) {
@@ -120,12 +126,15 @@ public class ClientMain implements ClientNetworkHandler {
                 exceptionConnector.throwException(e);
             }
         });
+        synchronized (executor) {
+            future = tempFuture;
+        }
     }
 
     public void setObjectiveCard(String nick, int cardId) throws RemoteException {
         LOGGER.debug("CLIENT RMI: Sending setObjectiveCard request to server");
 
-        future = executor.submit(() -> {
+        Future<?> tempFuture = executor.submit(() -> {
             try {
                 ((PlayerViewInterface) registry.lookup("PlayerView"))
                         .setObjectiveCard(nick, cardId);
@@ -139,13 +148,16 @@ public class ClientMain implements ClientNetworkHandler {
                 exceptionConnector.throwException(e);
             }
         });
+        synchronized (executor) {
+            future = tempFuture;
+        }
     }
 
     public void placeCard(String nick, int cardId, int x, int y, boolean isRetro)
     throws RemoteException {
         LOGGER.debug("CLIENT RMI: Sending placeCard request to server");
 
-        future = executor.submit(() -> {
+        Future<?> tempFuture = executor.submit(() -> {
             try {
                 ((PlayerViewInterface) registry.lookup("PlayerView"))
                         .placeCard(nick, cardId, x, y, isRetro);
@@ -165,6 +177,9 @@ public class ClientMain implements ClientNetworkHandler {
                 exceptionConnector.throwException(e);
             }
         });
+        synchronized (executor) {
+            future = tempFuture;
+        }
     }
 
     public void drawCard(String nick, boolean fromVisible, PlayableCardType type,
@@ -172,7 +187,7 @@ public class ClientMain implements ClientNetworkHandler {
     throws RemoteException {
         LOGGER.debug("CLIENT RMI: Sending drawCard request to server");
 
-        future = executor.submit(() -> {
+        Future<?> tempFuture = executor.submit(() -> {
             try {
                 ((PlayerViewInterface) registry.lookup("PlayerView"))
                         .drawCard(nick, fromVisible, type, cardId);
@@ -194,6 +209,9 @@ public class ClientMain implements ClientNetworkHandler {
                 exceptionConnector.throwException(e);
             }
         });
+        synchronized (executor) {
+            future = tempFuture;
+        }
     }
 
     public NetworkConnector getConnector() {
@@ -204,11 +222,24 @@ public class ClientMain implements ClientNetworkHandler {
     public void close() {
         try {
             executor.shutdown();
+            await();
             UnicastRemoteObject.unexportObject(connector, true);
         } catch (NoSuchObjectException e) {
             LOGGER.error("CLIENT RMI: No Connector to un-export");
         }
         LOGGER.debug("CLIENT RMI: Client closed");
+    }
+
+    public void await() {
+        synchronized (executor) {
+            if (future != null) {
+                try {
+                    future.get();
+                } catch (InterruptedException | ExecutionException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     public synchronized void reconnect(String nick) throws RemoteException {
@@ -219,15 +250,5 @@ public class ClientMain implements ClientNetworkHandler {
             throw new RuntimeException(e);
         }
         stub1.reconnect(nick);
-    }
-
-    public void await() {
-        if (future != null) {
-            try {
-                future.get();
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 }
