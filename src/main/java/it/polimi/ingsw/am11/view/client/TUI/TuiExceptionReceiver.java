@@ -79,13 +79,13 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(GameStatusException ex) {
-        LOGGER.debug("GameStatusException received: {}" + ex.getMessage());
+        LOGGER.debug("GameStatusException received: {}", ex.getMessage());
         System.out.println(ex.getMessage());
     }
 
     @Override
     public void throwException(NotSetNumOfPlayerException ex) {
-        LOGGER.debug("NotSetNumOfPlayersException received: {}" + ex.getMessage());
+        LOGGER.debug("NotSetNumOfPlayersException received: {}", ex.getMessage());
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
 
             tuiUpdater.setCandidateNick("");
