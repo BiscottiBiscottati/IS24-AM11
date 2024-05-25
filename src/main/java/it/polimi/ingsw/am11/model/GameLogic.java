@@ -846,7 +846,8 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void addPlayerListener(String nickname, PlayerListener playerListener) {
+    public void addPlayerListener(@NotNull String nickname,
+                                  @NotNull PlayerListener playerListener) {
 
         LOGGER.debug("Adding player listener for {}", nickname);
 
@@ -854,7 +855,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void addTableListener(TableListener listener) {
+    public void addTableListener(@NotNull TableListener listener) {
 
         LOGGER.debug("Adding table listener");
 
@@ -862,7 +863,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void disconnectPlayer(String nickname) throws PlayerInitException {
+    public void disconnectPlayer(@NotNull String nickname) throws PlayerInitException {
         Player player =
                 playerManager.getPlayer(nickname)
                              .orElseThrow(() -> new PlayerInitException("Player not found"));

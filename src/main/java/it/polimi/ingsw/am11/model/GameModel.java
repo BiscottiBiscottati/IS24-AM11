@@ -33,10 +33,10 @@ public interface GameModel {
 
     PlayerColor getPlayerColor(String nickname) throws PlayerInitException;
 
-    Map<Position, CardContainer> getPositionedCard(String nickname)
+    Map<Position, CardContainer> getPositionedCard(@NotNull String nickname)
     throws PlayerInitException, GameStatusException;
 
-    Set<Position> getAvailablePositions(String nickname)
+    Set<Position> getAvailablePositions(@NotNull String nickname)
     throws PlayerInitException, GameStatusException;
 
     @NotNull
@@ -57,33 +57,33 @@ public interface GameModel {
 
     void initGame() throws NumOfPlayersException, GameStatusException, GameBreakingException;
 
-    void addPlayerToTable(String nickname, PlayerColor colour)
+    void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
     throws PlayerInitException, GameStatusException, NumOfPlayersException;
 
     void removePlayer(@NotNull String nickname) throws GameStatusException;
 
-    void setStarterFor(String nickname, boolean isRetro)
+    void setStarterFor(@NotNull String nickname, boolean isRetro)
     throws IllegalCardPlacingException, GameStatusException, PlayerInitException,
            GameBreakingException;
 
-    void setObjectiveFor(String nickname, int cardID)
+    void setObjectiveFor(@NotNull String nickname, int cardID)
     throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException,
            GameBreakingException;
 
-    void placeCard(String Nickname, int ID, Position position, boolean isRetro)
+    void placeCard(@NotNull String Nickname, int ID, @NotNull Position position, boolean isRetro)
     throws IllegalCardPlacingException,
            TurnsOrderException,
            IllegalPlateauActionException, GameStatusException, NotInHandException,
            PlayerInitException;
 
-    int drawFromDeckOf(PlayableCardType type, String nickname)
+    int drawFromDeckOf(@NotNull PlayableCardType type, @NotNull String nickname)
     throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
            IllegalPlayerSpaceActionException, PlayerInitException, MaxHandSizeException,
            IllegalPickActionException;
 
     void goNextTurn() throws GameBreakingException, GameStatusException;
 
-    int drawVisibleOf(PlayableCardType type, String nickname, int cardID)
+    int drawVisibleOf(@NotNull PlayableCardType type, @NotNull String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
            IllegalPlayerSpaceActionException, IllegalPickActionException, PlayerInitException;
 
@@ -99,13 +99,14 @@ public interface GameModel {
     Optional<Integer> getStarterCard(@NotNull String nickname)
     throws PlayerInitException, GameStatusException;
 
-    void addPlayerListener(String nickname, PlayerListener playerListener);
+    void addPlayerListener(@NotNull String nickname, @NotNull PlayerListener playerListener);
 
-    void addTableListener(TableListener listener);
+    void addTableListener(@NotNull TableListener listener);
 
-    void disconnectPlayer(String nickname) throws PlayerInitException;
+    void disconnectPlayer(@NotNull String nickname) throws PlayerInitException;
 
-    void reconnectPlayer(String nickname, PlayerListener playerListener) throws PlayerInitException;
+    void reconnectPlayer(@NotNull String nickname, @NotNull PlayerListener playerListener)
+    throws PlayerInitException;
 
     boolean isDisconnected(@NotNull String nickname);
 
