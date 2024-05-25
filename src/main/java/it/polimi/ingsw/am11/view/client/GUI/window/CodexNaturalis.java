@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am11.view.client.GUI.window;
 
+import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
+import it.polimi.ingsw.am11.view.client.GUI.GuiExceptionReceiver;
+import it.polimi.ingsw.am11.view.client.GUI.GuiUpdater;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import javafx.animation.ParallelTransition;
@@ -39,6 +42,10 @@ public class CodexNaturalis extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        GuiExceptionReceiver exceptionReceiver = new GuiExceptionReceiver();
+        GuiUpdater guiUpdater = new GuiUpdater(exceptionReceiver);
+        GuiActuator guiActuator = new GuiActuator(guiUpdater);
 
         // Proportions
         int size = (int) (Math.min(Screen.getPrimary().getBounds().getHeight(),
