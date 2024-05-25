@@ -21,6 +21,7 @@ module it.polimi.ingsw.am11 {
     requires org.slf4j;
     requires org.fusesource.jansi;
     requires ch.qos.logback.classic;
+    requires java.smartcardio;
     requires jdk.net;
 
     opens it.polimi.ingsw.am11 to javafx.fxml;

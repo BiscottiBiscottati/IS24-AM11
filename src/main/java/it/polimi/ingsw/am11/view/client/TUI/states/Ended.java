@@ -1,9 +1,15 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.Nullable;
 
-public class Ended implements TUIState {
+public class Ended extends TUIState {
+
+    public Ended(MiniGameModel model) {
+        super(model);
+    }
+
     @Override
     public void passArgs(Actuator actuator, String[] args) {
         //TODO

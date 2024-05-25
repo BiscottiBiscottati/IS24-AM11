@@ -41,7 +41,7 @@ public class TuiUpdater implements ClientViewUpdater {
         this.model = model;
         this.tuiStates = new EnumMap<>(TuiStates.class);
         for (TuiStates state : TuiStates.values()) {
-            tuiStates.put(state, state.getNewState());
+            tuiStates.put(state, state.getNewState(model));
         }
         this.currentState = new AtomicReference<>(tuiStates.get(TuiStates.CONNECTING));
         this.exceptionReceiver = new TuiExceptionReceiver(model, this);
@@ -110,24 +110,11 @@ public class TuiUpdater implements ClientViewUpdater {
                 //DONE
                 currentState.set(tuiStates.get(TuiStates.CHOOSING_STARTER));
                 currentState.get().restart(false, null);
-                try {
-                    CardPrinter.printCardFrontAndBack(
-                            model.getCliPlayer(model.myName()).getSpace().getStarterCard());
-                } catch (IllegalCardBuildException e) {
-                    throw new RuntimeException(e);
-                }
-                System.out.print("Place it on its front or on its retro >>> \033[K");
             }
             case CHOOSING_OBJECTIVES -> {
                 currentState.set(tuiStates.get(TuiStates.CHOOSING_OBJECTIVE));
                 currentState.get().restart(false, null);
-                try {
-                    CardPrinter.printObjectives(new ArrayList<>(model.getCliPlayer(
-                            model.myName()).getSpace().getCandidateObjectives()));
-                } catch (IllegalCardBuildException e) {
-                    throw new RuntimeException(e);
-                }
-                System.out.print("Choose one of the objectives above >>> \033[K");
+
             }
             case ENDED -> {
                 currentState.set(tuiStates.get(TuiStates.ENDED));
@@ -241,10 +228,7 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateNumOfPlayers(int numOfPlayers) {
-        if (isCurrentState(TuiStates.WAITING) && ! model.getGodPlayer().equals(model.myName())) {
-            currentState.set(tuiStates.get(TuiStates.SETTING_NAME));
-            currentState.get().restart(false, null);
-        }
+
     }
 
     @Override
@@ -258,7 +242,7 @@ public class TuiUpdater implements ClientViewUpdater {
     }
 
     public boolean isCurrentState(TuiStates state) {
-        return currentState.equals(tuiStates.get(state));
+        return currentState.get() == tuiStates.get(state);
     }
 
     public String getCandidateNick() {

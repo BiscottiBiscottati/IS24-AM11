@@ -4,16 +4,21 @@ import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class SettingNum implements TUIState {
+public class SettingNum extends TUIState {
     private static final String askForNum = "How many players will play? >>> \033[K";
     private boolean alreadyError = false;
     private boolean isBlocked = false;
 
     private static void errorsHappens(String text) {
         System.out.println("\033[F" + "\033[K" + text);
+    }
+
+    public SettingNum(MiniGameModel model) {
+        super(model);
     }
 
     @Override

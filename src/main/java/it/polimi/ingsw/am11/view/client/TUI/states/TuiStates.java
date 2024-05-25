@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+
 import java.lang.reflect.InvocationTargetException;
 
 public enum TuiStates {
@@ -20,9 +22,9 @@ public enum TuiStates {
         this.stateClass = stateClass;
     }
 
-    public TUIState getNewState() {
+    public TUIState getNewState(MiniGameModel model) {
         try {
-            return stateClass.getConstructor().newInstance();
+            return stateClass.getConstructor(MiniGameModel.class).newInstance(model);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                  NoSuchMethodException e) {
             throw new RuntimeException(e);

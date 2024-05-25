@@ -5,9 +5,10 @@ import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 
-public class SettingName implements TUIState {
+public class SettingName extends TUIState {
 
     private static final String askYourName = "What's your name? >>> \033[K";
     private boolean isQuote = false;
@@ -16,6 +17,11 @@ public class SettingName implements TUIState {
 
     private static void errorsHappens(String text) {
         System.out.println("\033[F" + "\033[K" + text);
+    }
+
+
+    public SettingName(MiniGameModel model) {
+super(model);
     }
 
     @Override

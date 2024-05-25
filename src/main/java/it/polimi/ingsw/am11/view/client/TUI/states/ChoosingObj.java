@@ -1,16 +1,28 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
+import it.polimi.ingsw.am11.view.client.TUI.printers.CardArchitect;
+import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ChoosingObj implements TUIState {
+import javax.smartcardio.Card;
+import java.util.ArrayList;
+
+public class ChoosingObj extends TUIState {
     private static final String askForObj = "Choose one of the objectives above >>> \033[K";
     private boolean alreadyError = false;
     private boolean isBlocked = false;
+
+
+    public ChoosingObj(MiniGameModel model) {
+        super(model);
+    }
 
     @Override
     public void passArgs(Actuator actuator, String[] args) {
@@ -80,13 +92,22 @@ public class ChoosingObj implements TUIState {
                                    ++++++++++++++++++++++++++++
                                    \s""");
 
+        System.out.println("You received this objectives:");
+
+        try {
+            CardPrinter.printObjectives(new ArrayList<>(model.getCliPlayer(model.myName()).getSpace().getCandidateObjectives()));
+        } catch (IllegalCardBuildException e) {
+            throw new RuntimeException(e);
+        }
+
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
             alreadyError = true;
         } else {
             alreadyError = false;
         }
-        System.out.println("You received this objectives:");
+
+        System.out.print(askForObj);
     }
 
     private static @NotNull ArgParser setUpOptions() {

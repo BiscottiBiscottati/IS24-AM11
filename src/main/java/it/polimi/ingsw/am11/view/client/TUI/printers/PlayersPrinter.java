@@ -11,12 +11,14 @@ public class PlayersPrinter {
     public static List<String> buildPlayers(MiniGameModel model) {
         //Players INFO: Name, color, points, isStarter
 
+        //Size: 96*
+
         String startingPlayer = model.getStartingPlayer();
         List<String> playersList = new ArrayList<>(model.getplayers());
         List<String> res = new ArrayList<>();
 
 
-        String lineStartingPlayer = spaces(7) + startingPlayer;
+        String lineStartingPlayer = "";
         String line1 = baseLine(false).repeat(playersList.size());
         StringBuilder line2 = new StringBuilder();
         StringBuilder line3 = new StringBuilder();
@@ -25,6 +27,8 @@ public class PlayersPrinter {
         String line6 = "";
 
         if (! startingPlayer.isEmpty()) {
+            lineStartingPlayer = spaces(7) + "STARTER";
+
             List<String> startingPlayerLines = infoLine(startingPlayer,
                                                         model.getCliPlayer(
                                                                 startingPlayer).getColor(),
@@ -49,10 +53,10 @@ public class PlayersPrinter {
                 line3.append(playerLines.get(1));
                 line4.append(playerLines.get(2));
 
-                i++;
                 if (player.equals(model.getCurrentTurn())) {
                     line6 = isTurn(i);
                 }
+                i++;
             }
         }
         
@@ -107,7 +111,7 @@ public class PlayersPrinter {
         }
         colors = "║"
                  + spaces((19 - color.toString().length()) / 2)
-                 + color.toString().length()
+                 + color
                  + spaces((int) Math.ceil((19 - color.toString().length()) / 2.0))
                  + "║";
         if (points < 10) {
@@ -125,8 +129,8 @@ public class PlayersPrinter {
     }
 
     public static String isTurn(int val) {
-        String word = "Playing ^";
-        String spaces = spaces(21).repeat(val - 1) + spaces(6);
+        String word = val + "Playing ^";
+        String spaces = spaces(21).repeat(val - 1) + spaces(5);
         return spaces + word;
     }
 

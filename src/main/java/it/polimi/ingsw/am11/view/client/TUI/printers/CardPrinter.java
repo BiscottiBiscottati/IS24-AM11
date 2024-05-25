@@ -10,6 +10,7 @@ import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
@@ -43,8 +44,16 @@ public class CardPrinter {
     private static final Deck<ObjectiveCard> objDeck = ObjectiveDeckFactory.createDeck();
 
     public static void printObjectives(List<Integer> ids) throws IllegalCardBuildException {
-        for (Integer id : ids) {
-            printCardFrontAndBack(id);
+        List<List<String>> allObj = new ArrayList<>();
+        for(Integer id: ids){
+            allObj.add(CardArchitect.buildObjective(id));
+        }
+
+        for(int i = 0; i < 7; i++){
+            for(List<String> singObj : allObj){
+                System.out.print(singObj.get(i));
+            }
+            System.out.print("\n");
         }
     }
 
@@ -322,14 +331,14 @@ public class CardPrinter {
     }
 
     public static ObjectiveCard getObjective(int id) throws IllegalCardBuildException {
-        return objDeck.getCardById(id).orElseThrow(
-                () -> new IllegalCardBuildException("Card not found"));
+        return objDeck.getCardById(id).orElseThrow(() -> new IllegalCardBuildException("Card not found"));
     }
 
     public static void printWaitingForTrn(MiniGameModel model) {
         List<String> playersInfo = PlayersPrinter.buildPlayers(model);
+        List<String> table;
         try {
-            List<String> table =
+             table =
                     CardArchitect.buildTable(new ArrayList<>(model.table().getShownCards()),
                                              model.table().getDeckTop(PlayableCardType.GOLD),
                                              model.table().getDeckTop(PlayableCardType.RESOURCE));
@@ -340,21 +349,42 @@ public class CardPrinter {
         List<Integer> persOnj =
                 new ArrayList<>(model.getCliPlayer(model.myName()).getSpace().getPlayerObjective());
 
-
+        List<String> obj;
         try {
-            List<String> obj = CardArchitect.buildVertObj(commObjs.get(0),
+            obj = CardArchitect.buildVertObj(commObjs.get(0),
                                                           commObjs.get(1),
                                                           persOnj.get(0));
         } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
 
+        List<String> handList;
         try {
-            List<String> handList =
+            handList =
                     CardArchitect.buildHand(new ArrayList<>(
                             model.getCliPlayer(model.myName()).getSpace().getPlayerHand()));
         } catch (Throwable e) {
             throw new RuntimeException(e);
+        }
+
+        int playersInfoSize = playersInfo.size();
+        int tableSize = table.size();
+        int handDepth = playersInfoSize + tableSize;
+
+        for (int i = 0; i != - 1; i++) {
+
+            if (i < playersInfo.size()){
+                System.out.println(playersInfo.get(i) + spaces(96 - playersInfo.get(i).length()) + obj.get(i));
+            } else if( i - playersInfoSize < table.size()){
+                System.out.println(table.get(i - playersInfoSize) + spaces(23) + obj.get(i));
+            } else if( i < obj.size()) {
+                System.out.println(handList.get(i - handDepth) + spaces(23) + obj.get(i));
+            } else {
+                System.out.println(handList.get(i - handDepth));
+                if(i == handList.size() + handDepth){
+                    i = -1;
+                }
+            }
         }
 
 

@@ -1,19 +1,28 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
+import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ChoosingStrt implements TUIState {
+public class ChoosingStrt extends TUIState {
     private static final String askForSide = "Place it on its front or on its retro >>> \033[K";
     private boolean alreadyError = false;
     private boolean isBlocked = false;
 
+
+    public ChoosingStrt(MiniGameModel model) {
+        super(model);
+    }
+
     @Override
     public void passArgs(Actuator actuator, String[] args) {
+
         ArgParser parser = setUpOptions();
 
         if (isBlocked) {
@@ -74,6 +83,14 @@ public class ChoosingStrt implements TUIState {
                                    \s
                                    ++++++++++++++++++++++++++++
                                    \s""");
+        System.out.println("You received this starter card:");
+
+        try {
+            CardPrinter.printCardFrontAndBack(
+                    model.getCliPlayer(model.myName()).getSpace().getStarterCard());
+        } catch (IllegalCardBuildException e) {
+            throw new RuntimeException(e);
+        }
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
@@ -81,7 +98,8 @@ public class ChoosingStrt implements TUIState {
         } else {
             alreadyError = false;
         }
-        System.out.println("You received this starter card:");
+
+        System.out.print(askForSide);
     }
 
     private static @NotNull ArgParser setUpOptions() {

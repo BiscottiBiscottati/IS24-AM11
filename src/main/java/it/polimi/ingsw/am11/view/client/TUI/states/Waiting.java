@@ -4,11 +4,16 @@ import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 
-public class Waiting implements TUIState {
+public class Waiting extends TUIState {
     public static final String askLine = "To ask is permissible , to reply is polite >>> \033[K";
     private boolean alreadyError = false;
+
+    public Waiting(MiniGameModel model) {
+        super(model);
+    }
 
     @Override
     public void passArgs(Actuator actuator, String[] args) {

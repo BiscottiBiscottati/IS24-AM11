@@ -5,12 +5,13 @@ import it.polimi.ingsw.am11.utils.Constants;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-public class Connecting implements TUIState {
+public class Connecting extends TUIState {
 
     private static final String chooseSocketOrRmi = "Choose socket or rmi >>> \033[K";
     private static final String chooseIp = "Enter IP, leave empty for default >>> \033[K";
@@ -24,6 +25,11 @@ public class Connecting implements TUIState {
     private String ip = "";
     private int port = - 1;
     private int count = 0;
+
+
+    public Connecting(MiniGameModel model) {
+        super(model);
+    }
 
     @Override
     public void passArgs(Actuator actuator, String[] args) {

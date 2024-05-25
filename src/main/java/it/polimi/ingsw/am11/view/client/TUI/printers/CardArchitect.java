@@ -76,9 +76,11 @@ public class CardArchitect {
                 leftPart = "╟───┘";
             }
             if (card != null) {
-                centralPart = (card.getType() == PlayableCardType.GOLD) ?
-                              ("    GOLD   ") :
-                              ("  RESOURCE ");
+                if(card.getType() == PlayableCardType.GOLD){
+                    centralPart = "    GOLD   ";
+                } else {
+                    centralPart = "  RESOURCE ";
+                }
             } else {
                 centralPart = CardPrinter.spaces(11);
             }
@@ -96,7 +98,7 @@ public class CardArchitect {
                 leftPart = "╟───┐";
             }
             if (left == 'X') {
-                rightPart = "               ╢";
+                rightPart = "               ║";
             } else {
                 rightPart = "           ┌───╢";
             }
@@ -124,12 +126,24 @@ public class CardArchitect {
             } else {
                 leftPart = "╚═══╧";
             }
-            if (left == 'X') {
-                rightPart = "═══════════════╝";
+            if (card != null) {
+                int id = card.getId();
+                if (id < 10) {
+                    centralPart = "════ " + id + " ════";
+                } else if (id < 100) {
+                    centralPart = "════ " + id + " ═══";
+                } else {
+                    centralPart = "═══ "+ id + " ═══";
+                }
             } else {
-                rightPart = "═══════════╧═══╝";
+                centralPart = "═══════════";
             }
-            line3 = leftPart + rightPart;
+            if (left == 'X') {
+                rightPart = "════╝";
+            } else {
+                rightPart = "╧═══╝";
+            }
+            line3 = leftPart + centralPart + rightPart;
         }
 
 
@@ -148,7 +162,7 @@ public class CardArchitect {
             return "║                   ║";
         }
         if (center.size() == 1) {
-            center1 = CardPrinter.getColorLetter(center.get(0));
+            center1 = CardPrinter.getColorLetter(center.getFirst());
             return "║         " + center1 + "         ║";
         }
         if (center.size() == 2) {
@@ -242,6 +256,9 @@ public class CardArchitect {
     public static List<String> buildTable(List<Integer> visiblesId, Color goldColor, Color resColor)
     throws IllegalCardBuildException {
 
+        //size: 73*19
+
+
         List<String> result = new ArrayList<>(8);
 
         List<String> goldDeckLines = buildDeck(goldColor, PlayableCardType.GOLD);
@@ -252,32 +269,43 @@ public class CardArchitect {
         List<String> card3 = buildCard(visiblesId.get(2));
         List<String> card4 = buildCard(visiblesId.get(3));
 
+        result.add("╔═ Table: " + "═".repeat(12) + "═".repeat(42) + "═".repeat(8) + "╗");
+
         int i;
 
-        for (i = 0; i < 8; i++) {
-            result.add(card1.get(i) + CardPrinter.spaces(4) + card2.get(i) + CardPrinter.spaces(4) + goldDeckLines.get(i));
+        int size = card1.size();
+        for (i = 0; i < size; i++) {
+            result.add("║"+card1.get(i) + CardPrinter.spaces(4) + card2.get(i) + CardPrinter.spaces(4) + goldDeckLines.get(i)+"║");
         }
 
-        result.add(" ");
+        result.add("║" + spaces(71) + "║");
 
-        for (i = 0; i < 8; i++) {
-            result.add(card3.get(i) + CardPrinter.spaces(4) + card4.get(i) + CardPrinter.spaces(4) + resDeckLines.get(i));
+        for (i = 0; i < size; i++) {
+            result.add("║"+card3.get(i) + CardPrinter.spaces(4) + card4.get(i) + CardPrinter.spaces(4) + resDeckLines.get(i)+"║");
         }
+        result.add("╚"+"═".repeat(63) +"═".repeat(8) +"╝");
 
         return result;
     }
 
-    public static List<String> buildHand(List<Integer> cardIds) throws Throwable {
+    public static List<String> buildHand(List<Integer> cardIds) throws IllegalCardBuildException {
+
+        //size 73 * 10
         List<String> result = new ArrayList<>(8);
 
         List<String> card1 = buildCard(cardIds.get(0));
         List<String> card2 = buildCard(cardIds.get(1));
         List<String> card3 = buildCard(cardIds.get(2));
 
+        result.add("╔═ Hand: " + "═".repeat(13) + "═".repeat(42) + "═".repeat(8) + "╗");
+
         int i;
-        for (i = 0; i < 8; i++) {
-            result.add(card1.get(i) + CardPrinter.spaces(4) + card2.get(i) + CardPrinter.spaces(4) + card3.get(i));
+        int size = card1.size();
+        for (i = 0; i < size; i++) {
+            result.add("║"+ card1.get(i) + CardPrinter.spaces(4) + card2.get(i) + CardPrinter.spaces(4) + card3.get(i)+ "║" );
         }
+
+        result.add("╚"+"═".repeat(63) +"═".repeat(8) +"╝");
 
         return result;
     }
@@ -292,13 +320,13 @@ public class CardArchitect {
         char blf = CardPrinter.getLetter(pCard.getItemCorner(Corner.DOWN_LX, false));
         char brf = CardPrinter.getLetter(pCard.getItemCorner(Corner.DOWN_RX, false));
 
-        List<Color> center = new ArrayList<>(pCard.getCenter(false));
+        List<Color> center = new ArrayList<>(pCard.getCenter(true));
 
-        List<String> topLinesFront = buildCornerLines(tlf, trf, true, null);
+        List<String> topLinesFront = buildCornerLines(tlf, trf, true, pCard);
 
         String centerLineFront = buildCenterString(center);
 
-        List<String> bottomLinesFront = buildCornerLines(blf, brf, false, null);
+        List<String> bottomLinesFront = buildCornerLines(blf, brf, false, pCard);
 
         card.add(topLinesFront.get(0));
         card.add(topLinesFront.get(1));
@@ -307,13 +335,6 @@ public class CardArchitect {
         card.add(bottomLinesFront.get(0));
         card.add(bottomLinesFront.get(1));
         card.add(bottomLinesFront.get(2));
-        if (id < 10) {
-            card.add(CardPrinter.spaces(10) + id + CardPrinter.spaces(10));
-        } else if (id < 100) {
-            card.add(CardPrinter.spaces(10) + id + CardPrinter.spaces(9));
-        } else {
-            card.add(CardPrinter.spaces(9) + id + CardPrinter.spaces(9));
-        }
         return card;
     }
 
@@ -327,7 +348,7 @@ public class CardArchitect {
         String line4 = "║ └───┘";
         String line5 = "║      ";
         String line6 = "╚══════";
-        String line7 = "";
+        String line7;
         if (id < 10) {
             line7 = spaces(10) + id + spaces(10);
         } else if (id < 100) {
@@ -505,8 +526,7 @@ public class CardArchitect {
         deck.add(centerLine);
         deck.add(bottomLines.get(0));
         deck.add(bottomLines.get(1));
-        deck.add(bottomLines.get(2));
-        deck.add(CardPrinter.spaces(9) + "Deck" + CardPrinter.spaces(8));
+        deck.add("╚═══╧═══ Deck ══╧═══╝");
 
         return deck;
     }

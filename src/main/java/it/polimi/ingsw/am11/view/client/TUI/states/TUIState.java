@@ -1,11 +1,22 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.Nullable;
 
-public interface TUIState {
-    void passArgs(Actuator actuator, String[] args);
+public abstract class TUIState {
 
-    void restart(boolean dueToEx, @Nullable Exception exception);
+    protected MiniGameModel model;
+
+    protected TUIState(MiniGameModel model) {
+        this.model = model;
+    }
+
+    public void passArgs(Actuator actuator, String[] args){
+    }
+
+    public void restart(boolean dueToEx, @Nullable Exception exception){
+
+    }
 }
 

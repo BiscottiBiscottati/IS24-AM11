@@ -1,9 +1,15 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.Nullable;
 
-public class Placing implements TUIState {
+public class Placing extends TUIState {
+
+    public Placing(MiniGameModel model) {
+        super(model);
+    }
+
     @Override
     public void passArgs(Actuator actuator, String[] args) {
 //        String word = positionalArgs.getFirst();

@@ -24,14 +24,24 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(IllegalPlayerSpaceActionException ex) {
+        LOGGER.debug("IllegalPlayerSpaceActionException {}", ex.getMessage());
+        //CASE: trying to set objective that is not yours
+        if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
+            tuiUpdater.setTuiState(TuiStates.CHOOSING_OBJECTIVE);
+            tuiUpdater.getCurrentTuiState().restart(true, ex);
+            return;
+        }
+
     }
 
     @Override
     public void throwException(TurnsOrderException ex) {
+        LOGGER.debug("TurnsOrderException {}", ex.getMessage());
     }
 
     @Override
     public void throwException(PlayerInitException ex) {
+        LOGGER.debug("PlayerInitException {}", ex.getMessage());
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
             //DONE
             tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
@@ -40,7 +50,6 @@ public class TuiExceptionReceiver implements ExceptionConnector {
         }
         //TODO
 
-
         // Should be unreachable
         System.out.println("PlayerInitException received");
         System.out.println("MESSAGE: " + ex.getMessage());
@@ -48,22 +57,27 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(IllegalCardPlacingException ex) {
+        LOGGER.debug("IllegalCardPlacingException {}", ex.getMessage());
     }
 
     @Override
     public void throwException(IllegalPickActionException ex) {
+        LOGGER.debug("IllegalPickActionException {}", ex.getMessage());
     }
 
     @Override
     public void throwException(NotInHandException ex) {
+        LOGGER.debug("NotInHandException {}", ex.getMessage());
     }
 
     @Override
     public void throwException(EmptyDeckException ex) {
+        LOGGER.debug("EmptyDeckException {}", ex.getMessage());
     }
 
     @Override
     public void throwException(NumOfPlayersException ex) {
+        LOGGER.debug("NumOfPlayersException {}", ex.getMessage());
         //DONE
         tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
         tuiUpdater.getCurrentTuiState().restart(true, ex);
@@ -71,6 +85,7 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(NotGodPlayerException ex) {
+        LOGGER.debug("NotGodPlayerException {}", ex.getMessage());
         //DONE
         model.setGodPlayer(null);
         tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
@@ -79,16 +94,16 @@ public class TuiExceptionReceiver implements ExceptionConnector {
 
     @Override
     public void throwException(GameStatusException ex) {
-        LOGGER.debug("GameStatusException received: {}", ex.getMessage());
+        LOGGER.debug("GameStatusException received: {}" + ex.getMessage());
         System.out.println(ex.getMessage());
     }
 
     @Override
     public void throwException(NotSetNumOfPlayerException ex) {
-        LOGGER.debug("NotSetNumOfPlayersException received: {}", ex.getMessage());
+        LOGGER.debug("NotSetNumOfPlayerException received: {}" + ex.getMessage());
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
-
             tuiUpdater.setCandidateNick("");
+            tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
             return;
         }
@@ -100,17 +115,20 @@ public class TuiExceptionReceiver implements ExceptionConnector {
     }
 
     @Override
-    public void throwException(IllegalPlateauActionException description) {
+    public void throwException(IllegalPlateauActionException ex) {
+        LOGGER.debug("IllegalPlateauActionException {}", ex.getMessage());
         //TODO
     }
 
     @Override
-    public void throwException(MaxHandSizeException description) {
+    public void throwException(MaxHandSizeException ex) {
+        LOGGER.debug("MaxHandSizeException {}", ex.getMessage());
         //TODO
     }
 
     @Override
-    public void throwException(LostConnectionException description) {
+    public void throwException(LostConnectionException ex) {
+        LOGGER.debug("LostConnectionException {}", ex.getMessage());
         //TODO
     }
 }

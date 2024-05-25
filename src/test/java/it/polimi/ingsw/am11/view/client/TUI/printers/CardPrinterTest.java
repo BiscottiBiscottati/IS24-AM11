@@ -64,4 +64,10 @@ class CardPrinterTest {
             CardPrinter.printCardFrontAndBack(id);
         }
     }
+
+    @Test
+    void printWaitingForTrn() {
+
+
+    }
 }
