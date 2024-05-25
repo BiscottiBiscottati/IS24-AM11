@@ -12,47 +12,36 @@ public interface ClientViewUpdater {
 
     void updateDeckTop(PlayableCardType type, Color color);
 
-    void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
-                     boolean removeMode);
+    void updateField(String nickname, int x, int y, int cardId,
+                     boolean isRetro, boolean removeMode);
 
     void updateShownPlayable(Integer previousId, Integer currentId);
 
-
     void updateTurnChange(String nickname);
-
 
     void updatePlayerPoint(String nickname, int points);
 
-
     void updateGameStatus(GameStatus status);
-
 
     void updateCommonObjective(Set<Integer> cardId, boolean removeMode);
 
-
     void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard);
-
 
     void updateHand(int cardId, boolean removeMode);
 
-
     void updatePersonalObjective(int cardId, boolean removeMode);
-
 
     void receiveStarterCard(int cardId);
 
-
     void receiveCandidateObjective(Set<Integer> cardId);
-
 
     void notifyGodPlayer();
 
-
     void updatePlayers(Map<PlayerColor, String> currentPlayers);
-
 
     void updateNumOfPlayers(int numOfPlayers);
 
+    void disconnectedFromServer();
 
     ExceptionConnector getExceptionConnector();
 }

@@ -248,6 +248,11 @@ public class TuiUpdater implements ClientViewUpdater {
     }
 
     @Override
+    public void disconnectedFromServer() {
+        //TODO to implement
+    }
+
+    @Override
     public ExceptionConnector getExceptionConnector() {
         return exceptionReceiver;
     }
