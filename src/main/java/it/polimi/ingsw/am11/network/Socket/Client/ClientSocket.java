@@ -59,16 +59,6 @@ public class ClientSocket implements ClientNetworkHandler {
         while (isRunning) {
             try {
                 message = in.readLine();
-                LOGGER.debug("CLIENT TCP: Client received message: {}", message);
-                if (message == null) {
-                    LOGGER.debug("CLIENT TCP: Connection closed by the server");
-                    // TODO to test
-                    clientViewUpdater.disconnectedFromServer();
-                    close();
-                    return;
-                } else if (! message.isBlank()) {
-                    clientMessageReceiver.receive(message);
-                }
             } catch (IOException e) {
                 LOGGER.debug("CLIENT TCP: Error while receiving message because {}",
                              e.getMessage());
@@ -76,6 +66,16 @@ public class ClientSocket implements ClientNetworkHandler {
                 clientViewUpdater.disconnectedFromServer();
                 close();
                 return;
+            }
+            LOGGER.debug("CLIENT TCP: Client received message: {}", message);
+            if (message == null) {
+                LOGGER.debug("CLIENT TCP: Connection closed by the server");
+                // TODO to test
+                clientViewUpdater.disconnectedFromServer();
+                close();
+                return;
+            } else if (! message.isBlank()) {
+                clientMessageReceiver.receive(message);
             }
         }
     }

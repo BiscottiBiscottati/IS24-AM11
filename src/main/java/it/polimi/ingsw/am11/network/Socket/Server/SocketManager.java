@@ -76,7 +76,6 @@ public class SocketManager {
                 threadPool.execute(clientHandler);
             } catch (IOException e) {
                 LOGGER.warn("SERVER TCP: Error while accepting: {}", e.getMessage());
-                isRunning = false;
             }
         }
     }

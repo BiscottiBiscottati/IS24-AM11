@@ -29,12 +29,13 @@ public class ClientHandler implements Runnable {
     private boolean isRunning;
 
     public ClientHandler(@NotNull Socket clientSocket) {
+        this.clientSocket = clientSocket;
         try {
-            this.clientSocket = clientSocket;
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
         } catch (IOException e) {
             LOGGER.error("SERVER TCP: Error while creating client handler", e);
+            // TODO could throw a custom exception
             throw new RuntimeException(e);
         }
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -70,12 +71,17 @@ public class ClientHandler implements Runnable {
         boolean validNickname = false;
         while (! validNickname) {
             try {
-                System.out.println("SERVER TCP: Waiting for nickname...");
+                LOGGER.info("SERVER TCP: Waiting for nickname");
                 nickname = in.readLine();
                 LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
+            } catch (IOException e) {
+                LOGGER.error("SERVER TCP: Error while reading nickname: {}", e.getMessage());
+                return false;
+            }
 
-                if (nickname == null) return false;
+            if (nickname == null) return false;
 
+            try {
                 ServerMessageSender serverMessageSender = new ServerMessageSender(out);
                 VirtualPlayerView view = CentralController.INSTANCE
                         .connectPlayer(nickname, serverMessageSender, serverMessageSender);
@@ -89,9 +95,6 @@ public class ClientHandler implements Runnable {
                 return false;
             } catch (PlayerInitException e) {
                 LOGGER.error("SERVER TCP: Nickname in use!");
-            } catch (IOException e) {
-                LOGGER.error("SERVER TCP: Error while reading nickname: {}", e.getMessage());
-                return false;
             }
         }
         return true;
