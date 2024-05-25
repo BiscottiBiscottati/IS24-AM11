@@ -8,6 +8,17 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Interface that defines the methods that the server can use to update the table.
+ * <p>
+ * The server will use these methods to send updates viewable by everyone to the clients.
+ * <p>
+ * Each player should provide an implementation of this interface to receive updates from the
+ * server.
+ *
+ * @see it.polimi.ingsw.am11.network.RMI.Server.ServerConnectorImpl
+ * @see it.polimi.ingsw.am11.network.Socket.Server.ServerMessageSender
+ */
 public interface ServerTableConnector {
 
     void updateDeckTop(PlayableCardType type, Color color);
