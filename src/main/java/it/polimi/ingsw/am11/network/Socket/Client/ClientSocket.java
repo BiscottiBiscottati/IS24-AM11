@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.network.Socket.Client;
 
+import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
-import it.polimi.ingsw.am11.network.CltToNetConnector;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -76,7 +76,7 @@ public class ClientSocket implements ClientNetworkHandler {
         }
     }
 
-    public CltToNetConnector getConnector() {
+    public ClientGameConnector getConnector() {
         return sendCommandC;
     }
 

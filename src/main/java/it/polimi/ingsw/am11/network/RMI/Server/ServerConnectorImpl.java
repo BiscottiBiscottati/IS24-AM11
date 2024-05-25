@@ -4,9 +4,10 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.network.PlayerConnector;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
-import it.polimi.ingsw.am11.network.TableConnector;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ClientGameUpdatesInterface;
+import it.polimi.ingsw.am11.network.ServerPlayerConnector;
+import it.polimi.ingsw.am11.network.ServerTableConnector;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,13 +16,15 @@ import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
-public class ConnectorImplementation implements PlayerConnector, TableConnector {
+public class ServerConnectorImpl
+        implements ServerPlayerConnector, ServerTableConnector {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectorImplementation.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            ServerConnectorImpl.class);
 
-    private final ConnectorInterface remoteConnector;
+    private final ClientGameUpdatesInterface remoteConnector;
 
-    public ConnectorImplementation(ConnectorInterface remoteConnector) {
+    public ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConnector) {
         this.remoteConnector = remoteConnector;
     }
 

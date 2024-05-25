@@ -8,7 +8,7 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import java.util.Map;
 import java.util.Set;
 
-public interface TableConnector {
+public interface ServerTableConnector {
 
     void updateDeckTop(PlayableCardType type, Color color);
 

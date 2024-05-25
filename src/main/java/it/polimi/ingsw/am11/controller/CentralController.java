@@ -5,8 +5,8 @@ import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
-import it.polimi.ingsw.am11.network.PlayerConnector;
-import it.polimi.ingsw.am11.network.TableConnector;
+import it.polimi.ingsw.am11.network.ServerPlayerConnector;
+import it.polimi.ingsw.am11.network.ServerTableConnector;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -30,8 +30,8 @@ public enum CentralController {
 
     @NotNull
     public synchronized VirtualPlayerView connectPlayer(@NotNull String nickname,
-                                                        @NotNull PlayerConnector playerConnector,
-                                                        @NotNull TableConnector tableConnector)
+                                                        @NotNull ServerPlayerConnector serverPlayerConnector,
+                                                        @NotNull ServerTableConnector serverTableConnector)
     throws GameStatusException, NumOfPlayersException, PlayerInitException,
            NotSetNumOfPlayerException {
         if (gameControllers.isEmpty()) createNewGame();
@@ -39,7 +39,7 @@ public enum CentralController {
         return gameControllers.stream()
                               .findFirst()
                               .orElseThrow()
-                              .connectPlayer(nickname, playerConnector, tableConnector);
+                              .connectPlayer(nickname, serverPlayerConnector, serverTableConnector);
     }
 
     public synchronized void createNewGame() {

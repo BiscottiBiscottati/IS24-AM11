@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.view.server;
 
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.network.TableConnector;
+import it.polimi.ingsw.am11.network.ServerTableConnector;
 import it.polimi.ingsw.am11.view.events.utils.ActionMode;
 import it.polimi.ingsw.am11.view.events.view.table.*;
 import org.jetbrains.annotations.NotNull;
@@ -16,13 +16,13 @@ import java.util.function.Consumer;
 
 public class VirtualTableView {
     private static final Logger LOGGER = LoggerFactory.getLogger(VirtualTableView.class);
-    private final Map<String, TableConnector> connectors;
+    private final Map<String, ServerTableConnector> connectors;
 
     public VirtualTableView() {
         this.connectors = new HashMap<>(8);
     }
 
-    public void addConnector(@NotNull String nickname, @NotNull TableConnector connector) {
+    public void addConnector(@NotNull String nickname, @NotNull ServerTableConnector connector) {
         this.connectors.put(nickname, connector);
     }
 
@@ -35,7 +35,7 @@ public class VirtualTableView {
         AtomicReference<Map.Entry<Position, CardContainer>> entry = new AtomicReference<>();
         ActionMode mode = event.getAction();
 
-        Consumer<TableConnector> function;
+        Consumer<ServerTableConnector> function;
 
         switch (mode) {
             case INSERTION -> {
@@ -74,7 +74,7 @@ public class VirtualTableView {
         broadcast(function);
     }
 
-    private void broadcast(@NotNull Consumer<TableConnector> action) {
+    private void broadcast(@NotNull Consumer<ServerTableConnector> action) {
         connectors.values().forEach(action);
     }
 

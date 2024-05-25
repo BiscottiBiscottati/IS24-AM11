@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.model.exceptions.*;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface PlayerViewInterface extends Remote {
+public interface ServerGameCommandsInterface extends Remote {
 
     void setStarterCard(String nick, boolean isRetro)
     throws RemoteException, PlayerInitException, IllegalCardPlacingException, GameStatusException;

@@ -2,16 +2,16 @@ package it.polimi.ingsw.am11.network.RMI.Client;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.network.CltToNetConnector;
+import it.polimi.ingsw.am11.network.ClientGameConnector;
 import org.jetbrains.annotations.NotNull;
 
 import java.rmi.RemoteException;
 
-public class NetworkConnector implements CltToNetConnector {
-    private final ClientMain main;
+public class NetworkConnector implements ClientGameConnector {
+    private final ClientRMI main;
     private String nickname;
 
-    public NetworkConnector(ClientMain main) {
+    public NetworkConnector(@NotNull ClientRMI main) {
         this.main = main;
     }
 

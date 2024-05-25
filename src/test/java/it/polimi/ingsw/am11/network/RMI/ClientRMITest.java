@@ -1,10 +1,7 @@
 package it.polimi.ingsw.am11.network.RMI;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.network.RMI.Client.ClientMain;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
-import it.polimi.ingsw.am11.network.RMI.Server.ServerMain;
+import it.polimi.ingsw.am11.network.RMI.Client.ClientRMI;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,12 +9,10 @@ import org.mockito.Mockito;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 
-class ClientMainTest {
+class ClientRMITest {
 
     @BeforeEach
     void setUp() {
@@ -32,7 +27,7 @@ class ClientMainTest {
     void testLogin() throws RemoteException, NotBoundException {
 
         assertThrows(RemoteException.class, () -> {
-            new ClientMain("localhost", 1234, Mockito.mock(ClientViewUpdater.class));
+            new ClientRMI("localhost", 1234, Mockito.mock(ClientViewUpdater.class));
         });
 
 

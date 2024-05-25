@@ -8,8 +8,8 @@ import it.polimi.ingsw.am11.model.exceptions.GameBreakingException;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
-import it.polimi.ingsw.am11.network.PlayerConnector;
-import it.polimi.ingsw.am11.network.TableConnector;
+import it.polimi.ingsw.am11.network.ServerPlayerConnector;
+import it.polimi.ingsw.am11.network.ServerTableConnector;
 import it.polimi.ingsw.am11.view.events.view.table.NumOfPlayerEvent;
 import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
 import it.polimi.ingsw.am11.view.server.TableViewUpdater;
@@ -49,8 +49,8 @@ public class GameController {
     }
 
     VirtualPlayerView connectPlayer(@NotNull String nickname,
-                                    @NotNull PlayerConnector playerConnector,
-                                    @NotNull TableConnector tableConnector)
+                                    @NotNull ServerPlayerConnector serverPlayerConnector,
+                                    @NotNull ServerTableConnector serverTableConnector)
     throws NumOfPlayersException, PlayerInitException, GameStatusException,
            NotSetNumOfPlayerException {
         int currentMaxPlayers = maxNumOfPlayer.get();
@@ -80,15 +80,15 @@ public class GameController {
             LOGGER.info("Adding player {} to model", nickname);
             model.addPlayerToTable(nickname, playerColor.pullAnyColor());
 
-            VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
+            VirtualPlayerView playerView = new VirtualPlayerView(serverPlayerConnector, nickname);
             playerViews.put(nickname, playerView);
             model.addPlayerListener(nickname, new PlayerViewUpdater(playerView));
-            tableView.addConnector(nickname, tableConnector);
+            tableView.addConnector(nickname, serverTableConnector);
 
             // TODO notify god player that the player has connected
             if (isGod) {
                 LOGGER.info("Notifying god player {}", nickname);
-                playerConnector.notifyGodPlayer();
+                serverPlayerConnector.notifyGodPlayer();
             }
 
             if (currentMaxPlayers == model.getPlayers().size()) {

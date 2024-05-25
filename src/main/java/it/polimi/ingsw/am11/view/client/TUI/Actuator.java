@@ -2,9 +2,9 @@ package it.polimi.ingsw.am11.view.client.TUI;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
-import it.polimi.ingsw.am11.network.CltToNetConnector;
-import it.polimi.ingsw.am11.network.RMI.Client.ClientMain;
+import it.polimi.ingsw.am11.network.RMI.Client.ClientRMI;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.InvalidArgumetsException;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
@@ -26,7 +26,7 @@ public class Actuator {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
 
     private final TuiUpdater tuiUpdater;
-    private CltToNetConnector connector;
+    private ClientGameConnector connector;
 
     public Actuator(@NotNull TuiUpdater tuiUpdater) {
         this.tuiUpdater = tuiUpdater;
@@ -46,7 +46,7 @@ public class Actuator {
             case "rmi": {
                 ClientNetworkHandler clientHandler = null;
                 try {
-                    clientHandler = new ClientMain(ip, port, tuiUpdater);
+                    clientHandler = new ClientRMI(ip, port, tuiUpdater);
                 } catch (RemoteException e) {
                     tuiUpdater.getCurrentTuiState().restart(true, e);
                     return;

@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
-public interface ConnectorInterface extends Remote {
+public interface ClientGameUpdatesInterface extends Remote {
 
     void updateHand(int cardId, boolean removeMode) throws RemoteException;
 

@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 
 //This is the interface used by the view to send commands to the server
 //It should be initialized by the implementation of ClientNetworkHandler
-public interface CltToNetConnector {
+public interface ClientGameConnector {
 
     void setStarterCard(boolean isRetro);
 

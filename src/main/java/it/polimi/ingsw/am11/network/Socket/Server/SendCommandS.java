@@ -7,8 +7,8 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.network.PlayerConnector;
-import it.polimi.ingsw.am11.network.TableConnector;
+import it.polimi.ingsw.am11.network.ServerPlayerConnector;
+import it.polimi.ingsw.am11.network.ServerTableConnector;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Set;
 
-public class SendCommandS implements PlayerConnector, TableConnector {
+public class SendCommandS implements ServerPlayerConnector, ServerTableConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(SendCommandS.class);
 
     private final PrintWriter out;

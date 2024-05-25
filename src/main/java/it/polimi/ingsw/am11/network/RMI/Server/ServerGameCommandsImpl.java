@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerGameCommandsInterface;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +13,15 @@ import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class PlayerViewImpl implements PlayerViewInterface {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerViewImpl.class);
+public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerGameCommandsImpl.class);
     private final Map<String, VirtualPlayerView> views;
 
-    public PlayerViewImpl() throws RemoteException {
+    public ServerGameCommandsImpl() throws RemoteException {
         this.views = new ConcurrentHashMap<>(8);
     }
 
-    public void addPlayer(String nick, ConnectorImplementation connector)
+    public void addPlayer(String nick, ServerConnectorImpl connector)
     throws NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException {
         synchronized (views) {

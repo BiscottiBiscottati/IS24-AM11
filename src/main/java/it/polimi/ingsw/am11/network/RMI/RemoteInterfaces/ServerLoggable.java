@@ -9,9 +9,9 @@ import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface Loggable extends Remote {
+public interface ServerLoggable extends Remote {
 
-    void login(String nick, ConnectorInterface connector)
+    void login(String nick, ClientGameUpdatesInterface connector)
     throws RemoteException, NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException;
 

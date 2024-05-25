@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.network.CltToNetConnector;
+import it.polimi.ingsw.am11.network.ClientGameConnector;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintWriter;
 
-public class SendCommandC implements CltToNetConnector {
+public class SendCommandC implements ClientGameConnector {
     // This class is used to send commands to the server
     // It is used by the client to send commands to the server
     private final PrintWriter out;

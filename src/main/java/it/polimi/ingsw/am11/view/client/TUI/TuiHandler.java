@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.view.client.TUI;
 
 import it.polimi.ingsw.am11.chat.ClientChatController;
 import it.polimi.ingsw.am11.network.ChatCltToNetConnector;
-import it.polimi.ingsw.am11.network.CltToNetConnector;
+import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -16,7 +16,7 @@ public class TuiHandler {
     private final MiniGameModel model;
 
     private final TuiUpdater tuiUpdater;
-    private CltToNetConnector connector;
+    private ClientGameConnector connector;
     private ClientChatController chatController;
     private ChatCltToNetConnector chatConnector;
     private Reader reader;

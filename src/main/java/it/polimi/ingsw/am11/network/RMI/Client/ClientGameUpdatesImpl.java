@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +13,13 @@ import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
-public class ClientToServerConnector implements ConnectorInterface {
+public class ClientGameUpdatesImpl implements ClientGameUpdatesInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientToServerConnector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientGameUpdatesImpl.class);
 
     private final ClientViewUpdater clientUpdater;
 
-    public ClientToServerConnector(ClientViewUpdater viewUpdater) {
+    public ClientGameUpdatesImpl(ClientViewUpdater viewUpdater) {
         this.clientUpdater = viewUpdater;
     }
 

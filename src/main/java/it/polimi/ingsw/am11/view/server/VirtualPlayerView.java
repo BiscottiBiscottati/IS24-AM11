@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.controller.GameController;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.network.PlayerConnector;
+import it.polimi.ingsw.am11.network.ServerPlayerConnector;
 import it.polimi.ingsw.am11.view.events.utils.ActionMode;
 import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
@@ -21,10 +21,10 @@ public class VirtualPlayerView {
     private static final Logger LOGGER = LoggerFactory.getLogger(VirtualPlayerView.class);
     private final CardController cardController;
     private final GameController gameController;
-    private final PlayerConnector connector;
+    private final ServerPlayerConnector connector;
     private final String nickname;
 
-    public VirtualPlayerView(@NotNull PlayerConnector connector, @NotNull String nickname) {
+    public VirtualPlayerView(@NotNull ServerPlayerConnector connector, @NotNull String nickname) {
         gameController = CentralController.INSTANCE.getAnyGame();
         cardController = gameController.getCardController();
         this.connector = connector;

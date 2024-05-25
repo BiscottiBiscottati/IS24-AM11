@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.controller;
 
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
-import it.polimi.ingsw.am11.network.PlayerConnector;
-import it.polimi.ingsw.am11.network.TableConnector;
+import it.polimi.ingsw.am11.network.ServerPlayerConnector;
+import it.polimi.ingsw.am11.network.ServerTableConnector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,10 +23,10 @@ class CentralControllerTest {
     CentralController centralController;
 
     @Mock
-    PlayerConnector playerConnector;
+    ServerPlayerConnector serverPlayerConnector;
 
     @Mock
-    TableConnector tableConnector;
+    ServerTableConnector serverTableConnector;
 
     @BeforeEach
     void setUp() {
@@ -36,18 +36,18 @@ class CentralControllerTest {
 
     @Test
     void connectPlayer() {
-        assertDoesNotThrow(() -> centralController.connectPlayer("chen", playerConnector,
-                                                                 tableConnector));
+        assertDoesNotThrow(() -> centralController.connectPlayer("chen", serverPlayerConnector,
+                                                                 serverTableConnector));
         assertThrows(NotSetNumOfPlayerException.class, () -> centralController.connectPlayer(
-                "edo", playerConnector, tableConnector));
+                "edo", serverPlayerConnector, serverTableConnector));
 
         assertDoesNotThrow(() -> centralController.setNumOfPlayers("chen", 3));
 
-        assertDoesNotThrow(() -> centralController.connectPlayer("edo", playerConnector,
-                                                                 tableConnector));
+        assertDoesNotThrow(() -> centralController.connectPlayer("edo", serverPlayerConnector,
+                                                                 serverTableConnector));
 
-        assertDoesNotThrow(() -> centralController.connectPlayer("osama", playerConnector,
-                                                                 tableConnector));
+        assertDoesNotThrow(() -> centralController.connectPlayer("osama", serverPlayerConnector,
+                                                                 serverTableConnector));
     }
 
     @Test
@@ -55,7 +55,7 @@ class CentralControllerTest {
         Set<String> nicknames = Set.of("edo", "osama", "ferdi");
 
         assertDoesNotThrow(() -> {
-            centralController.connectPlayer("chen", playerConnector, tableConnector);
+            centralController.connectPlayer("chen", serverPlayerConnector, serverTableConnector);
         });
 
         try {
@@ -69,7 +69,7 @@ class CentralControllerTest {
                     playerLatch.countDown();
                     assertThrows(NotSetNumOfPlayerException.class,
                                  () -> centralController.connectPlayer(
-                                         nickname, playerConnector, tableConnector));
+                                         nickname, serverPlayerConnector, serverTableConnector));
                 });
             }
             playerLatch.await();
@@ -83,7 +83,7 @@ class CentralControllerTest {
                     try {
                         latch.await();
                         assertDoesNotThrow(() -> centralController.connectPlayer(
-                                nickname, playerConnector, tableConnector));
+                                nickname, serverPlayerConnector, serverTableConnector));
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }

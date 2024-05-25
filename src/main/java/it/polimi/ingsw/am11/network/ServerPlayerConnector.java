@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.network;
 
 import java.util.Set;
 
-public interface PlayerConnector {
+public interface ServerPlayerConnector {
     void updateHand(int cardId, boolean removeMode);
 
     void updatePersonalObjective(int cardId, boolean removeMode);

@@ -6,9 +6,9 @@ import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ConnectorInterface;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.Loggable;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.PlayerViewInterface;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ClientGameUpdatesInterface;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerGameCommandsInterface;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerLoggable;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,30 +21,30 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ServerMain implements Loggable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServerMain.class);
+public class ServerRMI implements ServerLoggable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerRMI.class);
 
     private final int port;
-    private final PlayerViewImpl playerView;
+    private final ServerGameCommandsImpl playerView;
     private final Registry registry;
     private ExceptionConnector exceptionConnector;
 
-    public ServerMain(int port) {
+    public ServerRMI(int port) {
         this.port = port;
         try {
             registry = LocateRegistry.createRegistry(port);
-            playerView = new PlayerViewImpl();
+            playerView = new ServerGameCommandsImpl();
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void start() {
-        Loggable log;
-        PlayerViewInterface view;
+        ServerLoggable log;
+        ServerGameCommandsInterface view;
         try {
-            log = (Loggable) UnicastRemoteObject.exportObject(this, 0);
-            view = (PlayerViewInterface) UnicastRemoteObject.exportObject(playerView, 0);
+            log = (ServerLoggable) UnicastRemoteObject.exportObject(this, 0);
+            view = (ServerGameCommandsInterface) UnicastRemoteObject.exportObject(playerView, 0);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -67,9 +67,9 @@ public class ServerMain implements Loggable {
             registry.unbind("PlayerView");
 
             try {
-                UnicastRemoteObject.unexportObject(this, true);
-                UnicastRemoteObject.unexportObject(playerView, true);
-                UnicastRemoteObject.unexportObject(registry, true);
+                UnicastRemoteObject.unexportObject(this, false);
+                UnicastRemoteObject.unexportObject(playerView, false);
+                UnicastRemoteObject.unexportObject(registry, false);
             } catch (NoSuchObjectException e) {
                 LOGGER.debug("SERVER RMI: Object already un-exported");
             }
@@ -83,15 +83,16 @@ public class ServerMain implements Loggable {
     }
 
     @Override
-    public void login(String nick, ConnectorInterface remoteConnector)
+    public void login(String nick, ClientGameUpdatesInterface remoteConnector)
     throws RemoteException, NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException {
         LOGGER.debug("SERVER RMI: login: {}, {}", nick, remoteConnector);
-        ConnectorImplementation connector = new ConnectorImplementation(remoteConnector);
+        ServerConnectorImpl connector = new ServerConnectorImpl(remoteConnector);
         playerView.addPlayer(nick, connector);
         LOGGER.info("SERVER RMI: Player connected: {}", nick);
     }
 
+    // TODO to remove
     @Override
     public void logout(String nick) throws RemoteException {
         CentralController.INSTANCE.disconnectPlayer(nick);
@@ -104,6 +105,7 @@ public class ServerMain implements Loggable {
         CentralController.INSTANCE.setNumOfPlayers(nick, val);
     }
 
+    // TODO to remove
     @Override
     public void reconnect(String nick) throws RemoteException {
         if (playerView.containsPlayer(nick)) {
