@@ -25,7 +25,7 @@ public class ClientHandler implements Runnable {
     private final BufferedReader in;
     private final PrintWriter out;
     private String nickname;
-    private ReceiveCommandS receiveCommandS;
+    private ServerMessageReceiver serverMessageReceiver;
     private boolean isRunning;
 
     public ClientHandler(@NotNull Socket clientSocket) {
@@ -57,16 +57,16 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         isRunning = true;
-        SendException sendException = new SendException(out);
-        if (! readNickname(sendException)) return;// FIXME disconnection
+        ServerExceptionSender serverExceptionSender = new ServerExceptionSender(out);
+        if (! readNickname(serverExceptionSender)) return;// FIXME disconnection
         if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nickname)) {
-            if (! readNumOfPlayers(sendException)) return; //FIXME disconnection
+            if (! readNumOfPlayers(serverExceptionSender)) return; //FIXME disconnection
         }
         readJSONs();
 
     }
 
-    private boolean readNickname(SendException sendException) {
+    private boolean readNickname(ServerExceptionSender serverExceptionSender) {
         boolean validNickname = false;
         while (! validNickname) {
             try {
@@ -76,16 +76,16 @@ public class ClientHandler implements Runnable {
 
                 if (nickname == null) return false;
 
-                SendCommandS sendCommandS = new SendCommandS(out);
+                ServerMessageSender serverMessageSender = new ServerMessageSender(out);
                 VirtualPlayerView view = CentralController.INSTANCE
-                        .connectPlayer(nickname, sendCommandS, sendCommandS);
-                receiveCommandS = new ReceiveCommandS(view, out);
+                        .connectPlayer(nickname, serverMessageSender, serverMessageSender);
+                serverMessageReceiver = new ServerMessageReceiver(view, out);
                 validNickname = true;
                 LOGGER.info("SERVER TCP: Player connected with name: {}", nickname);
             } catch (GameStatusException | PlayerInitException | NumOfPlayersException |
                      NotSetNumOfPlayerException e) {
                 LOGGER.error("SERVER TCP: Error while connecting player", e);
-                sendException.Exception(e);
+                serverExceptionSender.Exception(e);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -93,7 +93,7 @@ public class ClientHandler implements Runnable {
         return true;
     }
 
-    private boolean readNumOfPlayers(SendException sendException) {
+    private boolean readNumOfPlayers(ServerExceptionSender serverExceptionSender) {
         boolean validNumOfPlayers = false;
         while (! validNumOfPlayers) {
             try {
@@ -110,7 +110,7 @@ public class ClientHandler implements Runnable {
                 }
             } catch (NotGodPlayerException | NumOfPlayersException | GameStatusException e) {
                 LOGGER.error("SERVER TCP: Error while setting number of players", e);
-                sendException.Exception(e);
+                serverExceptionSender.Exception(e);
             }
         }
         return true;
@@ -121,7 +121,7 @@ public class ClientHandler implements Runnable {
             String message = readInput();
             if (message == null) return;
             if (! message.isEmpty()) {
-                receiveCommandS.receive(message);
+                serverMessageReceiver.receive(message);
             }
         }
     }

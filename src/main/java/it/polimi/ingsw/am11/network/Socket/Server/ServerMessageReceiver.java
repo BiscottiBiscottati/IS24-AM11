@@ -11,17 +11,17 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class ReceiveCommandS {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReceiveCommandS.class);
+public class ServerMessageReceiver {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerMessageReceiver.class);
 
     private final VirtualPlayerView playerView;
     private final ObjectMapper mapper;
-    private final SendException sendException;
+    private final ServerExceptionSender serverExceptionSender;
 
-    public ReceiveCommandS(VirtualPlayerView playerView, PrintWriter out) {
+    public ServerMessageReceiver(VirtualPlayerView playerView, PrintWriter out) {
         this.playerView = playerView;
         this.mapper = new ObjectMapper();
-        this.sendException = new SendException(out);
+        this.serverExceptionSender = new ServerExceptionSender(out);
     }
 
     public void receive(String message) {
@@ -53,7 +53,7 @@ public class ReceiveCommandS {
                  EmptyDeckException | IllegalPlateauActionException | MaxHandSizeException |
                  GameStatusException e) {
             LOGGER.info("SERVER TCP: Exception to send: {}", e.getMessage());
-            sendException.Exception(e);
+            serverExceptionSender.Exception(e);
         }
     }
 

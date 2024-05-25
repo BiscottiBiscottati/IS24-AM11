@@ -15,15 +15,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ReceiveCommandC {
+public class ClientMessageReceiver {
     private final ClientViewUpdater clientPlayerView;
     private final ObjectMapper mapper;
-    private final ReceiveException receiveException;
+    private final ClientExceptionReceiver clientExceptionReceiver;
 
-    public ReceiveCommandC(@NotNull ClientViewUpdater clientPlayerView) {
+    public ClientMessageReceiver(@NotNull ClientViewUpdater clientPlayerView) {
         this.clientPlayerView = clientPlayerView;
         this.mapper = new ObjectMapper();
-        this.receiveException = new ReceiveException(clientPlayerView.getExceptionConnector());
+        this.clientExceptionReceiver = new ClientExceptionReceiver(
+                clientPlayerView.getExceptionConnector());
     }
 
     public void receive(String message) {
@@ -111,7 +112,7 @@ public class ReceiveCommandC {
                     clientPlayerView.notifyGodPlayer();
                     break;
                 case ("Exception"):
-                    receiveException.receive(message);
+                    clientExceptionReceiver.receive(message);
                     break;
             }
         } catch (IOException e) {
@@ -119,7 +120,7 @@ public class ReceiveCommandC {
         }
     }
 
-    public ReceiveException getReceiveException() {
-        return receiveException;
+    public ClientExceptionReceiver getReceiveException() {
+        return clientExceptionReceiver;
     }
 }

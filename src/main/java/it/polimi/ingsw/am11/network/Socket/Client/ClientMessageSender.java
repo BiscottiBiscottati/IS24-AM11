@@ -9,13 +9,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintWriter;
 
-public class SendCommandC implements ClientGameConnector {
+public class ClientMessageSender implements ClientGameConnector {
     // This class is used to send commands to the server
     // It is used by the client to send commands to the server
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public SendCommandC(PrintWriter out) {
+    public ClientMessageSender(PrintWriter out) {
         this.out = out;
     }
 

@@ -2,9 +2,9 @@ package it.polimi.ingsw.am11.network.Socket;
 
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.network.Socket.Client.ClientMessageReceiver;
+import it.polimi.ingsw.am11.network.Socket.Client.ClientMessageSender;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
-import it.polimi.ingsw.am11.network.Socket.Client.ReceiveCommandC;
-import it.polimi.ingsw.am11.network.Socket.Client.SendCommandC;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
@@ -82,12 +82,12 @@ class TestCommunication {
 
         // Create SendCommand and ReceiveCommand instances
 
-        SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
-        SendCommandC sendCommandC2 = new SendCommandC(clientSocket2.getOut());
-        SendCommandC sendCommandC3 = new SendCommandC(clientSocket3.getOut());
-        SendCommandC sendCommandC4 = new SendCommandC(clientSocket4.getOut());
+        ClientMessageSender clientMessageSender = new ClientMessageSender(clientSocket.getOut());
+        ClientMessageSender clientMessageSender2 = new ClientMessageSender(clientSocket2.getOut());
+        ClientMessageSender clientMessageSender3 = new ClientMessageSender(clientSocket3.getOut());
+        ClientMessageSender clientMessageSender4 = new ClientMessageSender(clientSocket4.getOut());
         // Send a message to the server
-        sendCommandC.setNickname("Francesco");
+        clientMessageSender.setNickname("Francesco");
 
         try {
             Thread.sleep(100); // Wait for 2 seconds
@@ -95,50 +95,50 @@ class TestCommunication {
             e.printStackTrace();
         }
 
-        sendCommandC.setNumOfPlayers(4);
+        clientMessageSender.setNumOfPlayers(4);
         try {
             Thread.sleep(100); // Wait for 2 seconds
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        sendCommandC2.setNickname("Giovanni");
+        clientMessageSender2.setNickname("Giovanni");
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        sendCommandC3.setNickname("Giuseppe");
+        clientMessageSender3.setNickname("Giuseppe");
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        sendCommandC4.setNickname("Giacomo");
+        clientMessageSender4.setNickname("Giacomo");
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        sendCommandC.setStarterCard(true);
+        clientMessageSender.setStarterCard(true);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        sendCommandC2.setStarterCard(false);
+        clientMessageSender2.setStarterCard(false);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        sendCommandC3.setStarterCard(false);
+        clientMessageSender3.setStarterCard(false);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        sendCommandC4.setStarterCard(false);
+        clientMessageSender4.setStarterCard(false);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -172,21 +172,25 @@ class TestCommunication {
     @Timeout(value = 3)
     void testSetupPlayersWithoutWait() {
         // Create SendCommand and ReceiveCommand instances
-        SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
-        ReceiveCommandC receiveCommandC = new ReceiveCommandC(clientViewUpdaterMock);
-        SendCommandC sendCommandC2 = new SendCommandC(clientSocket2.getOut());
-        ReceiveCommandC receiveCommandC2 = new ReceiveCommandC(clientViewUpdaterMock2);
-        SendCommandC sendCommandC3 = new SendCommandC(clientSocket3.getOut());
-        ReceiveCommandC receiveCommandC3 = new ReceiveCommandC(clientViewUpdaterMock3);
-        SendCommandC sendCommandC4 = new SendCommandC(clientSocket4.getOut());
-        ReceiveCommandC receiveCommandC4 = new ReceiveCommandC(clientViewUpdaterMock4);
+        ClientMessageSender clientMessageSender = new ClientMessageSender(clientSocket.getOut());
+        ClientMessageReceiver clientMessageReceiver = new ClientMessageReceiver(
+                clientViewUpdaterMock);
+        ClientMessageSender clientMessageSender2 = new ClientMessageSender(clientSocket2.getOut());
+        ClientMessageReceiver clientMessageReceiver2 = new ClientMessageReceiver(
+                clientViewUpdaterMock2);
+        ClientMessageSender clientMessageSender3 = new ClientMessageSender(clientSocket3.getOut());
+        ClientMessageReceiver clientMessageReceiver3 = new ClientMessageReceiver(
+                clientViewUpdaterMock3);
+        ClientMessageSender clientMessageSender4 = new ClientMessageSender(clientSocket4.getOut());
+        ClientMessageReceiver clientMessageReceiver4 = new ClientMessageReceiver(
+                clientViewUpdaterMock4);
 
         CountDownLatch latchForGod = new CountDownLatch(2);
         CountDownLatch latchForFinish = new CountDownLatch(8);
 
         // Setup Mockito chain invocation for sending num of player
         Mockito.doAnswer(invocation -> {
-            sendCommandC.setNumOfPlayers(4);
+            clientMessageSender.setNumOfPlayers(4);
             LOGGER.info("God notified");
             latchForGod.countDown();
             return 0;
@@ -201,7 +205,7 @@ class TestCommunication {
 
         // Setup Mockito chain invocations for setting Starters
         Mockito.doAnswer(invocation -> {
-                   sendCommandC.setStarterCard(true);
+                   clientMessageSender.setStarterCard(true);
                    LOGGER.info("Setting starter card for player 1");
                    latchForFinish.countDown();
                    return 0;
@@ -209,7 +213,7 @@ class TestCommunication {
                .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_STARTERS));
 
         Mockito.doAnswer(invocation -> {
-                   sendCommandC2.setStarterCard(false);
+                   clientMessageSender2.setStarterCard(false);
                    LOGGER.info("Setting starter card for player 2");
                    latchForFinish.countDown();
                    return 0;
@@ -217,7 +221,7 @@ class TestCommunication {
                .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_STARTERS));
 
         Mockito.doAnswer(invocation -> {
-                   sendCommandC3.setStarterCard(false);
+                   clientMessageSender3.setStarterCard(false);
                    LOGGER.info("Setting starter card for player 3");
                    latchForFinish.countDown();
                    return 0;
@@ -225,7 +229,7 @@ class TestCommunication {
                .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_STARTERS));
 
         Mockito.doAnswer(invocation -> {
-                   sendCommandC4.setStarterCard(false);
+                   clientMessageSender4.setStarterCard(false);
                    LOGGER.info("Setting starter card for player 4");
                    latchForFinish.countDown();
                    return 0;
@@ -275,7 +279,7 @@ class TestCommunication {
                    while (obj == 0) {
                        obj = obj1.get();
                    }
-                   sendCommandC.setPersonalObjective(obj);
+                   clientMessageSender.setPersonalObjective(obj);
                    latchForFinish.countDown();
                    return 0;
                }).when(clientViewUpdaterMock)
@@ -285,7 +289,7 @@ class TestCommunication {
                    while (obj == 0) {
                        obj = obj2.get();
                    }
-                   sendCommandC2.setPersonalObjective(obj);
+                   clientMessageSender2.setPersonalObjective(obj);
                    latchForFinish.countDown();
                    return 0;
                }).when(clientViewUpdaterMock2)
@@ -295,7 +299,7 @@ class TestCommunication {
                    while (obj == 0) {
                        obj = obj3.get();
                    }
-                   sendCommandC3.setPersonalObjective(obj);
+                   clientMessageSender3.setPersonalObjective(obj);
                    latchForFinish.countDown();
                    return 0;
                })
@@ -306,7 +310,7 @@ class TestCommunication {
                    while (obj == 0) {
                        obj = obj4.get();
                    }
-                   sendCommandC4.setPersonalObjective(obj);
+                   clientMessageSender4.setPersonalObjective(obj);
                    latchForFinish.countDown();
                    return 0;
                })
@@ -314,7 +318,7 @@ class TestCommunication {
                .updateGameStatus(ArgumentMatchers.eq(GameStatus.CHOOSING_OBJECTIVES));
 
         // sending first player nickname
-        sendCommandC.setNickname("Francesco");
+        clientMessageSender.setNickname("Francesco");
 
         try {
             latchForGod.await();
@@ -324,9 +328,9 @@ class TestCommunication {
 
 
         // sending other players nickname
-        sendCommandC2.setNickname("Giovanni");
-        sendCommandC3.setNickname("Giuseppe");
-        sendCommandC4.setNickname("Giacomo");
+        clientMessageSender2.setNickname("Giovanni");
+        clientMessageSender3.setNickname("Giuseppe");
+        clientMessageSender4.setNickname("Giacomo");
 
 
         // Wait for the end of the test
@@ -367,10 +371,10 @@ class TestCommunication {
     @Test
     @Timeout(value = 30)
     void testTCPKeepAlive() throws InterruptedException, IOException {
-        SendCommandC sendCommandC = new SendCommandC(clientSocket.getOut());
-        SendCommandC sendCommandC2 = new SendCommandC(clientSocket2.getOut());
+        ClientMessageSender clientMessageSender = new ClientMessageSender(clientSocket.getOut());
+        ClientMessageSender clientMessageSender2 = new ClientMessageSender(clientSocket2.getOut());
 
-        sendCommandC2.setNickname("chen");
+        clientMessageSender2.setNickname("chen");
 
         clientSocket.close();
 

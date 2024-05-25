@@ -17,13 +17,13 @@ import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Set;
 
-public class SendCommandS implements ServerPlayerConnector, ServerTableConnector {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SendCommandS.class);
+public class ServerMessageSender implements ServerPlayerConnector, ServerTableConnector {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerMessageSender.class);
 
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public SendCommandS(PrintWriter out) {
+    public ServerMessageSender(PrintWriter out) {
         this.out = out;
     }
 

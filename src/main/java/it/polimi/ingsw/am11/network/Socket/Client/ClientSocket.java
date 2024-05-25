@@ -21,8 +21,8 @@ public class ClientSocket implements ClientNetworkHandler {
     private final ClientViewUpdater clientViewUpdater;
     private final BufferedReader in;
     private final PrintWriter out;
-    private final ReceiveCommandC receiveCommandC;
-    private final SendCommandC sendCommandC;
+    private final ClientMessageReceiver clientMessageReceiver;
+    private final ClientMessageSender clientMessageSender;
     private final Socket socket;
     private final ExecutorService clientThread;
     private boolean isRunning;
@@ -40,8 +40,8 @@ public class ClientSocket implements ClientNetworkHandler {
             }
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            sendCommandC = new SendCommandC(out);
-            receiveCommandC = new ReceiveCommandC(this.clientViewUpdater);
+            clientMessageSender = new ClientMessageSender(out);
+            clientMessageReceiver = new ClientMessageReceiver(this.clientViewUpdater);
             clientThread = Executors.newFixedThreadPool(1);
             Runtime.getRuntime().addShutdownHook(new Thread(this::close));
 
@@ -65,7 +65,7 @@ public class ClientSocket implements ClientNetworkHandler {
                     // TODO handle disconnection
                     close();
                 } else if (! message.isBlank()) {
-                    receiveCommandC.receive(message);
+                    clientMessageReceiver.receive(message);
                 }
             } catch (IOException e) {
                 LOGGER.debug("CLIENT TCP: Error while receiving message because {}",
@@ -77,7 +77,7 @@ public class ClientSocket implements ClientNetworkHandler {
     }
 
     public ClientGameConnector getConnector() {
-        return sendCommandC;
+        return clientMessageSender;
     }
 
     @Override

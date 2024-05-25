@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 
-public class SendException {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SendException.class);
+public class ServerExceptionSender {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerExceptionSender.class);
 
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public SendException(PrintWriter out) {
+    public ServerExceptionSender(PrintWriter out) {
         this.out = out;
     }
 

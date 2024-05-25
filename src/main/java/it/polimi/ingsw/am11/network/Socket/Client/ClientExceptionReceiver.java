@@ -11,13 +11,13 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReceiveException {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReceiveException.class);
+public class ClientExceptionReceiver {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientExceptionReceiver.class);
 
     private final ObjectMapper mapper;
     private final ExceptionConnector exceptionConnector;
 
-    public ReceiveException(@NotNull ExceptionConnector exceptionConnector) {
+    public ClientExceptionReceiver(@NotNull ExceptionConnector exceptionConnector) {
         this.mapper = new ObjectMapper();
         this.exceptionConnector = exceptionConnector;
     }
