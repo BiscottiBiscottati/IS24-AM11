@@ -103,9 +103,9 @@ public interface GameModel {
 
     void addTableListener(TableListener listener);
 
-    void disconnectPlayer(String nickname);
+    void disconnectPlayer(String nickname) throws PlayerInitException;
 
-    void reconnectPlayer(String nickname);
+    void reconnectPlayer(String nickname, PlayerListener playerListener) throws PlayerInitException;
 
     boolean isDisconnected(@NotNull String nickname);
 

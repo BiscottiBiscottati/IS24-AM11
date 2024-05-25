@@ -60,8 +60,13 @@ public class GameController {
         if (! isGod && currentMaxPlayers == - 1) {
             if (model.isDisconnected(nickname) && godPlayer.get().equals(nickname)) {
                 LOGGER.info("God player {} trying to reconnect", nickname);
-                model.reconnectPlayer(nickname);
-                return playerViews.get(nickname);
+
+                VirtualPlayerView playerView = createPlayerView(nickname,
+                                                                playerConnector,
+                                                                tableConnector);
+
+                model.reconnectPlayer(nickname, new PlayerViewUpdater(playerView));
+                return playerView;
             }
             throw new NotSetNumOfPlayerException("NumOfPlayers not yet set by godPlayer");
         }
@@ -69,8 +74,13 @@ public class GameController {
         synchronized (model) {
             if (model.isDisconnected(nickname)) {
                 LOGGER.info("Player {} trying to reconnect", nickname);
-                model.reconnectPlayer(nickname);
-                return playerViews.get(nickname);
+
+                VirtualPlayerView playerView = createPlayerView(nickname,
+                                                                playerConnector,
+                                                                tableConnector);
+
+                model.reconnectPlayer(nickname, new PlayerViewUpdater(playerView));
+                return playerView;
             }
 
             if (currentMaxPlayers != - 1 && model.getPlayers().size() >= currentMaxPlayers) {
@@ -80,10 +90,10 @@ public class GameController {
             LOGGER.info("Adding player {} to model", nickname);
             model.addPlayerToTable(nickname, playerColor.pullAnyColor());
 
-            VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
-            playerViews.put(nickname, playerView);
+            VirtualPlayerView playerView = createPlayerView(nickname,
+                                                            playerConnector,
+                                                            tableConnector);
             model.addPlayerListener(nickname, new PlayerViewUpdater(playerView));
-            tableView.addConnector(nickname, tableConnector);
 
             // TODO notify god player that the player has connected
             if (isGod) {
@@ -100,6 +110,15 @@ public class GameController {
             }
             return playerView;
         }
+    }
+
+    private @NotNull VirtualPlayerView createPlayerView(@NotNull String nickname,
+                                                        @NotNull ServerPlayerConnector playerConnector,
+                                                        @NotNull ServerTableConnector tableConnector) {
+        VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
+        playerViews.put(nickname, playerView);
+        tableView.addConnector(nickname, tableConnector);
+        return playerView;
     }
 
     void setNumOfPlayers(@NotNull String nickname, int val)
@@ -134,12 +153,13 @@ public class GameController {
         }
     }
 
-    void removePlayer(String nickname) throws GameStatusException {
-        model.removePlayer(nickname);
-    }
-
-    void disconnectPlayer(String nickname) {
-        model.disconnectPlayer(nickname);
+    void disconnectPlayer(@NotNull String nickname) {
+        try {
+            model.disconnectPlayer(nickname);
+        } catch (PlayerInitException e) {
+            return;
+        }
+        tableView.removeConnector(nickname);
     }
 
     public CardController getCardController() {

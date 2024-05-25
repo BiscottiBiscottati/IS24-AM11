@@ -862,12 +862,15 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void disconnectPlayer(String nickname) {
-        Player player = playerManager.getPlayer(nickname).orElseThrow();
+    public void disconnectPlayer(String nickname) throws PlayerInitException {
+        Player player =
+                playerManager.getPlayer(nickname)
+                             .orElseThrow(() -> new PlayerInitException("Player not found"));
 
         LOGGER.info("Adding {} to unavailable players", nickname);
 
         playerManager.disconnectPlayer(player);
+        pcs.removeListener(nickname);
         if (Objects.equals(playerManager.getCurrentTurnPlayer().orElse(null), nickname)) {
             try {
                 goNextTurn();
@@ -878,12 +881,16 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void reconnectPlayer(String nickname) {
-        Player player = playerManager.getPlayer(nickname).orElseThrow();
-
-        LOGGER.info("Reconnected player {}", nickname);
+    public void reconnectPlayer(@NotNull String nickname, @NotNull PlayerListener playerListener)
+    throws PlayerInitException {
+        Player player =
+                playerManager.getPlayer(nickname)
+                             .orElseThrow(() -> new PlayerInitException("Player not found"));
 
         playerManager.reconnectPlayer(player);
+        pcs.addListener(nickname, playerListener);
+        LOGGER.info("Reconnected player {}", nickname);
+
     }
 
     @Override

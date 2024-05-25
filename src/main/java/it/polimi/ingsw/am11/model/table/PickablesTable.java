@@ -15,8 +15,6 @@ import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
-import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
-import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.table.CommonObjectiveChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.DeckTopChangeEvent;
@@ -325,18 +323,6 @@ public class PickablesTable {
             case GOLD -> goldDeck.getRemainingCards();
             case RESOURCE -> resourceDeck.getRemainingCards();
         };
-    }
-
-    public void addListener(TableListener listener) {
-        pcs.addListener(listener);
-    }
-
-    public void addListener(String nickname, PlayerListener listener) {
-        pcs.addListener(nickname, listener);
-    }
-
-    public void removeListener(TableListener listener) {
-        pcs.removeListener(listener);
     }
 
     public void hardReset() {
