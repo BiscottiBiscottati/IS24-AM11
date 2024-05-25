@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerGameCommandsInterface;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,7 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
         this.views = new ConcurrentHashMap<>(8);
     }
 
-    public void addPlayer(String nick, ServerConnectorImpl connector)
+    public void addPlayer(@NotNull String nick, @NotNull ServerConnectorImpl connector)
     throws NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException {
         synchronized (views) {

@@ -2,13 +2,11 @@ package it.polimi.ingsw.am11.view.client.TUI;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
-import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -16,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
@@ -102,7 +99,7 @@ public class TuiUpdater implements ClientViewUpdater {
     @Override
     public void updateGameStatus(GameStatus status) {
         model.table().setStatus(status);
-        LOGGER.debug("Game status event:" + status);
+        LOGGER.debug("Game status event: {}", status);
         switch (status) {
             case SETUP -> {
             }
@@ -124,7 +121,6 @@ public class TuiUpdater implements ClientViewUpdater {
                 //FIXME
                 currentState.set(tuiStates.get(TuiStates.WAITING_FOR_TURN));
                 currentState.get().restart(false, null);
-
             }
             case ARMAGEDDON -> {
                 System.out.println("The final phase of the game has began, the next turn will be " +

@@ -62,8 +62,9 @@ public class GameController {
                 LOGGER.info("God player {} trying to reconnect", nickname);
 
                 VirtualPlayerView playerView = createPlayerView(nickname,
-                                                                playerConnector,
-                                                                tableConnector);
+                                                                playerConnector
+                );
+                tableView.addConnector(nickname, tableConnector);
 
                 model.reconnectPlayer(nickname, new PlayerViewUpdater(playerView));
                 return playerView;
@@ -76,8 +77,9 @@ public class GameController {
                 LOGGER.info("Player {} trying to reconnect", nickname);
 
                 VirtualPlayerView playerView = createPlayerView(nickname,
-                                                                playerConnector,
-                                                                tableConnector);
+                                                                playerConnector
+                );
+                tableView.addConnector(nickname, tableConnector);
 
                 model.reconnectPlayer(nickname, new PlayerViewUpdater(playerView));
                 return playerView;
@@ -91,8 +93,9 @@ public class GameController {
             model.addPlayerToTable(nickname, playerColor.pullAnyColor());
 
             VirtualPlayerView playerView = createPlayerView(nickname,
-                                                            playerConnector,
-                                                            tableConnector);
+                                                            playerConnector
+            );
+            tableView.addConnector(nickname, tableConnector);
             model.addPlayerListener(nickname, new PlayerViewUpdater(playerView));
 
             // TODO notify god player that the player has connected
@@ -112,12 +115,10 @@ public class GameController {
         }
     }
 
-    private @NotNull VirtualPlayerView createPlayerView(@NotNull String nickname,
-                                                        @NotNull ServerPlayerConnector playerConnector,
-                                                        @NotNull ServerTableConnector tableConnector) {
+    private @NotNull VirtualPlayerView createPlayerView(String nickname,
+                                                        ServerPlayerConnector playerConnector) {
         VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
         playerViews.put(nickname, playerView);
-        tableView.addConnector(nickname, tableConnector);
         return playerView;
     }
 

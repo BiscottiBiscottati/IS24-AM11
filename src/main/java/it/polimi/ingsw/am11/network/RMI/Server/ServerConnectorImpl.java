@@ -15,179 +15,229 @@ import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ServerConnectorImpl
         implements ServerPlayerConnector, ServerTableConnector {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-            ServerConnectorImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerConnectorImpl.class);
 
     private final ClientGameUpdatesInterface remoteConnector;
+    private final ExecutorService executorService;
 
     public ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConnector) {
         this.remoteConnector = remoteConnector;
+        this.executorService = Executors.newSingleThreadExecutor();
     }
 
     @Override
     public void updateHand(int cardId, boolean removeMode) {
-        try {
-            remoteConnector.updateHand(cardId, removeMode);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updateHand(cardId, removeMode);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn("SERVER RMI: Player disconnected or closed while updating hand");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating hand", e);
+            }
+        });
     }
 
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
-        try {
-            remoteConnector.updatePersonalObjective(cardId, removeMode);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updatePersonalObjective(cardId, removeMode);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn(
+                        "SERVER RMI: Player disconnected or closed while updating personal " +
+                        "objective");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating personal objective", e);
+            }
+        });
     }
 
     @Override
     public void sendStarterCard(int cardId) {
-        try {
-            remoteConnector.receiveStarterCard(cardId);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.receiveStarterCard(cardId);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn("SERVER RMI: Player disconnected or closed while sending starter card");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while sending starter card", e);
+            }
+        });
     }
 
     @Override
     public void sendCandidateObjective(Set<Integer> cardsId) {
-        try {
-            remoteConnector.receiveCandidateObjective(cardsId);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.receiveCandidateObjective(cardsId);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn(
+                        "SERVER RMI: Player disconnected or closed while sending candidate " +
+                        "objective");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while sending candidate objective", e);
+            }
+        });
     }
 
     @Override
     public void notifyGodPlayer() {
         LOGGER.info("SERVER RMI: Notifying god player");
-        try {
-            remoteConnector.notifyGodPlayer();
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn("SERVER RMI: Player disconnected or closed while notifying god player");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.notifyGodPlayer();
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn("SERVER RMI: Player disconnected or closed while notifying god player");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while notifying god player", e);
+            }
+        });
     }
 
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
-        try {
-            remoteConnector.updateDeckTop(type, color);
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn("SERVER RMI: Player disconnected or closed while updating deck top");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updateDeckTop(type, color);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn("SERVER RMI: Player disconnected or closed while updating deck top");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating deck top", e);
+            }
+        });
     }
 
     @Override
     public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
                             boolean removeMode) {
-        try {
-            remoteConnector.updateField(nickname, x, y, cardId, isRetro, removeMode);
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn("SERVER RMI: Player disconnected or closed while updating field");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updateField(nickname, x, y, cardId, isRetro, removeMode);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn("SERVER RMI: Player disconnected or closed while updating field");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating field", e);
+            }
+        });
     }
 
     @Override
     public void updateShownPlayable(Integer previousId, Integer currentId) {
-        try {
-            remoteConnector.updateShownPlayable(previousId, currentId);
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn("SERVER RMI: Player disconnected or closed while updating shown playable");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updateShownPlayable(previousId, currentId);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn(
+                        "SERVER RMI: Player disconnected or closed while updating shown playable");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating shown playable", e);
+            }
+        });
     }
 
     @Override
     public void updateTurnChange(String nickname) {
-        try {
-            remoteConnector.updateTurnChange(nickname);
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn("SERVER RMI: Player disconnected or closed while updating turn change");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updateTurnChange(nickname);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn("SERVER RMI: Player disconnected or closed while updating turn change");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating turn change", e);
+            }
+        });
     }
 
     @Override
     public void updatePlayerPoint(String nickname, int points) {
-        try {
-            remoteConnector.updatePlayerPoint(nickname, points);
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn("SERVER RMI: Player disconnected or closed while updating player point");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updatePlayerPoint(nickname, points);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn(
+                        "SERVER RMI: Player disconnected or closed while updating player point");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating player point", e);
+            }
+        });
     }
 
     @Override
     public void updateGameStatus(GameStatus status) {
-        try {
-            remoteConnector.updateGameStatus(status);
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn("SERVER RMI: Player disconnected or closed while updating game status");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updateGameStatus(status);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn("SERVER RMI: Player disconnected or closed while updating game status");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating game status", e);
+            }
+        });
     }
 
     @Override
     public void updateCommonObjective(Set<Integer> cardsId, boolean removeMode) {
-        try {
-            remoteConnector.updateCommonObjective(cardsId, removeMode);
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn(
-                    "SERVER RMI: Player disconnected or closed while updating common objective");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updateCommonObjective(cardsId, removeMode);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn(
+                        "SERVER RMI: Player disconnected or closed while updating common " +
+                        "objective");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating common objective", e);
+            }
+        });
     }
 
     @Override
     public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
-        try {
-            remoteConnector.sendFinalLeaderboard(finalLeaderboard);
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn(
-                    "SERVER RMI: Player disconnected or closed while sending final leaderboard");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.sendFinalLeaderboard(finalLeaderboard);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn(
+                        "SERVER RMI: Player disconnected or closed while sending final " +
+                        "leaderboard");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while sending final leaderboard", e);
+            }
+        });
     }
 
     @Override
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
-        try {
-            remoteConnector.updatePlayers(currentPlayers);
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn("SERVER RMI: Player disconnected or closed while updating players");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updatePlayers(currentPlayers);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn("SERVER RMI: Player disconnected or closed while updating players");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating players", e);
+            }
+        });
     }
 
     @Override
     public void updateNumOfPlayers(Integer numOfPlayers) {
-        try {
-            remoteConnector.updateNumOfPlayers(numOfPlayers);
-        } catch (NoSuchObjectException e) {
-            LOGGER.warn(
-                    "SERVER RMI: Player disconnected or closed while updating number of players");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        executorService.submit(() -> {
+            try {
+                remoteConnector.updateNumOfPlayers(numOfPlayers);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn(
+                        "SERVER RMI: Player disconnected or closed while updating number of " +
+                        "players");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while updating number of players", e);
+            }
+        });
     }
 }
