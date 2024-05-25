@@ -22,7 +22,7 @@ public class ClientExceptionReceiver {
         this.exceptionConnector = exceptionConnector;
     }
 
-    public void receive(String message) {
+    public void receive(@NotNull String message) {
         try {
             // Parse the message
             JsonNode jsonNode = mapper.readTree(message);

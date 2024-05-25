@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class ServerMessageReceiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerMessageReceiver.class);
@@ -18,13 +18,14 @@ public class ServerMessageReceiver {
     private final ObjectMapper mapper;
     private final ServerExceptionSender serverExceptionSender;
 
-    public ServerMessageReceiver(VirtualPlayerView playerView, PrintWriter out) {
+    public ServerMessageReceiver(@NotNull VirtualPlayerView playerView,
+                                 @NotNull ServerExceptionSender exceptionSender) {
         this.playerView = playerView;
         this.mapper = new ObjectMapper();
-        this.serverExceptionSender = new ServerExceptionSender(out);
+        this.serverExceptionSender = exceptionSender;
     }
 
-    public void receive(String message) {
+    public void receive(@NotNull String message) {
         try {
             JsonNode jsonNode = mapper.readTree(message);
             switch (jsonNode.get("method").asText()) {
@@ -53,7 +54,7 @@ public class ServerMessageReceiver {
                  EmptyDeckException | IllegalPlateauActionException | MaxHandSizeException |
                  GameStatusException e) {
             LOGGER.info("SERVER TCP: Exception to send: {}", e.getMessage());
-            serverExceptionSender.Exception(e);
+            serverExceptionSender.exception(e);
         }
     }
 

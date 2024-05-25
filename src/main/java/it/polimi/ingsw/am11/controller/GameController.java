@@ -49,8 +49,8 @@ public class GameController {
     }
 
     VirtualPlayerView connectPlayer(@NotNull String nickname,
-                                    @NotNull ServerPlayerConnector serverPlayerConnector,
-                                    @NotNull ServerTableConnector serverTableConnector)
+                                    @NotNull ServerPlayerConnector playerConnector,
+                                    @NotNull ServerTableConnector tableConnector)
     throws NumOfPlayersException, PlayerInitException, GameStatusException,
            NotSetNumOfPlayerException {
         int currentMaxPlayers = maxNumOfPlayer.get();
@@ -80,15 +80,15 @@ public class GameController {
             LOGGER.info("Adding player {} to model", nickname);
             model.addPlayerToTable(nickname, playerColor.pullAnyColor());
 
-            VirtualPlayerView playerView = new VirtualPlayerView(serverPlayerConnector, nickname);
+            VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
             playerViews.put(nickname, playerView);
             model.addPlayerListener(nickname, new PlayerViewUpdater(playerView));
-            tableView.addConnector(nickname, serverTableConnector);
+            tableView.addConnector(nickname, tableConnector);
 
             // TODO notify god player that the player has connected
             if (isGod) {
                 LOGGER.info("Notifying god player {}", nickname);
-                serverPlayerConnector.notifyGodPlayer();
+                playerConnector.notifyGodPlayer();
             }
 
             if (currentMaxPlayers == model.getPlayers().size()) {
@@ -107,7 +107,7 @@ public class GameController {
            NumOfPlayersException {
 
         if (val <= 1 || val > model.getRuleSet().getMaxPlayers())
-            throw new NumOfPlayersException("Trying to add an illegal number of players");
+            throw new NumOfPlayersException("Trying to add an illegal number of players: " + val);
 
         if (! Objects.equals(godPlayer.get(), nickname)) {
             throw new NotGodPlayerException("A not god player is trying to set the num of " +

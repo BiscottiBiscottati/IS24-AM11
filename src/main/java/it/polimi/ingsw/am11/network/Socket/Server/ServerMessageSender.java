@@ -23,7 +23,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public ServerMessageSender(PrintWriter out) {
+    public ServerMessageSender(@NotNull PrintWriter out) {
         this.out = out;
     }
 

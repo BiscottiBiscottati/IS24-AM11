@@ -30,8 +30,8 @@ public enum CentralController {
 
     @NotNull
     public synchronized VirtualPlayerView connectPlayer(@NotNull String nickname,
-                                                        @NotNull ServerPlayerConnector serverPlayerConnector,
-                                                        @NotNull ServerTableConnector serverTableConnector)
+                                                        @NotNull ServerPlayerConnector playerConnector,
+                                                        @NotNull ServerTableConnector tableConnector)
     throws GameStatusException, NumOfPlayersException, PlayerInitException,
            NotSetNumOfPlayerException {
         if (gameControllers.isEmpty()) createNewGame();
@@ -39,7 +39,7 @@ public enum CentralController {
         return gameControllers.stream()
                               .findFirst()
                               .orElseThrow()
-                              .connectPlayer(nickname, serverPlayerConnector, serverTableConnector);
+                              .connectPlayer(nickname, playerConnector, tableConnector);
     }
 
     public synchronized void createNewGame() {
@@ -56,7 +56,7 @@ public enum CentralController {
                        .setNumOfPlayers(nickname, val);
     }
 
-    public void disconnectPlayer(String nickname) {
+    public synchronized void disconnectPlayer(String nickname) {
         LOGGER.info("Player {} disconnected", nickname);
         gameControllers.stream().findFirst()
                        .orElseThrow()

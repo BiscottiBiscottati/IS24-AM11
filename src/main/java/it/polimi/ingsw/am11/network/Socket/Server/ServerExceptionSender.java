@@ -12,13 +12,14 @@ public class ServerExceptionSender {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerExceptionSender.class);
 
     private final PrintWriter out;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper;
 
-    public ServerExceptionSender(PrintWriter out) {
+    public ServerExceptionSender(@NotNull PrintWriter out) {
         this.out = out;
+        this.mapper = new ObjectMapper();
     }
 
-    public void Exception(@NotNull Exception e) {
+    public void exception(@NotNull Exception e) {
         LOGGER.info("SERVER TCP: Exception to send: {}", e.getMessage());
         switch (e.getClass().getSimpleName()) {
             case "IllegalPlayerSpaceActionException":
@@ -58,7 +59,7 @@ public class ServerExceptionSender {
         }
     }
 
-    private void IllegalPlayerSpaceActionException(Exception e) {
+    private void IllegalPlayerSpaceActionException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "IllegalPlayerSpaceActionException");
@@ -66,7 +67,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void TurnsOrderException(Exception e) {
+    private void TurnsOrderException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "TurnsOrderException");
@@ -74,7 +75,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void PlayerInitException(Exception e) {
+    private void PlayerInitException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "PlayerInitException");
@@ -82,7 +83,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void IllegalCardPlacingException(Exception e) {
+    private void IllegalCardPlacingException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "IllegalCardPlacingException");
@@ -90,7 +91,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void IllegalPickActionException(Exception e) {
+    private void IllegalPickActionException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "IllegalPickActionException");
@@ -98,7 +99,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void NotInHandException(Exception e) {
+    private void NotInHandException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "NotInHandException");
@@ -106,7 +107,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void EmptyDeckException(Exception e) {
+    private void EmptyDeckException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "EmptyDeckException");
@@ -114,7 +115,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void IllegalPlateauActionException(Exception e) {
+    private void IllegalPlateauActionException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "IllegalPlateauActionException");
@@ -122,7 +123,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void MaxHandSizeException(Exception e) {
+    private void MaxHandSizeException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "MaxHandSizeException");
@@ -130,7 +131,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void GameStatusException(Exception e) {
+    private void GameStatusException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "GameStatusException");
@@ -138,7 +139,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void NumOfPlayersException(Exception e) {
+    private void NumOfPlayersException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "NumOfPlayersException");
@@ -146,7 +147,7 @@ public class ServerExceptionSender {
         out.println(json);
     }
 
-    private void NotSetNumOfPlayerException(Exception e) {
+    private void NotSetNumOfPlayerException(@NotNull Exception e) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "Exception");
         json.put("message", "NotSetNumOfPlayerException");

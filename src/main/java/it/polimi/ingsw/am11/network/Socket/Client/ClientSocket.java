@@ -62,16 +62,20 @@ public class ClientSocket implements ClientNetworkHandler {
                 LOGGER.debug("CLIENT TCP: Client received message: {}", message);
                 if (message == null) {
                     LOGGER.debug("CLIENT TCP: Connection closed by the server");
-                    // TODO handle disconnection
+                    // TODO to test
+                    clientViewUpdater.disconnectedFromServer();
                     close();
+                    return;
                 } else if (! message.isBlank()) {
                     clientMessageReceiver.receive(message);
                 }
             } catch (IOException e) {
                 LOGGER.debug("CLIENT TCP: Error while receiving message because {}",
                              e.getMessage());
-                //TODO: handle disconnection
+                //TODO: to test
+                clientViewUpdater.disconnectedFromServer();
                 close();
+                return;
             }
         }
     }

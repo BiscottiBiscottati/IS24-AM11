@@ -66,7 +66,7 @@ public class ClientHandler implements Runnable {
 
     }
 
-    private boolean readNickname(ServerExceptionSender serverExceptionSender) {
+    private boolean readNickname(@NotNull ServerExceptionSender exceptionSender) {
         boolean validNickname = false;
         while (! validNickname) {
             try {
@@ -79,28 +79,32 @@ public class ClientHandler implements Runnable {
                 ServerMessageSender serverMessageSender = new ServerMessageSender(out);
                 VirtualPlayerView view = CentralController.INSTANCE
                         .connectPlayer(nickname, serverMessageSender, serverMessageSender);
-                serverMessageReceiver = new ServerMessageReceiver(view, out);
+                serverMessageReceiver = new ServerMessageReceiver(view, exceptionSender);
                 validNickname = true;
                 LOGGER.info("SERVER TCP: Player connected with name: {}", nickname);
-            } catch (GameStatusException | PlayerInitException | NumOfPlayersException |
+            } catch (GameStatusException | NumOfPlayersException |
                      NotSetNumOfPlayerException e) {
-                LOGGER.error("SERVER TCP: Error while connecting player", e);
-                serverExceptionSender.Exception(e);
+                LOGGER.error("SERVER TCP: Error while connecting player: {}", e.getMessage());
+                exceptionSender.exception(e);
+                return false;
+            } catch (PlayerInitException e) {
+                LOGGER.error("SERVER TCP: Nickname in use!");
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                LOGGER.error("SERVER TCP: Error while reading nickname: {}", e.getMessage());
+                return false;
             }
         }
         return true;
     }
 
-    private boolean readNumOfPlayers(ServerExceptionSender serverExceptionSender) {
+    private boolean readNumOfPlayers(@NotNull ServerExceptionSender exceptionSender) {
         boolean validNumOfPlayers = false;
         while (! validNumOfPlayers) {
+            LOGGER.info("SERVER TCP: waiting for number of players...");
+            String message = readInput();
+            LOGGER.debug("SERVER TCP: Received message from god player: {}", message);
+            if (message == null) return false;
             try {
-                LOGGER.info("SERVER TCP: waiting for number of players...");
-                String message = readInput();
-                LOGGER.debug("SERVER TCP: Received message from god player: {}", message);
-                if (message == null) return false;
                 if (! message.isBlank()) {
                     int numOfPlayers = Integer.parseInt(message);
                     CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
@@ -108,9 +112,18 @@ public class ClientHandler implements Runnable {
                                 numOfPlayers, nickname);
                     validNumOfPlayers = true;
                 }
-            } catch (NotGodPlayerException | NumOfPlayersException | GameStatusException e) {
-                LOGGER.error("SERVER TCP: Error while setting number of players", e);
-                serverExceptionSender.Exception(e);
+            } catch (NotGodPlayerException | GameStatusException e) {
+                LOGGER.error("SERVER TCP: Error while setting number of players: {}",
+                             e.getMessage());
+                exceptionSender.exception(e);
+                return false;
+            } catch (NumOfPlayersException e) {
+                LOGGER.error("SERVER TCP: Invalid number of players: {}", e.getMessage());
+                exceptionSender.exception(e);
+            } catch (NumberFormatException e) {
+                LOGGER.error("SERVER TCP: Invalid string: {}", e.getMessage());
+                exceptionSender.exception(
+                        new NumOfPlayersException("Invalid input, please insert a number"));
             }
         }
         return true;

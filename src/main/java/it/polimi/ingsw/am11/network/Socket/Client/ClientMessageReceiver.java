@@ -46,7 +46,7 @@ public class ClientMessageReceiver {
                 case "sendCandidateObjective":
                     String cardsIdJson = jsonNode.get("cardsId").asText();
                     Set<Integer> cardsId = mapper.readValue(cardsIdJson,
-                                                            new TypeReference<Set<Integer>>() {});
+                                                            new TypeReference<>() {});
                     clientPlayerView.receiveCandidateObjective(cardsId);
                     break;
                 case "updateDeckTop":
@@ -91,7 +91,7 @@ public class ClientMessageReceiver {
                     JsonNode finalLeaderboardNode = mapper.readTree(finalLeaderboardJson);
                     Map<String, Integer> finalLeaderboard = mapper.convertValue(
                             finalLeaderboardNode,
-                            new TypeReference<Map<String, Integer>>() {});
+                            new TypeReference<>() {});
                     clientPlayerView.receiveFinalLeaderboard(finalLeaderboard);
                     break;
                 case "updatePlayers":
@@ -99,7 +99,7 @@ public class ClientMessageReceiver {
                     JsonNode currentPlayersNode = mapper.readTree(currentPlayersJson);
                     Map<PlayerColor, String> currentPlayers = mapper
                             .convertValue(currentPlayersNode,
-                                          new TypeReference<Map<PlayerColor, String>>() {});
+                                          new TypeReference<>() {});
                     clientPlayerView.updatePlayers(currentPlayers);
                     break;
                 case "updateNumOfPlayers":

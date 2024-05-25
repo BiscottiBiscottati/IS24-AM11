@@ -62,7 +62,7 @@ public class ClientMessageSender implements ClientGameConnector {
     }
 
     @Override
-    public void setNickname(String nickname) {
+    public void setNickname(@NotNull String nickname) {
         out.println(nickname);
     }
 }

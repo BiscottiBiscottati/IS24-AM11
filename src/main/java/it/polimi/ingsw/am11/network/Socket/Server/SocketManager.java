@@ -25,7 +25,7 @@ public class SocketManager {
         clientHandlers = new ArrayList<>(4);
         try {
             serverSocket = new ServerSocket(port);
-            threadPool = Executors.newFixedThreadPool(4); // Pool with 10 threads
+            threadPool = Executors.newFixedThreadPool(4);
             isRunning = true;
         } catch (IOException e) {
             LOGGER.error("SERVER TCP: Error while creating server", e);
