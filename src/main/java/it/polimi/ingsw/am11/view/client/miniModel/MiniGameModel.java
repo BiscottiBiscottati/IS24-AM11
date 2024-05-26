@@ -25,6 +25,7 @@ public class MiniGameModel {
         this.finalLeaderboard = null;
         this.iPlaced = false;
         this.currentTurn = "";
+        this.godPlayer = "";
     }
 
     public CliPlayer getCliPlayer(String nickname) {

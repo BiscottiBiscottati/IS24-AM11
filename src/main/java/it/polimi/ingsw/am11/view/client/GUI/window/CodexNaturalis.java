@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.view.client.GUI.GuiExceptionReceiver;
 import it.polimi.ingsw.am11.view.client.GUI.GuiUpdater;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
@@ -45,8 +46,9 @@ public class CodexNaturalis extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+        MiniGameModel miniGameModel = new MiniGameModel();
         GuiExceptionReceiver exceptionReceiver = new GuiExceptionReceiver();
-        GuiUpdater guiUpdater = new GuiUpdater(exceptionReceiver);
+        GuiUpdater guiUpdater = new GuiUpdater(exceptionReceiver, miniGameModel);
         GuiActuator guiActuator = new GuiActuator(guiUpdater);
 
         // Proportions
@@ -201,12 +203,12 @@ public class CodexNaturalis extends Application {
         joinButton.setOnAction(event -> {
             String connectionTypeText = connectionType.getText().toLowerCase();
             String ip = ipAddress.getCharacters().toString();
-            //TODO: handle exception
             int portNumber = parseInt(port.getCharacters().toString());
+            guiActuator.connect(connectionTypeText, ip, portNumber);
+            //TODO: handle exception
             if (ipAddress.getCharacters().toString().equals("Fail")) {
                 connectionFailed.setVisible(true);
             } else {
-                guiActuator.connect(connectionTypeText, ip, portNumber);
                 chooseRMI.setVisible(false);
                 chooseSocket.setVisible(false);
                 theBox.setVisible(false);
@@ -257,21 +259,23 @@ public class CodexNaturalis extends Application {
         AtomicInteger totalPlayers = new AtomicInteger();
 
         enterNumOfPlayers.setOnMouseClicked(event -> {
-            int num = 0;
-            try {
-                num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
-            } catch (NumberFormatException e) {
-                writeNumOfPlayers.setText("Fail");
-            }
-            if (writeNumOfPlayers.getCharacters().toString().equals("Fail")) {
-                invalidNumOfPlayers.setVisible(true);
-            } else {
-                guiActuator.setNumOfPlayers(num);
-                totalPlayers.set(parseInt(writeNumOfPlayers.getCharacters().toString()));
-                enterNumOfPlayers.setVisible(false);
-                goBack.setVisible(false);
-                numOfPlayers.setVisible(false);
-                writeNumOfPlayers.setVisible(false);
+            if (miniGameModel.myName().equals(miniGameModel.getGodPlayer())) {
+                int num = 0;
+                try {
+                    num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
+                } catch (NumberFormatException e) {
+                    writeNumOfPlayers.setText("Fail");
+                }
+                if (writeNumOfPlayers.getCharacters().toString().equals("Fail")) {
+                    invalidNumOfPlayers.setVisible(true);
+                } else {
+                    guiActuator.setNumOfPlayers(num);
+                    totalPlayers.set(parseInt(writeNumOfPlayers.getCharacters().toString()));
+                    enterNumOfPlayers.setVisible(false);
+                    goBack.setVisible(false);
+                    numOfPlayers.setVisible(false);
+                    writeNumOfPlayers.setVisible(false);
+                }
             }
         });
 
@@ -279,10 +283,11 @@ public class CodexNaturalis extends Application {
 
         chooseNick.setOnMouseClicked(event -> {
             String nick = writeNick.getCharacters().toString();
+            miniGameModel.setMyName(nick);
+            guiActuator.setName(nick);
             if (writeNick.getCharacters().toString().equals("Fail")) {
                 nameAlreadyTaken.setVisible(true);
             } else {
-                guiActuator.setName(nick);
                 chooseNick.setVisible(false);
                 goToNetwork.setVisible(false);
                 writeNick.setVisible(false);

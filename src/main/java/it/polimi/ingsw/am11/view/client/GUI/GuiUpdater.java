@@ -6,15 +6,18 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
 import java.util.Map;
 import java.util.Set;
 
 public class GuiUpdater implements ClientViewUpdater {
     private final GuiExceptionReceiver exceptionReceiver;
+    MiniGameModel miniGameModel;
 
-    public GuiUpdater(GuiExceptionReceiver exceptionReceiver) {
+    public GuiUpdater(GuiExceptionReceiver exceptionReceiver, MiniGameModel miniGameModel) {
         this.exceptionReceiver = exceptionReceiver;
+        this.miniGameModel = miniGameModel;
     }
 
     @Override
@@ -80,7 +83,8 @@ public class GuiUpdater implements ClientViewUpdater {
 
     @Override
     public void notifyGodPlayer() {
-
+        String username = miniGameModel.myName();
+        miniGameModel.setGodPlayer(username);
     }
 
     @Override
