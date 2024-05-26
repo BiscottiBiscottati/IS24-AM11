@@ -26,6 +26,8 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static java.lang.Integer.parseInt;
+
 public class CodexNaturalis extends Application {
 
     private final GuiResources guiResources;
@@ -197,11 +199,14 @@ public class CodexNaturalis extends Application {
         });
 
         joinButton.setOnAction(event -> {
-            //TODO
+            String connectionTypeText = connectionType.getText().toLowerCase();
+            String ip = ipAddress.getCharacters().toString();
+            //TODO: handle exception
+            int portNumber = parseInt(port.getCharacters().toString());
             if (ipAddress.getCharacters().toString().equals("Fail")) {
                 connectionFailed.setVisible(true);
             } else {
-
+                guiActuator.connect(connectionTypeText, ip, portNumber);
                 chooseRMI.setVisible(false);
                 chooseSocket.setVisible(false);
                 theBox.setVisible(false);
@@ -252,11 +257,17 @@ public class CodexNaturalis extends Application {
         AtomicInteger totalPlayers = new AtomicInteger();
 
         enterNumOfPlayers.setOnMouseClicked(event -> {
+            int num = 0;
+            try {
+                num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
+            } catch (NumberFormatException e) {
+                writeNumOfPlayers.setText("Fail");
+            }
             if (writeNumOfPlayers.getCharacters().toString().equals("Fail")) {
                 invalidNumOfPlayers.setVisible(true);
             } else {
-
-                totalPlayers.set(Integer.parseInt(writeNumOfPlayers.getCharacters().toString()));
+                guiActuator.setNumOfPlayers(num);
+                totalPlayers.set(parseInt(writeNumOfPlayers.getCharacters().toString()));
                 enterNumOfPlayers.setVisible(false);
                 goBack.setVisible(false);
                 numOfPlayers.setVisible(false);
@@ -267,9 +278,11 @@ public class CodexNaturalis extends Application {
         AtomicInteger currentPlayers = new AtomicInteger();
 
         chooseNick.setOnMouseClicked(event -> {
+            String nick = writeNick.getCharacters().toString();
             if (writeNick.getCharacters().toString().equals("Fail")) {
                 nameAlreadyTaken.setVisible(true);
             } else {
+                guiActuator.setName(nick);
                 chooseNick.setVisible(false);
                 goToNetwork.setVisible(false);
                 writeNick.setVisible(false);
