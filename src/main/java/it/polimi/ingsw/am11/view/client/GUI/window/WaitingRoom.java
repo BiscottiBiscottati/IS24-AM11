@@ -1,14 +1,13 @@
 package it.polimi.ingsw.am11.view.client.GUI.window;
 
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.text.Font;
 
 public class WaitingRoom {
 
-    private ProgressBar progressBar;
-
-    public void createWaitingRoom(Label waitingForPlayers, ProgressBar progressBar, Font font) {
+    public void createWaitingRoom(Label waitingForPlayers, ProgressIndicator loadingWheel,
+                                  Font font) {
 
         waitingForPlayers.setTranslateY(- 60);
         waitingForPlayers.setTranslateX(80);
@@ -19,17 +18,12 @@ public class WaitingRoom {
         waitingForPlayers.setStyle("-fx-background-color: #351F17");
         waitingForPlayers.setStyle("-fx-background-radius: 5");
         waitingForPlayers.setVisible(false);
-        progressBar.setProgress(0);
-        progressBar.setPrefSize(300, 50);
-        progressBar.setStyle("-fx-accent: #D7BC49");
-        progressBar.setStyle("-fx-background-color: #351F17");
-        progressBar.setStyle("-fx-background-radius: 5");
-        progressBar.setVisible(false);
-        this.progressBar = progressBar;
-    }
 
-    public void updateProgressBar(int currentPlayers, int totalPlayers) {
-        double progress = (double) currentPlayers / totalPlayers;
-        progressBar.setProgress(progress);
+        loadingWheel.setTranslateY(0);
+        loadingWheel.setTranslateX(0);
+        loadingWheel.setStyle("-fx-border-color: #D7BC49");
+        loadingWheel.setStyle("-fx-background-color: #351F17");
+        loadingWheel.setStyle("-fx-background-radius: 5");
+        loadingWheel.setVisible(false);
     }
 }

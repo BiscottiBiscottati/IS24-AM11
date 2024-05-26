@@ -13,7 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -71,20 +71,9 @@ public class CodexNaturalis extends Application {
 
 
         ImageView lDBackground = guiResources.getTheImageView(GuiResEnum.LGIN_BACKGROUND);
-        lDBackground.setFitHeight(size);
-        lDBackground.setPreserveRatio(true);
-
         ImageView lDSquare = guiResources.getTheImageView(GuiResEnum.LGIN_SQUARE);
-        lDSquare.setFitHeight(size);
-        lDSquare.setPreserveRatio(true);
-
         ImageView lDWritings = guiResources.getTheImageView(GuiResEnum.LGIN_WRITINGS);
-        lDWritings.setFitHeight(size);
-        lDWritings.setPreserveRatio(true);
-
         ImageView lDDisks = guiResources.getTheImageView(GuiResEnum.LGIN_DISK);
-        lDDisks.setFitHeight(size);
-        lDDisks.setPreserveRatio(true);
 
         ImageView wolf = guiResources.getTheImageView(GuiResEnum.WOLF_ICON);
         ImageView butterfly = guiResources.getTheImageView(GuiResEnum.BUTTERLFY_ICON);
@@ -111,20 +100,7 @@ public class CodexNaturalis extends Application {
         theBox.setAlignment(Pos.CENTER);
 
         javafx.scene.control.TextField ipAddress = new javafx.scene.control.TextField();
-        ipAddress.setAlignment(Pos.CENTER);
-        ipAddress.setPromptText("Ip Address");
-        ipAddress.setFont(font);
-        ipAddress.setStyle("-fx-background-color: #D7BC49; " +
-                           "-fx-background-radius: 5;" +
-                           " -fx-max-width: " + 20 * halfButtonSize);
-
         javafx.scene.control.TextField port = new javafx.scene.control.TextField();
-        port.setAlignment(Pos.CENTER);
-        port.setPromptText("Port");
-        port.setFont(font);
-        port.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5;" +
-                      " -fx-max-width: " + 20 * halfButtonSize);
-
 
         theBox.getChildren().addAll(ipAddress, port);
         theBox.setVisible(false);
@@ -137,7 +113,7 @@ public class CodexNaturalis extends Application {
 
         NetworkPage networkPage = new NetworkPage();
         networkPage.createNetworkPage(font, halfButtonSize, connectionType,
-                                      connectionFailed);
+                                      connectionFailed, ipAddress, port);
 
         root.getChildren().addAll(connectionFailed, connectionType);
 
@@ -304,18 +280,16 @@ public class CodexNaturalis extends Application {
         });
 
         Label waitingForPlayers = new Label("Waiting for other players to join...");
-        ProgressBar progressBar = new ProgressBar();
+        ProgressIndicator loadingWheel = new ProgressIndicator();
 
         WaitingRoom waitingRoom = new WaitingRoom();
-        waitingRoom.createWaitingRoom(waitingForPlayers, progressBar, font);
+        waitingRoom.createWaitingRoom(waitingForPlayers, loadingWheel, font);
 
-        root.getChildren().addAll(waitingForPlayers, progressBar);
+        root.getChildren().addAll(waitingForPlayers, loadingWheel);
         StackPane.setAlignment(waitingForPlayers, Pos.CENTER);
 
-        waitingRoom.updateProgressBar(currentPlayers.get(), totalPlayers.get());
-
         waitingForPlayers.setVisible(false);
-        progressBar.setVisible(false);
+        loadingWheel.setVisible(false);
 
         // Let's set the frame of the stage and the icons and add it
         frameHandler = new FrameHandler(guiResources, stage, root);

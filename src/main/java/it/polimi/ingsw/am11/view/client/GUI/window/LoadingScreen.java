@@ -14,6 +14,15 @@ public class LoadingScreen {
                                      SequentialTransition sqT) {
         int symbolSize = size / 8;
 
+        lDBackground.setFitHeight(size);
+        lDBackground.setPreserveRatio(true);
+        lDSquare.setFitHeight(size);
+        lDSquare.setPreserveRatio(true);
+        lDWritings.setFitHeight(size);
+        lDWritings.setPreserveRatio(true);
+        lDDisks.setFitHeight(size);
+        lDDisks.setPreserveRatio(true);
+
         wolf.setFitHeight(symbolSize);
         wolf.setPreserveRatio(true);
         wolf.setTranslateX(117.0 * size / 512.0);
