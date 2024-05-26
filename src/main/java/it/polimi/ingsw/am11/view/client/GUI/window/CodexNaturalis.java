@@ -167,7 +167,6 @@ public class CodexNaturalis extends Application {
 
         // Choose Nickname and go back buttons
         goToNetwork.setOnAction(event -> {
-
             chooseRMI.setVisible(true);
             chooseSocket.setVisible(true);
             theBox.setVisible(true);
@@ -299,20 +298,6 @@ public class CodexNaturalis extends Application {
 
         waitingForPlayers.setVisible(false);
         progressBar.setVisible(false);
-
-        enterNumOfPlayers.setOnMouseClicked(event -> {
-            if (writeNumOfPlayers.getCharacters().toString().equals("Fail")) {
-                invalidNumOfPlayers.setVisible(true);
-            } else {
-                enterNumOfPlayers.setVisible(false);
-                goBack.setVisible(false);
-                numOfPlayers.setVisible(false);
-                writeNumOfPlayers.setVisible(false);
-
-                waitingForPlayers.setVisible(true);
-                progressBar.setVisible(true);
-            }
-        });
 
         // Let's set the frame of the stage and the icons and add it
         frameHandler = new FrameHandler(guiResources, stage, root);
