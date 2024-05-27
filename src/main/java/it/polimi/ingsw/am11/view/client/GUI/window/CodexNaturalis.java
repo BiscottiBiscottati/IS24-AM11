@@ -44,7 +44,10 @@ public class CodexNaturalis extends Application implements GuiObserver {
     List<Label> labels;
     List<Button> buttons;
     List<TextField> textFields;
+    GuiActuator guiActuator;
+    MiniGameModel miniGameModel;
     private FrameHandler frameHandler;
+    private StackPane root;
 
 
     public CodexNaturalis() {
@@ -58,10 +61,10 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void start(Stage stage) throws IOException {
 
-        MiniGameModel miniGameModel = new MiniGameModel();
+        miniGameModel = new MiniGameModel();
         GuiExceptionReceiver exceptionReceiver = new GuiExceptionReceiver(this);
         GuiUpdater guiUpdater = new GuiUpdater(exceptionReceiver, miniGameModel, this);
-        GuiActuator guiActuator = new GuiActuator(guiUpdater);
+        guiActuator = new GuiActuator(guiUpdater);
 
         // Proportions
         int size = (int) (Math.min(Screen.getPrimary().getBounds().getHeight(),
@@ -79,7 +82,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
                               3 * halfButtonSize);
 
         //Let's build the loading screen
-        StackPane root = new StackPane();
+        root = new StackPane();
 
 
         ImageView lDBackground = guiResources.getTheImageView(GuiResEnum.LGIN_BACKGROUND);
@@ -214,7 +217,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
         networkPage.createNetworkPage(font, halfButtonSize, labels, buttonList, textFields,
                                       guiActuator, theBox);
         settingNick.createSettingNick(font, halfButtonSize, fontBig, labels, textFields, buttonList,
-                                      guiActuator, theBox, currentPlayers, miniGameModel);
+                                      guiActuator, theBox, loadingWheel, currentPlayers,
+                                      miniGameModel);
         settingNumOfPlayers.createNumOfPlayersPage(font, halfButtonSize, labels, textFields,
                                                    buttonList, guiActuator, miniGameModel,
                                                    totalPlayers);
@@ -318,7 +322,40 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void notifyGodPlayer() {
+        Label numOfPlayers = labels.get(0);
+        TextField writeNumOfPlayers = textFields.get(3);
+        Label invalidNumOfPlayers = labels.get(1);
+        Button enterNumOfPlayers = buttons.get(5);
+        Button goBack = buttons.get(6);
+        numOfPlayers.setVisible(true);
+        writeNumOfPlayers.setVisible(true);
+        enterNumOfPlayers.setVisible(true);
+        goBack.setVisible(true);
 
+        Label waitingForPlayers = labels.get(6);
+        ProgressIndicator loadingWheel = (ProgressIndicator) root.getChildren().get(8);
+
+        numOfPlayers.setOnMouseClicked(event -> {
+            int num = 0;
+            try {
+                num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
+            } catch (NumberFormatException e) {
+                writeNumOfPlayers.setText("Fail");
+            }
+            if (writeNumOfPlayers.getCharacters().toString().equals("Fail")) {
+                invalidNumOfPlayers.setVisible(true);
+            } else {
+                guiActuator.setNumOfPlayers(num);
+                enterNumOfPlayers.setVisible(false);
+                numOfPlayers.setVisible(false);
+                writeNumOfPlayers.setVisible(false);
+                invalidNumOfPlayers.setVisible(false);
+                goBack.setVisible(false);
+
+                loadingWheel.setVisible(true);
+                waitingForPlayers.setVisible(true);
+            }
+        });
     }
 
     @Override

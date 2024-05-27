@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
@@ -19,7 +20,8 @@ public class SettingNick {
     public void createSettingNick(Font font, int halfButtonSize, Font fontBig, List<Label> labels,
                                   List<TextField> textFields, List<Button> buttonList,
                                   GuiActuator guiActuator, VBox theBox,
-                                  AtomicInteger currentPlayers, MiniGameModel miniGameModel) {
+                                  ProgressIndicator loadingWheel, AtomicInteger currentPlayers,
+                                  MiniGameModel miniGameModel) {
 
         TextField writeNick = textFields.getFirst();
         Label yourName = labels.get(2);
@@ -74,8 +76,7 @@ public class SettingNick {
             nameAlreadyTaken.setVisible(true);
         });
 
-        Label numOfPlayers = labels.getFirst();
-        TextField writeNumOfPlayers = textFields.get(3);
+        Label waitingForPlayers = labels.get(6);
 
         chooseNick.setOnMouseClicked(event -> {
             String nick = writeNick.getCharacters().toString();
@@ -90,10 +91,8 @@ public class SettingNick {
                 yourName.setVisible(false);
                 nameAlreadyTaken.setVisible(false);
 
-                enterNumOfPlayers.setVisible(true);
-                numOfPlayers.setVisible(true);
-                writeNumOfPlayers.setVisible(true);
-                goBack.setVisible(true);
+                waitingForPlayers.setVisible(true);
+                loadingWheel.setVisible(true);
 
                 currentPlayers.getAndIncrement();
             }
