@@ -77,9 +77,9 @@ public class NetworkPage {
             try {
                 guiActuator.connect(connectionTypeText, ip, portNumber);
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                // TODO exception handler
+                return;
             }
-            //TODO: handle exception
             if (ipAddress.getCharacters().toString().equals("Fail")) {
                 connectionFailed.setVisible(true);
             } else {
@@ -97,7 +97,5 @@ public class NetworkPage {
                 yourName.setVisible(true);
             }
         });
-
-
     }
 }

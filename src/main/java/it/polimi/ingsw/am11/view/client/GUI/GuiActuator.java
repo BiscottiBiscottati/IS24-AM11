@@ -5,15 +5,18 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.factory.ConnectionType;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 
 public class GuiActuator {
 
     private final GuiUpdater guiUpdater;
+    MiniGameModel miniGameModel;
     private ClientGameConnector connector = null;
 
-    public GuiActuator(GuiUpdater guiUpdater) {
+    public GuiActuator(GuiUpdater guiUpdater, MiniGameModel miniGameModel) {
         this.guiUpdater = guiUpdater;
+        this.miniGameModel = miniGameModel;
     }
 
     public void connect(@NotNull String type, String ip, int port) throws Exception {
@@ -27,6 +30,7 @@ public class GuiActuator {
 
     public void setName(String nick) {
         connector.setNickname(nick);
+        miniGameModel.setMyName(nick);
     }
 
     public void setNumOfPlayers(int numOfPlayers) {
