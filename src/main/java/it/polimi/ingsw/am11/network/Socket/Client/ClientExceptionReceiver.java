@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 public class ClientExceptionReceiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientExceptionReceiver.class);
 
-    private final ObjectMapper mapper;
-    private final ExceptionConnector exceptionConnector;
+    private final @NotNull ObjectMapper mapper;
+    private final @NotNull ExceptionConnector exceptionConnector;
 
     public ClientExceptionReceiver(@NotNull ExceptionConnector exceptionConnector) {
         this.mapper = new ObjectMapper();

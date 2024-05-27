@@ -4,6 +4,8 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Set;
@@ -21,26 +23,26 @@ import java.util.Set;
  */
 public interface ServerTableConnector {
 
-    void updateDeckTop(PlayableCardType type, Color color);
+    void updateDeckTop(@NotNull PlayableCardType type, Color color);
 
-    void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
+    void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro,
                      boolean removeMode);
 
-    void updateShownPlayable(Integer previousId, Integer currentId);
+    void updateShownPlayable(@Nullable Integer previousId, @Nullable Integer currentId);
 
-    void updateTurnChange(String nickname);
+    void updateTurnChange(@NotNull String nickname);
 
-    void updatePlayerPoint(String nickname, int points);
+    void updatePlayerPoint(@NotNull String nickname, int points);
 
-    void updateGameStatus(GameStatus status);
+    void updateGameStatus(@NotNull GameStatus status);
 
-    void updateCommonObjective(Set<Integer> cardsId, boolean removeMode);
+    void updateCommonObjective(@NotNull Set<Integer> cardsId, boolean removeMode);
 
-    void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard);
+    void sendFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard);
 
-    void updatePlayers(Map<PlayerColor, String> currentPlayers);
+    void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers);
 
-    void updateNumOfPlayers(Integer numOfPlayers);
+    void updateNumOfPlayers(@NotNull Integer numOfPlayers);
 
 
 }

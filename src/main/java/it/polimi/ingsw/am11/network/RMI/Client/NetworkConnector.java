@@ -11,14 +11,13 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerGameCommandsInter
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerLoggable;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.TestOnly;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -26,12 +25,12 @@ import java.util.concurrent.Future;
 public class NetworkConnector implements ClientGameConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(NetworkConnector.class);
 
-    private final ClientRMI main;
-    private final Registry registry;
-    private final ClientGameUpdatesInterface remoteGameCommands;
-    private final ExceptionConnector exceptionConnector;
-    private final ExecutorService commandExecutor;
-    private String nickname;
+    private final @NotNull ClientRMI main;
+    private final @NotNull Registry registry;
+    private final @NotNull ClientGameUpdatesInterface remoteGameCommands;
+    private final @NotNull ExceptionConnector exceptionConnector;
+    private final @NotNull ExecutorService commandExecutor;
+    private @Nullable String nickname;
     private Future<?> future;
 
     public NetworkConnector(@NotNull ClientRMI main,
@@ -168,7 +167,7 @@ public class NetworkConnector implements ClientGameConnector {
     }
 
     @Override
-    public void drawCard(boolean fromVisible, PlayableCardType type, int cardId) {
+    public void drawCard(boolean fromVisible, @NotNull PlayableCardType type, int cardId) {
         LOGGER.debug("CLIENT RMI: Sending drawCard request to server");
 
         checkIfNickSet();
@@ -224,19 +223,5 @@ public class NetworkConnector implements ClientGameConnector {
             future = tempFuture;
         }
 
-    }
-
-    // TODO we may delete this
-    @TestOnly
-    public void await() {
-        synchronized (commandExecutor) {
-            if (future != null) {
-                try {
-                    future.get();
-                } catch (InterruptedException | ExecutionException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
     }
 }

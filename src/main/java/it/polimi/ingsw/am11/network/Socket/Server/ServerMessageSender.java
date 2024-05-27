@@ -20,7 +20,7 @@ import java.util.Set;
 public class ServerMessageSender implements ServerPlayerConnector, ServerTableConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerMessageSender.class);
 
-    private final PrintWriter out;
+    private final @NotNull PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
 
     public ServerMessageSender(@NotNull PrintWriter out) {
@@ -54,7 +54,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     }
 
     @Override
-    public void sendCandidateObjective(Set<Integer> cardsId) {
+    public void sendCandidateObjective(@NotNull Set<Integer> cardsId) {
         try {
             ObjectNode json = mapper.createObjectNode();
             json.put("method", "sendCandidateObjective");
@@ -74,7 +74,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     }
 
     @Override
-    public void updateDeckTop(PlayableCardType type, Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateDeckTop");
         json.put("type", type.toString().toUpperCase());
@@ -83,7 +83,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     }
 
     @Override
-    public void updateField(String nickname, int x, int y, int cardId,
+    public void updateField(@NotNull String nickname, int x, int y, int cardId,
                             boolean isRetro, boolean removeMode) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateField");
@@ -106,7 +106,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     }
 
     @Override
-    public void updateTurnChange(String nickname) {
+    public void updateTurnChange(@NotNull String nickname) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateTurnChange");
         json.put("nickname", nickname);
@@ -114,7 +114,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     }
 
     @Override
-    public void updatePlayerPoint(String nickname, int points) {
+    public void updatePlayerPoint(@NotNull String nickname, int points) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updatePlayerPoint");
         json.put("nickname", nickname);
@@ -131,7 +131,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     }
 
     @Override
-    public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
+    public void updateCommonObjective(@NotNull Set<Integer> cardId, boolean removeMode) {
         try {
             ObjectNode json = mapper.createObjectNode();
             json.put("method", "updateCommonObjective");
@@ -145,7 +145,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     }
 
     @Override
-    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+    public void sendFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard) {
         try {
             ObjectNode json = mapper.createObjectNode();
             json.put("method", "receiveFinalLeaderboard");
@@ -157,7 +157,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     }
 
     @Override
-    public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+    public void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers) {
         try {
             ObjectNode json = mapper.createObjectNode();
             json.put("method", "updatePlayers");
@@ -169,7 +169,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     }
 
     @Override
-    public void updateNumOfPlayers(Integer numOfPlayers) {
+    public void updateNumOfPlayers(@NotNull Integer numOfPlayers) {
         ObjectNode json = mapper.createObjectNode();
         json.put("method", "updateNumOfPlayers");
         json.put("numOfPlayers", numOfPlayers);

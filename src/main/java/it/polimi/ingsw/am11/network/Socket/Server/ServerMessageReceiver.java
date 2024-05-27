@@ -14,9 +14,9 @@ import java.io.IOException;
 public class ServerMessageReceiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerMessageReceiver.class);
 
-    private final VirtualPlayerView playerView;
-    private final ObjectMapper mapper;
-    private final ServerExceptionSender serverExceptionSender;
+    private final @NotNull VirtualPlayerView playerView;
+    private final @NotNull ObjectMapper mapper;
+    private final @NotNull ServerExceptionSender serverExceptionSender;
 
     public ServerMessageReceiver(@NotNull VirtualPlayerView playerView,
                                  @NotNull ServerExceptionSender exceptionSender) {

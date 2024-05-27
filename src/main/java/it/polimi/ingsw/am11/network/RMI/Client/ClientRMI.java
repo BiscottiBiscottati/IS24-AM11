@@ -24,12 +24,11 @@ public class ClientRMI implements ClientNetworkHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientRMI.class);
 
-    private final ExecutorService commandExecutor;
-    private final Registry registry;
-    private final ClientGameUpdatesInterface gameUpdatesInterface;
-    private final NetworkConnector networkConnector;
-    private final ScheduledExecutorService heartbeatsService;
-    private final HeartbeatSender heartbeatSender;
+    private final @NotNull ExecutorService commandExecutor;
+    private final @NotNull ClientGameUpdatesInterface gameUpdatesInterface;
+    private final @NotNull NetworkConnector networkConnector;
+    private final @NotNull ScheduledExecutorService heartbeatsService;
+    private final @NotNull HeartbeatSender heartbeatSender;
 
     public ClientRMI(@NotNull String ip, int port, @NotNull ClientViewUpdater updater)
     throws RemoteException {
@@ -38,7 +37,7 @@ public class ClientRMI implements ClientNetworkHandler {
         heartbeatsService = Executors.newSingleThreadScheduledExecutor();
 
         // Getting the registry
-        registry = LocateRegistry.getRegistry(ip, port);
+        Registry registry = LocateRegistry.getRegistry(ip, port);
         LOGGER.debug("CLIENT RMI: Registry located {}", registry.toString());
         // Creating the client remote interface
         ClientGameUpdatesImpl clientObject = new ClientGameUpdatesImpl(updater);
@@ -64,16 +63,16 @@ public class ClientRMI implements ClientNetworkHandler {
                                               TimeUnit.MILLISECONDS);
     }
 
-    public ClientGameConnector getGameUpdatesInterface() {
+    public @NotNull ClientGameConnector getGameUpdatesInterface() {
         return networkConnector;
     }
 
     @Override
     public void close() {
+        heartbeatSender.stop();
+        commandExecutor.shutdown();
+        heartbeatsService.shutdown();
         try {
-            heartbeatSender.stop();
-            commandExecutor.shutdown();
-            heartbeatsService.shutdown();
             UnicastRemoteObject.unexportObject(gameUpdatesInterface, false);
         } catch (NoSuchObjectException e) {
             LOGGER.debug("CLIENT RMI: No Connector to un-export");

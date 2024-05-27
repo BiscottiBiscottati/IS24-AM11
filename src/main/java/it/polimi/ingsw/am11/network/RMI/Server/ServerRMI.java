@@ -10,7 +10,7 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ClientGameUpdatesInterf
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.HeartbeatInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerGameCommandsInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerLoggable;
-import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +26,9 @@ public class ServerRMI implements ServerLoggable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerRMI.class);
 
     private final int port;
-    private final ServerGameCommandsImpl playerView;
-    private final Registry registry;
-    private final HeartbeatManager heartbeatManager;
-    private ExceptionConnector exceptionConnector;
+    private final @NotNull ServerGameCommandsImpl playerView;
+    private final @NotNull Registry registry;
+    private final @NotNull HeartbeatManager heartbeatManager;
 
     public ServerRMI(int port) {
         this.port = port;
@@ -94,7 +93,7 @@ public class ServerRMI implements ServerLoggable {
     }
 
     @Override
-    public void login(String nick, ClientGameUpdatesInterface remoteConnector)
+    public void login(@NotNull String nick, @NotNull ClientGameUpdatesInterface remoteConnector)
     throws RemoteException, NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException {
         LOGGER.debug("SERVER RMI: login: {}, {}", nick, remoteConnector);
@@ -104,7 +103,7 @@ public class ServerRMI implements ServerLoggable {
     }
 
     @Override
-    public void setNumOfPlayers(String nick, int val)
+    public void setNumOfPlayers(@NotNull String nick, int val)
     throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException {
         CentralController.INSTANCE.setNumOfPlayers(nick, val);
     }

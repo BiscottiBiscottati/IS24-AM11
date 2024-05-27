@@ -18,13 +18,13 @@ import java.util.concurrent.Executors;
 public class ClientSocket implements ClientNetworkHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientSocket.class);
 
-    private final ClientViewUpdater clientViewUpdater;
-    private final BufferedReader in;
-    private final PrintWriter out;
-    private final ClientMessageReceiver clientMessageReceiver;
-    private final ClientMessageSender clientMessageSender;
-    private final Socket socket;
-    private final ExecutorService clientThread;
+    private final @NotNull ClientViewUpdater clientViewUpdater;
+    private final @NotNull BufferedReader in;
+    private final @NotNull PrintWriter out;
+    private final @NotNull ClientMessageReceiver clientMessageReceiver;
+    private final @NotNull ClientMessageSender clientMessageSender;
+    private final @NotNull Socket socket;
+    private final @NotNull ExecutorService clientThread;
     private boolean isRunning;
 
     public ClientSocket(String ip, int port,
@@ -80,7 +80,7 @@ public class ClientSocket implements ClientNetworkHandler {
         }
     }
 
-    public ClientGameConnector getGameUpdatesInterface() {
+    public @NotNull ClientGameConnector getGameUpdatesInterface() {
         return clientMessageSender;
     }
 

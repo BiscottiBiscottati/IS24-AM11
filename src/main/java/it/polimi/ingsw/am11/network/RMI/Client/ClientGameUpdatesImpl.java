@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,19 +42,19 @@ public class ClientGameUpdatesImpl implements ClientGameUpdatesInterface {
     }
 
     @Override
-    public void receiveCandidateObjective(Set<Integer> cardsId) {
+    public void receiveCandidateObjective(@NotNull Set<Integer> cardsId) {
         clientUpdater.receiveCandidateObjective(cardsId);
 
     }
 
     @Override
-    public void updateDeckTop(PlayableCardType type, Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
         clientUpdater.updateDeckTop(type, color);
 
     }
 
     @Override
-    public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
+    public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro,
                             boolean removeMode) {
         clientUpdater.updateField(nickname, x, y, cardId, isRetro, removeMode);
 
@@ -65,37 +66,38 @@ public class ClientGameUpdatesImpl implements ClientGameUpdatesInterface {
     }
 
     @Override
-    public void updateTurnChange(String nickname) {
+    public void updateTurnChange(@NotNull String nickname) {
         clientUpdater.updateTurnChange(nickname);
 
     }
 
     @Override
-    public void updatePlayerPoint(String nickname, int points) {
+    public void updatePlayerPoint(@NotNull String nickname, int points) {
         clientUpdater.updatePlayerPoint(nickname, points);
 
     }
 
     @Override
-    public void updateGameStatus(GameStatus status) {
+    public void updateGameStatus(@NotNull GameStatus status) {
         clientUpdater.updateGameStatus(status);
 
     }
 
     @Override
-    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+    public void sendFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard) {
         clientUpdater.receiveFinalLeaderboard(finalLeaderboard);
 
     }
 
     @Override
-    public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
+    public void updateCommonObjective(@NotNull Set<Integer> cardId, boolean removeMode) {
         clientUpdater.updateCommonObjective(cardId, removeMode);
 
     }
 
     @Override
-    public void updatePlayers(Map<PlayerColor, String> currentPlayers) throws RemoteException {
+    public void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers)
+    throws RemoteException {
         clientUpdater.updatePlayers(currentPlayers);
     }
 

@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerGameCommandsImpl.class);
-    private final Map<String, VirtualPlayerView> views;
+    private final @NotNull Map<String, VirtualPlayerView> views;
 
     public ServerGameCommandsImpl() throws RemoteException {
         this.views = new ConcurrentHashMap<>(8);
@@ -33,7 +33,7 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
     }
 
     @Override
-    public void setStarterCard(String nick, boolean isRetro)
+    public void setStarterCard(@NotNull String nick, boolean isRetro)
     throws RemoteException, PlayerInitException, IllegalCardPlacingException, GameStatusException {
         synchronized (views) {
             if (views.containsKey(nick)) {
@@ -46,7 +46,7 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
     }
 
     @Override
-    public void setObjectiveCard(String nick, int cardId)
+    public void setObjectiveCard(@NotNull String nick, int cardId)
     throws RemoteException, IllegalPlayerSpaceActionException, PlayerInitException,
            GameStatusException {
         synchronized (views) {
@@ -61,7 +61,7 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
     }
 
     @Override
-    public void placeCard(String nick, int cardId, int x, int y, boolean isRetro)
+    public void placeCard(@NotNull String nick, int cardId, int x, int y, boolean isRetro)
     throws RemoteException, TurnsOrderException, PlayerInitException, IllegalCardPlacingException,
            NotInHandException, IllegalPlateauActionException, GameStatusException {
 
@@ -76,7 +76,8 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
     }
 
     @Override
-    public void drawCard(String nick, boolean fromVisible, PlayableCardType type, int cardId)
+    public void drawCard(@NotNull String nick, boolean fromVisible, @NotNull PlayableCardType type,
+                         int cardId)
     throws RemoteException, IllegalPlayerSpaceActionException, TurnsOrderException,
            IllegalPickActionException, PlayerInitException, EmptyDeckException,
            MaxHandSizeException, GameStatusException {

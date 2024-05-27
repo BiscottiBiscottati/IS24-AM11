@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.network;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Set;
 
 /**
@@ -17,7 +19,7 @@ public interface ServerPlayerConnector {
 
     void sendStarterCard(int cardId);
 
-    void sendCandidateObjective(Set<Integer> cardsId);
+    void sendCandidateObjective(@NotNull Set<Integer> cardsId);
 
     void notifyGodPlayer();
 }

@@ -16,9 +16,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class ClientMessageReceiver {
-    private final ClientViewUpdater clientPlayerView;
-    private final ObjectMapper mapper;
-    private final ClientExceptionReceiver clientExceptionReceiver;
+    private final @NotNull ClientViewUpdater clientPlayerView;
+    private final @NotNull ObjectMapper mapper;
+    private final @NotNull ClientExceptionReceiver clientExceptionReceiver;
 
     public ClientMessageReceiver(@NotNull ClientViewUpdater clientPlayerView) {
         this.clientPlayerView = clientPlayerView;
@@ -27,7 +27,7 @@ public class ClientMessageReceiver {
                 clientPlayerView.getExceptionConnector());
     }
 
-    public void receive(String message) {
+    public void receive(@NotNull String message) {
         try {
             JsonNode jsonNode = mapper.readTree(message);
             switch (jsonNode.get("method").asText()) {

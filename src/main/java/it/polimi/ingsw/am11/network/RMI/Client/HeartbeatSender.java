@@ -12,10 +12,10 @@ import java.util.concurrent.atomic.AtomicReference;
 public class HeartbeatSender implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeartbeatSender.class);
 
-    private final ClientRMI clientRMI;
-    private final HeartbeatInterface heartbeat;
-    private final ClientViewUpdater updater;
-    private final AtomicReference<String> nickname;
+    private final @NotNull ClientRMI clientRMI;
+    private final @NotNull HeartbeatInterface heartbeat;
+    private final @NotNull ClientViewUpdater updater;
+    private final @NotNull AtomicReference<String> nickname;
     private boolean isRunning;
 
     public HeartbeatSender(@NotNull HeartbeatInterface heartbeat,
@@ -36,24 +36,17 @@ public class HeartbeatSender implements Runnable {
 
     @Override
     public void run() {
-        if (! isRunning) {
-            LOGGER.debug("HeartbeatSender is not running, skipping heartbeat");
-            return;
-        }
-
         String tempNickname = nickname.get();
-        if (tempNickname == null) {
-            LOGGER.debug("Nickname not set, skipping heartbeat");
+        if (! isRunning || tempNickname == null) {
             return;
         }
         try {
             heartbeat.ping(tempNickname);
         } catch (RemoteException e) {
-            LOGGER.error("Error while sending heartbeat: {}", e.getMessage());
+            LOGGER.debug("Error while sending heartbeat: {}", e.getMessage());
             LOGGER.debug("Disconnecting from server");
             updater.disconnectedFromServer();
             clientRMI.close();
-            isRunning = false;
         }
 
     }

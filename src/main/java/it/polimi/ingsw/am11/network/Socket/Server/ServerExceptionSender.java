@@ -11,8 +11,8 @@ import java.io.PrintWriter;
 public class ServerExceptionSender {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerExceptionSender.class);
 
-    private final PrintWriter out;
-    private final ObjectMapper mapper;
+    private final @NotNull PrintWriter out;
+    private final @NotNull ObjectMapper mapper;
 
     public ServerExceptionSender(@NotNull PrintWriter out) {
         this.out = out;

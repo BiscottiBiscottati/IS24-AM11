@@ -55,24 +55,14 @@ public class GameController {
            NotSetNumOfPlayerException {
         int currentMaxPlayers = maxNumOfPlayer.get();
 
-        boolean isGod = godPlayer.compareAndSet(null, nickname);
+        boolean isGodSet = godPlayer.compareAndSet(null, nickname);
 
-        if (! isGod && currentMaxPlayers == - 1) {
-            if (model.isDisconnected(nickname) && godPlayer.get().equals(nickname)) {
-                LOGGER.info("God player {} trying to reconnect", nickname);
-
-                VirtualPlayerView playerView = createPlayerView(nickname,
-                                                                playerConnector
-                );
-                tableView.addConnector(nickname, tableConnector);
-
-                model.reconnectPlayer(nickname, new PlayerViewUpdater(playerView));
-                return playerView;
-            }
+        if (! isGodSet && currentMaxPlayers == - 1) {
             throw new NotSetNumOfPlayerException("NumOfPlayers not yet set by godPlayer");
         }
 
         synchronized (model) {
+            // check if the player is already in the game
             if (model.isDisconnected(nickname)) {
                 LOGGER.info("Player {} trying to reconnect", nickname);
 
@@ -99,7 +89,7 @@ public class GameController {
             model.addPlayerListener(nickname, new PlayerViewUpdater(playerView));
 
             // TODO notify god player that the player has connected
-            if (isGod) {
+            if (isGodSet) {
                 LOGGER.info("Notifying god player {}", nickname);
                 playerConnector.notifyGodPlayer();
             }
@@ -155,6 +145,12 @@ public class GameController {
     }
 
     void disconnectPlayer(@NotNull String nickname) {
+        String god = godPlayer.get();
+        int currentMaxPlayers = maxNumOfPlayer.get();
+        if (currentMaxPlayers == - 1 && god.equals(nickname)) {
+            CentralController.INSTANCE.destroyGame();
+            return;
+        }
         try {
             model.disconnectPlayer(nickname);
         } catch (PlayerInitException e) {

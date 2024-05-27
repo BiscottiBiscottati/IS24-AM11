@@ -8,12 +8,12 @@ import java.rmi.RemoteException;
 import java.util.concurrent.*;
 
 public class HeartbeatManager implements HeartbeatInterface {
-    private static final int HEARTBEAT_INTERVAL = 5000;
-    private static final int HEARTBEAT_TIMEOUT = 20000;
+    private static final int HEARTBEAT_INTERVAL = 1000;
+    private static final int HEARTBEAT_TIMEOUT = 3000;
 
-    private final ConcurrentHashMap<String, Long> lastHeartbeat;
-    private final ScheduledExecutorService heartbeatsService;
-    private final ExecutorService disconnectService;
+    private final @NotNull ConcurrentHashMap<String, Long> lastHeartbeat;
+    private final @NotNull ScheduledExecutorService heartbeatsService;
+    private final @NotNull ExecutorService disconnectService;
 
     public HeartbeatManager() {
         this.lastHeartbeat = new ConcurrentHashMap<>(8);

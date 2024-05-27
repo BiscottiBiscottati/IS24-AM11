@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.network.Socket.Server;
 
 import jdk.net.ExtendedSocketOptions;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +17,9 @@ import java.util.concurrent.TimeUnit;
 public class SocketManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketManager.class);
 
-    private final List<ClientHandler> clientHandlers;
-    private final ServerSocket serverSocket;
-    private final ExecutorService threadPool;
+    private final @NotNull List<ClientHandler> clientHandlers;
+    private final @NotNull ServerSocket serverSocket;
+    private final @NotNull ExecutorService threadPool;
     private boolean isRunning;
 
     public SocketManager(int port) {

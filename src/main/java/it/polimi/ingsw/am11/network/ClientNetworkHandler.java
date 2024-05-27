@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am11.network;
 
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This interface is used by the UI to get the connector to send commands to the server and to close
  * the connection.
@@ -11,6 +13,7 @@ package it.polimi.ingsw.am11.network;
  * @see it.polimi.ingsw.am11.network.Socket.Client.ClientSocket
  */
 public interface ClientNetworkHandler {
+    @NotNull
     ClientGameConnector getGameUpdatesInterface();
 
     void close();

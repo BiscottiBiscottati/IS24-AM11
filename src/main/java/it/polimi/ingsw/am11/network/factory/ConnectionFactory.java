@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 @FunctionalInterface
 public interface ConnectionFactory {
+    @NotNull
     ClientNetworkHandler create(@NotNull String ip,
                                 int port,
                                 @NotNull ClientViewUpdater updater)

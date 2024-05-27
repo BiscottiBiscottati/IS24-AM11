@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.network.RMI.Chat;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -60,6 +62,6 @@ public class ChatClientApp extends UnicastRemoteObject implements ChatClient {
 
     public class Settings {
         static int PORT = 1234;
-        static String SERVER_NAME = "127.0.0.1";
+        static @NotNull String SERVER_NAME = "127.0.0.1";
     }
 }

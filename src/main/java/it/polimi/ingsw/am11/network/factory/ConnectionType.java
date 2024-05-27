@@ -27,8 +27,8 @@ public enum ConnectionType {
                      .findFirst();
     }
 
-    public ClientNetworkHandler create(@NotNull String ip, int port,
-                                       @NotNull ClientViewUpdater updater)
+    public @NotNull ClientNetworkHandler create(@NotNull String ip, int port,
+                                                @NotNull ClientViewUpdater updater)
     throws Exception {
         return connectionFactory.create(ip, port, updater);
     }

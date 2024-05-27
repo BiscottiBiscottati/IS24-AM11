@@ -4,6 +4,8 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -18,26 +20,29 @@ public interface ClientGameUpdatesInterface extends Remote {
 
     void receiveStarterCard(int cardId) throws RemoteException;
 
-    void receiveCandidateObjective(Set<Integer> cardsId) throws RemoteException;
+    void receiveCandidateObjective(@NotNull Set<Integer> cardsId) throws RemoteException;
 
-    void updateDeckTop(PlayableCardType type, Color color) throws RemoteException;
+    void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) throws RemoteException;
 
-    void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
+    void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro,
                      boolean removeMode) throws RemoteException;
 
-    void updateShownPlayable(Integer previousId, Integer currentId) throws RemoteException;
+    void updateShownPlayable(@Nullable Integer previousId, @Nullable Integer currentId)
+    throws RemoteException;
 
-    void updateTurnChange(String nickname) throws RemoteException;
+    void updateTurnChange(@NotNull String nickname) throws RemoteException;
 
-    void updatePlayerPoint(String nickname, int points) throws RemoteException;
+    void updatePlayerPoint(@NotNull String nickname, int points) throws RemoteException;
 
-    void updateGameStatus(GameStatus status) throws RemoteException;
+    void updateGameStatus(@NotNull GameStatus status) throws RemoteException;
 
-    void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) throws RemoteException;
+    void sendFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard)
+    throws RemoteException;
 
-    void updateCommonObjective(Set<Integer> cardID, boolean removeMode) throws RemoteException;
+    void updateCommonObjective(@NotNull Set<Integer> cardID, boolean removeMode)
+    throws RemoteException;
 
-    void updatePlayers(Map<PlayerColor, String> currentPlayers) throws RemoteException;
+    void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers) throws RemoteException;
 
     void notifyGodPlayer() throws RemoteException;
 

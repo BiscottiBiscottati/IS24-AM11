@@ -23,8 +23,8 @@ public class ServerConnectorImpl
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerConnectorImpl.class);
 
-    private final ClientGameUpdatesInterface remoteConnector;
-    private final ExecutorService executorService;
+    private final @NotNull ClientGameUpdatesInterface remoteConnector;
+    private final @NotNull ExecutorService executorService;
 
     public ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConnector) {
         this.remoteConnector = remoteConnector;
@@ -73,7 +73,7 @@ public class ServerConnectorImpl
     }
 
     @Override
-    public void sendCandidateObjective(Set<Integer> cardsId) {
+    public void sendCandidateObjective(@NotNull Set<Integer> cardsId) {
         executorService.submit(() -> {
             try {
                 remoteConnector.receiveCandidateObjective(cardsId);
@@ -102,7 +102,7 @@ public class ServerConnectorImpl
     }
 
     @Override
-    public void updateDeckTop(PlayableCardType type, Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
         executorService.submit(() -> {
             try {
                 remoteConnector.updateDeckTop(type, color);
@@ -115,7 +115,7 @@ public class ServerConnectorImpl
     }
 
     @Override
-    public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
+    public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro,
                             boolean removeMode) {
 
         executorService.submit(() -> {
@@ -144,7 +144,7 @@ public class ServerConnectorImpl
     }
 
     @Override
-    public void updateTurnChange(String nickname) {
+    public void updateTurnChange(@NotNull String nickname) {
         executorService.submit(() -> {
             try {
                 remoteConnector.updateTurnChange(nickname);
@@ -157,7 +157,7 @@ public class ServerConnectorImpl
     }
 
     @Override
-    public void updatePlayerPoint(String nickname, int points) {
+    public void updatePlayerPoint(@NotNull String nickname, int points) {
         executorService.submit(() -> {
             try {
                 remoteConnector.updatePlayerPoint(nickname, points);
@@ -171,7 +171,7 @@ public class ServerConnectorImpl
     }
 
     @Override
-    public void updateGameStatus(GameStatus status) {
+    public void updateGameStatus(@NotNull GameStatus status) {
         executorService.submit(() -> {
             try {
                 remoteConnector.updateGameStatus(status);
@@ -184,7 +184,7 @@ public class ServerConnectorImpl
     }
 
     @Override
-    public void updateCommonObjective(Set<Integer> cardsId, boolean removeMode) {
+    public void updateCommonObjective(@NotNull Set<Integer> cardsId, boolean removeMode) {
         executorService.submit(() -> {
             try {
                 remoteConnector.updateCommonObjective(cardsId, removeMode);
@@ -199,7 +199,7 @@ public class ServerConnectorImpl
     }
 
     @Override
-    public void sendFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+    public void sendFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard) {
         executorService.submit(() -> {
             try {
                 remoteConnector.sendFinalLeaderboard(finalLeaderboard);
@@ -214,7 +214,7 @@ public class ServerConnectorImpl
     }
 
     @Override
-    public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+    public void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers) {
         executorService.submit(() -> {
             try {
                 remoteConnector.updatePlayers(currentPlayers);
@@ -227,7 +227,7 @@ public class ServerConnectorImpl
     }
 
     @Override
-    public void updateNumOfPlayers(Integer numOfPlayers) {
+    public void updateNumOfPlayers(@NotNull Integer numOfPlayers) {
         executorService.submit(() -> {
             try {
                 remoteConnector.updateNumOfPlayers(numOfPlayers);

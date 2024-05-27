@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.network.RMI.Chat;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -11,7 +13,7 @@ import java.util.List;
 public class ChatServerApp extends UnicastRemoteObject implements ChatServer {
 
 
-    private final List<ChatClient> chatClients;
+    private final @NotNull List<ChatClient> chatClients;
 
     /**
      * Creates and exports a new UnicastRemoteObject object using an anonymous port.
@@ -64,6 +66,6 @@ public class ChatServerApp extends UnicastRemoteObject implements ChatServer {
 
     public class Settings {
         static int PORT = 1234;
-        static String SERVER_NAME = "127.0.0.1";
+        static @NotNull String SERVER_NAME = "127.0.0.1";
     }
 }

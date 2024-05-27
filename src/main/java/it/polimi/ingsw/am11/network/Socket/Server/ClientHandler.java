@@ -21,9 +21,9 @@ import java.util.Objects;
 
 public class ClientHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
-    private final Socket clientSocket;
-    private final BufferedReader in;
-    private final PrintWriter out;
+    private final @NotNull Socket clientSocket;
+    private final @NotNull BufferedReader in;
+    private final @NotNull PrintWriter out;
     private String nickname;
     private ServerMessageReceiver serverMessageReceiver;
     private boolean isRunning;
@@ -70,14 +70,14 @@ public class ClientHandler implements Runnable {
     private boolean readNickname(@NotNull ServerExceptionSender exceptionSender) {
         boolean validNickname = false;
         while (! validNickname) {
+            LOGGER.info("SERVER TCP: Waiting for nickname");
             try {
-                LOGGER.info("SERVER TCP: Waiting for nickname");
                 nickname = in.readLine();
-                LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
             } catch (IOException e) {
-                LOGGER.error("SERVER TCP: Error while reading nickname: {}", e.getMessage());
+                LOGGER.error("SERVER TCP: Error while reading nickname", e);
                 return false;
             }
+            LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
 
             if (nickname == null) return false;
 
@@ -105,8 +105,8 @@ public class ClientHandler implements Runnable {
         while (! validNumOfPlayers) {
             LOGGER.info("SERVER TCP: waiting for number of players...");
             String message = readInput();
-            LOGGER.debug("SERVER TCP: Received message from god player: {}", message);
             if (message == null) return false;
+            LOGGER.debug("SERVER TCP: Received message from god player: {}", message);
             try {
                 if (! message.isBlank()) {
                     int numOfPlayers = Integer.parseInt(message);
@@ -144,6 +144,7 @@ public class ClientHandler implements Runnable {
 
     private @Nullable String readInput() {
         try {
+            LOGGER.debug("SERVER TCP: Waiting for input...");
             String message = null;
             if (! clientSocket.isClosed()) message = in.readLine();
             if (message == null) {
