@@ -40,7 +40,7 @@ public class TuiUpdater implements ClientViewUpdater {
         for (TuiStates state : TuiStates.values()) {
             tuiStates.put(state, state.getNewState(model));
         }
-        this.currentState = new AtomicReference<>(tuiStates.get(TuiStates.CONNECTING));
+        this.currentState = new AtomicReference<>(tuiStates.get(startingState));
         this.exceptionReceiver = new TuiExceptionReceiver(model, this);
     }
 
@@ -249,6 +249,10 @@ public class TuiUpdater implements ClientViewUpdater {
         return exceptionReceiver;
     }
 
+    public void setTuiState(TuiStates state) {
+        currentState.set(tuiStates.get(state));
+    }
+
     public boolean isCurrentState(TuiStates state) {
         return currentState.get() == tuiStates.get(state);
     }
@@ -263,10 +267,6 @@ public class TuiUpdater implements ClientViewUpdater {
 
     public TUIState getCurrentTuiState() {
         return currentState.get();
-    }
-
-    public void setTuiState(TuiStates state) {
-        currentState.set(tuiStates.get(state));
     }
 
     public TUIState getState(TuiStates state) {
