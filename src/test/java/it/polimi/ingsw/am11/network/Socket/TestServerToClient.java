@@ -47,7 +47,7 @@ public class TestServerToClient {
     @Test
     void notifyGodPlayer() throws InterruptedException {
 
-        clientSocket.getConnector().setNickname("test");
+        clientSocket.getGameUpdatesInterface().setNickname("test");
 
         CountDownLatch latch = new CountDownLatch(1);
 
@@ -67,7 +67,7 @@ public class TestServerToClient {
             return 0;
         }).when(updater).updateNumOfPlayers(anyInt());
 
-        clientSocket.getConnector().setNumOfPlayers(2);
+        clientSocket.getGameUpdatesInterface().setNumOfPlayers(2);
 
         latch2.await();
 

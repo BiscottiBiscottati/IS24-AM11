@@ -11,7 +11,7 @@ package it.polimi.ingsw.am11.network;
  * @see it.polimi.ingsw.am11.network.Socket.Client.ClientSocket
  */
 public interface ClientNetworkHandler {
-    ClientGameConnector getConnector();
+    ClientGameConnector getGameUpdatesInterface();
 
     void close();
 }

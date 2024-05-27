@@ -15,12 +15,8 @@ public interface ServerLoggable extends Remote {
     throws RemoteException, NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException;
 
-    void logout(String nick) throws RemoteException;
-
     default void setNumOfPlayers(String nick, int numOfPlayers)
     throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException {
     }
-
-    void reconnect(String nick) throws RemoteException;
 
 }
