@@ -1,7 +1,10 @@
 package it.polimi.ingsw.am11.view.client.GUI.window;
 
+import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.GuiExceptionReceiver;
+import it.polimi.ingsw.am11.view.client.GUI.GuiObserver;
 import it.polimi.ingsw.am11.view.client.GUI.GuiUpdater;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
@@ -27,9 +30,11 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CodexNaturalis extends Application {
+public class CodexNaturalis extends Application implements GuiObserver {
 
     private final GuiResources guiResources;
     private FrameHandler frameHandler;
@@ -48,7 +53,7 @@ public class CodexNaturalis extends Application {
 
         MiniGameModel miniGameModel = new MiniGameModel();
         GuiExceptionReceiver exceptionReceiver = new GuiExceptionReceiver();
-        GuiUpdater guiUpdater = new GuiUpdater(exceptionReceiver, miniGameModel);
+        GuiUpdater guiUpdater = new GuiUpdater(exceptionReceiver, miniGameModel, this);
         GuiActuator guiActuator = new GuiActuator(guiUpdater);
 
         // Proportions
@@ -190,4 +195,45 @@ public class CodexNaturalis extends Application {
         waitingRoom.createWaitingRoom(waitingForPlayers, loadingWheel, font);
     }
 
+    @Override
+    public void updateDeckTop(PlayableCardType type,
+                              it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {
+
+    }
+
+    @Override
+    public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
+                            boolean removeMode) {
+
+    }
+
+    @Override
+    public void updateShownPlayable(Integer previousId, Integer currentId) {
+
+    }
+
+    @Override
+    public void updateTurnChange(String nickname) {
+
+    }
+
+    @Override
+    public void updatePlayerPoint(String nickname, int points) {
+
+    }
+
+    @Override
+    public void updateGameStatus(GameStatus status) {
+
+    }
+
+    @Override
+    public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
+
+    }
+
+    @Override
+    public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+
+    }
 }

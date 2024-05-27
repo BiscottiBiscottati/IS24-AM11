@@ -74,7 +74,11 @@ public class NetworkPage {
             String connectionTypeText = connectionType.getText().toLowerCase();
             String ip = ipAddress.getCharacters().toString();
             int portNumber = Integer.parseInt(port.getCharacters().toString());
-            guiActuator.connect(connectionTypeText, ip, portNumber);
+            try {
+                guiActuator.connect(connectionTypeText, ip, portNumber);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             //TODO: handle exception
             if (ipAddress.getCharacters().toString().equals("Fail")) {
                 connectionFailed.setVisible(true);

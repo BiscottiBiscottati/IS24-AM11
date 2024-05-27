@@ -13,52 +13,56 @@ import java.util.Set;
 
 public class GuiUpdater implements ClientViewUpdater {
     private final GuiExceptionReceiver exceptionReceiver;
+    private final GuiObserver guiObserver;
     MiniGameModel miniGameModel;
 
-    public GuiUpdater(GuiExceptionReceiver exceptionReceiver, MiniGameModel miniGameModel) {
+    public GuiUpdater(GuiExceptionReceiver exceptionReceiver, MiniGameModel miniGameModel,
+                      GuiObserver guiObserver) {
         this.exceptionReceiver = exceptionReceiver;
         this.miniGameModel = miniGameModel;
+        this.guiObserver = guiObserver;
     }
 
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
-
+        guiObserver.updateDeckTop(type, color);
     }
 
     @Override
     public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
                             boolean removeMode) {
+        guiObserver.updateField(nickname, x, y, cardId, isRetro, removeMode);
 
     }
 
     @Override
     public void updateShownPlayable(Integer previousId, Integer currentId) {
-
+        guiObserver.updateShownPlayable(previousId, currentId);
     }
 
     @Override
     public void updateTurnChange(String nickname) {
-
+        guiObserver.updateTurnChange(nickname);
     }
 
     @Override
     public void updatePlayerPoint(String nickname, int points) {
-
+        guiObserver.updatePlayerPoint(nickname, points);
     }
 
     @Override
     public void updateGameStatus(GameStatus status) {
-
+        guiObserver.updateGameStatus(status);
     }
 
     @Override
     public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
-
+        guiObserver.updateCommonObjective(cardId, removeMode);
     }
 
     @Override
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
-
+        guiObserver.receiveFinalLeaderboard(finalLeaderboard);
     }
 
     @Override

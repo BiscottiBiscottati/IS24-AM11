@@ -23,7 +23,6 @@ public enum GuiResEnum {
     RED_GLD_RTR("red_gold.png"),
     OBJ_CARD("objective.png");
 
-
     private final String fileName;
 
     GuiResEnum(String fileName) {

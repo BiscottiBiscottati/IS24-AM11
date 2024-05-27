@@ -6,7 +6,6 @@ import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.RMI.Client.ClientRMI;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
-import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -14,21 +13,20 @@ import java.rmi.RemoteException;
 public class GuiActuator {
 
     private ClientGameConnector connector = null;
-    private GuiUpdater guiUpdater;
+    private final GuiUpdater guiUpdater;
 
     public GuiActuator(GuiUpdater guiUpdater) {
         this.guiUpdater = guiUpdater;
     }
 
-    public void connect(String type, String ip, int port) {
+    public void connect(String type, String ip, int port) throws Exception {
         ClientNetworkHandler clientHandler;
         switch (type) {
             case "rmi": {
                 try {
                     clientHandler = new ClientRMI(ip, port, guiUpdater);
                 } catch (RemoteException e) {
-                    //TODO: handle exception
-                    return;
+                    throw new RemoteException("Error while creating RMI client");
                 }
                 connector = clientHandler.getConnector();
                 break;
@@ -37,14 +35,13 @@ public class GuiActuator {
                 try {
                     clientHandler = new ClientSocket(ip, port, guiUpdater);
                 } catch (IOException e) {
-                    //TODO: handle exception
-                    return;
+                    throw new IOException("Error while creating socket client");
                 }
                 connector = clientHandler.getConnector();
                 break;
             }
             default: {
-                throw new RuntimeException("Type is set neither to rmi nor to socket");
+                throw new Exception("Type is set neither to rmi nor to socket");
             }
         }
     }
