@@ -10,7 +10,6 @@ import it.polimi.ingsw.am11.network.ServerTableConnector;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.TestOnly;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,10 +62,6 @@ public enum CentralController {
                        .disconnectPlayer(nickname);
     }
 
-    public void playerReconnected(String nickname) {
-        //TODO to implement
-    }
-
     public synchronized @Nullable String getGodPlayer() {
         return gameControllers.stream().findFirst()
                               .orElseThrow()
@@ -79,8 +74,8 @@ public enum CentralController {
         return gameControllers.stream().findFirst().orElseThrow();
     }
 
-    @TestOnly
-    public void forceReset() {
+    public void destroyGame() {
+        LOGGER.info("Destroying current Game and recreating a new one");
         gameControllers.clear();
         createNewGame();
     }
