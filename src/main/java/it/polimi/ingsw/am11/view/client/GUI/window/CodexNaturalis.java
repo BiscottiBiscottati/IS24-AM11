@@ -16,6 +16,7 @@ import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,10 +43,16 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     private final GuiResources guiResources;
     List<Label> labels;
-    List<Button> buttons;
+    List<Button> buttonsList;
     List<TextField> textFields;
     GuiActuator guiActuator;
     MiniGameModel miniGameModel;
+    Scene scene;
+    SettingNumOfPlayers settingNumOfPlayers = new SettingNumOfPlayers();
+    Font font;
+    Font fontBig;
+    int halfButtonSize;
+    AtomicInteger totalPlayers;
     private FrameHandler frameHandler;
     private StackPane root;
 
@@ -64,20 +71,20 @@ public class CodexNaturalis extends Application implements GuiObserver {
         miniGameModel = new MiniGameModel();
         GuiExceptionReceiver exceptionReceiver = new GuiExceptionReceiver(this);
         GuiUpdater guiUpdater = new GuiUpdater(exceptionReceiver, miniGameModel, this);
-        guiActuator = new GuiActuator(guiUpdater, miniGameModel);
+        guiActuator = new GuiActuator(guiUpdater);
 
         // Proportions
         int size = (int) (Math.min(Screen.getPrimary().getBounds().getHeight(),
                                    Screen.getPrimary().getBounds().getWidth()) * 0.7);
 
-        int halfButtonSize = size / 48;
+        halfButtonSize = size / 48;
         int distanceToBorder = halfButtonSize >> 2;
 
 
         //Let's get the custom font
-        Font font = Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
-                                  1.5 * halfButtonSize);
-        Font fontBig =
+        font = Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
+                             1.5 * halfButtonSize);
+        fontBig =
                 Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
                               3 * halfButtonSize);
 
@@ -129,8 +136,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
         Label yourName = new Label("Your Name:");
         Label nameAlreadyTaken = new Label();
 
-        SettingNick settingNick = new SettingNick();
-
         root.getChildren().addAll(yourName, writeNick, nameAlreadyTaken);
 
         // Buttons declarations
@@ -156,9 +161,9 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
         root.getChildren().addAll(numOfPlayers, writeNumOfPlayers, invalidNumOfPlayers);
 
-        SettingNumOfPlayers settingNumOfPlayers = new SettingNumOfPlayers();
+        SettingNick settingNick = new SettingNick();
 
-        AtomicInteger totalPlayers = new AtomicInteger();
+        totalPlayers = new AtomicInteger();
 
         AtomicInteger currentPlayers = new AtomicInteger();
 
@@ -173,7 +178,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
         frameHandler = new FrameHandler(guiResources, stage, root);
 
         // Set scene and stage
-        Scene scene = new Scene(root, size, size, Color.BLACK);
+        scene = new Scene(root, size, size, Color.BLACK);
 
         stage.setScene(scene);
         stage.setResizable(false);
@@ -181,10 +186,10 @@ public class CodexNaturalis extends Application implements GuiObserver {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
 
-        List<Label> labels = new ArrayList<>(
+        labels = new ArrayList<>(
                 List.of(numOfPlayers, invalidNumOfPlayers, yourName, nameAlreadyTaken,
-                        connectionType, connectionFailed, waitingForPlayers));
-        this.labels = labels;
+                        connectionType,
+                        connectionFailed, waitingForPlayers));
 
         numOfPlayers.setVisible(false);
         invalidNumOfPlayers.setVisible(false);
@@ -194,14 +199,11 @@ public class CodexNaturalis extends Application implements GuiObserver {
         connectionFailed.setVisible(false);
         waitingForPlayers.setVisible(false);
 
-        List<Button> buttonList = new ArrayList<>(
+        buttonsList = new ArrayList<>(
                 List.of(goToNetwork, chooseNick, chooseSocket, chooseRMI, joinButton,
                         enterNumOfPlayers, goBack));
-        this.buttons = buttonList;
 
-        List<TextField> textFields = new ArrayList<>(
-                List.of(writeNick, ipAddress, port, writeNumOfPlayers));
-        this.textFields = textFields;
+        textFields = new ArrayList<>(List.of(writeNick, ipAddress, port, writeNumOfPlayers));
 
         writeNick.setVisible(false);
         ipAddress.setVisible(false);
@@ -212,11 +214,12 @@ public class CodexNaturalis extends Application implements GuiObserver {
                 List.of(lDBackground, lDSquare, lDWritings, lDDisks, wolf, butterfly, mushroom,
                         leaf));
 
-        loadingScreen.animateLoadingScreen(size, images, buttonList, textFields, labels, prT, sqT,
+        loadingScreen.animateLoadingScreen(size, images, buttonsList, textFields, labels, prT, sqT,
                                            theBox);
-        networkPage.createNetworkPage(font, halfButtonSize, labels, buttonList, textFields,
+        networkPage.createNetworkPage(font, halfButtonSize, labels, buttonsList, textFields,
                                       guiActuator, theBox);
-        settingNick.createSettingNick(font, halfButtonSize, fontBig, labels, textFields, buttonList,
+        settingNick.createSettingNick(font, halfButtonSize, fontBig, labels, textFields,
+                                      buttonsList,
                                       guiActuator, theBox, loadingWheel, currentPlayers,
                                       miniGameModel);
 
@@ -320,39 +323,21 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void notifyGodPlayer() {
-        Label numOfPlayers = labels.get(0);
-        TextField writeNumOfPlayers = textFields.get(3);
-        Label invalidNumOfPlayers = labels.get(1);
-        Button enterNumOfPlayers = buttons.get(5);
-        Button goBack = buttons.get(6);
-        numOfPlayers.setVisible(true);
-        writeNumOfPlayers.setVisible(true);
-        enterNumOfPlayers.setVisible(true);
-        goBack.setVisible(true);
+        Platform.runLater(() -> {
+            System.out.println("You are the god player");
 
-        Label waitingForPlayers = labels.get(6);
-        ProgressIndicator loadingWheel = (ProgressIndicator) root.getChildren().get(8);
+            settingNumOfPlayers.createNumOfPlayersPage(font, halfButtonSize, labels, textFields,
+                                                       buttonsList, guiActuator, miniGameModel,
+                                                       totalPlayers);
+            Label numOfPlayers = labels.get(0);
+            TextField writeNumOfPlayers = textFields.get(3);
+            Label invalidNumOfPlayers = labels.get(1);
+            Button enterNumOfPlayers = buttonsList.get(5);
 
-        numOfPlayers.setOnMouseClicked(event -> {
-            int num = 0;
-            try {
-                num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
-            } catch (NumberFormatException e) {
-                writeNumOfPlayers.setText("Fail");
-            }
-            if (writeNumOfPlayers.getCharacters().toString().equals("Fail")) {
-                invalidNumOfPlayers.setVisible(true);
-            } else {
-                guiActuator.setNumOfPlayers(num);
-                enterNumOfPlayers.setVisible(false);
-                numOfPlayers.setVisible(false);
-                writeNumOfPlayers.setVisible(false);
-                invalidNumOfPlayers.setVisible(false);
-                goBack.setVisible(false);
-
-                loadingWheel.setVisible(true);
-                waitingForPlayers.setVisible(true);
-            }
+            numOfPlayers.setVisible(true);
+            writeNumOfPlayers.setVisible(true);
+            enterNumOfPlayers.setVisible(true);
+            invalidNumOfPlayers.setVisible(false);
         });
     }
 

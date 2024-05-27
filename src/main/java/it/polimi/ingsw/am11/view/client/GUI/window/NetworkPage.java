@@ -55,7 +55,7 @@ public class NetworkPage {
         Button chooseRMI = buttonList.get(3);
         Button joinButton = buttonList.get(4);
 
-        // Socket, Rmi and Join buttons
+        // Socket, Rmi and Join buttonsList
         chooseSocket.setOnAction(event -> {
             connectionType.setText("Socket");
         });
