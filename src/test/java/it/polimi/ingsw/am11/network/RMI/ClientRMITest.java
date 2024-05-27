@@ -11,7 +11,7 @@ class ClientRMITest {
 
     @BeforeEach
     void setUp() {
-        CentralController.INSTANCE.forceReset();
+        CentralController.INSTANCE.destroyGame();
     }
 
     @Test

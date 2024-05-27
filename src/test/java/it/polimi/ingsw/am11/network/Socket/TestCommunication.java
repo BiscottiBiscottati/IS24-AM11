@@ -64,7 +64,7 @@ class TestCommunication {
         when(clientViewUpdaterMock3.getExceptionConnector()).thenReturn(exceptionConnectorMock);
         when(clientViewUpdaterMock4.getExceptionConnector()).thenReturn(exceptionConnectorMock);
 
-        centralController.forceReset();
+        centralController.destroyGame();
         serverSocket = new SocketManager(12345);
         server = new Thread(() -> {
             serverSocket.start();

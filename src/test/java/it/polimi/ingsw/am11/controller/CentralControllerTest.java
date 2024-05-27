@@ -31,7 +31,7 @@ class CentralControllerTest {
     @BeforeEach
     void setUp() {
         centralController = CentralController.INSTANCE;
-        centralController.forceReset();
+        centralController.destroyGame();
     }
 
     @Test

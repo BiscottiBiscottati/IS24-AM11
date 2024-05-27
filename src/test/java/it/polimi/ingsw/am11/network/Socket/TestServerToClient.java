@@ -37,7 +37,7 @@ public class TestServerToClient {
     @BeforeEach
     void setUp() throws IOException {
         when(updater.getExceptionConnector()).thenReturn(exceptionConnector);
-        CentralController.INSTANCE.forceReset();
+        CentralController.INSTANCE.destroyGame();
         socketManager = new SocketManager(1234);
         serverThread = new Thread(socketManager::start);
         serverThread.start();

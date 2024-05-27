@@ -61,7 +61,7 @@ class ClientToServerConnectorTest {
 
         executor = Executors.newFixedThreadPool(5);
 
-        CentralController.INSTANCE.forceReset();
+        CentralController.INSTANCE.destroyGame();
         serverRMI = new ServerRMI(54321);
         executor.submit(serverRMI::start);
 
