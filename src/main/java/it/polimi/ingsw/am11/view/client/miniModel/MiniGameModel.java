@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.view.client.miniModel;
 
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.model.table.GameStatus;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -61,7 +61,7 @@ public class MiniGameModel {
         return currentTurn;
     }
 
-    public void setCurrentTurn(String nickname) {
+    public void setCurrentTurn(@NotNull String nickname) {
         currentTurn = nickname;
     }
 

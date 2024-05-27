@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import org.jetbrains.annotations.NotNull;
 
 public enum TuiStates {
     CONNECTING(Connecting::new),
@@ -19,7 +20,7 @@ public enum TuiStates {
         this.stateFactory = stateFactory;
     }
 
-    public TUIState getNewState(MiniGameModel model) {
+    public @NotNull TUIState getNewState(@NotNull MiniGameModel model) {
         return stateFactory.createState(model);
     }
 }

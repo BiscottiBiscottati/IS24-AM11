@@ -34,7 +34,7 @@ public class TuiUpdater implements ClientViewUpdater {
     private final AtomicReference<TUIState> currentState;
     private String candidateNick = "";
 
-    public TuiUpdater(MiniGameModel model, TuiStates startingState) {
+    public TuiUpdater(@NotNull MiniGameModel model, TuiStates startingState) {
         this.model = model;
         this.tuiStates = new EnumMap<>(TuiStates.class);
         for (TuiStates state : TuiStates.values()) {
@@ -87,7 +87,7 @@ public class TuiUpdater implements ClientViewUpdater {
     }
 
     @Override
-    public void updateTurnChange(String nickname) {
+    public void updateTurnChange(@NotNull String nickname) {
         model.setCurrentTurn(nickname);
         LOGGER.debug("It's {} turn", nickname);
 

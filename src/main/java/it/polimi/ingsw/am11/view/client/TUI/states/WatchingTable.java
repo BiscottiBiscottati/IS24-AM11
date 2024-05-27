@@ -6,13 +6,11 @@ import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
 import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
-import it.polimi.ingsw.am11.view.client.TUI.printers.FieldPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,9 +20,7 @@ public class WatchingTable extends TUIState {
     private static final String askForCommand = "What you wanna do? Draw a card? >>> \033[K";
     private static final String helpDraw = "HELP: draw <cardId/gold/resource> \033[K";
     private static final String helpGet = "GET: get <table/[nickname]> \033[K";
-    private MiniGameModel model;
     private boolean alreadyError = false;
-    private boolean isBlocked = false;
 
     public WatchingTable(MiniGameModel model) {
         super(model);
@@ -54,11 +50,9 @@ public class WatchingTable extends TUIState {
         switch (word.toLowerCase()) {
             case "help" -> {
                 Actuator.help();
-                return;
             }
             case "exit" -> {
                 Actuator.close();
-                return;
             }
             case "get" -> {
                 get(actuator, parser);
@@ -105,18 +99,6 @@ public class WatchingTable extends TUIState {
 
     }
 
-    private void askSpecLine() {
-        if (model.getCurrentTurn().equals(model.myName())) {
-            if (model.getiPlaced()) {
-                System.out.print(askForCommand);
-            } else {
-                System.out.print(askToSee);
-            }
-        } else {
-            System.out.print(askLine);
-        }
-    }
-
     @Override
     public void restart(boolean dueToEx, @Nullable Exception exception) {
         ConsUtils.clear();
@@ -159,6 +141,58 @@ public class WatchingTable extends TUIState {
             alreadyError = false;
         }
         askSpecLine();
+    }
+
+    private static @NotNull ArgParser setUpOptions() {
+        return new ArgParser();
+    }
+
+    private void askSpecLine() {
+        if (model.getCurrentTurn().equals(model.myName())) {
+            if (model.getiPlaced()) {
+                System.out.print(askForCommand);
+            } else {
+                System.out.print(askToSee);
+            }
+        } else {
+            System.out.print(askLine);
+        }
+    }
+
+    private void errorsHappensEvenTwice(String text) {
+        if (alreadyError) {
+            System.out.print("\033[F" + "\033[K");
+        }
+        System.out.println("\033[F" + "\033[K" + text);
+    }
+
+    private void get(Actuator actuator, ArgParser parser) {
+        List<String> positionalArgs = parser.getPositionalArgs();
+
+        Set<String> playerList = model.getplayers();
+
+        if (positionalArgs.size() == 2) {
+            if (playerList.contains(positionalArgs.get(1))) {
+                String word = positionalArgs.get(1);
+                String[] args = {"get", word};
+                actuator.setTuiState(TuiStates.WATCHING_TABLE);
+                actuator.getCurrentTuiState().passArgs(actuator, args);
+                return;
+            }
+            String secondWord = parser.getPositionalArgs().get(1);
+            switch (secondWord) {
+                case "?", "help" -> {
+                    errorsHappensEvenTwice(helpGet);
+                    alreadyError = true;
+                    askSpecLine();
+                }
+                case "table" -> {
+                    errorsHappensEvenTwice("You already are watching the table");
+                    alreadyError = true;
+                    System.out.print(askLine);
+                }
+            }
+        }
     }
 
     private void draw(Actuator actuator, ArgParser parser) {
@@ -214,50 +248,8 @@ public class WatchingTable extends TUIState {
             errorsHappensEvenTwice("ERROR" + secondWord + " is not a valid cardId");
             alreadyError = true;
             System.out.print(askForCommand);
-            return;
         }
 
 
-    }
-
-    private static @NotNull ArgParser setUpOptions() {
-        return new ArgParser();
-    }
-
-    private void errorsHappensEvenTwice(String text) {
-        if (alreadyError) {
-            System.out.print("\033[F" + "\033[K");
-        }
-        System.out.println("\033[F" + "\033[K" + text);
-    }
-
-    private void get(Actuator actuator, ArgParser parser) {
-        List<String> positionalArgs = parser.getPositionalArgs();
-
-        Set<String> playerList = model.getplayers();
-
-        if (positionalArgs.size() == 2) {
-            if (playerList.contains(positionalArgs.get(1))) {
-                String word = positionalArgs.get(1);
-                String[] args = {"get", word};
-                actuator.setTuiState(TuiStates.WATCHING_TABLE);
-                actuator.getCurrentTuiState().passArgs(actuator, args);
-                return;
-            }
-            String secondWord = parser.getPositionalArgs().get(1);
-            switch (secondWord) {
-                case "?", "help" -> {
-                    errorsHappensEvenTwice(helpGet);
-                    alreadyError = true;
-                    askSpecLine();
-                    return;
-                }
-                case "table" -> {
-                    errorsHappensEvenTwice("You already are watching the table");
-                    alreadyError = true;
-                    System.out.print(askLine);
-                }
-            }
-        }
     }
 }

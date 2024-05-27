@@ -1,8 +1,10 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import org.jetbrains.annotations.NotNull;
 
 @FunctionalInterface
 public interface StateFactory {
-    TUIState createState(MiniGameModel model);
+    @NotNull
+    TUIState createState(@NotNull MiniGameModel model);
 }
