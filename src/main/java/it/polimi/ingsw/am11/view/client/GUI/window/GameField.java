@@ -42,5 +42,7 @@ public class GameField {
         playerList.setStyle("-fx-background-color: #351F17");
         playerList.setStyle("-fx-background-radius: 5");
         playerList.setVisible(false);
+
+
     }
 }

@@ -22,8 +22,8 @@ public class SettingNick {
                                   AtomicInteger currentPlayers, MiniGameModel miniGameModel) {
 
         TextField writeNick = textFields.getFirst();
-        Label yourName = labels.get(0);
-        Label nameAlreadyTaken = labels.get(1);
+        Label yourName = labels.get(2);
+        Label nameAlreadyTaken = labels.get(3);
 
         writeNick.setAlignment(Pos.CENTER);
         writeNick.setPromptText("Nickname");
@@ -46,12 +46,12 @@ public class SettingNick {
 
         Button goToNetwork = buttonList.get(0);
         Button chooseNick = buttonList.get(1);
-        Button goBack = buttonList.get(2);
-        Button enterNumOfPlayers = buttonList.get(3);
-        Button chooseRMI = buttonList.get(4);
-        Button chooseSocket = buttonList.get(5);
-        Button joinButton = buttonList.get(6);
-        Label connectionType = labels.get(2);
+        Button goBack = buttonList.get(6);
+        Button enterNumOfPlayers = buttonList.get(5);
+        Button chooseRMI = buttonList.get(3);
+        Button chooseSocket = buttonList.get(2);
+        Button joinButton = buttonList.get(4);
+        Label connectionType = labels.get(4);
 
         goToNetwork.setOnAction(event -> {
             chooseRMI.setVisible(true);
@@ -74,8 +74,8 @@ public class SettingNick {
             nameAlreadyTaken.setVisible(true);
         });
 
-        Label numOfPlayers = labels.get(3);
-        TextField writeNumOfPlayers = textFields.get(1);
+        Label numOfPlayers = labels.getFirst();
+        TextField writeNumOfPlayers = textFields.get(3);
 
         chooseNick.setOnMouseClicked(event -> {
             String nick = writeNick.getCharacters().toString();

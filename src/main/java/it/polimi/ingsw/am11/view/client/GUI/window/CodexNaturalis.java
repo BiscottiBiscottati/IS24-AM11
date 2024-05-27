@@ -37,6 +37,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CodexNaturalis extends Application implements GuiObserver {
 
     private final GuiResources guiResources;
+    List<Label> labels;
+    List<Button> buttons;
+    List<TextField> textFields;
     private FrameHandler frameHandler;
 
 
@@ -174,17 +177,36 @@ public class CodexNaturalis extends Application implements GuiObserver {
         List<Label> labels = new ArrayList<>(
                 List.of(numOfPlayers, invalidNumOfPlayers, yourName, nameAlreadyTaken,
                         connectionType, connectionFailed, waitingForPlayers));
+        this.labels = labels;
+
+        numOfPlayers.setVisible(false);
+        invalidNumOfPlayers.setVisible(false);
+        yourName.setVisible(false);
+        nameAlreadyTaken.setVisible(false);
+        connectionType.setVisible(false);
+        connectionFailed.setVisible(false);
+        waitingForPlayers.setVisible(false);
+
         List<Button> buttonList = new ArrayList<>(
                 List.of(goToNetwork, chooseNick, chooseSocket, chooseRMI, joinButton,
                         enterNumOfPlayers, goBack));
+        this.buttons = buttonList;
+
         List<TextField> textFields = new ArrayList<>(
                 List.of(writeNick, ipAddress, port, writeNumOfPlayers));
+        this.textFields = textFields;
+
+        writeNick.setVisible(false);
+        ipAddress.setVisible(false);
+        port.setVisible(false);
+        writeNumOfPlayers.setVisible(false);
 
         List<ImageView> images = new ArrayList<>(
                 List.of(lDBackground, lDSquare, lDWritings, lDDisks, wolf, butterfly, mushroom,
                         leaf));
 
-        loadingScreen.animateLoadingScreen(size, images, buttonList, prT, sqT, theBox);
+        loadingScreen.animateLoadingScreen(size, images, buttonList, textFields, labels, prT, sqT,
+                                           theBox);
         networkPage.createNetworkPage(font, halfButtonSize, labels, buttonList, textFields,
                                       guiActuator, theBox);
         settingNick.createSettingNick(font, halfButtonSize, fontBig, labels, textFields, buttonList,

@@ -22,7 +22,7 @@ public class SettingNumOfPlayers {
                                        List<Button> buttonList, GuiActuator guiActuator,
                                        MiniGameModel miniGameModel, AtomicInteger totalPlayers) {
         Label numOfPlayers = labels.get(0);
-        TextField writeNumOfPlayers = textFields.get(0);
+        TextField writeNumOfPlayers = textFields.get(3);
         Label invalidNumOfPlayers = labels.get(1);
 
         numOfPlayers.setBackground(Background.EMPTY);
@@ -47,9 +47,9 @@ public class SettingNumOfPlayers {
 
         Button goToNetwork = buttonList.get(0);
         Button chooseNick = buttonList.get(1);
-        Button goBack = buttonList.get(2);
-        Button enterNumOfPlayers = buttonList.get(3);
-        TextField writeNick = textFields.get(1);
+        Button goBack = buttonList.get(6);
+        Button enterNumOfPlayers = buttonList.get(5);
+        TextField writeNick = textFields.getFirst();
         Label yourName = labels.get(2);
         Label nameAlreadyTaken = labels.get(3);
 

@@ -18,8 +18,8 @@ public class NetworkPage {
                                   List<Button> buttonList, List<TextField> textFields,
                                   GuiActuator guiActuator, VBox theBox) {
 
-        TextField ipAddress = textFields.get(0);
-        TextField port = textFields.get(1);
+        TextField ipAddress = textFields.get(1);
+        TextField port = textFields.get(2);
 
         ipAddress.setAlignment(Pos.CENTER);
         ipAddress.setPromptText("Ip Address");
@@ -34,8 +34,8 @@ public class NetworkPage {
         port.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5;" +
                       " -fx-max-width: " + 20 * halfButtonSize);
 
-        Label connectionType = labels.get(0);
-        Label connectionFailed = labels.get(1);
+        Label connectionType = labels.get(4);
+        Label connectionFailed = labels.get(5);
 
         connectionType.setBackground(Background.EMPTY);
         connectionType.setFont(font);
@@ -51,9 +51,9 @@ public class NetworkPage {
         connectionType.setVisible(false);
         connectionFailed.setVisible(false);
 
-        Button chooseSocket = buttonList.get(0);
-        Button chooseRMI = buttonList.get(1);
-        Button joinButton = buttonList.get(2);
+        Button chooseSocket = buttonList.get(2);
+        Button chooseRMI = buttonList.get(3);
+        Button joinButton = buttonList.get(4);
 
         // Socket, Rmi and Join buttons
         chooseSocket.setOnAction(event -> {
@@ -64,10 +64,10 @@ public class NetworkPage {
             connectionType.setText("Rmi");
         });
 
-        Button enterNumOfPlayers = buttonList.get(3);
-        Button goToNetwork = buttonList.get(4);
-        Button chooseNick = buttonList.get(5);
-        TextField writeNick = textFields.get(2);
+        Button enterNumOfPlayers = buttonList.get(5);
+        Button goToNetwork = buttonList.get(0);
+        Button chooseNick = buttonList.get(1);
+        TextField writeNick = textFields.get(0);
         Label yourName = labels.get(2);
 
         joinButton.setOnAction(event -> {
