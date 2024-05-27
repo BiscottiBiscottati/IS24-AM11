@@ -1,11 +1,9 @@
 package it.polimi.ingsw.am11.network.RMI.Client;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
-import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.RMI.Server.ServerRMI;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
@@ -38,6 +36,11 @@ class ClientToServerConnectorTest {
     ClientRMI clientRMI3;
     ClientRMI clientRMI4;
 
+    ClientGameConnector gameConnector;
+    ClientGameConnector gameConnector2;
+    ClientGameConnector gameConnector3;
+    ClientGameConnector gameConnector4;
+
     @Mock
     ClientViewUpdater updater;
     @Mock
@@ -66,86 +69,78 @@ class ClientToServerConnectorTest {
         clientRMI2 = new ClientRMI("localhost", 54321, updater2);
         clientRMI3 = new ClientRMI("localhost", 54321, updater3);
         clientRMI4 = new ClientRMI("localhost", 54321, updater4);
+
+        gameConnector = clientRMI.getGameUpdatesInterface();
+        gameConnector2 = clientRMI2.getGameUpdatesInterface();
+        gameConnector3 = clientRMI3.getGameUpdatesInterface();
+        gameConnector4 = clientRMI4.getGameUpdatesInterface();
     }
 
     @RepeatedTest(10)
+    @Timeout(3)
     void notifyGodPlayer() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(3);
+        CountDownLatch godNotified = new CountDownLatch(1);
+        CountDownLatch finishLatch = new CountDownLatch(1);
 
         doAnswer(invocation -> {
-            latch.countDown();
+            godNotified.countDown();
             return 0;
-        }).when(exceptionConnector).throwException(any(NotGodPlayerException.class));
+        }).when(updater).notifyGodPlayer();
         doAnswer(invocation -> {
-            latch.countDown();
+            finishLatch.countDown();
             return 0;
-        }).when(exceptionConnector).throwException(any(NotSetNumOfPlayerException.class));
+        }).when(updater).updateNumOfPlayers(3);
+
+        assertDoesNotThrow(() -> gameConnector.setNickname("chen"));
+
+        godNotified.await();
+
+        assertDoesNotThrow(() -> gameConnector.setNumOfPlayers(3));
+
+        finishLatch.await();
+
+        // verify notify god player is called and number set
+        verify(updater, Mockito.times(1)).notifyGodPlayer();
+        verify(updater, Mockito.times(1)).updateNumOfPlayers(3);
+    }
+
+    @RepeatedTest(10)
+    @Timeout(3)
+    void setNumOfPlayers() throws InterruptedException {
+        CountDownLatch finishLatch = new CountDownLatch(3);
         doAnswer(invocation -> {
-            latch.countDown();
+            assertDoesNotThrow(() -> gameConnector.setNumOfPlayers(3));
             return 0;
         }).when(updater).notifyGodPlayer();
 
-        assertDoesNotThrow(() -> clientRMI.login("chen"));
+        doAnswer(invocation -> {
+            assertDoesNotThrow(() -> gameConnector2.setNickname("edo"));
+            assertDoesNotThrow(() -> gameConnector3.setNickname("ferdi"));
+            return 0;
+        }).when(updater).updateNumOfPlayers(3);
 
-        clientRMI.await();
+        doAnswer(invocation -> {
+            finishLatch.countDown();
+            return 0;
+        }).when(updater).receiveStarterCard(anyInt());
+        doAnswer(invocation -> {
+            finishLatch.countDown();
+            return 0;
+        }).when(updater2).receiveStarterCard(anyInt());
+        doAnswer(invocation -> {
+            finishLatch.countDown();
+            return 0;
+        }).when(updater3).updateGameStatus(eq(GameStatus.CHOOSING_STARTERS));
 
-        assertDoesNotThrow(() -> clientRMI2.login("edo"));
-        clientRMI2.await();
+        assertDoesNotThrow(() -> gameConnector.setNickname("chen"));
 
-        assertDoesNotThrow(() -> clientRMI3.setNumOfPlayers("edo", 2));
-        clientRMI3.await();
+        finishLatch.await();
 
-        assertDoesNotThrow(() -> clientRMI.setNumOfPlayers("chen", 2));
-        clientRMI.await();
-
-
-        latch.await();
-
-        // verify not god player trying to set num of player
-        verify(exceptionConnector, times(1))
-                .throwException(any(NotGodPlayerException.class));
-        // verify player trying to enter game without num of players
-        verify(exceptionConnector, times(1))
-                .throwException(any(NotSetNumOfPlayerException.class));
-        // verify notify god player is called
-        verify(updater, Mockito.times(1)).notifyGodPlayer();
-    }
-
-    @RepeatedTest(10)
-    void setNumOfPlayers() {
-        assertDoesNotThrow(() -> clientRMI.login("chen"));
-        clientRMI.await();
-
-        // Testing illegal number of players
-        assertDoesNotThrow(() -> clientRMI.setNumOfPlayers("chen", 1));
-        clientRMI.await();
-        verify(exceptionConnector, times(1))
-                .throwException(any(NumOfPlayersException.class));
-
-        reset(exceptionConnector);
-
-        assertDoesNotThrow(() -> clientRMI.setNumOfPlayers("chen", 5));
-        clientRMI.await();
-        verify(exceptionConnector, times(1))
-                .throwException(any(NumOfPlayersException.class));
-
-        // Testing not god player
-        assertDoesNotThrow(() -> clientRMI2.setNumOfPlayers("edo", 3));
-        clientRMI2.await();
-
-        // Testing correct number of players
-        assertDoesNotThrow(() -> clientRMI.setNumOfPlayers("chen", 2));
-        clientRMI.await();
-
-        // Testing already set number of players
-        assertDoesNotThrow(() -> clientRMI2.setNumOfPlayers("chen", 3));
-        clientRMI2.await();
-
-        verify(exceptionConnector, times(1))
-                .throwException(any(NotGodPlayerException.class));
-        verify(updater, times(1)).updateNumOfPlayers(2);
-        verify(exceptionConnector, times(1))
-                .throwException(any(GameStatusException.class));
+        verify(updater, times(1)).notifyGodPlayer();
+        verify(updater, times(1)).updateNumOfPlayers(3);
+        verify(updater, times(1)).receiveStarterCard(anyInt());
+        verify(updater2, times(1)).receiveStarterCard(anyInt());
+        verify(updater3, times(1)).receiveStarterCard(anyInt());
 
     }
 
@@ -154,6 +149,7 @@ class ClientToServerConnectorTest {
     void setStarters() throws InterruptedException {
         CountDownLatch latchLogin = new CountDownLatch(1);
         CountDownLatch latchFinish = new CountDownLatch(3);
+        CountDownLatch numSet = new CountDownLatch(1);
 
         // Set Starter when choosing starters
         doAnswer(invocation -> {
@@ -164,9 +160,8 @@ class ClientToServerConnectorTest {
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
-                        assertDoesNotThrow(() -> clientRMI.setStarterCard("chen",
-                                                                          true));
-                        clientRMI.await();
+                        assertDoesNotThrow(() -> gameConnector.setStarterCard(
+                                true));
                         latchFinish.countDown();
                     });
             return 0;
@@ -179,8 +174,7 @@ class ClientToServerConnectorTest {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                assertDoesNotThrow(() -> clientRMI2.setStarterCard("edo", true));
-                clientRMI2.await();
+                assertDoesNotThrow(() -> gameConnector2.setStarterCard(true));
                 latchFinish.countDown();
             });
             return 0;
@@ -196,26 +190,36 @@ class ClientToServerConnectorTest {
             return 0;
         }).when(updater2).receiveCandidateObjective(anySet());
 
+        doAnswer(invocation -> {
+            assertDoesNotThrow(() -> gameConnector.setNumOfPlayers(2));
+            return 0;
+        }).when(updater).notifyGodPlayer();
+
+        doAnswer(invocation -> {
+            numSet.countDown();
+            return 0;
+        }).when(updater).updateNumOfPlayers(2);
+
         // Connect god player
-        assertDoesNotThrow(() -> clientRMI.login("chen"));
-        assertDoesNotThrow(() -> clientRMI.setNumOfPlayers("chen", 2));
-        clientRMI.await();
+        assertDoesNotThrow(() -> gameConnector.setNickname("chen"));
 
 
         // Test setting starter when the game is in setup
-        assertDoesNotThrow(() -> clientRMI.setStarterCard("chen", true));
-        clientRMI.await();
-        verify(exceptionConnector, times(1))
-                .throwException(any(GameStatusException.class));
+        assertDoesNotThrow(() -> gameConnector.setStarterCard(true));
+
+        numSet.await();
 
         // Connect second player
         executor.submit(() -> {
-            assertDoesNotThrow(() -> clientRMI2.login("edo"));
-            clientRMI2.await();
+            assertDoesNotThrow(() -> gameConnector2.setNickname("edo"));
             latchLogin.countDown();
         });
 
         latchFinish.await();
+
+        // Test that exception is thrown when setting starter when not in choosing starters
+        verify(exceptionConnector, times(1))
+                .throwException(any(GameStatusException.class));
 
         // Test that Starter are given
         verify(updater, times(1)).receiveStarterCard(anyInt());

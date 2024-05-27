@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ClientGameUpdatesInterface;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.HeartbeatInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerGameCommandsInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerLoggable;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
@@ -27,6 +28,7 @@ public class ServerRMI implements ServerLoggable {
     private final int port;
     private final ServerGameCommandsImpl playerView;
     private final Registry registry;
+    private final HeartbeatManager heartbeatManager;
     private ExceptionConnector exceptionConnector;
 
     public ServerRMI(int port) {
@@ -34,6 +36,7 @@ public class ServerRMI implements ServerLoggable {
         try {
             registry = LocateRegistry.createRegistry(port);
             playerView = new ServerGameCommandsImpl();
+            heartbeatManager = new HeartbeatManager();
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -42,9 +45,14 @@ public class ServerRMI implements ServerLoggable {
     public void start() {
         ServerLoggable log;
         ServerGameCommandsInterface view;
+        HeartbeatInterface heartbeat;
         try {
-            log = (ServerLoggable) UnicastRemoteObject.exportObject(this, 0);
-            view = (ServerGameCommandsInterface) UnicastRemoteObject.exportObject(playerView, 0);
+            log = (ServerLoggable) UnicastRemoteObject.exportObject(this,
+                                                                    0);
+            view = (ServerGameCommandsInterface) UnicastRemoteObject.exportObject(playerView,
+                                                                                  0);
+            heartbeat = (HeartbeatInterface) UnicastRemoteObject.exportObject(heartbeatManager,
+                                                                              0);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -52,24 +60,27 @@ public class ServerRMI implements ServerLoggable {
         try {
             registry.bind("Loggable", log);
             registry.bind("PlayerView", view);
-
-            Runtime.getRuntime().addShutdownHook(new Thread(this::close));
+            registry.bind("ping", heartbeat);
 
             LOGGER.info("SERVER RMI: Server open on port: {}", port);
         } catch (RemoteException | AlreadyBoundException e) {
             throw new RuntimeException(e);
         }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(this::close));
     }
 
     public void close() {
         try {
             registry.unbind("Loggable");
             registry.unbind("PlayerView");
+            registry.unbind("ping");
 
             try {
                 UnicastRemoteObject.unexportObject(this, false);
                 UnicastRemoteObject.unexportObject(playerView, false);
                 UnicastRemoteObject.unexportObject(registry, false);
+                UnicastRemoteObject.unexportObject(heartbeatManager, false);
             } catch (NoSuchObjectException e) {
                 LOGGER.debug("SERVER RMI: Object already un-exported");
             }
@@ -92,24 +103,9 @@ public class ServerRMI implements ServerLoggable {
         LOGGER.info("SERVER RMI: Player connected: {}", nick);
     }
 
-    // TODO to remove
-    @Override
-    public void logout(String nick) throws RemoteException {
-        CentralController.INSTANCE.disconnectPlayer(nick);
-        System.out.println(nick + " disconnected");
-    }
-
     @Override
     public void setNumOfPlayers(String nick, int val)
     throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException {
         CentralController.INSTANCE.setNumOfPlayers(nick, val);
-    }
-
-    // TODO to remove
-    @Override
-    public void reconnect(String nick) throws RemoteException {
-        if (playerView.containsPlayer(nick)) {
-            CentralController.INSTANCE.playerReconnected(nick);
-        }
     }
 }

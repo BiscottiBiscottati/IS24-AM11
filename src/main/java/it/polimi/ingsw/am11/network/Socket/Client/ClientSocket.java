@@ -80,7 +80,7 @@ public class ClientSocket implements ClientNetworkHandler {
         }
     }
 
-    public ClientGameConnector getConnector() {
+    public ClientGameConnector getGameUpdatesInterface() {
         return clientMessageSender;
     }
 

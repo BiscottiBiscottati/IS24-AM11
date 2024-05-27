@@ -1,13 +1,13 @@
 package it.polimi.ingsw.am11.network.RMI.Server;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.HearbeatInterface;
+import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.HeartbeatInterface;
 import org.jetbrains.annotations.NotNull;
 
 import java.rmi.RemoteException;
 import java.util.concurrent.*;
 
-public class HeartbeatManager implements HearbeatInterface {
+public class HeartbeatManager implements HeartbeatInterface {
     private static final int HEARTBEAT_INTERVAL = 5000;
     private static final int HEARTBEAT_TIMEOUT = 20000;
 
@@ -31,8 +31,8 @@ public class HeartbeatManager implements HearbeatInterface {
         lastHeartbeat.forEach((nickname, last) -> {
             if (now - last > HEARTBEAT_TIMEOUT) {
                 disconnectService.submit(() -> {
-                    CentralController.INSTANCE.disconnectPlayer(nickname);
                     lastHeartbeat.remove(nickname);
+                    CentralController.INSTANCE.disconnectPlayer(nickname);
                 });
             }
         });
@@ -43,8 +43,13 @@ public class HeartbeatManager implements HearbeatInterface {
         lastHeartbeat.put(nickname, System.currentTimeMillis());
     }
 
+    @Override
+    public int getInterval() throws RemoteException {
+        return HEARTBEAT_INTERVAL;
+    }
+
     public void close() {
-        heartbeatsService.shutdown();
         lastHeartbeat.clear();
+        heartbeatsService.shutdown();
     }
 }
