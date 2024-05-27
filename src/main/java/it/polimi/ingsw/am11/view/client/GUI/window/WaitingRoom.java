@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am11.view.client.GUI.window;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
 public class WaitingRoom {
@@ -17,13 +19,16 @@ public class WaitingRoom {
         waitingForPlayers.setStyle("-fx-text-fill: #D7BC49");
         waitingForPlayers.setStyle("-fx-background-color: #351F17");
         waitingForPlayers.setStyle("-fx-background-radius: 5");
-        waitingForPlayers.setVisible(false);
 
         loadingWheel.setTranslateY(0);
         loadingWheel.setTranslateX(0);
         loadingWheel.setStyle("-fx-border-color: #D7BC49");
         loadingWheel.setStyle("-fx-background-color: #351F17");
         loadingWheel.setStyle("-fx-background-radius: 5");
+
+        waitingForPlayers.setVisible(false);
         loadingWheel.setVisible(false);
+
+        StackPane.setAlignment(waitingForPlayers, Pos.CENTER);
     }
 }

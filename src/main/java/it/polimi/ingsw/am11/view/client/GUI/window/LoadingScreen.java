@@ -1,18 +1,25 @@
 package it.polimi.ingsw.am11.view.client.GUI.window;
 
 import javafx.animation.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
+import java.util.List;
+
 public class LoadingScreen {
 
-    public void animateLoadingScreen(int size, ImageView wolf, ImageView butterfly,
-                                     ImageView mushroom, ImageView leaf, ImageView lDWritings,
-                                     ImageView lDDisks, ImageView lDSquare,
-                                     ImageView lDBackground, ParallelTransition prT,
-                                     SequentialTransition sqT) {
+    public void animateLoadingScreen(int size, List<ImageView> images,
+                                     List<Button> buttonList, ParallelTransition prT,
+                                     SequentialTransition sqT, VBox theBox) {
         int symbolSize = size / 8;
+
+        ImageView lDBackground = images.get(0);
+        ImageView lDSquare = images.get(1);
+        ImageView lDWritings = images.get(2);
+        ImageView lDDisks = images.get(7);
 
         lDBackground.setFitHeight(size);
         lDBackground.setPreserveRatio(true);
@@ -22,6 +29,11 @@ public class LoadingScreen {
         lDWritings.setPreserveRatio(true);
         lDDisks.setFitHeight(size);
         lDDisks.setPreserveRatio(true);
+
+        ImageView mushroom = images.get(3);
+        ImageView wolf = images.get(4);
+        ImageView leaf = images.get(5);
+        ImageView butterfly = images.get(6);
 
         wolf.setFitHeight(symbolSize);
         wolf.setPreserveRatio(true);
@@ -154,6 +166,18 @@ public class LoadingScreen {
             wolf.setDisable(true);
             leaf.setDisable(true);
             butterfly.setDisable(true);
+        });
+
+        Button chooseRMI = buttonList.get(0);
+        Button chooseSocket = buttonList.get(1);
+        Button joinButton = buttonList.get(2);
+
+        sqT.onFinishedProperty().set(event -> {
+            chooseRMI.setVisible(true);
+            chooseSocket.setVisible(true);
+            chooseSocket.fire();
+            joinButton.setVisible(true);
+            theBox.setVisible(true);
         });
     }
 }
