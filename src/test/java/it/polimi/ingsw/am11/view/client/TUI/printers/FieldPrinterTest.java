@@ -6,7 +6,6 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.miniModel.CliField;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniCardContainer;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -42,14 +41,9 @@ class FieldPrinterTest {
         );
     }
 
-    @BeforeEach
-    void setUp() {
-        renderer = new FieldPrinter(field);
-    }
-
     @Test
     void render() throws IllegalCardBuildException {
         when(field.getCardsPositioned()).thenReturn(testField);
-        renderer.render();
+        FieldPrinter.render(field, false);
     }
 }
