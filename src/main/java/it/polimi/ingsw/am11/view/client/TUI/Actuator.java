@@ -3,9 +3,7 @@ package it.polimi.ingsw.am11.view.client.TUI;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.ClientGameConnector;
-import it.polimi.ingsw.am11.network.ClientNetworkHandler;
-import it.polimi.ingsw.am11.network.RMI.Client.ClientRMI;
-import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
+import it.polimi.ingsw.am11.network.factory.ConnectionType;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.InvalidArgumetsException;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
@@ -13,8 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.List;
 
 // Its purpose is to effectively actuate the commands parsed by the reader. This is an
@@ -41,39 +37,19 @@ public class Actuator {
         //TODO
     }
 
-    public void connect(String type, String ip, int port) {
-        switch (type) {
-            case "rmi": {
-                ClientNetworkHandler clientHandler = null;
-                try {
-                    clientHandler = new ClientRMI(ip, port, tuiUpdater);
-                } catch (RemoteException e) {
-                    tuiUpdater.getCurrentTuiState().restart(true, e);
-                    return;
-                }
-                connector = clientHandler.getConnector();
-                tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
-                tuiUpdater.getCurrentTuiState().restart(false, null);
-                break;
-            }
-            case "socket": {
-                ClientNetworkHandler clientHandler = null;
-                try {
-                    clientHandler = new ClientSocket(ip, port, tuiUpdater);
-                } catch (IOException e) {
-                    tuiUpdater.getCurrentTuiState().restart(true, e);
-                    return;
-                }
-                connector = clientHandler.getConnector();
-                tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
-                tuiUpdater.getCurrentTuiState().restart(false, null);
-                break;
-            }
-            default: {
-                throw new RuntimeException("Type is set neither to rmi nor to socket");
-            }
+    public void connect(@NotNull String type, String ip, int port) {
+        try {
+            connector = ConnectionType.fromString(type)
+                                      .orElseThrow(() -> new RuntimeException(
+                                              "Type is set neither to rmi nor to socket"))
+                                      .create(ip, port, tuiUpdater)
+                                      .getGameUpdatesInterface();
+        } catch (Exception e) {
+            tuiUpdater.getCurrentTuiState().restart(true, e);
+            return;
         }
-
+        tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
+        tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void setName(String nick)
