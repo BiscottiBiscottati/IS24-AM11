@@ -6,6 +6,11 @@ import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
 
 public class GuiExceptionReceiver implements ExceptionConnector {
+    final GuiObserver guiObserver;
+
+    public GuiExceptionReceiver(GuiObserver guiObserver) {
+        this.guiObserver = guiObserver;
+    }
 
     @Override
     public void throwException(IllegalPlayerSpaceActionException ex) {

@@ -24,4 +24,6 @@ public interface GuiObserver {
     void updateCommonObjective(Set<Integer> cardId, boolean removeMode);
 
     void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard);
+
+    void throwException(Exception ex);
 }

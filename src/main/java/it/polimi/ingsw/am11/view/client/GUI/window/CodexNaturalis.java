@@ -1,6 +1,9 @@
 package it.polimi.ingsw.am11.view.client.GUI.window;
 
+import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
+import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.GuiExceptionReceiver;
@@ -55,7 +58,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     public void start(Stage stage) throws IOException {
 
         MiniGameModel miniGameModel = new MiniGameModel();
-        GuiExceptionReceiver exceptionReceiver = new GuiExceptionReceiver();
+        GuiExceptionReceiver exceptionReceiver = new GuiExceptionReceiver(this);
         GuiUpdater guiUpdater = new GuiUpdater(exceptionReceiver, miniGameModel, this);
         GuiActuator guiActuator = new GuiActuator(guiUpdater);
 
@@ -257,5 +260,38 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
 
+    }
+
+    @Override
+    public void throwException(Exception ex) {
+        if (ex instanceof IllegalPlayerSpaceActionException) {
+            System.out.println("IllegalPlayerSpaceActionException");
+        } else if (ex instanceof TurnsOrderException) {
+            System.out.println("TurnsOrderException");
+        } else if (ex instanceof PlayerInitException) {
+            System.out.println("PlayerInitException");
+        } else if (ex instanceof IllegalCardPlacingException) {
+            System.out.println("IllegalCardPlacingException");
+        } else if (ex instanceof IllegalPickActionException) {
+            System.out.println("IllegalPickActionException");
+        } else if (ex instanceof NotInHandException) {
+            System.out.println("NotInHandException");
+        } else if (ex instanceof EmptyDeckException) {
+            System.out.println("EmptyDeckException");
+        } else if (ex instanceof NumOfPlayersException) {
+            System.out.println("NumOfPlayersException");
+        } else if (ex instanceof NotGodPlayerException) {
+            System.out.println("NotGodPlayerException");
+        } else if (ex instanceof GameStatusException) {
+            System.out.println("GameStatusException");
+        } else if (ex instanceof NotSetNumOfPlayerException) {
+            System.out.println("NotSetNumOfPlayerException");
+        } else if (ex instanceof IllegalPlateauActionException) {
+            System.out.println("IllegalPlateauActionException");
+        } else if (ex instanceof MaxHandSizeException) {
+            System.out.println("MaxHandSizeException");
+        } else if (ex instanceof LostConnectionException) {
+            System.out.println("LostConnectionException");
+        }
     }
 }
