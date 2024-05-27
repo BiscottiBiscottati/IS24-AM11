@@ -1,11 +1,14 @@
 package it.polimi.ingsw.am11.view.client.TUI;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.factory.ConnectionType;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.InvalidArgumetsException;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
+import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
+import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -81,71 +84,25 @@ public class Actuator {
         connector.setPersonalObjective(cardId);
     }
 
-    public void place(List<String> positionalArgs) throws InvalidArgumetsException {
-        if (positionalArgs.size() != 5) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
-        int x;
-        int y;
-        int cardid;
-        String frontOrRetro = positionalArgs.get(4);
-        try {
-            x = Integer.parseInt(positionalArgs.get(1));
-            y = Integer.parseInt(positionalArgs.get(2));
-            cardid = Integer.parseInt(positionalArgs.get(3));
-        } catch (NumberFormatException e) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
-        switch (frontOrRetro) {
-            case "front" -> connector.placeCard(new Position(x, y), cardid, false);
-            case "retro" -> connector.placeCard(new Position(x, y), cardid, true);
-            default -> throw new InvalidArgumetsException("Invalid Arguments");
+    public void place(int x, int y, int cardId, boolean isRetro) {
+        connector.placeCard(new Position(x, y), cardId, isRetro);
+    }
+
+    public void draw(Integer cardId, PlayableCardType deck) throws IllegalCardBuildException {
+        if (cardId == null) {
+            connector.drawCard(false, deck, 0);
+        } else {
+            connector.drawCard(true, CardPrinter.getCard(cardId).getType(), cardId);
         }
     }
 
-    public void draw(List<String> positionalArgs) throws InvalidArgumetsException {
-        if (positionalArgs.size() != 4 && positionalArgs.size() != 3) {
-            throw new InvalidArgumetsException("Invalid Arguments");
-        }
-        String visOrDeck = positionalArgs.get(1);
-        String resOrGold = positionalArgs.get(2);
-        int cardId = - 1;
-        if (positionalArgs.size() == 4) {
-            try {
-                cardId = Integer.parseInt(positionalArgs.get(3));
-            } catch (NumberFormatException e) {
-                throw new InvalidArgumetsException("Invalid Arguments");
-            }
-        }
+    public void setTuiState(TuiStates state) {
+        tuiUpdater.setTuiState(state);
+        tuiUpdater.getCurrentTuiState().restart(false, null);
+    }
 
-        switch (visOrDeck) {
-            case "visible" -> {
-                if (positionalArgs.size() != 4) {
-                    throw new InvalidArgumetsException("Invalid Arguments");
-                }
-                switch (resOrGold) {
-                    case "res" -> {
-                        connector.drawCard(true, PlayableCardType.RESOURCE, cardId);
-                    }
-                    case "gold" -> {
-                        connector.drawCard(true, PlayableCardType.GOLD, cardId);
-                    }
-                    default -> throw new InvalidArgumetsException("Invalid Arguments");
-                }
-            }
-            case "deck" -> {
-                switch (resOrGold) {
-                    case "res" -> {
-                        connector.drawCard(false, PlayableCardType.RESOURCE, cardId);
-                    }
-                    case "gold" -> {
-                        connector.drawCard(false, PlayableCardType.GOLD, cardId);
-                    }
-                    default -> throw new InvalidArgumetsException("Invalid Arguments");
-                }
-            }
-            default -> throw new InvalidArgumetsException("Invalid Arguments");
-        }
+    public TUIState getCurrentTuiState() {
+        return tuiUpdater.getCurrentTuiState();
     }
 
 }

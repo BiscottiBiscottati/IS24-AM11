@@ -46,26 +46,30 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
-        LOGGER.debug(model.getCurrentTurn() + "picked a card from the " + type.getName() +
-                     " deck, the " + type.getName() + " deck top card is now " +
-                     color.getColumnName());
+        LOGGER.debug("{}picked a card from the {} deck, the {} deck top card is now {}",
+                     model.getCurrentTurn(), type.getName(), type.getName(), color.getColumnName());
 
         model.table().refreshDeckTop(type, color);
+
+        if (isCurrentState(TuiStates.WATCHING_TABLE)) {
+            currentState.get().restart(false, null);
+        }
     }
 
     @Override
     public void updateField(String nickname, int x, int y, int cardId,
                             boolean isRetro, boolean removeMode) {
-        //DONE
+        LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {}, " +
+                     "removemode: {}", nickname, x, y, cardId, isRetro, removeMode);
         Position pos = new Position(x, y);
         if (! removeMode) {
             model.getCliPlayer(nickname).getField().place(pos, cardId, isRetro);
         } else {
             model.getCliPlayer(nickname).getField().remove(pos);
         }
-
-        if (isCurrentState(TuiStates.PLACING)) {
-            //TODO sucsefull placement
+        if (isCurrentState(TuiStates.WATCHING_FIELD)) {
+            String[] args = {"notify", nickname};
+            currentState.get().passArgs(null, args);
         }
 
 
@@ -76,23 +80,33 @@ public class TuiUpdater implements ClientViewUpdater {
         if (previousId != null) model.table().pickVisible(previousId);
         if (currentId != null) model.table().addVisible(currentId);
         LOGGER.debug("Removed from visible: {}, Added: {}", previousId, currentId);
+
+        if (isCurrentState(TuiStates.WATCHING_TABLE)) {
+            currentState.get().restart(false, null);
+        }
     }
 
     @Override
     public void updateTurnChange(String nickname) {
-        //FIXME
-
         model.setCurrentTurn(nickname);
         LOGGER.debug("It's {} turn", nickname);
+
+        if (isCurrentState(TuiStates.WATCHING_TABLE)) {
+            currentState.get().restart(false, null);
+        }
+        assert model.getCurrentTurn() != null;
+        if (model.getCurrentTurn().equals(model.myName())) {
+            setTuiState(TuiStates.WATCHING_FIELD);
+            currentState.get().restart(false, null);
+        }
     }
 
     @Override
     public void updatePlayerPoint(String nickname, int points) {
-        //DONE
         model.getCliPlayer(nickname).addPoints(points);
-
-        if (isCurrentState(TuiStates.WAITING_FOR_TURN)) {
-            //TODO update the points on the screen
+        LOGGER.debug("{} points added to {}", points, nickname);
+        if (isCurrentState(TuiStates.WATCHING_TABLE)) {
+            currentState.get().restart(false, null);
         }
     }
 
@@ -101,36 +115,31 @@ public class TuiUpdater implements ClientViewUpdater {
         model.table().setStatus(status);
         LOGGER.debug("Game status event: {}", status);
         switch (status) {
-            case SETUP -> {
+            case SETUP, ARMAGEDDON, LAST_TURN -> {
             }
             case CHOOSING_STARTERS -> {
-                //DONE
                 currentState.set(tuiStates.get(TuiStates.CHOOSING_STARTER));
                 currentState.get().restart(false, null);
             }
             case CHOOSING_OBJECTIVES -> {
                 currentState.set(tuiStates.get(TuiStates.CHOOSING_OBJECTIVE));
                 currentState.get().restart(false, null);
-
             }
             case ENDED -> {
                 currentState.set(tuiStates.get(TuiStates.ENDED));
                 currentState.get().restart(false, null);
             }
             case ONGOING -> {
-                //FIXME
-                currentState.set(tuiStates.get(TuiStates.WAITING_FOR_TURN));
-                currentState.get().restart(false, null);
-            }
-            case ARMAGEDDON -> {
-                System.out.println("The final phase of the game has began, the next turn will be " +
-                                   "the last one, choose wisely your moves");
-            }
-            case LAST_TURN -> {
-                System.out.println("This is the last turn, play the ace up your sleeve");
+                if (model.getCurrentTurn().equals(model.myName())) {
+                    setTuiState(TuiStates.WATCHING_FIELD);
+                    currentState.get().restart(false, null);
+                } else {
+                    currentState.set(tuiStates.get(TuiStates.WATCHING_TABLE));
+                    currentState.get().restart(false, null);
+                }
             }
             case null, default -> {
-                System.out.println("idk what's going on");
+                throw new RuntimeException("Received null or invalid game status update");
             }
         }
     }
@@ -143,6 +152,10 @@ public class TuiUpdater implements ClientViewUpdater {
         } else {
             cardId.stream().forEach(x -> model.table().addCommonObjectives(x));
             LOGGER.debug("CommonObjAdd: {}", cardId);
+        }
+
+        if (isCurrentState(TuiStates.WATCHING_TABLE)) {
+            currentState.get().restart(false, null);
         }
     }
 
@@ -162,7 +175,7 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateHand(int cardId, boolean removeMode) {
-        //DONE
+        LOGGER.debug("UpdateHand, cardId: {}, removeMode: {}", cardId, removeMode);
         if (removeMode) {
             model.removeCardFromHand(cardId);
         } else {
@@ -170,33 +183,35 @@ public class TuiUpdater implements ClientViewUpdater {
             model.setiPlaced(false);
         }
 
-        if (isCurrentState(TuiStates.WAITING_FOR_TURN)) {
-            //TODO update the hand on the screen
+        if (isCurrentState(TuiStates.WATCHING_TABLE)) {
+            currentState.get().restart(false, null);
+        } else if (isCurrentState(TuiStates.WATCHING_FIELD)) {
+            String[] args = {"notify", model.myName()};
+            currentState.get().passArgs(null, args);
         }
-        //TODO update also other cases
-
     }
 
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
-
+        LOGGER.debug("UpPersObj, cardId: {}, removeMode: {}", cardId, removeMode);
         if (removeMode) {
             model.rmPersonalObjective(cardId);
         } else {
             model.addPersonalObjective(cardId);
         }
+        if (isCurrentState(TuiStates.WATCHING_TABLE)) {
+            currentState.get().restart(false, null);
+        }
     }
 
     @Override
     public void receiveStarterCard(int cardId) {
-        //DONE
         model.addStarterCard(cardId);
         LOGGER.debug("Receive starter event, card id: {}", cardId);
     }
 
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
-        //DONE
         model.getCliPlayer(model.myName()).getSpace().addCandidateObjectives(cardId);
         cardId.forEach(
                 x -> LOGGER.debug("Receive candidate objective event, card id: {}", x));
@@ -207,15 +222,12 @@ public class TuiUpdater implements ClientViewUpdater {
         LOGGER.debug("EVENT: God player notification");
         model.setMyName(candidateNick);
         model.setGodPlayer(candidateNick);
-
-
         currentState.set(tuiStates.get(TuiStates.SETTING_NUM));
         currentState.get().restart(false, null);
     }
 
     @Override
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
-        //DONE
         model.setMyName(candidateNick);
         for (Map.Entry<PlayerColor, String> entry : currentPlayers.entrySet()) {
             model.addPlayer(entry.getValue(), entry.getKey());

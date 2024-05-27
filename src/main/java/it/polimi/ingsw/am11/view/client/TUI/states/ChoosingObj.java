@@ -30,7 +30,7 @@ public class ChoosingObj extends TUIState {
         int val;
 
         if (isBlocked) {
-            System.out.print("\033[A");
+            System.out.print("\033[A" + askForObj);
             return;
         }
 
@@ -56,7 +56,10 @@ public class ChoosingObj extends TUIState {
 
         String word = parser.getPositionalArgs().getFirst();
         switch (word.toLowerCase()) {
-            case "help" -> Actuator.help();
+            case "help" -> {
+                Actuator.help();
+                return;
+            }
             //Maybe a return is needed after help
             case "exit" -> Actuator.close();
         }

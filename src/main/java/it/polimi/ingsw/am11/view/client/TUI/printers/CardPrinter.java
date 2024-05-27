@@ -27,6 +27,7 @@ import it.polimi.ingsw.am11.view.client.TUI.utils.Matrix;
 import it.polimi.ingsw.am11.view.client.TUI.utils.Part;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -352,8 +353,8 @@ public class CardPrinter {
         List<String> obj;
         try {
             obj = CardArchitect.buildVertObj(commObjs.get(0),
-                                                          commObjs.get(1),
-                                                          persOnj.get(0));
+                                             commObjs.get(1),
+                                             persOnj.get(0));
         } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
@@ -370,9 +371,10 @@ public class CardPrinter {
         int playersInfoSize = playersInfo.size();
         int tableSize = table.size();
         int handDepth = playersInfoSize + tableSize;
+        int handSize = handList.size();
+        int totalSize = playersInfoSize + tableSize + handSize;
 
-        for (int i = 0; i != - 1; i++) {
-
+        for (int i = 0; i < totalSize ; i++) {
             if (i < playersInfo.size()){
                 System.out.println(playersInfo.get(i) + spaces(96 - playersInfo.get(i).length()) + obj.get(i));
             } else if( i - playersInfoSize < table.size()){
@@ -381,14 +383,15 @@ public class CardPrinter {
                 System.out.println(handList.get(i - handDepth) + spaces(23) + obj.get(i));
             } else {
                 System.out.println(handList.get(i - handDepth));
-                if(i == handList.size() + handDepth){
-                    i = -1;
-                }
             }
         }
-
-
     }
 
+    public static void printHand(List<Integer> cardIds) throws IllegalCardBuildException {
+        List<String> hand = CardArchitect.buildHand(cardIds);
+        for(String str: hand){
+            System.out.println(str);
+        }
+    }
 
 }

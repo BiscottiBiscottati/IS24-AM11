@@ -10,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class SettingName extends TUIState {
 
+    //TODO: check that the name is not help or other command names
+    //TODO: check in all states that the case sensitiveness is respected
+
     private static final String askYourName = "What's your name? >>> \033[K";
     private boolean isQuote = false;
     private boolean isBlocked = false;
@@ -21,7 +24,7 @@ public class SettingName extends TUIState {
 
 
     public SettingName(MiniGameModel model) {
-super(model);
+        super(model);
     }
 
     @Override

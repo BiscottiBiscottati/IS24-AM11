@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.view.client.miniModel;
 
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.model.table.GameStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -120,6 +121,7 @@ public class MiniGameModel {
     public void removePlaced(String nickname, Position pos) {
         playerMap.get(nickname).getField().remove(pos);
     }
+
 
     public boolean getiPlaced() {
         return iPlaced;
