@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.view.client.GUI;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 
 import java.util.Map;
@@ -26,4 +27,21 @@ public interface GuiObserver {
     void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard);
 
     void throwException(Exception ex);
+
+    void updateHand(int cardId, boolean removeMode);
+
+    void updatePersonalObjective(int cardId, boolean removeMode);
+
+
+    void receiveStarterCard(int cardId);
+
+    void receiveCandidateObjective(Set<Integer> cardId);
+
+    void notifyGodPlayer();
+
+    void updatePlayers(Map<PlayerColor, String> currentPlayers);
+
+    void updateNumOfPlayers(int numOfPlayers);
+
+    void disconnectedFromServer();
 }

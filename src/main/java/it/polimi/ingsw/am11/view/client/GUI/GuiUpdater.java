@@ -67,43 +67,44 @@ public class GuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateHand(int cardId, boolean removeMode) {
-
+        guiObserver.updateHand(cardId, removeMode);
     }
 
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
-
+        guiObserver.updatePersonalObjective(cardId, removeMode);
     }
 
     @Override
     public void receiveStarterCard(int cardId) {
-
+        guiObserver.receiveStarterCard(cardId);
     }
 
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
-
+        guiObserver.receiveCandidateObjective(cardId);
     }
 
     @Override
     public void notifyGodPlayer() {
         String username = miniGameModel.myName();
         miniGameModel.setGodPlayer(username);
+        guiObserver.notifyGodPlayer();
     }
 
     @Override
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
-
+        guiObserver.updatePlayers(currentPlayers);
     }
 
     @Override
     public void updateNumOfPlayers(int numOfPlayers) {
-
+        guiObserver.updateNumOfPlayers(numOfPlayers);
     }
 
     @Override
     public void disconnectedFromServer() {
-
+        guiObserver.disconnectedFromServer();
     }
 
     @Override

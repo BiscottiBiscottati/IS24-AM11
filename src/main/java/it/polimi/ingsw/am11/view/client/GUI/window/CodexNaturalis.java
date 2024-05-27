@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.GuiExceptionReceiver;
@@ -293,5 +294,45 @@ public class CodexNaturalis extends Application implements GuiObserver {
         } else if (ex instanceof LostConnectionException) {
             System.out.println("LostConnectionException");
         }
+    }
+
+    @Override
+    public void updateHand(int cardId, boolean removeMode) {
+
+    }
+
+    @Override
+    public void updatePersonalObjective(int cardId, boolean removeMode) {
+
+    }
+
+    @Override
+    public void receiveStarterCard(int cardId) {
+
+    }
+
+    @Override
+    public void receiveCandidateObjective(Set<Integer> cardId) {
+
+    }
+
+    @Override
+    public void notifyGodPlayer() {
+
+    }
+
+    @Override
+    public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+
+    }
+
+    @Override
+    public void updateNumOfPlayers(int numOfPlayers) {
+
+    }
+
+    @Override
+    public void disconnectedFromServer() {
+
     }
 }
