@@ -12,8 +12,6 @@ import javafx.scene.text.Font;
 
 import java.util.List;
 
-import static java.lang.Integer.parseInt;
-
 public class SettingNumOfPlayers {
 
     public void createNumOfPlayersPage(Font font, int halfButtonSize, List<Label> labels,
@@ -77,7 +75,6 @@ public class SettingNumOfPlayers {
                     invalidNumOfPlayers.setVisible(true);
                 } else {
                     guiActuator.setNumOfPlayers(num);
-                    totalPlayers.set(parseInt(writeNumOfPlayers.getCharacters().toString()));
                     enterNumOfPlayers.setVisible(false);
                     goBack.setVisible(false);
                     numOfPlayers.setVisible(false);

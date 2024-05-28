@@ -81,6 +81,8 @@ public class SettingNick {
             String nick = writeNick.getCharacters().toString();
             if (nick.equals("")) {
                 writeNick.setPromptText("Fail");
+                nameAlreadyTaken.setText("Name cannot be empty");
+                nameAlreadyTaken.setVisible(true);
             }
             miniGameModel.setMyName(nick);
             guiActuator.setName(nick);
