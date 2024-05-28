@@ -79,7 +79,7 @@ public class PickablesTable {
 
     private void shuffleDecks() {
 
-        LOGGER.debug("Shuffling decks...");
+        LOGGER.debug("MODEL: Shuffling decks...");
 
         goldDeck.shuffle();
         resourceDeck.shuffle();
@@ -158,7 +158,7 @@ public class PickablesTable {
             }
         }
 
-        LOGGER.info("Card color on top of the {} deck changed to: {}",
+        LOGGER.info("MODEL: Card color on top of the {} deck changed to: {}",
                     event.getCardType(),
                     event.getNewValue());
 
@@ -198,7 +198,7 @@ public class PickablesTable {
                     .ifPresent(goldCard -> {
                         shownGold.add(goldCard);
 
-                        LOGGER.info("Gold card with ID {} is shown on the table",
+                        LOGGER.info("MODEL: Gold card with ID {} is shown on the table",
                                     goldCard.getId());
 
                         pcs.fireEvent(new ShownPlayableEvent(
@@ -211,7 +211,7 @@ public class PickablesTable {
                         .ifPresent(resourceCard -> {
                             shownResources.add(resourceCard);
 
-                            LOGGER.info("Resource card with ID {} is shown on the table",
+                            LOGGER.info("MODEL: Resource card with ID {} is shown on the table",
                                         resourceCard.getId());
 
                             pcs.fireEvent(new ShownPlayableEvent(
@@ -238,7 +238,7 @@ public class PickablesTable {
                                               .map(CardIdentity::getId)
                                               .collect(Collectors.toSet());
 
-        LOGGER.info("Common objectives are picked: {}", objsID);
+        LOGGER.info("MODEL: Common objectives are picked: {}", objsID);
 
         pcs.fireEvent(new CommonObjectiveChangeEvent(null,
                                                      objsID));
@@ -262,7 +262,7 @@ public class PickablesTable {
                 Optional<GoldCard> gold = goldDeck.draw();
                 gold.ifPresent(shownGold::add);
 
-                LOGGER.info("Shown gold card with ID {} is substituted with {}",
+                LOGGER.info("MODEL: Shown gold card with ID {} is substituted with {}",
                             goldCard.getId(),
                             gold.map(PlayableCard::getId).orElse(null));
 
@@ -272,7 +272,7 @@ public class PickablesTable {
                         gold.map(PlayableCard::getId).orElse(null)
                 ));
 
-                LOGGER.info("Gold deck top color changed to: {}",
+                LOGGER.info("MODEL: Gold deck top color changed to: {}",
                             getDeckTop(PlayableCardType.GOLD).orElse(null));
 
                 pcs.fireEvent(new DeckTopChangeEvent(
@@ -288,7 +288,7 @@ public class PickablesTable {
                 Optional<ResourceCard> resource = resourceDeck.draw();
                 resource.ifPresent(shownResources::add);
 
-                LOGGER.info("Shown resource card with ID {} is substituted with {}",
+                LOGGER.info("MODEL: Shown resource card with ID {} is substituted with {}",
                             resourceCard.getId(),
                             resource.map(PlayableCard::getId).orElse(null));
 
@@ -298,7 +298,7 @@ public class PickablesTable {
                         resource.map(PlayableCard::getId).orElse(null)
                 ));
 
-                LOGGER.info("Resource deck top color changed to: {}",
+                LOGGER.info("MODEL: Resource deck top color changed to: {}",
                             getDeckTop(PlayableCardType.RESOURCE).orElse(null));
 
                 pcs.fireEvent(new DeckTopChangeEvent(
@@ -326,7 +326,7 @@ public class PickablesTable {
     }
 
     public void hardReset() {
-        LOGGER.debug("Hard resetting PickablesTable");
+        LOGGER.debug("MODEL: Hard resetting PickablesTable");
 
         resetDecks();
         clearTable();

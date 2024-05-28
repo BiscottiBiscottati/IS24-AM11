@@ -64,11 +64,10 @@ public class GameController {
         synchronized (model) {
             // check if the player is already in the game
             if (model.isDisconnected(nickname)) {
-                LOGGER.info("Player {} trying to reconnect", nickname);
+                LOGGER.info("CONTROLLER: Player {} trying to reconnect", nickname);
 
                 VirtualPlayerView playerView = createPlayerView(nickname,
-                                                                playerConnector
-                );
+                                                                playerConnector);
                 tableView.addConnector(nickname, tableConnector);
 
                 model.reconnectPlayer(nickname, new PlayerViewUpdater(playerView));
@@ -79,7 +78,7 @@ public class GameController {
                 throw new NumOfPlayersException("Max num of players reached");
             }
 
-            LOGGER.info("Adding player {} to model", nickname);
+            LOGGER.info("CONTROLLER: Adding player {} to model", nickname);
             model.addPlayerToTable(nickname, playerColor.pullAnyColor());
 
             VirtualPlayerView playerView = createPlayerView(nickname,
@@ -90,7 +89,7 @@ public class GameController {
 
             // TODO notify god player that the player has connected
             if (isGodSet) {
-                LOGGER.info("Notifying god player {}", nickname);
+                LOGGER.info("CONTROLLER: Notifying god player {}", nickname);
                 playerConnector.notifyGodPlayer();
             }
 
@@ -130,7 +129,7 @@ public class GameController {
 
         tableView.updateTable(new NumOfPlayerEvent(val));
 
-        LOGGER.info("Num of players set to {} by {}", val, nickname);
+        LOGGER.info("CONTROLLER: Num of players set to {} by {}", val, nickname);
 
     }
 

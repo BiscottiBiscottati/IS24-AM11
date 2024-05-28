@@ -40,7 +40,7 @@ public class GameLogic implements GameModel {
     private final GameListenerSupport pcs;
 
     public GameLogic() {
-        LOGGER.info("Creating a new GameLogic instance");
+        LOGGER.info("MODEL: Creating a new GameLogic instance");
 
         this.pcs = new GameListenerSupport();
         ruleSet = new BasicRuleset();
@@ -51,7 +51,7 @@ public class GameLogic implements GameModel {
     }
 
     private void setConstants() {
-        LOGGER.info("Setting constants");
+        LOGGER.info("MODEL: Setting constants");
 
         PersonalSpace.setMaxSizeofHand(ruleSet.getHandSize());
         PersonalSpace.setMaxObjectives(ruleSet.getNumOfPersonalObjective());
@@ -334,7 +334,7 @@ public class GameLogic implements GameModel {
                     playerManager.getNumberOfPlayers());
         }
 
-        LOGGER.info("Initializing the game...");
+        LOGGER.info("MODEL: Initializing the game...");
 
         Map<PlayerColor, String> collected = playerManager.getPlayers()
                                                           .stream()
@@ -345,14 +345,14 @@ public class GameLogic implements GameModel {
                                                                   Player::color,
                                                                   Player::nickname));
 
-        LOGGER.debug("Players info: {}", collected);
+        LOGGER.debug("MODEL: Players info: {}", collected);
 
         pcs.fireEvent(new PlayerInfoEvent(collected));
 
         resetAll();
 
         try {
-            LOGGER.info("Picking starters...");
+            LOGGER.info("MODEL: Picking starters...");
             pickStarters();
             plateau.setStatus(GameStatus.CHOOSING_STARTERS);
         } catch (IllegalPlayerSpaceActionException | GameStatusException | EmptyDeckException |
@@ -380,7 +380,7 @@ public class GameLogic implements GameModel {
         for (String nickname : playerManager.getPlayers()) {
             StarterCard starter = pickablesTable.pickStarterCard();
 
-            LOGGER.debug("Picking starter with Id {} for {}", starter.getId(), nickname);
+            LOGGER.debug("MODEL: Picking starter with Id {} for {}", starter.getId(), nickname);
 
             playerManager.setStarterCard(nickname, starter);
         }
@@ -408,7 +408,7 @@ public class GameLogic implements GameModel {
         Player newPlayer = playerManager.addPlayerToTable(nickname, colour);
         plateau.addPlayer(newPlayer);
 
-        LOGGER.info("Added player {} with color {}", nickname, colour);
+        LOGGER.info("MODEL: Added player {} with color {}", nickname, colour);
     }
 
     // FIXME may not even be needed as a method
@@ -426,7 +426,7 @@ public class GameLogic implements GameModel {
             throw new GameStatusException("A game is in progress");
         }
 
-        LOGGER.info("Removing player {}", nickname);
+        LOGGER.info("MODEL: Removing player {}", nickname);
 
         playerManager.getPlayer(nickname).ifPresent(plateau::removePlayer);
         playerManager.removePlayer(nickname);
@@ -458,7 +458,7 @@ public class GameLogic implements GameModel {
         player.field().placeStartingCard(starterCard,
                                          isRetro);
 
-        LOGGER.info("Placing starter card {} for {} on its {}", starterCard.getId(),
+        LOGGER.info("MODEL: Placing starter card {} for {} on its {}", starterCard.getId(),
                     nickname,
                     isRetro ? "back" : "front");
 
@@ -469,7 +469,7 @@ public class GameLogic implements GameModel {
 
         if (playerManager.areStarterSet()) {
 
-            LOGGER.info("All starters have been placed, moving to objectives");
+            LOGGER.info("MODEL: All starters have been placed, moving to objectives");
 
             try {
                 pickCandidateObjectives();
@@ -504,11 +504,11 @@ public class GameLogic implements GameModel {
                                                  .space();
         playerSpace.addObjective(objectiveCard);
 
-        LOGGER.info("Assigning objective {} to {}", cardID, nickname);
+        LOGGER.info("MODEL: Assigning objective {} to {}", cardID, nickname);
 
         pcs.fireEvent(new PersonalObjectiveChangeEvent(nickname, null, cardID));
         if (playerManager.areObjectiveSet()) {
-            LOGGER.info("All objectives have been assigned, giving cards to players");
+            LOGGER.info("MODEL: All objectives have been assigned, giving cards to players");
 
             giveCards();
             plateau.setStatus(GameStatus.ONGOING);
@@ -567,15 +567,15 @@ public class GameLogic implements GameModel {
                                 "Card requirements not met!"));
         player.space().pickCard(cardID);
 
-        LOGGER.info("Placing card {} for {} on position {}", cardID, nickname, position);
+        LOGGER.info("MODEL: Placing card {} for {} on position {}", cardID, nickname, position);
 
-        LOGGER.debug("Removed card {} from hand of {}", cardID, nickname);
+        LOGGER.debug("MODEL: Removed card {} from hand of {}", cardID, nickname);
 
         pcs.fireEvent(new HandChangeEvent(nickname, cardID, null));
 
         points = player.field().place(card, position, isRetro);
 
-        LOGGER.debug("Placed card {} for {} on position {}", cardID, nickname, position);
+        LOGGER.debug("MODEL: Placed card {} for {} on position {}", cardID, nickname, position);
 
         pcs.fireEvent(new FieldChangeEvent(nickname,
                                            null,
@@ -583,7 +583,7 @@ public class GameLogic implements GameModel {
 
         player.space().setCardBeenPlaced(true);
 
-        LOGGER.info("Card placed, giving {} points to {}", points, nickname);
+        LOGGER.info("MODEL: Card placed, giving {} points to {}", points, nickname);
 
         plateau.addPlayerPoints(player, points);
     }
@@ -603,12 +603,12 @@ public class GameLogic implements GameModel {
 
         if (playerSpace.availableSpaceInHand() >= 1) {
 
-            LOGGER.info("Drawing a card of type {} for {} from deck", type, nickname);
+            LOGGER.info("MODEL: Drawing a card of type {} for {} from deck", type, nickname);
 
             PlayableCard card = pickablesTable.drawPlayableFrom(type);
             playerSpace.addCardToHand(card);
 
-            LOGGER.debug("Added in hand card {} of type {} for {}", card.getId(), type,
+            LOGGER.debug("MODEL: Added in hand card {} of type {} for {}", card.getId(), type,
                          nickname);
 
             pcs.fireEvent(new HandChangeEvent(nickname, null, card.getId()));
@@ -665,12 +665,13 @@ public class GameLogic implements GameModel {
                 throw new GameBreakingException("Discrepancies between playerManager and itself");
             }
 
-            LOGGER.info("Counting points from common objectives");
+            LOGGER.info("MODEL: Counting points from common objectives");
 
             for (ObjectiveCard commonObjective : pickablesTable.getCommonObjectives()) {
                 int points = commonObjective.countPoints(player.field());
 
-                LOGGER.debug("Common Objective {} gives {} points to {}", commonObjective.getId(),
+                LOGGER.debug("MODEL: Common Objective {} gives {} points to {}",
+                             commonObjective.getId(),
                              points,
                              nickname);
 
@@ -680,12 +681,12 @@ public class GameLogic implements GameModel {
                 plateau.addPlayerPoints(player, points);
             }
 
-            LOGGER.info("Counting points from personal objectives");
+            LOGGER.info("MODEL: Counting points from personal objectives");
 
             for (ObjectiveCard privateObjective : player.space().getPlayerObjective()) {
                 int points = privateObjective.countPoints(player.field());
 
-                LOGGER.debug("Personal Objective {} gives {} points to {}",
+                LOGGER.debug("MODEL: Personal Objective {} gives {} points to {}",
                              privateObjective.getId(), points,
                              nickname);
 
@@ -707,7 +708,8 @@ public class GameLogic implements GameModel {
      */
     @Override
     public void goNextTurn() throws GameBreakingException, GameStatusException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
+        if (plateau.getStatus() == GameStatus.SETUP ||
+            plateau.getStatus() == GameStatus.ENDED ||
             plateau.getStatus() == GameStatus.CHOOSING_STARTERS ||
             plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
             throw new GameStatusException("the game is not ongoing");
@@ -719,7 +721,7 @@ public class GameLogic implements GameModel {
                   .allMatch(Optional::isEmpty) &&
             plateau.getStatus() == GameStatus.ONGOING) {
 
-            LOGGER.info("It's armageddon time!");
+            LOGGER.info("MODEL: It's armageddon time!");
 
             plateau.activateArmageddon();
         }
@@ -730,20 +732,20 @@ public class GameLogic implements GameModel {
             plateau.setStatus(GameStatus.ENDED);
             try {
 
-                LOGGER.info("Game ended, calculating points");
+                LOGGER.info("MODEL: Game ended, calculating points");
 
                 countObjectivesPoints();
             } catch (IllegalPlateauActionException ex) {
                 throw new GameBreakingException("Players in game logic and plateau don't match");
             }
 
-            LOGGER.info("Setting final leaderboard");
+            LOGGER.info("MODEL: Setting final leaderboard");
 
             plateau.setFinalLeaderboard();
         } else if (plateau.getStatus() == GameStatus.ARMAGEDDON &&
                    playerManager.isFirstTheCurrent()) {
 
-            LOGGER.info("Careful it's the last turn!");
+            LOGGER.info("MODEL: Careful it's the last turn!");
 
             plateau.setStatus(GameStatus.LAST_TURN);
         }
@@ -764,7 +766,7 @@ public class GameLogic implements GameModel {
                 PlayableCard card = pickablesTable.pickPlayableVisible(cardID);
                 playerSpace.addCardToHand(card);
 
-                LOGGER.info("Drawing a card {} of type {} for {} from visible", cardID, type,
+                LOGGER.info("MODEL: Drawing a card {} of type {} for {} from visible", cardID, type,
                             nickname);
 
                 pcs.fireEvent(new HandChangeEvent(nickname, null, card.getId()));
@@ -791,7 +793,7 @@ public class GameLogic implements GameModel {
      */
     @Override //
     public void forceEnd() {
-        LOGGER.info("Forcing the end of the game");
+        LOGGER.info("MODEL: Forcing the end of the game");
         plateau.setStatus(GameStatus.SETUP);
     }
 
@@ -850,7 +852,7 @@ public class GameLogic implements GameModel {
     public void addPlayerListener(@NotNull String nickname,
                                   @NotNull PlayerListener playerListener) {
 
-        LOGGER.debug("Adding player listener for {}", nickname);
+        LOGGER.debug("MODEL: Adding player listener for {}", nickname);
 
         pcs.addListener(nickname, playerListener);
     }
@@ -858,28 +860,21 @@ public class GameLogic implements GameModel {
     @Override
     public void addTableListener(@NotNull TableListener listener) {
 
-        LOGGER.debug("Adding table listener");
+        LOGGER.debug("MODEL: Adding table listener");
 
         pcs.addListener(listener);
     }
 
     @Override
     public void disconnectPlayer(@NotNull String nickname) throws PlayerInitException {
-        Player player =
-                playerManager.getPlayer(nickname)
-                             .orElseThrow(() -> new PlayerInitException("Player not found"));
+        Player player = playerManager.getPlayer(nickname)
+                                     .orElseThrow(
+                                             () -> new PlayerInitException("Player not found"));
 
-        LOGGER.info("Adding {} to unavailable players", nickname);
+        LOGGER.info("MODEL: Adding {} to unavailable players", nickname);
 
         playerManager.disconnectPlayer(player);
         pcs.removeListener(nickname);
-        if (Objects.equals(playerManager.getCurrentTurnPlayer().orElse(null), nickname)) {
-            try {
-                goNextTurn();
-            } catch (GameBreakingException | GameStatusException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     @Override
@@ -891,7 +886,7 @@ public class GameLogic implements GameModel {
 
         playerManager.reconnectPlayer(player);
         pcs.addListener(nickname, playerListener);
-        LOGGER.info("Reconnected player {}", nickname);
+        LOGGER.info("MODEL: Reconnected player {}", nickname);
 
     }
 
@@ -902,7 +897,7 @@ public class GameLogic implements GameModel {
 
     @Override
     public void forceReset() {
-        LOGGER.info("RESET: Forcing the reset of the game");
+        LOGGER.info("MODEL: RESET: Forcing the reset of the game");
         pcs.clearListeners();
         plateau.hardReset();
         pickablesTable.hardReset();
@@ -927,7 +922,7 @@ public class GameLogic implements GameModel {
                     card = pickablesTable.drawPlayableFrom(PlayableCardType.GOLD);
                     player.space().addCardToHand(card);
 
-                    LOGGER.debug("Giving gold card {} to {}", card.getId(),
+                    LOGGER.debug("MODEL: Giving gold card {} to {}", card.getId(),
                                  player.nickname());
 
                     pcs.fireEvent(new HandChangeEvent(player.nickname(),
@@ -939,7 +934,7 @@ public class GameLogic implements GameModel {
                     card = pickablesTable.drawPlayableFrom(PlayableCardType.RESOURCE);
                     player.space().addCardToHand(card);
 
-                    LOGGER.debug("Giving resource card {} to {}", card.getId(),
+                    LOGGER.debug("MODEL: Giving resource card {} to {}", card.getId(),
                                  player.nickname());
 
                     pcs.fireEvent(new HandChangeEvent(player.nickname(),
@@ -951,7 +946,7 @@ public class GameLogic implements GameModel {
             throw new GameBreakingException("Something broke while dealing cards");
         }
 
-        LOGGER.info("All cards have been given to players, choosing first player");
+        LOGGER.info("MODEL: All cards have been given to players, choosing first player");
 
         playerManager.chooseFirstPlayer();
     }
@@ -969,7 +964,7 @@ public class GameLogic implements GameModel {
         for (String nickname : playerManager.getPlayers()) {
             Set<ObjectiveCard> objectives = pickablesTable.pickObjectiveCandidates();
 
-            LOGGER.debug("Picking candidate objectives {} for {}",
+            LOGGER.debug("MODEL: Picking candidate objectives {} for {}",
                          objectives.stream()
                                    .map(ObjectiveCard::getType)
                                    .toList(),

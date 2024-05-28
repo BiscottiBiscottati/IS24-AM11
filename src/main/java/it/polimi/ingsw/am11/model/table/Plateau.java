@@ -42,7 +42,7 @@ public class Plateau {
         GameStatus oldValue = this.status.get();
         this.status.compareAndSet(oldValue, status);
 
-        LOGGER.info("Game status changed from {} to {}", oldValue, status);
+        LOGGER.info("MODEL: Game status changed from {} to {}", oldValue, status);
 
         pcs.fireEvent(new GameStatusChangeEvent(oldValue, status));
     }
@@ -55,7 +55,8 @@ public class Plateau {
             temp += points;
             playerPoints.put(player, temp);
 
-            LOGGER.info("Player {} gained {} points, total: {}", player.nickname(), points, temp);
+            LOGGER.info("MODEL: Player {} gained {} points, total: {}", player.nickname(), points,
+                        temp);
 
             pcs.fireEvent(new PlayerPointsChangeEvent(
                     player.nickname(),
@@ -172,7 +173,7 @@ public class Plateau {
                                                                                       e.getValue()),
                                                                               HashMap::putAll);
 
-        LOGGER.info("Final leaderboard set: {}", finalLeaderboardString);
+        LOGGER.info("MODEL: Final leaderboard set: {}", finalLeaderboardString);
 
         pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboardString));
     }
@@ -197,7 +198,7 @@ public class Plateau {
     }
 
     public void hardReset() {
-        LOGGER.debug("Hard reset on plateau");
+        LOGGER.debug("MODEL: Hard reset on plateau");
         playerPoints.clear();
         counterObjective.clear();
         finalLeaderboard.clear();

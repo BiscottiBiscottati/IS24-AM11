@@ -47,7 +47,7 @@ public class PlayerManager {
 
     public static void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
 
-        LOGGER.debug("Setting max number of players to {}", maxNumberOfPlayers);
+        LOGGER.debug("MODEL: Setting max number of players to {}", maxNumberOfPlayers);
 
         PlayerManager.maxNumberOfPlayers = maxNumberOfPlayers;
     }
@@ -156,7 +156,7 @@ public class PlayerManager {
                 .space()
                 .setStarterCard(starter);
 
-        LOGGER.info("Starter {} given to {}", starter.getId(), nickname);
+        LOGGER.info("MODEL: Starter {} given to {}", starter.getId(), nickname);
 
         pcs.fireEvent(new StarterCardEvent(nickname, null, starter.getId()));
     }
@@ -175,7 +175,7 @@ public class PlayerManager {
                                                .map(ObjectiveCard::getId)
                                                .collect(Collectors.toUnmodifiableSet());
 
-        LOGGER.info("Candidate objectives {} given to {}", candidateObjs, nickname);
+        LOGGER.info("MODEL: Candidate objectives {} given to {}", candidateObjs, nickname);
 
         pcs.fireEvent(new CandidateObjectiveEvent(nickname, null, candidateObjs));
     }
@@ -235,7 +235,8 @@ public class PlayerManager {
         firstPlayer = players.values()
                              .toArray(new Player[playerQueue.size()])[randomIndex];
 
-        LOGGER.debug("Players are: {}", players.values().stream().map(Player::nickname).toList());
+        LOGGER.debug("MODEL: Players are: {}",
+                     players.values().stream().map(Player::nickname).toList());
 
         Player peeked = playerQueue.element();
         while (peeked != firstPlayer) {
@@ -244,8 +245,8 @@ public class PlayerManager {
         }
         currentPlaying = playerQueue.element();
 
-        LOGGER.debug("First player is {}", firstPlayer.nickname());
-        LOGGER.debug("Current player is {}", currentPlaying.nickname());
+        LOGGER.debug("MODEL: First player is {}", firstPlayer.nickname());
+        LOGGER.debug("MODEL: Current player is {}", currentPlaying.nickname());
 
         pcs.fireEvent(new TurnChangeEvent(null, currentPlaying.nickname()));
     }
@@ -263,7 +264,7 @@ public class PlayerManager {
             currentPlaying = playerQueue.element();
             currentPlaying.space().setCardBeenPlaced(false);
 
-            LOGGER.info("Player {} is now playing", currentPlaying.nickname());
+            LOGGER.info("MODEL: Player {} is now playing", currentPlaying.nickname());
 
             pcs.fireEvent(new TurnChangeEvent(previousPlayer, currentPlaying.nickname()));
         } while (unavailablePlayers.contains(currentPlaying));
@@ -281,7 +282,7 @@ public class PlayerManager {
 
         // FIXME we may not need to fire a clear event
         players.forEach((name, player) -> {
-            LOGGER.debug("Clearing player {} hand and field", name);
+            LOGGER.debug("MODEL: Clearing player {} hand and field", name);
             pcs.fireEvent(new HandChangeEvent(
                     name,
                     null,
@@ -307,7 +308,7 @@ public class PlayerManager {
     }
 
     public void hardReset() {
-        LOGGER.debug("Hard reset on player manager");
+        LOGGER.debug("MODEL: Hard reset on player manager");
 
         players.clear();
         playerQueue.clear();

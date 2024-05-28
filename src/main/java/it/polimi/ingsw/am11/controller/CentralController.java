@@ -42,9 +42,16 @@ public enum CentralController {
     }
 
     public synchronized void createNewGame() {
-        LOGGER.info("Creating new game");
+        LOGGER.info("CONTROLLER: Creating new game");
         GameController newGame = new GameController();
         this.gameControllers.add(newGame);
+    }
+
+    public synchronized void disconnectPlayer(String nickname) {
+        LOGGER.info("CONTROLLER: Player {} disconnected", nickname);
+        gameControllers.stream().findFirst()
+                       .orElseThrow()
+                       .disconnectPlayer(nickname);
     }
 
     public synchronized void setNumOfPlayers(@NotNull String nickname, int val)
@@ -55,11 +62,10 @@ public enum CentralController {
                        .setNumOfPlayers(nickname, val);
     }
 
-    public synchronized void disconnectPlayer(String nickname) {
-        LOGGER.info("Player {} disconnected", nickname);
-        gameControllers.stream().findFirst()
-                       .orElseThrow()
-                       .disconnectPlayer(nickname);
+    public void destroyGame() {
+        LOGGER.info("CONTROLLER: Destroying current Game and recreating a new one");
+        gameControllers.clear();
+        createNewGame();
     }
 
     public synchronized @Nullable String getGodPlayer() {
@@ -72,11 +78,5 @@ public enum CentralController {
         if (gameControllers.isEmpty()) createNewGame();
 
         return gameControllers.stream().findFirst().orElseThrow();
-    }
-
-    public void destroyGame() {
-        LOGGER.info("Destroying current Game and recreating a new one");
-        gameControllers.clear();
-        createNewGame();
     }
 }
