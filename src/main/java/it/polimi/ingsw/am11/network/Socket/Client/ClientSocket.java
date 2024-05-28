@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.network.Socket.Client;
 import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import jdk.net.ExtendedSocketOptions;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +25,10 @@ public class ClientSocket implements ClientNetworkHandler {
     private final @NotNull ClientMessageReceiver clientMessageReceiver;
     private final @NotNull ClientMessageSender clientMessageSender;
     private final @NotNull Socket socket;
-    private final @NotNull ExecutorService clientThread;
+    private final @NotNull ExecutorService clientExecutor;
     private boolean isRunning;
 
-    public ClientSocket(String ip, int port,
+    public ClientSocket(@NotNull String ip, int port,
                         @NotNull ClientViewUpdater clientViewUpdater)
     throws IOException {
         this.clientViewUpdater = clientViewUpdater;
@@ -35,6 +36,11 @@ public class ClientSocket implements ClientNetworkHandler {
             //FIXME: If I try to connect to a random ip and port the method Socket() will not
             // terminate and the program will hang;
             socket = new Socket(ip, port);
+            socket.setKeepAlive(true);
+            socket.setOption(ExtendedSocketOptions.TCP_KEEPIDLE, 5);
+            socket.setOption(ExtendedSocketOptions.TCP_KEEPCOUNT, 2);
+            socket.setOption(ExtendedSocketOptions.TCP_KEEPINTERVAL, 1);
+            socket.setSoTimeout(0);
             if (! socket.isConnected()) {
                 throw new IOException("Connection error");
             }
@@ -42,10 +48,10 @@ public class ClientSocket implements ClientNetworkHandler {
             out = new PrintWriter(socket.getOutputStream(), true);
             clientMessageSender = new ClientMessageSender(out);
             clientMessageReceiver = new ClientMessageReceiver(this.clientViewUpdater);
-            clientThread = Executors.newFixedThreadPool(1);
+            clientExecutor = Executors.newFixedThreadPool(1);
             Runtime.getRuntime().addShutdownHook(new Thread(this::close));
 
-            clientThread.submit(this::run);
+            clientExecutor.submit(this::run);
 
         } catch (IOException e) {
             LOGGER.debug("CLIENT TCP: connection error", e);
@@ -87,7 +93,7 @@ public class ClientSocket implements ClientNetworkHandler {
     @Override
     public void close() {
         LOGGER.debug("CLIENT TCP: Closing client");
-        clientThread.shutdown();
+        clientExecutor.shutdown();
         isRunning = false;
         try {
             if (socket != null && ! socket.isClosed()) socket.close();

@@ -65,6 +65,7 @@ public class SocketManager {
                 // Accept a new connection from a client
                 Socket clientSocket = serverSocket.accept();
                 clientSocket.setKeepAlive(true);
+                clientSocket.setSoTimeout(0);
                 clientSocket.setOption(ExtendedSocketOptions.TCP_KEEPIDLE, 5);
                 clientSocket.setOption(ExtendedSocketOptions.TCP_KEEPCOUNT, 2);
                 clientSocket.setOption(ExtendedSocketOptions.TCP_KEEPINTERVAL, 1);
