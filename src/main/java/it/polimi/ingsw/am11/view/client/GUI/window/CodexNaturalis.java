@@ -71,7 +71,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
         miniGameModel = new MiniGameModel();
         GuiExceptionReceiver exceptionReceiver = new GuiExceptionReceiver(this);
         GuiUpdater guiUpdater = new GuiUpdater(exceptionReceiver, miniGameModel, this);
-        guiActuator = new GuiActuator(guiUpdater);
+        guiActuator = new GuiActuator(guiUpdater, miniGameModel);
 
         // Proportions
         int size = (int) (Math.min(Screen.getPrimary().getBounds().getHeight(),
