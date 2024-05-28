@@ -76,7 +76,7 @@ public class CardArchitect {
                 leftPart = "╟───┘";
             }
             if (card != null) {
-                if(card.getType() == PlayableCardType.GOLD){
+                if (card.getType() == PlayableCardType.GOLD) {
                     centralPart = "    GOLD   ";
                 } else {
                     centralPart = "  RESOURCE ";
@@ -133,7 +133,7 @@ public class CardArchitect {
                 } else if (id < 100) {
                     centralPart = "════ " + id + " ═══";
                 } else {
-                    centralPart = "═══ "+ id + " ═══";
+                    centralPart = "═══ " + id + " ═══";
                 }
             } else {
                 centralPart = "═══════════";
@@ -253,7 +253,8 @@ public class CardArchitect {
         }
     }
 
-    public static List<String> buildTable(List<Integer> visiblesId, Color goldColor, Color resColor)
+    public static List<String> buildTable(List<Integer> visiblesId, @Nullable Color goldColor,
+                                          @Nullable Color resColor)
     throws IllegalCardBuildException {
 
         //size: 73*19
@@ -263,6 +264,8 @@ public class CardArchitect {
 
         List<String> goldDeckLines = buildDeck(goldColor, PlayableCardType.GOLD);
         List<String> resDeckLines = buildDeck(resColor, PlayableCardType.RESOURCE);
+
+        //FIXME case of empty deck
 
         List<String> card1 = buildCard(visiblesId.get(0));
         List<String> card2 = buildCard(visiblesId.get(1));
@@ -275,15 +278,17 @@ public class CardArchitect {
 
         int size = card1.size();
         for (i = 0; i < size; i++) {
-            result.add("║"+card1.get(i) + CardPrinter.spaces(4) + card2.get(i) + CardPrinter.spaces(4) + goldDeckLines.get(i)+"║");
+            result.add("║" + card1.get(i) + CardPrinter.spaces(4) + card2.get(i) +
+                       CardPrinter.spaces(4) + goldDeckLines.get(i) + "║");
         }
 
         result.add("║" + spaces(71) + "║");
 
         for (i = 0; i < size; i++) {
-            result.add("║"+card3.get(i) + CardPrinter.spaces(4) + card4.get(i) + CardPrinter.spaces(4) + resDeckLines.get(i)+"║");
+            result.add("║" + card3.get(i) + CardPrinter.spaces(4) + card4.get(i) +
+                       CardPrinter.spaces(4) + resDeckLines.get(i) + "║");
         }
-        result.add("╚"+"═".repeat(63) +"═".repeat(8) +"╝");
+        result.add("╚" + "═".repeat(63) + "═".repeat(8) + "╝");
 
         return result;
     }
@@ -291,21 +296,38 @@ public class CardArchitect {
     public static List<String> buildHand(List<Integer> cardIds) throws IllegalCardBuildException {
 
         //size 73 * 10
+        if (cardIds.size() > 3) {
+            throw new IllegalCardBuildException("Hand can have 3 cards at maximum");
+        }
+
         List<String> result = new ArrayList<>(8);
 
-        List<String> card1 = buildCard(cardIds.get(0));
-        List<String> card2 = buildCard(cardIds.get(1));
-        List<String> card3 = buildCard(cardIds.get(2));
+        List<List<String>> cards = new ArrayList<>(3);
+
+        for (Integer i : cardIds) {
+            cards.add(buildCard(i));
+        }
 
         result.add("╔═ Hand: " + "═".repeat(13) + "═".repeat(42) + "═".repeat(8) + "╗");
 
         int i;
-        int size = card1.size();
+        int size = buildCard(1).size();
+        int cardLenght = 21;
         for (i = 0; i < size; i++) {
-            result.add("║"+ card1.get(i) + CardPrinter.spaces(4) + card2.get(i) + CardPrinter.spaces(4) + card3.get(i)+ "║" );
+            List<String> strings = new ArrayList<>();
+
+            for (List<String> card : cards) {
+                strings.add(card.get(i));
+            }
+            for (int j = 0; strings.size() < 3; j++) {
+                strings.add(CardPrinter.spaces(cardLenght));
+            }
+
+            result.add("║" + strings.get(0) + CardPrinter.spaces(4) + strings.get(1) +
+                       CardPrinter.spaces(4) + strings.get(2) + "║");
         }
 
-        result.add("╚"+"═".repeat(63) +"═".repeat(8) +"╝");
+        result.add("╚" + "═".repeat(63) + "═".repeat(8) + "╝");
 
         return result;
     }
@@ -344,7 +366,7 @@ public class CardArchitect {
 
         String line1 = "╔══════";
         String line2 = "║ ┌───┐";
-        String line3 = "║ │ "+ objectiveCard.getPoints()+" │";
+        String line3 = "║ │ " + objectiveCard.getPoints() + " │";
         String line4 = "║ └───┘";
         String line5 = "║      ";
         String line6 = "╚══════";
@@ -369,8 +391,8 @@ public class CardArchitect {
                 Map<Color, Integer> req = colorCollectCard.getColorRequirements();
                 Color color = Color.RED;
 
-                for(Color col : req.keySet()){
-                    if(req.get(col) > 0){
+                for (Color col : req.keySet()) {
+                    if (req.get(col) > 0) {
                         color = col;
                         break;
                     }
@@ -378,8 +400,8 @@ public class CardArchitect {
 
                 line1 = line1 + "═ Gather: ═══╗";
                 line2 = line2 + "    ┌───┐    ║";
-                line3 = line3 + "  ┌─┘ "+ color.getTUICode() +" └─┐  ║";
-                line4 = line4 + "  │ "+ color.getTUICode() +"   "+ color.getTUICode() +" │  ║";
+                line3 = line3 + "  ┌─┘ " + color.getTUICode() + " └─┐  ║";
+                line4 = line4 + "  │ " + color.getTUICode() + "   " + color.getTUICode() + " │  ║";
                 line5 = line5 + "  └───────┘  ║";
                 line6 = line6 + "═════════════╝";
 
@@ -397,16 +419,17 @@ public class CardArchitect {
                 line1 = line1 + "═ Gather: ═══╗";
                 line2 = line2 + "             ║";
 
-                if(symbols.values().stream().reduce(0, Integer::sum) == 2){
+                if (symbols.values().stream().reduce(0, Integer::sum) == 2) {
                     Symbol symbol = Symbol.FEATHER;
-                    for(Symbol sym : symbols.keySet()){
-                        if(symbols.get(sym) > 0){
+                    for (Symbol sym : symbols.keySet()) {
+                        if (symbols.get(sym) > 0) {
                             symbol = sym;
                             break;
                         }
                     }
                     line3 = line3 + "  ┌───────┐  ║";
-                    line4 = line4 + "  │ " + symbol.getTUICode() +"   "+symbol.getTUICode()+" │ " +
+                    line4 = line4 + "  │ " + symbol.getTUICode() + "   " + symbol.getTUICode() +
+                            " │ " +
                             " ║";
                     line5 = line5 + "  └───────┘  ║";
 
@@ -416,7 +439,7 @@ public class CardArchitect {
                     line5 = line5 + " └─────────┘ ║";
                 }
 
-                    line6 = line6 + "═════════════╝";
+                line6 = line6 + "═════════════╝";
             }
             case TripletCard tripletCard -> {
 //              1╔═══════ Pattern: ══╗  ╔═══════ Pattern: ══╗
@@ -433,15 +456,15 @@ public class CardArchitect {
 
                 List<List<Color>> pattern = tripletCard.getPattern();
 
-                if(!tripletCard.isFlipped()){
-                    line2 = line2 +"    ┌──│ "+ pattern.get(0).get(2).getTUICode() +" │ ║";
-                    line3 = line3 + " ┌──│ "+ pattern.get(1).get(1).getTUICode()  +" │──┘ ║";
-                    line4 = line4 + " │ "+ pattern.get(2).get(0).getTUICode() +" │──┘    ║";
+                if (! tripletCard.isFlipped()) {
+                    line2 = line2 + "    ┌──│ " + pattern.get(0).get(2).getTUICode() + " │ ║";
+                    line3 = line3 + " ┌──│ " + pattern.get(1).get(1).getTUICode() + " │──┘ ║";
+                    line4 = line4 + " │ " + pattern.get(2).get(0).getTUICode() + " │──┘    ║";
                     line5 = line5 + " └───┘       ║";
                 } else {
-                    line2 = line2 + " │ " + pattern.get(0).get(0).getTUICode()  + " │──┐    ║";
-                    line3 = line3 + " └──│ " + pattern.get(1).get(1).getTUICode()  + " │──┐ ║";
-                    line4 = line4 + "    └──│ " + pattern.get(2).get(2).getTUICode()  + " │ ║";
+                    line2 = line2 + " │ " + pattern.get(0).get(0).getTUICode() + " │──┐    ║";
+                    line3 = line3 + " └──│ " + pattern.get(1).get(1).getTUICode() + " │──┐ ║";
+                    line4 = line4 + "    └──│ " + pattern.get(2).get(2).getTUICode() + " │ ║";
                     line5 = line5 + "       └───┘ ║";
                 }
 
@@ -461,34 +484,33 @@ public class CardArchitect {
 
                 List<List<Color>> pattern = lCard.getPattern();
 
-                if(!lCard.isFlipped() && !lCard.isRotated()) {
-                    line2 = line2 + "  ┌──│ "+ pattern.get(0).get(2).getTUICode()  +" │   ║";
-                    line3 = line3 + "  │ "+ pattern.get(1).get(1).getTUICode()  +" │──┘   ║";
+                if (! lCard.isFlipped() && ! lCard.isRotated()) {
+                    line2 = line2 + "  ┌──│ " + pattern.get(0).get(2).getTUICode() + " │   ║";
+                    line3 = line3 + "  │ " + pattern.get(1).get(1).getTUICode() + " │──┘   ║";
                     line4 = line4 + "  ╞═══╡      ║";
-                    line5 = line5 + "  │ "+ pattern.get(3).get(1).getTUICode()  +" │      ║";
+                    line5 = line5 + "  │ " + pattern.get(3).get(1).getTUICode() + " │      ║";
                     line6 = line6 + "══╧═══╧══════╝";
-                } else if (lCard.isFlipped() && !lCard.isRotated()) {
-                    line2 = line2 + "  │ "+ pattern.get(0).get(0).getTUICode()  +" │──┐   ║";
-                    line3 = line3 + "  └──│ "+ pattern.get(1).get(1).getTUICode()  +" │   ║";
+                } else if (lCard.isFlipped() && ! lCard.isRotated()) {
+                    line2 = line2 + "  │ " + pattern.get(0).get(0).getTUICode() + " │──┐   ║";
+                    line3 = line3 + "  └──│ " + pattern.get(1).get(1).getTUICode() + " │   ║";
                     line4 = line4 + "     ╞═══╡   ║";
-                    line5 = line5 + "     │ "+ pattern.get(3).get(1).getTUICode()  +" │   ║";
+                    line5 = line5 + "     │ " + pattern.get(3).get(1).getTUICode() + " │   ║";
                     line6 = line6 + "═════╧═══╧═══╝";
-                } else if (!lCard.isFlipped() && lCard.isRotated()) {
-                    line2 = line2 + "     │ "+ pattern.get(0).get(1).getTUICode()  +" │   ║";
+                } else if (! lCard.isFlipped() && lCard.isRotated()) {
+                    line2 = line2 + "     │ " + pattern.get(0).get(1).getTUICode() + " │   ║";
                     line3 = line3 + "     ╞═══╡   ║";
-                    line4 = line4 + "  ┌──│ "+ pattern.get(2).get(1).getTUICode()  +" │   ║";
-                    line5 = line5 + "  │ "+ pattern.get(3).get(0).getTUICode()  +" │──┘   ║";
+                    line4 = line4 + "  ┌──│ " + pattern.get(2).get(1).getTUICode() + " │   ║";
+                    line5 = line5 + "  │ " + pattern.get(3).get(0).getTUICode() + " │──┘   ║";
                     line6 = line6 + "══╧═══╧══════╝";
                 } else {
-                    line2 = line2 + "  │ "+ pattern.get(0).get(1).getTUICode()  +" │      ║";
+                    line2 = line2 + "  │ " + pattern.get(0).get(1).getTUICode() + " │      ║";
                     line3 = line3 + "  ╞═══╡      ║";
-                    line4 = line4 + "  │ "+ pattern.get(2).get(1).getTUICode()  +" │──┐   ║";
-                    line5 = line5 + "  └──│ "+ pattern.get(3).get(2).getTUICode()  +" │   ║";
+                    line4 = line4 + "  │ " + pattern.get(2).get(1).getTUICode() + " │──┐   ║";
+                    line5 = line5 + "  └──│ " + pattern.get(3).get(2).getTUICode() + " │   ║";
                     line6 = line6 + "═════╧═══╧═══╝";
                 }
             }
-            default ->
-                throw new IllegalCardBuildException("Is not objective");
+            default -> throw new IllegalCardBuildException("Is not objective");
 
         }
 
@@ -503,7 +525,7 @@ public class CardArchitect {
         return result;
     }
 
-    public static List<String> buildDeck(Color color, PlayableCardType type) {
+    public static List<String> buildDeck(@Nullable Color color, PlayableCardType type) {
         List<String> deck = new ArrayList<>(8);
         List<Color> center = new ArrayList<>(1);
         center.add(color);
@@ -567,7 +589,7 @@ public class CardArchitect {
         }
         res.add("╚═══════════════════════╝");
         res.add("╔ Personal objectives: ═╗");
-        for(i = 0; i < 7; i++){
+        for (i = 0; i < 7; i++) {
             res.add("║ " + persList.get(i) + " ║");
         }
         res.add("╚═══════════════════════╝");

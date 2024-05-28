@@ -67,9 +67,11 @@ public class TuiUpdater implements ClientViewUpdater {
         } else {
             model.getCliPlayer(nickname).getField().remove(pos);
         }
+
         if (isCurrentState(TuiStates.WATCHING_FIELD)) {
             String[] args = {"notify", nickname};
             currentState.get().passArgs(null, args);
+            System.out.println("check 3");
         }
 
 

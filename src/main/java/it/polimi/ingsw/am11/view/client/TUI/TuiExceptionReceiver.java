@@ -37,6 +37,7 @@ public class TuiExceptionReceiver implements ExceptionConnector {
     @Override
     public void throwException(TurnsOrderException ex) {
         LOGGER.debug("TurnsOrderException {}", ex.getMessage());
+        //FIXME
     }
 
     @Override
@@ -58,21 +59,31 @@ public class TuiExceptionReceiver implements ExceptionConnector {
     @Override
     public void throwException(IllegalCardPlacingException ex) {
         LOGGER.debug("IllegalCardPlacingException {}", ex.getMessage());
+        model.setiPlaced(false);
+        tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
+        tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
     public void throwException(IllegalPickActionException ex) {
         LOGGER.debug("IllegalPickActionException {}", ex.getMessage());
+        tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
+        tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
     public void throwException(NotInHandException ex) {
         LOGGER.debug("NotInHandException {}", ex.getMessage());
+        model.setiPlaced(false);
+        tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
+        tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
     public void throwException(EmptyDeckException ex) {
         LOGGER.debug("EmptyDeckException {}", ex.getMessage());
+        tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
+        tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
@@ -95,7 +106,7 @@ public class TuiExceptionReceiver implements ExceptionConnector {
     @Override
     public void throwException(GameStatusException ex) {
         LOGGER.debug("GameStatusException received: {}" + ex.getMessage());
-        System.out.println(ex.getMessage());
+        //TODO
     }
 
     @Override

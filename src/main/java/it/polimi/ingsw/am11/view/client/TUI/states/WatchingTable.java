@@ -56,6 +56,7 @@ public class WatchingTable extends TUIState {
             }
             case "get" -> {
                 get(actuator, parser);
+                return;
             }
             case "back" -> {
                 if (model.getCurrentTurn().equals(model.myName())) {
@@ -112,6 +113,7 @@ public class WatchingTable extends TUIState {
                                            \s
                                            ++++++++++++++++++++++++++++
                                            \s""");
+
             } else {
                 System.out.println("""
                                            ++++++++++++++++++++++++++++
@@ -175,7 +177,7 @@ public class WatchingTable extends TUIState {
             if (playerList.contains(positionalArgs.get(1))) {
                 String word = positionalArgs.get(1);
                 String[] args = {"get", word};
-                actuator.setTuiState(TuiStates.WATCHING_TABLE);
+                actuator.setTuiState(TuiStates.WATCHING_FIELD);
                 actuator.getCurrentTuiState().passArgs(actuator, args);
                 return;
             }

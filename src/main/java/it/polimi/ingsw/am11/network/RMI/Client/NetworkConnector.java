@@ -92,8 +92,10 @@ public class NetworkConnector implements ClientGameConnector {
             } catch (NotBoundException | RemoteException e) {
                 throw new RuntimeException(e); // TODO disconnection from server
             } catch (PlayerInitException e) {
+                //TODO to remove, controller have to deal with this
                 exceptionConnector.throwException(e);
             } catch (IllegalCardPlacingException e) {
+                //TODO to remove, controller have to deal with this
                 exceptionConnector.throwException(e);
             } catch (GameStatusException e) {
                 exceptionConnector.throwException(e);
@@ -125,6 +127,7 @@ public class NetworkConnector implements ClientGameConnector {
             } catch (IllegalPlayerSpaceActionException e) {
                 exceptionConnector.throwException(e);
             } catch (PlayerInitException e) {
+                //TODO to remove, controller have to deal with this
                 exceptionConnector.throwException(e);
             } catch (GameStatusException e) {
                 exceptionConnector.throwException(e);
@@ -150,12 +153,14 @@ public class NetworkConnector implements ClientGameConnector {
             } catch (TurnsOrderException e) {
                 exceptionConnector.throwException(e);
             } catch (PlayerInitException e) {
+                //TODO to remove, controller have to deal with this
                 exceptionConnector.throwException(e);
             } catch (IllegalCardPlacingException e) {
                 exceptionConnector.throwException(e);
             } catch (NotInHandException e) {
                 exceptionConnector.throwException(e);
             } catch (IllegalPlateauActionException e) {
+                //TODO to remove, controller have to deal with this
                 exceptionConnector.throwException(e);
             } catch (GameStatusException e) {
                 exceptionConnector.throwException(e);
@@ -179,12 +184,14 @@ public class NetworkConnector implements ClientGameConnector {
             } catch (NotBoundException | RemoteException e) {
                 throw new RuntimeException(e);
             } catch (IllegalPlayerSpaceActionException e) {
+                //Same as maxhandsizeex
                 exceptionConnector.throwException(e);
             } catch (TurnsOrderException e) {
                 exceptionConnector.throwException(e);
             } catch (IllegalPickActionException e) {
                 exceptionConnector.throwException(e);
             } catch (PlayerInitException e) {
+                //TODO to remove, controller have to deal with this
                 exceptionConnector.throwException(e);
             } catch (EmptyDeckException e) {
                 exceptionConnector.throwException(e);

@@ -85,10 +85,13 @@ public class Actuator {
     }
 
     public void place(int x, int y, int cardId, boolean isRetro) {
+        tuiUpdater.setTuiState(TuiStates.WATCHING_TABLE);
+        tuiUpdater.getCurrentTuiState().restart(false, null);
         connector.placeCard(new Position(x, y), cardId, isRetro);
     }
 
     public void draw(Integer cardId, PlayableCardType deck) throws IllegalCardBuildException {
+        tuiUpdater.getCurrentTuiState().restart(false, null);
         if (cardId == null) {
             connector.drawCard(false, deck, 0);
         } else {

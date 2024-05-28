@@ -616,6 +616,7 @@ public class GameLogic implements GameModel {
             goNextTurn();
             return card.getId();
         } else {
+            //TODO this exception should be transformed in a max handsize exception
             throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
         }
     }
