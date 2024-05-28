@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.lang.Integer.parseInt;
 
@@ -20,7 +19,7 @@ public class SettingNumOfPlayers {
     public void createNumOfPlayersPage(Font font, int halfButtonSize, List<Label> labels,
                                        List<TextField> textFields,
                                        List<Button> buttonList, GuiActuator guiActuator,
-                                       MiniGameModel miniGameModel, AtomicInteger totalPlayers) {
+                                       MiniGameModel miniGameModel) {
         Label numOfPlayers = labels.get(0);
         TextField writeNumOfPlayers = textFields.get(3);
         Label invalidNumOfPlayers = labels.get(1);

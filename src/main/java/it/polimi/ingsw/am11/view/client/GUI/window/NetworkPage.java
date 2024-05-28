@@ -76,13 +76,6 @@ public class NetworkPage {
             int portNumber = Integer.parseInt(port.getCharacters().toString());
             try {
                 guiActuator.connect(connectionTypeText, ip, portNumber);
-            } catch (Exception e) {
-                // TODO exception handler
-                return;
-            }
-            if (ipAddress.getCharacters().toString().equals("Fail")) {
-                connectionFailed.setVisible(true);
-            } else {
                 chooseRMI.setVisible(false);
                 chooseSocket.setVisible(false);
                 theBox.setVisible(false);
@@ -95,6 +88,9 @@ public class NetworkPage {
                 goToNetwork.setVisible(true);
                 chooseNick.setVisible(true);
                 yourName.setVisible(true);
+            } catch (Exception e) {
+                ipAddress.setText("Fail");
+                connectionFailed.setVisible(true);
             }
         });
     }

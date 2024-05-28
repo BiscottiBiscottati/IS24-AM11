@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CodexNaturalis extends Application implements GuiObserver {
 
@@ -52,7 +51,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
     Font font;
     Font fontBig;
     int halfButtonSize;
-    AtomicInteger totalPlayers;
     ProgressIndicator loadingWheel;
     private FrameHandler frameHandler;
     private StackPane root;
@@ -164,10 +162,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
         SettingNick settingNick = new SettingNick();
 
-        totalPlayers = new AtomicInteger();
-
-        AtomicInteger currentPlayers = new AtomicInteger();
-
         Label waitingForPlayers = new Label("Waiting for other players to join...");
         loadingWheel = new ProgressIndicator();
 
@@ -221,7 +215,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
                                       guiActuator, theBox);
         settingNick.createSettingNick(font, halfButtonSize, fontBig, labels, textFields,
                                       buttonsList,
-                                      guiActuator, theBox, loadingWheel, currentPlayers,
+                                      guiActuator, theBox, loadingWheel,
                                       miniGameModel);
 
         waitingRoom.createWaitingRoom(waitingForPlayers, loadingWheel, font);
@@ -328,8 +322,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
             System.out.println("You are the god player");
 
             settingNumOfPlayers.createNumOfPlayersPage(font, halfButtonSize, labels, textFields,
-                                                       buttonsList, guiActuator, miniGameModel,
-                                                       totalPlayers);
+                                                       buttonsList, guiActuator, miniGameModel);
             Label numOfPlayers = labels.get(0);
             TextField writeNumOfPlayers = textFields.get(3);
             Label invalidNumOfPlayers = labels.get(1);
@@ -347,19 +340,17 @@ public class CodexNaturalis extends Application implements GuiObserver {
             invalidNumOfPlayers.setVisible(false);
 
             enterNumOfPlayers.setOnMouseClicked(event -> {
-                if (miniGameModel.myName().equals(miniGameModel.getGodPlayer())) {
-                    int num = 0;
-                    try {
-                        num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
-                    } catch (NumberFormatException e) {
-                        writeNumOfPlayers.setText("Fail");
-                    }
-                    if (writeNumOfPlayers.getCharacters().toString().equals("Fail")) {
-                        invalidNumOfPlayers.setVisible(true);
-                    } else {
-                        totalPlayers.set(num);
-                        guiActuator.setNumOfPlayers(num);
-                    }
+                int num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
+                if (num < 1 || num > 4) {
+                    invalidNumOfPlayers.setVisible(true);
+                } else if (miniGameModel.myName().equals(miniGameModel.getGodPlayer())) {
+                    guiActuator.setNumOfPlayers(num);
+                    waitingForPlayers.setVisible(true);
+                    enterNumOfPlayers.setVisible(false);
+                    numOfPlayers.setVisible(false);
+                    writeNumOfPlayers.setVisible(false);
+                    invalidNumOfPlayers.setVisible(false);
+                    loadingWheel.setVisible(true);
                 }
             });
         });

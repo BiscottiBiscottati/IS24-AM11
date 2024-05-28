@@ -13,14 +13,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class SettingNick {
 
     public void createSettingNick(Font font, int halfButtonSize, Font fontBig, List<Label> labels,
                                   List<TextField> textFields, List<Button> buttonList,
                                   GuiActuator guiActuator, VBox theBox,
-                                  ProgressIndicator loadingWheel, AtomicInteger currentPlayers,
+                                  ProgressIndicator loadingWheel,
                                   MiniGameModel miniGameModel) {
 
         TextField writeNick = textFields.getFirst();
@@ -80,22 +79,19 @@ public class SettingNick {
 
         chooseNick.setOnMouseClicked(event -> {
             String nick = writeNick.getCharacters().toString();
+            if (nick.equals("")) {
+                writeNick.setPromptText("Fail");
+            }
             miniGameModel.setMyName(nick);
             guiActuator.setName(nick);
-            if (writeNick.getCharacters().toString().equals("Fail")) {
-                nameAlreadyTaken.setVisible(true);
-            } else {
-                chooseNick.setVisible(false);
-                goToNetwork.setVisible(false);
-                writeNick.setVisible(false);
-                yourName.setVisible(false);
-                nameAlreadyTaken.setVisible(false);
+            chooseNick.setVisible(false);
+            goToNetwork.setVisible(false);
+            writeNick.setVisible(false);
+            yourName.setVisible(false);
+            nameAlreadyTaken.setVisible(false);
 
-                waitingForPlayers.setVisible(true);
-                loadingWheel.setVisible(true);
-
-                currentPlayers.getAndIncrement();
-            }
+            waitingForPlayers.setVisible(true);
+            loadingWheel.setVisible(true);
         });
     }
 }
