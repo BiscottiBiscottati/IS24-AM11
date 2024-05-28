@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PlayersPrinter {
 
@@ -59,8 +60,8 @@ public class PlayersPrinter {
                 i++;
             }
         }
-        
-        
+
+
         res.add(lineStartingPlayer);
         res.add(line1);
         res.add(line2.toString());
@@ -132,6 +133,26 @@ public class PlayersPrinter {
         String word = val + "Playing ^";
         String spaces = spaces(21).repeat(val - 1) + spaces(5);
         return spaces + word;
+    }
+
+    public static void printLeaderboard(Map<String, Integer> leaderboard) {
+        for (String player : leaderboard.keySet()) {
+            if (leaderboard.get(player) == 1) {
+                System.out.println(
+                        "╔ Winner: " + "═".repeat(Math.max(player.length() - 9, 0)) + "╗");
+                System.out.println("║ " + player + spaces(Math.max(9 - player.length(), 0)) + " ║");
+                System.out.println("╚" + "═".repeat(Math.max(player.length(), 9)) + "╝");
+            } else {
+                for (int i = 2; i < leaderboard.size(); i++) {
+                    System.out.println(
+                            "╔ " + i + ": " + "═".repeat(Math.max(player.length() - 4, 0)) + "╗");
+                    System.out.println(
+                            "║ " + player + spaces(Math.max(4 - player.length(), 0)) + " ║");
+                    System.out.println("╚" + "═".repeat(Math.max(player.length(), 4)) + "╝");
+                }
+            }
+        }
+
     }
 
 }

@@ -43,7 +43,7 @@ public class TuiExceptionReceiver implements ExceptionConnector {
     public void throwException(PlayerInitException ex) {
         LOGGER.debug("PlayerInitException {}", ex.getMessage());
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
-            //DONE
+            tuiUpdater.setCandidateNick("");
             tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
             return;

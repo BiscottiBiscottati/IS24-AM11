@@ -81,11 +81,8 @@ public class MiniGameModel {
         this.finalLeaderboard = finalLeaderboard;
     }
 
-    public @Nullable Integer getFinalPosition(String nickname) {
-        if (finalLeaderboard != null) {
-            return finalLeaderboard.get(nickname);
-        }
-        return null;
+    public @Nullable Map<String, Integer> getFinalLeaderboard() {
+        return finalLeaderboard;
     }
 
     public void addCardInHand(int cardId) {

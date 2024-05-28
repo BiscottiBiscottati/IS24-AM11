@@ -163,16 +163,9 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
-        //TODO
         model.setFinalLeaderboard(finalLeaderboard);
-        System.out.println("The final leaderboard is:");
-        for (int i = 1; i <= finalLeaderboard.size(); i++) {
-            for (String name : finalLeaderboard.keySet()) {
-                if (finalLeaderboard.get(name) == i) {
-                    System.out.println(i + ". " + name);
-                }
-            }
-        }
+        setTuiState(TuiStates.ENDED);
+        currentState.get().restart(false, null);
     }
 
     @Override

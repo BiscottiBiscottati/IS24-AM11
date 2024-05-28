@@ -88,7 +88,7 @@ public class WatchingField extends TUIState {
                 } else {
                     errorsHappensEvenTwice("It's not your turn");
                     alreadyError = true;
-                    System.out.print(askForCommand);
+                    System.out.print(askToSee);
                 }
             }
             case "back" -> {
