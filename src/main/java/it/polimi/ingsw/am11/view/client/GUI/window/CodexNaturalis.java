@@ -53,6 +53,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     Font fontBig;
     int halfButtonSize;
     AtomicInteger totalPlayers;
+    ProgressIndicator loadingWheel;
     private FrameHandler frameHandler;
     private StackPane root;
 
@@ -168,7 +169,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
         AtomicInteger currentPlayers = new AtomicInteger();
 
         Label waitingForPlayers = new Label("Waiting for other players to join...");
-        ProgressIndicator loadingWheel = new ProgressIndicator();
+        loadingWheel = new ProgressIndicator();
 
         WaitingRoom waitingRoom = new WaitingRoom();
 
@@ -333,10 +334,16 @@ public class CodexNaturalis extends Application implements GuiObserver {
             TextField writeNumOfPlayers = textFields.get(3);
             Label invalidNumOfPlayers = labels.get(1);
             Button enterNumOfPlayers = buttonsList.get(5);
+            Button goToNetwork = buttonsList.get(0);
+            Label waitingForPlayers = labels.get(6);
+
 
             numOfPlayers.setVisible(true);
             writeNumOfPlayers.setVisible(true);
             enterNumOfPlayers.setVisible(true);
+            goToNetwork.setVisible(true);
+            waitingForPlayers.setVisible(false);
+            loadingWheel.setVisible(false);
             invalidNumOfPlayers.setVisible(false);
         });
     }
