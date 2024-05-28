@@ -70,28 +70,36 @@ public class NetworkPage {
         TextField writeNick = textFields.get(0);
         Label yourName = labels.get(2);
 
-        joinButton.setOnAction(event -> {
+        joinButton.setOnMouseClicked(event -> {
             String connectionTypeText = connectionType.getText().toLowerCase();
             String ip = ipAddress.getCharacters().toString();
-            int portNumber = Integer.parseInt(port.getCharacters().toString());
+            int portNumber;
             try {
-                guiActuator.connect(connectionTypeText, ip, portNumber);
-                chooseRMI.setVisible(false);
-                chooseSocket.setVisible(false);
-                theBox.setVisible(false);
-                connectionFailed.setVisible(false);
-                connectionType.setVisible(false);
-                joinButton.setVisible(false);
-                enterNumOfPlayers.setVisible(false);
+                portNumber = Integer.parseInt(port.getCharacters().toString());
+                try {
+                    guiActuator.connect(connectionTypeText, ip, portNumber);
+                    chooseRMI.setVisible(false);
+                    chooseSocket.setVisible(false);
+                    theBox.setVisible(false);
+                    connectionFailed.setVisible(false);
+                    connectionType.setVisible(false);
+                    joinButton.setVisible(false);
+                    enterNumOfPlayers.setVisible(false);
 
-                writeNick.setVisible(true);
-                goToNetwork.setVisible(true);
-                chooseNick.setVisible(true);
-                yourName.setVisible(true);
-            } catch (Exception e) {
-                ipAddress.setText("Fail");
+                    writeNick.setVisible(true);
+                    goToNetwork.setVisible(true);
+                    chooseNick.setVisible(true);
+                    yourName.setVisible(true);
+                } catch (Exception e) {
+                    ipAddress.setText("Fail");
+                    connectionFailed.setVisible(true);
+                }
+            } catch (NumberFormatException e) {
+                port.setText("Fail");
                 connectionFailed.setVisible(true);
             }
+
+
         });
     }
 }

@@ -341,7 +341,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
             enterNumOfPlayers.setOnMouseClicked(event -> {
                 int num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
-                if (num < 1 || num > 4) {
+                if (num < 2 || num > 4) {
                     invalidNumOfPlayers.setVisible(true);
                 } else if (miniGameModel.myName().equals(miniGameModel.getGodPlayer())) {
                     guiActuator.setNumOfPlayers(num);

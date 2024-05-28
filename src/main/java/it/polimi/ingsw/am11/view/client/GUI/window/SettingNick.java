@@ -79,21 +79,22 @@ public class SettingNick {
 
         chooseNick.setOnMouseClicked(event -> {
             String nick = writeNick.getCharacters().toString();
-            if (nick.equals("")) {
+            if (nick.isEmpty()) {
                 writeNick.setPromptText("Fail");
                 nameAlreadyTaken.setText("Name cannot be empty");
                 nameAlreadyTaken.setVisible(true);
-            }
-            miniGameModel.setMyName(nick);
-            guiActuator.setName(nick);
-            chooseNick.setVisible(false);
-            goToNetwork.setVisible(false);
-            writeNick.setVisible(false);
-            yourName.setVisible(false);
-            nameAlreadyTaken.setVisible(false);
+            } else {
+                miniGameModel.setMyName(nick);
+                guiActuator.setName(nick);
+                chooseNick.setVisible(false);
+                goToNetwork.setVisible(false);
+                writeNick.setVisible(false);
+                yourName.setVisible(false);
+                nameAlreadyTaken.setVisible(false);
 
-            waitingForPlayers.setVisible(true);
-            loadingWheel.setVisible(true);
+                waitingForPlayers.setVisible(true);
+                loadingWheel.setVisible(true);
+            }
         });
     }
 }
