@@ -3,7 +3,11 @@ package it.polimi.ingsw.am11.utils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.regex.Pattern;
+
 public class Option {
+    private static final Pattern CHECK_NAME = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]*$");
+
     private final String name;
     private final String description;
     private final boolean hasValue;
@@ -11,6 +15,8 @@ public class Option {
     private String value;
 
     public Option(@NotNull String name, String description, @Nullable String defaultValue) {
+        if (! CHECK_NAME.matcher(name).matches())
+            throw new IllegalArgumentException("Invalid option name must start with a letter");
         this.name = name;
         this.description = description;
         this.value = defaultValue;

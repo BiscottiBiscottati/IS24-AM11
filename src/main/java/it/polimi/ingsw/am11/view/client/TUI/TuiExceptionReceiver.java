@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TuiExceptionReceiver implements ExceptionConnector {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TuiExceptionReceiver.class);
 
     private final MiniGameModel model;
     private final TuiUpdater tuiUpdater;
@@ -29,7 +29,6 @@ public class TuiExceptionReceiver implements ExceptionConnector {
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
             tuiUpdater.setTuiState(TuiStates.CHOOSING_OBJECTIVE);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
-            return;
         }
 
     }

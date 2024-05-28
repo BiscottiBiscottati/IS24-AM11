@@ -6,20 +6,22 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class ArgParser {
+    private static final Pattern OPTION_START = Pattern.compile("^-[a-zA-Z]");
     private final List<Option> options;
     private final List<String> positionalArgs;
 
     public ArgParser() {
-        this.options = new ArrayList<>(4);
+        options = new ArrayList<>(4);
         this.positionalArgs = new ArrayList<>(4);
     }
 
     public void parse(String @NotNull [] args) throws ParsingErrorException {
         for (int i = 0; i < args.length; i++) {
             if (args[i].isEmpty()) throw new ParsingErrorException("Argument " + i + " is empty");
-            if (args[i].charAt(0) == '-') {
+            if (OPTION_START.matcher(args[i]).matches()) {
                 int tempI = i;
                 Option option = getOption(args[i].substring(1))
                         .orElseThrow(
@@ -54,14 +56,14 @@ public class ArgParser {
     }
 
     public void addOption(Option option) {
-        this.options.add(option);
+        options.add(option);
     }
 
     public void addOption(String name, String description, String defaultValue) {
-        this.options.add(new Option(name, description, defaultValue));
+        options.add(new Option(name, description, defaultValue));
     }
 
     public void addOption(String name, String description, boolean hasValue) {
-        this.options.add(new Option(name, description, hasValue));
+        options.add(new Option(name, description, hasValue));
     }
 }

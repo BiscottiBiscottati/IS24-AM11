@@ -46,7 +46,7 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
-        LOGGER.debug("{}picked a card from the {} deck, the {} deck top card is now {}",
+        LOGGER.debug("{} picked a card from the {} deck, the {} deck top card is now {}",
                      model.getCurrentTurn(), type.getName(), type.getName(), color.getColumnName());
 
         model.table().refreshDeckTop(type, color);
@@ -243,7 +243,7 @@ public class TuiUpdater implements ClientViewUpdater {
 
     @Override
     public void disconnectedFromServer() {
-        //TODO to implement
+        //TODO to implement exit tui or reset to try to reconnect
     }
 
     @Override
