@@ -250,7 +250,17 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateGameStatus(GameStatus status) {
-
+        switch (status) {
+            case CHOOSING_STARTERS:
+                //TODO: open starter view selection
+                break;
+            case CHOOSING_OBJECTIVES:
+                //TODO: open objective view selection
+                break;
+            case ONGOING:
+                //TODO: open game view
+                break;
+        }
     }
 
     @Override
