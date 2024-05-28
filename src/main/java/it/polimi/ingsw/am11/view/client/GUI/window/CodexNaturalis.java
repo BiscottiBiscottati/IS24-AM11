@@ -345,6 +345,23 @@ public class CodexNaturalis extends Application implements GuiObserver {
             waitingForPlayers.setVisible(false);
             loadingWheel.setVisible(false);
             invalidNumOfPlayers.setVisible(false);
+
+            enterNumOfPlayers.setOnMouseClicked(event -> {
+                if (miniGameModel.myName().equals(miniGameModel.getGodPlayer())) {
+                    int num = 0;
+                    try {
+                        num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
+                    } catch (NumberFormatException e) {
+                        writeNumOfPlayers.setText("Fail");
+                    }
+                    if (writeNumOfPlayers.getCharacters().toString().equals("Fail")) {
+                        invalidNumOfPlayers.setVisible(true);
+                    } else {
+                        totalPlayers.set(num);
+                        guiActuator.setNumOfPlayers(num);
+                    }
+                }
+            });
         });
     }
 
