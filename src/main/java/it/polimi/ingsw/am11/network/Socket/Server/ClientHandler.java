@@ -50,9 +50,9 @@ public class ClientHandler implements Runnable {
 
     public void stop() throws IOException {
         isRunning = false;
-        if (in != null) in.close();
-        if (out != null) out.close();
-        if (clientSocket != null && ! clientSocket.isClosed()) clientSocket.close();
+        in.close();
+        out.close();
+        if (! clientSocket.isClosed()) clientSocket.close();
     }
 
     @Override

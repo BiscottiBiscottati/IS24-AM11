@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.model;
+package it.polimi.ingsw.am11.model.utils;
 
 public class BasicRuleset implements RuleSet {
 

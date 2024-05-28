@@ -103,7 +103,7 @@ public class ClientGameUpdatesImpl implements ClientGameUpdatesInterface {
 
     @Override
     public void notifyGodPlayer() throws RemoteException {
-        LOGGER.debug("Notifying god player");
+        LOGGER.debug("CLIENT RMI: Notifying god player");
         clientUpdater.notifyGodPlayer();
     }
 
