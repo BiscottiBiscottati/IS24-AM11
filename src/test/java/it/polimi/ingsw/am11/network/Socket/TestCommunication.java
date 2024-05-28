@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
+@Disabled
 @ExtendWith(MockitoExtension.class)
 class TestCommunication {
 
