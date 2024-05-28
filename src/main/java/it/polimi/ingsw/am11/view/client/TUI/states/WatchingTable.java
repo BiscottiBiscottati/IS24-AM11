@@ -56,7 +56,6 @@ public class WatchingTable extends TUIState {
             }
             case "get" -> {
                 get(actuator, parser);
-                return;
             }
             case "back" -> {
                 if (model.getCurrentTurn().equals(model.myName())) {
@@ -76,6 +75,7 @@ public class WatchingTable extends TUIState {
                 }
             }
             case "draw", "pick" -> {
+                assert model.getCurrentTurn() != null;
                 if (model.getCurrentTurn().equals(model.myName())) {
                     if (model.getiPlaced()) {
                         draw(actuator, parser);
