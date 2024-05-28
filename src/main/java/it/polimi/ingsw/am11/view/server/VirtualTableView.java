@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -19,7 +19,7 @@ public class VirtualTableView {
     private final Map<String, ServerTableConnector> connectors;
 
     public VirtualTableView() {
-        this.connectors = new HashMap<>(8);
+        this.connectors = new ConcurrentHashMap<>(8);
     }
 
     public void addConnector(@NotNull String nickname, @NotNull ServerTableConnector connector) {
