@@ -47,7 +47,7 @@ public class ClientRMI implements ClientNetworkHandler {
         networkConnector = new NetworkConnector(this,
                                                 registry,
                                                 gameUpdatesInterface,
-                                                updater.getExceptionConnector());
+                                                updater);
         // Check if the connection is working and create a heartbeat sender
         HeartbeatInterface ping;
         try {
