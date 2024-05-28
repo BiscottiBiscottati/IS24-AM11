@@ -337,14 +337,14 @@ public class CodexNaturalis extends Application implements GuiObserver {
             TextField writeNumOfPlayers = textFields.get(3);
             Label invalidNumOfPlayers = labels.get(1);
             Button enterNumOfPlayers = buttonsList.get(5);
-            Button goToNetwork = buttonsList.get(0);
+            Button goBack = buttonsList.get(6);
             Label waitingForPlayers = labels.get(6);
 
 
             numOfPlayers.setVisible(true);
             writeNumOfPlayers.setVisible(true);
             enterNumOfPlayers.setVisible(true);
-            goToNetwork.setVisible(true);
+            goBack.setVisible(true);
             waitingForPlayers.setVisible(false);
             loadingWheel.setVisible(false);
             invalidNumOfPlayers.setVisible(false);
@@ -355,11 +355,14 @@ public class CodexNaturalis extends Application implements GuiObserver {
                     invalidNumOfPlayers.setVisible(true);
                 } else if (miniGameModel.myName().equals(miniGameModel.getGodPlayer())) {
                     guiActuator.setNumOfPlayers(num);
-                    waitingForPlayers.setVisible(true);
+
                     enterNumOfPlayers.setVisible(false);
                     numOfPlayers.setVisible(false);
                     writeNumOfPlayers.setVisible(false);
                     invalidNumOfPlayers.setVisible(false);
+                    goBack.setVisible(false);
+
+                    waitingForPlayers.setVisible(true);
                     loadingWheel.setVisible(true);
                 }
             });
