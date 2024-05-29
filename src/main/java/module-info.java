@@ -28,6 +28,7 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11;
 
     opens it.polimi.ingsw.am11.view.client.GUI.window to javafx.fxml;
+    exports it.polimi.ingsw.am11.view.client.GUI to javafx.graphics;
     exports it.polimi.ingsw.am11.view.client.GUI.window;
     exports it.polimi.ingsw.am11.view.client.GUI.utils;
     opens it.polimi.ingsw.am11.view.client.GUI.utils to javafx.fxml;

@@ -1,27 +1,47 @@
-package it.polimi.ingsw.am11.view.client.GUI.window;
+package it.polimi.ingsw.am11.view.client.GUI.windows1;
 
+import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis1;
+import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
+import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import javafx.animation.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-import java.util.List;
-
 public class LoadingScreen {
-    public void animateLoadingScreen(int size, List<ImageView> images,
-                                     List<Button> buttonList, List<TextField> textFields,
-                                     List<Label> labels, ParallelTransition prT,
-                                     SequentialTransition sqT, VBox theBox) {
-        int symbolSize = size / 8;
+    private final CodexNaturalis1 codexNaturalis;
+    ImageView lDBackground, lDSquare, lDWritings, lDDisks, wolf, butterfly, mushroom, leaf;
+    SequentialTransition sqT;
+    ParallelTransition prT;
+    int size;
 
-        ImageView lDBackground = images.get(0);
-        ImageView lDSquare = images.get(1);
-        ImageView lDWritings = images.get(2);
-        ImageView lDDisks = images.get(3);
+    public LoadingScreen(CodexNaturalis1 codexNaturalis) {
+        this.codexNaturalis = codexNaturalis;
+    }
+
+    public void createLoadingScreen() {
+        GuiResources guiResources = codexNaturalis.getGuiResources();
+        StackPane root = codexNaturalis.getRoot();
+        size = codexNaturalis.getWindowSize();
+
+        lDBackground = guiResources.getTheImageView(GuiResEnum.LGIN_BACKGROUND);
+        lDSquare = guiResources.getTheImageView(GuiResEnum.LGIN_SQUARE);
+        lDWritings = guiResources.getTheImageView(GuiResEnum.LGIN_WRITINGS);
+        lDDisks = guiResources.getTheImageView(GuiResEnum.LGIN_DISK);
+
+        wolf = guiResources.getTheImageView(GuiResEnum.WOLF_ICON);
+        butterfly = guiResources.getTheImageView(GuiResEnum.BUTTERLFY_ICON);
+        mushroom = guiResources.getTheImageView(GuiResEnum.MUSHROOM_ICON);
+        leaf = guiResources.getTheImageView(GuiResEnum.LEAF_ICON);
+        sqT = new SequentialTransition();
+        prT = new ParallelTransition();
+        root.getChildren().addAll(lDBackground, lDSquare, lDWritings, lDDisks,
+                                  wolf, butterfly, mushroom, leaf);
+    }
+
+    public void animateLoadingScreen() {
+        int symbolSize = size / 8;
 
         lDBackground.setFitHeight(size);
         lDBackground.setPreserveRatio(true);
@@ -31,12 +51,6 @@ public class LoadingScreen {
         lDWritings.setPreserveRatio(true);
         lDDisks.setFitHeight(size);
         lDDisks.setPreserveRatio(true);
-
-        ImageView wolf = images.get(4);
-        ImageView butterfly = images.get(5);
-        ImageView mushroom = images.get(6);
-        ImageView leaf = images.get(7);
-
         wolf.setFitHeight(symbolSize);
         wolf.setPreserveRatio(true);
         wolf.setTranslateX(117.0 * size / 512.0);
@@ -53,7 +67,6 @@ public class LoadingScreen {
         leaf.setPreserveRatio(true);
         leaf.setTranslateX(- 123.0 * size / 512.0);
         leaf.setTranslateY(- 121.0 * size / 512.0);
-
         // Make the writings fade away
         Duration FadeTime = Duration.millis(3000);
 
@@ -170,22 +183,9 @@ public class LoadingScreen {
             butterfly.setDisable(true);
         });
 
-        Button chooseRMI = buttonList.get(3);
-        Button chooseSocket = buttonList.get(2);
-        Button joinButton = buttonList.get(4);
-        TextField ipAddress = textFields.get(1);
-        TextField port = textFields.get(2);
-        Label connectionType = labels.get(4);
+        //no more necessary
+        /*sqT.onFinishedProperty().set(event -> {
 
-        sqT.onFinishedProperty().set(event -> {
-            chooseRMI.setVisible(true);
-            chooseSocket.setVisible(true);
-            chooseSocket.fire();
-            joinButton.setVisible(true);
-            ipAddress.setVisible(true);
-            port.setVisible(true);
-            connectionType.setVisible(true);
-            theBox.setVisible(true);
-        });
+        });*/
     }
 }
