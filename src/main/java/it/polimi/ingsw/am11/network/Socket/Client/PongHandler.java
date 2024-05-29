@@ -1,5 +1,9 @@
 package it.polimi.ingsw.am11.network.Socket.Client;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import it.polimi.ingsw.am11.network.Socket.utils.ContextJSON;
+import it.polimi.ingsw.am11.network.Socket.utils.JsonFactory;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +24,7 @@ public class PongHandler implements Runnable {
     private final PrintWriter out;
     private final AtomicLong lastPong;
     private final ScheduledExecutorService pongExecutor;
+    private final ObjectNode pingMessage;
 
     public PongHandler(@NotNull Socket socket,
                        @NotNull PrintWriter out) {
@@ -27,16 +32,18 @@ public class PongHandler implements Runnable {
         this.out = out;
         this.lastPong = new AtomicLong(- 1);
         this.pongExecutor = Executors.newSingleThreadScheduledExecutor();
+        this.pingMessage = JsonFactory.createObjectNode(new ObjectMapper(), ContextJSON.PING);
     }
 
     public void start() {
-        lastPong.compareAndSet(- 1, System.currentTimeMillis());
-        pongExecutor.scheduleAtFixedRate(this, PONG_INTERVAL, PONG_INTERVAL,
-                                         TimeUnit.MILLISECONDS);
+        out.println(pingMessage);
     }
 
     public void pong() {
-        lastPong.set(System.currentTimeMillis());
+        if (lastPong.compareAndSet(- 1, System.currentTimeMillis())) {
+            pongExecutor.scheduleAtFixedRate(this, PONG_INTERVAL, PONG_INTERVAL,
+                                             TimeUnit.MILLISECONDS);
+        } else lastPong.set(System.currentTimeMillis());
     }
 
     @Override
@@ -50,9 +57,11 @@ public class PongHandler implements Runnable {
                 socket.close();
             } catch (Exception e) {
                 LOGGER.error("CLIENT TCP: Error while closing socket: {}", e.getMessage());
+            } finally {
+                pongExecutor.shutdown();
             }
         } else {
-            out.println("ping");
+            out.println(pingMessage);
         }
     }
 

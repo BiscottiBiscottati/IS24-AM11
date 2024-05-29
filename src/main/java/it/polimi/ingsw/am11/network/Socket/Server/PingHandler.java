@@ -1,9 +1,14 @@
 package it.polimi.ingsw.am11.network.Socket.Server;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import it.polimi.ingsw.am11.network.Socket.utils.ContextJSON;
+import it.polimi.ingsw.am11.network.Socket.utils.JsonFactory;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -16,11 +21,16 @@ public class PingHandler implements Runnable {
     private static final int PING_TIMEOUT = 3000;
 
     private final Socket clientSocket;
+    private final PrintWriter out;
+    private final ObjectNode pongMessage;
     private final ScheduledExecutorService pingExecutor;
     private final AtomicLong lastPing;
 
-    public PingHandler(@NotNull Socket clientSocket) {
+    public PingHandler(@NotNull Socket clientSocket,
+                       @NotNull PrintWriter out) {
         this.clientSocket = clientSocket;
+        this.out = out;
+        this.pongMessage = JsonFactory.createObjectNode(new ObjectMapper(), ContextJSON.PING);
         this.lastPing = new AtomicLong(- 1);
         this.pingExecutor = Executors.newSingleThreadScheduledExecutor();
     }
@@ -31,11 +41,13 @@ public class PingHandler implements Runnable {
         long last = lastPing.get();
         if (last == - 1) return;
         if (now - last > PING_TIMEOUT) {
-            LOGGER.info("SERVER TCP: Ping timeout, closing connection");
+            LOGGER.info("SERVER TCP: A ping timeout occurred");
             try {
                 clientSocket.close();
             } catch (Exception e) {
                 LOGGER.error("SERVER TCP: Error while closing socket: {}", e.getMessage());
+            } finally {
+                pingExecutor.shutdown();
             }
         }
     }
@@ -45,9 +57,10 @@ public class PingHandler implements Runnable {
             pingExecutor.scheduleAtFixedRate(this, PING_INTERVAL, PING_INTERVAL,
                                              TimeUnit.MILLISECONDS);
         } else lastPing.set(System.currentTimeMillis());
+        out.println(pongMessage);
     }
 
-    public void stop() {
+    public void close() {
         pingExecutor.shutdown();
     }
 }
