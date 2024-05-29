@@ -29,6 +29,15 @@ public enum GuiResEnum {
         this.fileName = fileName;
     }
 
+    public static GuiResEnum getEnumByCardId(int cardId) {
+        String fileName = cardId + ".png";
+        for (GuiResEnum value : GuiResEnum.values()) {
+            if (value.fileName.equals(fileName)) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("Invalid cardId: " + cardId);
+    }
 
     public String getFileName() {
         return fileName;

@@ -183,8 +183,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
         labels = new ArrayList<>(
                 List.of(numOfPlayers, invalidNumOfPlayers, yourName, nameAlreadyTaken,
-                        connectionType,
-                        connectionFailed, waitingForPlayers));
+                        connectionType, connectionFailed, waitingForPlayers));
 
         numOfPlayers.setVisible(false);
         invalidNumOfPlayers.setVisible(false);
@@ -318,7 +317,9 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void receiveStarterCard(int cardId) {
-
+        SettingStarterCards settingStarterCards = new SettingStarterCards();
+        settingStarterCards.createStarterCardsWindow(cardId, font, guiResources, halfButtonSize,
+                                                     root, loadingWheel, labels);
     }
 
     @Override
