@@ -36,6 +36,5 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.network.RMI.Client;
     exports it.polimi.ingsw.am11.network.RMI.RemoteInterfaces;
     exports it.polimi.ingsw.am11.network.RMI.Server;
-    exports it.polimi.ingsw.am11.network.RMI.Chat;
 
 }
