@@ -103,8 +103,6 @@ public class PickablesTable {
         };
     }
 
-    //region Getters
-
     public static void setNumOfCommonObjectives(int numOfCommonObjectives) {
         PickablesTable.numOfCommonObjectives = numOfCommonObjectives;
     }
@@ -119,20 +117,6 @@ public class PickablesTable {
 
     public Set<ObjectiveCard> getCommonObjectives() {
         return Collections.unmodifiableSet(commonObjectives);
-    }
-
-    public Optional<PlayableCard> getPlayableByID(int id) {
-        return resourceDeck.getCardById(id)
-                           .map(PlayableCard.class::cast)
-                           .or(() -> goldDeck.getCardById(id));
-    }
-
-    public Optional<StarterCard> getStarterByID(int id) {
-        return starterDeck.getCardById(id);
-    }
-
-    public Optional<ObjectiveCard> getObjectiveByID(int id) {
-        return objectiveDeck.getCardById(id);
     }
 
     public @NotNull PlayableCard drawPlayableFrom(@NotNull PlayableCardType type)

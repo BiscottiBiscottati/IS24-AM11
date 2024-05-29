@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
-import it.polimi.ingsw.am11.view.client.miniModel.utils.CardDecoder;
+import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;

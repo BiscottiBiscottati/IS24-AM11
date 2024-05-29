@@ -1,7 +1,8 @@
-package it.polimi.ingsw.am11.view.client.miniModel.utils;
+package it.polimi.ingsw.am11.model.decks.utils;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
+import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
@@ -39,5 +40,10 @@ public class CardDecoder {
 
     public static Optional<StarterCard> decodeStarterCard(int cardId) {
         return starterDeck.getCardById(cardId);
+    }
+
+    public static Optional<PlayableCard> decodePlayableCard(int cardId) {
+        return decodeResourceCard(cardId).map(PlayableCard.class::cast)
+                                         .or(() -> decodeGoldCard(cardId));
     }
 }
