@@ -1,10 +1,12 @@
 package it.polimi.ingsw.am11.model;
 
+import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.PersonalSpace;
 import it.polimi.ingsw.am11.model.players.Player;
@@ -15,6 +17,7 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.model.table.PickablesTable;
 import it.polimi.ingsw.am11.model.table.Plateau;
 import it.polimi.ingsw.am11.model.utils.BasicRuleset;
+import it.polimi.ingsw.am11.model.utils.ReconnectionTimer;
 import it.polimi.ingsw.am11.model.utils.RuleSet;
 import it.polimi.ingsw.am11.model.utils.TurnAction;
 import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
@@ -40,6 +43,7 @@ public class GameLogic implements GameModel {
     private final PlayerManager playerManager;
     private final PickablesTable pickablesTable;
     private final Plateau plateau;
+    private final ReconnectionTimer reconnectionTimer;
     private final GameListenerSupport pcs;
 
     public GameLogic() {
@@ -51,6 +55,7 @@ public class GameLogic implements GameModel {
         this.playerManager = new PlayerManager(this.pcs);
         this.pickablesTable = new PickablesTable(this.pcs);
         this.plateau = new Plateau(this.pcs);
+        this.reconnectionTimer = new ReconnectionTimer(this);
     }
 
     private void setConstants() {
@@ -551,23 +556,28 @@ public class GameLogic implements GameModel {
                     " turn."
             );
         }
+        if (playerManager.getCurrentAction() != TurnAction.PLACE_CARD) {
+            // FIXME to throw a different exception
+            throw new TurnsOrderException(nickname + " has already placed a card first");
+        }
         if (player.space().hasCardBeenPlaced()) {
             throw new TurnsOrderException(nickname + " has already placed a card first");
         }
 
-        PlayableCard card = pickablesTable.getPlayableByID(cardID)
-                                          .orElseThrow(() -> new IllegalCardPlacingException(
-                                                  "Card not found"));
+        PlayableCard card = CardDecoder.decodePlayableCard(cardID)
+                                       .orElseThrow(() -> new IllegalCardPlacingException(
+                                               "Card not found"));
         int points;
         Optional.of(playerManager.getHand(nickname).contains(cardID))
                 .filter(b -> b)
                 .orElseThrow(
                         () -> new NotInHandException("Card not in hand"));
-        Optional.of(player.field().isRequirementMet(card, isRetro))
-                .filter(b -> b)
-                .orElseThrow(
-                        () -> new IllegalCardPlacingException(
-                                "Card requirements not met!"));
+        Optional.of(player.field())
+                .filter(b -> b.isRequirementMet(card, isRetro))
+                .orElseThrow(() -> new IllegalCardPlacingException("Card requirements not met!"));
+        Optional.of(player.field())
+                .filter(b -> b.isAvailable(position))
+                .orElseThrow(() -> new IllegalCardPlacingException("Position not available!"));
         player.space().pickCard(cardID);
 
         LOGGER.info("MODEL: Placing card {} for {} on position {}", cardID, nickname, position);
@@ -585,6 +595,7 @@ public class GameLogic implements GameModel {
                                            Map.entry(position, CardContainer.of(card, isRetro))));
 
         player.space().setCardBeenPlaced(true);
+        playerManager.setCurrentAction(TurnAction.DRAW_CARD);
 
         LOGGER.info("MODEL: Card placed, giving {} points to {}", points, nickname);
 
@@ -624,83 +635,6 @@ public class GameLogic implements GameModel {
         }
     }
 
-    private void checkIfDrawAllowed(String nickname)
-    throws GameStatusException, TurnsOrderException, IllegalPickActionException {
-        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
-            plateau.getStatus() == GameStatus.CHOOSING_STARTERS ||
-            plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
-            throw new GameStatusException("the game is not ongoing");
-        }
-        // chef if current player not a player
-        Optional<String> currentTurnPlayer = playerManager.getCurrentTurnPlayer();
-        if (! Objects.equals(currentTurnPlayer, Optional.of(nickname))) {
-            throw new TurnsOrderException(
-                    "It's not " + nickname + " turn, it's " + currentTurnPlayer + " turn."
-            );
-        }
-        if (! playerManager.getPlayer(nickname).orElseThrow().space().hasCardBeenPlaced()) {
-            throw new IllegalPickActionException(nickname + " has to place a card first");
-        }
-
-    }
-
-    /**
-     * Calculate the points from common and personal objectives for each player and add them to the
-     * plateau
-     *
-     * @throws IllegalPlateauActionException if a player is not found
-     * @throws GameStatusException           if the game is not ongoing
-     */
-
-    private void countObjectivesPoints()
-    throws IllegalPlateauActionException, GameStatusException, GameBreakingException {
-        if (plateau.getStatus() != GameStatus.ENDED) {
-            throw new GameStatusException("the game has not ended yet");
-        }
-
-        for (String nickname : playerManager.getPlayers()) {
-            Player player;
-            try {
-                player = playerManager.getPlayer(nickname)
-                                      .orElseThrow(
-                                              () -> new PlayerInitException("player not found"));
-            } catch (PlayerInitException e) {
-                throw new GameBreakingException("Discrepancies between playerManager and itself");
-            }
-
-            LOGGER.info("MODEL: Counting points from common objectives");
-
-            for (ObjectiveCard commonObjective : pickablesTable.getCommonObjectives()) {
-                int points = commonObjective.countPoints(player.field());
-
-                LOGGER.debug("MODEL: Common Objective {} gives {} points to {}",
-                             commonObjective.getId(),
-                             points,
-                             nickname);
-
-                if (points > 0) {
-                    plateau.addCounterObjective(player);
-                }
-                plateau.addPlayerPoints(player, points);
-            }
-
-            LOGGER.info("MODEL: Counting points from personal objectives");
-
-            for (ObjectiveCard privateObjective : player.space().getPlayerObjective()) {
-                int points = privateObjective.countPoints(player.field());
-
-                LOGGER.debug("MODEL: Personal Objective {} gives {} points to {}",
-                             privateObjective.getId(), points,
-                             nickname);
-
-                if (points > 0) {
-                    plateau.addCounterObjective(player);
-                }
-                plateau.addPlayerPoints(player, points);
-            }
-        }
-    }
-
     /**
      * This method handles the changing of the turn and the final turn. If it is not the final turn,
      * it checks if it's armageddonTime and gives the turn to the next players. If it's the final
@@ -718,6 +652,11 @@ public class GameLogic implements GameModel {
             throw new GameStatusException("the game is not ongoing");
         }
 
+        if (playerManager.getNumberOfConnected() == 1) {
+            reconnectionTimer.waitForReconnection();
+            return;
+        }
+
         //check if it's armageddon time
         if (Stream.of(PlayableCardType.values())
                   .map(pickablesTable::getDeckTop)
@@ -728,6 +667,7 @@ public class GameLogic implements GameModel {
 
             plateau.activateArmageddon();
         }
+        // go to the next player
         playerManager.goNextTurn();
 
         //handle game end
@@ -745,12 +685,21 @@ public class GameLogic implements GameModel {
             LOGGER.info("MODEL: Setting final leaderboard");
 
             plateau.setFinalLeaderboard();
+
+            return;
         } else if (plateau.getStatus() == GameStatus.ARMAGEDDON &&
                    playerManager.isFirstTheCurrent()) {
 
             LOGGER.info("MODEL: Careful it's the last turn!");
 
             plateau.setStatus(GameStatus.LAST_TURN);
+        }
+
+        // TODO to implement logic when all player are disconnected
+        if (playerManager.isCurrentDisconnected()) {
+            LOGGER.info("MODEL: Player {} is disconnected, skipping his turn",
+                        playerManager.getCurrentTurnPlayer().orElseThrow());
+            goNextTurn();
         }
     }
 
@@ -878,6 +827,16 @@ public class GameLogic implements GameModel {
 
         playerManager.disconnectPlayer(player);
         pcs.removeListener(nickname);
+
+        if (playerManager.areAllDisconnected()) {
+            LOGGER.info("MODEL: All players are disconnected, stopping the game");
+            CentralController.INSTANCE.destroyGame();
+            return;
+        }
+
+        if (playerManager.isTurnOf(nickname)) {
+            reconnectionTimer.disconnectCurrent(nickname, playerManager.getCurrentAction());
+        }
     }
 
     @Override
@@ -890,6 +849,11 @@ public class GameLogic implements GameModel {
         playerManager.reconnectPlayer(player);
         pcs.addListener(nickname, playerListener);
         LOGGER.info("MODEL: Reconnected player {}", nickname);
+
+        reconnectionTimer.reconnect();
+        if (playerManager.isTurnOf(nickname)) {
+            reconnectionTimer.reconnectCurrent();
+        }
 
     }
 
@@ -906,6 +870,19 @@ public class GameLogic implements GameModel {
         pickablesTable.hardReset();
         playerManager.hardReset();
         plateau.setStatus(GameStatus.SETUP);
+    }
+
+    @Override
+    public void endGameEarly() {
+        plateau.setStatus(GameStatus.ENDED);
+        Player winningPlayer = playerManager.getPlayers().stream()
+                                            .filter(playerManager::isDisconnected)
+                                            .map(playerManager::getPlayer)
+                                            .filter(Optional::isPresent)
+                                            .map(Optional::get)
+                                            .findFirst().orElseThrow();
+
+        plateau.setWinner(winningPlayer);
     }
 
     private void giveCards() throws GameBreakingException {
@@ -975,6 +952,82 @@ public class GameLogic implements GameModel {
 
             playerManager.setCandidateObjectives(nickname,
                                                  objectives);
+        }
+    }
+
+    private void checkIfDrawAllowed(String nickname)
+    throws GameStatusException, TurnsOrderException, IllegalPickActionException {
+        if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
+            plateau.getStatus() == GameStatus.CHOOSING_STARTERS ||
+            plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
+            throw new GameStatusException("the game is not ongoing");
+        }
+        // chef if current player not a player
+        Optional<String> currentTurnPlayer = playerManager.getCurrentTurnPlayer();
+        if (! Objects.equals(currentTurnPlayer, Optional.of(nickname))) {
+            throw new TurnsOrderException(
+                    "It's not " + nickname + " turn, it's " + currentTurnPlayer + " turn."
+            );
+        }
+        if (! playerManager.getPlayer(nickname).orElseThrow().space().hasCardBeenPlaced()) {
+            throw new IllegalPickActionException(nickname + " has to place a card first");
+        }
+
+    }
+
+    /**
+     * Calculate the points from common and personal objectives for each player and add them to the
+     * plateau
+     *
+     * @throws IllegalPlateauActionException if a player is not found
+     * @throws GameStatusException           if the game is not ongoing
+     */
+    private void countObjectivesPoints()
+    throws IllegalPlateauActionException, GameStatusException, GameBreakingException {
+        if (plateau.getStatus() != GameStatus.ENDED) {
+            throw new GameStatusException("the game has not ended yet");
+        }
+
+        for (String nickname : playerManager.getPlayers()) {
+            Player player;
+            try {
+                player = playerManager.getPlayer(nickname)
+                                      .orElseThrow(
+                                              () -> new PlayerInitException("player not found"));
+            } catch (PlayerInitException e) {
+                throw new GameBreakingException("Discrepancies between playerManager and itself");
+            }
+
+            LOGGER.info("MODEL: Counting points from common objectives");
+
+            for (ObjectiveCard commonObjective : pickablesTable.getCommonObjectives()) {
+                int points = commonObjective.countPoints(player.field());
+
+                LOGGER.debug("MODEL: Common Objective {} gives {} points to {}",
+                             commonObjective.getId(),
+                             points,
+                             nickname);
+
+                if (points > 0) {
+                    plateau.addCounterObjective(player);
+                }
+                plateau.addPlayerPoints(player, points);
+            }
+
+            LOGGER.info("MODEL: Counting points from personal objectives");
+
+            for (ObjectiveCard privateObjective : player.space().getPlayerObjective()) {
+                int points = privateObjective.countPoints(player.field());
+
+                LOGGER.debug("MODEL: Personal Objective {} gives {} points to {}",
+                             privateObjective.getId(), points,
+                             nickname);
+
+                if (points > 0) {
+                    plateau.addCounterObjective(player);
+                }
+                plateau.addPlayerPoints(player, points);
+            }
         }
     }
 }

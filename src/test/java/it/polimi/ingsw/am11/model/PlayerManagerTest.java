@@ -3,6 +3,8 @@ package it.polimi.ingsw.am11.model;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.utils.BasicRuleset;
+import it.polimi.ingsw.am11.model.utils.RuleSet;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

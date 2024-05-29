@@ -11,6 +11,7 @@ import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.model.utils.TurnAction;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
@@ -35,6 +36,7 @@ public class PlayerManager {
     private final Set<Player> unavailablePlayers;
     private Player firstPlayer;
     private Player currentPlaying;
+    private TurnAction currentAction;
 
     public PlayerManager(GameListenerSupport pcs) {
         this.players = new HashMap<>(8);
@@ -42,6 +44,7 @@ public class PlayerManager {
         this.unavailablePlayers = new HashSet<>(8);
         this.firstPlayer = null;
         this.currentPlaying = null;
+        this.currentAction = TurnAction.PLACE_CARD;
         this.pcs = pcs;
     }
 
@@ -102,7 +105,6 @@ public class PlayerManager {
         } else {
             throw new PlayerInitException("Player " + nickname + " not found");
         }
-
     }
 
     public Optional<StarterCard> getStarterCard(@NotNull String nickname)
@@ -133,6 +135,14 @@ public class PlayerManager {
         } else {
             throw new PlayerInitException("Player " + nickname + " not found");
         }
+    }
+
+    public TurnAction getCurrentAction() {
+        return currentAction;
+    }
+
+    public void setCurrentAction(@NotNull TurnAction action) {
+        this.currentAction = action;
     }
 
     public void reconnectPlayer(Player player) {
@@ -209,7 +219,7 @@ public class PlayerManager {
             );
         } else if (players.size() >= maxNumberOfPlayers) {
             throw new NumOfPlayersException(
-                    "You are trying to add too many players, the limit is " +
+                    "You are trying toisPlayerTurn add too many players, the limit is " +
                     maxNumberOfPlayers
             );
         } else {
@@ -244,8 +254,9 @@ public class PlayerManager {
             peeked = playerQueue.element();
         }
         currentPlaying = playerQueue.element();
+        currentAction = TurnAction.PLACE_CARD;
 
-        LOGGER.debug("MODEL: First player is {}", firstPlayer.nickname());
+        LOGGER.info("MODEL: First player is {}", firstPlayer.nickname());
         LOGGER.debug("MODEL: Current player is {}", currentPlaying.nickname());
 
         pcs.fireEvent(new TurnChangeEvent(null, currentPlaying.nickname()));
@@ -256,18 +267,16 @@ public class PlayerManager {
     }
 
     public void goNextTurn() {
+        String previousPlayer = currentPlaying.nickname();
+        playerQueue.remove();
+        playerQueue.add(currentPlaying);
+        currentPlaying = playerQueue.element();
+        currentPlaying.space().setCardBeenPlaced(false);
+        currentAction = TurnAction.PLACE_CARD;
 
-        do {
-            String previousPlayer = currentPlaying.nickname();
-            playerQueue.remove();
-            playerQueue.add(currentPlaying);
-            currentPlaying = playerQueue.element();
-            currentPlaying.space().setCardBeenPlaced(false);
+        LOGGER.info("MODEL: Player {} is now playing", currentPlaying.nickname());
 
-            LOGGER.info("MODEL: Player {} is now playing", currentPlaying.nickname());
-
-            pcs.fireEvent(new TurnChangeEvent(previousPlayer, currentPlaying.nickname()));
-        } while (unavailablePlayers.contains(currentPlaying));
+        pcs.fireEvent(new TurnChangeEvent(previousPlayer, currentPlaying.nickname()));
     }
 
     public void resetAll() {
@@ -305,6 +314,25 @@ public class PlayerManager {
         return players.values().parallelStream()
                       .map(Player::space)
                       .allMatch(PersonalSpace::areObjectiveGiven);
+    }
+
+    public boolean isTurnOf(@NotNull String nickname) {
+        if (currentPlaying == null) {
+            return false;
+        }
+        return currentPlaying.nickname().equals(nickname);
+    }
+
+    public boolean isCurrentDisconnected() {
+        return unavailablePlayers.contains(currentPlaying);
+    }
+
+    public boolean areAllDisconnected() {
+        return unavailablePlayers.size() == players.size();
+    }
+
+    public int getNumberOfConnected() {
+        return players.size() - unavailablePlayers.size();
     }
 
     public void hardReset() {

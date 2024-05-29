@@ -112,4 +112,6 @@ public interface GameModel {
     boolean isDisconnected(@NotNull String nickname);
 
     void forceReset();
+
+    void endGameEarly();
 }

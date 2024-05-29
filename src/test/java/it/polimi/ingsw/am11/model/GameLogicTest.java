@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.utils.ReconnectionTimer;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -1307,6 +1308,43 @@ class GameLogicTest {
         for (String nickname : players) {
             assertDoesNotThrow(() -> model.getStarterCard(nickname));
         }
+    }
+
+    @Test
+    void goNextTurn() throws NumOfPlayersException, PlayerInitException, GameStatusException,
+                             IllegalCardPlacingException, GameBreakingException,
+                             InterruptedException {
+        ReconnectionTimer.setReconnectionTime(100);
+        model.addPlayerToTable("player1", PlayerColor.BLUE);
+        model.addPlayerToTable("player2", PlayerColor.GREEN);
+        model.addPlayerToTable("player3", PlayerColor.RED);
+
+        model.initGame();
+
+        model.setStarterFor("player1", false);
+        model.setStarterFor("player2", false);
+        model.setStarterFor("player3", false);
+
+        Set.of("player1", "player2", "player3").forEach(
+                player -> {
+                    try {
+                        model.setObjectiveFor(player, model.getCandidateObjectives(player)
+                                                           .stream()
+                                                           .findFirst()
+                                                           .orElseThrow());
+                    } catch (GameStatusException | PlayerInitException |
+                             IllegalPlayerSpaceActionException | GameBreakingException e) {
+                        fail(e);
+                    }
+                }
+        );
+
+        String toDisconnect = model.getCurrentTurnPlayer();
+        model.goNextTurn();
+        model.disconnectPlayer(toDisconnect);
+        model.goNextTurn();
+        model.goNextTurn();
+        assertNotEquals(toDisconnect, model.getCurrentTurnPlayer());
     }
 }
 

@@ -10,6 +10,7 @@ import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
+import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
@@ -63,7 +64,7 @@ public class PickablesTableTest {
     public void getPlayableByID() {
         ResourceCard card = resourceCardDeck.draw().orElseThrow();
         int resourceId = card.getId();
-        Optional<PlayableCard> playableCard = pickablesTable.getPlayableByID(resourceId);
+        Optional<PlayableCard> playableCard = CardDecoder.decodePlayableCard(resourceId);
 
         Assertions.assertNotNull(playableCard);
         Assertions.assertTrue(playableCard.isPresent());
@@ -75,7 +76,7 @@ public class PickablesTableTest {
         assertEquals(ResourceCard.class, playable.getClass());
 
         GoldCard goldCard = goldCardDeck.draw().orElseThrow();
-        playableCard = pickablesTable.getPlayableByID(goldCard.getId());
+        playableCard = CardDecoder.decodePlayableCard(goldCard.getId());
 
         Assertions.assertNotNull(playableCard);
         Assertions.assertTrue(playableCard.isPresent());
@@ -83,7 +84,7 @@ public class PickablesTableTest {
         assertEquals(Optional.of(goldCard), playableCard);
 
         StarterCard starterCard = starterCardDeck.draw().orElseThrow();
-        playableCard = pickablesTable.getPlayableByID(starterCard.getId());
+        playableCard = CardDecoder.decodePlayableCard(starterCard.getId());
 
         assertNotNull(playableCard);
         assertTrue(playableCard.isEmpty());

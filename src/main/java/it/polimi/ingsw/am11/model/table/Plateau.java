@@ -197,6 +197,29 @@ public class Plateau {
         return winners;
     }
 
+    public void setWinner(Player player) {
+        finalLeaderboard.keySet()
+                        .forEach(p -> finalLeaderboard.put(p, 2));
+
+        finalLeaderboard.put(player, 1);
+
+        Map<String, Integer> finalLeaderboardString = finalLeaderboard.entrySet()
+                                                                      .stream()
+                                                                      .map(e -> Map.entry(
+                                                                              e.getKey().nickname(),
+                                                                              e.getValue()))
+                                                                      .collect(
+                                                                              HashMap::new,
+                                                                              (m, e) -> m.put(
+                                                                                      e.getKey(),
+                                                                                      e.getValue()),
+                                                                              HashMap::putAll);
+
+        LOGGER.info("MODEL: Winner set: {}", player.nickname());
+
+        pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboardString));
+    }
+
     public void hardReset() {
         LOGGER.debug("MODEL: Hard reset on plateau");
         playerPoints.clear();
