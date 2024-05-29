@@ -21,6 +21,8 @@ import java.util.Objects;
 
 public class ClientHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
+
+    private final PingHandler pingHandler;
     private final @NotNull Socket clientSocket;
     private final @NotNull BufferedReader in;
     private final @NotNull PrintWriter out;
@@ -30,6 +32,7 @@ public class ClientHandler implements Runnable {
 
     public ClientHandler(@NotNull Socket clientSocket) {
         this.clientSocket = clientSocket;
+        this.pingHandler = new PingHandler(clientSocket);
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -50,6 +53,7 @@ public class ClientHandler implements Runnable {
 
     public void stop() throws IOException {
         isRunning = false;
+        pingHandler.stop();
         in.close();
         out.close();
         if (! clientSocket.isClosed()) clientSocket.close();
@@ -63,7 +67,7 @@ public class ClientHandler implements Runnable {
         if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nickname)) {
             if (! readNumOfPlayers(serverExceptionSender)) return; //FIXME disconnection
         }
-        readJSONs();
+        readGameMessage();
 
     }
 
@@ -108,7 +112,7 @@ public class ClientHandler implements Runnable {
             if (message == null) return false;
             LOGGER.debug("SERVER TCP: Received message from god player: {}", message);
             try {
-                if (! message.isBlank()) {
+                if (! message.isBlank() && ! message.equals("ping")) {
                     int numOfPlayers = Integer.parseInt(message);
                     CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
                     LOGGER.info("SERVER TCP: Number of players set to {} by {}",
@@ -132,11 +136,11 @@ public class ClientHandler implements Runnable {
         return true;
     }
 
-    private void readJSONs() {
+    private void readGameMessage() {
         while (isRunning) {
             String message = readInput();
             if (message == null) return;
-            if (! message.isEmpty()) {
+            if (! message.isBlank() && ! message.equals("ping")) {
                 serverMessageReceiver.receive(message);
             }
         }
@@ -151,6 +155,11 @@ public class ClientHandler implements Runnable {
                 LOGGER.info("SERVER TCP: Client {} disconnected", nickname);
                 CentralController.INSTANCE.disconnectPlayer(nickname);
                 isRunning = false;
+            }
+            if (Objects.equals(message, "ping")) {
+                LOGGER.trace("SERVER TCP: Ping received from client {}", nickname);
+                pingHandler.ping();
+                out.println("pong");
             }
             return message;
         } catch (IOException e) {

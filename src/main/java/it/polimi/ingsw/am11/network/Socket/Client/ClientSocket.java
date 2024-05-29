@@ -26,6 +26,7 @@ public class ClientSocket implements ClientNetworkHandler {
     private final @NotNull ClientMessageSender clientMessageSender;
     private final @NotNull Socket socket;
     private final @NotNull ExecutorService clientExecutor;
+    private final PongHandler pongHandler;
     private boolean isRunning;
 
     public ClientSocket(@NotNull String ip, int port,
@@ -51,6 +52,7 @@ public class ClientSocket implements ClientNetworkHandler {
             clientExecutor = Executors.newFixedThreadPool(1);
             Runtime.getRuntime().addShutdownHook(new Thread(this::close));
 
+            this.pongHandler = new PongHandler(socket, out);
             clientExecutor.submit(this::run);
 
         } catch (IOException e) {
@@ -80,6 +82,9 @@ public class ClientSocket implements ClientNetworkHandler {
                 clientViewUpdater.disconnectedFromServer();
                 close();
                 return;
+            }
+            if (message.equals("pong")) {
+                pongHandler.pong();
             } else if (! message.isBlank()) {
                 clientMessageReceiver.receive(message);
             }
@@ -96,9 +101,10 @@ public class ClientSocket implements ClientNetworkHandler {
         clientExecutor.shutdown();
         isRunning = false;
         try {
-            if (socket != null && ! socket.isClosed()) socket.close();
-            if (in != null) in.close();
-            if (out != null) out.close();
+            pongHandler.close();
+            if (! socket.isClosed()) socket.close();
+            in.close();
+            out.close();
         } catch (IOException e) {
             LOGGER.debug("CLIENT TCP: Error while closing the connection (likely already closed)");
         }
