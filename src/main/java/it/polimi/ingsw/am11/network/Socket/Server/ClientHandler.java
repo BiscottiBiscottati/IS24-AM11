@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.network.Socket.Server;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
@@ -17,22 +16,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Objects;
 
 public class ClientHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
 
-    private final PingHandler pingHandler;
     private final @NotNull Socket clientSocket;
     private final @NotNull BufferedReader in;
     private final @NotNull PrintWriter out;
+    private @Nullable ServerMessageHandler messageHandler;
     private String nickname;
-    private ServerMessageReceiver serverMessageReceiver;
     private boolean isRunning;
 
     public ClientHandler(@NotNull Socket clientSocket) {
         this.clientSocket = clientSocket;
-        this.pingHandler = new PingHandler(clientSocket);
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -42,21 +38,22 @@ public class ClientHandler implements Runnable {
             throw new RuntimeException(e);
         }
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                stop();
-                LOGGER.info("SERVER TCP: Server ClientHandler {} closed", nickname);
-            } catch (IOException e) {
-                LOGGER.error("SERVER TCP: Error while closing client handler", e);
-            }
+            stop();
+            LOGGER.info("SERVER TCP: Server ClientHandler {} closed", nickname);
         }));
     }
 
-    public void stop() throws IOException {
+    public void stop() {
+        LOGGER.debug("SERVER TCP: Stopping client handler");
         isRunning = false;
-        pingHandler.stop();
-        in.close();
+        if (messageHandler != null) messageHandler.close();
+        try {
+            if (! clientSocket.isClosed()) clientSocket.close();
+            in.close();
+        } catch (IOException e) {
+            LOGGER.debug("SERVER TCP: Error while closing client handler: {}", e.getMessage());
+        }
         out.close();
-        if (! clientSocket.isClosed()) clientSocket.close();
     }
 
     @Override
@@ -64,11 +61,7 @@ public class ClientHandler implements Runnable {
         isRunning = true;
         ServerExceptionSender serverExceptionSender = new ServerExceptionSender(out);
         if (! readNickname(serverExceptionSender)) return;// FIXME disconnection
-        if (Objects.equals(CentralController.INSTANCE.getGodPlayer(), nickname)) {
-            if (! readNumOfPlayers(serverExceptionSender)) return; //FIXME disconnection
-        }
-        readGameMessage();
-
+        loopMessageRead();
     }
 
     private boolean readNickname(@NotNull ServerExceptionSender exceptionSender) {
@@ -76,90 +69,54 @@ public class ClientHandler implements Runnable {
         while (! validNickname) {
             LOGGER.info("SERVER TCP: Waiting for nickname");
             try {
-                nickname = in.readLine();
+                nickname = ServerMessageReceiver.receiveNickname(in.readLine());
             } catch (IOException e) {
                 LOGGER.error("SERVER TCP: Error while reading nickname", e);
                 return false;
             }
-            LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
-
             if (nickname == null) return false;
+
+            LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
 
             try {
                 ServerMessageSender serverMessageSender = new ServerMessageSender(out);
                 VirtualPlayerView view = CentralController.INSTANCE
                         .connectPlayer(nickname, serverMessageSender, serverMessageSender);
-                serverMessageReceiver = new ServerMessageReceiver(view, exceptionSender);
+                ServerMessageReceiver serverMessageReceiver =
+                        new ServerMessageReceiver(view, exceptionSender);
+                PingHandler pingHandler = new PingHandler(clientSocket, out);
+
+                messageHandler = new ServerMessageHandler(serverMessageReceiver, pingHandler);
                 validNickname = true;
                 LOGGER.info("SERVER TCP: Player connected with name: {}", nickname);
             } catch (GameStatusException | NumOfPlayersException |
-                     NotSetNumOfPlayerException e) {
+                     NotSetNumOfPlayerException | PlayerInitException e) {
                 LOGGER.error("SERVER TCP: Error while connecting player: {}", e.getMessage());
                 exceptionSender.exception(e);
+                stop();
                 return false;
-            } catch (PlayerInitException e) {
-                LOGGER.error("SERVER TCP: Nickname in use!");
             }
         }
         return true;
     }
 
-    private boolean readNumOfPlayers(@NotNull ServerExceptionSender exceptionSender) {
-        boolean validNumOfPlayers = false;
-        while (! validNumOfPlayers) {
-            LOGGER.info("SERVER TCP: waiting for number of players...");
-            String message = readInput();
-            if (message == null) return false;
-            LOGGER.debug("SERVER TCP: Received message from god player: {}", message);
-            try {
-                if (! message.isBlank() && ! message.equals("ping")) {
-                    int numOfPlayers = Integer.parseInt(message);
-                    CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
-                    LOGGER.info("SERVER TCP: Number of players set to {} by {}",
-                                numOfPlayers, nickname);
-                    validNumOfPlayers = true;
-                }
-            } catch (NotGodPlayerException | GameStatusException e) {
-                LOGGER.error("SERVER TCP: Error while setting number of players: {}",
-                             e.getMessage());
-                exceptionSender.exception(e);
-                return false;
-            } catch (NumOfPlayersException e) {
-                LOGGER.error("SERVER TCP: Invalid number of players: {}", e.getMessage());
-                exceptionSender.exception(e);
-            } catch (NumberFormatException e) {
-                LOGGER.error("SERVER TCP: Invalid string: {}", e.getMessage());
-                exceptionSender.exception(
-                        new NumOfPlayersException("Invalid input, please insert a number"));
-            }
-        }
-        return true;
-    }
-
-    private void readGameMessage() {
+    private void loopMessageRead() {
         while (isRunning) {
             String message = readInput();
             if (message == null) return;
-            if (! message.isBlank() && ! message.equals("ping")) {
-                serverMessageReceiver.receive(message);
-            }
+            if (messageHandler == null) throw new IllegalStateException("Message handler not set");
+            messageHandler.receive(message);
         }
     }
 
     private @Nullable String readInput() {
         try {
-            LOGGER.debug("SERVER TCP: Waiting for input...");
             String message = null;
             if (! clientSocket.isClosed()) message = in.readLine();
             if (message == null) {
                 LOGGER.info("SERVER TCP: Client {} disconnected", nickname);
                 CentralController.INSTANCE.disconnectPlayer(nickname);
                 isRunning = false;
-            }
-            if (Objects.equals(message, "ping")) {
-                LOGGER.trace("SERVER TCP: Ping received from client {}", nickname);
-                pingHandler.ping();
-                out.println("pong");
             }
             return message;
         } catch (IOException e) {

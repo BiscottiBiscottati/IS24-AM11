@@ -9,6 +9,8 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -16,6 +18,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class ClientMessageReceiver {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientMessageReceiver.class);
+
     private final @NotNull ClientViewUpdater clientPlayerView;
     private final @NotNull ObjectMapper mapper;
     private final @NotNull ClientExceptionReceiver clientExceptionReceiver;
@@ -27,9 +31,9 @@ public class ClientMessageReceiver {
                 clientPlayerView.getExceptionConnector());
     }
 
-    public void receive(@NotNull String message) {
+    public void receive(@NotNull JsonNode jsonNode) {
+        LOGGER.debug("CLIENT TCP: Received message: {}", jsonNode);
         try {
-            JsonNode jsonNode = mapper.readTree(message);
             switch (jsonNode.get("method").asText()) {
                 case "updateHand":
                     clientPlayerView.updateHand(jsonNode.get("cardId").asInt(),
@@ -110,9 +114,6 @@ public class ClientMessageReceiver {
                     break;
                 case "youGodPlayer":
                     clientPlayerView.notifyGodPlayer();
-                    break;
-                case ("Exception"):
-                    clientExceptionReceiver.receive(message);
                     break;
             }
         } catch (IOException e) {

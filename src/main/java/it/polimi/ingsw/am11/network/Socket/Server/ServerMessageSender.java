@@ -9,6 +9,8 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.ServerTableConnector;
+import it.polimi.ingsw.am11.network.Socket.utils.ContextJSON;
+import it.polimi.ingsw.am11.network.Socket.utils.JsonFactory;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import java.util.Set;
 
 public class ServerMessageSender implements ServerPlayerConnector, ServerTableConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerMessageSender.class);
+    private static final ContextJSON CONTEXT = ContextJSON.GAME;
 
     private final @NotNull PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -29,7 +32,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
 
     @Override
     public void updateHand(int cardId, boolean removeMode) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "updateHand");
         json.put("cardId", cardId);
         json.put("removeMode", removeMode);
@@ -38,7 +41,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
 
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "updatePersonalObjective");
         json.put("cardId", cardId);
         json.put("removeMode", removeMode);
@@ -47,7 +50,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
 
     @Override
     public void sendStarterCard(int cardId) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "sendStarterCard");
         json.put("cardId", cardId);
         out.println(json);
@@ -56,7 +59,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     @Override
     public void sendCandidateObjective(@NotNull Set<Integer> cardsId) {
         try {
-            ObjectNode json = mapper.createObjectNode();
+            ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
             json.put("method", "sendCandidateObjective");
             String cardsIdJson = mapper.writeValueAsString(cardsId);
             json.put("cardsId", cardsIdJson);
@@ -68,14 +71,14 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
 
     @Override
     public void notifyGodPlayer() {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "youGodPlayer");
         out.println(json);
     }
 
     @Override
     public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "updateDeckTop");
         json.put("type", type.toString().toUpperCase());
         json.put("color", color.toString().toUpperCase());
@@ -85,7 +88,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     @Override
     public void updateField(@NotNull String nickname, int x, int y, int cardId,
                             boolean isRetro, boolean removeMode) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "updateField");
         json.put("nickname", nickname);
         json.put("x", x);
@@ -98,7 +101,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
 
     @Override
     public void updateShownPlayable(Integer previousId, Integer currentId) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "updateShownPlayable");
         json.put("previousId", previousId);
         json.put("currentId", currentId);
@@ -107,7 +110,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
 
     @Override
     public void updateTurnChange(@NotNull String nickname) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "updateTurnChange");
         json.put("nickname", nickname);
         out.println(json);
@@ -115,7 +118,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
 
     @Override
     public void updatePlayerPoint(@NotNull String nickname, int points) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "updatePlayerPoint");
         json.put("nickname", nickname);
         json.put("points", points);
@@ -124,7 +127,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
 
     @Override
     public void updateGameStatus(@NotNull GameStatus status) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "updateGameStatus");
         json.put("status", status.toString());
         out.println(json);
@@ -133,7 +136,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     @Override
     public void updateCommonObjective(@NotNull Set<Integer> cardId, boolean removeMode) {
         try {
-            ObjectNode json = mapper.createObjectNode();
+            ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
             json.put("method", "updateCommonObjective");
             String cardIdJson = mapper.writeValueAsString(cardId);
             json.put("cardId", cardIdJson);
@@ -147,7 +150,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     @Override
     public void sendFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard) {
         try {
-            ObjectNode json = mapper.createObjectNode();
+            ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
             json.put("method", "receiveFinalLeaderboard");
             json.put("finalLeaderboard", mapper.writeValueAsString(finalLeaderboard));
             out.println(json);
@@ -159,7 +162,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
     @Override
     public void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers) {
         try {
-            ObjectNode json = mapper.createObjectNode();
+            ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
             json.put("method", "updatePlayers");
             json.put("currentPlayers", mapper.writeValueAsString(currentPlayers));
             out.println(json);
@@ -170,7 +173,7 @@ public class ServerMessageSender implements ServerPlayerConnector, ServerTableCo
 
     @Override
     public void updateNumOfPlayers(@NotNull Integer numOfPlayers) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "updateNumOfPlayers");
         json.put("numOfPlayers", numOfPlayers);
         out.println(json);

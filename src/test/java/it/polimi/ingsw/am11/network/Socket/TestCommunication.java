@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientMessageReceiver;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientMessageSender;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
+import it.polimi.ingsw.am11.network.Socket.Client.PongHandler;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionConnector;
@@ -49,6 +50,9 @@ class TestCommunication {
     ClientViewUpdater clientViewUpdaterMock4;
     @Mock
     ExceptionConnector exceptionConnectorMock;
+
+    @Mock
+    PongHandler pongHandler;
     Thread server;
     SocketManager serverSocket;
 
@@ -83,10 +87,14 @@ class TestCommunication {
 
         // Create SendCommand and ReceiveCommand instances
 
-        ClientMessageSender clientMessageSender = new ClientMessageSender(clientSocket.getOut());
-        ClientMessageSender clientMessageSender2 = new ClientMessageSender(clientSocket2.getOut());
-        ClientMessageSender clientMessageSender3 = new ClientMessageSender(clientSocket3.getOut());
-        ClientMessageSender clientMessageSender4 = new ClientMessageSender(clientSocket4.getOut());
+        ClientMessageSender clientMessageSender = new ClientMessageSender(clientSocket.getOut(),
+                                                                          pongHandler);
+        ClientMessageSender clientMessageSender2 = new ClientMessageSender(clientSocket2.getOut(),
+                                                                           pongHandler);
+        ClientMessageSender clientMessageSender3 = new ClientMessageSender(clientSocket3.getOut(),
+                                                                           pongHandler);
+        ClientMessageSender clientMessageSender4 = new ClientMessageSender(clientSocket4.getOut(),
+                                                                           pongHandler);
         // Send a message to the server
         clientMessageSender.setNickname("Francesco");
 
@@ -173,16 +181,20 @@ class TestCommunication {
     @Timeout(value = 3)
     void testSetupPlayersWithoutWait() {
         // Create SendCommand and ReceiveCommand instances
-        ClientMessageSender clientMessageSender = new ClientMessageSender(clientSocket.getOut());
+        ClientMessageSender clientMessageSender = new ClientMessageSender(clientSocket.getOut(),
+                                                                          pongHandler);
         ClientMessageReceiver clientMessageReceiver = new ClientMessageReceiver(
                 clientViewUpdaterMock);
-        ClientMessageSender clientMessageSender2 = new ClientMessageSender(clientSocket2.getOut());
+        ClientMessageSender clientMessageSender2 = new ClientMessageSender(clientSocket2.getOut(),
+                                                                           pongHandler);
         ClientMessageReceiver clientMessageReceiver2 = new ClientMessageReceiver(
                 clientViewUpdaterMock2);
-        ClientMessageSender clientMessageSender3 = new ClientMessageSender(clientSocket3.getOut());
+        ClientMessageSender clientMessageSender3 = new ClientMessageSender(clientSocket3.getOut(),
+                                                                           pongHandler);
         ClientMessageReceiver clientMessageReceiver3 = new ClientMessageReceiver(
                 clientViewUpdaterMock3);
-        ClientMessageSender clientMessageSender4 = new ClientMessageSender(clientSocket4.getOut());
+        ClientMessageSender clientMessageSender4 = new ClientMessageSender(clientSocket4.getOut(),
+                                                                           pongHandler);
         ClientMessageReceiver clientMessageReceiver4 = new ClientMessageReceiver(
                 clientViewUpdaterMock4);
 
@@ -372,8 +384,10 @@ class TestCommunication {
     @Test
     @Timeout(value = 30)
     void testTCPKeepAlive() throws InterruptedException, IOException {
-        ClientMessageSender clientMessageSender = new ClientMessageSender(clientSocket.getOut());
-        ClientMessageSender clientMessageSender2 = new ClientMessageSender(clientSocket2.getOut());
+        ClientMessageSender clientMessageSender = new ClientMessageSender(clientSocket.getOut(),
+                                                                          pongHandler);
+        ClientMessageSender clientMessageSender2 = new ClientMessageSender(clientSocket2.getOut(),
+                                                                           pongHandler);
 
         clientMessageSender2.setNickname("chen");
 

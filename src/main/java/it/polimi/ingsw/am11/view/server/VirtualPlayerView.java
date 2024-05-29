@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.view.server;
 import it.polimi.ingsw.am11.controller.CardController;
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.controller.GameController;
+import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.Position;
@@ -29,6 +30,12 @@ public class VirtualPlayerView {
         cardController = gameController.getCardController();
         this.connector = connector;
         this.nickname = nickname;
+    }
+
+    public void setNumOfPlayers(int numOfPlayers)
+    throws NumOfPlayersException, NotGodPlayerException, GameStatusException {
+        LOGGER.debug("COMMAND: Num of players set to {} from {}", numOfPlayers, nickname);
+        CentralController.INSTANCE.setNumOfPlayers(nickname, numOfPlayers);
     }
 
     public void setStarterCard(boolean isRetro)

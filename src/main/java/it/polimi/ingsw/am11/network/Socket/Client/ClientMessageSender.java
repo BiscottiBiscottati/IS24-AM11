@@ -5,23 +5,28 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.ClientGameConnector;
+import it.polimi.ingsw.am11.network.Socket.utils.ContextJSON;
+import it.polimi.ingsw.am11.network.Socket.utils.JsonFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintWriter;
 
 public class ClientMessageSender implements ClientGameConnector {
-    // This class is used to send commands to the server
-    // It is used by the client to send commands to the server
+    private static final ContextJSON CONTEXT = ContextJSON.GAME;
+
     private final PrintWriter out;
     private final ObjectMapper mapper = new ObjectMapper();
+    private final PongHandler pongHandler;
 
-    public ClientMessageSender(PrintWriter out) {
+    public ClientMessageSender(@NotNull PrintWriter out,
+                               @NotNull PongHandler pongHandler) {
         this.out = out;
+        this.pongHandler = pongHandler;
     }
 
     @Override
     public void setStarterCard(boolean isRetro) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "setStarterCard");
         json.put("isRetro", isRetro);
         out.println(json);
@@ -29,7 +34,7 @@ public class ClientMessageSender implements ClientGameConnector {
 
     @Override
     public void setPersonalObjective(int cardId) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "setPersonalObjective");
         json.put("cardId", cardId);
         out.println(json);
@@ -37,7 +42,7 @@ public class ClientMessageSender implements ClientGameConnector {
 
     @Override
     public void placeCard(@NotNull Position pos, int cardId, boolean isRetro) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "placeCard");
         json.put("x", pos.x());
         json.put("y", pos.y());
@@ -48,7 +53,7 @@ public class ClientMessageSender implements ClientGameConnector {
 
     @Override
     public void drawCard(boolean fromVisible, @NotNull PlayableCardType type, int cardId) {
-        ObjectNode json = mapper.createObjectNode();
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
         json.put("method", "drawCard");
         json.put("fromVisible", fromVisible);
         json.put("type", type.toString().toUpperCase());
@@ -58,11 +63,18 @@ public class ClientMessageSender implements ClientGameConnector {
 
     @Override
     public void setNumOfPlayers(int numOfPlayers) {
-        out.println(numOfPlayers);
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
+        json.put("method", "setNumOfPlayers");
+        json.put("numOfPlayers", numOfPlayers);
+        out.println(json);
     }
 
     @Override
     public void setNickname(@NotNull String nickname) {
-        out.println(nickname);
+        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
+        json.put("method", "setNickname");
+        json.put("nickname", nickname);
+        out.println(json);
+        pongHandler.start();
     }
 }

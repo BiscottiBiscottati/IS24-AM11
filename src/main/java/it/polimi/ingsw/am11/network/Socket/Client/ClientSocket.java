@@ -22,11 +22,10 @@ public class ClientSocket implements ClientNetworkHandler {
     private final @NotNull ClientViewUpdater clientViewUpdater;
     private final @NotNull BufferedReader in;
     private final @NotNull PrintWriter out;
-    private final @NotNull ClientMessageReceiver clientMessageReceiver;
     private final @NotNull ClientMessageSender clientMessageSender;
     private final @NotNull Socket socket;
     private final @NotNull ExecutorService clientExecutor;
-    private final PongHandler pongHandler;
+    private final @NotNull ClientMessageHandler messageHandler;
     private boolean isRunning;
 
     public ClientSocket(@NotNull String ip, int port,
@@ -42,17 +41,26 @@ public class ClientSocket implements ClientNetworkHandler {
             socket.setOption(ExtendedSocketOptions.TCP_KEEPCOUNT, 2);
             socket.setOption(ExtendedSocketOptions.TCP_KEEPINTERVAL, 1);
             socket.setSoTimeout(0);
+
             if (! socket.isConnected()) {
                 throw new IOException("Connection error");
             }
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            clientMessageSender = new ClientMessageSender(out);
-            clientMessageReceiver = new ClientMessageReceiver(this.clientViewUpdater);
             clientExecutor = Executors.newFixedThreadPool(1);
             Runtime.getRuntime().addShutdownHook(new Thread(this::close));
 
-            this.pongHandler = new PongHandler(socket, out);
+
+            PongHandler pongHandler = new PongHandler(socket, out);
+            ClientMessageReceiver clientMessageReceiver = new ClientMessageReceiver(
+                    this.clientViewUpdater);
+            ClientExceptionReceiver exceptionReceiver = new ClientExceptionReceiver(
+                    clientViewUpdater.getExceptionConnector());
+            this.messageHandler = new ClientMessageHandler(clientMessageReceiver,
+                                                           exceptionReceiver,
+                                                           pongHandler);
+
+            clientMessageSender = new ClientMessageSender(out, pongHandler);
             clientExecutor.submit(this::run);
 
         } catch (IOException e) {
@@ -75,7 +83,6 @@ public class ClientSocket implements ClientNetworkHandler {
                 close();
                 return;
             }
-            LOGGER.debug("CLIENT TCP: Client received message: {}", message);
             if (message == null) {
                 LOGGER.debug("CLIENT TCP: Connection closed by the server");
                 // TODO to test
@@ -83,11 +90,7 @@ public class ClientSocket implements ClientNetworkHandler {
                 close();
                 return;
             }
-            if (message.equals("pong")) {
-                pongHandler.pong();
-            } else if (! message.isBlank()) {
-                clientMessageReceiver.receive(message);
-            }
+            messageHandler.receive(message);
         }
     }
 
@@ -101,7 +104,7 @@ public class ClientSocket implements ClientNetworkHandler {
         clientExecutor.shutdown();
         isRunning = false;
         try {
-            pongHandler.close();
+            messageHandler.close();
             if (! socket.isClosed()) socket.close();
             in.close();
             out.close();
@@ -112,7 +115,7 @@ public class ClientSocket implements ClientNetworkHandler {
     }
 
     // For testing purposes
-    public PrintWriter getOut() {
+    public @NotNull PrintWriter getOut() {
         return out;
     }
 }
