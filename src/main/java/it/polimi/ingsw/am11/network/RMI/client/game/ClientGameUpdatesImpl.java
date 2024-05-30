@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.network.RMI.client;
+package it.polimi.ingsw.am11.network.RMI.client.game;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;

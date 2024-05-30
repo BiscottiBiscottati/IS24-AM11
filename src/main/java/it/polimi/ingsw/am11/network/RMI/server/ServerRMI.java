@@ -10,6 +10,9 @@ import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ClientGameUpdatesInterf
 import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.HeartbeatInterface;
 import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ServerGameCommandsInterface;
 import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ServerLoggable;
+import it.polimi.ingsw.am11.network.RMI.server.chat.ServerChatConnectorImpl;
+import it.polimi.ingsw.am11.network.RMI.server.game.ServerConnectorImpl;
+import it.polimi.ingsw.am11.network.RMI.server.game.ServerGameCommandsImpl;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

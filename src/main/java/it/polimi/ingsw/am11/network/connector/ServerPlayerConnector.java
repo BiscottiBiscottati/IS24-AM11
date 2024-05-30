@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.connector;
 
+import it.polimi.ingsw.am11.network.RMI.server.game.ServerConnectorImpl;
 import it.polimi.ingsw.am11.network.socket.server.game.ServerGameSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,7 +11,7 @@ import java.util.Set;
  * <p>
  * Each player should have an implementation of this interface to receive updates from the server.
  *
- * @see it.polimi.ingsw.am11.network.RMI.server.ServerConnectorImpl
+ * @see ServerConnectorImpl
  * @see ServerGameSender
  */
 public interface ServerPlayerConnector {

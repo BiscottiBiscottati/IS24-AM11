@@ -1,10 +1,11 @@
-package it.polimi.ingsw.am11.network.RMI.client;
+package it.polimi.ingsw.am11.network.RMI.client.game;
 
 import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.network.RMI.client.ClientRMI;
 import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ServerGameCommandsInterface;
 import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ServerLoggable;
@@ -21,8 +22,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.concurrent.*;
 
-public class NetworkConnector implements ClientGameConnector {
-    private static final Logger LOGGER = LoggerFactory.getLogger(NetworkConnector.class);
+public class ClientConnectorImpl implements ClientGameConnector {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientConnectorImpl.class);
 
     private final @NotNull ClientRMI main;
     private final @NotNull Registry registry;
@@ -33,10 +34,10 @@ public class NetworkConnector implements ClientGameConnector {
     private @Nullable String nickname;
     private @NotNull Future<?> future;
 
-    public NetworkConnector(@NotNull ClientRMI main,
-                            @NotNull Registry registry,
-                            @NotNull ClientGameUpdatesInterface remoteGameCommands,
-                            @NotNull ClientViewUpdater updater) {
+    public ClientConnectorImpl(@NotNull ClientRMI main,
+                               @NotNull Registry registry,
+                               @NotNull ClientGameUpdatesInterface remoteGameCommands,
+                               @NotNull ClientViewUpdater updater) {
         this.main = main;
         this.registry = registry;
         this.remoteGameCommands = remoteGameCommands;

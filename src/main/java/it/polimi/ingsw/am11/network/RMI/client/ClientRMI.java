@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am11.network.RMI.client;
 
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
+import it.polimi.ingsw.am11.network.RMI.client.game.ClientConnectorImpl;
+import it.polimi.ingsw.am11.network.RMI.client.game.ClientGameUpdatesImpl;
 import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.HeartbeatInterface;
 import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
@@ -25,7 +27,7 @@ public class ClientRMI implements ClientNetworkHandler {
 
     private final @NotNull ExecutorService commandExecutor;
     private final @NotNull ClientGameUpdatesInterface gameUpdatesInterface;
-    private final @NotNull NetworkConnector networkConnector;
+    private final @NotNull ClientConnectorImpl clientConnectorImpl;
     private final @NotNull HeartbeatSender heartbeatSender;
 
     public ClientRMI(@NotNull String ip, int port, @NotNull ClientViewUpdater updater)
@@ -41,10 +43,10 @@ public class ClientRMI implements ClientNetworkHandler {
         gameUpdatesInterface = (ClientGameUpdatesInterface) UnicastRemoteObject.exportObject(
                 clientObject, 0);
         // Create the network connector
-        networkConnector = new NetworkConnector(this,
-                                                registry,
-                                                gameUpdatesInterface,
-                                                updater);
+        clientConnectorImpl = new ClientConnectorImpl(this,
+                                                      registry,
+                                                      gameUpdatesInterface,
+                                                      updater);
         // Check if the connection is working and create a heartbeat sender
         HeartbeatInterface ping;
         try {
@@ -58,7 +60,7 @@ public class ClientRMI implements ClientNetworkHandler {
     }
 
     public @NotNull ClientGameConnector getGameConnector() {
-        return networkConnector;
+        return clientConnectorImpl;
     }
 
     @Override

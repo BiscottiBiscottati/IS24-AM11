@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.network.connector;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.network.RMI.client.game.ClientConnectorImpl;
 import it.polimi.ingsw.am11.network.socket.client.game.ClientGameSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * Each network implementation will provide an implementation of this interface.
  *
- * @see it.polimi.ingsw.am11.network.RMI.client.NetworkConnector
+ * @see ClientConnectorImpl
  * @see ClientGameSender
  */
 public interface ClientGameConnector {
