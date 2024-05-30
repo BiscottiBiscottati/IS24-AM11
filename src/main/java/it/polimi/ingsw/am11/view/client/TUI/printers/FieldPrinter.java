@@ -6,7 +6,6 @@ import it.polimi.ingsw.am11.model.cards.utils.helpers.MatrixFiller;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.miniModel.CliField;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniCardContainer;
-import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class FieldPrinter {
     public static final int CARD_WIDTH = 3;
 
 
-    public static void render(CliField field, boolean withSuggestions) {
+    public static void render(@NotNull CliField field, boolean withSuggestions) {
 
         Map<Position, MiniCardContainer> cardsPositioned = field.getCardsPositioned();
 
