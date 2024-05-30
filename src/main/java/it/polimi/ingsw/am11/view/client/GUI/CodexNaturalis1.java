@@ -58,8 +58,7 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
         primaryStage.setResizable(false);
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
-        loadingScreen.animateLoadingScreen();
-        networkPage.showNetworkPage();
+
     }
 
     public void initializeGUI() {
@@ -113,6 +112,14 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
 
     public GuiActuator getGuiActuator() {
         return guiActuator;
+    }
+
+    public GuiUpdater getGuiUpdater() {
+        return guiUpdater;
+    }
+
+    public void showNetworkPage() {
+        networkPage.showNetworkPage();
     }
 
     @Override

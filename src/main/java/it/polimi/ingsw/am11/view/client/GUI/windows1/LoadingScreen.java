@@ -42,7 +42,6 @@ public class LoadingScreen {
 
     public void animateLoadingScreen() {
         int symbolSize = size / 8;
-
         lDBackground.setFitHeight(size);
         lDBackground.setPreserveRatio(true);
         lDSquare.setFitHeight(size);
@@ -184,8 +183,11 @@ public class LoadingScreen {
         });
 
         //no more necessary
-        /*sqT.onFinishedProperty().set(event -> {
+        sqT.onFinishedProperty().set(event -> {
+            codexNaturalis.showNetworkPage();
+        });
 
-        });*/
+
     }
+
 }

@@ -37,7 +37,7 @@ public class NetworkPage {
         theBox.setAlignment(Pos.CENTER);
 
         ipAddress = new TextField();
-        TextField port = new TextField();
+        port = new TextField();
         theBox.getChildren().addAll(ipAddress, port);
         theBox.setVisible(false);
         root.getChildren().addAll(theBox);
