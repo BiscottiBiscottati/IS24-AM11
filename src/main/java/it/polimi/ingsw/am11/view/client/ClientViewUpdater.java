@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Set;
@@ -43,5 +44,9 @@ public interface ClientViewUpdater {
 
     void disconnectedFromServer();
 
-    ExceptionConnector getExceptionConnector();
+    @NotNull
+    ExceptionThrower getExceptionThrower();
+
+    @NotNull
+    ClientChatUpdater getChatUpdater();
 }

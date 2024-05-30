@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
 import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
-import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -34,11 +34,11 @@ public class TestServerToClient {
     @Mock
     ClientViewUpdater updater;
     @Mock
-    ExceptionConnector exceptionConnector;
+    ExceptionThrower exceptionThrower;
 
     @BeforeEach
     void setUp() throws IOException {
-        when(updater.getExceptionConnector()).thenReturn(exceptionConnector);
+        when(updater.getExceptionThrower()).thenReturn(exceptionThrower);
         CentralController.INSTANCE.destroyGame();
         socketManager = new SocketManager(1234);
         serverThread = new Thread(socketManager::start);
@@ -49,7 +49,7 @@ public class TestServerToClient {
     @Test
     void notifyGodPlayer() throws InterruptedException {
 
-        clientSocket.getGameUpdatesInterface().setNickname("test");
+        clientSocket.getGameConnector().setNickname("test");
 
         CountDownLatch latch = new CountDownLatch(1);
 
@@ -69,7 +69,7 @@ public class TestServerToClient {
             return 0;
         }).when(updater).updateNumOfPlayers(anyInt());
 
-        clientSocket.getGameUpdatesInterface().setNumOfPlayers(2);
+        clientSocket.getGameConnector().setNumOfPlayers(2);
 
         latch2.await();
 

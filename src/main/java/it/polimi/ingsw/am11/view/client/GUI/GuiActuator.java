@@ -25,7 +25,7 @@ public class GuiActuator {
                               .orElseThrow(() -> new RuntimeException(
                                       "Type is set neither to rmi nor to socket"))
                               .create(ip, port, guiUpdater);
-        connector = clientHandler.getGameUpdatesInterface();
+        connector = clientHandler.getGameConnector();
     }
 
     public void setName(String nick) {

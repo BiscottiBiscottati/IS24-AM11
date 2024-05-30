@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.view.client.TUI;
 
-import it.polimi.ingsw.am11.chat.ClientChatController;
 import it.polimi.ingsw.am11.network.ClientChatConnector;
 import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
@@ -17,7 +16,6 @@ public class TuiHandler {
 
     private final TuiUpdater tuiUpdater;
     private ClientGameConnector connector;
-    private ClientChatController chatController;
     private ClientChatConnector chatConnector;
     private Reader reader;
 

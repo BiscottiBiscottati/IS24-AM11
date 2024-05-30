@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.Socket.Client;
 
+import it.polimi.ingsw.am11.network.ClientChatConnector;
 import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
@@ -19,19 +20,20 @@ import java.util.concurrent.Executors;
 public class ClientSocket implements ClientNetworkHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientSocket.class);
 
-    private final @NotNull ClientViewUpdater clientViewUpdater;
+    private final @NotNull ClientViewUpdater viewUpdater;
     private final @NotNull BufferedReader in;
     private final @NotNull PrintWriter out;
-    private final @NotNull ClientMessageSender clientMessageSender;
+    private final @NotNull ClientGameSender clientGameSender;
+    private final @NotNull ClientChatSender clientChatSender;
     private final @NotNull Socket socket;
     private final @NotNull ExecutorService clientExecutor;
     private final @NotNull ClientMessageHandler messageHandler;
     private boolean isRunning;
 
     public ClientSocket(@NotNull String ip, int port,
-                        @NotNull ClientViewUpdater clientViewUpdater)
+                        @NotNull ClientViewUpdater viewUpdater)
     throws IOException {
-        this.clientViewUpdater = clientViewUpdater;
+        this.viewUpdater = viewUpdater;
         try {
             //FIXME: If I try to connect to a random ip and port the method Socket() will not
             // terminate and the program will hang;
@@ -52,15 +54,17 @@ public class ClientSocket implements ClientNetworkHandler {
 
 
             PongHandler pongHandler = new PongHandler(socket, out);
-            ClientMessageReceiver clientMessageReceiver = new ClientMessageReceiver(
-                    this.clientViewUpdater);
+            ClientGameReceiver gameReceiver = new ClientGameReceiver(this.viewUpdater);
+            ClientChatReceiver chatReceiver = new ClientChatReceiver(viewUpdater.getChatUpdater());
             ClientExceptionReceiver exceptionReceiver = new ClientExceptionReceiver(
-                    clientViewUpdater.getExceptionConnector());
-            this.messageHandler = new ClientMessageHandler(clientMessageReceiver,
+                    viewUpdater.getExceptionThrower());
+            this.messageHandler = new ClientMessageHandler(gameReceiver,
                                                            exceptionReceiver,
-                                                           pongHandler);
+                                                           pongHandler,
+                                                           chatReceiver);
 
-            clientMessageSender = new ClientMessageSender(out, pongHandler);
+            clientChatSender = new ClientChatSender(out);
+            clientGameSender = new ClientGameSender(out, pongHandler, clientChatSender);
             clientExecutor.submit(this::run);
 
         } catch (IOException e) {
@@ -79,14 +83,14 @@ public class ClientSocket implements ClientNetworkHandler {
                 LOGGER.debug("CLIENT TCP: Error while receiving message because {}",
                              e.getMessage());
                 //TODO: to test
-                clientViewUpdater.disconnectedFromServer();
+                viewUpdater.disconnectedFromServer();
                 close();
                 return;
             }
             if (message == null) {
                 LOGGER.debug("CLIENT TCP: Connection closed by the server");
                 // TODO to test
-                clientViewUpdater.disconnectedFromServer();
+                viewUpdater.disconnectedFromServer();
                 close();
                 return;
             }
@@ -94,8 +98,14 @@ public class ClientSocket implements ClientNetworkHandler {
         }
     }
 
-    public @NotNull ClientGameConnector getGameUpdatesInterface() {
-        return clientMessageSender;
+    @Override
+    public @NotNull ClientGameConnector getGameConnector() {
+        return clientGameSender;
+    }
+
+    @Override
+    public @NotNull ClientChatConnector getChatConnector() {
+        return clientChatSender;
     }
 
     @Override

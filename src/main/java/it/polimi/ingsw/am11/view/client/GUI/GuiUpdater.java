@@ -4,9 +4,11 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
-import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Set;
@@ -139,7 +141,13 @@ public class GuiUpdater implements ClientViewUpdater {
     }
 
     @Override
-    public ExceptionConnector getExceptionConnector() {
+    public @NotNull ExceptionThrower getExceptionThrower() {
         return exceptionReceiver;
+    }
+
+    @Override
+    public @NotNull ClientChatUpdater getChatUpdater() {
+        //  FIXME to implement
+        return null;
     }
 }

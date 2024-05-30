@@ -14,7 +14,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface ClientNetworkHandler {
     @NotNull
-    ClientGameConnector getGameUpdatesInterface();
+    ClientGameConnector getGameConnector();
+
+    @NotNull
+    ClientChatConnector getChatConnector();
 
     void close();
 }

@@ -12,17 +12,20 @@ import org.slf4j.LoggerFactory;
 public class ClientMessageHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientMessageHandler.class);
 
-    private final ClientMessageReceiver messageReceiver;
+    private final ClientGameReceiver messageReceiver;
     private final ClientExceptionReceiver exceptionReceiver;
     private final PongHandler pongHandler;
+    private final ClientChatReceiver chatReceiver;
     private final ObjectMapper mapper;
 
-    public ClientMessageHandler(@NotNull ClientMessageReceiver messageReceiver,
+    public ClientMessageHandler(@NotNull ClientGameReceiver messageReceiver,
                                 @NotNull ClientExceptionReceiver exceptionReceiver,
-                                @NotNull PongHandler pongHandler) {
+                                @NotNull PongHandler pongHandler,
+                                @NotNull ClientChatReceiver chatReceiver) {
         this.messageReceiver = messageReceiver;
         this.exceptionReceiver = exceptionReceiver;
         this.pongHandler = pongHandler;
+        this.chatReceiver = chatReceiver;
         this.mapper = new ObjectMapper();
     }
 
@@ -42,6 +45,7 @@ public class ClientMessageHandler {
             case PING -> pongHandler.pong();
             case GAME -> messageReceiver.receive(jsonNode);
             case EXCEPTION -> exceptionReceiver.receive(jsonNode);
+            case CHAT -> chatReceiver.receive(jsonNode);
             case null, default -> {}
         }
     }

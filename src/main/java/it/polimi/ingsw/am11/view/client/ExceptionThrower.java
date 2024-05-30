@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.*;
 
-public interface ExceptionConnector {
+public interface ExceptionThrower {
 
     void throwException(IllegalPlayerSpaceActionException ex);
 

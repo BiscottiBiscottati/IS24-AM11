@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.network.Socket.Client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.network.Socket.utils.ContextJSON;
 import it.polimi.ingsw.am11.network.Socket.utils.JsonFactory;
@@ -32,7 +31,7 @@ public class PongHandler implements Runnable {
         this.out = out;
         this.lastPong = new AtomicLong(- 1);
         this.pongExecutor = Executors.newSingleThreadScheduledExecutor();
-        this.pingMessage = JsonFactory.createObjectNode(new ObjectMapper(), ContextJSON.PING);
+        this.pingMessage = JsonFactory.createObjectNode(ContextJSON.PING);
     }
 
     public void start() {

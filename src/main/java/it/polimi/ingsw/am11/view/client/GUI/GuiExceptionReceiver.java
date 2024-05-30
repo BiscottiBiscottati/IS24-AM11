@@ -3,9 +3,9 @@ package it.polimi.ingsw.am11.view.client.GUI;
 import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.*;
-import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 
-public class GuiExceptionReceiver implements ExceptionConnector {
+public class GuiExceptionReceiver implements ExceptionThrower {
     final GuiObserver guiObserver;
 
     public GuiExceptionReceiver(GuiObserver guiObserver) {

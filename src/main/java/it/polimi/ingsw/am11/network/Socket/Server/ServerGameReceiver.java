@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.network.Socket.MessageReceiver;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,14 +14,14 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class ServerMessageReceiver {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServerMessageReceiver.class);
+public class ServerGameReceiver implements MessageReceiver {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerGameReceiver.class);
 
     private final @NotNull VirtualPlayerView playerView;
     private final @NotNull ServerExceptionSender serverExceptionSender;
 
-    public ServerMessageReceiver(@NotNull VirtualPlayerView playerView,
-                                 @NotNull ServerExceptionSender exceptionSender) {
+    public ServerGameReceiver(@NotNull VirtualPlayerView playerView,
+                              @NotNull ServerExceptionSender exceptionSender) {
         this.playerView = playerView;
         this.serverExceptionSender = exceptionSender;
     }

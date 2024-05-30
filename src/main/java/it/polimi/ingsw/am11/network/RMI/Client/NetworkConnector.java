@@ -10,7 +10,7 @@ import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ClientGameUpdatesInterf
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerGameCommandsInterface;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ServerLoggable;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
-import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class NetworkConnector implements ClientGameConnector {
     private final @NotNull Registry registry;
     private final @NotNull ClientViewUpdater updater;
     private final @NotNull ClientGameUpdatesInterface remoteGameCommands;
-    private final @NotNull ExceptionConnector exceptionConnector;
+    private final @NotNull ExceptionThrower exceptionThrower;
     private final @NotNull ExecutorService commandExecutor;
     private @Nullable String nickname;
     private @NotNull Future<?> future;
@@ -41,7 +41,7 @@ public class NetworkConnector implements ClientGameConnector {
         this.registry = registry;
         this.remoteGameCommands = remoteGameCommands;
         this.updater = updater;
-        this.exceptionConnector = updater.getExceptionConnector();
+        this.exceptionThrower = updater.getExceptionThrower();
         this.commandExecutor = Executors.newSingleThreadExecutor();
         this.nickname = null;
         this.future = CompletableFuture.completedFuture(null);
@@ -69,13 +69,13 @@ public class NetworkConnector implements ClientGameConnector {
                 LOGGER.debug("CLIENT RMI: Connection error while logging in: {}", e.getMessage());
                 updater.disconnectedFromServer();
             } catch (NumOfPlayersException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (NotSetNumOfPlayerException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (GameStatusException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (PlayerInitException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             }
         });
     }
@@ -100,20 +100,14 @@ public class NetworkConnector implements ClientGameConnector {
                 updater.disconnectedFromServer();
             } catch (PlayerInitException e) {
                 //TODO to remove, controller have to deal with this
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (IllegalCardPlacingException e) {
                 //TODO to remove, controller have to deal with this
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (GameStatusException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             }
         });
-    }
-
-    private void checkIfNickSet() {
-        if (nickname == null) {
-            throw new RuntimeException("Nickname not set");
-        }
     }
 
     @Override
@@ -135,12 +129,12 @@ public class NetworkConnector implements ClientGameConnector {
                              e.getMessage());
                 updater.disconnectedFromServer();
             } catch (IllegalPlayerSpaceActionException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (PlayerInitException e) {
                 //TODO to remove, controller have to deal with this
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (GameStatusException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             }
         });
     }
@@ -164,19 +158,19 @@ public class NetworkConnector implements ClientGameConnector {
                              e.getMessage());
                 updater.disconnectedFromServer();
             } catch (TurnsOrderException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (PlayerInitException e) {
                 //TODO to remove, controller have to deal with this
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (IllegalCardPlacingException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (NotInHandException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (IllegalPlateauActionException e) {
                 //TODO to remove, controller have to deal with this
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (GameStatusException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             }
         });
     }
@@ -202,20 +196,20 @@ public class NetworkConnector implements ClientGameConnector {
                 updater.disconnectedFromServer();
             } catch (IllegalPlayerSpaceActionException e) {
                 //Same as maxhandsizeex
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (TurnsOrderException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (IllegalPickActionException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (PlayerInitException e) {
                 //TODO to remove, controller have to deal with this
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (EmptyDeckException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (MaxHandSizeException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (GameStatusException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             }
         });
     }
@@ -239,12 +233,18 @@ public class NetworkConnector implements ClientGameConnector {
                              e.getMessage());
                 updater.disconnectedFromServer();
             } catch (NumOfPlayersException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (GameStatusException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             } catch (NotGodPlayerException e) {
-                exceptionConnector.throwException(e);
+                exceptionThrower.throwException(e);
             }
         });
+    }
+
+    private void checkIfNickSet() {
+        if (nickname == null) {
+            throw new RuntimeException("Nickname not set");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.RMI.Client;
 
+import it.polimi.ingsw.am11.network.ClientChatConnector;
 import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.RMI.RemoteInterfaces.ClientGameUpdatesInterface;
@@ -17,8 +18,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class ClientRMI implements ClientNetworkHandler {
 
@@ -27,14 +26,12 @@ public class ClientRMI implements ClientNetworkHandler {
     private final @NotNull ExecutorService commandExecutor;
     private final @NotNull ClientGameUpdatesInterface gameUpdatesInterface;
     private final @NotNull NetworkConnector networkConnector;
-    private final @NotNull ScheduledExecutorService heartbeatsService;
     private final @NotNull HeartbeatSender heartbeatSender;
 
     public ClientRMI(@NotNull String ip, int port, @NotNull ClientViewUpdater updater)
     throws RemoteException {
 
         commandExecutor = Executors.newSingleThreadExecutor();
-        heartbeatsService = Executors.newSingleThreadScheduledExecutor();
 
         // Getting the registry
         Registry registry = LocateRegistry.getRegistry(ip, port);
@@ -57,21 +54,22 @@ public class ClientRMI implements ClientNetworkHandler {
         }
         // Start the heartbeat sender
         heartbeatSender = new HeartbeatSender(ping, updater, this);
-        heartbeatsService.scheduleAtFixedRate(heartbeatSender,
-                                              ping.getInterval(),
-                                              ping.getInterval(),
-                                              TimeUnit.MILLISECONDS);
+        HeartbeatSender.setHeartbeatInterval(ping.getInterval());
     }
 
-    public @NotNull ClientGameConnector getGameUpdatesInterface() {
+    public @NotNull ClientGameConnector getGameConnector() {
         return networkConnector;
+    }
+
+    @Override
+    public @NotNull ClientChatConnector getChatConnector() {
+        return null;
     }
 
     @Override
     public void close() {
         heartbeatSender.stop();
         commandExecutor.shutdown();
-        heartbeatsService.shutdown();
         try {
             UnicastRemoteObject.unexportObject(gameUpdatesInterface, false);
         } catch (NoSuchObjectException e) {

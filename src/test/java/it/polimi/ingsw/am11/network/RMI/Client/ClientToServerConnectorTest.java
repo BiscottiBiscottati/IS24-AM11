@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.RMI.Server.ServerRMI;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
-import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -48,14 +48,14 @@ class ClientToServerConnectorTest {
     @Mock
     ClientViewUpdater updater4;
     @Mock
-    ExceptionConnector exceptionConnector;
+    ExceptionThrower exceptionThrower;
 
     @BeforeEach
     void setUp() throws RemoteException {
-        when(updater.getExceptionConnector()).thenReturn(exceptionConnector);
-        when(updater2.getExceptionConnector()).thenReturn(exceptionConnector);
-        when(updater3.getExceptionConnector()).thenReturn(exceptionConnector);
-        when(updater4.getExceptionConnector()).thenReturn(exceptionConnector);
+        when(updater.getExceptionThrower()).thenReturn(exceptionThrower);
+        when(updater2.getExceptionThrower()).thenReturn(exceptionThrower);
+        when(updater3.getExceptionThrower()).thenReturn(exceptionThrower);
+        when(updater4.getExceptionThrower()).thenReturn(exceptionThrower);
 
         executor = Executors.newFixedThreadPool(5);
 
@@ -68,10 +68,10 @@ class ClientToServerConnectorTest {
         clientRMI3 = new ClientRMI("localhost", 54321, updater3);
         clientRMI4 = new ClientRMI("localhost", 54321, updater4);
 
-        gameConnector = clientRMI.getGameUpdatesInterface();
-        gameConnector2 = clientRMI2.getGameUpdatesInterface();
-        gameConnector3 = clientRMI3.getGameUpdatesInterface();
-        gameConnector4 = clientRMI4.getGameUpdatesInterface();
+        gameConnector = clientRMI.getGameConnector();
+        gameConnector2 = clientRMI2.getGameConnector();
+        gameConnector3 = clientRMI3.getGameConnector();
+        gameConnector4 = clientRMI4.getGameConnector();
     }
 
     @RepeatedTest(10)
@@ -224,7 +224,7 @@ class ClientToServerConnectorTest {
         latchFinish.await();
 
         // Test that exception is thrown when setting starter when not in choosing starters
-        verify(exceptionConnector, times(1))
+        verify(exceptionThrower, times(1))
                 .throwException(any(GameStatusException.class));
 
         // Test that Starter are given

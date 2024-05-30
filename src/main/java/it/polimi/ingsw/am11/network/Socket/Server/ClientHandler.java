@@ -69,7 +69,7 @@ public class ClientHandler implements Runnable {
         while (! validNickname) {
             LOGGER.info("SERVER TCP: Waiting for nickname");
             try {
-                nickname = ServerMessageReceiver.receiveNickname(in.readLine());
+                nickname = ServerGameReceiver.receiveNickname(in.readLine());
             } catch (IOException e) {
                 LOGGER.error("SERVER TCP: Error while reading nickname", e);
                 return false;
@@ -79,14 +79,17 @@ public class ClientHandler implements Runnable {
             LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
 
             try {
-                ServerMessageSender serverMessageSender = new ServerMessageSender(out);
+                ServerGameSender messageSender = new ServerGameSender(out);
+                ServerChatSender chatSender = new ServerChatSender(out);
                 VirtualPlayerView view = CentralController.INSTANCE
-                        .connectPlayer(nickname, serverMessageSender, serverMessageSender);
-                ServerMessageReceiver serverMessageReceiver =
-                        new ServerMessageReceiver(view, exceptionSender);
+                        .connectPlayer(nickname, messageSender, messageSender, chatSender);
+                ServerGameReceiver messageReceiver =
+                        new ServerGameReceiver(view, exceptionSender);
+                ServerChatReceiver chatReceiver = new ServerChatReceiver(exceptionSender);
                 PingHandler pingHandler = new PingHandler(clientSocket, out);
 
-                messageHandler = new ServerMessageHandler(serverMessageReceiver, pingHandler);
+                messageHandler = new ServerMessageHandler(messageReceiver, pingHandler,
+                                                          chatReceiver);
                 validNickname = true;
                 LOGGER.info("SERVER TCP: Player connected with name: {}", nickname);
             } catch (GameStatusException | NumOfPlayersException |

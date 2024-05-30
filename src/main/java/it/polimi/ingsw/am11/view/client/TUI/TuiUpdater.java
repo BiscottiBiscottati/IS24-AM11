@@ -5,8 +5,9 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
-import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -240,8 +241,14 @@ public class TuiUpdater implements ClientViewUpdater {
     }
 
     @Override
-    public ExceptionConnector getExceptionConnector() {
+    public @NotNull ExceptionThrower getExceptionThrower() {
         return exceptionReceiver;
+    }
+
+    @Override
+    public @NotNull ClientChatUpdater getChatUpdater() {
+        // FIXME to implement
+        return null;
     }
 
     public void setTuiState(TuiStates state) {

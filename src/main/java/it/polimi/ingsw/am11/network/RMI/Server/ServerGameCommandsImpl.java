@@ -18,17 +18,26 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerGameCommandsImpl.class);
     private final @NotNull Map<String, VirtualPlayerView> views;
 
-    public ServerGameCommandsImpl() throws RemoteException {
+    public ServerGameCommandsImpl() {
         this.views = new ConcurrentHashMap<>(8);
     }
 
-    public void addPlayer(@NotNull String nick, @NotNull ServerConnectorImpl connector)
+    public void addPlayer(@NotNull String nick,
+                          @NotNull ServerConnectorImpl connector,
+                          @NotNull ServerChatConnectorImpl chatConnector)
     throws NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException {
         synchronized (views) {
             VirtualPlayerView view =
-                    CentralController.INSTANCE.connectPlayer(nick, connector, connector);
+                    CentralController.INSTANCE.connectPlayer(nick, connector, connector,
+                                                             chatConnector);
             views.put(nick, view);
+        }
+    }
+
+    public void removePlayer(@NotNull String nick) {
+        synchronized (views) {
+            views.remove(nick);
         }
     }
 
@@ -92,7 +101,4 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
         }
     }
 
-    public boolean containsPlayer(String nick) {
-        synchronized (views) {return views.containsKey(nick);}
-    }
 }

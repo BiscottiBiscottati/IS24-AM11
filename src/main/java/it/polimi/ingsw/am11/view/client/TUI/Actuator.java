@@ -5,7 +5,6 @@ import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.factory.ConnectionType;
-import it.polimi.ingsw.am11.view.client.TUI.exceptions.InvalidArgumetsException;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
 import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
@@ -13,8 +12,6 @@ import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 // Its purpose is to effectively actuate the commands parsed by the reader. This is an
 // "intermediate class" between the classes that read input and the interface of the network
@@ -46,7 +43,7 @@ public class Actuator {
                                       .orElseThrow(() -> new RuntimeException(
                                               "Type is set neither to rmi nor to socket"))
                                       .create(ip, port, tuiUpdater)
-                                      .getGameUpdatesInterface();
+                                      .getGameConnector();
         } catch (Exception e) {
             tuiUpdater.getCurrentTuiState().restart(true, e);
             return;

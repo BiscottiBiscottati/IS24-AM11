@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.network.Socket.MessageReceiver;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -17,18 +18,18 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ClientMessageReceiver {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientMessageReceiver.class);
+public class ClientGameReceiver implements MessageReceiver {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientGameReceiver.class);
 
     private final @NotNull ClientViewUpdater clientPlayerView;
     private final @NotNull ObjectMapper mapper;
     private final @NotNull ClientExceptionReceiver clientExceptionReceiver;
 
-    public ClientMessageReceiver(@NotNull ClientViewUpdater clientPlayerView) {
+    public ClientGameReceiver(@NotNull ClientViewUpdater clientPlayerView) {
         this.clientPlayerView = clientPlayerView;
         this.mapper = new ObjectMapper();
         this.clientExceptionReceiver = new ClientExceptionReceiver(
-                clientPlayerView.getExceptionConnector());
+                clientPlayerView.getExceptionThrower());
     }
 
     public void receive(@NotNull JsonNode jsonNode) {

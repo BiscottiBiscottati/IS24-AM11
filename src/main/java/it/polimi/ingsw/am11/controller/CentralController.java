@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.network.ServerChatConnector;
 import it.polimi.ingsw.am11.network.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.ServerTableConnector;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
@@ -23,22 +24,30 @@ public enum CentralController {
 
     private final List<GameController> gameControllers;
 
+    private final ChatController chatController;
+
     CentralController() {
         this.gameControllers = new ArrayList<>(4);
+        this.chatController = new ChatController();
     }
 
     @NotNull
     public synchronized VirtualPlayerView connectPlayer(@NotNull String nickname,
                                                         @NotNull ServerPlayerConnector playerConnector,
-                                                        @NotNull ServerTableConnector tableConnector)
+                                                        @NotNull ServerTableConnector tableConnector,
+                                                        @NotNull ServerChatConnector chatConnector)
     throws GameStatusException, NumOfPlayersException, PlayerInitException,
            NotSetNumOfPlayerException {
         if (gameControllers.isEmpty()) createNewGame();
 
-        return gameControllers.stream()
-                              .findFirst()
-                              .orElseThrow()
-                              .connectPlayer(nickname, playerConnector, tableConnector);
+        VirtualPlayerView view = gameControllers.stream()
+                                                .findFirst()
+                                                .orElseThrow()
+                                                .connectPlayer(nickname, playerConnector,
+                                                               tableConnector);
+
+        chatController.addPlayer(nickname, chatConnector);
+        return view;
     }
 
     public synchronized void createNewGame() {
@@ -52,6 +61,7 @@ public enum CentralController {
         gameControllers.stream().findFirst()
                        .orElseThrow()
                        .disconnectPlayer(nickname);
+        chatController.removePlayer(nickname);
     }
 
     public synchronized void setNumOfPlayers(@NotNull String nickname, int val)
@@ -65,6 +75,7 @@ public enum CentralController {
     public void destroyGame() {
         LOGGER.info("CONTROLLER: Destroying current Game and recreating a new one");
         gameControllers.clear();
+        chatController.clear();
         createNewGame();
     }
 
@@ -78,5 +89,9 @@ public enum CentralController {
         if (gameControllers.isEmpty()) createNewGame();
 
         return gameControllers.stream().findFirst().orElseThrow();
+    }
+
+    public ChatController getChatController() {
+        return chatController;
     }
 }

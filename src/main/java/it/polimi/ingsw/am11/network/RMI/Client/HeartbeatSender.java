@@ -7,12 +7,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class HeartbeatSender implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeartbeatSender.class);
+    private static int HEARTBEAT_INTERVAL = 1000;
 
     private final @NotNull ClientRMI clientRMI;
+    private final @NotNull ScheduledExecutorService heartbeatsService;
     private final @NotNull HeartbeatInterface heartbeat;
     private final @NotNull ClientViewUpdater updater;
     private final @NotNull AtomicReference<String> nickname;
@@ -21,6 +26,7 @@ public class HeartbeatSender implements Runnable {
     public HeartbeatSender(@NotNull HeartbeatInterface heartbeat,
                            @NotNull ClientViewUpdater updater,
                            @NotNull ClientRMI clientRMI) {
+        this.heartbeatsService = Executors.newSingleThreadScheduledExecutor();
         this.heartbeat = heartbeat;
         this.updater = updater;
         this.nickname = new AtomicReference<>(null);
@@ -32,6 +38,12 @@ public class HeartbeatSender implements Runnable {
 
     public void stop() {
         isRunning = false;
+        heartbeatsService.shutdown();
+    }
+
+    public static void setHeartbeatInterval(int interval) {
+        if (interval <= 0) return;
+        HEARTBEAT_INTERVAL = interval;
     }
 
     @Override
@@ -53,5 +65,9 @@ public class HeartbeatSender implements Runnable {
 
     public void setNickname(@NotNull String nickname) {
         this.nickname.set(nickname);
+        heartbeatsService.scheduleAtFixedRate(this,
+                                              HEARTBEAT_INTERVAL,
+                                              HEARTBEAT_INTERVAL,
+                                              TimeUnit.MILLISECONDS);
     }
 }

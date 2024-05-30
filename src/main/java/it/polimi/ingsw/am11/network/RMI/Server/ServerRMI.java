@@ -26,19 +26,19 @@ public class ServerRMI implements ServerLoggable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerRMI.class);
 
     private final int port;
-    private final @NotNull ServerGameCommandsImpl playerView;
     private final @NotNull Registry registry;
+    private final @NotNull ServerGameCommandsImpl ServerGameCommands;
     private final @NotNull HeartbeatManager heartbeatManager;
 
     public ServerRMI(int port) {
         this.port = port;
         try {
             registry = LocateRegistry.createRegistry(port);
-            playerView = new ServerGameCommandsImpl();
-            heartbeatManager = new HeartbeatManager();
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+        ServerGameCommands = new ServerGameCommandsImpl();
+        heartbeatManager = new HeartbeatManager(this);
     }
 
     public void start() {
@@ -48,8 +48,9 @@ public class ServerRMI implements ServerLoggable {
         try {
             log = (ServerLoggable) UnicastRemoteObject.exportObject(this,
                                                                     0);
-            view = (ServerGameCommandsInterface) UnicastRemoteObject.exportObject(playerView,
-                                                                                  0);
+            view = (ServerGameCommandsInterface) UnicastRemoteObject.exportObject(
+                    ServerGameCommands,
+                    0);
             heartbeat = (HeartbeatInterface) UnicastRemoteObject.exportObject(heartbeatManager,
                                                                               0);
         } catch (RemoteException e) {
@@ -77,7 +78,7 @@ public class ServerRMI implements ServerLoggable {
 
             try {
                 UnicastRemoteObject.unexportObject(this, false);
-                UnicastRemoteObject.unexportObject(playerView, false);
+                UnicastRemoteObject.unexportObject(ServerGameCommands, false);
                 UnicastRemoteObject.unexportObject(registry, false);
                 UnicastRemoteObject.unexportObject(heartbeatManager, false);
             } catch (NoSuchObjectException e) {
@@ -92,13 +93,18 @@ public class ServerRMI implements ServerLoggable {
         }
     }
 
+    public void removePlayer(@NotNull String nick) {
+        ServerGameCommands.removePlayer(nick);
+    }
+
     @Override
     public void login(@NotNull String nick, @NotNull ClientGameUpdatesInterface remoteConnector)
     throws RemoteException, NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException {
         LOGGER.debug("SERVER RMI: login: {}, {}", nick, remoteConnector);
         ServerConnectorImpl connector = new ServerConnectorImpl(remoteConnector);
-        playerView.addPlayer(nick, connector);
+        ServerChatConnectorImpl chatConnector = new ServerChatConnectorImpl(); // FIXME to fix
+        ServerGameCommands.addPlayer(nick, connector, chatConnector);
         LOGGER.info("SERVER RMI: Player connected: {}", nick);
     }
 

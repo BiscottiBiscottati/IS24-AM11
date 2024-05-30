@@ -24,7 +24,7 @@ public class ServerExceptionSender {
 
     public void exception(@NotNull Exception e) {
         LOGGER.info("SERVER TCP: Exception to send: {}", e.getClass().getSimpleName());
-        ObjectNode json = JsonFactory.createObjectNode(mapper, CONTEXT);
+        ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
         json.put("method", e.getClass().getSimpleName());
         json.put("description", e.getMessage());
         out.println(json);

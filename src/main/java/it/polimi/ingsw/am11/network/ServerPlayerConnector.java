@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network;
 
+import it.polimi.ingsw.am11.network.Socket.Server.ServerGameSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -10,7 +11,7 @@ import java.util.Set;
  * Each player should have an implementation of this interface to receive updates from the server.
  *
  * @see it.polimi.ingsw.am11.network.RMI.Server.ServerConnectorImpl
- * @see it.polimi.ingsw.am11.network.Socket.Server.ServerMessageSender
+ * @see ServerGameSender
  */
 public interface ServerPlayerConnector {
     void updateHand(int cardId, boolean removeMode);

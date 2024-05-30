@@ -3,13 +3,13 @@ package it.polimi.ingsw.am11.view.client.TUI;
 import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.*;
-import it.polimi.ingsw.am11.view.client.ExceptionConnector;
+import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TuiExceptionReceiver implements ExceptionConnector {
+public class TuiExceptionReceiver implements ExceptionThrower {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiExceptionReceiver.class);
 
     private final MiniGameModel model;
