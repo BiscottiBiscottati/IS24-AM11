@@ -46,5 +46,6 @@ public class WaitingRoomPage {
 
     public void showWaitingRoomPage() {
 
+
     }
 }
