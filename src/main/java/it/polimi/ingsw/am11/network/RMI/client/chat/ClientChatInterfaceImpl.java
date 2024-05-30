@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.network.RMI.client.chat;
 
-import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ClientChatInterface;
+import it.polimi.ingsw.am11.network.RMI.remote.chat.ClientChatInterface;
 import org.jetbrains.annotations.NotNull;
 
 import java.rmi.RemoteException;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.network.RMI.server;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.HeartbeatInterface;
+import it.polimi.ingsw.am11.network.RMI.remote.heartbeat.HeartbeatInterface;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.network.RMI.remoteInterfaces;
+package it.polimi.ingsw.am11.network.RMI.remote.chat;
 
 import org.jetbrains.annotations.NotNull;
 

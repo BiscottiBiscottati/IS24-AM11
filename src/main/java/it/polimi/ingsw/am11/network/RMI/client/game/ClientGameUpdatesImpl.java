@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ClientGameUpdatesInterface;
+import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;

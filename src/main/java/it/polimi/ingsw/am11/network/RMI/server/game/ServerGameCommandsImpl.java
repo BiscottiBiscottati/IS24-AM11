@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
-import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ServerGameCommandsInterface;
+import it.polimi.ingsw.am11.network.RMI.remote.game.ServerGameCommandsInterface;
 import it.polimi.ingsw.am11.network.RMI.server.chat.ServerChatConnectorImpl;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.jetbrains.annotations.NotNull;

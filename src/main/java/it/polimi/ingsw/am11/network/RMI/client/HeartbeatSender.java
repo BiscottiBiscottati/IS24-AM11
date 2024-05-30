@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.network.RMI.client;
 
-import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.HeartbeatInterface;
+import it.polimi.ingsw.am11.network.RMI.remote.heartbeat.HeartbeatInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;

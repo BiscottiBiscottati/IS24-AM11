@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.network.RMI.remoteInterfaces;
+package it.polimi.ingsw.am11.network.RMI.remote.game;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;

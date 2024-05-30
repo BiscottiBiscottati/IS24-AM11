@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.network.RMI;
 
-import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ClientGameUpdatesInterface;
-import it.polimi.ingsw.am11.network.RMI.remoteInterfaces.ServerLoggable;
+import it.polimi.ingsw.am11.network.RMI.remote.ServerLoggable;
+import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.network.RMI.server.ServerRMI;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

@@ -34,11 +34,14 @@ module it.polimi.ingsw.am11 {
     opens it.polimi.ingsw.am11.view.client.GUI.utils to javafx.fxml;
 
     exports it.polimi.ingsw.am11.network.RMI.client;
-    exports it.polimi.ingsw.am11.network.RMI.remoteInterfaces;
+    exports it.polimi.ingsw.am11.network.RMI.remote;
     exports it.polimi.ingsw.am11.network.RMI.server;
     exports it.polimi.ingsw.am11.network.RMI.client.chat;
     exports it.polimi.ingsw.am11.network.RMI.client.game;
     exports it.polimi.ingsw.am11.network.RMI.server.chat;
     exports it.polimi.ingsw.am11.network.RMI.server.game;
+    exports it.polimi.ingsw.am11.network.RMI.remote.chat;
+    exports it.polimi.ingsw.am11.network.RMI.remote.game;
+    exports it.polimi.ingsw.am11.network.RMI.remote.heartbeat;
 
 }
