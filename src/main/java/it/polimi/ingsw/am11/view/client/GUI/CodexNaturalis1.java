@@ -10,6 +10,7 @@ import it.polimi.ingsw.am11.view.client.GUI.window.FrameHandler;
 import it.polimi.ingsw.am11.view.client.GUI.windows1.LoadingScreen;
 import it.polimi.ingsw.am11.view.client.GUI.windows1.NetworkPage;
 import it.polimi.ingsw.am11.view.client.GUI.windows1.SettingNickPage;
+import it.polimi.ingsw.am11.view.client.GUI.windows1.WaitingRoomPage;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -35,6 +36,7 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
     LoadingScreen loadingScreen;
     NetworkPage networkPage;
     SettingNickPage settingNickPage;
+    WaitingRoomPage waitingRoomPage;
     private StackPane root;
     private FrameHandler frameHandler;
 
@@ -78,7 +80,8 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
         networkPage.createNetworkPage();
         settingNickPage = new SettingNickPage(this);
         settingNickPage.createSettingNickPage();
-
+        waitingRoomPage = new WaitingRoomPage(this);
+        waitingRoomPage.createWaitingRoomPage();
 
     }
 
@@ -133,6 +136,10 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
 
     public void showNetworkPage() {
         networkPage.showNetworkPage();
+    }
+
+    public void showSettingNickPage() {
+        settingNickPage.showSettingNickPage();
     }
 
     @Override

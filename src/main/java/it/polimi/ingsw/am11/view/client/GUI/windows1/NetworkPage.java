@@ -164,7 +164,7 @@ public class NetworkPage {
                     connectionType.setVisible(false);
                     joinButton.setVisible(false);
 
-                    //TODO: go to settingNickPage
+                    codexNaturalis.showSettingNickPage();
 
                 } catch (Exception e) {
                     ipAddress.setText("Fail");
