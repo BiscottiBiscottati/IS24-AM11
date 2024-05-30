@@ -1,7 +1,5 @@
 package it.polimi.ingsw.am11.network.RMI.server;
 
-import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
@@ -109,11 +107,5 @@ public class ServerRMI implements ServerLoggable {
         ServerChatConnectorImpl chatConnector = new ServerChatConnectorImpl(); // FIXME to fix
         ServerGameCommands.addPlayer(nick, connector, chatConnector);
         LOGGER.info("SERVER RMI: Player connected: {}", nick);
-    }
-
-    @Override
-    public void setNumOfPlayers(@NotNull String nick, int val)
-    throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException {
-        CentralController.INSTANCE.setNumOfPlayers(nick, val);
     }
 }

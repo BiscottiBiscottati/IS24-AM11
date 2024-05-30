@@ -21,6 +21,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ClientConnectorImpl implements ClientGameConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientConnectorImpl.class);
@@ -31,7 +32,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
     private final @NotNull ClientGameUpdatesInterface remoteGameCommands;
     private final @NotNull ExceptionThrower exceptionThrower;
     private final @NotNull ExecutorService commandExecutor;
-    private @Nullable String nickname;
+    private final AtomicReference<String> nickname;
     private @NotNull Future<?> future;
 
     public ClientConnectorImpl(@NotNull ClientRMI main,
@@ -44,12 +45,12 @@ public class ClientConnectorImpl implements ClientGameConnector {
         this.updater = updater;
         this.exceptionThrower = updater.getExceptionThrower();
         this.commandExecutor = Executors.newSingleThreadExecutor();
-        this.nickname = null;
+        this.nickname = new AtomicReference<>(null);
         this.future = CompletableFuture.completedFuture(null);
     }
 
     public synchronized @Nullable String getNickname() {
-        return nickname;
+        return nickname.get();
     }
 
     @Override
@@ -58,7 +59,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
             future.get();
         } catch (ExecutionException | InterruptedException ignored) {}
 
-        this.nickname = nickname;
+        this.nickname.compareAndSet(null, nickname);
 
         LOGGER.debug("CLIENT RMI: Sending login request to server");
         future = commandExecutor.submit(() -> {
@@ -94,7 +95,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
         future = commandExecutor.submit(() -> {
             try {
                 ((ServerGameCommandsInterface) registry.lookup("PlayerView"))
-                        .setStarterCard(nickname, isRetro);
+                        .setStarterCard(nickname.get(), isRetro);
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while setting starter: {}",
                              e.getMessage());
@@ -124,7 +125,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
         future = commandExecutor.submit(() -> {
             try {
                 ((ServerGameCommandsInterface) registry.lookup("PlayerView"))
-                        .setObjectiveCard(nickname, cardId);
+                        .setObjectiveCard(nickname.get(), cardId);
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while setting objective: {}",
                              e.getMessage());
@@ -153,7 +154,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
         future = commandExecutor.submit(() -> {
             try {
                 ((ServerGameCommandsInterface) registry.lookup("PlayerView"))
-                        .placeCard(nickname, cardId, pos.x(), pos.y(), isRetro);
+                        .placeCard(nickname.get(), cardId, pos.x(), pos.y(), isRetro);
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while placing card: {}",
                              e.getMessage());
@@ -190,7 +191,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
         future = commandExecutor.submit(() -> {
             try {
                 ((ServerGameCommandsInterface) registry.lookup("PlayerView"))
-                        .drawCard(nickname, fromVisible, type, cardId);
+                        .drawCard(nickname.get(), fromVisible, type, cardId);
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while drawing card: {}",
                              e.getMessage());
@@ -227,8 +228,8 @@ public class ClientConnectorImpl implements ClientGameConnector {
 
         future = commandExecutor.submit(() -> {
             try {
-                ((ServerLoggable) registry.lookup("Loggable"))
-                        .setNumOfPlayers(nickname, numOfPlayers);
+                ((ServerGameCommandsInterface) registry.lookup("PlayerView"))
+                        .setNumOfPlayers(nickname.get(), numOfPlayers);
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while setting number of players: {}",
                              e.getMessage());
@@ -244,7 +245,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
     }
 
     private void checkIfNickSet() {
-        if (nickname == null) {
+        if (nickname.get() == null) {
             throw new RuntimeException("Nickname not set");
         }
     }

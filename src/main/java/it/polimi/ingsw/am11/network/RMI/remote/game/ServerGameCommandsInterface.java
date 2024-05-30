@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.RMI.remote.game;
 
+import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import org.jetbrains.annotations.NotNull;
@@ -25,4 +26,7 @@ public interface ServerGameCommandsInterface extends Remote {
     throws RemoteException, IllegalPlayerSpaceActionException, TurnsOrderException,
            IllegalPickActionException, PlayerInitException, EmptyDeckException,
            MaxHandSizeException, GameStatusException;
+
+    void setNumOfPlayers(@NotNull String nick, int numOfPlayers)
+    throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException;
 }

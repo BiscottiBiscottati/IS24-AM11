@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.network.RMI.server.game;
 
 import it.polimi.ingsw.am11.controller.CentralController;
+import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
@@ -100,6 +101,12 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
                 throw new RemoteException("Use login method to add player first.");
             }
         }
+    }
+
+    @Override
+    public void setNumOfPlayers(@NotNull String nick, int numOfPlayers)
+    throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException {
+        CentralController.INSTANCE.setNumOfPlayers(nick, numOfPlayers);
     }
 
 }
