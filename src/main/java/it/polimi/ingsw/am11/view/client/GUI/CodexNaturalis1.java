@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.GUI.window.FrameHandler;
 import it.polimi.ingsw.am11.view.client.GUI.windows1.LoadingScreen;
 import it.polimi.ingsw.am11.view.client.GUI.windows1.NetworkPage;
+import it.polimi.ingsw.am11.view.client.GUI.windows1.SettingNickPage;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -33,6 +34,7 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
     int WindowSize, halfButtonSize, distanceToBorder;
     LoadingScreen loadingScreen;
     NetworkPage networkPage;
+    SettingNickPage settingNickPage;
     private StackPane root;
     private FrameHandler frameHandler;
 
@@ -74,6 +76,8 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
         loadingScreen.createLoadingScreen();
         networkPage = new NetworkPage(this);
         networkPage.createNetworkPage();
+        settingNickPage = new SettingNickPage(this);
+        settingNickPage.createSettingNickPage();
 
 
     }
@@ -111,12 +115,20 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
         return font;
     }
 
+    public Font getFontBig() {
+        return fontBig;
+    }
+
     public int getDistanceToBorder() {
         return distanceToBorder;
     }
 
     public GuiActuator getGuiActuator() {
         return guiActuator;
+    }
+
+    public MiniGameModel getMiniGameModel() {
+        return miniGameModel;
     }
 
     public void showNetworkPage() {
