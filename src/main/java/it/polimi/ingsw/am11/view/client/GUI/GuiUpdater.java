@@ -136,7 +136,7 @@ public class GuiUpdater implements ClientViewUpdater {
     }
 
     @Override
-    public void disconnectedFromServer() {
+    public void disconnectedFromServer(@NotNull String message) {
         guiObserver.disconnectedFromServer();
     }
 

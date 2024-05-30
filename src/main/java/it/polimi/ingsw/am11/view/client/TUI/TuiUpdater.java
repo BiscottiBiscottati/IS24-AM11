@@ -236,7 +236,7 @@ public class TuiUpdater implements ClientViewUpdater {
     }
 
     @Override
-    public void disconnectedFromServer() {
+    public void disconnectedFromServer(@NotNull String message) {
         //TODO to implement exit tui or reset to try to reconnect
     }
 

@@ -42,7 +42,7 @@ public interface ClientViewUpdater {
 
     void updateNumOfPlayers(int numOfPlayers);
 
-    void disconnectedFromServer();
+    void disconnectedFromServer(@NotNull String message);
 
     @NotNull
     ExceptionThrower getExceptionThrower();

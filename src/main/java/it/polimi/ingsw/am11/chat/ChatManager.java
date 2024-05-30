@@ -39,7 +39,7 @@ public class ChatManager {
                                    @NotNull String msg) throws PlayerInitException {
         if (chatConnectors.containsKey(recipient))
             chatConnectors.get(recipient)
-                          .sendPrivateMsg(sender, recipient, msg);
+                          .sendPrivateMsg(sender, msg);
         else throw new PlayerInitException(
                 "Player " + recipient + " not found to send private message.");
     }

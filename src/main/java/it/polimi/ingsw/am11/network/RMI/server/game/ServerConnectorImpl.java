@@ -18,17 +18,18 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ServerConnectorImpl
+public record ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConnector)
         implements ServerPlayerConnector, ServerTableConnector {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerConnectorImpl.class);
+    private static ExecutorService executorService;
 
-    private final @NotNull ClientGameUpdatesInterface remoteConnector;
-    private final @NotNull ExecutorService executorService;
+    public static void stop() {
+        executorService.shutdown();
+    }
 
-    public ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConnector) {
-        this.remoteConnector = remoteConnector;
-        this.executorService = Executors.newSingleThreadExecutor();
+    public static void start() {
+        executorService = Executors.newCachedThreadPool();
     }
 
     @Override

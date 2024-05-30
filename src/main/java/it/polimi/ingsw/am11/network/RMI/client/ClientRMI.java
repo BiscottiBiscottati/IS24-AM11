@@ -1,8 +1,11 @@
 package it.polimi.ingsw.am11.network.RMI.client;
 
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
+import it.polimi.ingsw.am11.network.RMI.client.chat.ClientChatConnectorImpl;
+import it.polimi.ingsw.am11.network.RMI.client.chat.ClientChatInterfaceImpl;
 import it.polimi.ingsw.am11.network.RMI.client.game.ClientConnectorImpl;
 import it.polimi.ingsw.am11.network.RMI.client.game.ClientGameUpdatesImpl;
+import it.polimi.ingsw.am11.network.RMI.remote.chat.ClientChatInterface;
 import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.network.RMI.remote.heartbeat.HeartbeatInterface;
 import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
@@ -18,22 +21,21 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ClientRMI implements ClientNetworkHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientRMI.class);
 
-    private final @NotNull ExecutorService commandExecutor;
     private final @NotNull ClientGameUpdatesInterface gameUpdatesInterface;
+    private final @NotNull ClientChatInterface chatInterface;
     private final @NotNull ClientConnectorImpl clientConnectorImpl;
     private final @NotNull HeartbeatSender heartbeatSender;
+    private final ClientChatConnectorImpl chatConnectorImpl;
 
     public ClientRMI(@NotNull String ip, int port, @NotNull ClientViewUpdater updater)
     throws RemoteException {
 
-        commandExecutor = Executors.newSingleThreadExecutor();
+        ClientConnectorImpl.start();
 
         // Getting the registry
         Registry registry = LocateRegistry.getRegistry(ip, port);
@@ -42,10 +44,17 @@ public class ClientRMI implements ClientNetworkHandler {
         ClientGameUpdatesImpl clientObject = new ClientGameUpdatesImpl(updater);
         gameUpdatesInterface = (ClientGameUpdatesInterface) UnicastRemoteObject.exportObject(
                 clientObject, 0);
+        ClientChatInterfaceImpl chatObject = new ClientChatInterfaceImpl(updater.getChatUpdater());
+        chatInterface = (ClientChatInterface) UnicastRemoteObject.exportObject(
+                chatObject, 0);
+
+        chatConnectorImpl = new ClientChatConnectorImpl(registry);
         // Create the network connector
         clientConnectorImpl = new ClientConnectorImpl(this,
                                                       registry,
                                                       gameUpdatesInterface,
+                                                      chatInterface,
+                                                      chatConnectorImpl,
                                                       updater);
         // Check if the connection is working and create a heartbeat sender
         HeartbeatInterface ping;
@@ -65,19 +74,21 @@ public class ClientRMI implements ClientNetworkHandler {
 
     @Override
     public @NotNull ClientChatConnector getChatConnector() {
-        return null;
+        return chatConnectorImpl;
     }
 
     @Override
     public void close() {
         heartbeatSender.stop();
-        commandExecutor.shutdown();
         try {
             UnicastRemoteObject.unexportObject(gameUpdatesInterface, false);
+            UnicastRemoteObject.unexportObject(chatInterface, false);
         } catch (NoSuchObjectException e) {
             LOGGER.debug("CLIENT RMI: No Connector to un-export");
+        } finally {
+            ClientConnectorImpl.stop();
+            LOGGER.debug("CLIENT RMI: Client closed");
         }
-        LOGGER.debug("CLIENT RMI: Client closed");
     }
 
     public void setHeartbeatNickname(@NotNull String nickname) {

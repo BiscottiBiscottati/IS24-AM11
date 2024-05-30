@@ -88,14 +88,14 @@ public class ClientSocket implements ClientNetworkHandler {
                 LOGGER.debug("CLIENT TCP: Error while receiving message because {}",
                              e.getMessage());
                 //TODO: to test
-                viewUpdater.disconnectedFromServer();
+                viewUpdater.disconnectedFromServer(e.getMessage());
                 close();
                 return;
             }
             if (message == null) {
                 LOGGER.debug("CLIENT TCP: Connection closed by the server");
                 // TODO to test
-                viewUpdater.disconnectedFromServer();
+                viewUpdater.disconnectedFromServer("Connection closed by the server");
                 close();
                 return;
             }

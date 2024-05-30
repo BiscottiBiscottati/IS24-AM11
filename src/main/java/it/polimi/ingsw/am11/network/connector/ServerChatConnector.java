@@ -6,5 +6,5 @@ public interface ServerChatConnector {
 
     void sendPublicMsg(@NotNull String sender, @NotNull String msg);
 
-    void sendPrivateMsg(@NotNull String sender, @NotNull String recipient, @NotNull String msg);
+    void sendPrivateMsg(@NotNull String sender, @NotNull String msg);
 }

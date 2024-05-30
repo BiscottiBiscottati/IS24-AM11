@@ -57,7 +57,7 @@ public class HeartbeatSender implements Runnable {
         } catch (RemoteException e) {
             LOGGER.debug("Error while sending heartbeat: {}", e.getMessage());
             LOGGER.debug("Disconnecting from server");
-            updater.disconnectedFromServer();
+            updater.disconnectedFromServer(e.getMessage());
             clientRMI.close();
         }
 

@@ -219,7 +219,7 @@ public class PlayerManager {
             );
         } else if (players.size() >= maxNumberOfPlayers) {
             throw new NumOfPlayersException(
-                    "You are trying toisPlayerTurn add too many players, the limit is " +
+                    "You are trying to add too many players, the limit is " +
                     maxNumberOfPlayers
             );
         } else {

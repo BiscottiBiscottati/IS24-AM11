@@ -32,13 +32,12 @@ public class ServerChatSender implements ServerChatConnector {
     }
 
     @Override
-    public void sendPrivateMsg(@NotNull String sender, @NotNull String recipient,
+    public void sendPrivateMsg(@NotNull String sender,
                                @NotNull String msg) {
-        LOGGER.info("SERVER TCP: Private message from {} to {}: {}", sender, recipient, msg);
+        LOGGER.info("SERVER TCP: Private message sent from {}: {}", sender, msg);
         ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
         json.put("method", "sendPrivateMsg");
         json.put("sender", sender);
-        json.put("recipient", recipient);
         json.put("msg", msg);
 
         out.println(json);

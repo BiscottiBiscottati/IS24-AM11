@@ -6,7 +6,9 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.RMI.client.ClientRMI;
+import it.polimi.ingsw.am11.network.RMI.client.chat.ClientChatConnectorImpl;
 import it.polimi.ingsw.am11.network.RMI.remote.ServerLoggable;
+import it.polimi.ingsw.am11.network.RMI.remote.chat.ClientChatInterface;
 import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.network.RMI.remote.game.ServerGameCommandsInterface;
 import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
@@ -25,28 +27,41 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ClientConnectorImpl implements ClientGameConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientConnectorImpl.class);
+    private static ExecutorService commandExecutor;
 
     private final @NotNull ClientRMI main;
     private final @NotNull Registry registry;
     private final @NotNull ClientViewUpdater updater;
     private final @NotNull ClientGameUpdatesInterface remoteGameCommands;
+    private final @NotNull ClientChatInterface remoteChat;
     private final @NotNull ExceptionThrower exceptionThrower;
-    private final @NotNull ExecutorService commandExecutor;
+    private final @NotNull ClientChatConnectorImpl chatConnector;
     private final AtomicReference<String> nickname;
     private @NotNull Future<?> future;
 
     public ClientConnectorImpl(@NotNull ClientRMI main,
                                @NotNull Registry registry,
                                @NotNull ClientGameUpdatesInterface remoteGameCommands,
+                               @NotNull ClientChatInterface remoteChat,
+                               @NotNull ClientChatConnectorImpl chatConnector,
                                @NotNull ClientViewUpdater updater) {
         this.main = main;
         this.registry = registry;
         this.remoteGameCommands = remoteGameCommands;
+        this.remoteChat = remoteChat;
+        this.chatConnector = chatConnector;
         this.updater = updater;
         this.exceptionThrower = updater.getExceptionThrower();
-        this.commandExecutor = Executors.newSingleThreadExecutor();
         this.nickname = new AtomicReference<>(null);
         this.future = CompletableFuture.completedFuture(null);
+    }
+
+    public synchronized static void start() {
+        commandExecutor = Executors.newSingleThreadExecutor();
+    }
+
+    public synchronized static void stop() {
+        commandExecutor.shutdown();
     }
 
     public synchronized @Nullable String getNickname() {
@@ -65,11 +80,13 @@ public class ClientConnectorImpl implements ClientGameConnector {
         future = commandExecutor.submit(() -> {
             try {
                 ((ServerLoggable) registry.lookup("Loggable"))
-                        .login(nickname, remoteGameCommands);
+                        .login(nickname, remoteGameCommands, remoteChat);
                 main.setHeartbeatNickname(nickname);
+                chatConnector.setSender(nickname);
+
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while logging in: {}", e.getMessage());
-                updater.disconnectedFromServer();
+                updater.disconnectedFromServer(e.getMessage());
             } catch (NumOfPlayersException e) {
                 exceptionThrower.throwException(e);
             } catch (NotSetNumOfPlayerException e) {
@@ -99,7 +116,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while setting starter: {}",
                              e.getMessage());
-                updater.disconnectedFromServer();
+                updater.disconnectedFromServer(e.getMessage());
             } catch (PlayerInitException e) {
                 //TODO to remove, controller have to deal with this
                 exceptionThrower.throwException(e);
@@ -129,7 +146,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while setting objective: {}",
                              e.getMessage());
-                updater.disconnectedFromServer();
+                updater.disconnectedFromServer(e.getMessage());
             } catch (IllegalPlayerSpaceActionException e) {
                 exceptionThrower.throwException(e);
             } catch (PlayerInitException e) {
@@ -158,7 +175,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while placing card: {}",
                              e.getMessage());
-                updater.disconnectedFromServer();
+                updater.disconnectedFromServer(e.getMessage());
             } catch (TurnsOrderException e) {
                 exceptionThrower.throwException(e);
             } catch (PlayerInitException e) {
@@ -195,9 +212,8 @@ public class ClientConnectorImpl implements ClientGameConnector {
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while drawing card: {}",
                              e.getMessage());
-                updater.disconnectedFromServer();
+                updater.disconnectedFromServer(e.getMessage());
             } catch (IllegalPlayerSpaceActionException e) {
-                //Same as maxhandsizeex
                 exceptionThrower.throwException(e);
             } catch (TurnsOrderException e) {
                 exceptionThrower.throwException(e);
@@ -233,7 +249,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
             } catch (NotBoundException | RemoteException e) {
                 LOGGER.debug("CLIENT RMI: Connection error while setting number of players: {}",
                              e.getMessage());
-                updater.disconnectedFromServer();
+                updater.disconnectedFromServer(e.getMessage());
             } catch (NumOfPlayersException e) {
                 exceptionThrower.throwException(e);
             } catch (GameStatusException e) {

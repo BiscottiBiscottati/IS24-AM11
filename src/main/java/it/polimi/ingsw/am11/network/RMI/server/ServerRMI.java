@@ -5,10 +5,13 @@ import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.network.RMI.remote.ServerLoggable;
+import it.polimi.ingsw.am11.network.RMI.remote.chat.ClientChatInterface;
+import it.polimi.ingsw.am11.network.RMI.remote.chat.ServerChatInterface;
 import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.network.RMI.remote.game.ServerGameCommandsInterface;
 import it.polimi.ingsw.am11.network.RMI.remote.heartbeat.HeartbeatInterface;
 import it.polimi.ingsw.am11.network.RMI.server.chat.ServerChatConnectorImpl;
+import it.polimi.ingsw.am11.network.RMI.server.chat.ServerChatInterfaceImpl;
 import it.polimi.ingsw.am11.network.RMI.server.game.ServerConnectorImpl;
 import it.polimi.ingsw.am11.network.RMI.server.game.ServerGameCommandsImpl;
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +32,7 @@ public class ServerRMI implements ServerLoggable {
     private final int port;
     private final @NotNull Registry registry;
     private final @NotNull ServerGameCommandsImpl ServerGameCommands;
+    private final @NotNull ServerChatInterfaceImpl chatInterface;
     private final @NotNull HeartbeatManager heartbeatManager;
 
     public ServerRMI(int port) {
@@ -40,12 +44,16 @@ public class ServerRMI implements ServerLoggable {
         }
         ServerGameCommands = new ServerGameCommandsImpl();
         heartbeatManager = new HeartbeatManager(this);
+        chatInterface = new ServerChatInterfaceImpl();
+        ServerConnectorImpl.start();
+        ServerChatConnectorImpl.start();
     }
 
     public void start() {
         ServerLoggable log;
         ServerGameCommandsInterface view;
         HeartbeatInterface heartbeat;
+        ServerChatInterface chat;
         try {
             log = (ServerLoggable) UnicastRemoteObject.exportObject(this,
                                                                     0);
@@ -54,6 +62,9 @@ public class ServerRMI implements ServerLoggable {
                     0);
             heartbeat = (HeartbeatInterface) UnicastRemoteObject.exportObject(heartbeatManager,
                                                                               0);
+            chat = (ServerChatInterface) UnicastRemoteObject.exportObject(
+                    chatInterface,
+                    0);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -62,6 +73,7 @@ public class ServerRMI implements ServerLoggable {
             registry.bind("Loggable", log);
             registry.bind("PlayerView", view);
             registry.bind("ping", heartbeat);
+            registry.bind("chat", chat);
 
             LOGGER.info("SERVER RMI: Server open on port: {}", port);
         } catch (RemoteException | AlreadyBoundException e) {
@@ -76,21 +88,27 @@ public class ServerRMI implements ServerLoggable {
             registry.unbind("Loggable");
             registry.unbind("PlayerView");
             registry.unbind("ping");
+            registry.unbind("chat");
 
             try {
                 UnicastRemoteObject.unexportObject(this, false);
                 UnicastRemoteObject.unexportObject(ServerGameCommands, false);
                 UnicastRemoteObject.unexportObject(registry, false);
                 UnicastRemoteObject.unexportObject(heartbeatManager, false);
+                UnicastRemoteObject.unexportObject(chatInterface, false);
             } catch (NoSuchObjectException e) {
                 LOGGER.debug("SERVER RMI: Object already un-exported");
             }
 
-            LOGGER.info("SERVER RMI: Server closed");
         } catch (RemoteException e) {
             LOGGER.error("SERVER RMI: Error while closing server", e);
         } catch (NotBoundException e) {
             LOGGER.debug("SERVER RMI: Not bound (probably already closed)");
+        } finally {
+            heartbeatManager.close();
+            ServerConnectorImpl.stop();
+            ServerChatConnectorImpl.stop();
+            LOGGER.info("SERVER RMI: Server closed");
         }
     }
 
@@ -99,12 +117,14 @@ public class ServerRMI implements ServerLoggable {
     }
 
     @Override
-    public void login(@NotNull String nick, @NotNull ClientGameUpdatesInterface remoteConnector)
+    public void login(@NotNull String nick, @NotNull ClientGameUpdatesInterface remoteConnector,
+                      @NotNull ClientChatInterface remoteChat)
     throws RemoteException, NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException {
         LOGGER.debug("SERVER RMI: login: {}, {}", nick, remoteConnector);
         ServerConnectorImpl connector = new ServerConnectorImpl(remoteConnector);
-        ServerChatConnectorImpl chatConnector = new ServerChatConnectorImpl(); // FIXME to fix
+        ServerChatConnectorImpl chatConnector = new ServerChatConnectorImpl(remoteChat); // FIXME to
+        // fix
         ServerGameCommands.addPlayer(nick, connector, chatConnector);
         LOGGER.info("SERVER RMI: Player connected: {}", nick);
     }
