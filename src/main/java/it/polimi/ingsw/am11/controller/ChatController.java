@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.controller;
 
 import it.polimi.ingsw.am11.chat.ChatManager;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
-import it.polimi.ingsw.am11.network.ServerChatConnector;
+import it.polimi.ingsw.am11.network.connector.ServerChatConnector;
 import org.jetbrains.annotations.NotNull;
 
 public class ChatController {

@@ -1,7 +1,7 @@
-package it.polimi.ingsw.am11.network.socket.server;
+package it.polimi.ingsw.am11.network.socket.server.chat;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import it.polimi.ingsw.am11.network.ServerChatConnector;
+import it.polimi.ingsw.am11.network.connector.ServerChatConnector;
 import it.polimi.ingsw.am11.network.socket.utils.ContextJSON;
 import it.polimi.ingsw.am11.network.socket.utils.JsonFactory;
 import org.jetbrains.annotations.NotNull;

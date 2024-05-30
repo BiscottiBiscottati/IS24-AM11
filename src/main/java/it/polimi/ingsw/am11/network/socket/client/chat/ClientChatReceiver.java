@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.network.socket.client;
+package it.polimi.ingsw.am11.network.socket.client.chat;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.am11.network.socket.MessageReceiver;

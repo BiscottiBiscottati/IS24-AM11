@@ -1,6 +1,6 @@
-package it.polimi.ingsw.am11.network;
+package it.polimi.ingsw.am11.network.connector;
 
-import it.polimi.ingsw.am11.network.socket.server.ServerGameSender;
+import it.polimi.ingsw.am11.network.socket.server.game.ServerGameSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;

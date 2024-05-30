@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am11.network;
 
 
+import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
+import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
 import org.jetbrains.annotations.NotNull;
 
 /**

@@ -1,10 +1,11 @@
-package it.polimi.ingsw.am11.network.socket.server;
+package it.polimi.ingsw.am11.network.socket.server.chat;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.controller.ChatController;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.network.socket.MessageReceiver;
+import it.polimi.ingsw.am11.network.socket.server.game.ServerExceptionSender;
 import org.jetbrains.annotations.NotNull;
 
 public class ServerChatReceiver implements MessageReceiver {

@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.view.client.TUI;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.network.ClientGameConnector;
+import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
 import it.polimi.ingsw.am11.network.factory.ConnectionType;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
 import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;

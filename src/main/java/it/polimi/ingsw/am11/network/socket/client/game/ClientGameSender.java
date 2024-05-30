@@ -1,10 +1,12 @@
-package it.polimi.ingsw.am11.network.socket.client;
+package it.polimi.ingsw.am11.network.socket.client.game;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.network.ClientGameConnector;
+import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
+import it.polimi.ingsw.am11.network.socket.client.PongHandler;
+import it.polimi.ingsw.am11.network.socket.client.chat.ClientChatSender;
 import it.polimi.ingsw.am11.network.socket.utils.ContextJSON;
 import it.polimi.ingsw.am11.network.socket.utils.JsonFactory;
 import org.jetbrains.annotations.NotNull;

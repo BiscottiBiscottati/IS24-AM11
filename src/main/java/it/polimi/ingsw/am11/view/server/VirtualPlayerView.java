@@ -7,7 +7,7 @@ import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.network.ServerPlayerConnector;
+import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.view.events.utils.ActionMode;
 import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;

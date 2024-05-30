@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.chat;
 
-import it.polimi.ingsw.am11.network.ClientChatConnector;
+import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
 
 public class ClientChatController {
 

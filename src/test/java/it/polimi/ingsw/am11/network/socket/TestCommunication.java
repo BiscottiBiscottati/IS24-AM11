@@ -2,7 +2,11 @@ package it.polimi.ingsw.am11.network.socket;
 
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.network.socket.client.*;
+import it.polimi.ingsw.am11.network.socket.client.ClientSocket;
+import it.polimi.ingsw.am11.network.socket.client.PongHandler;
+import it.polimi.ingsw.am11.network.socket.client.chat.ClientChatSender;
+import it.polimi.ingsw.am11.network.socket.client.game.ClientGameReceiver;
+import it.polimi.ingsw.am11.network.socket.client.game.ClientGameSender;
 import it.polimi.ingsw.am11.network.socket.server.SocketManager;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;

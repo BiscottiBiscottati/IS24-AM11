@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.network.socket.server;
+package it.polimi.ingsw.am11.network.socket.server.game;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,8 +7,8 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.network.ServerPlayerConnector;
-import it.polimi.ingsw.am11.network.ServerTableConnector;
+import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
+import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
 import it.polimi.ingsw.am11.network.socket.utils.ContextJSON;
 import it.polimi.ingsw.am11.network.socket.utils.JsonFactory;
 import org.jetbrains.annotations.NotNull;

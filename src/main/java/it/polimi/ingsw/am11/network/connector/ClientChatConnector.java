@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.network;
+package it.polimi.ingsw.am11.network.connector;
 
 import org.jetbrains.annotations.NotNull;
 

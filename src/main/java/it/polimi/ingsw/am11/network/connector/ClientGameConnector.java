@@ -1,8 +1,8 @@
-package it.polimi.ingsw.am11.network;
+package it.polimi.ingsw.am11.network.connector;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.network.socket.client.ClientGameSender;
+import it.polimi.ingsw.am11.network.socket.client.game.ClientGameSender;
 import org.jetbrains.annotations.NotNull;
 
 

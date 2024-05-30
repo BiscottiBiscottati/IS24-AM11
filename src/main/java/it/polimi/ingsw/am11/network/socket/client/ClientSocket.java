@@ -1,8 +1,13 @@
 package it.polimi.ingsw.am11.network.socket.client;
 
-import it.polimi.ingsw.am11.network.ClientChatConnector;
-import it.polimi.ingsw.am11.network.ClientGameConnector;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
+import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
+import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
+import it.polimi.ingsw.am11.network.socket.client.chat.ClientChatReceiver;
+import it.polimi.ingsw.am11.network.socket.client.chat.ClientChatSender;
+import it.polimi.ingsw.am11.network.socket.client.game.ClientExceptionReceiver;
+import it.polimi.ingsw.am11.network.socket.client.game.ClientGameReceiver;
+import it.polimi.ingsw.am11.network.socket.client.game.ClientGameSender;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import jdk.net.ExtendedSocketOptions;
 import org.jetbrains.annotations.NotNull;

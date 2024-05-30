@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.network.socket.client;
+package it.polimi.ingsw.am11.network.socket.client.game;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;

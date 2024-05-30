@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.chat;
 
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
-import it.polimi.ingsw.am11.network.ServerChatConnector;
+import it.polimi.ingsw.am11.network.connector.ServerChatConnector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

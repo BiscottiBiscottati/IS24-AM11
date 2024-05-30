@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.view.server;
 
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.network.ServerTableConnector;
+import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
 import it.polimi.ingsw.am11.view.events.utils.ActionMode;
 import it.polimi.ingsw.am11.view.events.view.table.*;
 import org.jetbrains.annotations.NotNull;

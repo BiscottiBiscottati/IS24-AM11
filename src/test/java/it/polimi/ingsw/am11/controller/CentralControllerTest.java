@@ -1,9 +1,9 @@
 package it.polimi.ingsw.am11.controller;
 
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
-import it.polimi.ingsw.am11.network.ServerChatConnector;
-import it.polimi.ingsw.am11.network.ServerPlayerConnector;
-import it.polimi.ingsw.am11.network.ServerTableConnector;
+import it.polimi.ingsw.am11.network.connector.ServerChatConnector;
+import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
+import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

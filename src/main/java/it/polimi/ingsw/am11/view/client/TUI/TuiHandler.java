@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.view.client.TUI;
 
-import it.polimi.ingsw.am11.network.ClientChatConnector;
-import it.polimi.ingsw.am11.network.ClientGameConnector;
+import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
+import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.network.RMI.server;
 
-import it.polimi.ingsw.am11.network.ServerChatConnector;
+import it.polimi.ingsw.am11.network.connector.ServerChatConnector;
 import org.jetbrains.annotations.NotNull;
 
 public class ServerChatConnectorImpl implements ServerChatConnector {
