@@ -27,7 +27,6 @@ public class NetworkPage {
     }
 
     public void createNetworkPage() {
-        int halfButtonSize = codexNaturalis.getHalfButtonSize();
         StackPane root = codexNaturalis.getRoot();
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
@@ -39,39 +38,26 @@ public class NetworkPage {
 
         ipAddress = new TextField();
         port = new TextField();
-        theBox.getChildren().addAll(ipAddress, port);
-        theBox.setVisible(false);
-        root.getChildren().addAll(theBox);
 
-        // Label: socket or rmi
-        connectionType = new Label();
-        connectionFailed = new Label();
-        root.getChildren().addAll(connectionFailed, connectionType);
-
-        TextField writeNick = new TextField();
-        Label yourName = new Label("Your Name:");
-        Label nameAlreadyTaken = new Label();
-
-        root.getChildren().addAll(yourName, writeNick, nameAlreadyTaken);
-        chooseSocket = new Button("_Cancel");
-        chooseRMI = new Button("_Cancel");
-        joinButton = new Button("_Cancel");
-        root.getChildren().addAll(chooseRMI, chooseSocket, joinButton);
-    }
-
-    public void showNetworkPage() {
         ipAddress.setAlignment(Pos.CENTER);
-        ipAddress.setPromptText("Ip Address");
+        ipAddress.setPromptText("localhost");
         ipAddress.setFont(font);
         ipAddress.setStyle("-fx-background-color: #D7BC49; " +
                            "-fx-background-radius: 5;" +
                            " -fx-max-width: " + 20 * halfButtonSize);
 
         port.setAlignment(Pos.CENTER);
-        port.setPromptText("Port");
+        port.setPromptText("12345");
         port.setFont(font);
         port.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5;" +
                       " -fx-max-width: " + 20 * halfButtonSize);
+
+        theBox.getChildren().addAll(ipAddress, port);
+        root.getChildren().addAll(theBox);
+
+        // Label: socket or rmi
+        connectionType = new Label();
+        connectionFailed = new Label();
 
         connectionType.setBackground(Background.EMPTY);
         connectionType.setFont(font);
@@ -84,16 +70,83 @@ public class NetworkPage {
         connectionFailed.setTextFill(Color.RED);
         connectionFailed.setVisible(false);
 
+        root.getChildren().addAll(connectionFailed, connectionType);
+
+        chooseSocket = new Button("_Cancel");
+        chooseRMI = new Button("_Cancel");
+        joinButton = new Button("_Cancel");
+
+        chooseSocket.setPrefSize(halfButtonSize << 3, halfButtonSize << 1);
+        chooseSocket.setTranslateX(- 5 * halfButtonSize);
+        chooseSocket.setTranslateY(- 10 * halfButtonSize);
+        chooseSocket.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
+        chooseSocket.setText("Socket");
+        chooseSocket.setFont(font);
+        chooseSocket.setTextFill(Color.web("#351F17"));
+        chooseSocket.setOnMousePressed(
+                event -> chooseSocket.setStyle(
+                        "-fx-background-color: #685C19; -fx-background-radius: 5"));
+        chooseSocket.setOnMouseReleased(event -> chooseSocket.setStyle(
+                "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
+
+        chooseRMI.setPrefSize(halfButtonSize << 3, halfButtonSize << 1);
+        chooseRMI.setTranslateX(5 * halfButtonSize);
+        chooseRMI.setTranslateY(- 10 * halfButtonSize);
+        chooseRMI.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
+        chooseRMI.setText("Rmi");
+        chooseRMI.setFont(font);
+        chooseRMI.setTextFill(Color.web("#351F17"));
+        chooseRMI.setOnMousePressed(
+                event -> chooseRMI.setStyle(
+                        "-fx-background-color: #685C19; -fx-background-radius: 5"));
+        chooseRMI.setOnMouseReleased(event -> chooseRMI.setStyle(
+                "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
+
+        joinButton.setPrefSize(halfButtonSize << 3, halfButtonSize << 1);
+        joinButton.setTranslateY(10 * halfButtonSize - distanceToBorder);
+        joinButton.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
+        joinButton.setText("Join");
+        joinButton.setFont(font);
+        joinButton.setTextFill(Color.web("#351F17"));
+        joinButton.setOnMousePressed(
+                event -> joinButton.setStyle(
+                        "-fx-background-color: #685C19; -fx-background-radius: 5"));
+        joinButton.setOnMouseReleased(event -> joinButton.setStyle(
+                "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
+
+        root.getChildren().addAll(chooseRMI, chooseSocket, joinButton);
+
+        joinButton.setVisible(false);
+        chooseRMI.setVisible(false);
+        chooseSocket.setVisible(false);
+        ipAddress.setVisible(false);
+        port.setVisible(false);
         connectionType.setVisible(false);
         connectionFailed.setVisible(false);
+        theBox.setVisible(false);
+    }
+
+    public void showNetworkPage() {
+
+        connectionType.setVisible(true);
+        ipAddress.setVisible(true);
+        port.setVisible(true);
+        joinButton.setVisible(true);
+        chooseRMI.setVisible(true);
+        chooseSocket.setVisible(true);
+        theBox.setVisible(true);
 
         // Socket, Rmi and Join buttonsList
         chooseSocket.setOnAction(event -> {
             connectionType.setText("Socket");
+            ipAddress.setText("localhost");
+            port.setText("12345");
         });
 
         chooseRMI.setOnAction(event -> {
             connectionType.setText("Rmi");
+            ipAddress.setText("localhost");
+            port.setText("54321");
         });
 
         joinButton.setOnMouseClicked(event -> {

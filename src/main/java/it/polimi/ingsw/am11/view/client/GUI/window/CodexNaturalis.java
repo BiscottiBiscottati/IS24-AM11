@@ -47,7 +47,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
     GuiActuator guiActuator;
     MiniGameModel miniGameModel;
     Scene scene;
-    SettingNumOfPlayers settingNumOfPlayers = new SettingNumOfPlayers();
     Font font;
     Font fontBig;
     int halfButtonSize;
@@ -147,6 +146,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
         Button goBack = new Button("_Cancel");
 
         Buttons buttons = new Buttons();
+
         buttons.createButtons(goToNetwork, halfButtonSize, distanceToBorder, font, chooseNick,
                               chooseSocket, chooseRMI, joinButton, enterNumOfPlayers, goBack);
 
@@ -331,9 +331,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
     public void notifyGodPlayer() {
         Platform.runLater(() -> {
             System.out.println("You are the god player");
-
-            settingNumOfPlayers.createNumOfPlayersPage(font, halfButtonSize, labels, textFields,
-                                                       buttonsList, guiActuator, miniGameModel);
             Label numOfPlayers = labels.get(0);
             TextField writeNumOfPlayers = textFields.get(3);
             Label invalidNumOfPlayers = labels.get(1);
