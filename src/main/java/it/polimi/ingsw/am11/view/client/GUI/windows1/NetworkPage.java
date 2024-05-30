@@ -16,7 +16,7 @@ public class NetworkPage {
     private final CodexNaturalis1 codexNaturalis;
     TextField ipAddress, port;
     Font font;
-    int halfButtonSize;
+    int halfButtonSize, distanceToBorder;
     Label connectionType, connectionFailed;
     Button chooseSocket, chooseRMI, joinButton;
     GuiActuator guiActuator;
@@ -32,6 +32,7 @@ public class NetworkPage {
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
         guiActuator = codexNaturalis.getGuiActuator();
+        distanceToBorder = codexNaturalis.getDistanceToBorder();
 
         theBox = new VBox(2 * halfButtonSize);
         theBox.setAlignment(Pos.CENTER);
