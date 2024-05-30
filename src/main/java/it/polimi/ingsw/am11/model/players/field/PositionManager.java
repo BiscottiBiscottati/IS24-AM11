@@ -192,9 +192,9 @@ public class PositionManager {
                      .map(corner -> PositionManager.getPositionIn(position, corner))
                      .filter(this.cardsPositioned::containsKey)
                      .map(pos -> {
-                         Corner cornerToCover = PositionManager.getCornerFromPositions(
-                                 pos,
-                                 position).orElseThrow();
+                         Corner cornerToCover = PositionManager.getCornerFromPositions(pos,
+                                                                                       position)
+                                                               .orElseThrow();
                          return this.cardsPositioned.get(pos).cover(cornerToCover);
                      })
                      .filter(Optional::isPresent)

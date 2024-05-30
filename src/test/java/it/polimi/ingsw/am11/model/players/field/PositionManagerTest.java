@@ -146,14 +146,16 @@ class PositionManagerTest {
                     positionManager.placeCard(card, Position.of(1, 1), true)
             );
             // The card should cover the card in the starter position
-            assertEquals(List.of(card.getItemCorner(Corner.TOP_RX, true)), itemCovered.get());
+            assertEquals(List.of(Objects.requireNonNull(card.getItemCorner(Corner.TOP_RX, true))),
+                         itemCovered.get());
 
             // Test placing a card in a valid position
             itemCovered.set(
                     positionManager.placeCard(card, Position.of(1, - 1), true)
             );
             // The card should cover the card in the starter position
-            assertEquals(List.of(card.getItemCorner(Corner.DOWN_RX, true)), itemCovered.get());
+            assertEquals(List.of(Objects.requireNonNull(card.getItemCorner(Corner.DOWN_RX, true))),
+                         itemCovered.get());
 
             // Getting the items in the corners of both (1, 1) and (1, -1)
             List<CornerContainer> itemsToBeCovered = new ArrayList<>(4);
@@ -183,21 +185,5 @@ class PositionManagerTest {
         assertEquals(1, positionManager.getCardsPositioned().size());
         assertTrue(positionManager.getCardsPositioned().containsKey(Position.of(0, 0)));
         assertEquals(card, positionManager.getCardsPositioned().get(Position.of(0, 0)).getCard());
-    }
-
-    @Test
-    void getAvailablePositions() {
-    }
-
-    @Test
-    void isAvailable() {
-    }
-
-    @Test
-    void getCardIfExists() {
-    }
-
-    @Test
-    void containsCard() {
     }
 }
