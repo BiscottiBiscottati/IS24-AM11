@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * Each network implementation will provide an implementation of this interface.
  *
- * @see it.polimi.ingsw.am11.network.RMI.Client.ClientRMI
- * @see it.polimi.ingsw.am11.network.Socket.Client.ClientSocket
+ * @see it.polimi.ingsw.am11.network.RMI.client.ClientRMI
+ * @see it.polimi.ingsw.am11.network.socket.client.ClientSocket
  */
 public interface ClientNetworkHandler {
     @NotNull

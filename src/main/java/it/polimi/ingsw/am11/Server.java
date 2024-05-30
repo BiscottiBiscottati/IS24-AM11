@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11;
 
 import it.polimi.ingsw.am11.controller.CentralController;
-import it.polimi.ingsw.am11.network.RMI.Server.ServerRMI;
-import it.polimi.ingsw.am11.network.Socket.Server.SocketManager;
+import it.polimi.ingsw.am11.network.RMI.server.ServerRMI;
+import it.polimi.ingsw.am11.network.socket.server.SocketManager;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import org.jetbrains.annotations.NotNull;
 

@@ -33,8 +33,8 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.view.client.GUI.utils;
     opens it.polimi.ingsw.am11.view.client.GUI.utils to javafx.fxml;
 
-    exports it.polimi.ingsw.am11.network.RMI.Client;
-    exports it.polimi.ingsw.am11.network.RMI.RemoteInterfaces;
-    exports it.polimi.ingsw.am11.network.RMI.Server;
+    exports it.polimi.ingsw.am11.network.RMI.client;
+    exports it.polimi.ingsw.am11.network.RMI.remoteInterfaces;
+    exports it.polimi.ingsw.am11.network.RMI.server;
 
 }

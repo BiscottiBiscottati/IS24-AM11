@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
-import it.polimi.ingsw.am11.network.Socket.Server.ServerGameSender;
+import it.polimi.ingsw.am11.network.socket.server.ServerGameSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +19,7 @@ import java.util.Set;
  * Each player should provide an implementation of this interface to receive updates from the
  * server.
  *
- * @see it.polimi.ingsw.am11.network.RMI.Server.ServerConnectorImpl
+ * @see it.polimi.ingsw.am11.network.RMI.server.ServerConnectorImpl
  * @see ServerGameSender
  */
 public interface ServerTableConnector {

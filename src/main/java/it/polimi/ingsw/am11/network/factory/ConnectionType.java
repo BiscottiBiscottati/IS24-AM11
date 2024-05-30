@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.network.factory;
 
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
-import it.polimi.ingsw.am11.network.RMI.Client.ClientRMI;
-import it.polimi.ingsw.am11.network.Socket.Client.ClientSocket;
+import it.polimi.ingsw.am11.network.RMI.client.ClientRMI;
+import it.polimi.ingsw.am11.network.socket.client.ClientSocket;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
 
