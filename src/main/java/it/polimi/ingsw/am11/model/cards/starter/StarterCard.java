@@ -220,7 +220,7 @@ public final class StarterCard implements FieldCard {
          */
         public Builder(int id) {
             this.id = id;
-            this.availableCornersFront = EnumMapUtils.Init(Corner.class, Availability.NOT_USABLE);
+            this.availableCornersFront = EnumMapUtils.init(Corner.class, Availability.NOT_USABLE);
             this.availableColorCornerBack = new EnumMap<>(Corner.class);
             this.centerColors = EnumSet.noneOf(Color.class);
         }

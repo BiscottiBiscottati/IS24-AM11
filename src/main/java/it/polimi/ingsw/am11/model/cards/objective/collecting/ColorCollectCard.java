@@ -19,7 +19,7 @@ import java.util.Objects;
 
 public final class ColorCollectCard extends CollectingCard {
     private static final ImmutableMap<Symbol, Integer> SYMBOL_TO_COLLECT = Maps.immutableEnumMap(
-            EnumMapUtils.Init(Symbol.class, 0)
+            EnumMapUtils.init(Symbol.class, 0)
     );
 
     private final @NotNull ImmutableMap<Color, Integer> colorToCollect;
@@ -66,7 +66,7 @@ public final class ColorCollectCard extends CollectingCard {
 
         public Builder(int id, int points) {
             super(id, points);
-            this.colorToCollect = EnumMapUtils.Init(Color.class, 0);
+            this.colorToCollect = EnumMapUtils.init(Color.class, 0);
         }
 
         public @NotNull Builder hasColor(Color color, int quantity) {

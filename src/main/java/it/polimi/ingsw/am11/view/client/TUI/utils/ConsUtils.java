@@ -1,6 +1,9 @@
 package it.polimi.ingsw.am11.view.client.TUI.utils;
 
-public abstract class ConsUtils {
+public class ConsUtils {
+
+    private ConsUtils() {
+    }
 
     public static void clear() {
         // Check the operating system

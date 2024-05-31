@@ -2,7 +2,6 @@ package it.polimi.ingsw.am11.model.cards.utils.helpers;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
-import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +17,8 @@ class EnumMapUtilsTest {
 
     @BeforeAll
     static void beforeAll() {
-        toTest = EnumMapUtils.Init(Symbol.class, 0);
-        toTest2 = EnumMapUtils.Init(Color.class, Symbol.FEATHER);
+        toTest = EnumMapUtils.init(Symbol.class, 0);
+        toTest2 = EnumMapUtils.init(Color.class, Symbol.FEATHER);
     }
 
     @Test

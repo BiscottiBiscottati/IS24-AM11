@@ -21,9 +21,9 @@ public class ExposedItemManager {
     private final @NotNull EnumMap<Color, Integer> placedCardColors;
 
     ExposedItemManager() {
-        exposedColors = EnumMapUtils.Init(Color.class, 0);
-        exposedSymbols = EnumMapUtils.Init(Symbol.class, 0);
-        placedCardColors = EnumMapUtils.Init(Color.class, 0);
+        exposedColors = EnumMapUtils.init(Color.class, 0);
+        exposedSymbols = EnumMapUtils.init(Symbol.class, 0);
+        placedCardColors = EnumMapUtils.init(Color.class, 0);
     }
 
     void reset() {

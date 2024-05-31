@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -27,13 +28,25 @@ public class EnumMapUtils {
      * @return a new instance of the defined <code>EnumMap</code>
      */
     @NotNull
-    public static <K extends Enum<K>, V> EnumMap<K, V> Init(
+    public static <K extends Enum<K>, V> EnumMap<K, V> init(
             @NotNull Class<K> keyType,
             @NotNull V defaultValue) {
         return Arrays.stream(keyType.getEnumConstants())
                      .collect(Collectors.toMap(
                              Function.identity(),
                              x -> defaultValue,
+                             (x, y) -> x,
+                             () -> new EnumMap<>(keyType)
+                     ));
+    }
+
+    public static <K extends Enum<K>, V> EnumMap<K, V> init(
+            @NotNull Class<K> keyType,
+            @NotNull Supplier<V> defaultValueSupplier) {
+        return Arrays.stream(keyType.getEnumConstants())
+                     .collect(Collectors.toMap(
+                             Function.identity(),
+                             x -> defaultValueSupplier.get(),
                              (x, y) -> x,
                              () -> new EnumMap<>(keyType)
                      ));

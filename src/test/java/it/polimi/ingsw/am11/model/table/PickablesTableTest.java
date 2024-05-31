@@ -19,6 +19,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -130,7 +131,7 @@ public class PickablesTableTest {
             try {
                 StarterCard starterCard = pickablesTable.pickStarterCard();
                 Assertions.assertNotNull(starterCard);
-            } catch (EmptyDeckException e) {
+            } catch (NoSuchElementException e) {
                 break; // Exit the loop when the deck is empty
             }
         }
@@ -143,7 +144,7 @@ public class PickablesTableTest {
             try {
                 ObjectiveCard objectiveCard = pickablesTable.pickObjectiveCard();
                 Assertions.assertNotNull(objectiveCard);
-            } catch (EmptyDeckException e) {
+            } catch (NoSuchElementException e) {
                 break; // Exit the loop when the deck is empty
             }
         }

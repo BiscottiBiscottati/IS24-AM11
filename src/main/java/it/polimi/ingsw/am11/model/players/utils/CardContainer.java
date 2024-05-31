@@ -50,13 +50,13 @@ public class CardContainer {
      */
     public CardContainer(@NotNull FieldCard card) {
         this.card = card;
-        coveredCorners = EnumMapUtils.Init(Corner.class, false);
+        coveredCorners = EnumMapUtils.init(Corner.class, false);
         isRetro = false;
     }
 
     public CardContainer(@NotNull FieldCard card, boolean isRetro) {
         this.card = card;
-        coveredCorners = EnumMapUtils.Init(Corner.class, false);
+        coveredCorners = EnumMapUtils.init(Corner.class, false);
         this.isRetro = isRetro;
     }
 

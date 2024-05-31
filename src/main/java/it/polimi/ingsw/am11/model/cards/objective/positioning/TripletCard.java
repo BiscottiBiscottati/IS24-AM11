@@ -101,7 +101,7 @@ public final class TripletCard extends PositioningCard {
 
         public @NotNull Builder hasColor(@NotNull Color color) {
             this.colorOfPattern = color;
-            this.colorRequirements = EnumMapUtils.Init(Color.class, 0);
+            this.colorRequirements = EnumMapUtils.init(Color.class, 0);
             this.colorRequirements.put(color, 3);
             return this;
         }

@@ -366,7 +366,7 @@ public class GameLogic implements GameModel {
             LOGGER.info("MODEL: Picking starters...");
             pickStarters();
             plateau.setStatus(GameStatus.CHOOSING_STARTERS);
-        } catch (IllegalPlayerSpaceActionException | GameStatusException | EmptyDeckException |
+        } catch (IllegalPlayerSpaceActionException | GameStatusException |
                  IllegalPickActionException | PlayerInitException e) {
             LOGGER.error("Something broke while dealing starters or objectives! Error: {}",
                          e.getMessage());
@@ -388,7 +388,7 @@ public class GameLogic implements GameModel {
      */
 
     private void pickStarters()
-    throws EmptyDeckException, GameStatusException, PlayerInitException,
+    throws GameStatusException, PlayerInitException,
            IllegalPlayerSpaceActionException, IllegalPickActionException {
         for (String nickname : playerManager.getPlayers()) {
             StarterCard starter = pickablesTable.pickStarterCard();

@@ -178,7 +178,7 @@ class TripletCardTest {
         // Test for a simple map.
         Mockito.when(playerField.getCardsPositioned())
                .thenReturn(posCardSmall);
-        EnumMap<Color, Integer> placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        EnumMap<Color, Integer> placedCardNumber = EnumMapUtils.init(Color.class, 0);
         placedCardNumber.put(Color.GREEN, 7);
         Mockito.when(playerField.getPlacedCardColours())
                .thenReturn(placedCardNumber);
@@ -187,7 +187,7 @@ class TripletCardTest {
         assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test if color placed are less than 3.
-        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber = EnumMapUtils.init(Color.class, 0);
         placedCardNumber.put(Color.GREEN, 2);
         Mockito.when(playerField.getPlacedCardColours())
                .thenReturn(placedCardNumber);
@@ -196,7 +196,7 @@ class TripletCardTest {
         assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test a simple map but there are no matching pattern
-        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber = EnumMapUtils.init(Color.class, 0);
         placedCardNumber.put(Color.GREEN, 6);
         placedCardNumber.put(Color.BLUE, 2);
         Mockito.when(playerField.getPlacedCardColours())
@@ -208,7 +208,7 @@ class TripletCardTest {
         assertEquals(0, tripletCardRevForGreens.countPoints(playerField));
 
         // Test for a larger map.
-        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber = EnumMapUtils.init(Color.class, 0);
         placedCardNumber.put(Color.GREEN, 13);
         placedCardNumber.put(Color.BLUE, 5);
         Mockito.when(playerField.getPlacedCardColours())
@@ -220,7 +220,7 @@ class TripletCardTest {
         assertEquals(4, tripletCardRevForGreens.countPoints(playerField));
 
         // Test for an even larger map.
-        placedCardNumber = EnumMapUtils.Init(Color.class, 0);
+        placedCardNumber = EnumMapUtils.init(Color.class, 0);
         placedCardNumber.put(Color.GREEN, 22);
         placedCardNumber.put(Color.BLUE, 8);
         Mockito.when(playerField.getPlacedCardColours())

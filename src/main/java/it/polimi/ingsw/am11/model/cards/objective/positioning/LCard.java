@@ -124,7 +124,7 @@ public final class LCard extends PositioningCard {
             super(id, points);
             this.primaryColor = null;
             this.secondaryColor = null;
-            this.colorRequirements = EnumMapUtils.Init(Color.class, 0);
+            this.colorRequirements = EnumMapUtils.init(Color.class, 0);
         }
 
         public @NotNull Builder isFlipped(boolean flippedFlag) {

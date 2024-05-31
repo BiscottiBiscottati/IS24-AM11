@@ -16,7 +16,7 @@ public class MiniCardContainer {
 
     public MiniCardContainer(int cardId, boolean isRetro) {
         this.cardId = cardId;
-        coveredCorners = EnumMapUtils.Init(Corner.class, false);
+        coveredCorners = EnumMapUtils.init(Corner.class, false);
         this.isRetro = isRetro;
     }
 
