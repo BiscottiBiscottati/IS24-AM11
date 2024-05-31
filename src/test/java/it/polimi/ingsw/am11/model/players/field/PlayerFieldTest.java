@@ -14,8 +14,6 @@ import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
-import it.polimi.ingsw.am11.model.players.field.PlayerField;
-import it.polimi.ingsw.am11.model.players.field.PositionManager;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.junit.jupiter.api.Assertions;
@@ -296,8 +294,6 @@ class PlayerFieldTest {
         assertDoesNotThrow(() -> playerField.placeStartingCard(card, true));
         Stream.of(Color.values())
               .forEach(color -> assertEquals(0, playerField.getNumberOfPositionedColor(color)));
-
-        // TODO better test to do
 
         ResourceCard resourceCard = resourceDeck.draw().orElseThrow();
         assertDoesNotThrow(() -> playerField.place(resourceCard,

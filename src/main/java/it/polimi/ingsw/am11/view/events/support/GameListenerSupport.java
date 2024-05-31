@@ -31,10 +31,6 @@ public class GameListenerSupport {
         tableListeners.add(listener);
     }
 
-    public void removeListener(TableListener listener) {
-        tableListeners.remove(listener);
-    }
-
     public void removeListener(String player) {
         this.playerListeners.remove(player);
     }

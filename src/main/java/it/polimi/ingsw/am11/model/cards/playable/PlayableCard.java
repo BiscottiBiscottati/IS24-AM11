@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.model.cards.playable;
 
-import it.polimi.ingsw.am11.model.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.*;
@@ -30,13 +29,11 @@ import java.util.Set;
  * The class also contains a nested <code>Builder</code> class for creating instances of
  * <code>PlayableCard</code>.
  */
-public abstract sealed class PlayableCard implements CardIdentity,
-                                                     FieldCard permits GoldCard, ResourceCard {
+public abstract sealed class PlayableCard implements
+                                          FieldCard permits GoldCard, ResourceCard {
     private final @NotNull Color color;
     private final int points;
     private final int id;
-
-    //TODO may need cleanup of methods
 
     /**
      * Constructs a new instance of <code>PlayableCard</code> using the provided
@@ -234,8 +231,7 @@ public abstract sealed class PlayableCard implements CardIdentity,
     @Override
     public abstract boolean isAvailable(@NotNull Corner corner, boolean isRetro);
 
-    // TODO we could return Item instead and eliminate Availability since it can be substituted
-    //  by isAvailable method
+    @Override
     public abstract @NotNull CornerContainer getItemCorner(@NotNull Corner corner,
                                                            boolean isRetro);
 

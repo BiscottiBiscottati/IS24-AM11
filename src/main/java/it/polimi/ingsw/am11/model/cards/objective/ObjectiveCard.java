@@ -81,10 +81,6 @@ public abstract sealed class ObjectiveCard implements CardIdentity
         return points;
     }
 
-
-    // TODO: We can delete getSymbolRequirements and get ColorRequirements and use
-    //  hasItemRequirements instead
-
     /**
      * Checks if the provided item meets the requirements of this <code>ObjectiveCard</code>.
      * <p>

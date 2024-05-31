@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
  * <code>TRIPLET</code>.
  */
 public enum ObjectiveCardType {
-    // TODO: we need to discuss if the pattern is really needed
 
     COLOR_COLLECT(null),
     L_SHAPE(Set.of(

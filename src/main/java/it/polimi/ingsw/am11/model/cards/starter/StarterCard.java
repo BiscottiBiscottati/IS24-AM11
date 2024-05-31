@@ -145,7 +145,6 @@ public final class StarterCard implements FieldCard {
         else return availableCornersFront.get(corner);
     }
 
-    // TODO may need cleanup of methods
     public @NotNull Set<Color> getCenter(boolean isRetro) {
         if (isRetro) return EnumSet.noneOf(Color.class);
         else return centerColorsFront;

@@ -12,7 +12,6 @@ public class Client {
 
     static void start(@NotNull ArgParser parser) throws IOException {
         String uiMode = parser.getOption("ui").orElseThrow().getValue();
-        // TODO gui or tui and setup connection to server
         switch (uiMode) {
             case "gui" -> Application.launch(CodexNaturalis.class);
             case "tui" -> new TuiHandler().start();

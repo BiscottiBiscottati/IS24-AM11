@@ -87,7 +87,6 @@ public class GameController {
             tableView.addConnector(nickname, tableConnector);
             model.addPlayerListener(nickname, new PlayerViewUpdater(playerView));
 
-            // TODO notify god player that the player has connected
             if (isGodSet) {
                 LOGGER.info("CONTROLLER: Notifying god player {}", nickname);
                 playerConnector.notifyGodPlayer();
@@ -131,16 +130,6 @@ public class GameController {
 
         LOGGER.info("CONTROLLER: Num of players set to {} by {}", val, nickname);
 
-    }
-
-    void goNextTurn() throws
-                      GameStatusException {
-        try {
-            // TODO to handle disconnection in the model
-            model.goNextTurn();
-        } catch (GameBreakingException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     void disconnectPlayer(@NotNull String nickname) {

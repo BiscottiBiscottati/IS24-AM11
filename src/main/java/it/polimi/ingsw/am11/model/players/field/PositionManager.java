@@ -279,36 +279,6 @@ public class PositionManager {
                               .anyMatch(cardContainer -> cardContainer.isCardEquals(card));
     }
 
-    // TODO to remove
-    public FieldCard resetLastMove() {
-        this.cardsPositioned.entrySet()
-                            .stream()
-                            .filter(entry -> entry.getValue().getCard().equals(lastPlacedCard))
-                            .map(Map.Entry::getKey)
-                            .forEach(cardsPositioned::remove);
-
-        this.availablePositions.clear();
-        this.closedPositions.clear();
-
-        this.cardsPositioned.keySet()
-                            .stream()
-                            .flatMap(pos -> Stream.of(Corner.values())
-                                                  .map(corner -> PositionManager.getPositionIn(
-                                                          pos, corner)))
-                            .distinct()
-                            .filter(pos -> ! this.cardsPositioned.containsKey(pos))
-                            .forEach(position -> {
-                                if (isAdjacentClosed(position)) {
-                                    closedPositions.add(position);
-                                } else {
-                                    availablePositions.add(position);
-                                }
-                            });
-        // TODO may need to test
-
-        return lastPlacedCard;
-    }
-
     private boolean isAdjacentClosed(@NotNull Position position) {
         return Stream.of(Corner.values())
                      .map(corner -> PositionManager.getPositionIn(position, corner))

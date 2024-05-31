@@ -30,7 +30,6 @@ public class VirtualTableView {
         this.connectors.remove(nickname);
     }
 
-    //TODO methods to finish
     public void updateTable(@NotNull FieldChangeEvent event) {
         AtomicReference<Map.Entry<Position, CardContainer>> entry = new AtomicReference<>();
         ActionMode mode = event.getAction();
@@ -77,8 +76,6 @@ public class VirtualTableView {
     private void broadcast(@NotNull Consumer<ServerTableConnector> action) {
         connectors.values().forEach(action);
     }
-
-    //FIXME may use commander pattern or other
 
     public void updateTable(@NotNull GameStatusChangeEvent event) {
         LOGGER.debug("EVENT: Game status change from {} to {}", event.getOldValue(),
