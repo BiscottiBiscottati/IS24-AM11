@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.network.socket.server.game;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
@@ -19,16 +18,10 @@ import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Set;
 
-public class ServerGameSender implements ServerPlayerConnector, ServerTableConnector {
+public record ServerGameSender(@NotNull PrintWriter out)
+        implements ServerPlayerConnector, ServerTableConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerGameSender.class);
     private static final ContextJSON CONTEXT = ContextJSON.GAME;
-
-    private final @NotNull PrintWriter out;
-    private final ObjectMapper mapper = new ObjectMapper();
-
-    public ServerGameSender(@NotNull PrintWriter out) {
-        this.out = out;
-    }
 
     @Override
     public void updateHand(int cardId, boolean removeMode) {
@@ -61,7 +54,7 @@ public class ServerGameSender implements ServerPlayerConnector, ServerTableConne
         try {
             ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
             json.put("method", "sendCandidateObjective");
-            String cardsIdJson = mapper.writeValueAsString(cardsId);
+            String cardsIdJson = JsonFactory.writeValueAsString(cardsId);
             json.put("cardsId", cardsIdJson);
             out.println(json);
         } catch (JsonProcessingException e) {
@@ -138,7 +131,7 @@ public class ServerGameSender implements ServerPlayerConnector, ServerTableConne
         try {
             ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
             json.put("method", "updateCommonObjective");
-            String cardIdJson = mapper.writeValueAsString(cardId);
+            String cardIdJson = JsonFactory.writeValueAsString(cardId);
             json.put("cardId", cardIdJson);
             json.put("removeMode", removeMode);
             out.println(json);
@@ -152,7 +145,8 @@ public class ServerGameSender implements ServerPlayerConnector, ServerTableConne
         try {
             ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
             json.put("method", "receiveFinalLeaderboard");
-            json.put("finalLeaderboard", mapper.writeValueAsString(finalLeaderboard));
+            String finalLeaderboardJson = JsonFactory.writeValueAsString(finalLeaderboard);
+            json.put("finalLeaderboard", finalLeaderboardJson);
             out.println(json);
         } catch (JsonProcessingException e) {
             LOGGER.error("Error while sending final leaderboard", e);
@@ -164,7 +158,8 @@ public class ServerGameSender implements ServerPlayerConnector, ServerTableConne
         try {
             ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
             json.put("method", "updatePlayers");
-            json.put("currentPlayers", mapper.writeValueAsString(currentPlayers));
+            String currentPlayersJson = JsonFactory.writeValueAsString(currentPlayers);
+            json.put("currentPlayers", currentPlayersJson);
             out.println(json);
         } catch (JsonProcessingException e) {
             LOGGER.error("Error while sending current players", e);

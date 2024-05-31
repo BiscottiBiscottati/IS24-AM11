@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.network.socket.server.game;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.network.socket.utils.ContextJSON;
 import it.polimi.ingsw.am11.network.socket.utils.JsonFactory;
@@ -10,17 +9,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 
-public class ServerExceptionSender {
+public record ServerExceptionSender(@NotNull PrintWriter out) {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerExceptionSender.class);
     private static final ContextJSON CONTEXT = ContextJSON.EXCEPTION;
-
-    private final @NotNull PrintWriter out;
-    private final @NotNull ObjectMapper mapper;
-
-    public ServerExceptionSender(@NotNull PrintWriter out) {
-        this.out = out;
-        this.mapper = new ObjectMapper();
-    }
 
     public void exception(@NotNull Exception e) {
         LOGGER.info("SERVER TCP: Exception to send: {}", e.getClass().getSimpleName());

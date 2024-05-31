@@ -36,7 +36,7 @@ public class GameController {
     private final AtomicReference<String> godPlayer;
     private final VirtualTableView tableView;
 
-    public GameController() {
+    GameController() {
         this.model = new GameLogic();
         this.tableView = new VirtualTableView();
         this.cardController = new CardController(model);

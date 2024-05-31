@@ -10,15 +10,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 
-public class ServerChatSender implements ServerChatConnector {
+public record ServerChatSender(@NotNull PrintWriter out) implements ServerChatConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerChatSender.class);
     private static final ContextJSON CONTEXT = ContextJSON.CHAT;
-
-    private final PrintWriter out;
-
-    public ServerChatSender(@NotNull PrintWriter out) {
-        this.out = out;
-    }
 
     @Override
     public void sendPublicMsg(@NotNull String sender, @NotNull String msg) {

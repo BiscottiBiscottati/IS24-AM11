@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.network.socket.client.game;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
@@ -13,21 +12,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintWriter;
 
-public class ClientGameSender implements ClientGameConnector {
+public record ClientGameSender(@NotNull PrintWriter out, @NotNull PongHandler pongHandler,
+                               @NotNull ClientChatSender chatSender)
+        implements ClientGameConnector {
     private static final ContextJSON CONTEXT = ContextJSON.GAME;
-
-    private final PrintWriter out;
-    private final ObjectMapper mapper = new ObjectMapper();
-    private final PongHandler pongHandler;
-    private final ClientChatSender chatSender;
-
-    public ClientGameSender(@NotNull PrintWriter out,
-                            @NotNull PongHandler pongHandler,
-                            @NotNull ClientChatSender chatSender) {
-        this.out = out;
-        this.pongHandler = pongHandler;
-        this.chatSender = chatSender;
-    }
 
     @Override
     public void setStarterCard(boolean isRetro) {

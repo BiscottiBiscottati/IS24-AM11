@@ -5,12 +5,8 @@ import it.polimi.ingsw.am11.network.socket.MessageReceiver;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import org.jetbrains.annotations.NotNull;
 
-public class ClientChatReceiver implements MessageReceiver {
-    private final ClientChatUpdater chatUpdater;
-
-    public ClientChatReceiver(@NotNull ClientChatUpdater chatUpdater) {
-        this.chatUpdater = chatUpdater;
-    }
+public record ClientChatReceiver(@NotNull ClientChatUpdater chatUpdater)
+        implements MessageReceiver {
 
     @Override
     public void receive(@NotNull JsonNode jsonNode) {

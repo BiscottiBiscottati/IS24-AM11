@@ -2,19 +2,18 @@ package it.polimi.ingsw.am11.network.socket.client.game;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.network.socket.MessageReceiver;
+import it.polimi.ingsw.am11.network.socket.utils.JsonFactory;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,12 +21,10 @@ public class ClientGameReceiver implements MessageReceiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientGameReceiver.class);
 
     private final @NotNull ClientViewUpdater clientPlayerView;
-    private final @NotNull ObjectMapper mapper;
     private final @NotNull ClientExceptionReceiver clientExceptionReceiver;
 
     public ClientGameReceiver(@NotNull ClientViewUpdater clientPlayerView) {
         this.clientPlayerView = clientPlayerView;
-        this.mapper = new ObjectMapper();
         this.clientExceptionReceiver = new ClientExceptionReceiver(
                 clientPlayerView.getExceptionThrower());
     }
@@ -50,8 +47,8 @@ public class ClientGameReceiver implements MessageReceiver {
                     break;
                 case "sendCandidateObjective":
                     String cardsIdJson = jsonNode.get("cardsId").asText();
-                    Set<Integer> cardsId = mapper.readValue(cardsIdJson,
-                                                            new TypeReference<>() {});
+                    Set<Integer> cardsId = JsonFactory.readValue(cardsIdJson,
+                                                                 new TypeReference<>() {});
                     clientPlayerView.receiveCandidateObjective(cardsId);
                     break;
                 case "updateDeckTop":
@@ -85,26 +82,23 @@ public class ClientGameReceiver implements MessageReceiver {
                     break;
                 case "updateCommonObjective":
                     String commonObjectiveJson = jsonNode.get("cardId").asText();
-                    Set<Integer> commonObjective = mapper.
-                            readValue(commonObjectiveJson,
-                                      new TypeReference<HashSet<Integer>>() {});
+                    Set<Integer> commonObjective = JsonFactory.readValue(commonObjectiveJson,
+                                                                         new TypeReference<>() {});
                     clientPlayerView.updateCommonObjective(commonObjective,
                                                            jsonNode.get("removeMode").asBoolean());
                     break;
                 case "receiveFinalLeaderboard":
                     String finalLeaderboardJson = jsonNode.get("finalLeaderboard").asText();
-                    JsonNode finalLeaderboardNode = mapper.readTree(finalLeaderboardJson);
-                    Map<String, Integer> finalLeaderboard = mapper.convertValue(
-                            finalLeaderboardNode,
+                    Map<String, Integer> finalLeaderboard = JsonFactory.readValue(
+                            finalLeaderboardJson,
                             new TypeReference<>() {});
                     clientPlayerView.receiveFinalLeaderboard(finalLeaderboard);
                     break;
                 case "updatePlayers":
                     String currentPlayersJson = jsonNode.get("currentPlayers").asText();
-                    JsonNode currentPlayersNode = mapper.readTree(currentPlayersJson);
-                    Map<PlayerColor, String> currentPlayers = mapper
-                            .convertValue(currentPlayersNode,
-                                          new TypeReference<>() {});
+                    Map<PlayerColor, String> currentPlayers = JsonFactory.readValue(
+                            currentPlayersJson,
+                            new TypeReference<>() {});
                     clientPlayerView.updatePlayers(currentPlayers);
                     break;
                 case "updateNumOfPlayers":

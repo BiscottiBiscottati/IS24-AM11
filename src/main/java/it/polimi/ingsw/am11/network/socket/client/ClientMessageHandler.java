@@ -2,40 +2,26 @@ package it.polimi.ingsw.am11.network.socket.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Enums;
 import it.polimi.ingsw.am11.network.socket.client.chat.ClientChatReceiver;
 import it.polimi.ingsw.am11.network.socket.client.game.ClientExceptionReceiver;
 import it.polimi.ingsw.am11.network.socket.client.game.ClientGameReceiver;
 import it.polimi.ingsw.am11.network.socket.utils.ContextJSON;
+import it.polimi.ingsw.am11.network.socket.utils.JsonFactory;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClientMessageHandler {
+public record ClientMessageHandler(@NotNull ClientGameReceiver messageReceiver,
+                                   @NotNull ClientExceptionReceiver exceptionReceiver,
+                                   @NotNull PongHandler pongHandler,
+                                   @NotNull ClientChatReceiver chatReceiver) {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientMessageHandler.class);
-
-    private final ClientGameReceiver messageReceiver;
-    private final ClientExceptionReceiver exceptionReceiver;
-    private final PongHandler pongHandler;
-    private final ClientChatReceiver chatReceiver;
-    private final ObjectMapper mapper;
-
-    public ClientMessageHandler(@NotNull ClientGameReceiver messageReceiver,
-                                @NotNull ClientExceptionReceiver exceptionReceiver,
-                                @NotNull PongHandler pongHandler,
-                                @NotNull ClientChatReceiver chatReceiver) {
-        this.messageReceiver = messageReceiver;
-        this.exceptionReceiver = exceptionReceiver;
-        this.pongHandler = pongHandler;
-        this.chatReceiver = chatReceiver;
-        this.mapper = new ObjectMapper();
-    }
 
     public void receive(@NotNull String message) {
         JsonNode jsonNode;
         try {
-            jsonNode = mapper.readTree(message);
+            jsonNode = JsonFactory.toJsonNode(message);
         } catch (JsonProcessingException e) {
             LOGGER.info("CLIENT TCP: Error while parsing json: {}", e.getMessage());
             return;

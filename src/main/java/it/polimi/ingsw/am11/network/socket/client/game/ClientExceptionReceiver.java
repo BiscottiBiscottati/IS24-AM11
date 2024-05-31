@@ -10,14 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClientExceptionReceiver implements MessageReceiver {
+public record ClientExceptionReceiver(@NotNull ExceptionThrower exceptionThrower)
+        implements MessageReceiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientExceptionReceiver.class);
-
-    private final @NotNull ExceptionThrower exceptionThrower;
-
-    public ClientExceptionReceiver(@NotNull ExceptionThrower exceptionThrower) {
-        this.exceptionThrower = exceptionThrower;
-    }
 
     public void receive(@NotNull JsonNode jsonNode) {
         LOGGER.debug("CLIENT TCP: Received exception: {}", jsonNode);

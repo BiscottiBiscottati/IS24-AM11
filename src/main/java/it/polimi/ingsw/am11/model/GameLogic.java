@@ -271,6 +271,7 @@ public class GameLogic implements GameModel {
                                                         .orElseThrow(() -> new PlayerInitException(
                                                                 "Player not found")));
         } catch (IllegalPlateauActionException e) {
+            LOGGER.error("Plateau and player have discrepancies! Error: {}", e.getMessage());
             throw new GameBreakingException("Plateau and player manager have discrepancies");
         }
     }
@@ -298,6 +299,8 @@ public class GameLogic implements GameModel {
                                                  "Player not " +
                                                  "found")));
         } catch (IllegalPlateauActionException e) {
+            LOGGER.error("Plateau and player manager have discrepancies! Error: {}",
+                         e.getMessage());
             throw new GameBreakingException("Plateau and player manager have discrepancies");
         }
     }
@@ -365,6 +368,8 @@ public class GameLogic implements GameModel {
             plateau.setStatus(GameStatus.CHOOSING_STARTERS);
         } catch (IllegalPlayerSpaceActionException | GameStatusException | EmptyDeckException |
                  IllegalPickActionException | PlayerInitException e) {
+            LOGGER.error("Something broke while dealing starters or objectives! Error: {}",
+                         e.getMessage());
             throw new GameBreakingException("Something broke while dealing starters or objectives");
         }
     }
@@ -482,6 +487,7 @@ public class GameLogic implements GameModel {
             try {
                 pickCandidateObjectives();
             } catch (EmptyDeckException | IllegalPickActionException e) {
+                LOGGER.error("Something broke while dealing objectives! Error: {}", e.getMessage());
                 throw new GameBreakingException(
                         "Something broke while dealing starters or objectives");
             }
@@ -679,6 +685,8 @@ public class GameLogic implements GameModel {
 
                 countObjectivesPoints();
             } catch (IllegalPlateauActionException ex) {
+                LOGGER.error("Players in game logic and plateau don't match! Error: {}",
+                             ex.getMessage());
                 throw new GameBreakingException("Players in game logic and plateau don't match");
             }
 
@@ -728,6 +736,9 @@ public class GameLogic implements GameModel {
                 throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
             }
         } catch (MaxHandSizeException ex) {
+            LOGGER.error(
+                    "We have lost a card due to picking it from the visible and not being able " +
+                    "to put it anywhere! Error: {}", ex.getMessage());
             throw new GameBreakingException(
                     "We have lost a card due to picking it from the visible and not being able " +
                     "to put it anywhere"
@@ -923,6 +934,7 @@ public class GameLogic implements GameModel {
                 }
             }
         } catch (EmptyDeckException | MaxHandSizeException e) {
+            LOGGER.error("Something broke while dealing cards! Error: {}", e.getMessage());
             throw new GameBreakingException("Something broke while dealing cards");
         }
 
@@ -995,6 +1007,8 @@ public class GameLogic implements GameModel {
                                       .orElseThrow(
                                               () -> new PlayerInitException("player not found"));
             } catch (PlayerInitException e) {
+                LOGGER.error("Discrepancies between playerManager and itself! Error: {}",
+                             e.getMessage());
                 throw new GameBreakingException("Discrepancies between playerManager and itself");
             }
 

@@ -8,7 +8,7 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 public class CardController {
     private final GameModel model;
 
-    public CardController(GameModel model) {
+    CardController(GameModel model) {
         this.model = model;
     }
 

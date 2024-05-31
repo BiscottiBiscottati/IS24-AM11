@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class ChatController {
     private final ChatManager chatModel;
 
-    public ChatController() {
+    ChatController() {
         chatModel = new ChatManager();
     }
 
