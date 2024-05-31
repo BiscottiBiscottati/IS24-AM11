@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
@@ -21,6 +22,7 @@ public class WatchingField extends TUIState {
     private static final String askForCommand = "What you wanna do? Place a card? >>> \033[K";
     private static final String helpPlace = "HELP: place <x> <y> <cardId> <front/retro> \033[K";
     private static final String helpGet = "GET: get <table/[nickname]> \033[K";
+    private static String gameStatus = "";
     private boolean alreadyError = false;
     private String currentFieldShowed = "";
 
@@ -115,8 +117,88 @@ public class WatchingField extends TUIState {
         }
     }
 
+    private void askSpecLine() {
+        if (model.getCurrentTurn().equals(model.myName())) {
+            if (model.getiPlaced()) {
+                System.out.print(askToSee);
+            } else {
+                System.out.print(askForCommand);
+            }
+        } else {
+            System.out.print(askLine);
+        }
+    }
+
+    private void place(Actuator actuator, ArgParser parser) {
+        List<String> positionalArgs = parser.getPositionalArgs();
+
+        if (positionalArgs.size() == 2) {
+            String secondWord = parser.getPositionalArgs().get(1);
+            switch (secondWord.toLowerCase()) {
+                case "?", "help" -> {
+                    errorsHappensEvenTwice(helpPlace);
+                    alreadyError = true;
+                    System.out.print(askForCommand);
+                    return;
+                }
+            }
+        }
+
+        if (positionalArgs.size() != 5) {
+            errorsHappensEvenTwice("ERROR: wrong number of arguments for place command");
+            alreadyError = true;
+            System.out.println(askForCommand);
+            return;
+        }
+        int x = 0;
+        int y = 0;
+        int cardid = 0;
+        String frontOrRetro = parser.getPositionalArgs().get(4).toLowerCase();
+        try {
+            x = Integer.parseInt(positionalArgs.get(1));
+            y = Integer.parseInt(positionalArgs.get(2));
+            cardid = Integer.parseInt(positionalArgs.get(3));
+        } catch (NumberFormatException e) {
+            errorsHappensEvenTwice("ERROR: Invalid arguments, <x>, <y> and <cardId> have to be an" +
+                                   " integer");
+            alreadyError = true;
+            System.out.println(askForCommand);
+            return;
+        }
+
+        if (! model.getCliPlayer(model.myName()).getSpace().getPlayerHand().contains(cardid)) {
+            errorsHappensEvenTwice("ERROR: You don't have this card in your hand");
+            alreadyError = true;
+            System.out.println(askForCommand);
+            return;
+        }
+
+
+        switch (frontOrRetro.toLowerCase()) {
+            case "front" -> {
+                actuator.place(x, y, cardid, false);
+                model.setiPlaced(true);
+            }
+            case "retro" -> {
+                actuator.place(x, y, cardid, true);
+                model.setiPlaced(true);
+            }
+            default -> {
+                errorsHappensEvenTwice("ERROR: Invalid argument, specify front or retro ");
+                alreadyError = true;
+                System.out.println(askForCommand);
+            }
+        }
+    }
+
+
     @Override
     public void restart(boolean dueToEx, @Nullable Exception exception) {
+        if (model.table().getStatus().equals(GameStatus.ARMAGEDDON)) {
+            gameStatus = "ATTENTION: the game is going to end in 2 rounds!";
+        } else if (model.table().getStatus().equals(GameStatus.LAST_TURN)) {
+            gameStatus = "ATTENTION: last round!";
+        }
         ConsUtils.clear();
 
         currentFieldShowed = model.getCurrentTurn();
@@ -127,7 +209,7 @@ public class WatchingField extends TUIState {
                                            ++++++++++++++++++++++++++++
                                            \s
                                             STATUS: It's your turn, you have to draw a card...
-                                           \s
+                                           """ + gameStatus + """
                                            ++++++++++++++++++++++++++++
                                            \s""");
             } else {
@@ -135,7 +217,7 @@ public class WatchingField extends TUIState {
                                            ++++++++++++++++++++++++++++
                                            \s
                                             STATUS: It's your turn, place a card...
-                                           \s
+                                           """ + gameStatus + """
                                            ++++++++++++++++++++++++++++
                                            \s""");
             }
@@ -152,7 +234,7 @@ public class WatchingField extends TUIState {
                                        ++++++++++++++++++++++++++++
                                        \s
                                         STATUS: It's not your turn, please wait...
-                                       \s
+                                       """ + gameStatus + """
                                        ++++++++++++++++++++++++++++
                                        \s""");
 
@@ -173,18 +255,6 @@ public class WatchingField extends TUIState {
         return new ArgParser();
     }
 
-    private void askSpecLine() {
-        if (model.getCurrentTurn().equals(model.myName())) {
-            if (model.getiPlaced()) {
-                System.out.print(askToSee);
-            } else {
-                System.out.print(askForCommand);
-            }
-        } else {
-            System.out.print(askLine);
-        }
-    }
-
     private void errorsHappensEvenTwice(String text) {
         if (alreadyError) {
             System.out.print("\033[F" + "\033[K");
@@ -192,79 +262,16 @@ public class WatchingField extends TUIState {
         System.out.println("\033[F" + "\033[K" + text);
     }
 
-    private void refresh() {
-        String name = currentFieldShowed;
-        ConsUtils.clear();
-
-        if (model.getCurrentTurn().equals(model.myName())) {
-            if (model.getiPlaced()) {
-                System.out.println("""
-                                           ++++++++++++++++++++++++++++
-                                           \s
-                                            STATUS: It's your turn, you have to draw a card...
-                                           \s
-                                           ++++++++++++++++++++++++++++
-                                           \s""");
-            } else {
-                System.out.println("""
-                                           ++++++++++++++++++++++++++++
-                                           \s
-                                            STATUS: It's your turn, you have to place a card...
-                                           \s
-                                           ++++++++++++++++++++++++++++
-                                           \s""");
-            }
-            if (model.myName().equals(name)) {
-                System.out.println("This is your field, quite impressive:");
-                FieldPrinter.render(model.getCliPlayer(name).getField(),
-                                    true);
-                try {
-                    CardPrinter.printHand(new ArrayList<>(
-                            model.getCliPlayer(model.myName()).getSpace().getPlayerHand()));
-                } catch (IllegalCardBuildException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                System.out.println("This is " + name + " field:");
-                FieldPrinter.render(model.getCliPlayer(name).getField(),
-                                    false);
-            }
-        } else {
-            System.out.println("""
-                                       ++++++++++++++++++++++++++++
-                                       \s
-                                        STATUS: It's not your turn, please wait...
-                                       \s
-                                       ++++++++++++++++++++++++++++
-                                       \s""");
-
-            if (model.myName().equals(name)) {
-                System.out.println("This is your field, quite impressive:");
-                FieldPrinter.render(model.getCliPlayer(name).getField(),
-                                    true);
-                try {
-                    CardPrinter.printHand(new ArrayList<>(
-                            model.getCliPlayer(model.myName()).getSpace().getPlayerHand()));
-                } catch (IllegalCardBuildException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                System.out.println("This is " + name + " field:");
-                FieldPrinter.render(model.getCliPlayer(name).getField(),
-                                    false);
-            }
-        }
-        askSpecLine();
-    }
-
     private void get(Actuator actuator, ArgParser parser) {
         List<String> positionalArgs = parser.getPositionalArgs();
 
         Set<String> playerList = model.getplayers();
 
+        String secondWord = parser.getPositionalArgs().get(1);
+
         if (positionalArgs.size() == 2) {
-            if (playerList.contains(positionalArgs.get(1))) {
-                String name = positionalArgs.get(1);
+            if (playerList.contains(secondWord)) {
+                String name = secondWord;
                 currentFieldShowed = name;
                 ConsUtils.clear();
 
@@ -274,7 +281,7 @@ public class WatchingField extends TUIState {
                                                    ++++++++++++++++++++++++++++
                                                    \s
                                                     STATUS: It's your turn, you have to draw a card...
-                                                   \s
+                                                   """ + gameStatus + """
                                                    ++++++++++++++++++++++++++++
                                                    \s""");
                     } else {
@@ -282,7 +289,7 @@ public class WatchingField extends TUIState {
                                                    ++++++++++++++++++++++++++++
                                                    \s
                                                     STATUS: It's your turn, you have to place a card...
-                                                   \s
+                                                   """ + gameStatus + """
                                                    ++++++++++++++++++++++++++++
                                                    \s""");
                     }
@@ -306,7 +313,7 @@ public class WatchingField extends TUIState {
                                                ++++++++++++++++++++++++++++
                                                \s
                                                 STATUS: It's not your turn, please wait...
-                                               \s
+                                               """ + gameStatus + """
                                                ++++++++++++++++++++++++++++
                                                \s""");
 
@@ -328,8 +335,8 @@ public class WatchingField extends TUIState {
                 }
                 askSpecLine();
             }
-            String secondWord = parser.getPositionalArgs().get(1);
-            switch (secondWord) {
+
+            switch (secondWord.toLowerCase()) {
                 case "?", "help" -> {
                     errorsHappensEvenTwice(helpGet);
                     alreadyError = true;
@@ -337,63 +344,91 @@ public class WatchingField extends TUIState {
                 }
                 case "table" -> {
                     actuator.setTuiState(TuiStates.WATCHING_TABLE);
+                    return;
+                }
+                default -> {
+                    errorsHappensEvenTwice("ERROR: " + secondWord + " is not a valid option");
+                    alreadyError = true;
+                    askSpecLine();
                 }
             }
+        } else {
+            errorsHappensEvenTwice("ERROR: wrong number of arguments for get command");
+            alreadyError = true;
+            askSpecLine();
         }
 
     }
 
-    private void place(Actuator actuator, ArgParser parser) {
-        List<String> positionalArgs = parser.getPositionalArgs();
+    private void refresh() {
+        if (model.table().getStatus().equals(GameStatus.ARMAGEDDON)) {
+            gameStatus = "ATTENTION: the game is going to end in 2 rounds!";
+        } else if (model.table().getStatus().equals(GameStatus.LAST_TURN)) {
+            gameStatus = "ATTENTION: last round!";
+        }
 
-        if (positionalArgs.size() == 2) {
-            String secondWord = parser.getPositionalArgs().get(1);
-            switch (secondWord) {
-                case "?", "help" -> {
-                    errorsHappensEvenTwice(helpPlace);
-                    alreadyError = true;
-                    System.out.print(askForCommand);
-                    return;
+        String name = currentFieldShowed;
+        ConsUtils.clear();
+
+        if (model.getCurrentTurn().equals(model.myName())) {
+            if (model.getiPlaced()) {
+                System.out.println("""
+                                           ++++++++++++++++++++++++++++
+                                           \s
+                                            STATUS: It's your turn, you have to draw a card...
+                                           """ + gameStatus + """
+                                           ++++++++++++++++++++++++++++
+                                           \s""");
+            } else {
+                System.out.println("""
+                                           ++++++++++++++++++++++++++++
+                                           \s
+                                            STATUS: It's your turn, you have to place a card...
+                                           """ + gameStatus + """
+                                           ++++++++++++++++++++++++++++
+                                           \s""");
+            }
+            if (model.myName().equals(name)) {
+                System.out.println("This is your field, quite impressive:");
+                FieldPrinter.render(model.getCliPlayer(name).getField(),
+                                    true);
+                try {
+                    CardPrinter.printHand(new ArrayList<>(
+                            model.getCliPlayer(model.myName()).getSpace().getPlayerHand()));
+                } catch (IllegalCardBuildException e) {
+                    throw new RuntimeException(e);
                 }
+            } else {
+                System.out.println("This is " + name + " field:");
+                FieldPrinter.render(model.getCliPlayer(name).getField(),
+                                    false);
             }
-        }
+        } else {
+            System.out.println("""
+                                       ++++++++++++++++++++++++++++
+                                       \s
+                                        STATUS: It's not your turn, please wait...
+                                       """ + gameStatus + """
+                                       ++++++++++++++++++++++++++++
+                                       \s""");
 
-        if (positionalArgs.size() != 5) {
-            errorsHappensEvenTwice("ERROR: wrong number of arguments for place command");
-            alreadyError = true;
-            System.out.println(askForCommand);
-            return;
-        }
-        int x = 0;
-        int y = 0;
-        int cardid = 0;
-        String frontOrRetro = parser.getPositionalArgs().get(4);
-        try {
-            x = Integer.parseInt(positionalArgs.get(1));
-            y = Integer.parseInt(positionalArgs.get(2));
-            cardid = Integer.parseInt(positionalArgs.get(3));
-        } catch (NumberFormatException e) {
-            errorsHappensEvenTwice("ERROR: Invalid arguments, <x>, <y> and <cardId> have to be an" +
-                                   " integer");
-            alreadyError = true;
-            System.out.println(askForCommand);
-            return;
-        }
-        switch (frontOrRetro) {
-            case "front" -> {
-                actuator.place(x, y, cardid, false);
-                model.setiPlaced(true);
-            }
-            case "retro" -> {
-                actuator.place(x, y, cardid, true);
-                model.setiPlaced(true);
-            }
-            default -> {
-                errorsHappensEvenTwice("ERROR: Invalid argument, specify front or retro ");
-                alreadyError = true;
-                System.out.println(askForCommand);
+            if (model.myName().equals(name)) {
+                System.out.println("This is your field, quite impressive:");
+                FieldPrinter.render(model.getCliPlayer(name).getField(),
+                                    true);
+                try {
+                    CardPrinter.printHand(new ArrayList<>(
+                            model.getCliPlayer(model.myName()).getSpace().getPlayerHand()));
+                } catch (IllegalCardBuildException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                System.out.println("This is " + name + " field:");
+                FieldPrinter.render(model.getCliPlayer(name).getField(),
+                                    false);
             }
         }
+        askSpecLine();
     }
 }
 

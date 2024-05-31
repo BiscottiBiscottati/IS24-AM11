@@ -64,6 +64,14 @@ public class SettingName extends TUIState {
             case "exit" -> Actuator.close();
         }
 
+        if (word.length() > 19) {
+            errorsHappensEvenTwice("The name is too long, it must be less than 30 " +
+                                   "characters");
+            alreadyError = true;
+            System.out.print(askYourName);
+            return;
+        }
+
         try {
             isBlocked = true;
             actuator.setName(word);

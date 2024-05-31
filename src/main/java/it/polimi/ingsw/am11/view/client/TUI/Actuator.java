@@ -92,7 +92,7 @@ public class Actuator {
         if (cardId == null) {
             connector.drawCard(false, deck, 0);
         } else {
-            connector.drawCard(true, CardPrinter.getCard(cardId).getType(), cardId);
+            connector.drawCard(true, CardPrinter.getPlayableCard(cardId).getType(), cardId);
         }
     }
 

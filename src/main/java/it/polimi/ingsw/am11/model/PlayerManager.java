@@ -208,12 +208,17 @@ public class PlayerManager {
 
     public Player addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
     throws PlayerInitException, NumOfPlayersException {
-        if (players.containsKey(nickname)) {
-            throw new PlayerInitException(nickname + " is already in use");
-        } else if (players.values()
-                          .stream()
-                          .map(Player::color)
-                          .anyMatch(playerColor -> playerColor.equals(colour))) {
+
+        for (String item : players.keySet()) {
+            if (item.equalsIgnoreCase(nickname)) {
+                throw new PlayerInitException(nickname + " is already in use");
+            }
+        }
+
+        if (players.values()
+                   .stream()
+                   .map(Player::color)
+                   .anyMatch(playerColor -> playerColor.equals(colour))) {
             throw new PlayerInitException(
                     "Colour already in use: " + colour
             );

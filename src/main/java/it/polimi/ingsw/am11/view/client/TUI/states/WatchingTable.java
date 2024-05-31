@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.view.client.TUI.states;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
@@ -20,6 +21,7 @@ public class WatchingTable extends TUIState {
     private static final String askForCommand = "What you wanna do? Draw a card? >>> \033[K";
     private static final String helpDraw = "HELP: draw <cardId/gold/resource> \033[K";
     private static final String helpGet = "GET: get <table/[nickname]> \033[K";
+    private static String gameStatus = "";
     private boolean alreadyError = false;
 
     public WatchingTable(MiniGameModel model) {
@@ -102,6 +104,13 @@ public class WatchingTable extends TUIState {
 
     @Override
     public void restart(boolean dueToEx, @Nullable Exception exception) {
+
+        if (model.table().getStatus().equals(GameStatus.ARMAGEDDON)) {
+            gameStatus = "ATTENTION: the game is going to end in 2 rounds!";
+        } else if (model.table().getStatus().equals(GameStatus.LAST_TURN)) {
+            gameStatus = "ATTENTION: last round!";
+        }
+
         ConsUtils.clear();
 
         if (model.getCurrentTurn().equals(model.myName())) {
@@ -110,7 +119,7 @@ public class WatchingTable extends TUIState {
                                            ++++++++++++++++++++++++++++
                                            \s
                                             STATUS: It's your turn, draw a card...
-                                           \s
+                                           """ + gameStatus + """
                                            ++++++++++++++++++++++++++++
                                            \s""");
 
@@ -119,7 +128,7 @@ public class WatchingTable extends TUIState {
                                            ++++++++++++++++++++++++++++
                                            \s
                                             STATUS: It's your turn, you have to place a card...
-                                           \s
+                                           """ + gameStatus + """
                                            ++++++++++++++++++++++++++++
                                            \s""");
             }
@@ -129,7 +138,7 @@ public class WatchingTable extends TUIState {
                                        ++++++++++++++++++++++++++++
                                        \s
                                         STATUS: It's not your turn, please wait...
-                                       \s
+                                       """ + gameStatus + """
                                        ++++++++++++++++++++++++++++
                                        \s""");
 
@@ -182,7 +191,7 @@ public class WatchingTable extends TUIState {
                 return;
             }
             String secondWord = parser.getPositionalArgs().get(1);
-            switch (secondWord) {
+            switch (secondWord.toLowerCase()) {
                 case "?", "help" -> {
                     errorsHappensEvenTwice(helpGet);
                     alreadyError = true;
@@ -192,6 +201,11 @@ public class WatchingTable extends TUIState {
                     errorsHappensEvenTwice("You already are watching the table");
                     alreadyError = true;
                     System.out.print(askLine);
+                }
+                default -> {
+                    errorsHappensEvenTwice("ERROR: " + secondWord + " is not a valid option");
+                    alreadyError = true;
+                    askSpecLine();
                 }
             }
         }
@@ -209,7 +223,7 @@ public class WatchingTable extends TUIState {
 
         String secondWord = parser.getPositionalArgs().get(1);
         try {
-            switch (secondWord) {
+            switch (secondWord.toLowerCase()) {
                 case "?", "help" -> {
                     errorsHappensEvenTwice(helpDraw);
                     alreadyError = true;
@@ -244,10 +258,16 @@ public class WatchingTable extends TUIState {
             return;
         }
 
-        try {
-            actuator.draw(val, null);
-        } catch (IllegalCardBuildException e) {
-            errorsHappensEvenTwice("ERROR" + secondWord + " is not a valid cardId");
+        if (model.table().getShownCards().contains(val)) {
+            try {
+                actuator.draw(val, null);
+            } catch (IllegalCardBuildException e) {
+                errorsHappensEvenTwice("ERROR" + secondWord + " is not a valid cardId");
+                alreadyError = true;
+                System.out.print(askForCommand);
+            }
+        } else {
+            errorsHappensEvenTwice("ERROR: " + secondWord + " is not cardId in the table");
             alreadyError = true;
             System.out.print(askForCommand);
         }

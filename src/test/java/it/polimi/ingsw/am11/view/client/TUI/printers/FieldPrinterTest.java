@@ -19,31 +19,33 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class FieldPrinterTest {
 
-    static Map<Position, MiniCardContainer> testField;
 
     FieldPrinter renderer;
 
-    @Mock
-    CliField field;
+    static CliField field;
 
     @BeforeAll
     static void beforeAll() {
-        MiniCardContainer starter = new MiniCardContainer(100, true);
-        Stream.of(Corner.values())
-              .filter(corner -> corner != Corner.DOWN_RX)
-              .forEach(starter::cover);
-
-        testField = Map.of(
-                new Position(0, 0), starter,
-                new Position(- 1, - 1), new MiniCardContainer(2, false),
-                new Position(1, 1), new MiniCardContainer(3, false),
-                new Position(- 1, 1), new MiniCardContainer(5, false)
-        );
+        field = new CliField();
+        field.place(new Position(0, 0), 100, true);
+        field.place(new Position(- 1, - 1), 2, false);
+        field.place(new Position(1, 1), 3, false);
+        field.place(new Position(- 1, 1), 5, false);
+        field.place(new Position(2, 2), 6, false);
     }
 
     @Test
     void render() throws IllegalCardBuildException {
-        when(field.getCardsPositioned()).thenReturn(testField);
         FieldPrinter.render(field, false);
+        CardPrinter.printCardFrontAndBack(100);
+        System.out.println(100);
+        CardPrinter.printCardFrontAndBack(2);
+        System.out.println(2);
+        CardPrinter.printCardFrontAndBack(3);
+        System.out.println(3);
+        CardPrinter.printCardFrontAndBack(5);
+        System.out.println(5);
+        CardPrinter.printCardFrontAndBack(6);
+        System.out.println(6);
     }
 }

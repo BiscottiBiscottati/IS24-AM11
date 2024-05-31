@@ -43,7 +43,7 @@ public class CardArchitect {
                 leftPart = "╔═══╤";
                 parts.add(new Part("╔═══╤"));
             }
-            if (left == 'X') {
+            if (right == 'X') {
                 rightPart = "═══════════════╗";
                 parts.add(new Part("═══════════════╗"));
             } else {
@@ -63,7 +63,7 @@ public class CardArchitect {
             } else {
                 centralPart = CardPrinter.spaces(11);
             }
-            if (left == 'X') {
+            if (right == 'X') {
                 rightPart = "    ║";
             } else {
                 rightPart = "│ " + right + " ║";
@@ -84,7 +84,7 @@ public class CardArchitect {
             } else {
                 centralPart = CardPrinter.spaces(11);
             }
-            if (left == 'X') {
+            if (right == 'X') {
                 rightPart = "    ║";
             } else {
                 rightPart = "└───╢";
@@ -97,7 +97,7 @@ public class CardArchitect {
             } else {
                 leftPart = "╟───┐";
             }
-            if (left == 'X') {
+            if (right == 'X') {
                 rightPart = "               ║";
             } else {
                 rightPart = "           ┌───╢";
@@ -114,7 +114,7 @@ public class CardArchitect {
             } else {
                 centralPart = CardPrinter.spaces(11);
             }
-            if (left == 'X') {
+            if (right == 'X') {
                 rightPart = "    ║";
             } else {
                 rightPart = "│ " + right + " ║";
@@ -138,7 +138,7 @@ public class CardArchitect {
             } else {
                 centralPart = "═══════════";
             }
-            if (left == 'X') {
+            if (right == 'X') {
                 rightPart = "════╝";
             } else {
                 rightPart = "╧═══╝";
@@ -336,7 +336,7 @@ public class CardArchitect {
 
         List<String> card = new ArrayList<>();
 
-        PlayableCard pCard = CardPrinter.getCard(id);
+        PlayableCard pCard = CardPrinter.getPlayableCard(id);
         char tlf = CardPrinter.getLetter(pCard.getItemCorner(Corner.TOP_LX, false));
         char trf = CardPrinter.getLetter(pCard.getItemCorner(Corner.TOP_RX, false));
         char blf = CardPrinter.getLetter(pCard.getItemCorner(Corner.DOWN_LX, false));

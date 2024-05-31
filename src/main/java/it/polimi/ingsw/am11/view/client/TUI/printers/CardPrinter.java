@@ -12,6 +12,7 @@ import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
+import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
@@ -29,6 +30,7 @@ import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.ls.LSOutput;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,12 +48,12 @@ public class CardPrinter {
 
     public static void printObjectives(List<Integer> ids) throws IllegalCardBuildException {
         List<List<String>> allObj = new ArrayList<>();
-        for(Integer id: ids){
+        for (Integer id : ids) {
             allObj.add(CardArchitect.buildObjective(id));
         }
 
-        for(int i = 0; i < 7; i++){
-            for(List<String> singObj : allObj){
+        for (int i = 0; i < 7; i++) {
+            for (List<String> singObj : allObj) {
                 System.out.print(singObj.get(i));
             }
             System.out.print("\n");
@@ -97,7 +99,6 @@ public class CardPrinter {
             System.out.println("        Front        " + spaces(spaces) + "        Retro        ");
 
 
-//            System.out.println("""
 //                                       ╔═══╤═══════════╤═══╗    ╔═══╤═══════════╤═══╗
 //                                       ║ W │2xScroll: 3│ W ║    ║ W │           │ W ║
 //                                       ╟───┘           └───╢    ╟───┘           └───╢
@@ -106,142 +107,11 @@ public class CardPrinter {
 //                                       ║ W │           │ W ║    ║ W │           │ W ║
 //                                       ╚═══╧═══════════╧═══╝    ╚═══╧═══════════╧═══╝
 //                                      "         GOLD        "
-//                                       """);
 
         } else if (objDeck.getCardById(id).isPresent()) {
-            ObjectiveCard objectiveCard = objDeck.getCardById(id).orElseThrow();
-
-            List<Line> lines = new ArrayList<>(7);
-
-            Line topLine = new Line(List.of(new Part("╔"),
-                                            new Part("═".repeat(19)),
-                                            new Part("╗")));
-
-            Line botLine = new Line(List.of(new Part("╚"),
-                                            new Part("═".repeat(19)),
-                                            new Part("╝")));
-
-            Line emptyCenterBorder = new Line(List.of(new Part("║"),
-                                                      new Part(" ".repeat(19)),
-                                                      new Part("║")));
-            lines.add(topLine);
-
-            int points = objectiveCard.getPoints();
-            Line pointsLine = new Line(List.of(new Part("║"),
-                                               new Part(" ".repeat(9)),
-                                               new Part(String.valueOf(points)),
-                                               new Part(" ".repeat(9)),
-                                               new Part("║")));
-            lines.add(pointsLine);
-
-            switch (objectiveCard) {
-                case ColorCollectCard colorCollectCard -> {
-                    Map.Entry<Color, Integer> colorToCollect =
-                            colorCollectCard.getColorRequirements()
-                                            .entrySet()
-                                            .stream().filter(
-                                                    entry -> entry.getValue() > 0).findFirst()
-                                            .orElseThrow();
-                    char colorLetter = getColorLetter(colorToCollect.getKey());
-                    lines.add(emptyCenterBorder);
-                    lines.add(new Line(List.of(new Part("║"),
-                                               new Part(" ".repeat(8)),
-                                               new Part(colorToCollect.getValue().toString()),
-                                               new Part("x"),
-                                               new Part(String.valueOf(colorLetter)),
-                                               new Part(" ".repeat(8)),
-                                               new Part("║"))));
-                    lines.add(emptyCenterBorder);
-                }
-                case SymbolCollectCard symbolCollectCard -> {
-                    for (Map.Entry<Symbol, Integer> entry :
-                            symbolCollectCard.getSymbolRequirements().entrySet()) {
-                        if (entry.getValue() == 0) {
-                            continue;
-                        }
-                        char symbolLetter = getLetter(entry.getKey());
-                        lines.add(new Line(List.of(new Part("║"),
-                                                   new Part(" ".repeat(8)),
-                                                   new Part(entry.getValue().toString()),
-                                                   new Part("x"),
-                                                   new Part(String.valueOf(symbolLetter)),
-                                                   new Part(" ".repeat(8)),
-                                                   new Part("║"))));
-                    }
-                    if (5 - lines.size() > 0) {
-                        IntStream.range(0, 5 - lines.size())
-                                 .forEach(i -> lines.add(emptyCenterBorder));
-                    }
-                    lines.add(emptyCenterBorder);
-                }
-                case TripletCard tripletCard -> {
-                    List<List<String>> pattern =
-                            IntStream.range(0, 4)
-                                     .mapToObj(i -> tripletCard.getPattern().get(i)
-                                                               .stream()
-                                                               .map(color -> color == null ?
-                                                                             " " :
-                                                                             String.valueOf(
-                                                                                     getLetter(
-                                                                                             color)))
-                                                               .toList())
-                                     .toList();
-
-                    for (int i = 0; i < 4; i++) {
-                        List<Part> parts = new ArrayList<>(4);
-                        parts.add(new Part("║"));
-                        parts.add(new Part(" ".repeat(7)));
-
-                        parts.add(new Part(String.join(" ", pattern.get(i))));
-
-                        parts.add(new Part(" ".repeat(7)));
-                        parts.add(new Part("║"));
-                        lines.add(new Line(parts));
-                    }
-
-                }
-                case LCard lCard -> {
-
-                    List<List<String>> pattern =
-                            IntStream.range(0, 4)
-                                     .mapToObj(i -> lCard.getPattern().get(i)
-                                                         .stream()
-                                                         .map(color -> color == null ?
-                                                                       " " :
-                                                                       String.valueOf(
-                                                                               getLetter(color)))
-                                                         .toList())
-                                     .toList();
-
-                    for (int i = 0; i < 4; i++) {
-                        List<Part> parts = new ArrayList<>(4);
-                        parts.add(new Part("║"));
-                        parts.add(new Part(" ".repeat(7)));
-
-                        parts.add(new Part(String.join(" ", pattern.get(i))));
-
-                        parts.add(new Part(" ".repeat(7)));
-                        parts.add(new Part("║"));
-                        lines.add(new Line(parts));
-                    }
-                }
-                default -> IntStream.range(0, 3).forEach(i -> lines.add(emptyCenterBorder));
-
-            }
-
-            lines.add(botLine);
-
-            lines.add(new Line(
-                    List.of(new Part(" ".repeat(8)),
-                            new Part(Strings.padStart(String.valueOf(id), 3, ' ')),
-                            new Part(" ".repeat(10))
-                    )));
-
-            new Matrix(lines).print();
-
-
+            printObjectives(new ArrayList<>(List.of(id)));
         } else {
-            PlayableCard pCard = getCard(id);
+            PlayableCard pCard = getPlayableCard(id);
             char tlf = getLetter(pCard.getItemCorner(Corner.TOP_LX, false));
             char trf = getLetter(pCard.getItemCorner(Corner.TOP_RX, false));
             char blf = getLetter(pCard.getItemCorner(Corner.DOWN_LX, false));
@@ -258,7 +128,7 @@ public class CardPrinter {
             List<String> topLinesBack = CardArchitect.buildCornerLines(tlb, trb, true, null);
 
             String centerLineFront = CardArchitect.buildCenterString(center);
-            String centerLineBack = CardArchitect.buildCenterString(null);
+            String centerLineBack = CardArchitect.buildCenterString(center);
 
             List<String> bottomLinesFront = CardArchitect.buildCornerLines(blf, brf, false, null);
             List<String> bottomLinesBack = CardArchitect.buildCornerLines(blb, brb, false, null);
@@ -324,22 +194,32 @@ public class CardPrinter {
         }
     }
 
-    public static PlayableCard getCard(int id) throws IllegalCardBuildException {
+    public static PlayableCard getPlayableCard(int id) throws IllegalCardBuildException {
         return resDeck.getCardById(id)
                       .map(PlayableCard.class::cast)
                       .or(() -> goldDeck.getCardById(id))
                       .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
     }
 
+    public static FieldCard getFieldCard(int id) throws IllegalCardBuildException {
+        return resDeck.getCardById(id)
+                      .map(FieldCard.class::cast)
+                      .or(() -> goldDeck.getCardById(id))
+                      .map(FieldCard.class::cast)
+                      .or(() -> starterDeck.getCardById(id))
+                      .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
+    }
+
     public static ObjectiveCard getObjective(int id) throws IllegalCardBuildException {
-        return objDeck.getCardById(id).orElseThrow(() -> new IllegalCardBuildException("Card not found"));
+        return objDeck.getCardById(id).orElseThrow(
+                () -> new IllegalCardBuildException("Card not found"));
     }
 
     public static void printWaitingForTrn(MiniGameModel model) {
         List<String> playersInfo = PlayersPrinter.buildPlayers(model);
         List<String> table;
         try {
-             table =
+            table =
                     CardArchitect.buildTable(new ArrayList<>(model.table().getShownCards()),
                                              model.table().getDeckTop(PlayableCardType.GOLD),
                                              model.table().getDeckTop(PlayableCardType.RESOURCE));
@@ -374,12 +254,13 @@ public class CardPrinter {
         int handSize = handList.size();
         int totalSize = playersInfoSize + tableSize + handSize;
 
-        for (int i = 0; i < totalSize ; i++) {
-            if (i < playersInfo.size()){
-                System.out.println(playersInfo.get(i) + spaces(96 - playersInfo.get(i).length()) + obj.get(i));
-            } else if( i - playersInfoSize < table.size()){
+        for (int i = 0; i < totalSize; i++) {
+            if (i < playersInfo.size()) {
+                System.out.println(
+                        playersInfo.get(i) + spaces(96 - playersInfo.get(i).length()) + obj.get(i));
+            } else if (i - playersInfoSize < table.size()) {
                 System.out.println(table.get(i - playersInfoSize) + spaces(23) + obj.get(i));
-            } else if( i < obj.size()) {
+            } else if (i < obj.size()) {
                 System.out.println(handList.get(i - handDepth) + spaces(23) + obj.get(i));
             } else {
                 System.out.println(handList.get(i - handDepth));
@@ -389,7 +270,7 @@ public class CardPrinter {
 
     public static void printHand(List<Integer> cardIds) throws IllegalCardBuildException {
         List<String> hand = CardArchitect.buildHand(cardIds);
-        for(String str: hand){
+        for (String str : hand) {
             System.out.println(str);
         }
     }

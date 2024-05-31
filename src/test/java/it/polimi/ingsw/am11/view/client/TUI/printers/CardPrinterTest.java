@@ -32,7 +32,6 @@ class CardPrinterTest {
     @Test
     void printStartCard() throws IllegalCardBuildException {
         Deck<StarterCard> starterDeck = StarterDeckFactory.createDeck();
-
         int remainingCards = starterDeck.getRemainingCards();
         for (int i = 0; i < remainingCards; i++) {
             int id = starterDeck.draw().orElseThrow().getId();
@@ -44,7 +43,6 @@ class CardPrinterTest {
     @Test
     void printResourceCards() throws IllegalCardBuildException {
         Deck<ResourceCard> resourceDeck = ResourceDeckFactory.createDeck();
-
         int remainingCards = resourceDeck.getRemainingCards();
         for (int i = 0; i < remainingCards; i++) {
             int id = resourceDeck.draw().orElseThrow().getId();

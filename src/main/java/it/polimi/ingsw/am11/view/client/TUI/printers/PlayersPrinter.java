@@ -130,7 +130,7 @@ public class PlayersPrinter {
     }
 
     public static String isTurn(int val) {
-        String word = val + "Playing ^";
+        String word = "Playing ^";
         String spaces = spaces(21).repeat(val - 1) + spaces(5);
         return spaces + word;
     }

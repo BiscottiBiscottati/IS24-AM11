@@ -18,15 +18,5 @@ public abstract class ConsUtils {
         }
     }
 
-    public static void card() {
-        System.out.println("""
-                                   ╔═══╤═══════════╤═══╗
-                                   ║ W │           │ W ║
-                                   ╟───┘           └───╢                   
-                                   ║                   ║
-                                   ╟───┐           ┌───╢
-                                   ║ W │           │ W ║
-                                   ╚═══╧═══════════╧═══╝                                
-                                   """);
-    }
+
 }

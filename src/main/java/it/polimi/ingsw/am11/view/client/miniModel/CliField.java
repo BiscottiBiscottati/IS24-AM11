@@ -20,9 +20,14 @@ public class CliField {
 
         MiniCardContainer cardContainer = new MiniCardContainer(cardId, isRetro);
         Stream.of(Corner.values())
-              .filter(corner -> cardsPositioned.containsKey(PositionManager.getPositionIn(pos,
-                                                                                          corner)))
-              .forEach(cardContainer::cover);
+              .map(corner -> PositionManager.getPositionIn(pos, corner))
+              .filter(cardsPositioned::containsKey)
+              .forEach(position -> {
+                  MiniCardContainer neighbour = cardsPositioned.get(position);
+                  Corner cornerToCover = PositionManager.getCornerFromPositions(position, pos)
+                                                        .orElseThrow();
+                  neighbour.cover(cornerToCover);
+              });
 
         cardsPositioned.put(pos, cardContainer);
     }
