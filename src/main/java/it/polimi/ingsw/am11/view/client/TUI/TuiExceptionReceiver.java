@@ -28,6 +28,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
         //CASE: trying to set objective that is not yours
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
             tuiUpdater.setTuiState(TuiStates.CHOOSING_OBJECTIVE);
+            tuiUpdater.setHomeState(TuiStates.CHOOSING_OBJECTIVE);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
         }
 
@@ -36,7 +37,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(TurnsOrderException ex) {
         LOGGER.debug("TurnsOrderException {}", ex.getMessage());
-        //FIXME
+        throw new RuntimeException(ex);
     }
 
     @Override
@@ -45,14 +46,11 @@ public class TuiExceptionReceiver implements ExceptionThrower {
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
             tuiUpdater.setCandidateNick("");
             tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
+            tuiUpdater.setHomeState(TuiStates.SETTING_NAME);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
             return;
         }
-        //TODO
 
-        // Should be unreachable
-        System.out.println("PlayerInitException received");
-        System.out.println("MESSAGE: " + ex.getMessage());
     }
 
     @Override
@@ -60,13 +58,15 @@ public class TuiExceptionReceiver implements ExceptionThrower {
         LOGGER.debug("IllegalCardPlacingException {}", ex.getMessage());
         model.setiPlaced(false);
         tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
+        tuiUpdater.setHomeState(TuiStates.WATCHING_FIELD);
         tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
     public void throwException(IllegalPickActionException ex) {
         LOGGER.debug("IllegalPickActionException {}", ex.getMessage());
-        tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
+        tuiUpdater.setTuiState(TuiStates.WATCHING_TABLE);
+        tuiUpdater.setHomeState(TuiStates.WATCHING_TABLE);
         tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
@@ -75,6 +75,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
         LOGGER.debug("NotInHandException {}", ex.getMessage());
         model.setiPlaced(false);
         tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
+        tuiUpdater.setHomeState(TuiStates.WATCHING_FIELD);
         tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
@@ -82,38 +83,40 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     public void throwException(EmptyDeckException ex) {
         LOGGER.debug("EmptyDeckException {}", ex.getMessage());
         tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
+        tuiUpdater.setHomeState(TuiStates.WATCHING_FIELD);
         tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
     public void throwException(NumOfPlayersException ex) {
         LOGGER.debug("NumOfPlayersException {}", ex.getMessage());
-        //DONE
         tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
+        tuiUpdater.setHomeState(TuiStates.SETTING_NUM);
         tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
     public void throwException(NotGodPlayerException ex) {
         LOGGER.debug("NotGodPlayerException {}", ex.getMessage());
-        //DONE
         model.setGodPlayer(null);
         tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
+        tuiUpdater.setHomeState(TuiStates.SETTING_NAME);
         tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 
     @Override
     public void throwException(GameStatusException ex) {
-        LOGGER.debug("GameStatusException received: {}" + ex.getMessage());
-        //TODO
+        LOGGER.debug("GameStatusException received: {}", ex.getMessage());
+
     }
 
     @Override
     public void throwException(NotSetNumOfPlayerException ex) {
-        LOGGER.debug("NotSetNumOfPlayerException received: {}" + ex.getMessage());
+        LOGGER.debug("NotSetNumOfPlayerException received: {}", ex.getMessage());
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
             tuiUpdater.setCandidateNick("");
             tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
+            tuiUpdater.setHomeState(TuiStates.SETTING_NAME);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
             return;
         }

@@ -26,14 +26,16 @@ import java.util.concurrent.atomic.AtomicReference;
 // update and get the TUIState and to save the candidateNick (the nickname that the player try to
 // send to the server)
 
-public class TuiUpdater implements ClientViewUpdater {
+public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
 
     private final MiniGameModel model;
     private final EnumMap<TuiStates, TUIState> tuiStates;
     private final TuiExceptionReceiver exceptionReceiver;
     private final AtomicReference<TUIState> currentState;
+    private AtomicReference<TUIState> homeState;
     private String candidateNick = "";
+    private int unreadMessages = 0;
 
     public TuiUpdater(@NotNull MiniGameModel model, TuiStates startingState) {
         this.model = model;
@@ -99,6 +101,7 @@ public class TuiUpdater implements ClientViewUpdater {
         assert model.getCurrentTurn() != null;
         if (model.getCurrentTurn().equals(model.myName())) {
             setTuiState(TuiStates.WATCHING_FIELD);
+            homeState.set(tuiStates.get(TuiStates.WATCHING_FIELD));
             currentState.get().restart(false, null);
         }
     }
@@ -121,22 +124,27 @@ public class TuiUpdater implements ClientViewUpdater {
             }
             case CHOOSING_STARTERS -> {
                 currentState.set(tuiStates.get(TuiStates.CHOOSING_STARTER));
+                homeState.set(tuiStates.get(TuiStates.CHOOSING_STARTER));
                 currentState.get().restart(false, null);
             }
             case CHOOSING_OBJECTIVES -> {
                 currentState.set(tuiStates.get(TuiStates.CHOOSING_OBJECTIVE));
+                homeState.set(tuiStates.get(TuiStates.CHOOSING_OBJECTIVE));
                 currentState.get().restart(false, null);
             }
             case ENDED -> {
                 currentState.set(tuiStates.get(TuiStates.ENDED));
+                homeState.set(tuiStates.get(TuiStates.ENDED));
                 currentState.get().restart(false, null);
             }
             case ONGOING -> {
                 if (model.getCurrentTurn().equals(model.myName())) {
                     setTuiState(TuiStates.WATCHING_FIELD);
+                    homeState.set(tuiStates.get(TuiStates.WATCHING_FIELD));
                     currentState.get().restart(false, null);
                 } else {
                     currentState.set(tuiStates.get(TuiStates.WATCHING_TABLE));
+                    homeState.set(tuiStates.get(TuiStates.WATCHING_TABLE));
                     currentState.get().restart(false, null);
                 }
             }
@@ -165,6 +173,7 @@ public class TuiUpdater implements ClientViewUpdater {
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
         model.setFinalLeaderboard(finalLeaderboard);
         setTuiState(TuiStates.ENDED);
+        homeState.set(tuiStates.get(TuiStates.ENDED));
         currentState.get().restart(false, null);
     }
 
@@ -218,6 +227,7 @@ public class TuiUpdater implements ClientViewUpdater {
         model.setMyName(candidateNick);
         model.setGodPlayer(candidateNick);
         currentState.set(tuiStates.get(TuiStates.SETTING_NUM));
+        homeState.set(tuiStates.get(TuiStates.SETTING_NUM));
         currentState.get().restart(false, null);
     }
 
@@ -274,4 +284,30 @@ public class TuiUpdater implements ClientViewUpdater {
         return tuiStates.get(state);
     }
 
+    public void goBack() {
+        currentState.set(homeState.get());
+        currentState.get().restart(false, null);
+    }
+
+    @Override
+    public void receiveMsg(@NotNull String sender, @NotNull String msg) {
+        model.addChatMessage(sender + ": " + msg);
+        unreadMessages++;
+        if (isCurrentState(TuiStates.CHAT)) {
+            currentState.get().restart(false, null);
+        }
+    }
+
+    @Override
+    public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
+        model.addChatMessage("[PRIVATE]" + sender + ": " + msg);
+        unreadMessages++;
+        if (isCurrentState(TuiStates.CHAT)) {
+            currentState.get().restart(false, null);
+        }
+    }
+
+    public void setHomeState(TuiStates state) {
+        homeState.set(tuiStates.get(state));
+    }
 }

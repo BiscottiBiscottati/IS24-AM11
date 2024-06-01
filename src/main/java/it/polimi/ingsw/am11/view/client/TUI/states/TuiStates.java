@@ -12,7 +12,8 @@ public enum TuiStates {
     CHOOSING_OBJECTIVE(ChoosingObj::new),
     ENDED(Ended::new),
     WATCHING_TABLE(WatchingTable::new),
-    WATCHING_FIELD(WatchingField::new);
+    WATCHING_FIELD(WatchingField::new),
+    CHAT(Chat::new);
 
     private final StateFactory stateFactory;
 

@@ -5,11 +5,10 @@ import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class MiniGameModel {
+    private final List<String> chatMessages;
     private final Map<String, CliPlayer> playerMap;
     private final CliTable table;
     private Map<String, Integer> finalLeaderboard;
@@ -21,12 +20,13 @@ public class MiniGameModel {
 
 
     public MiniGameModel() {
-        this.playerMap = new HashMap();
+        this.playerMap = new HashMap(8);
         this.table = new CliTable();
         this.finalLeaderboard = null;
         this.iPlaced = false;
         this.currentTurn = "";
         this.godPlayer = "";
+        this.chatMessages = new ArrayList<>(8);
     }
 
     public CliPlayer getCliPlayer(String nickname) {
@@ -122,6 +122,14 @@ public class MiniGameModel {
 
     public boolean getiPlaced() {
         return iPlaced;
+    }
+
+    public void addChatMessage(String message) {
+        chatMessages.add(message);
+    }
+
+    public List<String> getChatMessages() {
+        return chatMessages;
     }
 
     public void setiPlaced(boolean iPlaced) {

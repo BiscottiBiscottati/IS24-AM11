@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -76,6 +77,24 @@ public class WatchingField extends TUIState {
             }
             case "get" -> {
                 get(actuator, parser);
+            }
+            case "msg", "send" -> {
+                String note;
+                try {
+                    note = Chat.chatter(actuator, Arrays.copyOfRange(args, 1, args.length),
+                                        model.getplayers());
+                } catch (ParsingErrorException e) {
+                    errorsHappensEvenTwice("ERROR: " + e.getMessage());
+                    alreadyError = true;
+                    askSpecLine();
+                    return;
+                }
+                if (! note.isEmpty()) {
+                    errorsHappensEvenTwice(note);
+                    alreadyError = true;
+                    askSpecLine();
+                    return;
+                }
             }
             case "place" -> {
                 if (model.getCurrentTurn().equals(model.myName())) {
@@ -344,6 +363,10 @@ public class WatchingField extends TUIState {
                 }
                 case "table" -> {
                     actuator.setTuiState(TuiStates.WATCHING_TABLE);
+                    return;
+                }
+                case "chat" -> {
+                    actuator.setTuiState(TuiStates.CHAT);
                     return;
                 }
                 default -> {

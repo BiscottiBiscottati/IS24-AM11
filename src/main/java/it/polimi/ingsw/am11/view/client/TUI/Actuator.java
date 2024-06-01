@@ -3,6 +3,8 @@ package it.polimi.ingsw.am11.view.client.TUI;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.network.ClientNetworkHandler;
+import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
 import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
 import it.polimi.ingsw.am11.network.factory.ConnectionType;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
@@ -23,10 +25,12 @@ public class Actuator {
 
     private final TuiUpdater tuiUpdater;
     private ClientGameConnector connector;
+    private ClientChatConnector chatConnector;
 
     public Actuator(@NotNull TuiUpdater tuiUpdater) {
         this.tuiUpdater = tuiUpdater;
         this.connector = null;
+        this.chatConnector = null;
     }
 
     public static void close() {
@@ -39,22 +43,26 @@ public class Actuator {
 
     public void connect(@NotNull String type, String ip, int port) {
         try {
-            connector = ConnectionType.fromString(type)
-                                      .orElseThrow(() -> new RuntimeException(
-                                              "Type is set neither to rmi nor to socket"))
-                                      .create(ip, port, tuiUpdater)
-                                      .getGameConnector();
+            ClientNetworkHandler connection = ConnectionType.fromString(type)
+                                                            .orElseThrow(() -> new RuntimeException(
+                                                                    "Type is set neither to rmi " +
+                                                                    "nor to socket"))
+                                                            .create(ip, port, tuiUpdater);
+            connector = connection.getGameConnector();
+            chatConnector = connection.getChatConnector();
         } catch (Exception e) {
             tuiUpdater.getCurrentTuiState().restart(true, e);
             return;
         }
         tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
+        tuiUpdater.setHomeState(TuiStates.SETTING_NAME);
         tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void setName(String nick)
     throws TooManyRequestsException {
         tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.setHomeState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
         if (! tuiUpdater.getCandidateNick().isEmpty()) {
             throw new TooManyRequestsException("You already sent a nickname, wait for results");
@@ -65,24 +73,28 @@ public class Actuator {
 
     public void setNumOfPlayers(int num) {
         tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.setHomeState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
         connector.setNumOfPlayers(num);
     }
 
     public void setStarter(boolean isRetro) {
         tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.setHomeState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
         connector.setStarterCard(isRetro);
     }
 
     public void setObjective(int cardId) {
         tuiUpdater.setTuiState(TuiStates.WAITING);
+        tuiUpdater.setHomeState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
         connector.setPersonalObjective(cardId);
     }
 
     public void place(int x, int y, int cardId, boolean isRetro) {
         tuiUpdater.setTuiState(TuiStates.WATCHING_TABLE);
+        tuiUpdater.setHomeState(TuiStates.WATCHING_TABLE);
         tuiUpdater.getCurrentTuiState().restart(false, null);
         connector.placeCard(new Position(x, y), cardId, isRetro);
     }
@@ -101,8 +113,21 @@ public class Actuator {
         tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
+    public void sendChatMessage(String message) {
+        chatConnector.pubMsg(message);
+    }
+
+    public void sendPrivateMessage(String recipient, String message) {
+        chatConnector.pubPrivateMsg(recipient, message);
+    }
+
+    public void goBack() {
+        tuiUpdater.goBack();
+    }
+
     public TUIState getCurrentTuiState() {
         return tuiUpdater.getCurrentTuiState();
     }
+
 
 }
