@@ -29,6 +29,7 @@ public class SettingNickPage {
     }
 
     public void createSettingNickPage() {
+        guiActuator = codexNaturalis.getGuiActuator();
         StackPane root = codexNaturalis.getRoot();
         miniGameModel = codexNaturalis.getMiniGameModel();
         font = codexNaturalis.getFont();
@@ -115,8 +116,7 @@ public class SettingNickPage {
                 writeNick.setVisible(false);
                 yourName.setVisible(false);
                 nameAlreadyTaken.setVisible(false);
-
-                //goToWaitingRoomPage();
+                codexNaturalis.showWaitingRoomPage();
             }
         });
 

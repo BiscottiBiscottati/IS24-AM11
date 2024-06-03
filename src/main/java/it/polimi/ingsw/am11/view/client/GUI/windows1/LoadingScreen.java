@@ -9,6 +9,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
+import java.util.concurrent.CountDownLatch;
+
 public class LoadingScreen {
     private final CodexNaturalis1 codexNaturalis;
     ImageView lDBackground, lDSquare, lDWritings, lDDisks, wolf, butterfly, mushroom, leaf;

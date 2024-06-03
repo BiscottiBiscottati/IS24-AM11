@@ -12,6 +12,7 @@ public class WaitingRoomPage {
     ProgressIndicator loadingWheel;
     StackPane root;
     Font font;
+    Label waitingForPlayers;
 
     public WaitingRoomPage(CodexNaturalis1 codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
@@ -20,7 +21,7 @@ public class WaitingRoomPage {
     public void createWaitingRoomPage() {
         root = codexNaturalis.getRoot();
         font = codexNaturalis.getFont();
-        Label waitingForPlayers = new Label("Waiting for other players to join...");
+        waitingForPlayers = new Label("Waiting for other players to join...");
         loadingWheel = new ProgressIndicator();
         root.getChildren().addAll(waitingForPlayers, loadingWheel);
         waitingForPlayers.setTranslateY(- 60);
@@ -45,7 +46,8 @@ public class WaitingRoomPage {
     }
 
     public void showWaitingRoomPage() {
-
+        waitingForPlayers.setVisible(true);
+        loadingWheel.setVisible(true);
 
     }
 }

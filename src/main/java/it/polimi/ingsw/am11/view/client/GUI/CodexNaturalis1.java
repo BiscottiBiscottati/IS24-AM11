@@ -22,6 +22,7 @@ import javafx.stage.StageStyle;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 public class CodexNaturalis1 extends Application implements GuiObserver {
     private final GuiResources guiResources;
@@ -39,6 +40,7 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
     WaitingRoomPage waitingRoomPage;
     private StackPane root;
     private FrameHandler frameHandler;
+    private CountDownLatch latch;
 
     public CodexNaturalis1() {
         this.guiResources = new GuiResources();
@@ -46,6 +48,7 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
         this.guiExceptionReceiver = new GuiExceptionReceiver(this);
         this.guiUpdater = new GuiUpdater(guiExceptionReceiver, miniGameModel, this);
         this.guiActuator = new GuiActuator(guiUpdater, miniGameModel);
+        this.latch = new CountDownLatch(1);
     }
 
     public static void main(String[] args) {
@@ -214,7 +217,7 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
 
     @Override
     public void notifyGodPlayer() {
-
+        //TODO: showSetNumberOfPlayersPage();
     }
 
     @Override
