@@ -2,10 +2,11 @@ package it.polimi.ingsw.am11.model.decks;
 
 import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
-import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
+import it.polimi.ingsw.am11.persistence.DeckMemento;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,6 +21,12 @@ class DeckTest {
     static void beforeAll() {
         resourceDeck = ResourceDeckFactory.createDeck();
         goldDeck = GoldDeckFactory.createDeck();
+    }
+
+    @BeforeEach
+    void setUp() {
+        resourceDeck.reset();
+        goldDeck.reset();
     }
 
     @Test
@@ -48,5 +55,36 @@ class DeckTest {
         goldDeck.draw();
         goldDeck.reset();
         assertEquals(40, goldDeck.getRemainingCards());
+    }
+
+    @Test
+    void save() {
+        resourceDeck.shuffle();
+        int numOfCards = resourceDeck.getRemainingCards();
+        DeckMemento memento = resourceDeck.save();
+        assertEquals(numOfCards, memento.cards().size());
+
+        for (int i = 0; i < numOfCards; i++) {
+            assertEquals(resourceDeck.draw().orElseThrow().getId(),
+                         memento.cards().reversed().get(i));
+        }
+    }
+
+    @Test
+    void load() {
+        resourceDeck.shuffle();
+        DeckMemento memento = resourceDeck.save();
+
+        for (int i = 0; i < 6; i++) {
+            resourceDeck.draw();
+        }
+
+        resourceDeck.load(memento);
+        assertEquals(40, resourceDeck.getRemainingCards());
+
+        for (int i = 0; i < 40; i++) {
+            assertEquals(memento.cards().reversed().get(i),
+                         resourceDeck.draw().orElseThrow().getId());
+        }
     }
 }

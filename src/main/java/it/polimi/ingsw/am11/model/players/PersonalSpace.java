@@ -8,7 +8,9 @@ import it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.model.exceptions.NotInHandException;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 
 public class PersonalSpace {
@@ -20,14 +22,14 @@ public class PersonalSpace {
 
     private final Set<PlayableCard> playerHand;
     private final Set<ObjectiveCard> playerObjective;
-    private final Map<Integer, ObjectiveCard> candidateObjectives;
+    private final Set<ObjectiveCard> candidateObjectives;
     private StarterCard starterCard;
     private boolean placed;
 
     public PersonalSpace() {
         playerHand = new HashSet<>(maxSizeofHand << 1);
         playerObjective = new HashSet<>(maxObjectives << 1);
-        candidateObjectives = new HashMap<>(maxCandidateObjectives << 1);
+        candidateObjectives = new HashSet<>(maxCandidateObjectives << 1);
         starterCard = null;
     }
 
@@ -74,22 +76,21 @@ public class PersonalSpace {
     }
 
     public Set<ObjectiveCard> getCandidateObjectives() {
-        return Set.copyOf(candidateObjectives.values());
+        return Set.copyOf(candidateObjectives);
     }
 
     public ObjectiveCard getCandidateObjectiveByID(int id)
     throws IllegalPlayerSpaceActionException {
-        ObjectiveCard objective = candidateObjectives.get(id);
-        if (objective != null) {
-            return objective;
-        } else {
-            throw new IllegalPlayerSpaceActionException(
-                    "The objective that you chose is not one of yours");
-        }
+        return candidateObjectives.stream()
+                                  .filter(obj -> obj.getId() == id)
+                                  .findFirst()
+                                  .orElseThrow(() -> new IllegalPlayerSpaceActionException(
+                                          "The objective that you chose is not" +
+                                          " one of yours"));
     }
 
-    public void setNewCandidateObjectives(ObjectiveCard objective) {
-        candidateObjectives.put(objective.getId(), objective);
+    public void setNewCandidateObjectives(@NotNull ObjectiveCard objective) {
+        candidateObjectives.add(objective);
     }
 
     public int availableSpaceInHand() {

@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
+import it.polimi.ingsw.am11.persistence.DeckMemento;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -89,17 +90,18 @@ public class Deck<T extends CardIdentity> {
         this.deck.addAll(mappingIdToCard.values());
     }
 
-    public void resetInto(@NotNull List<Integer> ids) {
-        this.deck.clear();
-        ids.stream()
-           .map(mappingIdToCard::get)
-           .forEach(this.deck::addLast);
+    public DeckMemento save() {
+        List<Integer> current = this.deck.stream()
+                                         .map(CardIdentity::getId)
+                                         .toList();
+        return new DeckMemento(current);
     }
 
-    public List<Integer> saveCurrentState() {
-        return this.deck.stream()
-                        .map(CardIdentity::getId)
-                        .toList();
+    public void load(@NotNull DeckMemento memento) {
+        this.deck.clear();
+        memento.cards().stream()
+               .map(mappingIdToCard::get)
+               .forEach(this.deck::push);
     }
 
     /**

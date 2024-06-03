@@ -30,7 +30,6 @@ public class PositionManager {
     private final @NotNull Set<Position> availablePositions;
     private final @NotNull Set<Position> closedPositions;
     private final @NotNull Map<Position, CardContainer> cardsPositioned;
-    private FieldCard lastPlacedCard;
 
     /**
      * Constructor for the <code>PositionManager</code> class.
@@ -48,7 +47,6 @@ public class PositionManager {
         this.availablePositions.add(Position.of(0, 0));
         this.closedPositions = new HashSet<>(32);
         this.cardsPositioned = new HashMap<>(64);
-        this.lastPlacedCard = null;
     }
 
     /**
@@ -183,8 +181,6 @@ public class PositionManager {
               .filter(availablePos -> ! this.cardsPositioned.containsKey(availablePos))
               .forEach(this.availablePositions::add);
         this.availablePositions.removeAll(this.closedPositions);
-
-        this.lastPlacedCard = card;
 
         // Update the cards that are covered by the new card and return the List of Items being
         // covered

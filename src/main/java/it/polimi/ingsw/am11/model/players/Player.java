@@ -2,15 +2,16 @@ package it.polimi.ingsw.am11.model.players;
 
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This is a record class representing a Player in the game. A <code>Player</code> has a nickname, a
  * color, a {@link PersonalSpace}, and a {@link PlayerField}.
  */
-public record Player(String nickname,
-                     PlayerColor color,
-                     PersonalSpace space,
-                     PlayerField field) {
+public record Player(@NotNull String nickname,
+                     @NotNull PlayerColor color,
+                     @NotNull PersonalSpace space,
+                     @NotNull PlayerField field) {
 
     /**
      * This is a constructor for the Player record. It creates a new <code>Player</code> with the
