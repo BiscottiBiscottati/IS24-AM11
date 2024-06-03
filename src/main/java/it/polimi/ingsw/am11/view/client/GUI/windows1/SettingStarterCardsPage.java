@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.view.client.GUI.window;
+package it.polimi.ingsw.am11.view.client.GUI.windows1;
 
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
@@ -12,45 +12,67 @@ import javafx.scene.text.Font;
 
 import java.util.List;
 
-public class SettingStarterCards {
+public class SettingStarterCardsPage {
+    Label message;
+    ImageView cardImage;
+    ImageView cardRetro;
+    VBox layout;
 
     public void createStarterCardsWindow(int cardId, Font font, GuiResources guiResources,
-                                         int halfButtonSize, StackPane root,
-                                         ProgressIndicator loadingwheel, List<Label> labels) {
+                                         int halfButtonSize, StackPane root) {
         // Create the starter cards
 
-        Label message = new Label("This is your starter card:");
+        message = new Label("This is your starter card:");
         message.setFont(font);
         message.setAlignment(Pos.CENTER);
         message.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5;" +
                          " -fx-max-width: " + 20 * halfButtonSize);
-        ImageView cardImage = guiResources.getTheImageView(GuiResEnum.getEnumByCardId(cardId));
+        cardImage = guiResources.getTheImageView(GuiResEnum.getEnumByCardId(cardId));
         cardImage.setFitHeight(200);
         cardImage.setFitWidth(100);
 
-        ImageView cardRetro = guiResources.getTheImageView(GuiResEnum.getEnumByCardId(cardId));
+        cardRetro = guiResources.getTheImageView(GuiResEnum.getEnumByCardIdRetro(cardId));
         cardRetro.setFitHeight(200);
         cardRetro.setFitWidth(100);
 
-        VBox layout = new VBox(10);
+        layout = new VBox(10);
         layout.getChildren().addAll(message, cardImage);
         layout.setAlignment(Pos.CENTER);
 
         root.getChildren().add(layout);
 
-        Label waitingForPlayers = labels.get(6);
+        layout.setVisible(false);
+    }
 
-        layout.setVisible(true);
-
-        waitingForPlayers.setVisible(false);
+    public void showStarterCardsWindow(ProgressIndicator loadingwheel, List<Label> labels) {
         loadingwheel.setVisible(false);
+        labels.get(6).setVisible(false);
+
+        message.setVisible(true);
+        cardImage.setVisible(true);
+        layout.setVisible(true);
+        cardRetro.setVisible(true);
 
         cardImage.setOnMouseClicked(event -> {
+            cardImage.setVisible(false);
+            cardRetro.setVisible(false);
+            message.setVisible(false);
             layout.setVisible(false);
+
+            //TODO send the card to the server and show SettingObjectiveCardsPage
+
         });
 
         cardRetro.setOnMouseClicked(event -> {
+            cardImage.setVisible(false);
+            cardRetro.setVisible(false);
+            message.setVisible(false);
             layout.setVisible(false);
+
+            //TODO send the card to the server and show SettingObjectiveCardsPage
+
         });
+
+
     }
 }

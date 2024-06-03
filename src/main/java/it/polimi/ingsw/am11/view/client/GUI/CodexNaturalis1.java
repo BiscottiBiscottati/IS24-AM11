@@ -7,10 +7,7 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.GUI.window.FrameHandler;
-import it.polimi.ingsw.am11.view.client.GUI.windows1.LoadingScreen;
-import it.polimi.ingsw.am11.view.client.GUI.windows1.NetworkPage;
-import it.polimi.ingsw.am11.view.client.GUI.windows1.SettingNickPage;
-import it.polimi.ingsw.am11.view.client.GUI.windows1.WaitingRoomPage;
+import it.polimi.ingsw.am11.view.client.GUI.windows1.*;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -212,6 +209,8 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
 
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
+        SettingObjCardsPage settingObjCardsPage = new SettingObjCardsPage();
+        settingObjCardsPage.createObjCardsWindow(cardId);
 
     }
 

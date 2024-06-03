@@ -39,6 +39,16 @@ public enum GuiResEnum {
         throw new IllegalArgumentException("Invalid cardId: " + cardId);
     }
 
+    public static GuiResEnum getEnumByCardIdRetro(int cardId) {
+        String fileName = cardId + "_Retro.png";
+        for (GuiResEnum value : GuiResEnum.values()) {
+            if (value.fileName.equals(fileName)) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("Invalid cardId: " + cardId);
+    }
+
     public String getFileName() {
         return fileName;
     }

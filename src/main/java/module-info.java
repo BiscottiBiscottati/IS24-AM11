@@ -43,5 +43,7 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.network.RMI.remote.chat;
     exports it.polimi.ingsw.am11.network.RMI.remote.game;
     exports it.polimi.ingsw.am11.network.RMI.remote.heartbeat;
+    exports it.polimi.ingsw.am11.view.client.GUI.windows1;
+    opens it.polimi.ingsw.am11.view.client.GUI.windows1 to javafx.fxml;
 
 }

@@ -317,9 +317,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void receiveStarterCard(int cardId) {
-        SettingStarterCards settingStarterCards = new SettingStarterCards();
-        settingStarterCards.createStarterCardsWindow(cardId, font, guiResources, halfButtonSize,
-                                                     root, loadingWheel, labels);
     }
 
     @Override
