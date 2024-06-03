@@ -80,24 +80,20 @@ public class VirtualTableView {
     public void updateTable(@NotNull GameStatusChangeEvent event) {
         LOGGER.debug("EVENT: Game status change from {} to {}", event.getOldValue(),
                      event.getNewValue());
-        broadcast(connector -> connector.updateGameStatus(event.getNewValue()));
+        broadcast(connector -> connector.updateGameStatus(event.getValueOfAction()));
     }
 
     public void updateTable(@NotNull CommonObjectiveChangeEvent event) {
         switch (event.getAction()) {
             case INSERTION -> {
                 LOGGER.debug("EVENT: Common objective {} added", event.getValueOfAction());
-                broadcast(connector -> {
-                    connector.updateCommonObjective(event.getValueOfAction(),
-                                                    false);
-                });
+                broadcast(connector -> connector.updateCommonObjective(event.getValueOfAction(),
+                                                                       false));
             }
             case REMOVAL -> {
                 LOGGER.debug("EVENT: Common objective {} removed", event.getValueOfAction());
-                broadcast(connector -> {
-                    connector.updateCommonObjective(event.getValueOfAction(),
-                                                    true);
-                });
+                broadcast(connector -> connector.updateCommonObjective(event.getValueOfAction(),
+                                                                       true));
             }
             default -> LOGGER.debug("Invalid ActionMode in CommonObjectiveChangeEvent");
         }
@@ -131,16 +127,12 @@ public class VirtualTableView {
 
     public void updateTable(@NotNull FinalLeaderboardEvent event) {
         LOGGER.debug("EVENT: Final leaderboard sent: {}", event.getNewValue());
-        broadcast(connector -> {
-            connector.sendFinalLeaderboard(event.getNewValue());
-        });
+        broadcast(connector -> connector.sendFinalLeaderboard(event.getNewValue()));
     }
 
     public void updateTable(@NotNull PlayerInfoEvent event) {
-        LOGGER.debug("EVENT: Player info sent: {}", event.getNewValue());
-        broadcast(connector -> {
-            connector.updatePlayers(event.getNewValue());
-        });
+        LOGGER.debug("EVENT: Player info sent: {}", event.getValueOfAction());
+        broadcast(connector -> connector.updatePlayers(event.getValueOfAction()));
     }
 
     public void updateTable(@NotNull ReportNumOfPlEvent event) {

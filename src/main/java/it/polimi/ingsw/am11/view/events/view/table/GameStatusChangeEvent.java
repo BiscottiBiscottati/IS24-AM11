@@ -32,7 +32,7 @@ public class GameStatusChangeEvent extends TableViewEvent {
     }
 
     @Override
-    public @NotNull Object getValueOfAction() {
+    public @NotNull GameStatus getValueOfAction() {
         return newValue;
     }
 }
