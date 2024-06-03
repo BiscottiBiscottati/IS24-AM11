@@ -1,6 +1,5 @@
-package it.polimi.ingsw.am11.network.factory;
+package it.polimi.ingsw.am11.network;
 
-import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.RMI.client.ClientRMI;
 import it.polimi.ingsw.am11.network.socket.client.ClientSocket;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
