@@ -79,7 +79,7 @@ public interface GameModel {
 
     int drawFromDeckOf(@NotNull PlayableCardType type, @NotNull String nickname)
     throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
-           IllegalPlayerSpaceActionException, PlayerInitException, MaxHandSizeException,
+           PlayerInitException, MaxHandSizeException,
            IllegalPickActionException;
 
     void goNextTurn() throws GameBreakingException, GameStatusException;

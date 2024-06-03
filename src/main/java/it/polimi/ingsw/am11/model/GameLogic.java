@@ -20,6 +20,7 @@ import it.polimi.ingsw.am11.model.utils.BasicRuleset;
 import it.polimi.ingsw.am11.model.utils.ReconnectionTimer;
 import it.polimi.ingsw.am11.model.utils.RuleSet;
 import it.polimi.ingsw.am11.model.utils.TurnAction;
+import it.polimi.ingsw.am11.persistence.GameModelMemento;
 import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
 import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
@@ -32,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -383,7 +385,6 @@ public class GameLogic implements GameModel {
      * Pick a <code>StarterCard</code> from the deck on the <code>PickableTable</code> and saves it
      * in player space
      *
-     * @throws EmptyDeckException  if the deck of  <code>StartingCard</code> is empty
      * @throws GameStatusException if the game is not ongoing
      */
 
@@ -610,9 +611,8 @@ public class GameLogic implements GameModel {
 
     @Override
     public int drawFromDeckOf(@NotNull PlayableCardType type, @NotNull String nickname)
-    throws GameStatusException, TurnsOrderException, EmptyDeckException,
-           IllegalPlayerSpaceActionException, PlayerInitException, MaxHandSizeException,
-           GameBreakingException, IllegalPickActionException {
+    throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
+           PlayerInitException, MaxHandSizeException, IllegalPickActionException {
 
         PersonalSpace playerSpace = playerManager.getPlayer(nickname)
                                                  .orElseThrow(() -> new PlayerInitException(
@@ -636,8 +636,8 @@ public class GameLogic implements GameModel {
             goNextTurn();
             return card.getId();
         } else {
-            //TODO this exception should be transformed in a max handsize exception
-            throw new IllegalPlayerSpaceActionException(nickname + " hand is already full");
+            //TODO this exception should be transformed in a max hand size exception
+            throw new MaxHandSizeException(nickname + " hand is already full");
         }
     }
 
@@ -676,7 +676,7 @@ public class GameLogic implements GameModel {
         // go to the next player
         playerManager.goNextTurn();
 
-        //handle game end
+        //handle the game end
         if (plateau.getStatus() == GameStatus.LAST_TURN && playerManager.isFirstTheCurrent()) {
             plateau.setStatus(GameStatus.ENDED);
             try {
@@ -1043,6 +1043,22 @@ public class GameLogic implements GameModel {
                 plateau.addPlayerPoints(player, points);
             }
         }
+    }
+
+    public GameModelMemento save() {
+        return new GameModelMemento(pickablesTable.save(),
+                                    plateau.save(),
+                                    playerManager.save());
+    }
+
+    public void load(@NotNull GameModelMemento memento) {
+        pickablesTable.load(memento.table());
+        playerManager.load(memento.playerManager());
+        plateau.load(memento.plateau(),
+                     playerManager.getPlayers().stream()
+                                  .collect(Collectors.toMap(Function.identity(),
+                                                            s -> playerManager.getPlayer(s)
+                                                                              .orElseThrow())));
     }
 }
 

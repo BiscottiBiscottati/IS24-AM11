@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
@@ -13,14 +14,19 @@ import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
+import it.polimi.ingsw.am11.persistence.PickablesTableMemento;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType.GOLD;
@@ -245,5 +251,51 @@ public class PickablesTableTest {
         }
         assertEquals(numberInDeck - 1,
                      pickablesTable.getRemainingDeckOf(GOLD));
+    }
+
+    @Test
+    void save() {
+        Set<ObjectiveCard> objCards = pickablesTable.getCommonObjectives();
+        Map<PlayableCardType, Set<Integer>> shownCards =
+                Stream.of(PlayableCardType.values())
+                      .collect(Collectors.toMap(
+                              Function.identity(),
+                              type -> pickablesTable.getShownPlayable(type)
+                                                    .stream()
+                                                    .map(PlayableCard::getId)
+                                                    .collect(Collectors.toSet())));
+
+        PickablesTableMemento memento = pickablesTable.save();
+
+        assertEquals(objCards.size(), memento.commonObjs().size());
+        assertEquals(objCards.stream().map(ObjectiveCard::getId).collect(Collectors.toSet()),
+                     memento.commonObjs());
+        assertEquals(shownCards.size(), memento.shownPlayable().size());
+        assertEquals(shownCards, memento.shownPlayable());
+    }
+
+    @Test
+    void load() {
+        Set<ObjectiveCard> objCards = pickablesTable.getCommonObjectives();
+        Map<PlayableCardType, Set<PlayableCard>> shownCards =
+                Stream.of(PlayableCardType.values())
+                      .collect(Collectors.toMap(
+                              Function.identity(),
+                              pickablesTable::getShownPlayable));
+
+        PickablesTableMemento memento = pickablesTable.save();
+
+        pickablesTable.hardReset();
+        pickablesTable.initialize();
+
+        pickablesTable.load(memento);
+
+        assertEquals(objCards.size(), pickablesTable.getCommonObjectives().size());
+        assertEquals(objCards, pickablesTable.getCommonObjectives());
+        assertEquals(shownCards.size(), pickablesTable.getShownPlayable(GOLD).size());
+        assertEquals(shownCards.get(GOLD),
+                     pickablesTable.getShownPlayable(GOLD));
+        assertEquals(shownCards.get(RESOURCE),
+                     pickablesTable.getShownPlayable(RESOURCE));
     }
 }

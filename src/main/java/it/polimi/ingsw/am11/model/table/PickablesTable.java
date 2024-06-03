@@ -7,8 +7,10 @@ import it.polimi.ingsw.am11.model.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
+import it.polimi.ingsw.am11.persistence.PickablesTableMemento;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.table.CommonObjectiveChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.DeckTopChangeEvent;
@@ -220,6 +222,36 @@ public class PickablesTable {
 
     public int getRemainingDeckOf(@NotNull PlayableCardType type) {
         return deckManager.getNumberRemainingOf(type);
+    }
+
+    public PickablesTableMemento save() {
+        Map<PlayableCardType, Set<Integer>> temp = new EnumMap<>(PlayableCardType.class);
+        shownPlayable.forEach((type, cards) -> temp.put(type, cards.stream()
+                                                                   .map(PlayableCard::getId)
+                                                                   .collect(Collectors.toSet())));
+        return new PickablesTableMemento(
+                deckManager.save(),
+                Map.copyOf(temp),
+                commonObjectives.stream()
+                                .map(ObjectiveCard::getId)
+                                .collect(Collectors.toSet())
+        );
+    }
+
+    public void load(@NotNull PickablesTableMemento memento) {
+        hardReset();
+        deckManager.load(memento.deckManager());
+        Map<PlayableCardType, Set<PlayableCard>> temp = new EnumMap<>(PlayableCardType.class);
+        memento.shownPlayable()
+               .forEach((type, ids) -> temp.put(type, ids.stream()
+                                                         .map(CardDecoder::decodePlayableCard)
+                                                         .map(Optional::orElseThrow)
+                                                         .collect(Collectors.toSet())));
+        shownPlayable.putAll(temp);
+        commonObjectives.addAll(memento.commonObjs().stream()
+                                       .map(CardDecoder::decodeObjectiveCard)
+                                       .map(Optional::orElseThrow)
+                                       .collect(Collectors.toSet()));
     }
 
     public void hardReset() {

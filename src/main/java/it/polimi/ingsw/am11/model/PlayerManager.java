@@ -12,6 +12,7 @@ import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.utils.TurnAction;
+import it.polimi.ingsw.am11.persistence.PlayerManagerMemento;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
@@ -338,6 +339,32 @@ public class PlayerManager {
 
     public int getNumberOfConnected() {
         return players.size() - unavailablePlayers.size();
+    }
+
+    public PlayerManagerMemento save() {
+        return new PlayerManagerMemento(
+                playerQueue.stream()
+                           .map(Player::save)
+                           .toList(),
+                firstPlayer.nickname(),
+                currentPlaying.nickname(),
+                currentAction
+        );
+    }
+
+    public void load(@NotNull PlayerManagerMemento memento) {
+        hardReset();
+
+        memento.players()
+               .forEach(playerMemento -> {
+                   Player player = Player.load(playerMemento);
+                   players.put(player.nickname(), player);
+                   playerQueue.add(player);
+               });
+
+        firstPlayer = players.get(memento.firstPlayer());
+        currentPlaying = players.get(memento.currentPlayer());
+        currentAction = memento.currentAction();
     }
 
     public void hardReset() {

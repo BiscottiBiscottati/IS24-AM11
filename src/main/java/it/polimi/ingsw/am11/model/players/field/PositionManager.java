@@ -6,6 +6,8 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.persistence.CardContainerMemento;
+import it.polimi.ingsw.am11.persistence.PositionManagerMemento;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -298,5 +300,27 @@ public class PositionManager {
      */
     Map<Position, CardContainer> getCardsPositioned() {
         return Map.copyOf(cardsPositioned);
+    }
+
+    PositionManagerMemento save() {
+        Map<Position, CardContainerMemento> temp = new HashMap<>(64);
+        cardsPositioned.forEach((position, container) -> temp.put(position, container.save()));
+        return new PositionManagerMemento(Set.copyOf(availablePositions),
+                                          Set.copyOf(closedPositions),
+                                          temp);
+    }
+
+    void load(@NotNull PositionManagerMemento memento) {
+        this.availablePositions.clear();
+        this.closedPositions.clear();
+        this.cardsPositioned.clear();
+
+        availablePositions.addAll(memento.availablePos());
+        closedPositions.addAll(memento.closedPos());
+
+        Map<Position, CardContainer> temp = new HashMap<>(64);
+        memento.cardPositioned()
+               .forEach((position, container) -> temp.put(position, CardContainer.load(container)));
+        cardsPositioned.putAll(temp);
     }
 }

@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.persistence.PositionManagerMemento;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -185,5 +186,49 @@ class PositionManagerTest {
         assertEquals(1, positionManager.getCardsPositioned().size());
         assertTrue(positionManager.getCardsPositioned().containsKey(Position.of(0, 0)));
         assertEquals(card, positionManager.getCardsPositioned().get(Position.of(0, 0)).getCard());
+    }
+
+    @Test
+    void save() {
+        StarterCard card = starterDeck.draw().orElseThrow();
+        try {
+            positionManager.placeCard(card, Position.of(0, 0), true);
+            positionManager.placeCard(card, Position.of(1, 1), true);
+            positionManager.placeCard(card, Position.of(1, - 1), true);
+            positionManager.placeCard(card, Position.of(2, 0), true);
+        } catch (IllegalCardPlacingException e) {
+            fail(e);
+        }
+
+        PositionManagerMemento memento = positionManager.save();
+        assertEquals(4, memento.cardPositioned().size());
+        assertEquals(Set.of(Position.of(0, 0), Position.of(1, 1),
+                            Position.of(1, - 1), Position.of(2, 0)),
+                     memento.cardPositioned().keySet());
+        assertEquals(0, memento.closedPos().size());
+        assertEquals(8, memento.availablePos().size());
+    }
+
+    @Test
+    void load() {
+        StarterCard card = starterDeck.draw().orElseThrow();
+        try {
+            positionManager.placeCard(card, Position.of(0, 0), true);
+            positionManager.placeCard(card, Position.of(1, 1), true);
+            positionManager.placeCard(card, Position.of(1, - 1), true);
+            positionManager.placeCard(card, Position.of(2, 0), true);
+        } catch (IllegalCardPlacingException e) {
+            fail(e);
+        }
+
+        PositionManagerMemento memento = positionManager.save();
+        positionManager.reset();
+        positionManager.load(memento);
+
+        assertEquals(4, positionManager.getCardsPositioned().size());
+        assertEquals(Set.of(Position.of(0, 0), Position.of(1, 1),
+                            Position.of(1, - 1), Position.of(2, 0)),
+                     positionManager.getCardsPositioned().keySet());
+        assertEquals(8, positionManager.getAvailablePositions().size());
     }
 }

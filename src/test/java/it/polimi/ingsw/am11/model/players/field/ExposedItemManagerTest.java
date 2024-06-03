@@ -9,7 +9,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
-import it.polimi.ingsw.am11.model.players.field.ExposedItemManager;
+import it.polimi.ingsw.am11.persistence.ItemManagerMemento;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -201,5 +201,34 @@ class ExposedItemManagerTest {
 
         assertTrue(itemManager.isRequirementsMet(card, false));
         assertTrue(itemManager.isRequirementsMet(card, true));
+    }
+
+    @Test
+    void save() {
+        itemManager.addToExposed(Color.RED);
+        itemManager.addToExposed(Color.RED);
+        itemManager.addToExposed(Color.BLUE);
+        itemManager.addToExposed(Symbol.FEATHER);
+        itemManager.addCardColor(Color.RED);
+
+        ItemManagerMemento memento = itemManager.save();
+
+        assertEquals(2, memento.exposedColors().get(Color.RED));
+        assertEquals(1, memento.exposedColors().get(Color.BLUE));
+        assertEquals(1, memento.exposedSymbols().get(Symbol.FEATHER));
+        assertEquals(1, memento.placedCardColors().get(Color.RED));
+    }
+
+    @Test
+    void load() {
+        ItemManagerMemento memento = new ItemManagerMemento(Map.of(Color.RED, 2, Color.BLUE, 1),
+                                                            Map.of(Symbol.FEATHER, 1),
+                                                            Map.of(Color.RED, 1));
+        itemManager.load(memento);
+
+        assertEquals(2, itemManager.getExposedItem(Color.RED));
+        assertEquals(1, itemManager.getExposedItem(Color.BLUE));
+        assertEquals(1, itemManager.getExposedItem(Symbol.FEATHER));
+        assertEquals(1, itemManager.getPlacedCardOf(Color.RED));
     }
 }

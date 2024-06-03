@@ -8,7 +8,6 @@ import java.io.Serializable;
 public record PlayerMemento(@NotNull String nickname,
                             @NotNull PlayerColor color,
                             @NotNull PersonalSpaceMemento space,
-                            @NotNull FieldMemento field,
-                            @NotNull ExposedItemMemento exposedItem)
+                            @NotNull FieldMemento field)
         implements Serializable {
 }

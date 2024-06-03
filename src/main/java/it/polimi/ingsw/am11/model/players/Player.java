@@ -2,6 +2,8 @@ package it.polimi.ingsw.am11.model.players;
 
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.persistence.PlayerMemento;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -36,5 +38,19 @@ public record Player(@NotNull String nickname,
      */
     public Player(String nickname, PlayerColor color, PersonalSpace space) {
         this(nickname, color, space, new PlayerField());
+    }
+
+    @Contract("_ -> new")
+    public static @NotNull Player load(@NotNull PlayerMemento memento) {
+        PersonalSpace space = new PersonalSpace();
+        space.load(memento.space());
+        PlayerField field = new PlayerField();
+        field.load(memento.field());
+        return new Player(memento.nickname(), memento.color(), space, field);
+    }
+
+    @Contract(" -> new")
+    public @NotNull PlayerMemento save() {
+        return new PlayerMemento(nickname, color, space.save(), field.save());
     }
 }

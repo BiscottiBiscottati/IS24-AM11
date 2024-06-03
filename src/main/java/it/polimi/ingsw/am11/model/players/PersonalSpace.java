@@ -3,14 +3,17 @@ package it.polimi.ingsw.am11.model.players;
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
+import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.model.exceptions.NotInHandException;
+import it.polimi.ingsw.am11.persistence.PersonalSpaceMemento;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class PersonalSpace {
@@ -137,6 +140,38 @@ public class PersonalSpace {
         candidateObjectives.remove(id);
     }
 
+    public boolean areObjectiveGiven() {
+        return maxObjectives == playerObjective.size();
+    }
+
+    public PersonalSpaceMemento save() {
+        return new PersonalSpaceMemento(playerHand.stream()
+                                                  .map(PlayableCard::getId)
+                                                  .collect(Collectors.toSet()),
+                                        playerObjective.stream()
+                                                       .map(ObjectiveCard::getId)
+                                                       .collect(Collectors.toSet()),
+                                        candidateObjectives.stream()
+                                                           .map(ObjectiveCard::getId)
+                                                           .collect(Collectors.toSet()),
+                                        starterCard.getId());
+    }
+
+    public void load(@NotNull PersonalSpaceMemento memento) {
+        clearAll();
+
+        memento.hand()
+               .forEach(id -> playerHand.add(
+                       CardDecoder.decodePlayableCard(id).orElseThrow()));
+        memento.personalObjs()
+               .forEach(id -> playerObjective.add(
+                       CardDecoder.decodeObjectiveCard(id).orElseThrow()));
+        memento.candidateObjs()
+               .forEach(id -> candidateObjectives.add(
+                       CardDecoder.decodeObjectiveCard(id).orElseThrow()));
+        starterCard = CardDecoder.decodeStarterCard(memento.starterCard()).orElseThrow();
+    }
+
     public void clearAll() {
         playerHand.clear();
         playerObjective.clear();
@@ -144,9 +179,4 @@ public class PersonalSpace {
         starterCard = null;
 
     }
-
-    public boolean areObjectiveGiven() {
-        return maxObjectives == playerObjective.size();
-    }
-
 }

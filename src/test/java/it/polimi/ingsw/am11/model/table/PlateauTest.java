@@ -3,10 +3,13 @@ package it.polimi.ingsw.am11.model.table;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.persistence.PlateauMemento;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
 
 class PlateauTest {
     Plateau plateau;
@@ -229,5 +232,47 @@ class PlateauTest {
                                 () -> plateau.getCounterObjective(player));
         Assertions.assertThrows(IllegalPlateauActionException.class,
                                 () -> plateau.getPlayerFinishingPosition(player));
+    }
+
+    @Test
+    void save() throws IllegalPlateauActionException {
+        PlateauMemento memento = plateau.save();
+        Assertions.assertEquals(0, memento.playerPoints().size());
+        Assertions.assertEquals(0, memento.objCounter().size());
+        Assertions.assertEquals(0, memento.leaderboard().size());
+        Assertions.assertEquals(GameStatus.SETUP, memento.status());
+
+        plateau.setStatus(GameStatus.ONGOING);
+        Player testPlayer = new Player("Test Player", PlayerColor.BLUE);
+        plateau.addPlayer(testPlayer);
+        plateau.addPlayerPoints(testPlayer, 5);
+        plateau.addCounterObjective(testPlayer);
+
+        memento = plateau.save();
+
+        Assertions.assertEquals(1, memento.playerPoints().size());
+        Assertions.assertEquals(5, memento.playerPoints().get("Test Player"));
+        Assertions.assertEquals(1, memento.objCounter().size());
+        Assertions.assertEquals(0, memento.leaderboard().size());
+        Assertions.assertEquals(GameStatus.ONGOING, memento.status());
+    }
+
+    @Test
+    void load() throws IllegalPlateauActionException {
+        plateau.setStatus(GameStatus.ONGOING);
+        Player testPlayer = new Player("Test Player", PlayerColor.BLUE);
+        plateau.addPlayer(testPlayer);
+        plateau.addPlayerPoints(testPlayer, 5);
+        plateau.addCounterObjective(testPlayer);
+
+        PlateauMemento memento = plateau.save();
+
+        plateau.reset();
+
+        plateau.load(memento, Map.of("Test Player", testPlayer));
+
+        Assertions.assertEquals(5, plateau.getPlayerPoints(testPlayer));
+        Assertions.assertEquals(1, plateau.getCounterObjective(testPlayer));
+        Assertions.assertEquals(GameStatus.ONGOING, plateau.getStatus());
     }
 }

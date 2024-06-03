@@ -6,6 +6,8 @@ import it.polimi.ingsw.am11.model.cards.utils.Item;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
+import it.polimi.ingsw.am11.persistence.CardContainerMemento;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,6 +60,18 @@ public class CardContainer {
         this.card = card;
         coveredCorners = EnumMapUtils.init(Corner.class, false);
         this.isRetro = isRetro;
+    }
+
+    public CardContainer(@NotNull FieldCard card, Map<Corner, Boolean> coveredCorners,
+                         boolean isRetro) {
+        this.card = card;
+        this.coveredCorners = new EnumMap<>(coveredCorners);
+        this.isRetro = isRetro;
+    }
+
+    public static @NotNull CardContainer load(@NotNull CardContainerMemento memento) {
+        FieldCard card = CardDecoder.decodeFieldCard(memento.card()).orElseThrow();
+        return new CardContainer(card, memento.coveredCorners(), memento.isRetro());
     }
 
 
@@ -187,5 +201,9 @@ public class CardContainer {
      */
     public Optional<Item> getItemOn(Corner corner) {
         return this.card.getItemCorner(corner, isRetro).getItem();
+    }
+
+    public CardContainerMemento save() {
+        return new CardContainerMemento(card.getId(), Map.copyOf(coveredCorners), isRetro);
     }
 }

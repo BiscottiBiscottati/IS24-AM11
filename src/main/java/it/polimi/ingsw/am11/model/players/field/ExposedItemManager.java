@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
+import it.polimi.ingsw.am11.persistence.ItemManagerMemento;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -68,26 +69,37 @@ public class ExposedItemManager {
         }
     }
 
-    public int getPlacedCardOf(@NotNull Color color) {
+    int getPlacedCardOf(@NotNull Color color) {
         return this.placedCardColors.get(color);
     }
 
-    public Map<Color, Integer> getPlacedCardColors() {
+    Map<Color, Integer> getPlacedCardColors() {
         return Map.copyOf(this.placedCardColors);
     }
 
-    public boolean isRequirementsMet(@NotNull PlayableCard card, boolean isRetro) {
+    boolean isRequirementsMet(@NotNull PlayableCard card, boolean isRetro) {
         if (isRetro) return true;
         return Stream.of(Color.values())
                      .allMatch(color -> card.getPlacingRequirementsOf(color) <=
                                         this.getExposedItem(color));
     }
 
-    public int getExposedItem(@NotNull Item item) {
+    int getExposedItem(@NotNull Item item) {
         return switch (item) {
             case Color color -> this.exposedColors.get(color);
             case Symbol symbol -> this.exposedSymbols.get(symbol);
         };
+    }
+
+    ItemManagerMemento save() {
+        return new ItemManagerMemento(Map.copyOf(exposedColors), Map.copyOf(exposedSymbols),
+                                      Map.copyOf(placedCardColors));
+    }
+
+    void load(@NotNull ItemManagerMemento memento) {
+        exposedColors.putAll(memento.exposedColors());
+        exposedSymbols.putAll(memento.exposedSymbols());
+        placedCardColors.putAll(memento.placedCardColors());
     }
 
 }

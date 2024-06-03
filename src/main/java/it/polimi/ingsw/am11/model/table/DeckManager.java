@@ -12,6 +12,7 @@ import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
+import it.polimi.ingsw.am11.persistence.DeckManagerMemento;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -70,5 +71,19 @@ public class DeckManager {
             case GOLD -> goldDeck.getRemainingCards();
             case RESOURCE -> resourceDeck.getRemainingCards();
         };
+    }
+
+    public DeckManagerMemento save() {
+        return new DeckManagerMemento(resourceDeck.save(),
+                                      goldDeck.save(),
+                                      starterDeck.save(),
+                                      objectiveDeck.save());
+    }
+
+    public void load(@NotNull DeckManagerMemento memento) {
+        goldDeck.load(memento.goldDeck());
+        resourceDeck.load(memento.resourceDeck());
+        objectiveDeck.load(memento.objectiveDeck());
+        starterDeck.load(memento.starterDeck());
     }
 }

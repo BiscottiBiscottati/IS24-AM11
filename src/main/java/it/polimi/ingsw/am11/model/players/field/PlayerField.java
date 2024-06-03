@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.persistence.FieldMemento;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -136,6 +137,15 @@ public class PlayerField {
             case PlayableCard playableCard ->
                     this.itemManager.isRequirementsMet(playableCard, isRetro);
         };
+    }
+
+    public FieldMemento save() {
+        return new FieldMemento(itemManager.save(), positionManager.save());
+    }
+
+    public void load(@NotNull FieldMemento memento) {
+        this.itemManager.load(memento.exposedItems());
+        this.positionManager.load(memento.positionManager());
     }
 
 }

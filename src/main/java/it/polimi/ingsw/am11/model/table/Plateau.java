@@ -2,10 +2,12 @@ package it.polimi.ingsw.am11.model.table;
 
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
+import it.polimi.ingsw.am11.persistence.PlateauMemento;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.table.FinalLeaderboardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.PlayerPointsChangeEvent;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public class Plateau {
     private static final Logger LOGGER = LoggerFactory.getLogger(Plateau.class);
@@ -186,7 +189,6 @@ public class Plateau {
         }
     }
 
-
     public List<Player> getWinners() {
         List<Player> winners = new ArrayList<>(4);
         for (Map.Entry<Player, Integer> entry : finalLeaderboard.entrySet()) {
@@ -218,6 +220,34 @@ public class Plateau {
         LOGGER.info("MODEL: Winner set: {}", player.nickname());
 
         pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboardString));
+    }
+
+    public PlateauMemento save() {
+        Map<String, Integer> tempPoints = toNickMap(playerPoints);
+        Map<String, Integer> tempCounterObjective = toNickMap(counterObjective);
+        Map<String, Integer> tempFinalLeaderboard = toNickMap(finalLeaderboard);
+        return new PlateauMemento(tempPoints, tempCounterObjective, tempFinalLeaderboard,
+                                  status.get());
+    }
+
+    private static @NotNull Map<String, Integer> toNickMap(@NotNull Map<Player, Integer> map) {
+        return map.keySet().stream()
+                  .collect(Collectors.toUnmodifiableMap(
+                          Player::nickname,
+                          map::get
+                  ));
+    }
+
+    public void load(@NotNull PlateauMemento memento, @NotNull Map<String, Player> mapping) {
+        hardReset();
+
+        memento.playerPoints()
+               .forEach((nick, points) -> playerPoints.put(mapping.get(nick), points));
+        memento.objCounter()
+               .forEach((nick, counter) -> counterObjective.put(mapping.get(nick), counter));
+        memento.leaderboard()
+               .forEach((nick, position) -> finalLeaderboard.put(mapping.get(nick), position));
+        status.set(memento.status());
     }
 
     public void hardReset() {
