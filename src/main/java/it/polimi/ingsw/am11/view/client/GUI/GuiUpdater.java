@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.Set;
 
-public class GuiUpdater implements ClientViewUpdater {
+public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private final GuiExceptionReceiver exceptionReceiver;
     private final GuiObserver guiObserver;
     MiniGameModel miniGameModel;
@@ -147,7 +147,16 @@ public class GuiUpdater implements ClientViewUpdater {
 
     @Override
     public @NotNull ClientChatUpdater getChatUpdater() {
-        //  FIXME to implement
-        return null;
+        return this;
+    }
+
+    @Override
+    public void receiveMsg(@NotNull String sender, @NotNull String msg) {
+
+    }
+
+    @Override
+    public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
+
     }
 }

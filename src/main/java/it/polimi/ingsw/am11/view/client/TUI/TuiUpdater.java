@@ -33,7 +33,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private final EnumMap<TuiStates, TUIState> tuiStates;
     private final TuiExceptionReceiver exceptionReceiver;
     private final AtomicReference<TUIState> currentState;
-    private AtomicReference<TUIState> homeState;
+    private final AtomicReference<TUIState> homeState;
     private String candidateNick = "";
     private int unreadMessages = 0;
 
@@ -45,6 +45,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
         this.currentState = new AtomicReference<>(tuiStates.get(startingState));
         this.exceptionReceiver = new TuiExceptionReceiver(model, this);
+        this.homeState = new AtomicReference<>();
     }
 
     @Override
@@ -256,8 +257,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     @Override
     public @NotNull ClientChatUpdater getChatUpdater() {
-        // FIXME to implement
-        return null;
+        return this;
     }
 
     public void setTuiState(TuiStates state) {
