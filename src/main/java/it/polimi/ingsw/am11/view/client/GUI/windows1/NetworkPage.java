@@ -169,6 +169,7 @@ public class NetworkPage {
                 } catch (Exception e) {
                     ipAddress.setText("Fail");
                     connectionFailed.setVisible(true);
+                    e.printStackTrace();
                 }
             } catch (NumberFormatException e) {
                 port.setText("Fail");

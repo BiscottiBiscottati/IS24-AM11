@@ -142,6 +142,10 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
         settingNickPage.showSettingNickPage();
     }
 
+    public void showWaitingRoomPage() {
+        waitingRoomPage.showWaitingRoomPage();
+    }
+
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
 
