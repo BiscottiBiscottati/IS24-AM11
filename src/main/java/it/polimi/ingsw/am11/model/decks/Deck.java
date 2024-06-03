@@ -9,10 +9,7 @@ import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.persistence.DeckMemento;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Represents a deck of cards.
@@ -36,7 +33,7 @@ public class Deck<T extends CardIdentity> {
 
     private final ImmutableMap<Integer, T> mappingIdToCard;
 
-    private final Stack<T> deck;
+    private final ArrayDeque<T> deck;
 
     /**
      * Constructor for the Deck class.
@@ -46,8 +43,7 @@ public class Deck<T extends CardIdentity> {
      */
     public Deck(@NotNull ImmutableMap<Integer, T> mappingIdToCard) {
         this.mappingIdToCard = mappingIdToCard;
-        this.deck = new Stack<>();
-        this.deck.addAll(mappingIdToCard.values());
+        this.deck = new ArrayDeque<>(mappingIdToCard.values());
     }
 
     /**
@@ -56,7 +52,10 @@ public class Deck<T extends CardIdentity> {
      * @return The deck shuffled.
      */
     public Deck<T> shuffle() {
-        Collections.shuffle(this.deck);
+        List<T> tempList = new ArrayList<>(this.deck.stream().toList());
+        Collections.shuffle(tempList);
+        this.deck.clear();
+        this.deck.addAll(tempList);
         return this;
     }
 
@@ -70,7 +69,7 @@ public class Deck<T extends CardIdentity> {
     @NotNull
     public Optional<T> draw() {
         if (this.deck.isEmpty()) return Optional.empty();
-        return Optional.of(this.deck.pop());
+        return Optional.of(this.deck.pollFirst());
     }
 
     /**
@@ -99,9 +98,7 @@ public class Deck<T extends CardIdentity> {
 
     public void load(@NotNull DeckMemento memento) {
         this.deck.clear();
-        memento.cards().stream()
-               .map(mappingIdToCard::get)
-               .forEach(this.deck::push);
+        this.deck.addAll(memento.cards().stream().map(mappingIdToCard::get).toList());
     }
 
     /**

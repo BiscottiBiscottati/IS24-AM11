@@ -59,20 +59,18 @@ class DeckTest {
 
     @Test
     void save() {
-        resourceDeck.shuffle();
         int numOfCards = resourceDeck.getRemainingCards();
         DeckMemento memento = resourceDeck.save();
         assertEquals(numOfCards, memento.cards().size());
 
         for (int i = 0; i < numOfCards; i++) {
             assertEquals(resourceDeck.draw().orElseThrow().getId(),
-                         memento.cards().reversed().get(i));
+                         memento.cards().get(i));
         }
     }
 
     @Test
     void load() {
-        resourceDeck.shuffle();
         DeckMemento memento = resourceDeck.save();
 
         for (int i = 0; i < 6; i++) {
@@ -83,7 +81,7 @@ class DeckTest {
         assertEquals(40, resourceDeck.getRemainingCards());
 
         for (int i = 0; i < 40; i++) {
-            assertEquals(memento.cards().reversed().get(i),
+            assertEquals(memento.cards().get(i),
                          resourceDeck.draw().orElseThrow().getId());
         }
     }
