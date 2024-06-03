@@ -49,4 +49,16 @@ public record ServerChatConnectorImpl(@NotNull ClientChatInterface chatInterface
         });
 
     }
+
+    @Override
+    public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
+        executorService.submit(() -> {
+            try {
+                LOGGER.info("SERVER RMI: Confirming message sent from {}", sender);
+                chatInterface.receiveConfirmation(sender, msg);
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error confirming message sent: {}", e.getMessage());
+            }
+        });
+    }
 }

@@ -19,4 +19,10 @@ public record ClientChatInterfaceImpl(@NotNull ClientChatUpdater chatUpdater)
     throws RemoteException {
         chatUpdater.receivePrivateMsg(sender, msg);
     }
+
+    @Override
+    public void receiveConfirmation(@NotNull String sender, @NotNull String msg)
+    throws RemoteException {
+        chatUpdater.confirmSentMsg(sender, msg);
+    }
 }

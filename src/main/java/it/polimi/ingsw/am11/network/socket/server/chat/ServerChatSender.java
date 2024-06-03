@@ -36,4 +36,15 @@ public record ServerChatSender(@NotNull PrintWriter out) implements ServerChatCo
 
         out.println(json);
     }
+
+    @Override
+    public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
+        LOGGER.info("SERVER TCP: Message sent confirmed: {}", msg);
+        ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
+        json.put("method", "confirmSentMsg");
+        json.put("sender", sender);
+        json.put("msg", msg);
+
+        out.println(json);
+    }
 }

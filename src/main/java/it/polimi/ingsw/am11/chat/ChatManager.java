@@ -3,11 +3,14 @@ package it.polimi.ingsw.am11.chat;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.network.connector.ServerChatConnector;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ChatManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChatManager.class.getName());
 
     private final Map<String, ServerChatConnector> chatConnectors;
 
@@ -28,20 +31,29 @@ public class ChatManager {
     }
 
     public void broadcastMessage(@NotNull String sender, @NotNull String msg) {
-        chatConnectors.forEach((nickname, connector) -> {
-            if (! nickname.equals(sender)) {
-                connector.sendPublicMsg(sender, msg);
-            }
-        });
+        if (chatConnectors.isEmpty()) return;
+
+        LOGGER.info("SERVER CHAT: Broadcasting message from {}: {}", sender, msg);
+        chatConnectors.entrySet().stream()
+                      .filter(entry -> ! entry.getKey().equals(sender))
+                      .forEach(entry -> entry.getValue().sendPublicMsg(sender, msg));
+        chatConnectors.get(sender).confirmSentMsg(sender, msg);
     }
 
     public void sendPrivateMessage(@NotNull String sender, @NotNull String recipient,
                                    @NotNull String msg) throws PlayerInitException {
-        if (chatConnectors.containsKey(recipient))
-            chatConnectors.get(recipient)
-                          .sendPrivateMsg(sender, msg);
-        else throw new PlayerInitException(
-                "Player " + recipient + " not found to send private message.");
+        if (chatConnectors.isEmpty()) return;
+
+        LOGGER.info("SERVER CHAT: Sending private message from {} to {}: {}", sender, recipient,
+                    msg);
+        chatConnectors.entrySet().stream()
+                      .filter(entry -> entry.getKey().equals(recipient))
+                      .findFirst()
+                      .map(Map.Entry::getValue)
+                      .orElseThrow(() -> new PlayerInitException(
+                              "Player " + recipient + " not found to send private message."))
+                      .sendPrivateMsg(sender, msg);
+        chatConnectors.get(sender).confirmSentMsg(sender, msg);
     }
 
 }

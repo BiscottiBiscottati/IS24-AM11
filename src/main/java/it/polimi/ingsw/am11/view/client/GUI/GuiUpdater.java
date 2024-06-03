@@ -159,4 +159,9 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
 
     }
+
+    @Override
+    public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
+        //TODO confimation of the message sent
+    }
 }

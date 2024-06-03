@@ -9,4 +9,6 @@ public interface ClientChatInterface extends Remote {
     void receiveMsg(@NotNull String sender, @NotNull String msg) throws RemoteException;
 
     void receivePrivateMsg(@NotNull String sender, @NotNull String msg) throws RemoteException;
+
+    void receiveConfirmation(@NotNull String sender, @NotNull String msg) throws RemoteException;
 }

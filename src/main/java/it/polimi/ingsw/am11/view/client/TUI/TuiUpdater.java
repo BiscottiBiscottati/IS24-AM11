@@ -307,6 +307,11 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    @Override
+    public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
+        // TODO confirmation that a message has been sent
+    }
+
     public void setHomeState(TuiStates state) {
         homeState.set(tuiStates.get(state));
     }
