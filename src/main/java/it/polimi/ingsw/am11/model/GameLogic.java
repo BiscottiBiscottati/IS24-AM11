@@ -899,6 +899,22 @@ public class GameLogic implements GameModel {
         plateau.setWinner(winningPlayer);
     }
 
+    public @NotNull GameModelMemento save() {
+        return new GameModelMemento(pickablesTable.save(),
+                                    plateau.save(),
+                                    playerManager.save());
+    }
+
+    public void load(@NotNull GameModelMemento memento) {
+        pickablesTable.load(memento.table());
+        playerManager.load(memento.playerManager());
+        plateau.load(memento.plateau(),
+                     playerManager.getPlayers().stream()
+                                  .collect(Collectors.toMap(Function.identity(),
+                                                            s -> playerManager.getPlayer(s)
+                                                                              .orElseThrow())));
+    }
+
     private void giveCards() throws GameBreakingException {
         pickablesTable.initialize();
 
@@ -1046,22 +1062,6 @@ public class GameLogic implements GameModel {
                 plateau.addPlayerPoints(player, points);
             }
         }
-    }
-
-    public GameModelMemento save() {
-        return new GameModelMemento(pickablesTable.save(),
-                                    plateau.save(),
-                                    playerManager.save());
-    }
-
-    public void load(@NotNull GameModelMemento memento) {
-        pickablesTable.load(memento.table());
-        playerManager.load(memento.playerManager());
-        plateau.load(memento.plateau(),
-                     playerManager.getPlayers().stream()
-                                  .collect(Collectors.toMap(Function.identity(),
-                                                            s -> playerManager.getPlayer(s)
-                                                                              .orElseThrow())));
     }
 }
 

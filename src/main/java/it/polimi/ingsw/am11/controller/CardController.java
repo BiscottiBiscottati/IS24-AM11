@@ -4,12 +4,26 @@ import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.persistence.SavesManager;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class CardController {
-    private final GameModel model;
+    private static final long SAVE_INTERVAL_SEC = 5;
 
-    CardController(GameModel model) {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CardController.class);
+
+    private final GameModel model;
+    private final ScheduledExecutorService saveExecutor;
+
+    CardController(@NotNull GameModel model) {
         this.model = model;
+        this.saveExecutor = Executors.newSingleThreadScheduledExecutor();
     }
 
     public synchronized void setObjectiveFor(String nickname, int cardID)
@@ -57,5 +71,21 @@ public class CardController {
         } catch (GameBreakingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    void startSaveExecutor() {
+        saveExecutor.scheduleAtFixedRate(this::saveToDisk,
+                                         SAVE_INTERVAL_SEC,
+                                         SAVE_INTERVAL_SEC,
+                                         TimeUnit.SECONDS);
+    }
+
+    synchronized void saveToDisk() {
+        LOGGER.info("CONTROLLER: Saving game to disk");
+        SavesManager.saveGame(model.save());
+    }
+
+    void stopSaveExecutor() {
+        saveExecutor.shutdown();
     }
 }

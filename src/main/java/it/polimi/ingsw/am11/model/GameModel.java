@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.GameStatus;
 import it.polimi.ingsw.am11.model.utils.RuleSet;
+import it.polimi.ingsw.am11.persistence.memento.GameModelMemento;
 import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
 import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import org.jetbrains.annotations.NotNull;
@@ -114,4 +115,9 @@ public interface GameModel {
     void forceReset();
 
     void endGameEarly();
+
+    @NotNull
+    GameModelMemento save();
+
+    void load(@NotNull GameModelMemento memento);
 }

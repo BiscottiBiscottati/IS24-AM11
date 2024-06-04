@@ -66,10 +66,7 @@ class CentralControllerTest {
                                             serverTableConnector, chatConnector);
         });
 
-        try {
-
-            ExecutorService executor = Executors.newFixedThreadPool(8);
-
+        try (ExecutorService executor = Executors.newFixedThreadPool(8)) {
             CountDownLatch playerLatch = new CountDownLatch(nicknames.size());
 
             for (String nickname : nicknames) {

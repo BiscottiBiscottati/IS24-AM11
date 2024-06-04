@@ -10,6 +10,7 @@ import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
+import it.polimi.ingsw.am11.persistence.SavesManager;
 import it.polimi.ingsw.am11.view.events.view.table.NumOfPlayerEvent;
 import it.polimi.ingsw.am11.view.server.PlayerViewUpdater;
 import it.polimi.ingsw.am11.view.server.TableViewUpdater;
@@ -95,6 +96,7 @@ public class GameController {
             if (currentMaxPlayers == model.getPlayers().size()) {
                 try {
                     model.initGame();
+                    cardController.startSaveExecutor();
                 } catch (NumOfPlayersException | GameBreakingException e) {
                     throw new RuntimeException(e);
                 }
@@ -153,5 +155,18 @@ public class GameController {
 
     String getGodPlayer() {
         return godPlayer.get();
+    }
+
+    void destroyGame() {
+        cardController.stopSaveExecutor();
+    }
+
+    boolean loadMostRecent() {
+        return SavesManager.loadMostRecentGame()
+                           .map(memento -> {
+                               model.load(memento);
+                               return true;
+                           })
+                           .orElse(false);
     }
 }

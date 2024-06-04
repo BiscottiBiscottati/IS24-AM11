@@ -346,8 +346,8 @@ public class PlayerManager {
                 playerQueue.stream()
                            .map(Player::save)
                            .toList(),
-                firstPlayer.nickname(),
-                currentPlaying.nickname(),
+                firstPlayer != null ? firstPlayer.nickname() : null,
+                currentPlaying != null ? currentPlaying.nickname() : null,
                 currentAction
         );
     }

@@ -3,10 +3,12 @@ package it.polimi.ingsw.am11.model.players.utils;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+
 /**
  * Represents a position in a 2D space with x and y coordinates.
  */
-public record Position(int x, int y) {
+public record Position(int x, int y) implements Serializable {
 
     /**
      * Factory method to create a new <code>Position</code> instance.

@@ -74,6 +74,7 @@ public enum CentralController {
 
     public void destroyGame() {
         LOGGER.info("CONTROLLER: Destroying current Game and recreating a new one");
+        gameControllers.forEach(GameController::destroyGame);
         gameControllers.clear();
         chatController.clear();
         createNewGame();
