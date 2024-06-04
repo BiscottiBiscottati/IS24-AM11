@@ -31,7 +31,7 @@ public class PlayerManager {
     private final static Logger LOGGER = LoggerFactory.getLogger(PlayerManager.class);
 
     private static int maxNumberOfPlayers;
-    private final Map<String, Player> players;
+    private final SequencedMap<String, Player> players;
     private final Queue<Player> playerQueue;
     private final GameListenerSupport pcs;
     private final Set<Player> unavailablePlayers;
@@ -40,7 +40,7 @@ public class PlayerManager {
     private TurnAction currentAction;
 
     public PlayerManager(GameListenerSupport pcs) {
-        this.players = new HashMap<>(8);
+        this.players = new LinkedHashMap<>(8);
         this.playerQueue = new ArrayDeque<>(maxNumberOfPlayers);
         this.unavailablePlayers = new HashSet<>(8);
         this.firstPlayer = null;
@@ -60,8 +60,8 @@ public class PlayerManager {
         return PlayerManager.maxNumberOfPlayers;
     }
 
-    public Set<String> getPlayers() {
-        return players.keySet();
+    public SequencedSet<String> getPlayers() {
+        return players.sequencedKeySet();
     }
 
     public int getNumberOfPlayers() {
