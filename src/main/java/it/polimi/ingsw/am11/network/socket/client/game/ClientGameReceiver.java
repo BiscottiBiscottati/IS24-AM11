@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.SequencedMap;
 import java.util.Set;
 
 public class ClientGameReceiver implements MessageReceiver {
@@ -96,7 +97,7 @@ public class ClientGameReceiver implements MessageReceiver {
                     break;
                 case "updatePlayers":
                     String currentPlayersJson = jsonNode.get("currentPlayers").asText();
-                    Map<PlayerColor, String> currentPlayers = JsonFactory.readValue(
+                    SequencedMap<PlayerColor, String> currentPlayers = JsonFactory.readValue(
                             currentPlayersJson,
                             new TypeReference<>() {});
                     clientPlayerView.updatePlayers(currentPlayers);

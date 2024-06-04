@@ -101,7 +101,7 @@ class GameLogicTest {
             model.drawFromDeckOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer());
         } catch (GameStatusException | TurnsOrderException | IllegalCardPlacingException |
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
-                 IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
+                 EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
             fail(e);
         }
@@ -126,7 +126,7 @@ class GameLogicTest {
             model.drawFromDeckOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer());
         } catch (GameStatusException | TurnsOrderException | IllegalCardPlacingException |
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
-                 IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
+                 EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
             fail(e);
         }
@@ -340,7 +340,7 @@ class GameLogicTest {
             model.drawFromDeckOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer());
         } catch (GameStatusException | TurnsOrderException | IllegalCardPlacingException |
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
-                 IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
+                 EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
             fail(e);
         }
@@ -355,7 +355,7 @@ class GameLogicTest {
             assertEquals(model.getPositionedCard(model.getCurrentTurnPlayer()).size(), 2);
             model.drawFromDeckOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer());
         } catch (TurnsOrderException | IllegalCardPlacingException | NotInHandException |
-                 IllegalPlateauActionException | IllegalPlayerSpaceActionException |
+                 IllegalPlateauActionException |
                  EmptyDeckException | GameBreakingException | MaxHandSizeException |
                  IllegalPickActionException e) {
             fail(e);
@@ -394,7 +394,7 @@ class GameLogicTest {
             model.drawFromDeckOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer());
         } catch (GameStatusException | TurnsOrderException | IllegalCardPlacingException |
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
-                 IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
+                 EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
             fail(e);
         }
@@ -948,7 +948,7 @@ class GameLogicTest {
                                                true));
         } catch (GameStatusException | TurnsOrderException | IllegalCardPlacingException |
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
-                 IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
+                 EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
             fail(e);
         }
@@ -990,7 +990,7 @@ class GameLogicTest {
             model.drawFromDeckOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer());
         } catch (GameStatusException | TurnsOrderException | IllegalCardPlacingException |
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
-                 IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
+                 EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
             fail(e);
         }
@@ -1090,7 +1090,7 @@ class GameLogicTest {
             model.drawFromDeckOf(PlayableCardType.GOLD, model.getCurrentTurnPlayer());
         } catch (GameStatusException | TurnsOrderException | IllegalCardPlacingException |
                  PlayerInitException | NotInHandException | IllegalPlateauActionException |
-                 IllegalPlayerSpaceActionException | EmptyDeckException | GameBreakingException |
+                 EmptyDeckException | GameBreakingException |
                  MaxHandSizeException | IllegalPickActionException e) {
             fail(e);
         }

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.SequencedMap;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -61,7 +62,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updateField(String nickname, int x, int y, int cardId,
+    public void updateField(@NotNull String nickname, int x, int y, int cardId,
                             boolean isRetro, boolean removeMode) {
         LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {}, " +
                      "removemode: {}", nickname, x, y, cardId, isRetro, removeMode);
@@ -108,7 +109,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updatePlayerPoint(String nickname, int points) {
+    public void updatePlayerPoint(@NotNull String nickname, int points) {
         model.getCliPlayer(nickname).addPoints(points);
         LOGGER.debug("{} points added to {}", points, nickname);
         if (isCurrentState(TuiStates.WATCHING_TABLE)) {
@@ -117,7 +118,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updateGameStatus(GameStatus status) {
+    public void updateGameStatus(@NotNull GameStatus status) {
         model.table().setStatus(status);
         LOGGER.debug("Game status event: {}", status);
         switch (status) {
@@ -156,7 +157,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
+    public void updateCommonObjective(@NotNull Set<Integer> cardId, boolean removeMode) {
         if (removeMode) {
             cardId.stream().forEach(x -> model.table().removeCommonObjective(x));
             LOGGER.debug("CommonObjRm: {}", cardId);
@@ -171,7 +172,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+    public void receiveFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard) {
         model.setFinalLeaderboard(finalLeaderboard);
         setTuiState(TuiStates.ENDED);
         homeState.set(tuiStates.get(TuiStates.ENDED));
@@ -233,7 +234,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+    public void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers) {
         model.setMyName(candidateNick);
         for (Map.Entry<PlayerColor, String> entry : currentPlayers.entrySet()) {
             model.addPlayer(entry.getValue(), entry.getKey());

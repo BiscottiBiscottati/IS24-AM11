@@ -349,14 +349,17 @@ public class GameLogic implements GameModel {
 
         LOGGER.info("MODEL: Initializing the game...");
 
-        Map<PlayerColor, String> collected = playerManager.getPlayers()
-                                                          .stream()
-                                                          .map(playerManager::getPlayer)
-                                                          .filter(Optional::isPresent)
-                                                          .map(Optional::get)
-                                                          .collect(Collectors.toUnmodifiableMap(
-                                                                  Player::color,
-                                                                  Player::nickname));
+        SequencedMap<PlayerColor, String> collected =
+                playerManager.getPlayers()
+                             .stream()
+                             .map(playerManager::getPlayer)
+                             .filter(Optional::isPresent)
+                             .map(Optional::get)
+                             .collect(Collectors.toMap(
+                                     Player::color,
+                                     Player::nickname,
+                                     (a, b) -> a,
+                                     LinkedHashMap::new));
 
         LOGGER.debug("MODEL: Players info: {}", collected);
 

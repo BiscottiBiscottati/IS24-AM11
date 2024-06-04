@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.SequencedMap;
 import java.util.Set;
 
 /**
@@ -42,7 +43,7 @@ public interface ServerTableConnector {
 
     void sendFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard);
 
-    void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers);
+    void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers);
 
     void updateNumOfPlayers(@NotNull Integer numOfPlayers);
 

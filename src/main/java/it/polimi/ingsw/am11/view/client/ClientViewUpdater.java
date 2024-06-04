@@ -7,26 +7,27 @@ import it.polimi.ingsw.am11.model.table.GameStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.SequencedMap;
 import java.util.Set;
 
 public interface ClientViewUpdater {
 
-    void updateDeckTop(PlayableCardType type, Color color);
+    void updateDeckTop(@NotNull PlayableCardType type, Color color);
 
-    void updateField(String nickname, int x, int y, int cardId,
+    void updateField(@NotNull String nickname, int x, int y, int cardId,
                      boolean isRetro, boolean removeMode);
 
     void updateShownPlayable(Integer previousId, Integer currentId);
 
-    void updateTurnChange(String nickname);
+    void updateTurnChange(@NotNull String nickname);
 
-    void updatePlayerPoint(String nickname, int points);
+    void updatePlayerPoint(@NotNull String nickname, int points);
 
-    void updateGameStatus(GameStatus status);
+    void updateGameStatus(@NotNull GameStatus status);
 
-    void updateCommonObjective(Set<Integer> cardId, boolean removeMode);
+    void updateCommonObjective(@NotNull Set<Integer> cardId, boolean removeMode);
 
-    void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard);
+    void receiveFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard);
 
     void updateHand(int cardId, boolean removeMode);
 
@@ -38,7 +39,7 @@ public interface ClientViewUpdater {
 
     void notifyGodPlayer();
 
-    void updatePlayers(Map<PlayerColor, String> currentPlayers);
+    void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers);
 
     void updateNumOfPlayers(int numOfPlayers);
 

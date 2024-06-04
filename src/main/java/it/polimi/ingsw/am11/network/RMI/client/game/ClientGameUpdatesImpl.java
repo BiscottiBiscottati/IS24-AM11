@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 import java.util.Map;
+import java.util.SequencedMap;
 import java.util.Set;
 
 public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater)
@@ -91,7 +92,7 @@ public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater)
     }
 
     @Override
-    public void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers)
+    public void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers)
     throws RemoteException {
         viewUpdater.updatePlayers(currentPlayers);
     }

@@ -11,6 +11,7 @@ import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.SequencedMap;
 import java.util.Set;
 
 public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
@@ -26,13 +27,13 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updateDeckTop(PlayableCardType type, Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, Color color) {
         guiObserver.updateDeckTop(type, color);
         miniGameModel.table().refreshDeckTop(type, color);
     }
 
     @Override
-    public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
+    public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro,
                             boolean removeMode) {
         guiObserver.updateField(nickname, x, y, cardId, isRetro, removeMode);
 
@@ -46,25 +47,25 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updateTurnChange(String nickname) {
+    public void updateTurnChange(@NotNull String nickname) {
         guiObserver.updateTurnChange(nickname);
         miniGameModel.setCurrentTurn(nickname);
     }
 
     @Override
-    public void updatePlayerPoint(String nickname, int points) {
+    public void updatePlayerPoint(@NotNull String nickname, int points) {
         miniGameModel.addPoints(nickname, points);
         guiObserver.updatePlayerPoint(nickname, points);
     }
 
     @Override
-    public void updateGameStatus(GameStatus status) {
+    public void updateGameStatus(@NotNull GameStatus status) {
         guiObserver.updateGameStatus(status);
         miniGameModel.table().setStatus(status);
     }
 
     @Override
-    public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
+    public void updateCommonObjective(@NotNull Set<Integer> cardId, boolean removeMode) {
         if (removeMode) {
             for (int id : cardId) {
                 miniGameModel.table().removeCommonObjective(id);
@@ -78,7 +79,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+    public void receiveFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard) {
         miniGameModel.setFinalLeaderboard(finalLeaderboard);
         guiObserver.receiveFinalLeaderboard(finalLeaderboard);
     }
@@ -123,7 +124,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
+    public void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers) {
         guiObserver.updatePlayers(currentPlayers);
         for (Map.Entry<PlayerColor, String> entry : currentPlayers.entrySet()) {
             miniGameModel.addPlayer(entry.getValue(), entry.getKey());

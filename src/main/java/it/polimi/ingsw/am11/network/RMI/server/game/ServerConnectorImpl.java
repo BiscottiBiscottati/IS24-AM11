@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.util.Map;
+import java.util.SequencedMap;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -215,7 +216,7 @@ public record ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConn
     }
 
     @Override
-    public void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers) {
+    public void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers) {
         executorService.submit(() -> {
             try {
                 remoteConnector.updatePlayers(currentPlayers);

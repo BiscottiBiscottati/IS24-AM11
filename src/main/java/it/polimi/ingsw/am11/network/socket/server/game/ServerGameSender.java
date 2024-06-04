@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 import java.util.Map;
+import java.util.SequencedMap;
 import java.util.Set;
 
 public record ServerGameSender(@NotNull PrintWriter out)
@@ -154,7 +155,7 @@ public record ServerGameSender(@NotNull PrintWriter out)
     }
 
     @Override
-    public void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers) {
+    public void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers) {
         try {
             ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
             json.put("method", "updatePlayers");

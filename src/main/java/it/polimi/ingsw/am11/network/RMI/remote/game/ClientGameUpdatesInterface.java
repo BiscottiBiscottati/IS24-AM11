@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Map;
+import java.util.SequencedMap;
 import java.util.Set;
 
 public interface ClientGameUpdatesInterface extends Remote {
@@ -42,7 +43,8 @@ public interface ClientGameUpdatesInterface extends Remote {
     void updateCommonObjective(@NotNull Set<Integer> cardID, boolean removeMode)
     throws RemoteException;
 
-    void updatePlayers(@NotNull Map<PlayerColor, String> currentPlayers) throws RemoteException;
+    void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers)
+    throws RemoteException;
 
     void notifyGodPlayer() throws RemoteException;
 

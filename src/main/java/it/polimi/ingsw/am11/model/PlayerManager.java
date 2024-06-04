@@ -355,9 +355,9 @@ public class PlayerManager {
     public void load(@NotNull PlayerManagerMemento memento) {
         hardReset();
 
-        memento.players()
-               .forEach(playerMemento -> {
-                   Player player = Player.load(playerMemento);
+        memento.players().stream()
+               .map(Player::load)
+               .forEach(player -> {
                    players.put(player.nickname(), player);
                    playerQueue.add(player);
                });
