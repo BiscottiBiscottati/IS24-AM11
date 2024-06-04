@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 
 import java.util.Set;
 
-public class SettingObjCardsPage {
+public class SetObjCardsPage {
 
     Label ChooseObj;
     ImageView obj1;

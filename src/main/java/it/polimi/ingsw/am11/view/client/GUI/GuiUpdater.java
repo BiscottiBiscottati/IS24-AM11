@@ -9,12 +9,16 @@ import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
 
 public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GuiUpdater.class);
+
     private final GuiExceptionReceiver exceptionReceiver;
     private final GuiObserver guiObserver;
     MiniGameModel miniGameModel;
@@ -106,6 +110,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     @Override
     public void receiveStarterCard(int cardId) {
+        LOGGER.debug("Received starter card: {}", cardId);
         miniGameModel.addStarterCard(cardId);
         guiObserver.receiveStarterCard(cardId);
     }

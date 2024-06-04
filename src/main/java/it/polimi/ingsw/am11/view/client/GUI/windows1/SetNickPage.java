@@ -12,7 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class SettingNickPage {
+public class SetNickPage {
     private final CodexNaturalis1 codexNaturalis;
     MiniGameModel miniGameModel;
     GuiActuator guiActuator;
@@ -24,7 +24,7 @@ public class SettingNickPage {
     int halfButtonSize, distanceToBorder;
 
 
-    public SettingNickPage(CodexNaturalis1 codexNaturalis) {
+    public SetNickPage(CodexNaturalis1 codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
     }
 

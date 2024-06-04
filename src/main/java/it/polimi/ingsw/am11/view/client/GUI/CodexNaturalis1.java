@@ -33,8 +33,9 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
     int WindowSize, halfButtonSize, distanceToBorder;
     LoadingScreen loadingScreen;
     NetworkPage networkPage;
-    SettingNickPage settingNickPage;
+    SetNickPage setNickPage;
     WaitingRoomPage waitingRoomPage;
+    SetNumOfPlayersPage setNumOfPlayersPage;
     private StackPane root;
     private FrameHandler frameHandler;
     private CountDownLatch latch;
@@ -78,10 +79,12 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
         loadingScreen.createLoadingScreen();
         networkPage = new NetworkPage(this);
         networkPage.createNetworkPage();
-        settingNickPage = new SettingNickPage(this);
-        settingNickPage.createSettingNickPage();
+        setNickPage = new SetNickPage(this);
+        setNickPage.createSettingNickPage();
         waitingRoomPage = new WaitingRoomPage(this);
         waitingRoomPage.createWaitingRoomPage();
+        setNumOfPlayersPage = new SetNumOfPlayersPage(this);
+        setNumOfPlayersPage.createNumOfPlayersPage();
 
     }
 
@@ -139,11 +142,19 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
     }
 
     public void showSettingNickPage() {
-        settingNickPage.showSettingNickPage();
+        setNickPage.showSettingNickPage();
     }
 
     public void showWaitingRoomPage() {
         waitingRoomPage.showWaitingRoomPage();
+    }
+
+    public void hideWaitingRoomPage() {
+        waitingRoomPage.hideWaitingRoomPage();
+    }
+
+    public void showSetNumOfPlayersPage() {
+        setNumOfPlayersPage.showSetNumOfPlayersPage();
     }
 
     @Override
@@ -204,19 +215,24 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
 
     @Override
     public void receiveStarterCard(int cardId) {
-
+        hideWaitingRoomPage();
+        System.out.println("Received starter card in gui: " + cardId);
+        SetStarterCardsPage setStarterCardsPage = new SetStarterCardsPage(this);
+        setStarterCardsPage.createStarterCardsPage(cardId);
+        System.out.println("Created StarterCardPage");
+        setStarterCardsPage.showStarterCardsPage();
     }
 
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
-        SettingObjCardsPage settingObjCardsPage = new SettingObjCardsPage();
-        settingObjCardsPage.createObjCardsWindow(cardId);
+        //SetObjCardsPage setObjCardsPage = new SetObjCardsPage();
+        //setObjCardsPage.createObjCardsWindow(cardId);
 
     }
 
     @Override
     public void notifyGodPlayer() {
-        //TODO: showSetNumberOfPlayersPage();
+        showSetNumOfPlayersPage();
     }
 
     @Override

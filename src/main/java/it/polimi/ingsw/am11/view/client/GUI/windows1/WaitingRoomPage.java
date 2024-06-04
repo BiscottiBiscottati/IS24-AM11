@@ -50,4 +50,9 @@ public class WaitingRoomPage {
         loadingWheel.setVisible(true);
 
     }
+
+    public void hideWaitingRoomPage() {
+        waitingForPlayers.setVisible(false);
+        loadingWheel.setVisible(false);
+    }
 }

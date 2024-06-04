@@ -51,6 +51,8 @@ public class PongHandler implements Runnable {
         long last = lastPong.get();
         if (last == - 1) return;
         if (now - last > PONG_TIMEOUT) {
+            LOGGER.debug("CLIENT TCP: A pong timeout occurred: {} ms",
+                         now - last);
             LOGGER.info("CLIENT TCP: Pong timeout, closing connection");
             try {
                 socket.close();

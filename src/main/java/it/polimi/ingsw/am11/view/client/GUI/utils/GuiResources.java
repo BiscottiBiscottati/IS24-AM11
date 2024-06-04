@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.view.client.GUI.utils;
 
 import it.polimi.ingsw.am11.view.client.GUI.window.CodexNaturalis;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -36,5 +37,20 @@ public class GuiResources {
 
     public String getUrlString(GuiResEnum name) {
         return String.valueOf(getTheUrl(name));
+    }
+
+    public ImageView getCardImage(int cardId) {
+        URL url = CodexNaturalis.class.getResource(cardId + ".png");
+        String urlString = String.valueOf(url);
+        System.out.println();
+        Image image = new Image(urlString);
+        return new ImageView(image);
+    }
+
+    public ImageView getCardImageRetro(int cardId) {
+        URL url = CodexNaturalis.class.getResource(cardId + "_Retro.png");
+        String urlString = String.valueOf(url);
+        Image image = new Image(urlString);
+        return new ImageView(image);
     }
 }

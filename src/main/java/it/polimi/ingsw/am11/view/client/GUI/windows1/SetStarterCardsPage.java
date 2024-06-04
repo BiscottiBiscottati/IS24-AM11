@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.view.client.GUI.windows1;
 
+import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis1;
+import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import javafx.geometry.Pos;
@@ -12,31 +14,43 @@ import javafx.scene.text.Font;
 
 import java.util.List;
 
-public class SettingStarterCardsPage {
+public class SetStarterCardsPage {
+    private final CodexNaturalis1 codexNaturalis;
+    StackPane root;
+    GuiResources guiResources;
+    GuiActuator guiActuator;
     Label message;
-    ImageView cardImage;
-    ImageView cardRetro;
+    ImageView cardImage, cardRetro;
     VBox layout;
+    Font font;
+    int halfButtonSize;
 
-    public void createStarterCardsWindow(int cardId, Font font, GuiResources guiResources,
-                                         int halfButtonSize, StackPane root) {
-        // Create the starter cards
+    public SetStarterCardsPage(CodexNaturalis1 codexNaturalis) {
+        this.codexNaturalis = codexNaturalis;
+    }
 
+
+    public void createStarterCardsPage(int cardId) {
+        root = codexNaturalis.getRoot();
+        font = codexNaturalis.getFont();
+        halfButtonSize = codexNaturalis.getHalfButtonSize();
+        guiResources = codexNaturalis.getGuiResources();
+        guiActuator = codexNaturalis.getGuiActuator();
         message = new Label("This is your starter card:");
         message.setFont(font);
         message.setAlignment(Pos.CENTER);
         message.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5;" +
                          " -fx-max-width: " + 20 * halfButtonSize);
-        cardImage = guiResources.getTheImageView(GuiResEnum.getEnumByCardId(cardId));
+        cardImage = guiResources.getCardImage(cardId);
         cardImage.setFitHeight(200);
         cardImage.setFitWidth(100);
 
-        cardRetro = guiResources.getTheImageView(GuiResEnum.getEnumByCardIdRetro(cardId));
+        cardRetro = guiResources.getCardImageRetro(cardId);
         cardRetro.setFitHeight(200);
         cardRetro.setFitWidth(100);
 
         layout = new VBox(10);
-        layout.getChildren().addAll(message, cardImage);
+        layout.getChildren().addAll(message, cardImage, cardRetro);
         layout.setAlignment(Pos.CENTER);
 
         root.getChildren().add(layout);
@@ -44,10 +58,7 @@ public class SettingStarterCardsPage {
         layout.setVisible(false);
     }
 
-    public void showStarterCardsWindow(ProgressIndicator loadingwheel, List<Label> labels) {
-        loadingwheel.setVisible(false);
-        labels.get(6).setVisible(false);
-
+    public void showStarterCardsPage() {
         message.setVisible(true);
         cardImage.setVisible(true);
         layout.setVisible(true);
@@ -58,9 +69,8 @@ public class SettingStarterCardsPage {
             cardRetro.setVisible(false);
             message.setVisible(false);
             layout.setVisible(false);
-
-            //TODO send the card to the server and show SettingObjectiveCardsPage
-
+            guiActuator.setStarterCard(false);
+            codexNaturalis.showWaitingRoomPage();
         });
 
         cardRetro.setOnMouseClicked(event -> {
@@ -68,9 +78,8 @@ public class SettingStarterCardsPage {
             cardRetro.setVisible(false);
             message.setVisible(false);
             layout.setVisible(false);
-
-            //TODO send the card to the server and show SettingObjectiveCardsPage
-
+            guiActuator.setStarterCard(true);
+            codexNaturalis.showWaitingRoomPage();
         });
 
 
