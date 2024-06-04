@@ -7,7 +7,7 @@ import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.model.exceptions.NotInHandException;
-import it.polimi.ingsw.am11.persistence.PersonalSpaceMemento;
+import it.polimi.ingsw.am11.persistence.memento.PersonalSpaceMemento;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;

@@ -20,7 +20,7 @@ import it.polimi.ingsw.am11.model.utils.BasicRuleset;
 import it.polimi.ingsw.am11.model.utils.ReconnectionTimer;
 import it.polimi.ingsw.am11.model.utils.RuleSet;
 import it.polimi.ingsw.am11.model.utils.TurnAction;
-import it.polimi.ingsw.am11.persistence.GameModelMemento;
+import it.polimi.ingsw.am11.persistence.memento.GameModelMemento;
 import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
 import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;

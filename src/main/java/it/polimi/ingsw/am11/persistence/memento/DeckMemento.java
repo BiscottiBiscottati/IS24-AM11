@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.persistence;
+package it.polimi.ingsw.am11.persistence.memento;
 
 import org.jetbrains.annotations.NotNull;
 

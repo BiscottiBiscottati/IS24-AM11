@@ -6,8 +6,8 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.persistence.CardContainerMemento;
-import it.polimi.ingsw.am11.persistence.PositionManagerMemento;
+import it.polimi.ingsw.am11.persistence.memento.CardContainerMemento;
+import it.polimi.ingsw.am11.persistence.memento.PositionManagerMemento;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

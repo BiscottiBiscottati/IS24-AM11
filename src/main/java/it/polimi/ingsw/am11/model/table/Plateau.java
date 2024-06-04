@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.model.table;
 
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
-import it.polimi.ingsw.am11.persistence.PlateauMemento;
+import it.polimi.ingsw.am11.persistence.memento.PlateauMemento;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.table.FinalLeaderboardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent;

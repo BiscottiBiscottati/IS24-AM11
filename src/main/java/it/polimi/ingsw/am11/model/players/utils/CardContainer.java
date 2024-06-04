@@ -7,7 +7,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
-import it.polimi.ingsw.am11.persistence.CardContainerMemento;
+import it.polimi.ingsw.am11.persistence.memento.CardContainerMemento;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

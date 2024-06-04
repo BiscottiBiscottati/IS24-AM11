@@ -12,7 +12,7 @@ import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
-import it.polimi.ingsw.am11.persistence.DeckManagerMemento;
+import it.polimi.ingsw.am11.persistence.memento.DeckManagerMemento;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
