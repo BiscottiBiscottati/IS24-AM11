@@ -90,13 +90,22 @@ public class Chat extends TUIState {
         //This method will receive already checked arguments
         switch (args[0].toLowerCase()) {
             case "/help" -> {
+                if (args.length > 1) {
+                    throw new ParsingErrorException("Too many arguments");
+                }
                 return askForHelp;
             }
             case "/exit" -> {
+                if (args.length > 1) {
+                    throw new ParsingErrorException("Too many arguments");
+                }
                 Actuator.close();
                 return "";
             }
             case "/back" -> {
+                if (args.length > 1) {
+                    throw new ParsingErrorException("Too many arguments");
+                }
                 actuator.goBack();
                 return "";
             }

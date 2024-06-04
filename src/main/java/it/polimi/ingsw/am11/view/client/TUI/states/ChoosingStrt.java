@@ -10,6 +10,8 @@ import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+
 public class ChoosingStrt extends TUIState {
     private static final String askForSide = "Place it on its front or on its retro >>> \033[K";
     private boolean alreadyError = false;
@@ -52,9 +54,32 @@ public class ChoosingStrt extends TUIState {
 
         String word = parser.getPositionalArgs().getFirst();
         switch (word.toLowerCase()) {
-            case "help" -> Actuator.help();
-            //Maybe a return is needed after help
+            case "help" -> {
+                Actuator.help();
+                return;
+            }
             case "exit" -> Actuator.close();
+            case "get" -> {
+                get(actuator, parser);
+            }
+            case "msg", "send" -> {
+                String note;
+                try {
+                    note = Chat.chatter(actuator, Arrays.copyOfRange(args, 1, args.length),
+                                        model.getplayers());
+                } catch (ParsingErrorException e) {
+                    errorsHappensEvenTwice("ERROR: " + e.getMessage());
+                    alreadyError = true;
+                    System.out.print(askForSide);
+                    return;
+                }
+                if (! note.isEmpty()) {
+                    errorsHappensEvenTwice(note);
+                    alreadyError = true;
+                    System.out.print(askForSide);
+                    return;
+                }
+            }
             case "front" -> {
                 isBlocked = true;
                 actuator.setStarter(false);
@@ -111,6 +136,23 @@ public class ChoosingStrt extends TUIState {
             System.out.print("\033[F" + "\033[K");
         }
         System.out.println("\033[F" + "\033[K" + text);
+    }
+
+    private void get(Actuator actuator, ArgParser parser) {
+        if (parser.getPositionalArgs().size() < 2) {
+            errorsHappensEvenTwice("ERROR: get command requires an argument");
+            alreadyError = true;
+            System.out.print(askForSide);
+            return;
+        }
+
+        String word = parser.getPositionalArgs().get(1);
+
+        if (word.toLowerCase().equals("chat")) {
+            actuator.setTuiState(TuiStates.CHAT);
+            return;
+        }
+
     }
 
 }

@@ -60,21 +60,23 @@ public class WatchingTable extends TUIState {
                 get(actuator, parser);
             }
             case "back" -> {
-                if (model.getCurrentTurn().equals(model.myName())) {
-                    if (model.getiPlaced()) {
-                        errorsHappensEvenTwice("You already are on the root page, you need to " +
-                                               "pick a card");
-                        alreadyError = true;
-                        System.out.print(askForCommand);
-                    } else {
-                        actuator.setTuiState(TuiStates.WATCHING_FIELD);
-                    }
-                } else {
-                    errorsHappensEvenTwice("You already are on the root page, wait for your turn," +
-                                           " you can watch other players fields");
-                    alreadyError = true;
-                    System.out.print(askLine);
-                }
+                actuator.goBack();
+//                if (model.getCurrentTurn().equals(model.myName())) {
+//                    if (model.getiPlaced()) {
+//                        errorsHappensEvenTwice("You already are on the root page, you need to " +
+//                                               "pick a card");
+//                        alreadyError = true;
+//                        System.out.print(askForCommand);
+//                    } else {
+//                        actuator.setTuiState(TuiStates.WATCHING_FIELD);
+//                    }
+//                } else {
+//                    errorsHappensEvenTwice("You already are on the root page, wait for your
+//                    turn," +
+//                                           " you can watch other players fields");
+//                    alreadyError = true;
+//                    System.out.print(askLine);
+//                }
             }
             case "draw", "pick" -> {
                 assert model.getCurrentTurn() != null;

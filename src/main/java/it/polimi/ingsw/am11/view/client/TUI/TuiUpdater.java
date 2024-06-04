@@ -36,7 +36,6 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private final AtomicReference<TUIState> currentState;
     private final AtomicReference<TUIState> homeState;
     private String candidateNick = "";
-    private int unreadMessages = 0;
 
     public TuiUpdater(@NotNull MiniGameModel model, TuiStates startingState) {
         this.model = model;
@@ -293,7 +292,6 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveMsg(@NotNull String sender, @NotNull String msg) {
         model.addChatMessage(sender + ": " + msg);
-        unreadMessages++;
         if (isCurrentState(TuiStates.CHAT)) {
             currentState.get().restart(false, null);
         }
@@ -302,7 +300,6 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
         model.addChatMessage("[PRIVATE]" + sender + ": " + msg);
-        unreadMessages++;
         if (isCurrentState(TuiStates.CHAT)) {
             currentState.get().restart(false, null);
         }

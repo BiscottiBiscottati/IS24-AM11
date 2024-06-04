@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.smartcardio.Card;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ChoosingObj extends TUIState {
     private static final String askForObj = "Choose one of the objectives above >>> \033[K";
@@ -60,6 +61,27 @@ public class ChoosingObj extends TUIState {
                 Actuator.help();
                 return;
             }
+            case "get" -> {
+                get(actuator, parser);
+            }
+            case "msg", "send" -> {
+                String note;
+                try {
+                    note = Chat.chatter(actuator, Arrays.copyOfRange(args, 1, args.length),
+                                        model.getplayers());
+                } catch (ParsingErrorException e) {
+                    errorsHappensEvenTwice("ERROR: " + e.getMessage());
+                    alreadyError = true;
+                    System.out.print(askForObj);
+                    return;
+                }
+                if (! note.isEmpty()) {
+                    errorsHappensEvenTwice(note);
+                    alreadyError = true;
+                    System.out.print(askForObj);
+                    return;
+                }
+            }
             //Maybe a return is needed after help
             case "exit" -> Actuator.close();
         }
@@ -98,7 +120,8 @@ public class ChoosingObj extends TUIState {
         System.out.println("You received this objectives:");
 
         try {
-            CardPrinter.printObjectives(new ArrayList<>(model.getCliPlayer(model.myName()).getSpace().getCandidateObjectives()));
+            CardPrinter.printObjectives(new ArrayList<>(
+                    model.getCliPlayer(model.myName()).getSpace().getCandidateObjectives()));
         } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
@@ -123,4 +146,22 @@ public class ChoosingObj extends TUIState {
         }
         System.out.println("\033[F" + "\033[K" + text);
     }
+
+    private void get(Actuator actuator, ArgParser parser) {
+        if (parser.getPositionalArgs().size() < 2) {
+            errorsHappensEvenTwice("ERROR: get command requires an argument");
+            alreadyError = true;
+            System.out.print(askForObj);
+            return;
+        }
+
+        String word = parser.getPositionalArgs().get(1);
+
+        if (word.toLowerCase().equals("chat")) {
+            actuator.setTuiState(TuiStates.CHAT);
+            return;
+        }
+
+    }
+
 }

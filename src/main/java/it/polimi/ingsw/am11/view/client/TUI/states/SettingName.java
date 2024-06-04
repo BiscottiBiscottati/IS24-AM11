@@ -8,6 +8,8 @@ import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+
 public class SettingName extends TUIState {
 
     //TODO: check that the name is not help or other command names
@@ -59,8 +61,10 @@ public class SettingName extends TUIState {
 
         String word = parser.getPositionalArgs().getFirst();
         switch (word.toLowerCase()) {
-            case "help" -> Actuator.help();
-            //Maybe a return is needed after help
+            case "help" -> {
+                Actuator.help();
+                return;
+            }
             case "exit" -> Actuator.close();
         }
 

@@ -94,7 +94,10 @@ public class Connecting extends TUIState {
 
         String word = parser.getPositionalArgs().getFirst();
         switch (word.toLowerCase()) {
-            case "help" -> Actuator.help();
+            case "help" -> {
+                Actuator.help();
+                return;
+            }
             //Maybe a return is needed after help
             case "exit" -> Actuator.close();
         }

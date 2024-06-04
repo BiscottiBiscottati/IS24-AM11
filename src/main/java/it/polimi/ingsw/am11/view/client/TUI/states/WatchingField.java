@@ -113,20 +113,21 @@ public class WatchingField extends TUIState {
                 }
             }
             case "back" -> {
-                if (model.getCurrentTurn().equals(model.myName())) {
-                    if (model.getiPlaced()) {
-                        actuator.setTuiState(TuiStates.WATCHING_TABLE);
-                    } else if (! currentFieldShowed.equals(model.myName())) {
-                        restart(false, null);
-                    } else {
-                        errorsHappensEvenTwice("You already are on the root page, you need to " +
-                                               "place a card");
-                        alreadyError = true;
-                        System.out.print(askForCommand);
-                    }
-                } else {
-                    actuator.setTuiState(TuiStates.WATCHING_TABLE);
-                }
+                actuator.goBack();
+//                if (model.getCurrentTurn().equals(model.myName())) {
+//                    if (model.getiPlaced()) {
+//                        actuator.setTuiState(TuiStates.WATCHING_TABLE);
+//                    } else if (! currentFieldShowed.equals(model.myName())) {
+//                        restart(false, null);
+//                    } else {
+//                        errorsHappensEvenTwice("You already are on the root page, you need to " +
+//                                               "place a card");
+//                        alreadyError = true;
+//                        System.out.print(askForCommand);
+//                    }
+//                } else {
+//                    actuator.setTuiState(TuiStates.WATCHING_TABLE);
+//                }
             }
             default -> {
                 errorsHappensEvenTwice("ERROR: " + word + " is not a valid option");
