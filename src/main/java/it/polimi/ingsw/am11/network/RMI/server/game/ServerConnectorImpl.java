@@ -30,7 +30,7 @@ public record ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConn
     }
 
     public static void start() {
-        executorService = Executors.newCachedThreadPool();
+        executorService = Executors.newSingleThreadExecutor();
     }
 
     @Override
