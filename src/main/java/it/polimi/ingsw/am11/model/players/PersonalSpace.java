@@ -7,7 +7,7 @@ import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.model.exceptions.NotInHandException;
-import it.polimi.ingsw.am11.persistence.memento.PersonalSpaceMemento;
+import it.polimi.ingsw.am11.model.utils.memento.PersonalSpaceMemento;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -156,7 +156,7 @@ public class PersonalSpace {
                                         candidateObjectives.stream()
                                                            .map(ObjectiveCard::getId)
                                                            .collect(Collectors.toSet()),
-                                        starterCard.getId());
+                                        starterCard != null ? starterCard.getId() : - 1);
     }
 
     public void load(@NotNull PersonalSpaceMemento memento) {

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.persistence.memento;
+package it.polimi.ingsw.am11.model.utils.memento;
 
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.jetbrains.annotations.NotNull;

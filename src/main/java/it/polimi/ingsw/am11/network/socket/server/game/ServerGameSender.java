@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
 import it.polimi.ingsw.am11.network.socket.utils.ContextJSON;
@@ -68,6 +69,16 @@ public record ServerGameSender(@NotNull PrintWriter out)
         ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
         json.put("method", "youGodPlayer");
         out.println(json);
+    }
+
+    @Override
+    public void sendReconnection(@NotNull ReconnectionModelMemento memento) {
+        ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
+        try {
+            json.put("memento", JsonFactory.writeValueAsString(memento));
+        } catch (JsonProcessingException e) {
+            LOGGER.error("Error while sending reconnection", e);
+        }
     }
 
     @Override

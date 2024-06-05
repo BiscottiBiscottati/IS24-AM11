@@ -9,10 +9,7 @@ import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.view.events.utils.ActionMode;
-import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
-import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
-import it.polimi.ingsw.am11.view.events.view.player.PersonalObjectiveChangeEvent;
-import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
+import it.polimi.ingsw.am11.view.events.view.player.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,5 +96,10 @@ public class VirtualPlayerView {
     public void updatePlayer(@NotNull StarterCardEvent event) {
         LOGGER.debug("EVENT: Starter card {} sent to {}", event.getNewValue(), nickname);
         connector.sendStarterCard(event.getNewValue());
+    }
+
+    public void updatePlayer(@NotNull ReconnectionEvent event) {
+        LOGGER.debug("EVENT: Game model memento sent to {}", nickname);
+        connector.sendReconnection(event.getValueOfAction());
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.connector;
 
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.network.RMI.server.game.ServerConnectorImpl;
 import it.polimi.ingsw.am11.network.socket.server.game.ServerGameSender;
 import org.jetbrains.annotations.NotNull;
@@ -24,4 +25,6 @@ public interface ServerPlayerConnector {
     void sendCandidateObjective(@NotNull Set<Integer> cardsId);
 
     void notifyGodPlayer();
+
+    void sendReconnection(@NotNull ReconnectionModelMemento memento); //FIXME to implement
 }

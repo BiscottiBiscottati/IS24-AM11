@@ -1,11 +1,9 @@
-package it.polimi.ingsw.am11.persistence;
+package it.polimi.ingsw.am11.model.utils.persistence;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.polimi.ingsw.am11.persistence.memento.GameModelMemento;
-import it.polimi.ingsw.am11.persistence.utils.DirectoryCreator;
-import it.polimi.ingsw.am11.persistence.utils.SQLQuery;
+import it.polimi.ingsw.am11.model.utils.memento.GameModelMemento;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

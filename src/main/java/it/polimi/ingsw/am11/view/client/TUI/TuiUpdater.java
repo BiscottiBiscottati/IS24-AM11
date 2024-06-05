@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
@@ -248,6 +249,11 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void disconnectedFromServer(@NotNull String message) {
         //TODO to implement exit tui or reset to try to reconnect
+    }
+
+    @Override
+    public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
+        // TODO to implement reconnection
     }
 
     @Override

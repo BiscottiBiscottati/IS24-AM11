@@ -10,7 +10,8 @@ import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException;
-import it.polimi.ingsw.am11.persistence.memento.PickablesTableMemento;
+import it.polimi.ingsw.am11.model.utils.memento.PickablesTableMemento;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionTableMemento;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.table.CommonObjectiveChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.DeckTopChangeEvent;
@@ -18,10 +19,12 @@ import it.polimi.ingsw.am11.view.events.view.table.ShownPlayableEvent;
 import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -225,17 +228,34 @@ public class PickablesTable {
     }
 
     public @NotNull PickablesTableMemento save() {
+        return new PickablesTableMemento(
+                deckManager.save(),
+                shownToIntMap(),
+                commonToIntSet()
+        );
+    }
+
+    private @NotNull @Unmodifiable Map<PlayableCardType, Set<Integer>> shownToIntMap() {
         Map<PlayableCardType, Set<Integer>> temp = new EnumMap<>(PlayableCardType.class);
         shownPlayable.forEach((type, cards) -> temp.put(type, cards.stream()
                                                                    .map(PlayableCard::getId)
                                                                    .collect(Collectors.toSet())));
-        return new PickablesTableMemento(
-                deckManager.save(),
-                Map.copyOf(temp),
-                commonObjectives.stream()
-                                .map(ObjectiveCard::getId)
-                                .collect(Collectors.toSet())
-        );
+        return Map.copyOf(temp);
+    }
+
+    private @NotNull @Unmodifiable Set<Integer> commonToIntSet() {
+        return commonObjectives.stream()
+                               .map(ObjectiveCard::getId)
+                               .collect(Collectors.toUnmodifiableSet());
+    }
+
+    public @NotNull ReconnectionTableMemento savePublic() {
+        return new ReconnectionTableMemento(
+                Stream.of(PlayableCardType.values())
+                      .collect(Collectors.toMap(Function.identity(),
+                                                this::getDeckTop)),
+                shownToIntMap(),
+                commonToIntSet());
     }
 
     public void load(@NotNull PickablesTableMemento memento) {

@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
 import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
-import it.polimi.ingsw.am11.persistence.memento.PlateauMemento;
+import it.polimi.ingsw.am11.model.utils.memento.PlateauMemento;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

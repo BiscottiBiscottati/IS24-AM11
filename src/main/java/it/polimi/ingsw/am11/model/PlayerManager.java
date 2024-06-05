@@ -12,7 +12,7 @@ import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.utils.TurnAction;
-import it.polimi.ingsw.am11.persistence.memento.PlayerManagerMemento;
+import it.polimi.ingsw.am11.model.utils.memento.PlayerManagerMemento;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
@@ -347,6 +347,19 @@ public class PlayerManager {
         return new PlayerManagerMemento(
                 playerQueue.stream()
                            .map(Player::save)
+                           .toList(),
+                firstPlayer != null ? firstPlayer.nickname() : null,
+                currentPlaying != null ? currentPlaying.nickname() : null,
+                currentAction
+        );
+    }
+
+    public @NotNull PlayerManagerMemento save(@NotNull String nickname) {
+        return new PlayerManagerMemento(
+                playerQueue.stream()
+                           .map(player -> player.nickname().equals(nickname) ?
+                                          player.save() :
+                                          player.savePublic())
                            .toList(),
                 firstPlayer != null ? firstPlayer.nickname() : null,
                 currentPlaying != null ? currentPlaying.nickname() : null,

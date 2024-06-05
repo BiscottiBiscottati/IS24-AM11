@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
@@ -144,6 +145,11 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void disconnectedFromServer(@NotNull String message) {
         guiObserver.disconnectedFromServer();
+    }
+
+    @Override
+    public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
+        // TODO to implemento reconnection
     }
 
     @Override

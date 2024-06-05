@@ -8,7 +8,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.persistence.memento.FieldMemento;
+import it.polimi.ingsw.am11.model.utils.memento.FieldMemento;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

@@ -7,7 +7,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
-import it.polimi.ingsw.am11.persistence.memento.ItemManagerMemento;
+import it.polimi.ingsw.am11.model.utils.memento.ItemManagerMemento;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;

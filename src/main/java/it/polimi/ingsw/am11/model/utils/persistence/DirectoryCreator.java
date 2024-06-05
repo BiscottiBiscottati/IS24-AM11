@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.persistence.utils;
+package it.polimi.ingsw.am11.model.utils.persistence;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

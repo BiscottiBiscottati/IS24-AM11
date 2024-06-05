@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
@@ -99,6 +100,20 @@ public record ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConn
                 LOGGER.warn("SERVER RMI: Player disconnected or closed while notifying god player");
             } catch (RemoteException e) {
                 LOGGER.error("SERVER RMI: Error while notifying god player", e);
+            }
+        });
+    }
+
+    @Override
+    public void sendReconnection(@NotNull ReconnectionModelMemento memento) {
+        LOGGER.info("SERVER RMI: Sending reconnection");
+        executorService.submit(() -> {
+            try {
+                remoteConnector.sendReconnection(memento);
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn("SERVER RMI: Player disconnected or closed while sending reconnection");
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while sending reconnection", e);
             }
         });
     }

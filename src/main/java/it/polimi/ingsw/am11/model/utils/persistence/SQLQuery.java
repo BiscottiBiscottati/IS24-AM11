@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.persistence.utils;
+package it.polimi.ingsw.am11.model.utils.persistence;
 
 public class SQLQuery {
     public static final String CREATE_SAVES_TABLE = """

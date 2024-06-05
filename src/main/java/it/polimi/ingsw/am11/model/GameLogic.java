@@ -15,13 +15,19 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.table.PickablesTable;
 import it.polimi.ingsw.am11.model.table.Plateau;
-import it.polimi.ingsw.am11.model.utils.*;
-import it.polimi.ingsw.am11.persistence.memento.GameModelMemento;
+import it.polimi.ingsw.am11.model.utils.BasicRuleset;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.model.utils.RuleSet;
+import it.polimi.ingsw.am11.model.utils.TurnAction;
+import it.polimi.ingsw.am11.model.utils.memento.GameModelMemento;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
+import it.polimi.ingsw.am11.model.utils.resilience.ReconnectionTimer;
 import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;
 import it.polimi.ingsw.am11.view.events.listeners.TableListener;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
 import it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.player.PersonalObjectiveChangeEvent;
+import it.polimi.ingsw.am11.view.events.view.player.ReconnectionEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.PlayerInfoEvent;
 import org.jetbrains.annotations.NotNull;
@@ -864,6 +870,12 @@ public class GameLogic implements GameModel {
         if (playerManager.isTurnOf(nickname)) {
             reconnectionTimer.reconnectCurrent();
         }
+
+        ReconnectionModelMemento memento = new ReconnectionModelMemento(pickablesTable.savePublic(),
+                                                                        plateau.save(),
+                                                                        playerManager.save(
+                                                                                nickname));
+        pcs.fireEvent(new ReconnectionEvent(nickname, memento));
 
     }
 

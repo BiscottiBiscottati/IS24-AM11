@@ -15,7 +15,7 @@ import it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException;
 import it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.model.exceptions.NotInHandException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.persistence.memento.PersonalSpaceMemento;
+import it.polimi.ingsw.am11.model.utils.memento.PersonalSpaceMemento;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

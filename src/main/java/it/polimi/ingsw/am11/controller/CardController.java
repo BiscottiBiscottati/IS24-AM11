@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.persistence.SavesManager;
+import it.polimi.ingsw.am11.model.utils.persistence.SavesManager;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

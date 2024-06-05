@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,4 +50,6 @@ public interface ClientGameUpdatesInterface extends Remote {
     void notifyGodPlayer() throws RemoteException;
 
     void updateNumOfPlayers(int numberOfPlayers) throws RemoteException;
+
+    void sendReconnection(@NotNull ReconnectionModelMemento memento) throws RemoteException;
 }

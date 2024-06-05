@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -44,6 +45,8 @@ public interface ClientViewUpdater {
     void updateNumOfPlayers(int numOfPlayers);
 
     void disconnectedFromServer(@NotNull String message);
+
+    void receiveReconnection(@NotNull ReconnectionModelMemento memento);
 
     @NotNull
     ExceptionThrower getExceptionThrower();
