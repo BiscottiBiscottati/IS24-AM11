@@ -13,7 +13,7 @@ import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.field.PositionManager;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
-import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.view.events.PlayerViewEvent;
 import it.polimi.ingsw.am11.view.events.TableViewEvent;
 import it.polimi.ingsw.am11.view.events.listeners.PlayerListener;

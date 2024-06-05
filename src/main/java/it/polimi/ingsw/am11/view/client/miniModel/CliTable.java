@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.view.client.miniModel;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
 
 import java.util.EnumMap;
 import java.util.HashSet;

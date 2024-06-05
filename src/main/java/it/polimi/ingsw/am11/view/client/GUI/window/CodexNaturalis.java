@@ -5,7 +5,7 @@ import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.GuiExceptionReceiver;
 import it.polimi.ingsw.am11.view.client.GUI.GuiObserver;

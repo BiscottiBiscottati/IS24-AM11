@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.persistence;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.model.GameLogic;
 import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
@@ -7,7 +9,8 @@ import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.persistence.memento.GameModelMemento;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +25,6 @@ class SavesManagerTest {
 
     @AfterAll
     static void afterAll() {
-        SavesManager.deleteAll();
     }
 
     @BeforeEach
@@ -86,5 +88,15 @@ class SavesManagerTest {
         assertEquals(objsChen, model.getCandidateObjectives("chen"));
         assertEquals(objsEdo, model.getCandidateObjectives("edo"));
         assertEquals(objsFerdi, model.getCandidateObjectives("ferdi"));
+    }
+
+    @Test
+    void jsonSerializationTest() throws JsonProcessingException {
+        GameModelMemento memento = model.save();
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        String json = mapper.writeValueAsString(memento);
+        System.out.println(json);
     }
 }

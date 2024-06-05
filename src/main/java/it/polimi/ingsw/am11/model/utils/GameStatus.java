@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.model.table;
+package it.polimi.ingsw.am11.model.utils;
 
 public enum GameStatus {
     SETUP,

@@ -6,14 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.persistence.memento.GameModelMemento;
 import it.polimi.ingsw.am11.persistence.utils.DirectoryCreator;
 import it.polimi.ingsw.am11.persistence.utils.SQLQuery;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
@@ -31,29 +28,20 @@ public class SavesManager {
     private static final String CONNECTION_URL = "jdbc:sqlite:" + DB_PATH;
 
     public static void saveGame(@NotNull GameModelMemento modelMemento) {
-        if (Files.notExists(DB_PATH)) {
-            try {
-                DirectoryCreator.createGameDirectories();
-                Files.createFile(DB_PATH);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        createDB();
 
         try (Connection conn = DriverManager.getConnection(CONNECTION_URL);
              Statement statement = conn.createStatement()) {
-            statement.addBatch(SQLQuery.CREATE_SAVES_TABLE);
-            statement.addBatch(SQLQuery.CREATE_CUSTOM_TABLE);
-            statement.executeBatch();
+
+            createTables(statement);
 
             String saveTime = LocalDateTime.now(ZoneId.of("Europe/Rome"))
                                            .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            String saveData = MAPPER.writeValueAsString(modelMemento);
 
             try (PreparedStatement insertStm = conn.prepareStatement(SQLQuery.INSERT_SAVE)) {
                 insertStm.setString(1, saveTime);
-
-                insertStm.setBytes(2, MAPPER.writeValueAsBytes(modelMemento));
-
+                insertStm.setString(2, saveData);
                 insertStm.executeUpdate();
             }
 
@@ -63,16 +51,21 @@ public class SavesManager {
         }
     }
 
-    @Contract("_ -> new")
-    private static byte @NotNull [] toBytes(@NotNull GameModelMemento modelMemento) {
-        try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-             ObjectOutputStream out = new ObjectOutputStream(byteOut)) {
-            out.writeObject(modelMemento);
-            out.flush();
-            return byteOut.toByteArray();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private static void createDB() {
+        if (Files.notExists(DB_PATH)) {
+            try {
+                DirectoryCreator.createGameDirectories();
+                Files.createFile(DB_PATH);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
+    }
+
+    private static void createTables(@NotNull Statement statement) throws SQLException {
+        statement.addBatch(SQLQuery.CREATE_SAVES_TABLE);
+        statement.addBatch(SQLQuery.CREATE_CUSTOM_TABLE);
+        statement.executeBatch();
     }
 
     public static Optional<GameModelMemento> loadMostRecentGame() {
@@ -88,9 +81,10 @@ public class SavesManager {
                 return Optional.empty();
             }
 
-            byte[] data = resultSet.getBytes("save_data");
+            String data = resultSet.getString("save_data");
 
-            return Optional.of(MAPPER.readValue(data, new TypeReference<>() {}));
+            GameModelMemento modelMemento = MAPPER.readValue(data, new TypeReference<>() {});
+            return Optional.of(modelMemento);
 
         } catch (SQLException | IOException e) {
             LOGGER.error("Error loading game: {}", e.getMessage());
@@ -99,6 +93,8 @@ public class SavesManager {
     }
 
     public static void deleteAll() {
+        if (Files.notExists(DB_PATH)) return;
+
         try (Connection conn = DriverManager.getConnection(CONNECTION_URL);
              Statement statement = conn.createStatement()) {
             statement.addBatch(SQLQuery.DELETE_ALL_SAVES);

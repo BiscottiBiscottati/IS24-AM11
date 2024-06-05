@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.network.RMI.server.game;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.connector.ServerTableConnector;

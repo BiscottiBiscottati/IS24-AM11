@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.model.players.utils;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,8 +23,15 @@ public record Position(int x, int y) implements Serializable {
         return new Position(x, y);
     }
 
+    @JsonCreator
+    public static @NotNull Position of(@NotNull String s) {
+        String[] parts = s.split(";");
+        return new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+    }
+
+    @Contract(pure = true)
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return x + ";" + y;
     }
 

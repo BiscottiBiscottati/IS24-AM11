@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.network.RMI.client;
 
 import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
-import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.network.RMI.server.ServerRMI;
 import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;

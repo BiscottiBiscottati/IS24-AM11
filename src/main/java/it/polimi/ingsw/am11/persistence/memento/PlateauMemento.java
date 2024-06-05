@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.persistence.memento;
 
-import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;

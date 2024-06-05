@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.view.events.view.table;
 
-import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.view.events.TableViewEvent;
 import it.polimi.ingsw.am11.view.server.VirtualTableView;
 import org.jetbrains.annotations.NotNull;

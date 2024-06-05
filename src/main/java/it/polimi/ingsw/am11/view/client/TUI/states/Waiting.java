@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
-import it.polimi.ingsw.am11.model.table.GameStatus;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
