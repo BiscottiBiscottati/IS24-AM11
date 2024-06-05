@@ -46,4 +46,6 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.view.client.GUI.windows1;
     opens it.polimi.ingsw.am11.view.client.GUI.windows1 to javafx.fxml;
 
+    exports it.polimi.ingsw.am11.persistence.memento to com.fasterxml.jackson.databind;
+
 }
