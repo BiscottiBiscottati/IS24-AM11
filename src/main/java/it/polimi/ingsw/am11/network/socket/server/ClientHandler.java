@@ -29,7 +29,7 @@ public class ClientHandler implements Runnable {
     private final @NotNull BufferedReader in;
     private final @NotNull PrintWriter out;
     private @Nullable ServerMessageHandler messageHandler;
-    private String nickname;
+    private @Nullable String nickname;
     private boolean isRunning;
 
     public ClientHandler(@NotNull Socket clientSocket) {

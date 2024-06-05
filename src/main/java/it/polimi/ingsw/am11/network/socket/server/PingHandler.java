@@ -19,11 +19,11 @@ public class PingHandler implements Runnable {
     private static final int PING_INTERVAL = 1000;
     private static final int PING_TIMEOUT = 3000;
 
-    private final Socket clientSocket;
-    private final PrintWriter out;
-    private final ObjectNode pongMessage;
-    private final ScheduledExecutorService pingExecutor;
-    private final AtomicLong lastPing;
+    private final @NotNull Socket clientSocket;
+    private final @NotNull PrintWriter out;
+    private final @NotNull ObjectNode pongMessage;
+    private final @NotNull ScheduledExecutorService pingExecutor;
+    private final @NotNull AtomicLong lastPing;
 
     public PingHandler(@NotNull Socket clientSocket,
                        @NotNull PrintWriter out) {

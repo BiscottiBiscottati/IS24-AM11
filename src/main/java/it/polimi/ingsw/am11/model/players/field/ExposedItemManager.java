@@ -91,6 +91,7 @@ public class ExposedItemManager {
         };
     }
 
+    @NotNull
     ItemManagerMemento save() {
         return new ItemManagerMemento(Map.copyOf(exposedColors), Map.copyOf(exposedSymbols),
                                       Map.copyOf(placedCardColors));

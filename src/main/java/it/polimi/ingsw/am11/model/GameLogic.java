@@ -37,12 +37,12 @@ public class GameLogic implements GameModel {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameLogic.class);
 
-    private final RuleSet ruleSet;
-    private final PlayerManager playerManager;
-    private final PickablesTable pickablesTable;
-    private final Plateau plateau;
-    private final ReconnectionTimer reconnectionTimer;
-    private final GameListenerSupport pcs;
+    private final @NotNull RuleSet ruleSet;
+    private final @NotNull PlayerManager playerManager;
+    private final @NotNull PickablesTable pickablesTable;
+    private final @NotNull Plateau plateau;
+    private final @NotNull ReconnectionTimer reconnectionTimer;
+    private final @NotNull GameListenerSupport pcs;
 
     public GameLogic() {
         LOGGER.info("MODEL: Creating a new GameLogic instance");
@@ -982,7 +982,7 @@ public class GameLogic implements GameModel {
         }
     }
 
-    private void checkIfDrawAllowed(String nickname)
+    private void checkIfDrawAllowed(@NotNull String nickname)
     throws GameStatusException, TurnsOrderException, IllegalPickActionException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED ||
             plateau.getStatus() == GameStatus.CHOOSING_STARTERS ||

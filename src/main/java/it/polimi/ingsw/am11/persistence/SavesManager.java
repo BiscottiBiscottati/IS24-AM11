@@ -68,7 +68,7 @@ public class SavesManager {
         statement.executeBatch();
     }
 
-    public static Optional<GameModelMemento> loadMostRecentGame() {
+    public static @NotNull Optional<GameModelMemento> loadMostRecentGame() {
         if (Files.notExists(DB_PATH)) {
             return Optional.empty();
         }

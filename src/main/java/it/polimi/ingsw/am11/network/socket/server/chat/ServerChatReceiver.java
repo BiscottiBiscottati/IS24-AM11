@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class ServerChatReceiver implements MessageReceiver {
 
-    private final ChatController chatController;
-    private final ServerExceptionSender exceptionSender;
+    private final @NotNull ChatController chatController;
+    private final @NotNull ServerExceptionSender exceptionSender;
 
     public ServerChatReceiver(@NotNull ServerExceptionSender exceptionSender) {
         this.chatController = CentralController.INSTANCE.getChatController();

@@ -33,10 +33,10 @@ public class PickablesTable {
     private static int numOfCommonObjectives;
     private static int numOfShownPerType;
     private static int numOfCandidatesObjectives;
-    private final DeckManager deckManager;
-    private final Map<PlayableCardType, Set<PlayableCard>> shownPlayable;
-    private final Set<ObjectiveCard> commonObjectives;
-    private final GameListenerSupport pcs;
+    private final @NotNull DeckManager deckManager;
+    private final @NotNull Map<PlayableCardType, Set<PlayableCard>> shownPlayable;
+    private final @NotNull Set<ObjectiveCard> commonObjectives;
+    private final @NotNull GameListenerSupport pcs;
 
     public PickablesTable(@NotNull GameListenerSupport pcs) {
         this.deckManager = new DeckManager();
@@ -93,7 +93,7 @@ public class PickablesTable {
         PickablesTable.numOfCandidatesObjectives = numOfCandidatesObjectives;
     }
 
-    public Set<ObjectiveCard> getCommonObjectives() {
+    public @NotNull Set<ObjectiveCard> getCommonObjectives() {
         return Collections.unmodifiableSet(commonObjectives);
     }
 
@@ -114,7 +114,7 @@ public class PickablesTable {
         return card;
     }
 
-    public StarterCard pickStarterCard() {
+    public @NotNull StarterCard pickStarterCard() {
         return deckManager.drawStarter()
                           .orElseThrow();
     }
@@ -126,7 +126,7 @@ public class PickablesTable {
         return Set.copyOf(objs);
     }
 
-    public ObjectiveCard pickObjectiveCard() {
+    public @NotNull ObjectiveCard pickObjectiveCard() {
         return deckManager.drawObjective()
                           .orElseThrow();
     }
@@ -224,7 +224,7 @@ public class PickablesTable {
         return deckManager.getNumberRemainingOf(type);
     }
 
-    public PickablesTableMemento save() {
+    public @NotNull PickablesTableMemento save() {
         Map<PlayableCardType, Set<Integer>> temp = new EnumMap<>(PlayableCardType.class);
         shownPlayable.forEach((type, cards) -> temp.put(type, cards.stream()
                                                                    .map(PlayableCard::getId)

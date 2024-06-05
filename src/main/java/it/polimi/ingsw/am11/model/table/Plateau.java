@@ -23,11 +23,11 @@ public class Plateau {
     private static final Logger LOGGER = LoggerFactory.getLogger(Plateau.class);
 
     private static int armageddonTime;
-    private final Map<Player, Integer> playerPoints;
-    private final Map<Player, Integer> counterObjective;
-    private final Map<Player, Integer> finalLeaderboard;
+    private final @NotNull Map<Player, Integer> playerPoints;
+    private final @NotNull Map<Player, Integer> counterObjective;
+    private final @NotNull Map<Player, Integer> finalLeaderboard;
     private final GameListenerSupport pcs;
-    private final AtomicReference<GameStatus> status;
+    private final @NotNull AtomicReference<GameStatus> status;
 
 
     public Plateau(GameListenerSupport pcs) {
@@ -51,7 +51,8 @@ public class Plateau {
         pcs.fireEvent(new GameStatusChangeEvent(oldValue, status));
     }
 
-    public void addPlayerPoints(Player player, int points) throws IllegalPlateauActionException {
+    public void addPlayerPoints(@NotNull Player player, int points)
+    throws IllegalPlateauActionException {
         Integer temp = playerPoints.getOrDefault(player, null);
         if (temp == null) {
             throw new IllegalPlateauActionException("Player not found");
@@ -190,7 +191,7 @@ public class Plateau {
         }
     }
 
-    public List<Player> getWinners() {
+    public @NotNull List<Player> getWinners() {
         List<Player> winners = new ArrayList<>(4);
         for (Map.Entry<Player, Integer> entry : finalLeaderboard.entrySet()) {
             if (entry.getValue() == 1) {
@@ -200,7 +201,7 @@ public class Plateau {
         return winners;
     }
 
-    public void setWinner(Player player) {
+    public void setWinner(@NotNull Player player) {
         finalLeaderboard.keySet()
                         .forEach(p -> finalLeaderboard.put(p, 2));
 
@@ -223,7 +224,7 @@ public class Plateau {
         pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboardString));
     }
 
-    public PlateauMemento save() {
+    public @NotNull PlateauMemento save() {
         Map<String, Integer> tempPoints = toNickMap(playerPoints);
         Map<String, Integer> tempCounterObjective = toNickMap(counterObjective);
         Map<String, Integer> tempFinalLeaderboard = toNickMap(finalLeaderboard);

@@ -2,12 +2,13 @@ package it.polimi.ingsw.am11.controller;
 
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
 import java.util.Set;
 
 public class PlayerColorManager {
-    private final Set<PlayerColor> colors;
+    private final @NotNull Set<PlayerColor> colors;
 
     PlayerColorManager() {
         this.colors = EnumSet.allOf(PlayerColor.class);

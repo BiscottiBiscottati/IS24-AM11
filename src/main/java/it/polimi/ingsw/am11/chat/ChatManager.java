@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChatManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatManager.class.getName());
 
-    private final Map<String, ServerChatConnector> chatConnectors;
+    private final @NotNull Map<String, ServerChatConnector> chatConnectors;
 
     public ChatManager() {
         this.chatConnectors = new ConcurrentHashMap<>(8);

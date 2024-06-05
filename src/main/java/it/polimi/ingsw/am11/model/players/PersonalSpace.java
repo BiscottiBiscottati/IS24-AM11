@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException;
 import it.polimi.ingsw.am11.model.exceptions.NotInHandException;
 import it.polimi.ingsw.am11.persistence.memento.PersonalSpaceMemento;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -23,10 +24,10 @@ public class PersonalSpace {
     private static int maxObjectives;
     private static int maxCandidateObjectives;
 
-    private final Set<PlayableCard> playerHand;
-    private final Set<ObjectiveCard> playerObjective;
-    private final Set<ObjectiveCard> candidateObjectives;
-    private StarterCard starterCard;
+    private final @NotNull Set<PlayableCard> playerHand;
+    private final @NotNull Set<ObjectiveCard> playerObjective;
+    private final @NotNull Set<ObjectiveCard> candidateObjectives;
+    private @Nullable StarterCard starterCard;
     private boolean placed;
 
     public PersonalSpace() {
@@ -56,15 +57,15 @@ public class PersonalSpace {
         return placed;
     }
 
-    public Set<PlayableCard> getPlayerHand() {
+    public @NotNull Set<PlayableCard> getPlayerHand() {
         return playerHand;
     }
 
-    public Set<ObjectiveCard> getPlayerObjective() {
+    public @NotNull Set<ObjectiveCard> getPlayerObjective() {
         return playerObjective;
     }
 
-    public Optional<StarterCard> getStarterCard() {
+    public @NotNull Optional<StarterCard> getStarterCard() {
         return Optional.ofNullable(starterCard);
     }
 
@@ -123,7 +124,8 @@ public class PersonalSpace {
 
     }
 
-    public void addObjective(ObjectiveCard newObjective) throws IllegalPlayerSpaceActionException {
+    public void addObjective(@NotNull ObjectiveCard newObjective)
+    throws IllegalPlayerSpaceActionException {
         Optional.of(newObjective)
                 .filter(objective -> ! playerObjective.contains(objective))
                 .orElseThrow(() -> new IllegalPlayerSpaceActionException(
@@ -144,7 +146,7 @@ public class PersonalSpace {
         return maxObjectives == playerObjective.size();
     }
 
-    public PersonalSpaceMemento save() {
+    public @NotNull PersonalSpaceMemento save() {
         return new PersonalSpaceMemento(playerHand.stream()
                                                   .map(PlayableCard::getId)
                                                   .collect(Collectors.toSet()),

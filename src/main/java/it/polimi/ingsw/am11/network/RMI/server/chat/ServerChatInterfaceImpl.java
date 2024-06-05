@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.rmi.RemoteException;
 
 public class ServerChatInterfaceImpl implements ServerChatInterface {
-    private final ChatController chatController;
+    private final @NotNull ChatController chatController;
 
     public ServerChatInterfaceImpl() {
         this.chatController = CentralController.INSTANCE.getChatController();
@@ -22,7 +22,8 @@ public class ServerChatInterfaceImpl implements ServerChatInterface {
     }
 
     @Override
-    public void pubPrivateMsg(@NotNull String sender, @NotNull String recipient, String msg)
+    public void pubPrivateMsg(@NotNull String sender, @NotNull String recipient,
+                              @NotNull String msg)
     throws RemoteException {
         try {
             chatController.sendPrivateMessage(sender, recipient, msg);

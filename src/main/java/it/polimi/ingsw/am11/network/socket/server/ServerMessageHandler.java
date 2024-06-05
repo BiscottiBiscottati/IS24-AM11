@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 public class ServerMessageHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerMessageHandler.class);
 
-    private final ServerGameReceiver messageReceiver;
-    private final ServerChatReceiver chatReceiver;
-    private final PingHandler pingHandler;
+    private final @NotNull ServerGameReceiver messageReceiver;
+    private final @NotNull ServerChatReceiver chatReceiver;
+    private final @NotNull PingHandler pingHandler;
 
     public ServerMessageHandler(@NotNull ServerGameReceiver messageReceiver,
                                 @NotNull PingHandler pingHandler,

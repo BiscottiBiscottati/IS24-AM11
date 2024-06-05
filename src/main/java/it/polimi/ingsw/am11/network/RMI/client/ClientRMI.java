@@ -30,7 +30,7 @@ public class ClientRMI implements ClientNetworkHandler {
     private final @NotNull ClientChatInterface chatInterface;
     private final @NotNull ClientConnectorImpl clientConnectorImpl;
     private final @NotNull HeartbeatSender heartbeatSender;
-    private final ClientChatConnectorImpl chatConnectorImpl;
+    private final @NotNull ClientChatConnectorImpl chatConnectorImpl;
 
     public ClientRMI(@NotNull String ip, int port, @NotNull ClientViewUpdater updater)
     throws RemoteException {

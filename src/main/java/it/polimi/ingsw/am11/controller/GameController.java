@@ -29,13 +29,13 @@ import java.util.concurrent.atomic.AtomicReference;
 public class GameController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
 
-    private final GameModel model;
-    private final CardController cardController;
-    private final Map<String, VirtualPlayerView> playerViews;
-    private final PlayerColorManager playerColor;
-    private final AtomicInteger maxNumOfPlayer;
-    private final AtomicReference<String> godPlayer;
-    private final VirtualTableView tableView;
+    private final @NotNull GameModel model;
+    private final @NotNull CardController cardController;
+    private final @NotNull Map<String, VirtualPlayerView> playerViews;
+    private final @NotNull PlayerColorManager playerColor;
+    private final @NotNull AtomicInteger maxNumOfPlayer;
+    private final @NotNull AtomicReference<String> godPlayer;
+    private final @NotNull VirtualTableView tableView;
 
     GameController() {
         this.model = new GameLogic();
@@ -49,6 +49,7 @@ public class GameController {
         this.godPlayer = new AtomicReference<>(null);
     }
 
+    @NotNull
     VirtualPlayerView connectPlayer(@NotNull String nickname,
                                     @NotNull ServerPlayerConnector playerConnector,
                                     @NotNull ServerTableConnector tableConnector)
@@ -105,8 +106,8 @@ public class GameController {
         }
     }
 
-    private @NotNull VirtualPlayerView createPlayerView(String nickname,
-                                                        ServerPlayerConnector playerConnector) {
+    private @NotNull VirtualPlayerView createPlayerView(@NotNull String nickname,
+                                                        @NotNull ServerPlayerConnector playerConnector) {
         VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
         playerViews.put(nickname, playerView);
         return playerView;

@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.network.connector.ServerChatConnector;
 import org.jetbrains.annotations.NotNull;
 
 public class ChatController {
-    private final ChatManager chatModel;
+    private final @NotNull ChatManager chatModel;
 
     ChatController() {
         chatModel = new ChatManager();

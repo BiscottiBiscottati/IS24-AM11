@@ -18,10 +18,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 
 public class DeckManager {
-    private final Deck<GoldCard> goldDeck;
-    private final Deck<ResourceCard> resourceDeck;
-    private final Deck<ObjectiveCard> objectiveDeck;
-    private final Deck<StarterCard> starterDeck;
+    private final @NotNull Deck<GoldCard> goldDeck;
+    private final @NotNull Deck<ResourceCard> resourceDeck;
+    private final @NotNull Deck<ObjectiveCard> objectiveDeck;
+    private final @NotNull Deck<StarterCard> starterDeck;
 
     public DeckManager() {
         this.goldDeck = GoldDeckFactory.createDeck();
@@ -44,25 +44,25 @@ public class DeckManager {
         starterDeck.shuffle();
     }
 
-    public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
+    public @NotNull Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
         return switch (type) {
             case GOLD -> goldDeck.peekTop().map(GoldCard::getColor);
             case RESOURCE -> resourceDeck.peekTop().map(ResourceCard::getColor);
         };
     }
 
-    public Optional<PlayableCard> drawPlayableFrom(@NotNull PlayableCardType type) {
+    public @NotNull Optional<PlayableCard> drawPlayableFrom(@NotNull PlayableCardType type) {
         return switch (type) {
             case GOLD -> goldDeck.draw().map(PlayableCard.class::cast);
             case RESOURCE -> resourceDeck.draw().map(PlayableCard.class::cast);
         };
     }
 
-    public Optional<StarterCard> drawStarter() {
+    public @NotNull Optional<StarterCard> drawStarter() {
         return starterDeck.draw();
     }
 
-    public Optional<ObjectiveCard> drawObjective() {
+    public @NotNull Optional<ObjectiveCard> drawObjective() {
         return objectiveDeck.draw();
     }
 
@@ -73,7 +73,7 @@ public class DeckManager {
         };
     }
 
-    public DeckManagerMemento save() {
+    public @NotNull DeckManagerMemento save() {
         return new DeckManagerMemento(resourceDeck.save(),
                                       goldDeck.save(),
                                       starterDeck.save(),

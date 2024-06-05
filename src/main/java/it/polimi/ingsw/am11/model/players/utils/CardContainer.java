@@ -10,6 +10,7 @@ import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.persistence.memento.CardContainerMemento;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -37,8 +38,8 @@ import java.util.Optional;
  */
 public class CardContainer {
 
-    private final FieldCard card;
-    private final EnumMap<Corner, Boolean> coveredCorners;
+    private final @NotNull FieldCard card;
+    private final @NotNull EnumMap<Corner, Boolean> coveredCorners;
     private final boolean isRetro;
 
     /**
@@ -62,7 +63,7 @@ public class CardContainer {
         this.isRetro = isRetro;
     }
 
-    public CardContainer(@NotNull FieldCard card, Map<Corner, Boolean> coveredCorners,
+    public CardContainer(@NotNull FieldCard card, @NotNull Map<Corner, Boolean> coveredCorners,
                          boolean isRetro) {
         this.card = card;
         this.coveredCorners = new EnumMap<>(coveredCorners);
@@ -108,7 +109,7 @@ public class CardContainer {
      *
      * @return An immutable <code>Map</code> of the covered corners of the card.
      */
-    public Map<Corner, Boolean> getCoveredCorners() {
+    public @NotNull Map<Corner, Boolean> getCoveredCorners() {
         return Maps.immutableEnumMap(this.coveredCorners);
     }
 
@@ -154,7 +155,7 @@ public class CardContainer {
      * @return true if the specified color is not null and equals the color of the card, false
      * otherwise.
      */
-    public boolean isColorEquals(Color color) {
+    public boolean isColorEquals(@Nullable Color color) {
         if (color != null) return this.card.isColorEqual(color);
         return false;
     }
@@ -170,7 +171,7 @@ public class CardContainer {
      * @return true if the specified card is not null and equals the card in the container, false
      * otherwise.
      */
-    public boolean isCardEquals(FieldCard card) {
+    public boolean isCardEquals(@Nullable FieldCard card) {
         if (card != null) return this.card.equals(card);
         return false;
     }
@@ -203,7 +204,7 @@ public class CardContainer {
         return this.card.getItemCorner(corner, isRetro).getItem();
     }
 
-    public CardContainerMemento save() {
+    public @NotNull CardContainerMemento save() {
         return new CardContainerMemento(card.getId(), Map.copyOf(coveredCorners), isRetro);
     }
 }

@@ -77,15 +77,16 @@ public class ResourceDeckFactory {
         return new Deck<>(builder.build());
     }
 
-    private static void setFrontCorners(ResourceCard.Builder cardBuilder, ResultSet result)
+    private static void setFrontCorners(ResourceCard.@NotNull Builder cardBuilder,
+                                        @NotNull ResultSet result)
     throws SQLException {
         for (Corner corner : Corner.values()) {
             cardBuilder.hasIn(corner, getCornerContainer(corner, result));
         }
     }
 
-    private static CornerContainer getCornerContainer(@NotNull Corner corner,
-                                                      @NotNull ResultSet result)
+    private static @NotNull CornerContainer getCornerContainer(@NotNull Corner corner,
+                                                               @NotNull ResultSet result)
     throws SQLException {
         return CornerContainer.of(result.getString(corner.getColumnName()));
     }

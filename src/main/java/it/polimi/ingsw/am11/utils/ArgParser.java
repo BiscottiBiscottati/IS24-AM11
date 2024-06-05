@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 
 public class ArgParser {
     private static final Pattern OPTION_START = Pattern.compile("^-[a-zA-Z]");
-    private final List<Option> options;
-    private final List<String> positionalArgs;
+    private final @NotNull List<Option> options;
+    private final @NotNull List<String> positionalArgs;
 
     public ArgParser() {
         options = new ArrayList<>(4);
@@ -42,7 +42,7 @@ public class ArgParser {
         }
     }
 
-    public Optional<Option> getOption(String name) {
+    public @NotNull Optional<Option> getOption(String name) {
         for (Option option : options) {
             if (option.getName().equals(name)) {
                 return Optional.of(option);
@@ -59,11 +59,11 @@ public class ArgParser {
         options.add(option);
     }
 
-    public void addOption(String name, String description, String defaultValue) {
+    public void addOption(@NotNull String name, String description, String defaultValue) {
         options.add(new Option(name, description, defaultValue));
     }
 
-    public void addOption(String name, String description, boolean hasValue) {
+    public void addOption(@NotNull String name, String description, boolean hasValue) {
         options.add(new Option(name, description, hasValue));
     }
 }

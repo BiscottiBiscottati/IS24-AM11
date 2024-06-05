@@ -22,9 +22,9 @@ public enum CentralController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CentralController.class);
 
-    private final List<GameController> gameControllers;
+    private final @NotNull List<GameController> gameControllers;
 
-    private final ChatController chatController;
+    private final @NotNull ChatController chatController;
 
     CentralController() {
         this.gameControllers = new ArrayList<>(4);
@@ -56,7 +56,7 @@ public enum CentralController {
         this.gameControllers.add(newGame);
     }
 
-    public synchronized void disconnectPlayer(String nickname) {
+    public synchronized void disconnectPlayer(@NotNull String nickname) {
         LOGGER.info("CONTROLLER: Player {} disconnected", nickname);
         gameControllers.stream().findFirst()
                        .orElseThrow()
@@ -86,13 +86,13 @@ public enum CentralController {
                               .getGodPlayer();
     }
 
-    public synchronized GameController getAnyGame() {
+    public synchronized @NotNull GameController getAnyGame() {
         if (gameControllers.isEmpty()) createNewGame();
 
         return gameControllers.stream().findFirst().orElseThrow();
     }
 
-    public ChatController getChatController() {
+    public @NotNull ChatController getChatController() {
         return chatController;
     }
 }

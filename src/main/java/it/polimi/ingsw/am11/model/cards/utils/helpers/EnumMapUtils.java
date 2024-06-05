@@ -40,7 +40,7 @@ public class EnumMapUtils {
                      ));
     }
 
-    public static <K extends Enum<K>, V> EnumMap<K, V> init(
+    public static <K extends Enum<K>, V> @NotNull EnumMap<K, V> init(
             @NotNull Class<K> keyType,
             @NotNull Supplier<V> defaultValueSupplier) {
         return Arrays.stream(keyType.getEnumConstants())

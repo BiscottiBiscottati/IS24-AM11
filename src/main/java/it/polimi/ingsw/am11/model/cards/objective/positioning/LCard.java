@@ -23,7 +23,7 @@ public final class LCard extends PositioningCard {
     private final boolean isRotatedFlag;
     private final @Nullable Color primaryColor;
     private final @Nullable Color secondaryColor;
-    private final List<List<Color>> pattern;
+    private final @NotNull List<List<Color>> pattern;
 
     private final @NotNull PatternCounter counter;
 

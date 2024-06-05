@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.model.decks.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +17,7 @@ public class DatabaseConstants {
      * Uses the <code>getResource</code> method to locate the path of "/db/cards.sqlite" in the
      * resources' folder.
      */
-    public static final String DATABASE_URL;
+    public static final @NotNull String DATABASE_URL;
 
     static {
         File tempDbFile;

@@ -117,7 +117,7 @@ public class ClientGameReceiver implements MessageReceiver {
         }
     }
 
-    public ClientExceptionReceiver getReceiveException() {
+    public @NotNull ClientExceptionReceiver getReceiveException() {
         return clientExceptionReceiver;
     }
 }

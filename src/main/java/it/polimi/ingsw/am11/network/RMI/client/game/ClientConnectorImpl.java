@@ -36,7 +36,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
     private final @NotNull ClientChatInterface remoteChat;
     private final @NotNull ExceptionThrower exceptionThrower;
     private final @NotNull ClientChatConnectorImpl chatConnector;
-    private final AtomicReference<String> nickname;
+    private final @NotNull AtomicReference<String> nickname;
     private @NotNull Future<?> future;
 
     public ClientConnectorImpl(@NotNull ClientRMI main,

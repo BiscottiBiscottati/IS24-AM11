@@ -119,8 +119,8 @@ public class GoldDeckFactory {
         }
     }
 
-    private static CornerContainer getCornerContainer(@NotNull Corner corner,
-                                                      @NotNull ResultSet result)
+    private static @NotNull CornerContainer getCornerContainer(@NotNull Corner corner,
+                                                               @NotNull ResultSet result)
     throws SQLException {
         if (result.isClosed()) {
             throw new RuntimeException("Result set is closed");

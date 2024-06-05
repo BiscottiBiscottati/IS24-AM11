@@ -20,6 +20,7 @@ import it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent;
 import it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent;
 import it.polimi.ingsw.am11.view.events.view.table.TurnChangeEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,12 +32,12 @@ public class PlayerManager {
     private final static Logger LOGGER = LoggerFactory.getLogger(PlayerManager.class);
 
     private static int maxNumberOfPlayers;
-    private final SequencedMap<String, Player> players;
-    private final Queue<Player> playerQueue;
+    private final @NotNull SequencedMap<String, Player> players;
+    private final @NotNull Queue<Player> playerQueue;
     private final GameListenerSupport pcs;
-    private final Set<Player> unavailablePlayers;
-    private Player firstPlayer;
-    private Player currentPlaying;
+    private final @NotNull Set<Player> unavailablePlayers;
+    private @Nullable Player firstPlayer;
+    private @Nullable Player currentPlaying;
     private TurnAction currentAction;
 
     public PlayerManager(GameListenerSupport pcs) {
@@ -68,21 +69,21 @@ public class PlayerManager {
         return players.size();
     }
 
-    public Optional<String> getCurrentTurnPlayer() {
+    public @NotNull Optional<String> getCurrentTurnPlayer() {
         return Optional.ofNullable(currentPlaying)
                        .map(Player::nickname);
     }
 
-    public Optional<String> getFirstPlayer() {
+    public @NotNull Optional<String> getFirstPlayer() {
         return Optional.ofNullable(firstPlayer)
                        .map(Player::nickname);
     }
 
-    public Optional<Player> getPlayer(String nickname) {
+    public @NotNull Optional<Player> getPlayer(String nickname) {
         return Optional.ofNullable(players.get(nickname));
     }
 
-    public Set<Integer> getHand(String nickname) throws PlayerInitException {
+    public @NotNull Set<Integer> getHand(String nickname) throws PlayerInitException {
         Player player = players.get(nickname);
         if (player != null) {
             return player.space()
@@ -95,7 +96,8 @@ public class PlayerManager {
         }
     }
 
-    public Set<Integer> getPlayerObjective(@NotNull String nickname) throws PlayerInitException {
+    public @NotNull Set<Integer> getPlayerObjective(@NotNull String nickname)
+    throws PlayerInitException {
         Player player = players.get(nickname);
         if (player != null) {
             return player.space()
@@ -192,7 +194,7 @@ public class PlayerManager {
     }
 
 
-    public Optional<PlayerColor> getPlayerColor(@NotNull String nickname) {
+    public @NotNull Optional<PlayerColor> getPlayerColor(@NotNull String nickname) {
         return Optional.ofNullable(players.get(nickname))
                        .map(Player::color);
     }
@@ -207,7 +209,7 @@ public class PlayerManager {
         }
     }
 
-    public Player addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
+    public @NotNull Player addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
     throws PlayerInitException, NumOfPlayersException {
 
         for (String item : players.keySet()) {
@@ -341,7 +343,7 @@ public class PlayerManager {
         return players.size() - unavailablePlayers.size();
     }
 
-    public PlayerManagerMemento save() {
+    public @NotNull PlayerManagerMemento save() {
         return new PlayerManagerMemento(
                 playerQueue.stream()
                            .map(Player::save)

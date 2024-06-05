@@ -302,6 +302,7 @@ public class PositionManager {
         return Map.copyOf(cardsPositioned);
     }
 
+    @NotNull
     PositionManagerMemento save() {
         Map<Position, CardContainerMemento> temp = new HashMap<>(64);
         cardsPositioned.forEach((position, container) -> temp.put(position, container.save()));

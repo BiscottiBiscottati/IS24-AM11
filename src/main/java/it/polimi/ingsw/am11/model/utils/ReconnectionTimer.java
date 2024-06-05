@@ -12,9 +12,9 @@ import java.util.TimerTask;
 public class ReconnectionTimer {
     private static int RECONNECTION_TIME = 10000;
 
-    private final Timer currentTurnTimer;
-    private final Timer reconnectionTimer;
-    private final GameModel model;
+    private final @NotNull Timer currentTurnTimer;
+    private final @NotNull Timer reconnectionTimer;
+    private final @NotNull GameModel model;
 
     public ReconnectionTimer(@NotNull GameModel model) {
         this.model = model;

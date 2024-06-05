@@ -19,11 +19,11 @@ public class PongHandler implements Runnable {
     private static final int PONG_INTERVAL = 1000;
     private static final int PONG_TIMEOUT = 3000;
 
-    private final Socket socket;
-    private final PrintWriter out;
-    private final AtomicLong lastPong;
-    private final ScheduledExecutorService pongExecutor;
-    private final ObjectNode pingMessage;
+    private final @NotNull Socket socket;
+    private final @NotNull PrintWriter out;
+    private final @NotNull AtomicLong lastPong;
+    private final @NotNull ScheduledExecutorService pongExecutor;
+    private final @NotNull ObjectNode pingMessage;
 
     public PongHandler(@NotNull Socket socket,
                        @NotNull PrintWriter out) {

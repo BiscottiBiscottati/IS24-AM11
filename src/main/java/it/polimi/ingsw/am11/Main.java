@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.utils.Constants;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import org.fusesource.jansi.AnsiConsole;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String @Nullable [] args) throws IOException {
 
         final String HELP_MESSAGE = """
                 Usage: java -jar <jar file> <server|client> [options]

@@ -23,7 +23,7 @@ public record Player(@NotNull String nickname,
      * @param nickname The nickname of the player.
      * @param color    The color of the player.
      */
-    public Player(String nickname, PlayerColor color) {
+    public Player(@NotNull String nickname, @NotNull PlayerColor color) {
         this(nickname, color, new PersonalSpace(), new PlayerField());
     }
 
@@ -36,7 +36,8 @@ public record Player(@NotNull String nickname,
      * @param color    The color of the player.
      * @param space    The personal space of the player.
      */
-    public Player(String nickname, PlayerColor color, PersonalSpace space) {
+    public Player(@NotNull String nickname, @NotNull PlayerColor color,
+                  @NotNull PersonalSpace space) {
         this(nickname, color, space, new PlayerField());
     }
 

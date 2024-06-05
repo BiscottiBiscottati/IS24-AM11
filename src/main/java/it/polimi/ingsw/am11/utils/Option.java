@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class Option {
     private static final Pattern CHECK_NAME = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]*$");
 
-    private final String name;
+    private final @NotNull String name;
     private final String description;
     private final boolean hasValue;
     @Nullable

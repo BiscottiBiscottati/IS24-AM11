@@ -11,6 +11,7 @@ import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class CardDecoder {
         return objectiveDeck.getCardById(cardId);
     }
 
-    public static Optional<FieldCard> decodeFieldCard(int cardId) {
+    public static @NotNull Optional<FieldCard> decodeFieldCard(int cardId) {
         return decodeResourceCard(cardId).map(FieldCard.class::cast)
                                          .or(() -> decodeGoldCard(cardId))
                                          .or(() -> decodeStarterCard(cardId));
@@ -42,7 +43,7 @@ public class CardDecoder {
         return starterDeck.getCardById(cardId);
     }
 
-    public static Optional<PlayableCard> decodePlayableCard(int cardId) {
+    public static @NotNull Optional<PlayableCard> decodePlayableCard(int cardId) {
         return decodeResourceCard(cardId).map(PlayableCard.class::cast)
                                          .or(() -> decodeGoldCard(cardId));
     }

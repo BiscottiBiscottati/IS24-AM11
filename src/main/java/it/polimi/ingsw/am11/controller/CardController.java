@@ -18,15 +18,15 @@ public class CardController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CardController.class);
 
-    private final GameModel model;
-    private final ScheduledExecutorService saveExecutor;
+    private final @NotNull GameModel model;
+    private final @NotNull ScheduledExecutorService saveExecutor;
 
     CardController(@NotNull GameModel model) {
         this.model = model;
         this.saveExecutor = Executors.newSingleThreadScheduledExecutor();
     }
 
-    public synchronized void setObjectiveFor(String nickname, int cardID)
+    public synchronized void setObjectiveFor(@NotNull String nickname, int cardID)
     throws GameStatusException,
            PlayerInitException,
            IllegalPlayerSpaceActionException {
@@ -37,7 +37,8 @@ public class CardController {
         }
     }
 
-    public synchronized void placeCard(String Nickname, int cardId, Position position,
+    public synchronized void placeCard(@NotNull String Nickname, int cardId,
+                                       @NotNull Position position,
                                        boolean isRetro)
     throws GameStatusException,
            PlayerInitException,
@@ -48,7 +49,8 @@ public class CardController {
         model.placeCard(Nickname, cardId, position, isRetro);
     }
 
-    public synchronized int drawCard(boolean fromVisible, PlayableCardType type, String nickname,
+    public synchronized int drawCard(boolean fromVisible, @NotNull PlayableCardType type,
+                                     @NotNull String nickname,
                                      int cardID)
     throws IllegalPlayerSpaceActionException, TurnsOrderException, IllegalPickActionException,
            PlayerInitException, GameStatusException, EmptyDeckException,
@@ -62,7 +64,7 @@ public class CardController {
         }
     }
 
-    public synchronized void setStarterFor(String nickname, boolean isRetro)
+    public synchronized void setStarterFor(@NotNull String nickname, boolean isRetro)
     throws GameStatusException,
            PlayerInitException,
            IllegalCardPlacingException {

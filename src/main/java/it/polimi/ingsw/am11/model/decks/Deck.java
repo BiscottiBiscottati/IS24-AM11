@@ -31,9 +31,9 @@ import java.util.*;
  */
 public class Deck<T extends CardIdentity> {
 
-    private final ImmutableMap<Integer, T> mappingIdToCard;
+    private final @NotNull ImmutableMap<Integer, T> mappingIdToCard;
 
-    private final ArrayDeque<T> deck;
+    private final @NotNull ArrayDeque<T> deck;
 
     /**
      * Constructor for the Deck class.
@@ -51,7 +51,7 @@ public class Deck<T extends CardIdentity> {
      *
      * @return The deck shuffled.
      */
-    public Deck<T> shuffle() {
+    public @NotNull Deck<T> shuffle() {
         List<T> tempList = new ArrayList<>(this.deck.stream().toList());
         Collections.shuffle(tempList);
         this.deck.clear();
@@ -89,7 +89,7 @@ public class Deck<T extends CardIdentity> {
         this.deck.addAll(mappingIdToCard.values());
     }
 
-    public DeckMemento save() {
+    public @NotNull DeckMemento save() {
         List<Integer> current = this.deck.stream()
                                          .map(CardIdentity::getId)
                                          .toList();
@@ -107,11 +107,11 @@ public class Deck<T extends CardIdentity> {
      * @param id The id of the card to get.
      * @return The card with the given id, if present.
      */
-    public Optional<T> getCardById(int id) {
+    public @NotNull Optional<T> getCardById(int id) {
         return Optional.ofNullable(mappingIdToCard.getOrDefault(id, null));
     }
 
-    public Optional<T> peekTop() {
+    public @NotNull Optional<T> peekTop() {
         if (deck.isEmpty()) return Optional.empty();
         return Optional.of(deck.peek());
     }

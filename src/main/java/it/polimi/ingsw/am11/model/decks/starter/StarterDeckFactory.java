@@ -95,7 +95,7 @@ public class StarterDeckFactory {
 
     private static void setCenterColors(@NotNull PreparedStatement centerStatement,
                                         @NotNull ResultSet result,
-                                        StarterCard.Builder cardBuilder)
+                                        StarterCard.@NotNull Builder cardBuilder)
     throws SQLException {
         centerStatement.setInt(1, result.getInt("front_center_color_id"));
         try (ResultSet centerResult = centerStatement.executeQuery()) {

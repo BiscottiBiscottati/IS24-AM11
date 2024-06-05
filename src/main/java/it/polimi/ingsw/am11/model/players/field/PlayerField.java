@@ -139,7 +139,7 @@ public class PlayerField {
         };
     }
 
-    public FieldMemento save() {
+    public @NotNull FieldMemento save() {
         return new FieldMemento(itemManager.save(), positionManager.save());
     }
 

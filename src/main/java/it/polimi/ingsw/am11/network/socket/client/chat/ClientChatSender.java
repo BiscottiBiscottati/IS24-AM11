@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 public class ClientChatSender implements ClientChatConnector {
     private static final ContextJSON CONTEXT = ContextJSON.CHAT;
 
-    private final PrintWriter out;
+    private final @NotNull PrintWriter out;
     private String nickname;
 
     public ClientChatSender(@NotNull PrintWriter out) {

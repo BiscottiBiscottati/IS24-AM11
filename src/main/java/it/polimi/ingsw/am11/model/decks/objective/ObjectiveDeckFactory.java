@@ -76,7 +76,7 @@ public class ObjectiveDeckFactory {
     }
 
     private static void setCollectingCards(@NotNull PreparedStatement collectingStatement,
-                                           ImmutableMap.Builder<Integer, ObjectiveCard> builder)
+                                           ImmutableMap.@NotNull Builder<Integer, ObjectiveCard> builder)
     throws SQLException, IllegalCardBuildException {
         collectingStatement.setString(1, "COLOR_COLLECT");
         try (ResultSet resultSet = collectingStatement.executeQuery()) {
@@ -111,7 +111,7 @@ public class ObjectiveDeckFactory {
     }
 
     private static void setPositioningCards(@NotNull PreparedStatement positioningStatement,
-                                            ImmutableMap.Builder<Integer, ObjectiveCard> builder)
+                                            ImmutableMap.@NotNull Builder<Integer, ObjectiveCard> builder)
     throws SQLException, IllegalCardBuildException {
         positioningStatement.setString(1, "L_SHAPE");
         try (ResultSet resultSet = positioningStatement.executeQuery()) {
