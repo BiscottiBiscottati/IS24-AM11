@@ -25,6 +25,7 @@ class SavesManagerTest {
 
     @AfterAll
     static void afterAll() {
+        SavesManager.deleteAll();
     }
 
     @BeforeEach
