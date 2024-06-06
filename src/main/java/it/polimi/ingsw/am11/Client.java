@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11;
 
 import it.polimi.ingsw.am11.utils.ArgParser;
-import it.polimi.ingsw.am11.view.client.GUI.window.CodexNaturalis;
+import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.TUI.TuiHandler;
 import javafx.application.Application;
 import org.jetbrains.annotations.NotNull;
