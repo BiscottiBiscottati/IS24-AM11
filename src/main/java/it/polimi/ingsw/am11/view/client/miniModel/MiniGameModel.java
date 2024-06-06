@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.view.client.miniModel;
 
+import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.jetbrains.annotations.NotNull;
@@ -113,6 +114,11 @@ public class MiniGameModel {
 
     public void place(String nickname, Position pos, int cardId, boolean isRetro) {
         playerMap.get(nickname).getField().place(pos, cardId, isRetro);
+    }
+
+    public void absolutePlace(String nickname, Position pos, int cardId, boolean isRetro,
+                              Map<Corner, Boolean> coveredCorners) {
+        playerMap.get(nickname).getField().absolutePosition(pos, cardId, isRetro, coveredCorners);
     }
 
     public void removePlaced(String nickname, Position pos) {

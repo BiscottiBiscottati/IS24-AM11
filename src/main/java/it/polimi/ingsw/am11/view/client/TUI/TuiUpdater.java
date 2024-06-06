@@ -5,6 +5,9 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.model.utils.TurnAction;
+import it.polimi.ingsw.am11.model.utils.memento.PlateauMemento;
+import it.polimi.ingsw.am11.model.utils.memento.PlayerMemento;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
@@ -278,7 +281,54 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     @Override
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
-        // TODO to implement reconnection
+        model.setMyName(candidateNick);
+        model.setStartingPlayer(memento.playerManager().firstPlayer());
+        model.setCurrentTurn(memento.playerManager().currentPlayer());
+
+        //table
+        for (PlayableCardType deckTop : memento.table().deckTops().keySet()) {
+            model.table().refreshDeckTop(deckTop,
+                                         memento.table().deckTops().get(deckTop).orElse(null));
+        }
+        for (PlayableCardType shown : memento.table().shownPlayable().keySet()) {
+            memento.table().shownPlayable().get(shown).forEach(x -> model.table().addVisible(x));
+        }
+        for (Integer commonObj : memento.table().commonObjs()) {
+            model.table().addCommonObjectives(commonObj);
+        }
+
+        //players manager
+        for (PlayerMemento player : memento.playerManager().players()) {
+            model.addPlayer(player.nickname(), player.color());
+            if (model.myName().equals(player.nickname())) {
+                player.space().hand().forEach(x -> model.addCardInHand(x));
+                player.space().personalObjs().forEach(x -> model.addPersonalObjective(x));
+                model.getCliPlayer(model.myName()).getSpace().addCandidateObjectives(
+                        player.space().candidateObjs());
+                model.getCliPlayer(model.myName()).getSpace().setStarterCard(
+                        player.space().starterCard());
+                model.setiPlaced(
+                        memento.playerManager().currentAction().equals(TurnAction.DRAW_CARD));
+            }
+            player.field().positionManager().cardPositioned().forEach(
+                    (pos, cardContainerMemento) -> {
+                        model.absolutePlace(player.nickname(), pos, cardContainerMemento.card(),
+                                            cardContainerMemento.isRetro(),
+                                            cardContainerMemento.coveredCorners());
+                    });
+        }
+
+        //Plateau
+        if (! memento.plateau().leaderboard().isEmpty()) {
+            model.setFinalLeaderboard(memento.plateau().leaderboard());
+        }
+        model.table().setStatus(memento.plateau().status());
+        memento.plateau().playerPoints().forEach(
+                (nickname, points) -> model.getCliPlayer(nickname).addPoints(points));
+
+
+        //Set Tui
+
     }
 
     @Override

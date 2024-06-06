@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.players.field.PositionManager;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -14,6 +15,12 @@ public class CliField {
 
     public CliField() {
         cardsPositioned = new HashMap<>(20);
+    }
+
+    public void absolutePosition(Position pos, int cardId, boolean isRetro, Map<Corner,
+            Boolean> coveredCorners) {
+        MiniCardContainer cardContainer = new MiniCardContainer(cardId, isRetro, coveredCorners);
+        cardsPositioned.put(pos, cardContainer);
     }
 
     public void place(Position pos, int cardId, boolean isRetro) {

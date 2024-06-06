@@ -112,9 +112,8 @@ public class FieldPrinter {
                                    printMatrix);
                 }
                 // Fill center with coord
-                else if (matrixOfPositions.get(y).get(x) != null &&
-                         matrixOfCards.get(y - 1).get(x - 1) == null &&
-                         withSuggestions) {
+                else if (withSuggestions && matrixOfPositions.get(y).get(x) != null &&
+                         matrixOfCards.get(y - 1).get(x - 1) == null) {
                     setCoordinates(matrixOfPositions.get(y).get(x),
                                    rowIndex,
                                    columnIndex,

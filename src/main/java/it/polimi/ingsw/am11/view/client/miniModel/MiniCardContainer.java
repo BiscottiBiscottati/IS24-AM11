@@ -8,15 +8,22 @@ import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.Map;
 
 public class MiniCardContainer {
     private final int cardId;
-    private final EnumMap<Corner, Boolean> coveredCorners;
+    private final Map<Corner, Boolean> coveredCorners;
     private final boolean isRetro;
 
     public MiniCardContainer(int cardId, boolean isRetro) {
         this.cardId = cardId;
         coveredCorners = EnumMapUtils.init(Corner.class, false);
+        this.isRetro = isRetro;
+    }
+
+    public MiniCardContainer(int cardId, boolean isRetro, Map<Corner, Boolean> coveredCorners) {
+        this.cardId = cardId;
+        this.coveredCorners = coveredCorners;
         this.isRetro = isRetro;
     }
 
@@ -28,7 +35,7 @@ public class MiniCardContainer {
         return cardId;
     }
 
-    public EnumMap<Corner, Boolean> getCoveredCorners() {
+    public Map<Corner, Boolean> getCoveredCorners() {
         return coveredCorners;
     }
 
