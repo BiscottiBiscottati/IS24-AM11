@@ -834,10 +834,13 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void disconnectPlayer(@NotNull String nickname) throws PlayerInitException {
+    public void disconnectPlayer(@NotNull String nickname) {
         Player player = playerManager.getPlayer(nickname)
-                                     .orElseThrow(
-                                             () -> new PlayerInitException("Player not found"));
+                                     .orElse(null);
+        if (player == null) {
+            LOGGER.error("MODEL: Player {} not found, no one to disconnect", nickname);
+            return;
+        }
 
         LOGGER.info("MODEL: Adding {} to unavailable players", nickname);
 
@@ -921,6 +924,7 @@ public class GameLogic implements GameModel {
                                   .collect(Collectors.toMap(Function.identity(),
                                                             s -> playerManager.getPlayer(s)
                                                                               .orElseThrow())));
+        playerManager.getPlayers().forEach(this::disconnectPlayer);
     }
 
     private void giveCards() throws GameBreakingException {

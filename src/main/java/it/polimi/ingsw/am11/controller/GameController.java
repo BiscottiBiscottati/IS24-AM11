@@ -128,11 +128,7 @@ public class GameController {
             CentralController.INSTANCE.destroyGame();
             return;
         }
-        try {
-            model.disconnectPlayer(nickname);
-        } catch (PlayerInitException e) {
-            return;
-        }
+        model.disconnectPlayer(nickname);
         tableView.removeConnector(nickname);
     }
 
