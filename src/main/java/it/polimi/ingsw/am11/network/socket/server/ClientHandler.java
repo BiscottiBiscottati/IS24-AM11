@@ -97,9 +97,13 @@ public class ClientHandler implements Runnable {
                                                           chatReceiver);
                 validNickname = true;
                 LOGGER.info("SERVER TCP: Player connected with name: {}", nickname);
-            } catch (GameStatusException | NumOfPlayersException |
+            } catch (NumOfPlayersException |
                      NotSetNumOfPlayerException | PlayerInitException e) {
                 LOGGER.error("SERVER TCP: Error while connecting player: {}", e.getMessage());
+                exceptionSender.exception(e);
+            } catch (GameStatusException e) {
+                LOGGER.error("SERVER TCP: Error player trying to connect an ongoing game: {}",
+                             e.getMessage());
                 exceptionSender.exception(e);
                 stop();
                 return false;
