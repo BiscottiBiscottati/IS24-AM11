@@ -6,7 +6,6 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.model.utils.TurnAction;
-import it.polimi.ingsw.am11.model.utils.memento.PlateauMemento;
 import it.polimi.ingsw.am11.model.utils.memento.PlayerMemento;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
@@ -33,9 +32,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
-
-    private MiniGameModel model;
     private final EnumMap<TuiStates, TUIState> tuiStates;
+    private MiniGameModel model;
     private TuiExceptionReceiver exceptionReceiver;
     private AtomicReference<TUIState> currentState;
     private AtomicReference<TUIState> homeState;
@@ -45,6 +43,16 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         this.tuiStates = new EnumMap<>(TuiStates.class);
         reset(startingState);
         currentState.get().restart(false, null);
+    }
+
+    public void reset(TuiStates startingState) {
+        this.model = new MiniGameModel();
+        for (TuiStates state : TuiStates.values()) {
+            tuiStates.put(state, state.getNewState(model));
+        }
+        this.currentState = new AtomicReference<>(tuiStates.get(startingState));
+        this.exceptionReceiver = new TuiExceptionReceiver(model, this);
+        this.homeState = new AtomicReference<>();
     }
 
     @Override
@@ -257,29 +265,6 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void receiveMsg(@NotNull String sender, @NotNull String msg) {
-        model.addChatMessage("[PUBLIC] " + sender + ": " + msg);
-        if (isCurrentState(TuiStates.CHAT)) {
-            currentState.get().restart(false, null);
-        }
-    }
-
-    @Override
-    public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
-        model.addChatMessage("[PRIVATE] " + sender + ": " + msg);
-        if (isCurrentState(TuiStates.CHAT)) {
-            currentState.get().restart(false, null);
-        }
-    }
-
-    @Override
-    public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
-        if (sender.equals(model.myName())) {
-            model.addChatMessage("[YOU] " + sender + ": " + msg);
-        }
-    }
-
-    @Override
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
         model.setMyName(candidateNick);
         model.setStartingPlayer(memento.playerManager().firstPlayer());
@@ -288,7 +273,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         //table
         for (PlayableCardType deckTop : memento.table().deckTops().keySet()) {
             model.table().refreshDeckTop(deckTop,
-                                         memento.table().deckTops().get(deckTop).orElse(null));
+                                         memento.table().deckTops().get(deckTop));
         }
         for (PlayableCardType shown : memento.table().shownPlayable().keySet()) {
             memento.table().shownPlayable().get(shown).forEach(x -> model.table().addVisible(x));
@@ -386,6 +371,29 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         return currentState.get() == tuiStates.get(state);
     }
 
+    @Override
+    public void receiveMsg(@NotNull String sender, @NotNull String msg) {
+        model.addChatMessage("[PUBLIC] " + sender + ": " + msg);
+        if (isCurrentState(TuiStates.CHAT)) {
+            currentState.get().restart(false, null);
+        }
+    }
+
+    @Override
+    public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
+        model.addChatMessage("[PRIVATE] " + sender + ": " + msg);
+        if (isCurrentState(TuiStates.CHAT)) {
+            currentState.get().restart(false, null);
+        }
+    }
+
+    @Override
+    public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
+        if (sender.equals(model.myName())) {
+            model.addChatMessage("[YOU] " + sender + ": " + msg);
+        }
+    }
+
     public String getCandidateNick() {
         return candidateNick;
     }
@@ -409,15 +417,5 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     public void setHomeState(TuiStates state) {
         homeState.set(tuiStates.get(state));
-    }
-
-    public void reset(TuiStates startingState) {
-        this.model = new MiniGameModel();
-        for (TuiStates state : TuiStates.values()) {
-            tuiStates.put(state, state.getNewState(model));
-        }
-        this.currentState = new AtomicReference<>(tuiStates.get(startingState));
-        this.exceptionReceiver = new TuiExceptionReceiver(model, this);
-        this.homeState = new AtomicReference<>();
     }
 }

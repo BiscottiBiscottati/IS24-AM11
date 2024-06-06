@@ -49,6 +49,7 @@ public class GameLogic implements GameModel {
     private final @NotNull Plateau plateau;
     private final @NotNull ReconnectionTimer reconnectionTimer;
     private final @NotNull GameListenerSupport pcs;
+    private boolean isLoadedGame;
 
     public GameLogic() {
         LOGGER.info("MODEL: Creating a new GameLogic instance");
@@ -60,6 +61,7 @@ public class GameLogic implements GameModel {
         this.pickablesTable = new PickablesTable(this.pcs);
         this.plateau = new Plateau(this.pcs);
         this.reconnectionTimer = new ReconnectionTimer(this);
+        this.isLoadedGame = false;
     }
 
     private void setConstants() {
@@ -79,7 +81,7 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public RuleSet getRuleSet() {
+    public @NotNull RuleSet getRuleSet() {
         return ruleSet;
     }
 
@@ -151,7 +153,14 @@ public class GameLogic implements GameModel {
                                           plateau.getStatus().name() +
                                           ", cards hasn't been dealt");
         }
-        return playerManager.getHand(nickname);
+        return playerManager.getPlayer(nickname)
+                            .map(Player::space)
+                            .map(PersonalSpace::getPlayerHand)
+                            .map(Set::stream)
+                            .map(playableCardStream ->
+                                         playableCardStream.map(PlayableCard::getId)
+                                                           .collect(Collectors.toUnmodifiableSet()))
+                            .orElseThrow(() -> new PlayerInitException("Player not found"));
     }
 
     /**
@@ -847,15 +856,7 @@ public class GameLogic implements GameModel {
         playerManager.disconnectPlayer(player);
         pcs.removeListener(nickname);
 
-        if (playerManager.areAllDisconnected()) {
-            LOGGER.info("MODEL: All players are disconnected, stopping the game");
-            CentralController.INSTANCE.destroyGame();
-            return;
-        }
-
-        if (playerManager.isTurnOf(nickname)) {
-            reconnectionTimer.disconnectCurrent(nickname, playerManager.getCurrentAction());
-        }
+        if (! isLoadedGame) checkIfGameCanContinue(nickname);
     }
 
     @Override
@@ -874,12 +875,13 @@ public class GameLogic implements GameModel {
             reconnectionTimer.reconnectCurrent();
         }
 
+        if (playerManager.areAllReconnected()) isLoadedGame = false;
+
         ReconnectionModelMemento memento = new ReconnectionModelMemento(pickablesTable.savePublic(),
                                                                         plateau.save(),
                                                                         playerManager.save(
                                                                                 nickname));
         pcs.fireEvent(new ReconnectionEvent(nickname, memento));
-
     }
 
     @Override
@@ -924,7 +926,20 @@ public class GameLogic implements GameModel {
                                   .collect(Collectors.toMap(Function.identity(),
                                                             s -> playerManager.getPlayer(s)
                                                                               .orElseThrow())));
+        isLoadedGame = true;
         playerManager.getPlayers().forEach(this::disconnectPlayer);
+    }
+
+    private void checkIfGameCanContinue(@NotNull String nickname) {
+        if (playerManager.areAllDisconnected()) {
+            LOGGER.info("MODEL: All players are disconnected, stopping the game");
+            CentralController.INSTANCE.destroyGame();
+            return;
+        }
+
+        if (playerManager.isTurnOf(nickname)) {
+            reconnectionTimer.disconnectCurrent(nickname, playerManager.getCurrentAction());
+        }
     }
 
     private void giveCards() throws GameBreakingException {

@@ -57,14 +57,21 @@ public enum CentralController {
     }
 
     public synchronized void loadMostRecent() {
+        destroyGame();
         LOGGER.info("CONTROLLER: Loading most recent game");
-        GameController newGame = new GameController();
 
-        if (! newGame.loadMostRecent())
+        GameController gameController = gameControllers.stream().findFirst().orElseThrow();
+
+        if (! gameController.loadMostRecent())
             LOGGER.info("CONTROLLER: No recent game found");
         else LOGGER.info("CONTROLLER: Loaded most recent game");
+    }
 
-        this.gameControllers.add(newGame);
+    public void destroyGame() {
+        LOGGER.info("CONTROLLER: Destroying current Game and recreating a new one");
+        gameControllers.clear();
+        chatController.clear();
+        createNewGame();
     }
 
     public synchronized void disconnectPlayer(@NotNull String nickname) {
@@ -81,13 +88,6 @@ public enum CentralController {
         gameControllers.stream().findFirst()
                        .orElseThrow()
                        .setNumOfPlayers(nickname, val);
-    }
-
-    public void destroyGame() {
-        LOGGER.info("CONTROLLER: Destroying current Game and recreating a new one");
-        gameControllers.clear();
-        chatController.clear();
-        createNewGame();
     }
 
     public synchronized @Nullable String getGodPlayer() {

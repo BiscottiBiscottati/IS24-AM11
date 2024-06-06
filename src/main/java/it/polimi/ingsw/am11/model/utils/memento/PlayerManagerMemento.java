@@ -6,9 +6,10 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
-public record PlayerManagerMemento(@NotNull List<PlayerMemento> players,
-                                   String firstPlayer,
-                                   String currentPlayer,
-                                   @NotNull TurnAction currentAction)
+public record PlayerManagerMemento
+        (@NotNull List<@NotNull PlayerMemento> players,
+         String firstPlayer,
+         String currentPlayer,
+         @NotNull TurnAction currentAction)
         implements Serializable {
 }

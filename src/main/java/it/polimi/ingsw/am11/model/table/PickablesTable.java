@@ -24,7 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -250,10 +249,13 @@ public class PickablesTable {
     }
 
     public @NotNull ReconnectionTableMemento savePublic() {
+        Map<PlayableCardType, Color> deckTops = new EnumMap<>(PlayableCardType.class);
+        for (PlayableCardType type : PlayableCardType.values()) {
+            deckTops.put(type, getDeckTop(type).orElse(null));
+        }
+
         return new ReconnectionTableMemento(
-                Stream.of(PlayableCardType.values())
-                      .collect(Collectors.toMap(Function.identity(),
-                                                this::getDeckTop)),
+                Map.copyOf(deckTops),
                 shownToIntMap(),
                 commonToIntSet());
     }

@@ -34,13 +34,13 @@ public class PlayerManager {
     private static int maxNumberOfPlayers;
     private final @NotNull SequencedMap<String, Player> players;
     private final @NotNull Queue<Player> playerQueue;
-    private final GameListenerSupport pcs;
     private final @NotNull Set<Player> unavailablePlayers;
+    private final @NotNull GameListenerSupport pcs;
     private @Nullable Player firstPlayer;
     private @Nullable Player currentPlaying;
     private TurnAction currentAction;
 
-    public PlayerManager(GameListenerSupport pcs) {
+    public PlayerManager(@NotNull GameListenerSupport pcs) {
         this.players = new LinkedHashMap<>(8);
         this.playerQueue = new ArrayDeque<>(maxNumberOfPlayers);
         this.unavailablePlayers = new HashSet<>(8);
@@ -72,6 +72,10 @@ public class PlayerManager {
     public @NotNull Optional<String> getCurrentTurnPlayer() {
         return Optional.ofNullable(currentPlaying)
                        .map(Player::nickname);
+    }
+
+    public boolean areAllReconnected() {
+        return unavailablePlayers.isEmpty();
     }
 
     public @NotNull Optional<String> getFirstPlayer() {

@@ -143,6 +143,7 @@ public class GameController {
     boolean loadMostRecent() {
         return SavesManager.loadMostRecentGame()
                            .map(memento -> {
+                               maxNumOfPlayer.set(memento.playerManager().players().size());
                                model.load(memento);
                                return true;
                            })
