@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
+           xmlns="http://javafx.com/javafx/21">
+    <children>
+        <HBox alignment="TOP_RIGHT" maxHeight="50.0" maxWidth="440.0" minHeight="150.0" minWidth="1320.0"
+              prefHeight="50.0" prefWidth="440.0" StackPane.alignment="TOP_RIGHT">
+            <children>
+                <VBox alignment="CENTER" maxHeight="60.0" maxWidth="110.0" minHeight="180.0" minWidth="330.0"
+                      prefHeight="60.0" prefWidth="110.0">
+                    <children>
+                        <Label fx:id="player1" alignment="BOTTOM_CENTER" minHeight="30.0" minWidth="50.0" text="Tizio"
+                               textAlignment="CENTER">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="pointsPl1" alignment="CENTER" minHeight="30.0" minWidth="50.0" text="5"
+                               textAlignment="CENTER">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <ImageView fx:id="colorPl1" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true"
+                                   preserveRatio="true"/>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="60.0" maxWidth="110.0" minHeight="180.0" minWidth="330.0"
+                      prefHeight="60.0" prefWidth="110.0">
+                    <children>
+                        <Label fx:id="player2" alignment="BOTTOM_CENTER" minHeight="30.0" minWidth="50.0" text="Caio"
+                               textAlignment="JUSTIFY">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="pointsPL2" text="3">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <ImageView fx:id="colorPl2" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true"
+                                   preserveRatio="true"/>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="60.0" maxWidth="110.0" minHeight="180.0" minWidth="330.0"
+                      prefHeight="60.0" prefWidth="110.0">
+                    <children>
+                        <Label fx:id="player3" alignment="BOTTOM_CENTER" contentDisplay="TOP" text="Sempronio"
+                               textAlignment="JUSTIFY">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="pointsPl3" text="7">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <ImageView fx:id="colorPl3" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true"
+                                   preserveRatio="true"/>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="60.0" maxWidth="110.0" minHeight="180.0" minWidth="330.0"
+                      prefHeight="60.0" prefWidth="110.0">
+                    <children>
+                        <Label fx:id="player4" alignment="TOP_CENTER" contentDisplay="CENTER" text="Tu"
+                               textAlignment="CENTER">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="pointsPl4" text="4">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <ImageView fx:id="colorPl4" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true"
+                                   preserveRatio="true"/>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <VBox maxHeight="650.0" maxWidth="600.0" minHeight="650.0" minWidth="600.0" prefHeight="200.0"
+              prefWidth="100.0">
+            <children>
+                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                    <children>
+                        <Label fx:id="decksLabel" alignment="CENTER" minHeight="50.0" minWidth="100.0" prefWidth="0.0"
+                               text="DECKS">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER" maxHeight="150.0" maxWidth="450.0" minHeight="150.0" minWidth="450.0"
+                              prefHeight="180.0" prefWidth="600.0">
+                            <children>
+                                <ImageView fx:id="goldDeck" fitHeight="150.0" fitWidth="240.0" pickOnBounds="true"
+                                           preserveRatio="true"/>
+                                <ImageView fx:id="resourceDeck" fitHeight="150.0" fitWidth="240.0" pickOnBounds="true"
+                                           preserveRatio="true"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox alignment="TOP_CENTER" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0"
+                      prefHeight="335.0" prefWidth="601.0">
+                    <children>
+                        <Label fx:id="visiblesLabel" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="100.0"
+                               prefWidth="50.0" text="VISIBLES" textAlignment="JUSTIFY">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER" maxHeight="300.0" maxWidth="600.0" minHeight="300.0" minWidth="600.0"
+                              prefHeight="300.0" prefWidth="600.0">
+                            <children>
+                                <VBox alignment="CENTER" maxHeight="300.0" maxWidth="230.0" minHeight="300.0"
+                                      minWidth="230.0" prefHeight="300.0" prefWidth="240.0">
+                                    <children>
+                                        <ImageView fx:id="goldVis1" fitHeight="150.0" fitWidth="240.0"
+                                                   pickOnBounds="true" preserveRatio="true"/>
+                                        <ImageView fx:id="goldVis2" fitHeight="150.0" fitWidth="240.0"
+                                                   pickOnBounds="true" preserveRatio="true"/>
+                                    </children>
+                                </VBox>
+                                <VBox alignment="CENTER" maxHeight="300.0" maxWidth="240.0" minHeight="300.0"
+                                      minWidth="230.0" prefHeight="300.0" prefWidth="220.0">
+                                    <children>
+                                        <ImageView fx:id="resVis1" fitHeight="150.0" fitWidth="240.0"
+                                                   pickOnBounds="true" preserveRatio="true"/>
+                                        <ImageView fx:id="resVis2" fitHeight="150.0" fitWidth="240.0"
+                                                   pickOnBounds="true" preserveRatio="true"/>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+        <VBox alignment="TOP_CENTER" maxHeight="240.0" maxWidth="600.0" minHeight="240.0" minWidth="600.0"
+              prefHeight="200.0" prefWidth="100.0" StackPane.alignment="BOTTOM_CENTER">
+            <children>
+                <Label fx:id="handLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="50.0" text="HAND">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" maxHeight="240.0" maxWidth="700.0" minHeight="240.0" minWidth="700.0"
+                      prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fx:id="handCard1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <HBox.margin>
+                                <Insets bottom="30.0" right="30.0"/>
+                            </HBox.margin>
+                        </ImageView>
+                        <ImageView fx:id="handCard2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <HBox.margin>
+                                <Insets bottom="30.0"/>
+                            </HBox.margin>
+                        </ImageView>
+                        <ImageView fx:id="handCard3" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <HBox.margin>
+                                <Insets bottom="30.0" left="30.0"/>
+                            </HBox.margin>
+                        </ImageView>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <Button fx:id="chatButton" alignment="BOTTOM_LEFT" mnemonicParsing="false" text="CHAT"
+                StackPane.alignment="BOTTOM_LEFT">
+            <font>
+                <Font size="24.0"/>
+            </font>
+            <StackPane.margin>
+                <Insets bottom="30.0" left="250.0" right="30.0" top="30.0"/>
+            </StackPane.margin>
+        </Button>
+        <ScrollPane fx:id="field" maxHeight="500.0" maxWidth="1200.0" minHeight="600.0" minWidth="1300.0"
+                    prefHeight="200.0" prefWidth="200.0" StackPane.alignment="CENTER_RIGHT">
+            <StackPane.margin>
+                <Insets bottom="30.0" right="30.0"/>
+            </StackPane.margin>
+        </ScrollPane>
+    </children>
+</StackPane>
