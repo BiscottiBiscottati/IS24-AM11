@@ -6,17 +6,22 @@ import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.model.utils.persistence.SavesManager;
 import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @ExtendWith(MockitoExtension.class)
 class GameControllerTest {
+
+    static final long CUSTOM_INTERVAL = 100;
 
     GameController gameController;
 
@@ -26,14 +31,13 @@ class GameControllerTest {
     @Mock
     ServerTableConnector tableConnector;
 
+    @AfterAll
+    static void afterAll() {
+    }
+
     @BeforeEach
     void setUp() {
         gameController = new GameController();
-    }
-
-    @AfterEach
-    void tearDown() {
-        gameController.destroyGame();
     }
 
     @Test
@@ -45,10 +49,11 @@ class GameControllerTest {
         gameController.setNumOfPlayers("chen", 2);
         gameController.connectPlayer("edo", playerConnector, tableConnector);
 
-        Thread.sleep(5100);
-
         gameController.getCardController().setStarterFor("chen", true);
 
-        Thread.sleep(5100);
+        gameController.getCardController().setStarterFor("edo", true);
+
+        assertTrue(SavesManager.loadMostRecentGame().isPresent());
+
     }
 }

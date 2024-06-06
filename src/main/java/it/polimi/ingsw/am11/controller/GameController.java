@@ -20,9 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -31,7 +29,6 @@ public class GameController {
 
     private final @NotNull GameModel model;
     private final @NotNull CardController cardController;
-    private final @NotNull Map<String, VirtualPlayerView> playerViews;
     private final @NotNull PlayerColorManager playerColor;
     private final @NotNull AtomicInteger maxNumOfPlayer;
     private final @NotNull AtomicReference<String> godPlayer;
@@ -43,7 +40,6 @@ public class GameController {
         this.cardController = new CardController(model);
         this.model.addTableListener(new TableViewUpdater(tableView));
         this.playerColor = new PlayerColorManager();
-        this.playerViews = new ConcurrentHashMap<>(8);
 
         this.maxNumOfPlayer = new AtomicInteger(- 1);
         this.godPlayer = new AtomicReference<>(null);
@@ -68,8 +64,7 @@ public class GameController {
             if (model.isDisconnected(nickname)) {
                 LOGGER.info("CONTROLLER: Player {} trying to reconnect", nickname);
 
-                VirtualPlayerView playerView = createPlayerView(nickname,
-                                                                playerConnector);
+                VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
                 tableView.addConnector(nickname, tableConnector);
 
                 model.reconnectPlayer(nickname, new PlayerViewUpdater(playerView));
@@ -83,9 +78,7 @@ public class GameController {
             LOGGER.info("CONTROLLER: Adding player {} to model", nickname);
             model.addPlayerToTable(nickname, playerColor.pullAnyColor());
 
-            VirtualPlayerView playerView = createPlayerView(nickname,
-                                                            playerConnector
-            );
+            VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
             tableView.addConnector(nickname, tableConnector);
             model.addPlayerListener(nickname, new PlayerViewUpdater(playerView));
 
@@ -97,20 +90,13 @@ public class GameController {
             if (currentMaxPlayers == model.getPlayers().size()) {
                 try {
                     model.initGame();
-                    cardController.startSaveExecutor();
+                    cardController.saveToDisk();
                 } catch (NumOfPlayersException | GameBreakingException e) {
                     throw new RuntimeException(e);
                 }
             }
             return playerView;
         }
-    }
-
-    private @NotNull VirtualPlayerView createPlayerView(@NotNull String nickname,
-                                                        @NotNull ServerPlayerConnector playerConnector) {
-        VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
-        playerViews.put(nickname, playerView);
-        return playerView;
     }
 
     void setNumOfPlayers(@NotNull String nickname, int val)
@@ -150,16 +136,12 @@ public class GameController {
         tableView.removeConnector(nickname);
     }
 
-    public CardController getCardController() {
+    public @NotNull CardController getCardController() {
         return cardController;
     }
 
     String getGodPlayer() {
         return godPlayer.get();
-    }
-
-    void destroyGame() {
-        cardController.stopSaveExecutor();
     }
 
     boolean loadMostRecent() {

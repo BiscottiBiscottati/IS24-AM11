@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.persistence;
+package it.polimi.ingsw.am11.model.utils.persistence;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,11 +11,11 @@ import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.model.utils.memento.GameModelMemento;
-import it.polimi.ingsw.am11.model.utils.persistence.SavesManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.*;
 import java.util.Optional;
 import java.util.Set;
 
@@ -100,5 +100,27 @@ class SavesManagerTest {
 
         String json = mapper.writeValueAsString(memento);
         System.out.println(json);
+    }
+
+    @Test
+    void lotsSavesTest() throws NumOfPlayersException, PlayerInitException, GameStatusException {
+        model.addPlayerToTable("chen", PlayerColor.BLUE);
+        model.addPlayerToTable("edo", PlayerColor.RED);
+        model.addPlayerToTable("ferdi", PlayerColor.YELLOW);
+        model.initGame();
+
+        for (int i = 0; i < 100; i++) {
+            SavesManager.saveGame(model.save());
+        }
+
+        try (Connection conn = DriverManager.getConnection(SavesManager.CONNECTION_URL);
+             Statement statement = conn.createStatement();
+             ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM saves")) {
+
+            result.next();
+            assertEquals(10, result.getInt(1));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

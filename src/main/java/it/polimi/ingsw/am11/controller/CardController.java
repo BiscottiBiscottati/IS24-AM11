@@ -9,21 +9,17 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class CardController {
-    private static final long SAVE_INTERVAL_SEC = 5;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(CardController.class);
-
     private final @NotNull GameModel model;
-    private final @NotNull ScheduledExecutorService saveExecutor;
+    private final @NotNull ExecutorService saveExecutor;
 
     CardController(@NotNull GameModel model) {
         this.model = model;
-        this.saveExecutor = Executors.newSingleThreadScheduledExecutor();
+        this.saveExecutor = Executors.newSingleThreadExecutor();
     }
 
     public synchronized void setObjectiveFor(@NotNull String nickname, int cardID)
@@ -32,9 +28,15 @@ public class CardController {
            IllegalPlayerSpaceActionException {
         try {
             model.setObjectiveFor(nickname, cardID);
+            saveExecutor.submit(this::saveToDisk);
         } catch (GameBreakingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    synchronized void saveToDisk() {
+        LOGGER.info("CONTROLLER: Saving game to disk");
+        SavesManager.saveGame(model.save());
     }
 
     public synchronized void placeCard(@NotNull String Nickname, int cardId,
@@ -47,6 +49,7 @@ public class CardController {
            IllegalPlateauActionException,
            NotInHandException {
         model.placeCard(Nickname, cardId, position, isRetro);
+        saveExecutor.submit(this::saveToDisk);
     }
 
     public synchronized int drawCard(boolean fromVisible, @NotNull PlayableCardType type,
@@ -56,9 +59,12 @@ public class CardController {
            PlayerInitException, GameStatusException, EmptyDeckException,
            MaxHandSizeException {
         try {
+            int card;
             if (fromVisible) {
-                return model.drawVisibleOf(type, nickname, cardID);
-            } else return model.drawFromDeckOf(type, nickname);
+                card = model.drawVisibleOf(type, nickname, cardID);
+            } else card = model.drawFromDeckOf(type, nickname);
+            saveExecutor.submit(this::saveToDisk);
+            return card;
         } catch (GameBreakingException e) {
             throw new RuntimeException(e);
         }
@@ -70,24 +76,9 @@ public class CardController {
            IllegalCardPlacingException {
         try {
             model.setStarterFor(nickname, isRetro);
+            saveExecutor.submit(this::saveToDisk);
         } catch (GameBreakingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    void startSaveExecutor() {
-        saveExecutor.scheduleAtFixedRate(this::saveToDisk,
-                                         SAVE_INTERVAL_SEC,
-                                         SAVE_INTERVAL_SEC,
-                                         TimeUnit.SECONDS);
-    }
-
-    synchronized void saveToDisk() {
-        LOGGER.info("CONTROLLER: Saving game to disk");
-        SavesManager.saveGame(model.save());
-    }
-
-    void stopSaveExecutor() {
-        saveExecutor.shutdown();
     }
 }

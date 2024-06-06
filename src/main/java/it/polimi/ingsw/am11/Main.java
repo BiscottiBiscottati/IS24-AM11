@@ -22,11 +22,14 @@ public class Main {
                   -socket <port> Socket port to use for the server
                   -mode <mode>   Mode to start the application in (gui|tui) (only for client)
                   -v             Print logging information
+                  -resume        Load the most recent save
                 """;
 
         ArgParser parser = setUpOptions();
 
         AnsiConsole.systemInstall();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(AnsiConsole::systemUninstall));
 
 
         if (args == null || args.length < 1) {
@@ -56,8 +59,6 @@ public class Main {
             case "help" -> System.out.println(HELP_MESSAGE);
             default -> System.out.println("Invalid mode: " + mode + ". Use 'server' or 'client'.");
         }
-
-        AnsiConsole.systemUninstall();
     }
 
     private static @NotNull ArgParser setUpOptions() {
@@ -73,6 +74,9 @@ public class Main {
                             "tui");
         argParser.addOption("v",
                             "Print logging information",
+                            false);
+        argParser.addOption("resume",
+                            "Load the most recent save",
                             false);
         return argParser;
     }

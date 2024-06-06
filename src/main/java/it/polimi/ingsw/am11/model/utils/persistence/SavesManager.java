@@ -23,7 +23,7 @@ public class SavesManager {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private static final Path DB_PATH = DirectoryCreator.SAVES_DIR.resolve("saves.sqlite");
-    private static final String CONNECTION_URL = "jdbc:sqlite:" + DB_PATH;
+    public static final String CONNECTION_URL = "jdbc:sqlite:" + DB_PATH;
 
     public static void saveGame(@NotNull GameModelMemento modelMemento) {
         createDB();
@@ -63,6 +63,7 @@ public class SavesManager {
     private static void createTables(@NotNull Statement statement) throws SQLException {
         statement.addBatch(SQLQuery.CREATE_SAVES_TABLE);
         statement.addBatch(SQLQuery.CREATE_CUSTOM_TABLE);
+        statement.addBatch(SQLQuery.TRIGGER_TO_DELETE_OLDER);
         statement.executeBatch();
     }
 

@@ -14,7 +14,11 @@ public class Server {
     static final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     static void start(@NotNull ArgParser parser) {
-        CentralController.INSTANCE.createNewGame();
+
+        if (Objects.equals(parser.getOption("resume").orElseThrow().getValue(), "")) {
+            CentralController.INSTANCE.loadMostRecent();
+        } else CentralController.INSTANCE.createNewGame();
+
         int socketPort = 0;
         int rmiPort = 0;
         try {

@@ -30,7 +30,7 @@ public class Option {
         this.value = null;
     }
 
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 

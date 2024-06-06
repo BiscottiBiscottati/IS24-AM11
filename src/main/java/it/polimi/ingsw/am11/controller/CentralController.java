@@ -56,6 +56,17 @@ public enum CentralController {
         this.gameControllers.add(newGame);
     }
 
+    public synchronized void loadMostRecent() {
+        LOGGER.info("CONTROLLER: Loading most recent game");
+        GameController newGame = new GameController();
+
+        if (! newGame.loadMostRecent())
+            LOGGER.info("CONTROLLER: No recent game found");
+        else LOGGER.info("CONTROLLER: Loaded most recent game");
+
+        this.gameControllers.add(newGame);
+    }
+
     public synchronized void disconnectPlayer(@NotNull String nickname) {
         LOGGER.info("CONTROLLER: Player {} disconnected", nickname);
         gameControllers.stream().findFirst()
@@ -74,7 +85,6 @@ public enum CentralController {
 
     public void destroyGame() {
         LOGGER.info("CONTROLLER: Destroying current Game and recreating a new one");
-        gameControllers.forEach(GameController::destroyGame);
         gameControllers.clear();
         chatController.clear();
         createNewGame();

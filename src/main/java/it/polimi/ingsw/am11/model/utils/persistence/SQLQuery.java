@@ -30,6 +30,21 @@ public class SQLQuery {
             LIMIT 1;
             """;
 
+    public static final String TRIGGER_TO_DELETE_OLDER = """
+            CREATE TRIGGER IF NOT EXISTS delete_old_saves
+            AFTER INSERT ON saves
+            WHEN (SELECT COUNT(*) FROM saves) > 10
+            BEGIN
+                DELETE FROM saves
+                WHERE id NOT IN (
+                    SELECT id
+                    FROM saves
+                    ORDER BY save_time DESC
+                    LIMIT 10
+                );
+            END;
+            """;
+
     public static final String DELETE_ALL_SAVES = """
             DELETE FROM saves;
             """;
@@ -37,4 +52,5 @@ public class SQLQuery {
     public static final String DELETE_ALL_CUSTOM = """
             DELETE FROM custom_saves;
             """;
+
 }

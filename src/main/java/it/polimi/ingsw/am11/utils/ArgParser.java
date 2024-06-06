@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class ArgParser {
-    private static final Pattern OPTION_START = Pattern.compile("^-[a-zA-Z]");
+    private static final Pattern OPTION_START = Pattern.compile("^-[a-zA-Z]\\w*");
     private final @NotNull List<Option> options;
     private final @NotNull List<String> positionalArgs;
 
@@ -19,7 +19,8 @@ public class ArgParser {
     }
 
     public void parse(String @NotNull [] args) throws ParsingErrorException {
-        for (int i = 0; i < args.length; i++) {
+        int length = args.length;
+        for (int i = 0; i < length; i++) {
             if (args[i].isEmpty()) throw new ParsingErrorException("Argument " + i + " is empty");
             if (OPTION_START.matcher(args[i]).matches()) {
                 int tempI = i;

@@ -47,6 +47,7 @@ module it.polimi.ingsw.am11 {
 
     exports it.polimi.ingsw.am11.model.utils.memento to com.fasterxml.jackson.databind;
     exports it.polimi.ingsw.am11.model.players to com.fasterxml.jackson.databind;
+    exports it.polimi.ingsw.am11.model.players.utils to com.fasterxml.jackson.databind;
     exports it.polimi.ingsw.am11.model.utils to com.fasterxml.jackson.databind;
-    exports it.polimi.ingsw.am11.model.utils.resilience to com.fasterxml.jackson.databind;
+    exports it.polimi.ingsw.am11.model.utils.persistence to com.fasterxml.jackson.databind;
 }
