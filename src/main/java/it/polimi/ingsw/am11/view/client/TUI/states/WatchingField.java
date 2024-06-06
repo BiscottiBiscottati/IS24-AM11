@@ -200,10 +200,10 @@ public class WatchingField extends TUIState {
         assert model.getCurrentTurn() != null;
         if (model.getCurrentTurn().equals(model.myName())) {
             if (model.getiPlaced()) {
-                InfoBarPrinter.printInfoBar(null, "STATUS: It's your turn, you have to draw a " +
-                                                  "card...", gameStatus);
+                InfoBarPrinter.printInfoBar("", "STATUS: It's your turn, you have to draw a " +
+                                                "card...", gameStatus);
             } else {
-                InfoBarPrinter.printInfoBar(null, "STATUS: It's your turn, place a card...",
+                InfoBarPrinter.printInfoBar("", "STATUS: It's your turn, place a card...",
                                             gameStatus);
             }
             System.out.println("This is your field, quite impressive:");
@@ -215,7 +215,7 @@ public class WatchingField extends TUIState {
                 throw new RuntimeException(e);
             }
         } else {
-            InfoBarPrinter.printInfoBar(null, "STATUS: It's not your turn, please wait...",
+            InfoBarPrinter.printInfoBar("", "STATUS: It's not your turn, please wait...",
                                         gameStatus);
 
             System.out.println("This is " + model.getCurrentTurn() + " field:");
@@ -295,15 +295,15 @@ public class WatchingField extends TUIState {
         assert model.getCurrentTurn() != null;
         if (model.getCurrentTurn().equals(model.myName())) {
             if (model.getiPlaced()) {
-                InfoBarPrinter.printInfoBar(null,
+                InfoBarPrinter.printInfoBar("",
                                             "STATUS: It's your turn, you have to draw a card...",
                                             gameStatus);
             } else {
-                InfoBarPrinter.printInfoBar(null, "STATUS: It's your turn, place a card...",
+                InfoBarPrinter.printInfoBar("", "STATUS: It's your turn, place a card...",
                                             gameStatus);
             }
         } else {
-            InfoBarPrinter.printInfoBar(null, "STATUS: It's not your turn, please wait...",
+            InfoBarPrinter.printInfoBar("", "STATUS: It's not your turn, please wait...",
                                         gameStatus);
         }
 

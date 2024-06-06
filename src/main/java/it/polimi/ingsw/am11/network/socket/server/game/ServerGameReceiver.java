@@ -6,6 +6,8 @@ import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.network.socket.MessageReceiver;
+import it.polimi.ingsw.am11.network.socket.utils.ContextJSON;
+import it.polimi.ingsw.am11.network.socket.utils.JsonFactory;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,9 +29,11 @@ public class ServerGameReceiver implements MessageReceiver {
     }
 
     public static @Nullable String receiveNickname(@NotNull String message) {
+        LOGGER.info("SERVER TCP: Received message: {}", message);
         try {
-            JsonNode jsonNode = new ObjectMapper().readTree(message);
-            if (! jsonNode.get("method").asText().equals("setNickname")) return null;
+            JsonNode jsonNode = JsonFactory.toJsonNode(message);
+            if (! jsonNode.get("context").asText().equals(ContextJSON.GAME.toString())) return "";
+            if (! jsonNode.get("method").asText().equals("setNickname")) return "";
             return jsonNode.get("nickname").asText();
         } catch (IOException e) {
             LOGGER.error("SERVER TCP: Error while parsing nickname message: {}", e.getMessage());

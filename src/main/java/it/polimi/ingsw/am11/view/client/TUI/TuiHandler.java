@@ -68,6 +68,7 @@ public class TuiHandler {
             }
             System.out.print("#"); // print a part of the loading bar
         }
+        System.out.println();
 
     }
 

@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
 import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
+import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
@@ -115,32 +116,19 @@ public class WatchingTable extends TUIState {
         assert model.getCurrentTurn() != null;
         if (model.getCurrentTurn().equals(model.myName())) {
             if (model.getiPlaced()) {
-                System.out.println("""
-                                           ++++++++++++++++++++++++++++
-                                           \s
-                                            STATUS: It's your turn, draw a card...
-                                           """ + gameStatus + """
-                                           ++++++++++++++++++++++++++++
-                                           \s""");
+                InfoBarPrinter.printInfoBar("", "STATUS:  It's your turn, draw a card...",
+                                            gameStatus);
+
 
             } else {
-                System.out.println("""
-                                           ++++++++++++++++++++++++++++
-                                           \s
-                                            STATUS: It's your turn, you have to place a card...
-                                           """ + gameStatus + """
-                                           ++++++++++++++++++++++++++++
-                                           \s""");
+                InfoBarPrinter.printInfoBar("",
+                                            "STATUS: It's your turn, you have to place a card...",
+                                            gameStatus);
             }
             CardPrinter.printWaitingForTrn(model);
         } else {
-            System.out.println("""
-                                       ++++++++++++++++++++++++++++
-                                       \s
-                                        STATUS: It's not your turn, please wait...
-                                       """ + gameStatus + """
-                                       ++++++++++++++++++++++++++++
-                                       \s""");
+            InfoBarPrinter.printInfoBar("", "STATUS: It's not your turn, please wait...",
+                                        gameStatus);
 
             CardPrinter.printWaitingForTrn(model);
         }

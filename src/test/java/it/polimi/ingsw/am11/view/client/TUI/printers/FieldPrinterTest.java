@@ -36,7 +36,7 @@ class FieldPrinterTest {
 
     @Test
     void render() throws IllegalCardBuildException {
-        FieldPrinter.render(field, false);
+        FieldPrinter.render(field, true);
         CardPrinter.printCardFrontAndBack(100);
         System.out.println(100);
         CardPrinter.printCardFrontAndBack(2);

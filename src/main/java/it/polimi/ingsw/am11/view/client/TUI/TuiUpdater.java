@@ -328,6 +328,43 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
 
         //Set Tui
+        switch (model.table().getStatus()) {
+            case CHOOSING_STARTERS -> {
+                currentState.set(tuiStates.get(TuiStates.CHOOSING_STARTER));
+                homeState.set(tuiStates.get(TuiStates.CHOOSING_STARTER));
+                currentState.get().restart(false, null);
+            }
+            case CHOOSING_OBJECTIVES -> {
+                currentState.set(tuiStates.get(TuiStates.CHOOSING_OBJECTIVE));
+                homeState.set(tuiStates.get(TuiStates.CHOOSING_OBJECTIVE));
+                currentState.get().restart(false, null);
+            }
+            case ENDED -> {
+                currentState.set(tuiStates.get(TuiStates.ENDED));
+                homeState.set(tuiStates.get(TuiStates.ENDED));
+                currentState.get().restart(false, null);
+            }
+            case ONGOING, ARMAGEDDON, LAST_TURN -> {
+                if (model.getCurrentTurn().equals(model.myName()) && ! model.getiPlaced()) {
+                    currentState.set(tuiStates.get(TuiStates.WATCHING_FIELD));
+                    homeState.set(tuiStates.get(TuiStates.WATCHING_FIELD));
+                    currentState.get().restart(false, null);
+                } else {
+                    currentState.set(tuiStates.get(TuiStates.WATCHING_TABLE));
+                    homeState.set(tuiStates.get(TuiStates.WATCHING_TABLE));
+                    currentState.get().restart(false, null);
+                }
+            }
+            case SETUP -> {
+                currentState.set(tuiStates.get(TuiStates.WAITING));
+                homeState.set(tuiStates.get(TuiStates.WAITING));
+                currentState.get().restart(false, null);
+            }
+            case null, default -> {
+                throw new RuntimeException("Received null or invalid game status update");
+            }
+
+        }
 
     }
 

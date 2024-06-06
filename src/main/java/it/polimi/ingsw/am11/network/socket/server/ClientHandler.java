@@ -80,6 +80,10 @@ public class ClientHandler implements Runnable {
                 return false;
             }
             if (nickname == null) return false;
+            if (nickname.isBlank()) {
+                LOGGER.info("SERVER TCP: Retrying nickname");
+                continue;
+            }
 
             LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
 

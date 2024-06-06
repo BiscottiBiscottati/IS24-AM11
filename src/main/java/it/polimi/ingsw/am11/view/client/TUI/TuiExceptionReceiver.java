@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.view.client.TUI;
 import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.*;
+import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -57,9 +58,13 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     public void throwException(IllegalCardPlacingException ex) {
         LOGGER.debug("IllegalCardPlacingException {}", ex.getMessage());
         model.setiPlaced(false);
-        tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
-        tuiUpdater.setHomeState(TuiStates.WATCHING_FIELD);
-        tuiUpdater.getCurrentTuiState().restart(true, ex);
+        if (model.table().getStatus().equals(GameStatus.ONGOING) ||
+            model.table().getStatus().equals(GameStatus.ARMAGEDDON) ||
+            model.table().getStatus().equals(GameStatus.LAST_TURN)) {
+            tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
+            tuiUpdater.setHomeState(TuiStates.WATCHING_FIELD);
+            tuiUpdater.getCurrentTuiState().restart(true, ex);
+        }
     }
 
     @Override

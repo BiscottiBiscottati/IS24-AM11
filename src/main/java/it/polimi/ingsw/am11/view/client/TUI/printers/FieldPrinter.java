@@ -58,16 +58,6 @@ public class FieldPrinter {
         List<List<MiniCardContainer>> matrixOfCards = intoContainerMatrix(cardsPositioned);
         List<List<Position>> matrixOfPositions = intoPositionsMatrix(cardsPositioned);
 
-        for (List<MiniCardContainer> strings : matrixOfCards) {
-            System.out.println(strings);
-        }
-        System.out.println("jdsnfkasjdf lajsf ");
-
-        for (List<Position> strings : matrixOfPositions) {
-            System.out.println(strings);
-        }
-
-
         int PosSize = matrixOfPositions.size();
         int sizeY = (PosSize << 1) + 1;
         int sizeX = (matrixOfPositions.getFirst().size() << 1) + 1;

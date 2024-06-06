@@ -47,6 +47,7 @@ public class Connecting extends TUIState {
                 upClearDownThenFalse();
                 System.out.println(setIp + ip);
                 TuiStates.printAskLine(this);
+                return;
             } else if (port == - 1) {
                 switch (type) {
                     case "socket" -> {

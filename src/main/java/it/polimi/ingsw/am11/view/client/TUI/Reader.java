@@ -22,8 +22,6 @@ public class Reader {
         this.input = new Scanner(System.in);
         this.tuiUpdater = new TuiUpdater(TuiStates.CONNECTING);
         this.actuator = new Actuator(tuiUpdater);
-
-        tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void listen() {
