@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
+import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 
 public class Waiting extends TUIState {
-    public static final String askLine = "To ask is permissible , to reply is polite >>> \033[K";
+    static final String askLine = "To ask is permissible , to reply is polite >>> \033[K";
+    private static final String infoBar = "STATUS: Waiting...";
     private boolean alreadyError = false;
 
     public Waiting(MiniGameModel model) {
@@ -23,7 +25,8 @@ public class Waiting extends TUIState {
         ArgParser parser = setUpOptions();
 
         if (args[0].isEmpty()) {
-            System.out.print("\033[F" + askLine);
+            System.out.print("\033[F");
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -33,7 +36,7 @@ public class Waiting extends TUIState {
         } catch (ParsingErrorException e) {
             errorsHappensEvenTwice("ERROR: " + e.getMessage());
             alreadyError = true;
-            System.out.print(askLine);
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -51,7 +54,7 @@ public class Waiting extends TUIState {
                 } else {
                     errorsHappensEvenTwice("ERROR: get command is not available now");
                     alreadyError = true;
-                    System.out.print(askLine);
+                    TuiStates.printAskLine(this);
                 }
             }
             case "msg", "send" -> {
@@ -60,29 +63,31 @@ public class Waiting extends TUIState {
                     String note;
                     try {
                         note = Chat.chatter(actuator, Arrays.copyOfRange(args, 1, args.length),
-                                            model.getplayers());
+                                            model.getPlayers());
                     } catch (ParsingErrorException e) {
                         errorsHappensEvenTwice("ERROR: " + e.getMessage());
                         alreadyError = true;
-                        System.out.print(askLine);
+                        TuiStates.printAskLine(this);
                         return;
                     }
                     if (! note.isEmpty()) {
                         errorsHappensEvenTwice(note);
                         alreadyError = true;
-                        System.out.print(askLine);
-                        return;
+                        TuiStates.printAskLine(this);
+                    } else {
+                        System.out.print("\033[F");
+                        TuiStates.printAskLine(this);
                     }
                 } else {
                     errorsHappensEvenTwice("ERROR: chat is not available now");
                     alreadyError = true;
-                    System.out.print(askLine);
+                    TuiStates.printAskLine(this);
                 }
             }
             default -> {
                 errorsHappensEvenTwice("ERROR: " + word + " is not a valid option");
                 alreadyError = true;
-                System.out.print(askLine);
+                TuiStates.printAskLine(this);
             }
         }
     }
@@ -92,20 +97,19 @@ public class Waiting extends TUIState {
         alreadyError = false;
 
         ConsUtils.clear();
-        System.out.println("""
-                                   ++++++++++++++++++++++++++++
-                                   \s
-                                    STATUS: Waiting...
-                                   \s
-                                   ++++++++++++++++++++++++++++
-                                   \s""");
+        InfoBarPrinter.printInfoBar(infoBar);
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
             alreadyError = true;
         }
         System.out.println("Everybody is waiting for something...");
-        System.out.print(askLine);
+        TuiStates.printAskLine(this);
+    }
+
+    @Override
+    public TuiStates getState() {
+        return TuiStates.WAITING;
     }
 
     private static @NotNull ArgParser setUpOptions() {
@@ -123,7 +127,7 @@ public class Waiting extends TUIState {
         if (parser.getPositionalArgs().size() < 2) {
             errorsHappensEvenTwice("ERROR: get command requires an argument");
             alreadyError = true;
-            System.out.print(askLine);
+            TuiStates.printAskLine(this);
             return;
         }
 

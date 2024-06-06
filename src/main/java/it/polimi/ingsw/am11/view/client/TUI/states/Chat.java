@@ -1,24 +1,20 @@
 package it.polimi.ingsw.am11.view.client.TUI.states;
 
-import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
-import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
+import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class Chat extends TUIState {
-    private static final String askForMsg = "Write: >>> \033[K";
+    static final String askForMsg = "Write: >>> \033[K";
     private static final String askForHelp = "Use /mgs <nickname> to send a private message, use " +
-                                             "/back to exit chat, use /exit to exit the game >>> " +
+                                             "/back to exit chat, use /exit to exit the game" +
                                              "\033[K";
+    private static final String infoBar = "CHAT: Talk with your enemies...";
     private boolean alreadyError = false;
 
     public Chat(MiniGameModel model) {
@@ -30,25 +26,25 @@ public class Chat extends TUIState {
 
         //Empty string
         if (args[0].isEmpty()) {
-            System.out.print("\033[F" + askForMsg);
+            System.out.print("\033[F");
+            TuiStates.printAskLine(this);
             return;
         }
 
         String note;
         try {
-            note = chatter(actuator, args, model.getplayers());
+            note = chatter(actuator, args, model.getPlayers());
         } catch (ParsingErrorException e) {
             errorsHappensEvenTwice("ERROR: " + e.getMessage());
             alreadyError = true;
-            System.out.print(askForMsg);
+            TuiStates.printAskLine(this);
             return;
         }
 
         if (! note.isEmpty()) {
             errorsHappensEvenTwice(note);
             alreadyError = true;
-            System.out.print(askForMsg);
-            return;
+            TuiStates.printAskLine(this);
         }
 
 
@@ -56,15 +52,8 @@ public class Chat extends TUIState {
 
     @Override
     public void restart(boolean dueToEx, @Nullable Exception exception) {
-
         ConsUtils.clear();
-        System.out.println("""
-                                   ++++++++++++++++++++++++++++
-                                   \s
-                                    CHAT: Talk with your enemies...
-                                   \s
-                                   ++++++++++++++++++++++++++++
-                                   \s""");
+        InfoBarPrinter.printInfoBar(infoBar);
 
         model.getChatMessages().forEach(System.out::println);
 
@@ -75,7 +64,12 @@ public class Chat extends TUIState {
             alreadyError = false;
         }
 
-        System.out.print(askForMsg);
+        TuiStates.printAskLine(this);
+    }
+
+    @Override
+    public TuiStates getState() {
+        return TuiStates.CHAT;
     }
 
     private void errorsHappensEvenTwice(String text) {
@@ -121,11 +115,10 @@ public class Chat extends TUIState {
                     StringBuilder sb = new StringBuilder(8);
                     int length = args.length;
                     for (int i = 2; i < length; i++) {
-                        sb.append(args[i]);
+                        sb.append(args[i]).append(" ");
                     }
                     String msg = sb.toString();
                     actuator.sendPrivateMessage(args[1], msg);
-                    //System.out.print(askForMsg);
                     return "";
                 } else {
                     throw new ParsingErrorException("Player not found");
@@ -134,11 +127,10 @@ public class Chat extends TUIState {
             default -> {
                 StringBuilder sb = new StringBuilder(8);
                 for (String arg : args) {
-                    sb.append(arg);
+                    sb.append(arg).append(" ");
                 }
                 String msg = sb.toString();
                 actuator.sendChatMessage(msg);
-                //System.out.print(askForMsg);
                 return "";
             }
         }

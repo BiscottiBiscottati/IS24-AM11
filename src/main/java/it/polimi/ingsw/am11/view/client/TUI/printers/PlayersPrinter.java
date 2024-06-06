@@ -15,7 +15,7 @@ public class PlayersPrinter {
         //Size: 96*
 
         String startingPlayer = model.getStartingPlayer();
-        List<String> playersList = new ArrayList<>(model.getplayers());
+        List<String> playersList = new ArrayList<>(model.getPlayers());
         List<String> res = new ArrayList<>();
 
 

@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.view.client.TUI.states;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
+import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.printers.PlayersPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -12,7 +13,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 
 public class Ended extends TUIState {
-    private static String tellNothing = "Nothing to do here, you can exit the game >>> \033[K";
+    static String tellNothing = "Nothing to do here, you can exit the game >>> \033[K";
+    private static String infoBar = "STATUS: The game has ended";
     private boolean alreadyError = false;
 
     public Ended(MiniGameModel model) {
@@ -24,7 +26,8 @@ public class Ended extends TUIState {
         ArgParser parser = setUpOptions();
         //Empty string
         if (args[0].isEmpty()) {
-            System.out.print("\033[F" + tellNothing);
+            System.out.print("\033[F");
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -41,17 +44,17 @@ public class Ended extends TUIState {
                 String note;
                 try {
                     note = Chat.chatter(actuator, Arrays.copyOfRange(args, 1, args.length),
-                                        model.getplayers());
+                                        model.getPlayers());
                 } catch (ParsingErrorException e) {
                     errorsHappensEvenTwice("ERROR: " + e.getMessage());
                     alreadyError = true;
-                    System.out.print(tellNothing);
+                    TuiStates.printAskLine(this);
                     return;
                 }
                 if (! note.isEmpty()) {
                     errorsHappensEvenTwice(note);
                     alreadyError = true;
-                    System.out.print(tellNothing);
+                    TuiStates.printAskLine(this);
                     return;
                 }
             }
@@ -59,7 +62,7 @@ public class Ended extends TUIState {
             case "exit" -> Actuator.close();
             default -> {
                 errorsHappensEvenTwice("ERROR: Command not found");
-                System.out.print(tellNothing);
+                TuiStates.printAskLine(this);
             }
         }
     }
@@ -71,16 +74,15 @@ public class Ended extends TUIState {
     @Override
     public void restart(boolean dueToEx, @Nullable Exception exception) {
         ConsUtils.clear();
-        System.out.println("""
-                                   ++++++++++++++++++++++++++++
-                                   \s
-                                    STATUS: The game has ended
-                                   \s
-                                   ++++++++++++++++++++++++++++
-                                   \s""");
+        InfoBarPrinter.printInfoBar(infoBar);
 
         System.out.println("This is the final leaderboard:");
         PlayersPrinter.printLeaderboard(model.getFinalLeaderboard());
+    }
+
+    @Override
+    public TuiStates getState() {
+        return TuiStates.ENDED;
     }
 
     private void errorsHappensEvenTwice(String text) {
@@ -94,7 +96,7 @@ public class Ended extends TUIState {
         if (parser.getPositionalArgs().size() < 2) {
             errorsHappensEvenTwice("ERROR: get command requires an argument");
             alreadyError = true;
-            System.out.print(tellNothing);
+            TuiStates.printAskLine(this);
             return;
         }
 

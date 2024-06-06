@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.view.client.TUI;
 
+import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -16,10 +18,12 @@ public class Reader {
     private final TuiUpdater tuiUpdater;
     private final Actuator actuator;
 
-    public Reader(TuiUpdater tuiUpdater) {
+    public Reader() {
         this.input = new Scanner(System.in);
-        this.tuiUpdater = tuiUpdater;
+        this.tuiUpdater = new TuiUpdater(TuiStates.CONNECTING);
         this.actuator = new Actuator(tuiUpdater);
+
+        tuiUpdater.getCurrentTuiState().restart(false, null);
     }
 
     public void listen() {

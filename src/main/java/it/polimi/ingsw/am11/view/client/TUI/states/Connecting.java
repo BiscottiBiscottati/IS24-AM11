@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.Constants;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
+import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
@@ -13,18 +14,18 @@ import java.util.regex.Pattern;
 
 public class Connecting extends TUIState {
 
-    private static final String chooseSocketOrRmi = "Choose socket or rmi >>> \033[K";
-    private static final String chooseIp = "Enter IP, leave empty for default >>> \033[K";
-    private static final String choosePort = "Enter Port, leave empty for default >>> \033[K";
+    static final String chooseSocketOrRmi = "Choose socket or rmi >>> \033[K";
+    static final String chooseIp = "Enter IP, leave empty for default >>> \033[K";
+    static final String choosePort = "Enter Port, leave empty for default >>> \033[K";
     private static final String setSocketOrRmi = "Type of connection set to: ";
     private static final String setIp = "IP address set to: ";
     private static final String setPort = "Port set to: ";
+    private static final String infoBar = " STATUS: Connecting to the server...";
 
     private boolean alreadyError = false;
-    private String type = "";
-    private String ip = "";
-    private int port = - 1;
-    private int count = 0;
+    String type = "";
+    String ip = "";
+    int port = - 1;
 
 
     public Connecting(MiniGameModel model) {
@@ -38,16 +39,14 @@ public class Connecting extends TUIState {
         // Handel empty string
         if (args[0].isEmpty()) {
             if (type.isEmpty()) {
-                System.out.print("\033[F" + chooseSocketOrRmi);
+                System.out.print("\033[F");
+                TuiStates.printAskLine(this);
                 return;
             } else if (ip.isEmpty()) {
                 ip = "localhost";
                 upClearDownThenFalse();
                 System.out.println(setIp + ip);
-                if (port == - 1) {
-                    System.out.print(choosePort);
-                    return;
-                }
+                TuiStates.printAskLine(this);
             } else if (port == - 1) {
                 switch (type) {
                     case "socket" -> {
@@ -79,16 +78,9 @@ public class Connecting extends TUIState {
             }
         } catch (ParsingErrorException e) {
             errorsHappensEvenTwice("ERROR: " + e.getMessage());
-            if (type.isEmpty()) {
-                System.out.print(chooseSocketOrRmi);
-                alreadyError = true;
-            } else if (ip.isEmpty()) {
-                System.out.print(chooseIp);
-                alreadyError = true;
-            } else if (port == - 1) {
-                System.out.print(choosePort);
-                alreadyError = true;
-            }
+            TuiStates.printAskLine(this);
+            alreadyError = true;
+
             return;
         }
 
@@ -110,7 +102,7 @@ public class Connecting extends TUIState {
                 case "rmi" -> type = "rmi";
                 default -> {
                     errorsHappensEvenTwice("ERROR: " + word + " is not a valid argument");
-                    System.out.print(chooseSocketOrRmi);
+                    TuiStates.printAskLine(this);
                     alreadyError = true;
                     return;
                 }
@@ -133,7 +125,7 @@ public class Connecting extends TUIState {
                     ip = optIP;
                 } else {
                     errorsHappensEvenTwice("ERROR: " + optIP + " is not a valid value for IP");
-                    System.out.print(chooseSocketOrRmi);
+                    TuiStates.printAskLine(this);
                     alreadyError = true;
                 }
             }
@@ -145,7 +137,7 @@ public class Connecting extends TUIState {
                     port = Integer.parseInt(optPort);
                 } catch (NumberFormatException e) {
                     errorsHappensEvenTwice("ERROR: " + optPort + " is not a valid value for port");
-                    System.out.print(chooseSocketOrRmi);
+                    TuiStates.printAskLine(this);
                     alreadyError = true;
                 }
             }
@@ -157,14 +149,14 @@ public class Connecting extends TUIState {
                 if (port != - 1) {
                     System.out.println(setPort + port);
                 }
-                System.out.print(chooseIp);
+                TuiStates.printAskLine(this);
                 return;
             }
             if (port == - 1) {
                 upClearDownThenFalse();
                 System.out.println(setSocketOrRmi + type);
                 System.out.println(setIp + ip);
-                System.out.print(choosePort);
+                TuiStates.printAskLine(this);
                 return;
             }
         }
@@ -174,7 +166,7 @@ public class Connecting extends TUIState {
                 ip = word;
             } else {
                 errorsHappensEvenTwice("ERROR: " + word + " is not a valid value for IP");
-                System.out.print(chooseIp);
+                TuiStates.printAskLine(this);
                 alreadyError = true;
                 return;
             }
@@ -182,7 +174,7 @@ public class Connecting extends TUIState {
             upClearDownThenFalse();
             System.out.println(setIp + ip);
             if (port == - 1) {
-                System.out.print(choosePort);
+                TuiStates.printAskLine(this);
                 return;
             }
         }
@@ -192,7 +184,7 @@ public class Connecting extends TUIState {
                 port = Integer.parseInt(word);
             } catch (NumberFormatException e) {
                 errorsHappensEvenTwice("ERROR: " + word + " is not a valid value for port");
-                System.out.print(choosePort);
+                TuiStates.printAskLine(this);
                 alreadyError = true;
                 return;
             }
@@ -260,28 +252,26 @@ public class Connecting extends TUIState {
 
     @Override
     public void restart(boolean dueToEx, Exception exception) {
-        count++;
         alreadyError = false;
         type = "";
         ip = "";
         port = - 1;
 
         ConsUtils.clear();
-        System.out.println("""
-                                    ++++++++++++++++++++++++++++
-                                                                      \s
-                                     STATUS: Connecting to the server...
-                                                                      \s
-                                    ++++++++++++++++++++++++++++
-                                   \s""");
+        InfoBarPrinter.printInfoBar(infoBar);
 
         if (dueToEx) {
             System.out.println("ERROR DURING CONNECTION: " + exception.getMessage());
         }
         System.out.println("To join a new game you need to connect to the server, enter the " +
-                           "information" + count + ":");
+                           "information: ");
 
-        System.out.print(chooseSocketOrRmi);
+        TuiStates.printAskLine(this);
+    }
+
+    @Override
+    public TuiStates getState() {
+        return TuiStates.CONNECTING;
     }
 }
 

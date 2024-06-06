@@ -30,7 +30,8 @@ public class DatabaseConstants {
             }
 
             // create a temporary file to store the database
-            tempDbFile = File.createTempFile("cards", ".sqlite");
+            tempDbFile = File.createTempFile("it/polimi/ingsw/am11/view/client/GUI/window/cards",
+                                             ".sqlite");
 
             // copy the database data to the temporary file
             try (FileOutputStream outputStream = new FileOutputStream(tempDbFile)) {

@@ -12,13 +12,14 @@ import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 public class WatchingTable extends TUIState {
-    public static final String askToSee = "What you wanna do? Go back? >>> \033[K";
-    public static final String askLine = "Try to ask something >>> \033[K";
-    private static final String askForCommand = "What you wanna do? Draw a card? >>> \033[K";
+    static final String askToSee = "What you wanna do? Go back? >>> \033[K";
+    static final String askLine = "Try to ask something >>> \033[K";
+    static final String askForCommand = "What you wanna do? Draw a card? >>> \033[K";
     private static final String helpDraw = "HELP: draw <cardId/gold/resource> \033[K";
     private static final String helpGet = "GET: get <table/[nickname]> \033[K";
     private static String gameStatus = "";
@@ -50,33 +51,29 @@ public class WatchingTable extends TUIState {
 
         String word = parser.getPositionalArgs().getFirst();
         switch (word.toLowerCase()) {
-            case "help" -> {
-                Actuator.help();
-            }
-            case "exit" -> {
-                Actuator.close();
-            }
-            case "get" -> {
-                get(actuator, parser);
-            }
-            case "back" -> {
-                actuator.goBack();
-//                if (model.getCurrentTurn().equals(model.myName())) {
-//                    if (model.getiPlaced()) {
-//                        errorsHappensEvenTwice("You already are on the root page, you need to " +
-//                                               "pick a card");
-//                        alreadyError = true;
-//                        System.out.print(askForCommand);
-//                    } else {
-//                        actuator.setTuiState(TuiStates.WATCHING_FIELD);
-//                    }
-//                } else {
-//                    errorsHappensEvenTwice("You already are on the root page, wait for your
-//                    turn," +
-//                                           " you can watch other players fields");
-//                    alreadyError = true;
-//                    System.out.print(askLine);
-//                }
+            case "help" -> Actuator.help();
+            case "exit" -> Actuator.close();
+            case "get" -> get(actuator, parser);
+            case "back" -> actuator.goBack();
+            case "msg", "send" -> {
+                String note;
+                try {
+                    note = Chat.chatter(actuator, Arrays.copyOfRange(args, 1, args.length),
+                                        model.getPlayers());
+                } catch (ParsingErrorException e) {
+                    errorsHappensEvenTwice("ERROR: " + e.getMessage());
+                    alreadyError = true;
+                    askSpecLine();
+                    return;
+                }
+                if (! note.isEmpty()) {
+                    errorsHappensEvenTwice(note);
+                    alreadyError = true;
+                    askSpecLine();
+                } else {
+                    System.out.print("\033[F" + "\033[K");
+                    askSpecLine();
+                }
             }
             case "draw", "pick" -> {
                 assert model.getCurrentTurn() != null;
@@ -115,6 +112,7 @@ public class WatchingTable extends TUIState {
 
         ConsUtils.clear();
 
+        assert model.getCurrentTurn() != null;
         if (model.getCurrentTurn().equals(model.myName())) {
             if (model.getiPlaced()) {
                 System.out.println("""
@@ -148,6 +146,7 @@ public class WatchingTable extends TUIState {
         }
 
         if (dueToEx) {
+            assert exception != null;
             System.out.println("ERROR: " + exception.getMessage());
             alreadyError = true;
         } else {
@@ -156,11 +155,17 @@ public class WatchingTable extends TUIState {
         askSpecLine();
     }
 
+    @Override
+    public TuiStates getState() {
+        return TuiStates.WATCHING_TABLE;
+    }
+
     private static @NotNull ArgParser setUpOptions() {
         return new ArgParser();
     }
 
     private void askSpecLine() {
+        assert model.getCurrentTurn() != null;
         if (model.getCurrentTurn().equals(model.myName())) {
             if (model.getiPlaced()) {
                 System.out.print(askForCommand);
@@ -182,7 +187,7 @@ public class WatchingTable extends TUIState {
     private void get(Actuator actuator, ArgParser parser) {
         List<String> positionalArgs = parser.getPositionalArgs();
 
-        Set<String> playerList = model.getplayers();
+        Set<String> playerList = model.getPlayers();
 
         if (positionalArgs.size() == 2) {
             if (playerList.contains(positionalArgs.get(1))) {

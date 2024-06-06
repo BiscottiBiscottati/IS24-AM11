@@ -31,22 +31,17 @@ import java.util.concurrent.atomic.AtomicReference;
 public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
 
-    private final MiniGameModel model;
+    private MiniGameModel model;
     private final EnumMap<TuiStates, TUIState> tuiStates;
-    private final TuiExceptionReceiver exceptionReceiver;
-    private final AtomicReference<TUIState> currentState;
-    private final AtomicReference<TUIState> homeState;
+    private TuiExceptionReceiver exceptionReceiver;
+    private AtomicReference<TUIState> currentState;
+    private AtomicReference<TUIState> homeState;
     private String candidateNick = "";
 
-    public TuiUpdater(@NotNull MiniGameModel model, TuiStates startingState) {
-        this.model = model;
+    public TuiUpdater(TuiStates startingState) {
         this.tuiStates = new EnumMap<>(TuiStates.class);
-        for (TuiStates state : TuiStates.values()) {
-            tuiStates.put(state, state.getNewState(model));
-        }
-        this.currentState = new AtomicReference<>(tuiStates.get(startingState));
-        this.exceptionReceiver = new TuiExceptionReceiver(model, this);
-        this.homeState = new AtomicReference<>();
+        reset(startingState);
+        currentState.get().restart(false, null);
     }
 
     @Override
@@ -235,10 +230,13 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     @Override
     public void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers) {
-        model.setMyName(candidateNick);
-        for (Map.Entry<PlayerColor, String> entry : currentPlayers.entrySet()) {
-            model.addPlayer(entry.getValue(), entry.getKey());
+        if (! currentPlayers.containsValue(candidateNick)) {
+            LOGGER.error("Candidate nick not found in the player list");
+            throw new RuntimeException("Candidate nick not found in the player list");
         }
+        model.setMyName(candidateNick);
+        currentPlayers.sequencedKeySet()
+                      .forEach(x -> model.addPlayer(currentPlayers.get(x), x));
     }
 
     @Override
@@ -248,7 +246,34 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     @Override
     public void disconnectedFromServer(@NotNull String message) {
-        //TODO to implement exit tui or reset to try to reconnect
+        LOGGER.error("Disconnected from server: {}", message);
+        reset(TuiStates.CONNECTING);
+        //FIXME
+        currentState.get().restart(false, null);
+
+    }
+
+    @Override
+    public void receiveMsg(@NotNull String sender, @NotNull String msg) {
+        model.addChatMessage("[PUBLIC] " + sender + ": " + msg);
+        if (isCurrentState(TuiStates.CHAT)) {
+            currentState.get().restart(false, null);
+        }
+    }
+
+    @Override
+    public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
+        model.addChatMessage("[PRIVATE] " + sender + ": " + msg);
+        if (isCurrentState(TuiStates.CHAT)) {
+            currentState.get().restart(false, null);
+        }
+    }
+
+    @Override
+    public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
+        if (sender.equals(model.myName())) {
+            model.addChatMessage("[YOU] " + sender + ": " + msg);
+        }
     }
 
     @Override
@@ -295,28 +320,17 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         currentState.get().restart(false, null);
     }
 
-    @Override
-    public void receiveMsg(@NotNull String sender, @NotNull String msg) {
-        model.addChatMessage(sender + ": " + msg);
-        if (isCurrentState(TuiStates.CHAT)) {
-            currentState.get().restart(false, null);
-        }
-    }
-
-    @Override
-    public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
-        model.addChatMessage("[PRIVATE]" + sender + ": " + msg);
-        if (isCurrentState(TuiStates.CHAT)) {
-            currentState.get().restart(false, null);
-        }
-    }
-
-    @Override
-    public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
-        // TODO confirmation that a message has been sent
-    }
-
     public void setHomeState(TuiStates state) {
         homeState.set(tuiStates.get(state));
+    }
+
+    public void reset(TuiStates startingState) {
+        this.model = new MiniGameModel();
+        for (TuiStates state : TuiStates.values()) {
+            tuiStates.put(state, state.getNewState(model));
+        }
+        this.currentState = new AtomicReference<>(tuiStates.get(startingState));
+        this.exceptionReceiver = new TuiExceptionReceiver(model, this);
+        this.homeState = new AtomicReference<>();
     }
 }

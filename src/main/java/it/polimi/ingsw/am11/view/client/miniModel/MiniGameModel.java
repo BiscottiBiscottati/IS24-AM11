@@ -9,7 +9,7 @@ import java.util.*;
 
 public class MiniGameModel {
     private final List<String> chatMessages;
-    private final Map<String, CliPlayer> playerMap;
+    private final SequencedMap<String, CliPlayer> playerMap;
     private final CliTable table;
     private Map<String, Integer> finalLeaderboard;
     private String currentTurn;
@@ -20,7 +20,7 @@ public class MiniGameModel {
 
 
     public MiniGameModel() {
-        this.playerMap = new HashMap(8);
+        this.playerMap = new LinkedHashMap<>(8);
         this.table = new CliTable();
         this.finalLeaderboard = null;
         this.iPlaced = false;
@@ -33,8 +33,8 @@ public class MiniGameModel {
         return playerMap.get(nickname);
     }
 
-    public Set<String> getplayers() {
-        return playerMap.keySet();
+    public SequencedSet<String> getPlayers() {
+        return playerMap.sequencedKeySet();
     }
 
     public void setMyName(String nick) {

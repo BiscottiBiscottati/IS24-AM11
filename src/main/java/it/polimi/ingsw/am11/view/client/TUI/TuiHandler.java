@@ -12,21 +12,7 @@ import java.io.IOException;
 
 public class TuiHandler {
 
-    private final MiniGameModel model;
-
-    private final TuiUpdater tuiUpdater;
-    private ClientGameConnector connector;
-    private ClientChatConnector chatConnector;
-    private Reader reader;
-
-    public TuiHandler() {
-        this.model = new MiniGameModel();
-
-        this.tuiUpdater = new TuiUpdater(model, TuiStates.CONNECTING);
-    }
-
     public void start() throws IOException {
-
         ConsUtils.clear();
 
         System.out.println("""
@@ -60,9 +46,7 @@ public class TuiHandler {
         System.out.println("by Osama Atiqi, Edoardo Bergamo, Ferdinando Cioffi and Zining Chen");
         printLoadingBar(1);
         ConsUtils.clear();
-        reader = new Reader(tuiUpdater);
-
-        tuiUpdater.getCurrentTuiState().restart(false, null);
+        Reader reader = new Reader();
 
         while (true) {
             reader.listen();
@@ -80,7 +64,7 @@ public class TuiHandler {
             try {
                 Thread.sleep(stepDuration); // wait for the step duration
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Interrupted while waiting for the loading bar", e);
             }
             System.out.print("#"); // print a part of the loading bar
         }

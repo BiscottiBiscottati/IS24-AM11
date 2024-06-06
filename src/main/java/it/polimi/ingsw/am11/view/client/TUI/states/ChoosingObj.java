@@ -4,19 +4,19 @@ import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
-import it.polimi.ingsw.am11.view.client.TUI.printers.CardArchitect;
 import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
+import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.smartcardio.Card;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ChoosingObj extends TUIState {
-    private static final String askForObj = "Choose one of the objectives above >>> \033[K";
+    static final String askForObj = "Choose one of the objectives above >>> \033[K";
+    private static final String infoBar = "STATUS: Choosing the personal objective...";
     private boolean alreadyError = false;
     private boolean isBlocked = false;
 
@@ -31,33 +31,38 @@ public class ChoosingObj extends TUIState {
         int val;
 
         if (isBlocked) {
-            System.out.print("\033[A" + askForObj);
+            System.out.print("\033[A");
+            TuiStates.printAskLine(this);
             return;
         }
 
         //Empty string
         if (args[0].isEmpty()) {
-            System.out.print("\033[F" + askForObj);
+            System.out.print("\033[F");
+            TuiStates.printAskLine(this);
             return;
         }
 
         // Handle exception
         try {
             parser.parse(args);
-            if (parser.getPositionalArgs().size() > 1) {
-                throw new ParsingErrorException(
-                        "Too many arguments, starting from: " + parser.getPositionalArgs().get(1));
-            }
         } catch (ParsingErrorException e) {
             errorsHappensEvenTwice("ERROR: " + e.getMessage());
             alreadyError = true;
-            System.out.print(askForObj);
+            TuiStates.printAskLine(this);
             return;
         }
 
         String word = parser.getPositionalArgs().getFirst();
         switch (word.toLowerCase()) {
             case "help" -> {
+                if (parser.getPositionalArgs().size() > 1) {
+                    errorsHappensEvenTwice("ERROR: Too many arguments, starting from: " +
+                                           parser.getPositionalArgs().get(1));
+                    alreadyError = true;
+                    TuiStates.printAskLine(this);
+                    return;
+                }
                 Actuator.help();
                 return;
             }
@@ -68,22 +73,33 @@ public class ChoosingObj extends TUIState {
                 String note;
                 try {
                     note = Chat.chatter(actuator, Arrays.copyOfRange(args, 1, args.length),
-                                        model.getplayers());
+                                        model.getPlayers());
                 } catch (ParsingErrorException e) {
                     errorsHappensEvenTwice("ERROR: " + e.getMessage());
                     alreadyError = true;
-                    System.out.print(askForObj);
+                    TuiStates.printAskLine(this);
                     return;
                 }
                 if (! note.isEmpty()) {
                     errorsHappensEvenTwice(note);
                     alreadyError = true;
-                    System.out.print(askForObj);
+                    TuiStates.printAskLine(this);
                     return;
+                } else {
+                    System.out.print("\033[F");
+                    TuiStates.printAskLine(this);
                 }
             }
-            //Maybe a return is needed after help
-            case "exit" -> Actuator.close();
+            case "exit" -> {
+                if (parser.getPositionalArgs().size() > 1) {
+                    errorsHappensEvenTwice("ERROR: Too many arguments, starting from: " +
+                                           parser.getPositionalArgs().get(1));
+                    alreadyError = true;
+                    TuiStates.printAskLine(this);
+                    return;
+                }
+                Actuator.close();
+            }
         }
 
 
@@ -96,7 +112,7 @@ public class ChoosingObj extends TUIState {
             errorsHappensEvenTwice("ERROR: " + word + " is neither a valid command nor a valid " +
                                    "cardId");
             alreadyError = true;
-            System.out.print(askForObj);
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -109,13 +125,7 @@ public class ChoosingObj extends TUIState {
         isBlocked = false;
 
         ConsUtils.clear();
-        System.out.println("""
-                                   ++++++++++++++++++++++++++++
-                                   \s
-                                    STATUS: Choosing the personal objective...
-                                   \s
-                                   ++++++++++++++++++++++++++++
-                                   \s""");
+        InfoBarPrinter.printInfoBar(infoBar);
 
         System.out.println("You received this objectives:");
 
@@ -133,7 +143,12 @@ public class ChoosingObj extends TUIState {
             alreadyError = false;
         }
 
-        System.out.print(askForObj);
+        TuiStates.printAskLine(this);
+    }
+
+    @Override
+    public TuiStates getState() {
+        return TuiStates.CHOOSING_OBJECTIVE;
     }
 
     private static @NotNull ArgParser setUpOptions() {
@@ -151,7 +166,7 @@ public class ChoosingObj extends TUIState {
         if (parser.getPositionalArgs().size() < 2) {
             errorsHappensEvenTwice("ERROR: get command requires an argument");
             alreadyError = true;
-            System.out.print(askForObj);
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -159,7 +174,6 @@ public class ChoosingObj extends TUIState {
 
         if (word.toLowerCase().equals("chat")) {
             actuator.setTuiState(TuiStates.CHAT);
-            return;
         }
 
     }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
 import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
+import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +16,8 @@ public class SettingName extends TUIState {
     //TODO: check that the name is not help or other command names
     //TODO: check in all states that the case sensitiveness is respected
 
-    private static final String askYourName = "What's your name? >>> \033[K";
+    static final String askYourName = "What's your name? >>> \033[K";
+    private static final String infoBar = "STATUS: Choosing a nickname...";
     private boolean isQuote = false;
     private boolean isBlocked = false;
     private boolean alreadyError = false;
@@ -36,7 +38,8 @@ public class SettingName extends TUIState {
 
         //Empty string
         if (args[0].isEmpty()) {
-            System.out.print("\033[F" + askYourName);
+            System.out.print("\033[F");
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -55,7 +58,7 @@ public class SettingName extends TUIState {
         } catch (ParsingErrorException e) {
             errorsHappensEvenTwice("ERROR: " + e.getMessage());
             alreadyError = true;
-            System.out.print(askYourName);
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -72,7 +75,7 @@ public class SettingName extends TUIState {
             errorsHappensEvenTwice("The name is too long, it must be less than 30 " +
                                    "characters");
             alreadyError = true;
-            System.out.print(askYourName);
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -88,7 +91,7 @@ public class SettingName extends TUIState {
             }
             System.out.println("ERROR: " + e.getMessage() + "\033[K");
             alreadyError = true;
-            System.out.print(askYourName);
+            TuiStates.printAskLine(this);
         }
 
     }
@@ -110,20 +113,19 @@ public class SettingName extends TUIState {
         alreadyError = false;
 
         ConsUtils.clear();
-        System.out.println("""
-                                   ++++++++++++++++++++++++++++
-                                   \s
-                                    STATUS: Choosing a nickname...
-                                   \s
-                                   ++++++++++++++++++++++++++++
-                                   \s""");
+        InfoBarPrinter.printInfoBar(infoBar);
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
             alreadyError = true;
         }
         System.out.println("You can now choose your nickname, it can't contain spaces");
-        System.out.print(askYourName);
+        TuiStates.printAskLine(this);
+    }
+
+    @Override
+    public TuiStates getState() {
+        return TuiStates.SETTING_NAME;
     }
 
 }

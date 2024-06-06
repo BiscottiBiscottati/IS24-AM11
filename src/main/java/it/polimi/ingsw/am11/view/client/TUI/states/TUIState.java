@@ -13,11 +13,10 @@ public abstract class TUIState {
         this.model = model;
     }
 
-    public void passArgs(Actuator actuator, String[] args) {
-    }
+    public abstract void passArgs(Actuator actuator, String[] args);
 
-    public void restart(boolean dueToEx, @Nullable Exception exception) {
+    public abstract void restart(boolean dueToEx, @Nullable Exception exception);
 
-    }
+    public abstract TuiStates getState();
 }
 

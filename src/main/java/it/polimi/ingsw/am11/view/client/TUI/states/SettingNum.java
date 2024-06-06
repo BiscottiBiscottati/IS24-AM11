@@ -3,13 +3,15 @@ package it.polimi.ingsw.am11.view.client.TUI.states;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
 import it.polimi.ingsw.am11.view.client.TUI.Actuator;
+import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class SettingNum extends TUIState {
-    private static final String askForNum = "How many players will play? >>> \033[K";
+    static final String askForNum = "How many players will play? >>> \033[K";
+    private static final String infoBar = "STATUS: Choosing the number of players...";
     private boolean alreadyError = false;
     private boolean isBlocked = false;
 
@@ -33,7 +35,8 @@ public class SettingNum extends TUIState {
 
         //Empty string
         if (args[0].isEmpty()) {
-            System.out.print("\033[F" + askForNum);
+            System.out.print("\033[F");
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -47,7 +50,7 @@ public class SettingNum extends TUIState {
         } catch (ParsingErrorException e) {
             errorsHappensEvenTwice("ERROR: " + e.getMessage());
             alreadyError = true;
-            System.out.print(askForNum);
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -71,7 +74,7 @@ public class SettingNum extends TUIState {
             errorsHappensEvenTwice("ERROR: " + word + " is neither a valid command nor a valid " +
                                    "number");
             alreadyError = true;
-            System.out.print(askForNum);
+            TuiStates.printAskLine(this);
             return;
         }
 
@@ -85,13 +88,7 @@ public class SettingNum extends TUIState {
         alreadyError = false;
 
         ConsUtils.clear();
-        System.out.println("""
-                                   ++++++++++++++++++++++++++++
-                                   \s
-                                    STATUS: Choosing the number of players...
-                                   \s
-                                   ++++++++++++++++++++++++++++
-                                   \s""");
+        InfoBarPrinter.printInfoBar(infoBar);
 
         if (dueToEx) {
             System.out.println("ERROR: " + exception.getMessage());
@@ -99,7 +96,12 @@ public class SettingNum extends TUIState {
         }
         System.out.println("You are the moderator of the game, you have to choose the number of " +
                            "players:");
-        System.out.print(askForNum);
+        TuiStates.printAskLine(this);
+    }
+
+    @Override
+    public TuiStates getState() {
+        return TuiStates.SETTING_NUM;
     }
 
     private static @NotNull ArgParser setUpOptions() {
