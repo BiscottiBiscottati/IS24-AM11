@@ -1,6 +1,6 @@
-package it.polimi.ingsw.am11.view.client.GUI.windows1;
+package it.polimi.ingsw.am11.view.client.GUI.windows;
 
-import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis1;
+import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class NetworkPage {
-    private final CodexNaturalis1 codexNaturalis;
+    private final CodexNaturalis codexNaturalis;
     TextField ipAddress, port;
     Font font;
     int halfButtonSize, distanceToBorder;
@@ -22,7 +22,7 @@ public class NetworkPage {
     GuiActuator guiActuator;
     VBox theBox;
 
-    public NetworkPage(CodexNaturalis1 codexNaturalis) {
+    public NetworkPage(CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
     }
 

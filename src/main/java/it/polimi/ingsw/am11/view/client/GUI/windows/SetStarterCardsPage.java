@@ -1,21 +1,17 @@
-package it.polimi.ingsw.am11.view.client.GUI.windows1;
+package it.polimi.ingsw.am11.view.client.GUI.windows;
 
-import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis1;
+import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
-import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-import java.util.List;
-
 public class SetStarterCardsPage {
-    private final CodexNaturalis1 codexNaturalis;
+    private final CodexNaturalis codexNaturalis;
     StackPane root;
     GuiResources guiResources;
     GuiActuator guiActuator;
@@ -25,7 +21,7 @@ public class SetStarterCardsPage {
     Font font;
     int halfButtonSize;
 
-    public SetStarterCardsPage(CodexNaturalis1 codexNaturalis) {
+    public SetStarterCardsPage(CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
     }
 

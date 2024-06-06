@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.view.client.GUI.windows1;
+package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;

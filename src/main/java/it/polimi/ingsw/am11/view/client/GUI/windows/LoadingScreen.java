@@ -1,6 +1,6 @@
-package it.polimi.ingsw.am11.view.client.GUI.windows1;
+package it.polimi.ingsw.am11.view.client.GUI.windows;
 
-import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis1;
+import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import javafx.animation.*;
@@ -9,16 +9,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-import java.util.concurrent.CountDownLatch;
-
 public class LoadingScreen {
-    private final CodexNaturalis1 codexNaturalis;
+    private final CodexNaturalis codexNaturalis;
     ImageView lDBackground, lDSquare, lDWritings, lDDisks, wolf, butterfly, mushroom, leaf;
     SequentialTransition sqT;
     ParallelTransition prT;
     int size;
 
-    public LoadingScreen(CodexNaturalis1 codexNaturalis) {
+    public LoadingScreen(CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
     }
 

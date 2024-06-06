@@ -7,7 +7,7 @@ import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.GUI.window.FrameHandler;
-import it.polimi.ingsw.am11.view.client.GUI.windows1.*;
+import it.polimi.ingsw.am11.view.client.GUI.windows.*;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
-public class CodexNaturalis1 extends Application implements GuiObserver {
+public class CodexNaturalis extends Application implements GuiObserver {
     private final GuiResources guiResources;
     GuiActuator guiActuator;
     GuiExceptionReceiver guiExceptionReceiver;
@@ -38,9 +38,9 @@ public class CodexNaturalis1 extends Application implements GuiObserver {
     SetNumOfPlayersPage setNumOfPlayersPage;
     private StackPane root;
     private FrameHandler frameHandler;
-    private CountDownLatch latch;
+    private final CountDownLatch latch;
 
-    public CodexNaturalis1() {
+    public CodexNaturalis() {
         this.guiResources = new GuiResources();
         this.miniGameModel = new MiniGameModel();
         this.guiExceptionReceiver = new GuiExceptionReceiver(this);

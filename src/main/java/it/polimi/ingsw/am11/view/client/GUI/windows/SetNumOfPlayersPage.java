@@ -1,6 +1,6 @@
-package it.polimi.ingsw.am11.view.client.GUI.windows1;
+package it.polimi.ingsw.am11.view.client.GUI.windows;
 
-import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis1;
+import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class SetNumOfPlayersPage {
-    private final CodexNaturalis1 codexNaturalis;
+    private final CodexNaturalis codexNaturalis;
     GuiActuator guiActuator;
     Label numOfPlayers, invalidNumOfPlayers;
     Font font;
@@ -21,7 +21,7 @@ public class SetNumOfPlayersPage {
     Button enterNumOfPlayers;
     StackPane root;
 
-    public SetNumOfPlayersPage(CodexNaturalis1 codexNaturalis) {
+    public SetNumOfPlayersPage(CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
     }
 
@@ -70,7 +70,8 @@ public class SetNumOfPlayersPage {
                 "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
         enterNumOfPlayers.setVisible(false);
 
-        root.getChildren().addAll(numOfPlayers, writeNumOfPlayers, invalidNumOfPlayers, enterNumOfPlayers);
+        root.getChildren().addAll(numOfPlayers, writeNumOfPlayers, invalidNumOfPlayers,
+                                  enterNumOfPlayers);
     }
 
     public void showSetNumOfPlayersPage() {

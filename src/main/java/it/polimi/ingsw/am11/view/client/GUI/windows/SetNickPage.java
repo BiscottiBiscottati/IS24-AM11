@@ -1,6 +1,6 @@
-package it.polimi.ingsw.am11.view.client.GUI.windows1;
+package it.polimi.ingsw.am11.view.client.GUI.windows;
 
-import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis1;
+import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.geometry.Pos;
@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class SetNickPage {
-    private final CodexNaturalis1 codexNaturalis;
+    private final CodexNaturalis codexNaturalis;
     MiniGameModel miniGameModel;
     GuiActuator guiActuator;
     TextField writeNick;
@@ -24,7 +24,7 @@ public class SetNickPage {
     int halfButtonSize, distanceToBorder;
 
 
-    public SetNickPage(CodexNaturalis1 codexNaturalis) {
+    public SetNickPage(CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
     }
 

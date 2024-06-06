@@ -29,7 +29,7 @@ module it.polimi.ingsw.am11 {
 
     opens it.polimi.ingsw.am11.view.client.GUI.window to javafx.fxml;
     exports it.polimi.ingsw.am11.view.client.GUI to javafx.graphics;
-    exports it.polimi.ingsw.am11.view.client.GUI.window;
+    //exports it.polimi.ingsw.am11.view.client.GUI.window;
     exports it.polimi.ingsw.am11.view.client.GUI.utils;
     opens it.polimi.ingsw.am11.view.client.GUI.utils to javafx.fxml;
 
@@ -43,8 +43,8 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.network.RMI.remote.chat;
     exports it.polimi.ingsw.am11.network.RMI.remote.game;
     exports it.polimi.ingsw.am11.network.RMI.remote.heartbeat;
-    exports it.polimi.ingsw.am11.view.client.GUI.windows1;
-    opens it.polimi.ingsw.am11.view.client.GUI.windows1 to javafx.fxml;
+    exports it.polimi.ingsw.am11.view.client.GUI.windows;
+    opens it.polimi.ingsw.am11.view.client.GUI.windows to javafx.fxml;
 
     exports it.polimi.ingsw.am11.model.utils.memento to com.fasterxml.jackson.databind;
     exports it.polimi.ingsw.am11.model.players to com.fasterxml.jackson.databind;
