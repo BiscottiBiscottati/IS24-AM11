@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -41,18 +42,17 @@ public class SetObjCardsPage {
         message = new Label("Choose your objective card:");
         message.setFont(font);
         message.setAlignment(Pos.CENTER);
-        message.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5;" +
-                         " -fx-max-width: " + 20 * halfButtonSize);
+        message.setBackground(Background.EMPTY);
         cardIdList = List.copyOf(cardId);
         vbox = new VBox(10);
         try {
             cardImage1 = guiResources.getCardImage(cardIdList.getFirst());
-            cardImage1.setFitHeight(120);
-            cardImage1.setFitWidth(100);
+            cardImage1.setFitHeight(75);
+            cardImage1.setFitWidth(120);
 
             cardImage2 = guiResources.getCardImage(cardIdList.get(1));
-            cardImage2.setFitHeight(120);
-            cardImage2.setFitWidth(100);
+            cardImage2.setFitHeight(75);
+            cardImage2.setFitWidth(120);
         } catch (Exception e) {
             System.err.println("Error loading card image in ObjectiveCardsPage");
         }
@@ -86,7 +86,7 @@ public class SetObjCardsPage {
             layout.setVisible(false);
             vbox.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.get(0));
-            codexNaturalis.showWaitingRoomPage();
+            codexNaturalis.showGamePage();
         });
 
         cardImage2.setOnMouseClicked(event -> {
@@ -96,7 +96,7 @@ public class SetObjCardsPage {
             layout.setVisible(false);
             vbox.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.get(1));
-            codexNaturalis.showWaitingRoomPage();
+            codexNaturalis.showGamePage();
         });
 
 

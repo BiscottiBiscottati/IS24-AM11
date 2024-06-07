@@ -18,6 +18,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -38,6 +39,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     SetNickPage setNickPage;
     WaitingRoomPage waitingRoomPage;
     SetNumOfPlayersPage setNumOfPlayersPage;
+    GamePage gamePage;
     private StackPane root;
     private FrameHandler frameHandler;
 
@@ -86,6 +88,12 @@ public class CodexNaturalis extends Application implements GuiObserver {
         waitingRoomPage.createWaitingRoomPage();
         setNumOfPlayersPage = new SetNumOfPlayersPage(this);
         setNumOfPlayersPage.createNumOfPlayersPage();
+        try {
+            gamePage = new GamePage(this);
+            gamePage.createGamePage();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -152,6 +160,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
+
 
     }
 
@@ -255,5 +264,10 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void disconnectedFromServer() {
 
+    }
+
+    public void showGamePage() {
+        this.setFullScreen(true);
+        gamePage.showGamePage();
     }
 }

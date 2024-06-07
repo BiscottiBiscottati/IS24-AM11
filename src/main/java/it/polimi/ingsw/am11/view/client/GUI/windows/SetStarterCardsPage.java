@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -37,17 +38,16 @@ public class SetStarterCardsPage {
         message = new Label("This is your starter card:");
         message.setFont(font);
         message.setAlignment(Pos.CENTER);
-        message.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5;" +
-                         " -fx-max-width: " + 20 * halfButtonSize);
+        message.setBackground(Background.EMPTY);
         vbox = new VBox(10);
         try {
             cardImage = guiResources.getCardImage(cardId);
-            cardImage.setFitHeight(100);
-            cardImage.setFitWidth(80);
+            cardImage.setFitHeight(75);
+            cardImage.setFitWidth(120);
 
             cardRetro = guiResources.getCardImageRetro(cardId);
-            cardRetro.setFitHeight(100);
-            cardRetro.setFitWidth(80);
+            cardRetro.setFitHeight(75);
+            cardRetro.setFitWidth(120);
         } catch (Exception e) {
             System.err.println("Error loading card image in SetStarterCardsPage");
         }

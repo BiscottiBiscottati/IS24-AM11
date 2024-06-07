@@ -24,8 +24,8 @@ public class WaitingRoomPage {
         waitingForPlayers = new Label("Waiting...");
         loadingWheel = new ProgressIndicator();
         root.getChildren().addAll(waitingForPlayers, loadingWheel);
-        waitingForPlayers.setTranslateY(- 60);
-        waitingForPlayers.setTranslateX(80);
+        waitingForPlayers.setAlignment(Pos.CENTER);
+        waitingForPlayers.setTranslateY(- 80);
         waitingForPlayers.setPrefSize(400, 50);
         waitingForPlayers.setFont(font);
         waitingForPlayers.setStyle("-fx-font-size: 30");

@@ -10,12 +10,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class GamePage {
     private final CodexNaturalis codexNaturalis;
-    Parent root1 = FXMLLoader.load(
-            Objects.requireNonNull(getClass().getResource("/fxml/gamePage.fxml")));
+    Parent root1 = FXMLLoader.load(getClass().getResource("GamePage.fxml"));
     @FXML
     Label decksLabel;
     ImageView goldDeck;
@@ -41,5 +39,6 @@ public class GamePage {
     }
 
     public void showGamePage() {
+        root1.setVisible(true);
     }
 }

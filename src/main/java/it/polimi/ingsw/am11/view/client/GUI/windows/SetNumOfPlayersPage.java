@@ -57,8 +57,7 @@ public class SetNumOfPlayersPage {
 
         enterNumOfPlayers = new Button();
         enterNumOfPlayers.setPrefSize(halfButtonSize << 3, halfButtonSize << 1);
-        enterNumOfPlayers.setTranslateX(5 * halfButtonSize);
-        enterNumOfPlayers.setTranslateY(10 * halfButtonSize - distanceToBorder);
+        enterNumOfPlayers.setTranslateY(100);
         enterNumOfPlayers.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
         enterNumOfPlayers.setText("Enter");
         enterNumOfPlayers.setFont(font);
