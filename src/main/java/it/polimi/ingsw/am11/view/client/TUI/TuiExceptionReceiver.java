@@ -95,9 +95,17 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(NumOfPlayersException ex) {
         LOGGER.debug("NumOfPlayersException {}", ex.getMessage());
-        tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
-        tuiUpdater.setHomeState(TuiStates.SETTING_NUM);
-        tuiUpdater.getCurrentTuiState().restart(true, ex);
+        if (model.getGodPlayer().equals(model.myName())) {
+            tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
+            tuiUpdater.setHomeState(TuiStates.SETTING_NUM);
+            tuiUpdater.getCurrentTuiState().restart(true, ex);
+            return;
+        } else {
+            tuiUpdater.setTuiState(TuiStates.CONNECTING);
+            tuiUpdater.setHomeState(TuiStates.CONNECTING);
+            tuiUpdater.getCurrentTuiState().restart(true, ex);
+            return;
+        }
     }
 
     @Override

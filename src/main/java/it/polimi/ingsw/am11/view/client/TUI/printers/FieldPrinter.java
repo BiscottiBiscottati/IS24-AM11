@@ -58,13 +58,22 @@ public class FieldPrinter {
         List<List<MiniCardContainer>> matrixOfCards = intoContainerMatrix(cardsPositioned);
         List<List<Position>> matrixOfPositions = intoPositionsMatrix(cardsPositioned);
 
+//        for (List<MiniCardContainer> strings : matrixOfCards) {
+//            System.out.println(strings);
+//        }
+//        System.out.println("jdsnfkasjdf lajsf ");
+//
+//        for (List<Position> strings : matrixOfPositions) {
+//            System.out.println(strings);
+//        }
+
         int PosSize = matrixOfPositions.size();
         int sizeY = (PosSize << 1) + 1;
-        int sizeX = (matrixOfPositions.getFirst().size() << 1) + 1;
+        int sizeX = (matrixOfPositions.getFirst().size() << 1) + 3;
 
-        List<List<String>> printMatrix = new ArrayList<>(sizeY + 2);
+        List<List<String>> printMatrix = new ArrayList<>(sizeY);
         for (i = 0; i < sizeY; i++) {
-            printMatrix.add(new ArrayList<>(sizeX + 8));
+            printMatrix.add(new ArrayList<>(sizeX));
         }
 
         // fill the printMatrix with empty spaces
@@ -75,13 +84,13 @@ public class FieldPrinter {
                 //  ░╎-14;-19╎-14;-19╎░│  6│
                 //  ░░░░░░░X───R-19X───+───R
                 //  ░░░░░░░│  5│░░░│  3│░░-14;-19
-                //  ░░░░-14+───R───R───+░░░░
-                //  ░░░░░░░░░░░│100│░░░░░░░░
-                //  ░░░░░░░X───F───P░░░░░░░░
-                //  ░░░░░░░│  2│░░░░░░░░░░░░
-                //  ░░░░░░░G───R░░░░░░░░░░░░
-                //  +++-+++-+++-+++-+++-+++-+++-+++-
-                //   0 1 2 3 4 5 6 7 8 9 A B
+                //  ░░░░-14+───R───R───+░░░░░░
+                //  ░░░░░░░░░░░│100│░░░░░░░░░░
+                //  ░░░░░░░X───F───P░░░░░░░░░░
+                //  ░░░░░░░│  2│░░░░░░░░░░░░░░
+                //  ░░░░░░░G───R░░░░░░░░░░░░░░
+                //  +++-+++-+++-+++-+++-+++-+++-+++
+                //   0 1 2 3 4 5 6 7 8 9 A B C D E
             }
         }
 
