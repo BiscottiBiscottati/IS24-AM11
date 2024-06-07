@@ -21,7 +21,7 @@ public class WaitingRoomPage {
     public void createWaitingRoomPage() {
         root = codexNaturalis.getRoot();
         font = codexNaturalis.getFont();
-        waitingForPlayers = new Label("Waiting for other players to join...");
+        waitingForPlayers = new Label("Waiting...");
         loadingWheel = new ProgressIndicator();
         root.getChildren().addAll(waitingForPlayers, loadingWheel);
         waitingForPlayers.setTranslateY(- 60);

@@ -42,12 +42,15 @@ public class GuiResources {
     public ImageView getCardImage(int cardId) {
         String urlString = "";
         try {
-            URL url = LoadingScreen.class.getResource("/cards/front/" + cardId + ".png");
+            URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
+                                                       "/windows/cards/front/" + cardId + ".png");
             urlString = String.valueOf(url);
+            System.out.println(urlString);
             Image image = new Image(urlString);
-            return new ImageView(image);
+            ImageView imageView = new ImageView(image);
+            return imageView;
         } catch (Exception e) {
-            System.err.println("Error loading card image at Url: " + urlString);
+            System.err.println("Error loading front card image at Url: " + urlString);
             return null;
         }
     }
@@ -55,12 +58,16 @@ public class GuiResources {
     public ImageView getCardImageRetro(int cardId) {
         String urlString = "";
         try {
-            URL url = CodexNaturalis.class.getResource("/cards/retro/" + cardId + "_Retro.png");
+            URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
+                                                       "/windows/cards/retro/" + cardId + "_Retro" +
+                                                       ".png");
             urlString = String.valueOf(url);
+            System.out.println(urlString);
             Image image = new Image(urlString);
-            return new ImageView(image);
+            ImageView imageView = new ImageView(image);
+            return imageView;
         } catch (Exception e) {
-            System.err.println("Error loading card image at Url: " + urlString);
+            System.err.println("Error loading retro card image at Url: " + urlString);
             return null;
         }
     }

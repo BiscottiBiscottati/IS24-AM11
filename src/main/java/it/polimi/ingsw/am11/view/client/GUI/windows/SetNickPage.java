@@ -116,6 +116,7 @@ public class SetNickPage {
                 writeNick.setVisible(false);
                 yourName.setVisible(false);
                 nameAlreadyTaken.setVisible(false);
+                goToNetwork.setVisible(false);
                 codexNaturalis.showWaitingRoomPage();
             }
         });

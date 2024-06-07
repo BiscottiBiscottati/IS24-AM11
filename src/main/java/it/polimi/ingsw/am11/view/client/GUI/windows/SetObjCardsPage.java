@@ -1,57 +1,104 @@
 package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
+import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
+import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.util.List;
 import java.util.Set;
 
 public class SetObjCardsPage {
-
     private final CodexNaturalis codexNaturalis;
-    Label chooseObj;
-    ImageView obj1;
-    ImageView obj2;
-    HBox objBox;
+    StackPane root;
+    GuiResources guiResources;
+    GuiActuator guiActuator;
+    Label message;
+    ImageView cardImage1, cardImage2;
+    HBox layout;
+    VBox vbox;
+    Font font;
+    int halfButtonSize;
+    List<Integer> cardIdList;
 
     public SetObjCardsPage(CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
     }
 
-    public void createObjCardsWindow(Set<Integer> cardId) {
 
-        Font font = codexNaturalis.getFont();
+    public void createStarterCardsPage(Set<Integer> cardId) {
+        root = codexNaturalis.getRoot();
+        font = codexNaturalis.getFont();
+        halfButtonSize = codexNaturalis.getHalfButtonSize();
+        guiResources = codexNaturalis.getGuiResources();
+        guiActuator = codexNaturalis.getGuiActuator();
+        message = new Label("Choose your objective card:");
+        message.setFont(font);
+        message.setAlignment(Pos.CENTER);
+        message.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5;" +
+                         " -fx-max-width: " + 20 * halfButtonSize);
+        cardIdList = List.copyOf(cardId);
+        vbox = new VBox(10);
+        try {
+            cardImage1 = guiResources.getCardImage(cardIdList.getFirst());
+            cardImage1.setFitHeight(120);
+            cardImage1.setFitWidth(100);
 
-        chooseObj.setText("Choose your objective cards:");
-        chooseObj.setTranslateY(- 60);
-        chooseObj.setTranslateX(80);
-        chooseObj.setPrefSize(400, 50);
-        chooseObj.setFont(font);
-        chooseObj.setStyle("-fx-font-size: 30");
-        chooseObj.setStyle("-fx-text-fill: #D7BC49");
-        chooseObj.setStyle("-fx-background-color: #351F17");
-        chooseObj.setStyle("-fx-background-radius: 5");
+            cardImage2 = guiResources.getCardImage(cardIdList.get(1));
+            cardImage2.setFitHeight(120);
+            cardImage2.setFitWidth(100);
+        } catch (Exception e) {
+            System.err.println("Error loading card image in ObjectiveCardsPage");
+        }
 
-        obj1.setFitHeight(200);
-        obj1.setFitWidth(150);
-
-        obj2.setFitHeight(200);
-        obj2.setFitWidth(150);
-
-        objBox.getChildren().addAll(obj1, obj2, chooseObj);
-
-        StackPane root = codexNaturalis.getRoot();
-
-        root.getChildren().add(objBox);
-        objBox.setVisible(false);
-
-
+        try {
+            message.setVisible(false);
+            message.setAlignment(Pos.CENTER);
+            layout = new HBox(10);
+            layout.getChildren().addAll(cardImage1, cardImage2);
+            layout.setAlignment(Pos.CENTER);
+            vbox.getChildren().addAll(message, layout);
+            vbox.setAlignment(Pos.CENTER);
+            root.getChildren().addAll(vbox);
+            layout.setVisible(false);
+            vbox.setVisible(false);
+        } catch (Exception e) {
+            System.err.println("Error adding starter card to root in ObjectiveCardsPage");
+            e.printStackTrace();
+        }
     }
 
-    public void showObjCardsWindow() {
-        // Show the objective cards
+    public void showStarterCardsPage() {
+        message.setVisible(true);
+        layout.setVisible(true);
+        vbox.setVisible(true);
+
+        cardImage1.setOnMouseClicked(event -> {
+            cardImage1.setVisible(false);
+            cardImage2.setVisible(false);
+            message.setVisible(false);
+            layout.setVisible(false);
+            vbox.setVisible(false);
+            guiActuator.setPersonalObjective(cardIdList.get(0));
+            codexNaturalis.showWaitingRoomPage();
+        });
+
+        cardImage2.setOnMouseClicked(event -> {
+            cardImage1.setVisible(false);
+            cardImage2.setVisible(false);
+            message.setVisible(false);
+            layout.setVisible(false);
+            vbox.setVisible(false);
+            guiActuator.setPersonalObjective(cardIdList.get(1));
+            codexNaturalis.showWaitingRoomPage();
+        });
+
+
     }
 }

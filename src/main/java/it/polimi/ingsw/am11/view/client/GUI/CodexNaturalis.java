@@ -10,6 +10,7 @@ import it.polimi.ingsw.am11.view.client.GUI.window.FrameHandler;
 import it.polimi.ingsw.am11.view.client.GUI.windows.*;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -23,6 +24,7 @@ import java.util.concurrent.CountDownLatch;
 
 public class CodexNaturalis extends Application implements GuiObserver {
     private final GuiResources guiResources;
+    private final CountDownLatch latch;
     GuiActuator guiActuator;
     GuiExceptionReceiver guiExceptionReceiver;
     GuiUpdater guiUpdater;
@@ -38,7 +40,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
     SetNumOfPlayersPage setNumOfPlayersPage;
     private StackPane root;
     private FrameHandler frameHandler;
-    private final CountDownLatch latch;
 
     public CodexNaturalis() {
         this.guiResources = new GuiResources();
@@ -207,12 +208,14 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void receiveStarterCard(int cardId) {
-        hideWaitingRoomPage();
         System.out.println("Received starter card in gui: " + cardId);
-        SetStarterCardsPage setStarterCardsPage = new SetStarterCardsPage(this);
-        setStarterCardsPage.createStarterCardsPage(cardId);
-        System.out.println("Created StarterCardPage");
-        setStarterCardsPage.showStarterCardsPage();
+        Platform.runLater(() -> {
+            SetStarterCardsPage setStarterCardsPage = new SetStarterCardsPage(this);
+            setStarterCardsPage.createStarterCardsPage(cardId);
+            System.out.println("Created StarterCardPage");
+            hideWaitingRoomPage();
+            setStarterCardsPage.showStarterCardsPage();
+        });
     }
 
     public void hideWaitingRoomPage() {
@@ -221,8 +224,12 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
-        //SetObjCardsPage setObjCardsPage = new SetObjCardsPage();
-        //setObjCardsPage.createObjCardsWindow(cardId);
+        Platform.runLater(() -> {
+            SetObjCardsPage setObjCardsPage = new SetObjCardsPage(this);
+            setObjCardsPage.createStarterCardsPage(cardId);
+            hideWaitingRoomPage();
+            setObjCardsPage.showStarterCardsPage();
+        });
 
     }
 
