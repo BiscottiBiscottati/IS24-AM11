@@ -136,10 +136,6 @@ public class GameController {
         return cardController;
     }
 
-    String getGodPlayer() {
-        return godPlayer.get();
-    }
-
     boolean loadMostRecent() {
         return SavesManager.loadMostRecentGame()
                            .map(memento -> {

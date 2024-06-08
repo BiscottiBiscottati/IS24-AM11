@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ShownPlayableEvent extends TableViewEvent {
 
-    private final PlayableCardType cardType;
+    private final @NotNull PlayableCardType cardType;
     private final Integer oldValue;
     private final Integer newValue;
 
@@ -19,7 +19,7 @@ public class ShownPlayableEvent extends TableViewEvent {
         this.cardType = cardType;
     }
 
-    public PlayableCardType getCardType() {
+    public @NotNull PlayableCardType getCardType() {
         return cardType;
     }
 

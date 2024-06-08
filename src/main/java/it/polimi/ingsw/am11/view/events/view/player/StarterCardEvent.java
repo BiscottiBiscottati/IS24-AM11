@@ -8,9 +8,9 @@ public class StarterCardEvent extends PlayerViewEvent {
 
     //TODO to add to model
     private final Integer oldCardId;
-    private final Integer newCardId;
+    private final @NotNull Integer newCardId;
 
-    public StarterCardEvent(String player, Integer oldCardId,
+    public StarterCardEvent(@NotNull String player, Integer oldCardId,
                             @NotNull Integer newCardId) {
         super(player);
         this.oldCardId = oldCardId;

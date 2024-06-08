@@ -10,7 +10,6 @@ import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
 import it.polimi.ingsw.am11.view.server.VirtualPlayerView;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,10 +31,11 @@ public enum CentralController {
     }
 
     @NotNull
-    public synchronized VirtualPlayerView connectPlayer(@NotNull String nickname,
-                                                        @NotNull ServerPlayerConnector playerConnector,
-                                                        @NotNull ServerTableConnector tableConnector,
-                                                        @NotNull ServerChatConnector chatConnector)
+    public synchronized VirtualPlayerView connectPlayer
+            (@NotNull String nickname,
+             @NotNull ServerPlayerConnector playerConnector,
+             @NotNull ServerTableConnector tableConnector,
+             @NotNull ServerChatConnector chatConnector)
     throws GameStatusException, NumOfPlayersException, PlayerInitException,
            NotSetNumOfPlayerException {
         if (gameControllers.isEmpty()) createNewGame();
@@ -88,12 +88,6 @@ public enum CentralController {
         gameControllers.stream().findFirst()
                        .orElseThrow()
                        .setNumOfPlayers(nickname, val);
-    }
-
-    public synchronized @Nullable String getGodPlayer() {
-        return gameControllers.stream().findFirst()
-                              .orElseThrow()
-                              .getGodPlayer();
     }
 
     public synchronized @NotNull GameController getAnyGame() {

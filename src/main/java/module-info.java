@@ -48,6 +48,7 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.model.cards.objective;
     exports it.polimi.ingsw.am11.model.cards.utils;
     exports it.polimi.ingsw.am11.model.cards.utils.enums;
+    exports it.polimi.ingsw.am11.controller.exceptions;
     exports it.polimi.ingsw.am11.view.client.GUI.windows;
     opens it.polimi.ingsw.am11.view.client.GUI.windows to javafx.fxml;
 

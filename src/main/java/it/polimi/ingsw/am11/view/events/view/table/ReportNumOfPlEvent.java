@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ReportNumOfPlEvent extends TableViewEvent {
-    private final Integer numOfPlayers;
+    private final @NotNull Integer numOfPlayers;
 
     public ReportNumOfPlEvent(@NotNull Integer numOfPlayers) {
         this.numOfPlayers = numOfPlayers;

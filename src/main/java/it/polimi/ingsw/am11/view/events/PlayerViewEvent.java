@@ -5,13 +5,13 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class PlayerViewEvent extends ViewEvent {
 
-    private final String player;
+    private final @NotNull String player;
 
     protected PlayerViewEvent(@NotNull String player) {
         this.player = player;
     }
 
-    public String getPlayer() {
+    public @NotNull String getPlayer() {
         return player;
     }
 

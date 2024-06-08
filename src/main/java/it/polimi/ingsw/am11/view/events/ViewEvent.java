@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class ViewEvent {
-    public ActionMode getAction() {
+    public @NotNull ActionMode getAction() {
         if (this.getOldValue() == null && this.getNewValue() == null) return ActionMode.CLEAR;
         else if (this.getOldValue() == null) return ActionMode.INSERTION;
         else if (this.getNewValue() == null) return ActionMode.REMOVAL;

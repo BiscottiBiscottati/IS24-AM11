@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class DeckTopChangeEvent extends TableViewEvent {
 
-    private final PlayableCardType cardType;
+    private final @NotNull PlayableCardType cardType;
     private final Color oldValue;
     private final Color newValue;
 
@@ -39,7 +39,7 @@ public class DeckTopChangeEvent extends TableViewEvent {
         return newValue;
     }
 
-    public PlayableCardType getCardType() {
+    public @NotNull PlayableCardType getCardType() {
         return cardType;
     }
 

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public class PlayerPointsChangeEvent extends TableViewEvent {
 
     private final Integer oldValue;
-    private final Integer newValue;
+    private final @NotNull Integer newValue;
 
     public PlayerPointsChangeEvent(String player, Integer oldValue, @NotNull Integer newValue) {
         super(player);

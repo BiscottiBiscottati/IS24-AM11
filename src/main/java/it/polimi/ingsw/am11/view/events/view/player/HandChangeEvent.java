@@ -8,7 +8,7 @@ public class HandChangeEvent extends PlayerViewEvent {
     private final Integer previousCard;
     private final Integer currentCard;
 
-    public HandChangeEvent(String player, Integer oldCardId,
+    public HandChangeEvent(@NotNull String player, Integer oldCardId,
                            Integer newCardId) {
         super(player);
         this.previousCard = oldCardId;

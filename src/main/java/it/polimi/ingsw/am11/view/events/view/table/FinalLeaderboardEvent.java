@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 
 public class FinalLeaderboardEvent extends TableViewEvent {
-    private final Map<String, Integer> finalLeaderboard;
+    private final @NotNull Map<String, Integer> finalLeaderboard;
 
     public FinalLeaderboardEvent(@NotNull Map<String, Integer> finalLeaderboard) {
         this.finalLeaderboard = finalLeaderboard;

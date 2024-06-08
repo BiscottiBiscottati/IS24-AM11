@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public class VirtualTableView {
     private static final Logger LOGGER = LoggerFactory.getLogger(VirtualTableView.class);
-    private final Map<String, ServerTableConnector> connectors;
+    private final @NotNull Map<String, ServerTableConnector> connectors;
 
     public VirtualTableView() {
         this.connectors = new ConcurrentHashMap<>(8);

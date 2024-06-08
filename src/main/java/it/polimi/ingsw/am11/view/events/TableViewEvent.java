@@ -9,7 +9,7 @@ import java.util.Optional;
 public abstract class TableViewEvent extends ViewEvent {
 
 
-    private final String player;
+    private final @Nullable String player;
 
     protected TableViewEvent(@Nullable String player) {
         this.player = player;
@@ -21,7 +21,7 @@ public abstract class TableViewEvent extends ViewEvent {
 
     public abstract void updateView(@NotNull VirtualTableView virtualView);
 
-    public Optional<String> getPlayer() {
+    public @NotNull Optional<String> getPlayer() {
         return Optional.ofNullable(player);
     }
 

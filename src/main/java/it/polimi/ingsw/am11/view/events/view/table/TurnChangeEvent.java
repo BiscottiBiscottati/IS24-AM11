@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public class TurnChangeEvent extends TableViewEvent {
 
     private final String previousPlayer;
-    private final String currentPlayer;
+    private final @NotNull String currentPlayer;
 
     public TurnChangeEvent(String previousPlayer,
                            @NotNull String currentPlayer) {

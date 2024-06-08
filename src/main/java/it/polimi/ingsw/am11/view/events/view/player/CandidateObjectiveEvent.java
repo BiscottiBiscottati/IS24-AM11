@@ -10,9 +10,9 @@ public class CandidateObjectiveEvent extends PlayerViewEvent {
 
     // TODO to add to model
     private final Set<Integer> oldCardsId;
-    private final Set<Integer> newCardsId;
+    private final @NotNull Set<Integer> newCardsId;
 
-    public CandidateObjectiveEvent(String player, Set<Integer> oldCardsId,
+    public CandidateObjectiveEvent(@NotNull String player, Set<Integer> oldCardsId,
                                    @NotNull Set<Integer> newCardsId) {
         super(player);
         this.oldCardsId = oldCardsId;

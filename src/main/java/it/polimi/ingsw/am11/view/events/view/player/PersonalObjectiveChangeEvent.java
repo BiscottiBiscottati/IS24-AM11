@@ -10,7 +10,7 @@ public class PersonalObjectiveChangeEvent extends PlayerViewEvent {
     private final Integer oldCardId;
     private final Integer newCardId;
 
-    public PersonalObjectiveChangeEvent(String player, Integer oldCardId,
+    public PersonalObjectiveChangeEvent(@NotNull String player, Integer oldCardId,
                                         Integer newCardId) {
         super(player);
         this.oldCardId = oldCardId;

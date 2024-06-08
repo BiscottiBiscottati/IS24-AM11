@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
 // I think this class calls the server controller methods
 public class VirtualPlayerView {
     private static final Logger LOGGER = LoggerFactory.getLogger(VirtualPlayerView.class);
-    private final CardController cardController;
-    private final GameController gameController;
-    private final ServerPlayerConnector connector;
-    private final String nickname;
+    private final @NotNull CardController cardController;
+    private final @NotNull GameController gameController;
+    private final @NotNull ServerPlayerConnector connector;
+    private final @NotNull String nickname;
 
     public VirtualPlayerView(@NotNull ServerPlayerConnector connector, @NotNull String nickname) {
         gameController = CentralController.INSTANCE.getAnyGame();
@@ -54,7 +54,7 @@ public class VirtualPlayerView {
         cardController.placeCard(nickname, cardId, Position.of(x, y), isRetro);
     }
 
-    public void drawCard(boolean fromVisible, PlayableCardType type, int cardId)
+    public void drawCard(boolean fromVisible, @NotNull PlayableCardType type, int cardId)
     throws IllegalPlayerSpaceActionException, TurnsOrderException, IllegalPickActionException,
            PlayerInitException, EmptyDeckException, MaxHandSizeException, GameStatusException {
         LOGGER.debug("COMMAND: Drawing card of {} for {} from {}", type, nickname,

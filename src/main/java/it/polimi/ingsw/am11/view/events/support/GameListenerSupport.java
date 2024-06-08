@@ -12,8 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameListenerSupport {
-    private final Map<String, PlayerListener> playerListeners;
-    private final Set<TableListener> tableListeners;
+    private final @NotNull Map<String, PlayerListener> playerListeners;
+    private final @NotNull Set<TableListener> tableListeners;
 
     public GameListenerSupport() {
         this.playerListeners = new HashMap<>(8);
