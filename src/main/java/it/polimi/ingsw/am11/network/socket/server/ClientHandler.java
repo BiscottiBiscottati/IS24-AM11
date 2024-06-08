@@ -136,8 +136,8 @@ public class ClientHandler implements Runnable {
             }
             return message;
         } catch (IOException e) {
-            LOGGER.error("SERVER TCP: Error while reading input", e);
-            throw new RuntimeException(e);
+            LOGGER.error("SERVER TCP: Error while reading input: {}", e.getMessage());
+            return null;
         }
     }
 }
