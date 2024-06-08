@@ -11,6 +11,8 @@ import it.polimi.ingsw.am11.view.client.GUI.windows.*;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -40,6 +42,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     WaitingRoomPage waitingRoomPage;
     SetNumOfPlayersPage setNumOfPlayersPage;
     GamePage gamePage;
+    FXMLLoader fxmlLoader;
     private StackPane root;
     private FrameHandler frameHandler;
 
@@ -59,7 +62,13 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
+        fxmlLoader = new FXMLLoader(getClass().getResource(
+                "/it/polimi/ingsw/am11/view/client/GUI/window/GamePage.fxml"));
+        Parent root1 = fxmlLoader.load();
+        root1.setVisible(false);
+
         initializeGUI();
+        root.getChildren().add(root1);
         frameHandler = new FrameHandler(guiResources, primaryStage, root);
         scene = new Scene(root, WindowSize, WindowSize, javafx.scene.paint.Color.BLACK);
         primaryStage.setScene(scene);
@@ -70,7 +79,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     }
 
-    public void initializeGUI() {
+    public void initializeGUI() throws IOException {
         setFullScreen(false);
         font = Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
                              1.5 * halfButtonSize);
@@ -88,9 +97,10 @@ public class CodexNaturalis extends Application implements GuiObserver {
         waitingRoomPage.createWaitingRoomPage();
         setNumOfPlayersPage = new SetNumOfPlayersPage(this);
         setNumOfPlayersPage.createNumOfPlayersPage();
+        Parent root1 = root.getParent();
         try {
-            gamePage = new GamePage(this);
-            gamePage.createGamePage();
+            gamePage = fxmlLoader.getController();
+            gamePage.createGamePage(this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
