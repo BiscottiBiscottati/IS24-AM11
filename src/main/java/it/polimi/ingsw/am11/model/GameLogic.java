@@ -35,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -55,8 +54,9 @@ public class GameLogic implements GameModel {
         LOGGER.info("MODEL: Creating a new GameLogic instance");
 
         this.pcs = new GameListenerSupport();
-        ruleSet = new BasicRuleset();
+        this.ruleSet = new BasicRuleset();
         setConstants();
+
         this.playerManager = new PlayerManager(this.pcs);
         this.pickablesTable = new PickablesTable(this.pcs);
         this.plateau = new Plateau(this.pcs);
@@ -280,9 +280,9 @@ public class GameLogic implements GameModel {
                     "the game has not started, players don't have points");
         }
         try {
-            return plateau.getPlayerPoints(playerManager.getPlayer(nickname)
-                                                        .orElseThrow(() -> new PlayerInitException(
-                                                                "Player not found")));
+            playerManager.getPlayer(nickname)
+                         .orElseThrow(() -> new PlayerInitException("Player not found"));
+            return plateau.getPlayerPoints(nickname);
         } catch (IllegalPlateauActionException e) {
             LOGGER.error("Plateau and player have discrepancies! Error: {}", e.getMessage());
             throw new GameBreakingException("Plateau and player manager have discrepancies");
@@ -305,12 +305,9 @@ public class GameLogic implements GameModel {
                     "the game has not ended, there isn't a leaderboard");
         }
         try {
-            return plateau.getPlayerFinishingPosition(
-                    playerManager.getPlayer(nickname)
-                                 .orElseThrow(
-                                         () -> new PlayerInitException(
-                                                 "Player not " +
-                                                 "found")));
+            playerManager.getPlayer(nickname)
+                         .orElseThrow(() -> new PlayerInitException("Player not found"));
+            return plateau.getPlayerFinishingPosition(nickname);
         } catch (IllegalPlateauActionException e) {
             LOGGER.error("Plateau and player manager have discrepancies! Error: {}",
                          e.getMessage());
@@ -329,10 +326,7 @@ public class GameLogic implements GameModel {
             throw new GameStatusException(
                     "the game has not ended, there isn't a leaderboard");
         }
-        return plateau.getWinners()
-                      .stream()
-                      .map(Player::nickname)
-                      .collect(Collectors.toUnmodifiableSet());
+        return plateau.getWinners();
     }
 
 
@@ -433,8 +427,8 @@ public class GameLogic implements GameModel {
             throw new GameStatusException("A game is in progress");
         }
 
-        Player newPlayer = playerManager.addPlayerToTable(nickname, colour);
-        plateau.addPlayer(newPlayer);
+        playerManager.addPlayerToTable(nickname, colour);
+        plateau.addPlayer(nickname);
 
         LOGGER.info("MODEL: Added player {} with color {}", nickname, colour);
     }
@@ -456,8 +450,8 @@ public class GameLogic implements GameModel {
 
         LOGGER.info("MODEL: Removing player {}", nickname);
 
-        playerManager.getPlayer(nickname).ifPresent(plateau::removePlayer);
         playerManager.removePlayer(nickname);
+        plateau.removePlayer(nickname);
         pcs.removeListener(nickname); // FIXME for table listeners
     }
 
@@ -620,7 +614,7 @@ public class GameLogic implements GameModel {
 
         LOGGER.info("MODEL: Card placed, giving {} points to {}", points, nickname);
 
-        plateau.addPlayerPoints(player, points);
+        plateau.addPlayerPoints(nickname, points);
     }
 
     @Override
@@ -909,7 +903,7 @@ public class GameLogic implements GameModel {
                                             .map(Optional::get)
                                             .findFirst().orElseThrow();
 
-        plateau.setWinner(winningPlayer);
+        plateau.setWinner(winningPlayer.nickname());
     }
 
     public @NotNull GameModelMemento save() {
@@ -921,11 +915,8 @@ public class GameLogic implements GameModel {
     public void load(@NotNull GameModelMemento memento) {
         pickablesTable.load(memento.table());
         playerManager.load(memento.playerManager());
-        plateau.load(memento.plateau(),
-                     playerManager.getPlayers().stream()
-                                  .collect(Collectors.toMap(Function.identity(),
-                                                            s -> playerManager.getPlayer(s)
-                                                                              .orElseThrow())));
+        plateau.load(memento.plateau()
+        );
         isLoadedGame = true;
         playerManager.getPlayers().forEach(this::disconnectPlayer);
     }
@@ -1069,9 +1060,9 @@ public class GameLogic implements GameModel {
                              nickname);
 
                 if (points > 0) {
-                    plateau.addCounterObjective(player);
+                    plateau.addCounterObjective(player.nickname());
                 }
-                plateau.addPlayerPoints(player, points);
+                plateau.addPlayerPoints(nickname, points);
             }
 
             LOGGER.info("MODEL: Counting points from personal objectives");
@@ -1084,9 +1075,9 @@ public class GameLogic implements GameModel {
                              nickname);
 
                 if (points > 0) {
-                    plateau.addCounterObjective(player);
+                    plateau.addCounterObjective(player.nickname());
                 }
-                plateau.addPlayerPoints(player, points);
+                plateau.addPlayerPoints(nickname, points);
             }
         }
     }

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 
 /**
- * This interface is used by the UI to send commands to the server
+ * The UI uses this interface to send commands to the server
  * <p>
  * To get this connector, the UI should call the getConnector method of the
  * <code>ClientNetworkHandler</code>.

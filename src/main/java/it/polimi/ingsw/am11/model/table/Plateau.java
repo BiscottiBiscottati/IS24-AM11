@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.model.table;
 
 import it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException;
-import it.polimi.ingsw.am11.model.players.Player;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.model.utils.memento.PlateauMemento;
 import it.polimi.ingsw.am11.view.events.support.GameListenerSupport;
@@ -12,25 +11,21 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 public class Plateau {
     private static final Logger LOGGER = LoggerFactory.getLogger(Plateau.class);
 
     private static int armageddonTime;
-    private final @NotNull Map<Player, Integer> playerPoints;
-    private final @NotNull Map<Player, Integer> counterObjective;
-    private final @NotNull Map<Player, Integer> finalLeaderboard;
-    private final GameListenerSupport pcs;
+    private final @NotNull Map<String, Integer> playerPoints;
+    private final @NotNull Map<String, Integer> counterObjective;
+    private final @NotNull Map<String, Integer> finalLeaderboard;
+    private final @NotNull GameListenerSupport pcs;
     private final @NotNull AtomicReference<GameStatus> status;
 
 
-    public Plateau(GameListenerSupport pcs) {
+    public Plateau(@NotNull GameListenerSupport pcs) {
         this.playerPoints = new HashMap<>(8);
         this.counterObjective = new HashMap<>(3);
         this.status = new AtomicReference<>(GameStatus.SETUP);
@@ -42,7 +37,7 @@ public class Plateau {
         return status.get();
     }
 
-    public void setStatus(GameStatus status) {
+    public void setStatus(@NotNull GameStatus status) {
         GameStatus oldValue = this.status.get();
         this.status.compareAndSet(oldValue, status);
 
@@ -51,7 +46,7 @@ public class Plateau {
         pcs.fireEvent(new GameStatusChangeEvent(oldValue, status));
     }
 
-    public void addPlayerPoints(@NotNull Player player, int points)
+    public void addPlayerPoints(@NotNull String player, int points)
     throws IllegalPlateauActionException {
         Integer temp = playerPoints.getOrDefault(player, null);
         if (temp == null) {
@@ -60,11 +55,11 @@ public class Plateau {
             temp += points;
             playerPoints.put(player, temp);
 
-            LOGGER.info("MODEL: Player {} gained {} points, total: {}", player.nickname(), points,
+            LOGGER.info("MODEL: Player {} gained {} points, total: {}", player, points,
                         temp);
 
             pcs.fireEvent(new PlayerPointsChangeEvent(
-                    player.nickname(),
+                    player,
                     temp - points,
                     temp));
         }
@@ -86,7 +81,7 @@ public class Plateau {
         setStatus(GameStatus.ARMAGEDDON);
     }
 
-    public void removePlayer(Player player) {
+    public void removePlayer(@NotNull String player) {
         playerPoints.remove(player);
         counterObjective.remove(player);
         finalLeaderboard.remove(player);
@@ -97,7 +92,7 @@ public class Plateau {
                     .forEach(player -> {
                         playerPoints.put(player, 0);
                         pcs.fireEvent(new PlayerPointsChangeEvent(
-                                player.nickname(),
+                                player,
                                 null,
                                 0
                         ));
@@ -112,12 +107,12 @@ public class Plateau {
                         );
     }
 
-    public void addPlayer(Player newPlayer) {
+    public void addPlayer(@NotNull String newPlayer) {
         playerPoints.put(newPlayer, 0);
         counterObjective.put(newPlayer, 0);
     }
 
-    public void addCounterObjective(Player player)
+    public void addCounterObjective(@NotNull String player)
     throws IllegalPlateauActionException {
         if (! counterObjective.containsKey(player)) {
             throw new IllegalPlateauActionException("Player not found");
@@ -126,14 +121,14 @@ public class Plateau {
         }
     }
 
-    public int getPlayerPoints(Player player) throws IllegalPlateauActionException {
+    public int getPlayerPoints(@NotNull String player) throws IllegalPlateauActionException {
         Integer temp = playerPoints.getOrDefault(player, null);
         if (temp == null) {
             throw new IllegalPlateauActionException("Player not found");
         } else return temp;
     }
 
-    public int getCounterObjective(Player player) throws IllegalPlateauActionException {
+    public int getCounterObjective(@NotNull String player) throws IllegalPlateauActionException {
         Integer temp = counterObjective.getOrDefault(player, null);
         if (temp == null) {
             throw new IllegalPlateauActionException("Player not found");
@@ -141,17 +136,9 @@ public class Plateau {
     }
 
     public void setFinalLeaderboard() {
-        List<Map.Entry<Player, Integer>> entries = new ArrayList<>(playerPoints.entrySet());
+        List<Map.Entry<String, Integer>> entries = new ArrayList<>(playerPoints.entrySet());
 
-        entries.sort((e1, e2) -> {
-            int pointsComparison = e2.getValue().compareTo(e1.getValue());
-            if (pointsComparison != 0) {
-                return pointsComparison;
-            } else {
-                return counterObjective.get(e2.getKey()).compareTo(
-                        counterObjective.get(e1.getKey()));
-            }
-        });
+        entries.sort(Comparator.comparingInt(Map.Entry<String, Integer>::getValue).reversed());
 
         int rank = 1;
         int size = entries.size();
@@ -166,24 +153,15 @@ public class Plateau {
             }
         }
 
-        Map<String, Integer> finalLeaderboardString = finalLeaderboard.entrySet()
-                                                                      .stream()
-                                                                      .map(e -> Map.entry(
-                                                                              e.getKey().nickname(),
-                                                                              e.getValue()))
-                                                                      .collect(
-                                                                              HashMap::new,
-                                                                              (m, e) -> m.put(
-                                                                                      e.getKey(),
-                                                                                      e.getValue()),
-                                                                              HashMap::putAll);
+        Map<String, Integer> finalLeaderboardString = Map.copyOf(finalLeaderboard);
 
         LOGGER.info("MODEL: Final leaderboard set: {}", finalLeaderboardString);
 
         pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboardString));
     }
 
-    public int getPlayerFinishingPosition(Player player) throws IllegalPlateauActionException {
+    public int getPlayerFinishingPosition(@NotNull String player)
+    throws IllegalPlateauActionException {
         if (finalLeaderboard.containsKey(player)) {
             return finalLeaderboard.get(player);
         } else {
@@ -191,64 +169,41 @@ public class Plateau {
         }
     }
 
-    public @NotNull List<Player> getWinners() {
-        List<Player> winners = new ArrayList<>(4);
-        for (Map.Entry<Player, Integer> entry : finalLeaderboard.entrySet()) {
+    public @NotNull Set<String> getWinners() {
+        Set<String> winners = new HashSet<>(8);
+        for (Map.Entry<String, Integer> entry : finalLeaderboard.entrySet()) {
             if (entry.getValue() == 1) {
                 winners.add(entry.getKey());
             }
         }
-        return winners;
+        return Set.copyOf(winners);
     }
 
-    public void setWinner(@NotNull Player player) {
+    public void setWinner(@NotNull String player) {
         finalLeaderboard.keySet()
                         .forEach(p -> finalLeaderboard.put(p, 2));
 
         finalLeaderboard.put(player, 1);
 
-        Map<String, Integer> finalLeaderboardString = finalLeaderboard.entrySet()
-                                                                      .stream()
-                                                                      .map(e -> Map.entry(
-                                                                              e.getKey().nickname(),
-                                                                              e.getValue()))
-                                                                      .collect(
-                                                                              HashMap::new,
-                                                                              (m, e) -> m.put(
-                                                                                      e.getKey(),
-                                                                                      e.getValue()),
-                                                                              HashMap::putAll);
+        LOGGER.info("MODEL: Winner set: {}", player);
 
-        LOGGER.info("MODEL: Winner set: {}", player.nickname());
-
-        pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboardString));
+        pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboard));
     }
 
     public @NotNull PlateauMemento save() {
-        Map<String, Integer> tempPoints = toNickMap(playerPoints);
-        Map<String, Integer> tempCounterObjective = toNickMap(counterObjective);
-        Map<String, Integer> tempFinalLeaderboard = toNickMap(finalLeaderboard);
-        return new PlateauMemento(tempPoints, tempCounterObjective, tempFinalLeaderboard,
+        return new PlateauMemento(Map.copyOf(playerPoints),
+                                  Map.copyOf(counterObjective),
+                                  Map.copyOf(finalLeaderboard),
                                   status.get());
     }
 
-    private static @NotNull Map<String, Integer> toNickMap(@NotNull Map<Player, Integer> map) {
-        return map.keySet().stream()
-                  .collect(Collectors.toUnmodifiableMap(
-                          Player::nickname,
-                          map::get
-                  ));
-    }
-
-    public void load(@NotNull PlateauMemento memento, @NotNull Map<String, Player> mapping) {
+    public void load(@NotNull PlateauMemento memento) {
         hardReset();
 
-        memento.playerPoints()
-               .forEach((nick, points) -> playerPoints.put(mapping.get(nick), points));
-        memento.objCounter()
-               .forEach((nick, counter) -> counterObjective.put(mapping.get(nick), counter));
-        memento.leaderboard()
-               .forEach((nick, position) -> finalLeaderboard.put(mapping.get(nick), position));
+        playerPoints.putAll(memento.playerPoints());
+        counterObjective.putAll(memento.objCounter());
+        finalLeaderboard.putAll(memento.leaderboard());
+
         status.set(memento.status());
     }
 

@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-
 class PlateauTest {
     Plateau plateau;
 
@@ -27,12 +25,12 @@ class PlateauTest {
 
         Player player = new Player("Test Player",
                                    PlayerColor.BLUE);
-        plateau.addPlayer(player);
+        plateau.addPlayer(player.nickname());
         plateau.setStatus(GameStatus.ONGOING);
 
         // Add points to the player until they reach the armageddon time
         for (int i = 0; i < 20; i++) {
-            plateau.addPlayerPoints(player, 1);
+            plateau.addPlayerPoints(player.nickname(), 1);
         }
 
         Assertions.assertTrue(plateau.isArmageddonTime());
@@ -44,14 +42,14 @@ class PlateauTest {
 
         Player player = new Player("Test Player",
                                    PlayerColor.BLUE);
-        plateau.addPlayer(player);
-        plateau.addPlayerPoints(player, 1);
-        plateau.addCounterObjective(player);
-        Assertions.assertEquals(1, plateau.getPlayerPoints(player));
-        Assertions.assertEquals(1, plateau.getCounterObjective(player));
+        plateau.addPlayer(player.nickname());
+        plateau.addPlayerPoints(player.nickname(), 1);
+        plateau.addCounterObjective(player.nickname());
+        Assertions.assertEquals(1, plateau.getPlayerPoints(player.nickname()));
+        Assertions.assertEquals(1, plateau.getCounterObjective(player.nickname()));
         plateau.reset();
-        Assertions.assertEquals(0, plateau.getPlayerPoints(player));
-        Assertions.assertEquals(0, plateau.getCounterObjective(player));
+        Assertions.assertEquals(0, plateau.getPlayerPoints(player.nickname()));
+        Assertions.assertEquals(0, plateau.getCounterObjective(player.nickname()));
 
 
     }
@@ -61,9 +59,9 @@ class PlateauTest {
 
         Player player = new Player("Test Player",
                                    PlayerColor.BLUE);
-        plateau.addPlayer(player);
-        Assertions.assertEquals(0, plateau.getPlayerPoints(player));
-        Assertions.assertEquals(0, plateau.getCounterObjective(player));
+        plateau.addPlayer(player.nickname());
+        Assertions.assertEquals(0, plateau.getPlayerPoints(player.nickname()));
+        Assertions.assertEquals(0, plateau.getCounterObjective(player.nickname()));
 
     }
 
@@ -72,9 +70,9 @@ class PlateauTest {
 
         Player player = new Player("Test Player",
                                    PlayerColor.BLUE);
-        plateau.addPlayer(player);
-        plateau.addPlayerPoints(player, 3);
-        Assertions.assertEquals(3, plateau.getPlayerPoints(player));
+        plateau.addPlayer(player.nickname());
+        plateau.addPlayerPoints(player.nickname(), 3);
+        Assertions.assertEquals(3, plateau.getPlayerPoints(player.nickname()));
 
 
     }
@@ -84,9 +82,9 @@ class PlateauTest {
 
         Player player = new Player("Test Player", PlayerColor.BLUE);
 
-        plateau.addPlayer(player);
+        plateau.addPlayer(player.nickname());
 
-        Assertions.assertEquals(0, plateau.getPlayerPoints(player));
+        Assertions.assertEquals(0, plateau.getPlayerPoints(player.nickname()));
 
     }
 
@@ -95,33 +93,33 @@ class PlateauTest {
 
         Player player1 = new Player("Test Player1",
                                     PlayerColor.BLUE);
-        plateau.addPlayer(player1);
-        plateau.addPlayerPoints(player1, 5);
-        plateau.addCounterObjective(player1);
+        plateau.addPlayer(player1.nickname());
+        plateau.addPlayerPoints(player1.nickname(), 5);
+        plateau.addCounterObjective(player1.nickname());
         Player player2 = new Player("Test Player2",
                                     PlayerColor.RED);
-        plateau.addPlayer(player2);
-        plateau.addPlayerPoints(player2, 5);
-        plateau.addCounterObjective(player2);
+        plateau.addPlayer(player2.nickname());
+        plateau.addPlayerPoints(player2.nickname(), 5);
+        plateau.addCounterObjective(player2.nickname());
         Player player3 = new Player("Test Player3",
                                     PlayerColor.YELLOW);
-        plateau.addPlayer(player3);
-        plateau.addPlayerPoints(player3, 4);
-        plateau.addCounterObjective(player3);
+        plateau.addPlayer(player3.nickname());
+        plateau.addPlayerPoints(player3.nickname(), 4);
+        plateau.addCounterObjective(player3.nickname());
         Player player4 = new Player("Test Player4",
                                     PlayerColor.GREEN);
-        plateau.addPlayer(player4);
-        plateau.addPlayerPoints(player4, 3);
-        plateau.addCounterObjective(player4);
-        plateau.addCounterObjective(player4);
-        plateau.addCounterObjective(player4);
+        plateau.addPlayer(player4.nickname());
+        plateau.addPlayerPoints(player4.nickname(), 3);
+        plateau.addCounterObjective(player4.nickname());
+        plateau.addCounterObjective(player4.nickname());
+        plateau.addCounterObjective(player4.nickname());
 
         plateau.setFinalLeaderboard();
 
-        Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player1));
-        Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player2));
-        Assertions.assertEquals(2, plateau.getPlayerFinishingPosition(player3));
-        Assertions.assertEquals(3, plateau.getPlayerFinishingPosition(player4));
+        Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player1.nickname()));
+        Assertions.assertEquals(1, plateau.getPlayerFinishingPosition(player2.nickname()));
+        Assertions.assertEquals(2, plateau.getPlayerFinishingPosition(player3.nickname()));
+        Assertions.assertEquals(3, plateau.getPlayerFinishingPosition(player4.nickname()));
 
     }
 
@@ -134,31 +132,31 @@ class PlateauTest {
 
         Player player1 = new Player("Test Player1",
                                     PlayerColor.BLUE);
-        plateau.addPlayer(player1);
-        plateau.addPlayerPoints(player1, 5);
-        plateau.addCounterObjective(player1);
+        plateau.addPlayer(player1.nickname());
+        plateau.addPlayerPoints(player1.nickname(), 5);
+        plateau.addCounterObjective(player1.nickname());
         Player player2 = new Player("Test Player2",
                                     PlayerColor.RED);
-        plateau.addPlayer(player2);
-        plateau.addPlayerPoints(player2, 5);
-        plateau.addCounterObjective(player2);
+        plateau.addPlayer(player2.nickname());
+        plateau.addPlayerPoints(player2.nickname(), 5);
+        plateau.addCounterObjective(player2.nickname());
         Player player3 = new Player("Test Player3",
                                     PlayerColor.YELLOW);
-        plateau.addPlayer(player3);
-        plateau.addPlayerPoints(player3, 4);
-        plateau.addCounterObjective(player3);
+        plateau.addPlayer(player3.nickname());
+        plateau.addPlayerPoints(player3.nickname(), 4);
+        plateau.addCounterObjective(player3.nickname());
         Player player4 = new Player("Test Player4",
                                     PlayerColor.GREEN);
-        plateau.addPlayer(player4);
-        plateau.addPlayerPoints(player4, 3);
-        plateau.addCounterObjective(player4);
+        plateau.addPlayer(player4.nickname());
+        plateau.addPlayerPoints(player4.nickname(), 3);
+        plateau.addCounterObjective(player4.nickname());
 
         plateau.setFinalLeaderboard();
         plateau.getWinners();
 
         Assertions.assertEquals(2, plateau.getWinners().size());
-        Assertions.assertTrue(plateau.getWinners().contains(player1));
-        Assertions.assertTrue(plateau.getWinners().contains(player2));
+        Assertions.assertTrue(plateau.getWinners().contains(player1.nickname()));
+        Assertions.assertTrue(plateau.getWinners().contains(player2.nickname()));
 
 
     }
@@ -201,13 +199,13 @@ class PlateauTest {
 
         Player player = new Player("Test Player",
                                    PlayerColor.BLUE);
-        plateau.addPlayer(player);
-        Assertions.assertEquals(0, plateau.getCounterObjective(player));
-        plateau.addCounterObjective(player);
-        plateau.addCounterObjective(player);
-        Assertions.assertEquals(2, plateau.getCounterObjective(player));
-        plateau.addCounterObjective(player);
-        Assertions.assertEquals(3, plateau.getCounterObjective(player));
+        plateau.addPlayer(player.nickname());
+        Assertions.assertEquals(0, plateau.getCounterObjective(player.nickname()));
+        plateau.addCounterObjective(player.nickname());
+        plateau.addCounterObjective(player.nickname());
+        Assertions.assertEquals(2, plateau.getCounterObjective(player.nickname()));
+        plateau.addCounterObjective(player.nickname());
+        Assertions.assertEquals(3, plateau.getCounterObjective(player.nickname()));
 
     }
 
@@ -216,8 +214,8 @@ class PlateauTest {
 
         Player player = new Player("Test Player",
                                    PlayerColor.BLUE);
-        plateau.addPlayer(player);
-        Assertions.assertEquals(0, plateau.getCounterObjective(player));
+        plateau.addPlayer(player.nickname());
+        Assertions.assertEquals(0, plateau.getCounterObjective(player.nickname()));
     }
 
 
@@ -225,14 +223,14 @@ class PlateauTest {
     void removePlayer() {
         Player player = new Player("Test Player",
                                    PlayerColor.BLUE);
-        plateau.addPlayer(player);
-        plateau.removePlayer(player);
+        plateau.addPlayer(player.nickname());
+        plateau.removePlayer(player.nickname());
         Assertions.assertThrows(IllegalPlateauActionException.class,
-                                () -> plateau.getPlayerPoints(player));
+                                () -> plateau.getPlayerPoints(player.nickname()));
         Assertions.assertThrows(IllegalPlateauActionException.class,
-                                () -> plateau.getCounterObjective(player));
+                                () -> plateau.getCounterObjective(player.nickname()));
         Assertions.assertThrows(IllegalPlateauActionException.class,
-                                () -> plateau.getPlayerFinishingPosition(player));
+                                () -> plateau.getPlayerFinishingPosition(player.nickname()));
     }
 
     @Test
@@ -245,9 +243,9 @@ class PlateauTest {
 
         plateau.setStatus(GameStatus.ONGOING);
         Player testPlayer = new Player("Test Player", PlayerColor.BLUE);
-        plateau.addPlayer(testPlayer);
-        plateau.addPlayerPoints(testPlayer, 5);
-        plateau.addCounterObjective(testPlayer);
+        plateau.addPlayer(testPlayer.nickname());
+        plateau.addPlayerPoints(testPlayer.nickname(), 5);
+        plateau.addCounterObjective(testPlayer.nickname());
 
         memento = plateau.save();
 
@@ -262,18 +260,18 @@ class PlateauTest {
     void load() throws IllegalPlateauActionException {
         plateau.setStatus(GameStatus.ONGOING);
         Player testPlayer = new Player("Test Player", PlayerColor.BLUE);
-        plateau.addPlayer(testPlayer);
-        plateau.addPlayerPoints(testPlayer, 5);
-        plateau.addCounterObjective(testPlayer);
+        plateau.addPlayer(testPlayer.nickname());
+        plateau.addPlayerPoints(testPlayer.nickname(), 5);
+        plateau.addCounterObjective(testPlayer.nickname());
 
         PlateauMemento memento = plateau.save();
 
         plateau.reset();
 
-        plateau.load(memento, Map.of("Test Player", testPlayer));
+        plateau.load(memento);
 
-        Assertions.assertEquals(5, plateau.getPlayerPoints(testPlayer));
-        Assertions.assertEquals(1, plateau.getCounterObjective(testPlayer));
+        Assertions.assertEquals(5, plateau.getPlayerPoints(testPlayer.nickname()));
+        Assertions.assertEquals(1, plateau.getCounterObjective(testPlayer.nickname()));
         Assertions.assertEquals(GameStatus.ONGOING, plateau.getStatus());
     }
 }

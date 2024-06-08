@@ -28,12 +28,13 @@ public interface GameModel {
 
     String getFirstPlayer() throws GameStatusException;
 
-    Set<Integer> getPlayerHand(String nickname) throws GameStatusException, PlayerInitException;
+    Set<Integer> getPlayerHand(@NotNull String nickname)
+    throws GameStatusException, PlayerInitException;
 
-    Set<Integer> getPlayerObjective(String nickname) throws PlayerInitException,
-                                                            GameStatusException;
+    Set<Integer> getPlayerObjective(@NotNull String nickname)
+    throws PlayerInitException, GameStatusException;
 
-    PlayerColor getPlayerColor(String nickname) throws PlayerInitException;
+    PlayerColor getPlayerColor(@NotNull String nickname) throws PlayerInitException;
 
     Map<Position, CardContainer> getPositionedCard(@NotNull String nickname)
     throws PlayerInitException, GameStatusException;
@@ -44,14 +45,14 @@ public interface GameModel {
     @NotNull
     Set<Integer> getCommonObjectives() throws GameStatusException;
 
-    Set<Integer> getExposedCards(PlayableCardType type) throws GameStatusException;
+    Set<Integer> getExposedCards(@NotNull PlayableCardType type) throws GameStatusException;
 
 
-    int getPlayerPoints(String nickname)
+    int getPlayerPoints(@NotNull String nickname)
     throws PlayerInitException, GameStatusException,
            GameBreakingException;
 
-    int getPlayerFinishingPosition(String nickname)
+    int getPlayerFinishingPosition(@NotNull String nickname)
     throws PlayerInitException, GameStatusException,
            GameBreakingException;
 
@@ -93,7 +94,7 @@ public interface GameModel {
 
     GameStatus getStatus();
 
-    Optional<Color> getDeckTop(PlayableCardType type) throws GameStatusException;
+    Optional<Color> getDeckTop(@NotNull PlayableCardType type) throws GameStatusException;
 
     Set<Integer> getCandidateObjectives(@NotNull String nickname)
     throws PlayerInitException, GameStatusException;
