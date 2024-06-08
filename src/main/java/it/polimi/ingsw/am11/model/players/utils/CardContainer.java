@@ -97,7 +97,7 @@ public class CardContainer {
      *
      * @return The <code>FieldCard</code> object stored in this <code>CardContainer</code>.
      */
-    public FieldCard getCard() {
+    public @NotNull FieldCard getCard() {
         return card;
     }
 
@@ -200,7 +200,7 @@ public class CardContainer {
      * @return An {@link Optional} containing the item on the specified corner of the card, or an
      * empty {@link Optional} if there is no item on that corner.
      */
-    public Optional<Item> getItemOn(Corner corner) {
+    public Optional<Item> getItemOn(@NotNull Corner corner) {
         return this.card.getItemCorner(corner, isRetro).getItem();
     }
 

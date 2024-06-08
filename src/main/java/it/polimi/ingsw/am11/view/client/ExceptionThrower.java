@@ -31,6 +31,4 @@ public interface ExceptionThrower {
     void throwException(IllegalPlateauActionException description);
 
     void throwException(MaxHandSizeException description);
-
-    void throwException(LostConnectionException description);
 }

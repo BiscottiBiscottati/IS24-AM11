@@ -5,7 +5,6 @@ import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.model.cards.objective.CollectingCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.Validator;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
@@ -17,10 +16,15 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * This is the <code>ColorCollectCard</code> class that extends the <code>CollectingCard</code>
+ * class. It represents an objective card for collecting a specific color. The class is final,
+ * meaning it cannot be subclassed.
+ * <p>
+ * The class contains methods to get color, get the type of the card, count points based on the
+ * player's field, and a nested Builder class for creating instances of ColorCollectCard.
+ */
 public final class ColorCollectCard extends CollectingCard {
-    private static final ImmutableMap<Symbol, Integer> SYMBOL_TO_COLLECT = Maps.immutableEnumMap(
-            EnumMapUtils.init(Symbol.class, 0)
-    );
 
     private final @NotNull ImmutableMap<Color, Integer> colorToCollect;
 
@@ -34,11 +38,6 @@ public final class ColorCollectCard extends CollectingCard {
     @Override
     public @NotNull Map<Color, Integer> getColorRequirements() {
         return this.colorToCollect;
-    }
-
-    @Override
-    public @NotNull Map<Symbol, Integer> getSymbolRequirements() {
-        return SYMBOL_TO_COLLECT;
     }
 
     @Override

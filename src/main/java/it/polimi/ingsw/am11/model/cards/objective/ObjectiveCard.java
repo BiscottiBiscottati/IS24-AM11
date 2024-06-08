@@ -165,11 +165,42 @@ public abstract sealed class ObjectiveCard implements CardIdentity
     @NotNull
     public abstract ObjectiveCardType getType();
 
+    /**
+     * This method overrides the hashCode method from the Object class. It is used to generate a
+     * hash code for this <code>ObjectiveCard</code> object, which is used in hash-based
+     * collections. The hash code is generated based on the id of the ObjectiveCard.
+     *
+     * @return int - The hash code of this ObjectiveCard object.
+     */
     @Override
     public int hashCode() {
         return Integer.hashCode(this.id);
     }
 
+    /**
+     * This method overrides the equals method from the Object class.
+     * <p>
+     * Each Card has a unique id, so two cards are equal if they have the same id.
+     * <p>
+     * It is used to compare this ObjectiveCard object with another object for equality.
+     * <p>
+     * The method first checks if the superclasses equal method returns true.
+     * <p>
+     * If not, it checks if the class of the other object is the same as this ObjectiveCard's
+     * class.
+     * <p>
+     * If the classes are the same, it compares the id of this ObjectiveCard with the id of the
+     * other ObjectiveCard.
+     * <p>
+     * If the ids are the same, the method returns true, indicating that the two ObjectiveCards are
+     * equal.
+     * <p>
+     * If any of these checks fail, the method returns false, indicating that the two ObjectiveCards
+     * are not equal.
+     *
+     * @param obj The object to compare this ObjectiveCard with for equality.
+     * @return boolean - True if the other object is equal to this ObjectiveCard, false otherwise.
+     */
     @Override
     public boolean equals(@NotNull Object obj) {
         if (super.equals(obj)) return true;

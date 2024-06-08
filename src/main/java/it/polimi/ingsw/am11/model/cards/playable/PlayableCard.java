@@ -224,7 +224,7 @@ public abstract sealed class PlayableCard implements
      */
     @Contract(pure = true)
     @Override
-    public boolean isColorEqual(Color color) {
+    public boolean isColorEqual(@NotNull Color color) {
         return this.color == color;
     }
 
@@ -245,8 +245,7 @@ public abstract sealed class PlayableCard implements
      * @param isRetro A boolean indicating whether the card is in retro mode.
      * @return A <code>Set</code> of <code>Color</code> representing the center color of the card.
      */
-    @NotNull
-    public Set<Color> getCenter(boolean isRetro) {
+    public @NotNull Set<Color> getCenter(boolean isRetro) {
         if (isRetro) return Set.of(this.color);
         else return Set.of();
     }

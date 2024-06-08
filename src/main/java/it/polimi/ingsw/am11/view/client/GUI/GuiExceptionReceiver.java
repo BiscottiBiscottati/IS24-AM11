@@ -77,8 +77,4 @@ public class GuiExceptionReceiver implements ExceptionThrower {
 
     }
 
-    @Override
-    public void throwException(LostConnectionException description) {
-
-    }
 }

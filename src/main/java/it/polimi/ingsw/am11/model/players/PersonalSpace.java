@@ -139,7 +139,7 @@ public class PersonalSpace {
     }
 
     public void removeCandidateObjective(int id) {
-        candidateObjectives.remove(id);
+        candidateObjectives.removeIf(obj -> obj.getId() == id);
     }
 
     public boolean areObjectiveGiven() {

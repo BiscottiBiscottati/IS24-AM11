@@ -15,13 +15,27 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
+/**
+ * The CardDecoder class is a utility class used for decoding cards in the game.
+ * <p>
+ * It contains static methods for decoding different types of cards, such as ObjectiveCard,
+ * FieldCard, ResourceCard, GoldCard, and StarterCard.
+ * <p>
+ * Each method takes an integer cardId as a parameter and returns an Optional of the corresponding
+ * card.
+ * <p>
+ * The cardId is used to fetch the card from the appropriate deck.
+ * <p>
+ * If a card with the given id is found in the deck, it is returned wrapped in an Optional. If no
+ * card is found, an empty Optional is returned.
+ */
 public class CardDecoder {
     private static final Deck<ObjectiveCard> objectiveDeck = ObjectiveDeckFactory.createDeck();
     private static final Deck<ResourceCard> resourceDeck = ResourceDeckFactory.createDeck();
     private static final Deck<GoldCard> goldDeck = GoldDeckFactory.createDeck();
     private static final Deck<StarterCard> starterDeck = StarterDeckFactory.createDeck();
 
-    public static Optional<ObjectiveCard> decodeObjectiveCard(int cardId) {
+    public static @NotNull Optional<ObjectiveCard> decodeObjectiveCard(int cardId) {
         return objectiveDeck.getCardById(cardId);
     }
 
@@ -31,15 +45,15 @@ public class CardDecoder {
                                          .or(() -> decodeStarterCard(cardId));
     }
 
-    public static Optional<ResourceCard> decodeResourceCard(int cardId) {
+    public static @NotNull Optional<ResourceCard> decodeResourceCard(int cardId) {
         return resourceDeck.getCardById(cardId);
     }
 
-    public static Optional<GoldCard> decodeGoldCard(int cardId) {
+    public static @NotNull Optional<GoldCard> decodeGoldCard(int cardId) {
         return goldDeck.getCardById(cardId);
     }
 
-    public static Optional<StarterCard> decodeStarterCard(int cardId) {
+    public static @NotNull Optional<StarterCard> decodeStarterCard(int cardId) {
         return starterDeck.getCardById(cardId);
     }
 

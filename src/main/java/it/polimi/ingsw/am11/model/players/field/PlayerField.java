@@ -15,6 +15,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * The PlayerField class represents the field of a player in the game.
+ * <p>
+ * It manages the positioning and exposure of cards on the field.
+ * <p>
+ * The class contains two main components: an ExposedItemManager and a PositionManager.
+ * <p>
+ * The ExposedItemManager is responsible for managing the items exposed on the field.
+ * <p>
+ * The PositionManager is responsible for managing the positions of the cards on the field.
+ * <p>
+ * The class provides methods for placing cards on the field, checking the availability of
+ * positions, getting the number of specific items exposed on the field, and checking if a card is
+ * present on the field.
+ * <p>
+ * It also provides methods for saving and loading the state of the field.
+ */
 public class PlayerField {
 
     private final @NotNull ExposedItemManager itemManager;
@@ -103,18 +120,57 @@ public class PlayerField {
         return card.countPoints(this, position);
     }
 
+    /**
+     * It is used to get a set of all available positions on the player's field.
+     * <p>
+     * The availability of a position is determined by the PositionManager.
+     * <p>
+     * A position is considered available if it is not occupied by a card, and it is adjacent to a
+     * card already placed on the field.
+     *
+     * @return A set of all available positions on the player's field.
+     */
     public Set<Position> getAvailablePositions() {
         return this.positionManager.getAvailablePositions();
     }
 
+    /**
+     * It is used to check if a specific position on the player's field is available.
+     * <p>
+     * The availability of a position is determined by the PositionManager.
+     * <p>
+     * A position is considered available if it is not occupied by a card, and it is adjacent to a
+     * card already placed on the field.
+     *
+     * @param position Position - The position to check for availability.
+     * @return boolean - True if the position is available, false otherwise.
+     */
     public boolean isAvailable(@NotNull Position position) {
         return this.positionManager.isAvailable(position);
     }
 
+    /**
+     * It is used to get the number of a specific item exposed on the player's field.
+     * <p>
+     * The item is specified by the parameter passed to the method.
+     * <p>
+     * The number of specific items is determined by the ExposedItemManager.
+     *
+     * @param item Item - The item for which to get the count.
+     * @return int - The number of the specified item exposed on the player's field.
+     */
     public int getNumberOf(@NotNull Item item) {
         return itemManager.getExposedItem(item);
     }
 
+    /**
+     * It is used to check if a specific card is present on the player's field.
+     * <p>
+     * The presence of a card is determined by the PositionManager.
+     *
+     * @param card FieldCard - The card to check for presence on the field.
+     * @return boolean - True if the card is present on the field, false otherwise.
+     */
     public boolean containsCard(@NotNull FieldCard card) {
         return this.positionManager.containsCard(card);
     }
@@ -131,6 +187,21 @@ public class PlayerField {
         return this.itemManager.getPlacedCardOf(color);
     }
 
+    /**
+     * It is used to check if the requirements for placing a specific card on the player's field are
+     * met.
+     * <p>
+     * The requirements are determined by the ExposedItemManager.
+     * <p>
+     * For a StarterCard, the method always returns true as there are no requirements for placing a
+     * StarterCard.
+     * <p>
+     * For a PlayableCard, the method checks the requirements of the card.
+     *
+     * @param card    FieldCard - The card to check for requirement satisfaction.
+     * @param isRetro boolean - A flag indicating whether the card is placed in retro mode.
+     * @return boolean - True if the requirements for placing the card are met, false otherwise.
+     */
     public boolean isRequirementMet(@NotNull FieldCard card, boolean isRetro) {
         return switch (card) {
             case StarterCard ignored -> true;
@@ -139,10 +210,27 @@ public class PlayerField {
         };
     }
 
+    /**
+     * It is used to save the current state of the player's field.
+     * <p>
+     * The state of the player's field includes the state of the ExposedItemManager and the
+     * PositionManager.
+     *
+     * @return FieldMemento - A FieldMemento object representing the current state of the player's
+     * field.
+     */
     public @NotNull FieldMemento save() {
         return new FieldMemento(itemManager.save(), positionManager.save());
     }
 
+    /**
+     * It is used to load a saved state of the player's field.
+     * <p>
+     * The state of the player's field includes the state of the ExposedItemManager and the
+     * PositionManager.
+     *
+     * @param memento FieldMemento - The state to load into the player's field.
+     */
     public void load(@NotNull FieldMemento memento) {
         this.itemManager.load(memento.exposedItems());
         this.positionManager.load(memento.positionManager());

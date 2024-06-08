@@ -2,7 +2,6 @@ package it.polimi.ingsw.am11.model.cards.utils.enums;
 
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.Item;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -35,7 +34,6 @@ public enum Symbol implements CornerContainer, Item {
         return true;
     }
 
-    @Contract(value = " -> new", pure = true)
     @Override
     public @NotNull Optional<Item> getItem() {
         return Optional.of(this);

@@ -3,7 +3,6 @@ package it.polimi.ingsw.am11.model.cards.objective.collecting;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.model.cards.objective.CollectingCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
@@ -19,20 +18,11 @@ import java.util.Objects;
 
 public final class SymbolCollectCard extends CollectingCard {
 
-
-    private static final ImmutableMap<Color, Integer> COLOR_TO_COLLECT = Maps.immutableEnumMap(
-            EnumMapUtils.init(Color.class, 0)
-    );
     private final @NotNull ImmutableMap<Symbol, Integer> symbolToCollect;
 
     private SymbolCollectCard(@NotNull Builder builder) {
         super(builder);
         this.symbolToCollect = Maps.immutableEnumMap(builder.symbolToCollect);
-    }
-
-    @Override
-    public @NotNull Map<Color, Integer> getColorRequirements() {
-        return COLOR_TO_COLLECT;
     }
 
     @Override

@@ -114,7 +114,7 @@ public class PlayerManager {
         }
     }
 
-    public Optional<StarterCard> getStarterCard(@NotNull String nickname)
+    public @NotNull Optional<StarterCard> getStarterCard(@NotNull String nickname)
     throws PlayerInitException {
         Player player = players.get(nickname);
         if (player != null) {
@@ -213,7 +213,7 @@ public class PlayerManager {
         }
     }
 
-    public @NotNull Player addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
+    public void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
     throws PlayerInitException, NumOfPlayersException {
 
         for (String item : players.keySet()) {
@@ -239,7 +239,6 @@ public class PlayerManager {
             players.put(nickname, newPlayer);
             playerQueue.add(newPlayer);
 
-            return newPlayer;
         }
     }
 

@@ -23,13 +23,34 @@ public record Position(int x, int y) implements Serializable {
         return new Position(x, y);
     }
 
+    /**
+     * Factory method to create a new <code>Position</code> instance from a string.
+     * <p>
+     * The string should contain the x and y coordinates separated by a semicolon.
+     * <p>
+     * This method is used by Jackson library to deserialize a Position object from a JSON string.
+     * <p>
+     * Important: This method is necessary to serialize and deserialize into JSON format for saving
+     * the game state in SQLite database.
+     *
+     * @param s String - The string containing the x and y coordinates.
+     * @return Position - A new Position instance with the coordinates parsed from the string.
+     */
     @JsonCreator
     public static @NotNull Position of(@NotNull String s) {
         String[] parts = s.split(";");
         return new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
     }
 
-    @Contract(pure = true)
+    /**
+     * It is used to convert the Position object to a string representation.
+     * <p>
+     * The string representation includes the x and y coordinates separated by a semicolon.
+     * <p>
+     * This method is also used by the Jackson library for serialization.
+     *
+     * @return String - A string representation of the Position object.
+     */
     @Override
     public @NotNull String toString() {
         return x + ";" + y;

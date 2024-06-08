@@ -13,6 +13,19 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This is the abstract <code>PositioningCard</code> class that extends the
+ * <code>ObjectiveCard</code> class.
+ * <p>
+ * It represents an objective card for positioning a specific pattern on the player's field.
+ * <p>
+ * It is sealed, meaning it can only be subclassed by the classes specified in the permit clause.
+ * <p>
+ * In this case, the permitted subclasses are <code>LCard</code> and <code>TripletCard</code>.
+ * <p>
+ * The class contains methods to get color and symbol requirements, a method to get the pattern, and
+ * a nested Builder class for creating instances of PositioningCard.
+ */
 public abstract sealed class PositioningCard extends ObjectiveCard
         permits LCard, TripletCard {
     private static final ImmutableMap<Symbol, Integer> SYMBOL_REQUIREMENTS = Maps.immutableEnumMap(

@@ -42,6 +42,12 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.network.RMI.remote.chat;
     exports it.polimi.ingsw.am11.network.RMI.remote.game;
     exports it.polimi.ingsw.am11.network.RMI.remote.heartbeat;
+    exports it.polimi.ingsw.am11.model.exceptions;
+    exports it.polimi.ingsw.am11.model.cards.starter;
+    exports it.polimi.ingsw.am11.model.cards.playable;
+    exports it.polimi.ingsw.am11.model.cards.objective;
+    exports it.polimi.ingsw.am11.model.cards.utils;
+    exports it.polimi.ingsw.am11.model.cards.utils.enums;
     exports it.polimi.ingsw.am11.view.client.GUI.windows;
     opens it.polimi.ingsw.am11.view.client.GUI.windows to javafx.fxml;
 

@@ -13,7 +13,6 @@ import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -130,17 +129,17 @@ public final class StarterCard implements FieldCard {
     }
 
     @Override
-    public boolean isColorEqual(Color color) {
+    public boolean isColorEqual(@NotNull Color color) {
         return false;
     }
 
     @Override
-    public boolean isAvailable(Corner corner, boolean isRetro) {
+    public boolean isAvailable(@NotNull Corner corner, boolean isRetro) {
         if (isRetro) return true;
         else return availableCornersFront.get(corner).isAvailable();
     }
 
-    public @Nullable CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
+    public @NotNull CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
         if (isRetro) return availableColorCornerRetro.get(corner);
         else return availableCornersFront.get(corner);
     }

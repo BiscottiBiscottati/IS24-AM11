@@ -49,7 +49,6 @@ public class TuiExceptionReceiver implements ExceptionThrower {
             tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
             tuiUpdater.setHomeState(TuiStates.SETTING_NAME);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
-            return;
         }
 
     }
@@ -99,12 +98,10 @@ public class TuiExceptionReceiver implements ExceptionThrower {
             tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
             tuiUpdater.setHomeState(TuiStates.SETTING_NUM);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
-            return;
         } else {
             tuiUpdater.setTuiState(TuiStates.CONNECTING);
             tuiUpdater.setHomeState(TuiStates.CONNECTING);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
-            return;
         }
     }
 
@@ -152,9 +149,4 @@ public class TuiExceptionReceiver implements ExceptionThrower {
         //TODO
     }
 
-    @Override
-    public void throwException(LostConnectionException ex) {
-        LOGGER.debug("LostConnectionException {}", ex.getMessage());
-        //TODO
-    }
 }

@@ -84,7 +84,7 @@ public class LPatternCounter implements PatternCounter {
         for (Corner corner : Corner.values()) {
             Position adjacentPosition = PositionManager.getMovementOfPositions(
                     currentPosition,
-                    corner.toSingletonList());
+                    List.of(corner));
             if (field.getOrDefault(adjacentPosition, null) != null
                 && ! seenPositions.contains(adjacentPosition)) {
                 countNumberOfPatterns(field, adjacentPosition, 0);

@@ -49,7 +49,33 @@ public sealed interface CornerContainer permits Availability, Color, Symbol {
      */
     boolean isAvailable();
 
+    /**
+     * This method is part of the <code>CornerContainer</code> interface.
+     * <p>
+     * It is used to get the item contained in the corner.
+     * <p>
+     * The item can be a value of Color, Symbol, or Availability.
+     * <p>
+     * If the corner is not available to cover, the method will return an empty Optional.
+     * <p>
+     * If the corner is available but does not contain an item, the method will return an Optional
+     * containing Availability.USABLE.
+     * <p>
+     * If the corner contains an item, the method will return an Optional containing the item.
+     *
+     * @return Optional<Item> - The item contained in the corner, wrapped in an Optional.
+     */
     Optional<Item> getItem();
 
+    /**
+     * This method is part of the CornerContainer interface.
+     * <p>
+     * It is used to get the Text User Interface (TUI) code associated with the corner container.
+     * <p>
+     * The TUI code is a string representation of the corner container which can be used in
+     * text-based user interfaces.
+     *
+     * @return String - The TUI code of the corner container.
+     */
     String getTUICode();
 }

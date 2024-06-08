@@ -79,7 +79,7 @@ public class PickablesTable {
               )));
     }
 
-    public Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
+    public @NotNull Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
         return deckManager.getDeckTop(type);
     }
 

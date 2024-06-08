@@ -62,7 +62,7 @@ public final class LCard extends PositioningCard {
                                           )
                                           .forEach(corner -> cornersPurpose.put(
                                                   purpose,
-                                                  corner.toSingletonList()));
+                                                  List.of(corner)));
                 case ADJACENT_RX, ADJACENT_LX -> cornersPurpose.put(
                         purpose,
                         null

@@ -257,10 +257,6 @@ public class PositionManager {
         return availablePositions.contains(position);
     }
 
-    public @NotNull Optional<CardContainer> getCardIfExists(@NotNull Position position) {
-        return Optional.ofNullable(cardsPositioned.get(position));
-    }
-
     /**
      * Checks if a given card is already placed on the field.
      * <p>
@@ -275,18 +271,6 @@ public class PositionManager {
         return cardsPositioned.values()
                               .stream()
                               .anyMatch(cardContainer -> cardContainer.isCardEquals(card));
-    }
-
-    private boolean isAdjacentClosed(@NotNull Position position) {
-        return Stream.of(Corner.values())
-                     .map(corner -> PositionManager.getPositionIn(position, corner))
-                     .anyMatch(adjPos ->
-                                       Optional.ofNullable(this.cardsPositioned.get(adjPos))
-                                               .map(cardContainer -> cardContainer.isCornerCovered(
-                                                       PositionManager.getCornerFromPositions(
-                                                               adjPos,
-                                                               position).orElseThrow()))
-                                               .orElse(false));
     }
 
     /**
