@@ -44,6 +44,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     GamePage gamePage;
     FXMLLoader fxmlLoader;
     private StackPane root;
+    private Parent root1;
     private FrameHandler frameHandler;
 
     public CodexNaturalis() {
@@ -64,11 +65,10 @@ public class CodexNaturalis extends Application implements GuiObserver {
         this.primaryStage = primaryStage;
         fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/it/polimi/ingsw/am11/view/client/GUI/window/GamePage.fxml"));
-        Parent root1 = fxmlLoader.load();
+        root1 = fxmlLoader.load();
         root1.setVisible(false);
 
         initializeGUI();
-        root.getChildren().add(root1);
         frameHandler = new FrameHandler(guiResources, primaryStage, root);
         scene = new Scene(root, WindowSize, WindowSize, javafx.scene.paint.Color.BLACK);
         primaryStage.setScene(scene);
@@ -277,7 +277,9 @@ public class CodexNaturalis extends Application implements GuiObserver {
     }
 
     public void showGamePage() {
+        primaryStage.setScene(
+                new Scene(root1, WindowSize, WindowSize, javafx.scene.paint.Color.BLACK));
         this.setFullScreen(true);
-        gamePage.showGamePage();
+        GamePage.showGamePage(root1);
     }
 }

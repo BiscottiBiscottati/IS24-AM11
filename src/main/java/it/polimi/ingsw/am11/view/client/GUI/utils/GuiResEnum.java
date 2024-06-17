@@ -21,6 +21,7 @@ public enum GuiResEnum {
     GREEN_GLD_RTR("green_gold.png"),
     PURPLE_GLD_RTR("purple_gold.png"),
     RED_GLD_RTR("red_gold.png"),
+    GAME_BACKGROUND("gamePageBG.png"),
     OBJ_CARD("objective.png");
 
     private final String fileName;

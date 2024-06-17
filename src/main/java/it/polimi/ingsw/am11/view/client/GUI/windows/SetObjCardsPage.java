@@ -80,11 +80,7 @@ public class SetObjCardsPage {
         vbox.setVisible(true);
 
         cardImage1.setOnMouseClicked(event -> {
-            cardImage1.setVisible(false);
-            cardImage2.setVisible(false);
-            message.setVisible(false);
-            layout.setVisible(false);
-            vbox.setVisible(false);
+            root.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.get(0));
             codexNaturalis.showGamePage();
         });
