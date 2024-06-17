@@ -55,4 +55,12 @@ public class GuiActuator {
     public void drawCard(boolean fromVisible, PlayableCardType type, int cardId) {
         connector.drawCard(fromVisible, type, cardId);
     }
+
+    public void sendChatMessage(String message) {
+        chatConnector.pubMsg(message);
+    }
+
+    public void sendPrivateMessage(String recipient, String message) {
+        chatConnector.pubPrivateMsg(recipient, message);
+    }
 }

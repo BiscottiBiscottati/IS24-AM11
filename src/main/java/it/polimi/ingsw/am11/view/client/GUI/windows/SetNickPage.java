@@ -12,7 +12,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+import java.util.regex.Pattern;
+
 public class SetNickPage {
+    private static final Pattern SPACE_SPLIT = Pattern.compile("\\s+");
     private final CodexNaturalis codexNaturalis;
     MiniGameModel miniGameModel;
     GuiActuator guiActuator;
@@ -104,10 +107,19 @@ public class SetNickPage {
         goToNetwork.setVisible(true);
 
         chooseNick.setOnMouseClicked(event -> {
-            String nick = writeNick.getCharacters().toString();
+            String nick = writeNick.getCharacters().toString().strip();
+            String[] nickSplit = SPACE_SPLIT.split(nick);
             if (nick.isEmpty()) {
                 writeNick.setPromptText("Fail");
                 nameAlreadyTaken.setText("Name cannot be empty");
+                nameAlreadyTaken.setVisible(true);
+            } else if (nickSplit.length > 1) {
+                writeNick.setPromptText("Fail");
+                nameAlreadyTaken.setText("Name cannot contain spaces");
+                nameAlreadyTaken.setVisible(true);
+            } else if (nick.length() > 19) {
+                writeNick.setPromptText("Fail");
+                nameAlreadyTaken.setText("Name must be shorter than 19 characters");
                 nameAlreadyTaken.setVisible(true);
             } else {
                 miniGameModel.setMyName(nick);
