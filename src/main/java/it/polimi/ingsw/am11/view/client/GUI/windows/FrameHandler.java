@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.view.client.GUI.window;
+package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
@@ -84,7 +84,7 @@ public class FrameHandler {
         closeButton.setOnMouseExited(event -> closeCross.setOpacity(0.5));
         closeButton.setOnMousePressed(event -> closeCross.setOpacity(1));
 
-        closeButton.setOnAction(event -> {Platform.exit();});
+        closeButton.setOnAction(event -> Platform.exit());
         root.getChildren().add(closeButton);
 
         //Minimize Button

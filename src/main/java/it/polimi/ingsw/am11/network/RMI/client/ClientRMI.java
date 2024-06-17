@@ -26,7 +26,9 @@ public class ClientRMI implements ClientNetworkHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientRMI.class);
 
+    private final @NotNull ClientGameUpdatesImpl clientObject;
     private final @NotNull ClientGameUpdatesInterface gameUpdatesInterface;
+    private final @NotNull ClientChatInterfaceImpl chatObject;
     private final @NotNull ClientChatInterface chatInterface;
     private final @NotNull ClientConnectorImpl clientConnectorImpl;
     private final @NotNull HeartbeatSender heartbeatSender;
@@ -41,12 +43,16 @@ public class ClientRMI implements ClientNetworkHandler {
         Registry registry = LocateRegistry.getRegistry(ip, port);
         LOGGER.debug("CLIENT RMI: Registry located {}", registry.toString());
         // Creating the client remote interface
-        ClientGameUpdatesImpl clientObject = new ClientGameUpdatesImpl(updater);
+        clientObject = new ClientGameUpdatesImpl(updater);
         gameUpdatesInterface = (ClientGameUpdatesInterface) UnicastRemoteObject.exportObject(
                 clientObject, 0);
-        ClientChatInterfaceImpl chatObject = new ClientChatInterfaceImpl(updater.getChatUpdater());
+        LOGGER.debug("CLIENT RMI: Client Game object exported: {}", gameUpdatesInterface);
+        chatObject = new ClientChatInterfaceImpl(updater.getChatUpdater());
         chatInterface = (ClientChatInterface) UnicastRemoteObject.exportObject(
                 chatObject, 0);
+        LOGGER.debug("CLIENT RMI: Client Chat object exported: {}", chatInterface);
+
+        LOGGER.debug("CLIENT RMI: Client object exported");
 
         chatConnectorImpl = new ClientChatConnectorImpl(registry);
         // Create the network connector

@@ -6,7 +6,6 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
-import it.polimi.ingsw.am11.view.client.GUI.window.FrameHandler;
 import it.polimi.ingsw.am11.view.client.GUI.windows.*;
 import it.polimi.ingsw.am11.view.client.TUI.TuiUpdater;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -261,7 +260,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void notifyGodPlayer() {
-
         showSetNumOfPlayersPage();
     }
 

@@ -79,6 +79,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
         LOGGER.debug("CLIENT RMI: Sending login request to server");
         future = commandExecutor.submit(() -> {
             try {
+                LOGGER.debug("CLIENT RMI: Looking up Loggable and logging in");
                 ((ServerLoggable) registry.lookup("Loggable"))
                         .login(nickname, remoteGameCommands, remoteChat);
                 main.setHeartbeatNickname(nickname);

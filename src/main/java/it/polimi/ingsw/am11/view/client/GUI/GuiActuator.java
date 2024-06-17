@@ -6,27 +6,27 @@ import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.ConnectionType;
 import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
 import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
-import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 
 public class GuiActuator {
 
+    private static ClientNetworkHandler connection;
     private final GuiUpdater guiUpdater;
     private ClientGameConnector connector;
     private ClientChatConnector chatConnector;
 
-    public GuiActuator(GuiUpdater guiUpdater) {
+    public GuiActuator(@NotNull GuiUpdater guiUpdater) {
         this.guiUpdater = guiUpdater;
         this.connector = null;
         this.chatConnector = null;
     }
 
     public void connect(@NotNull String type, String ip, int port) throws Exception {
-        ClientNetworkHandler connection = ConnectionType.fromString(type)
-                                                        .orElseThrow(() -> new RuntimeException(
-                                                                "Type is set neither to rmi nor " +
-                                                                "to socket"))
-                                                        .create(ip, port, guiUpdater);
+        connection = ConnectionType.fromString(type)
+                                   .orElseThrow(() -> new RuntimeException(
+                                           "Type is set neither to rmi nor " +
+                                           "to socket"))
+                                   .create(ip, port, guiUpdater);
         connector = connection.getGameConnector();
         chatConnector = connection.getChatConnector();
     }
