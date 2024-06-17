@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.GUI.window.FrameHandler;
 import it.polimi.ingsw.am11.view.client.GUI.windows.*;
+import it.polimi.ingsw.am11.view.client.TUI.TuiUpdater;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -19,6 +20,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -26,12 +29,14 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 public class CodexNaturalis extends Application implements GuiObserver {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
+    private final GuiActuator guiActuator;
+    private final GuiUpdater guiUpdater;
+
+
     private final GuiResources guiResources;
     private final CountDownLatch latch;
-    GuiActuator guiActuator;
     GuiExceptionReceiver guiExceptionReceiver;
-    GuiUpdater guiUpdater;
-    MiniGameModel miniGameModel;
     Stage primaryStage;
     Scene scene;
     Font font, fontBig;
@@ -49,26 +54,28 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     public CodexNaturalis() {
         this.guiResources = new GuiResources();
-        this.miniGameModel = new MiniGameModel();
-        this.guiExceptionReceiver = new GuiExceptionReceiver(this);
-        this.guiUpdater = new GuiUpdater(guiExceptionReceiver, miniGameModel, this);
-        this.guiActuator = new GuiActuator(guiUpdater, miniGameModel);
+        this.guiUpdater = new GuiUpdater(this);
+        this.guiActuator = new GuiActuator(guiUpdater);
         this.latch = new CountDownLatch(1);
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/it/polimi/ingsw/am11/view/client/GUI/window/GamePage.fxml"));
-        root1 = fxmlLoader.load();
+        try {
+            root1 = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         root1.setVisible(false);
 
-        initializeGUI();
+        try {
+            initializeGUI();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         frameHandler = new FrameHandler(guiResources, primaryStage, root);
         scene = new Scene(root, WindowSize, WindowSize, javafx.scene.paint.Color.BLACK);
         primaryStage.setScene(scene);
@@ -153,7 +160,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     }
 
     public MiniGameModel getMiniGameModel() {
-        return miniGameModel;
+        return guiUpdater.getMiniGameModel();
     }
 
     public void showNetworkPage() {
@@ -254,6 +261,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void notifyGodPlayer() {
+
         showSetNumOfPlayersPage();
     }
 

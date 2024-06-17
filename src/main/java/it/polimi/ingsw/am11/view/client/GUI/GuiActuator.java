@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.ConnectionType;
+import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
 import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
@@ -11,26 +12,28 @@ import org.jetbrains.annotations.NotNull;
 public class GuiActuator {
 
     private final GuiUpdater guiUpdater;
-    MiniGameModel miniGameModel;
-    private ClientGameConnector connector = null;
+    private ClientGameConnector connector;
+    private ClientChatConnector chatConnector;
 
-    public GuiActuator(GuiUpdater guiUpdater, MiniGameModel miniGameModel) {
+    public GuiActuator(GuiUpdater guiUpdater) {
         this.guiUpdater = guiUpdater;
-        this.miniGameModel = miniGameModel;
+        this.connector = null;
+        this.chatConnector = null;
     }
 
     public void connect(@NotNull String type, String ip, int port) throws Exception {
-        ClientNetworkHandler clientHandler =
-                ConnectionType.fromString(type)
-                              .orElseThrow(() -> new RuntimeException(
-                                      "Type is set neither to rmi nor to socket"))
-                              .create(ip, port, guiUpdater);
-        connector = clientHandler.getGameConnector();
+        ClientNetworkHandler connection = ConnectionType.fromString(type)
+                                                        .orElseThrow(() -> new RuntimeException(
+                                                                "Type is set neither to rmi nor " +
+                                                                "to socket"))
+                                                        .create(ip, port, guiUpdater);
+        connector = connection.getGameConnector();
+        chatConnector = connection.getChatConnector();
     }
 
     public void setName(String nick) {
         connector.setNickname(nick);
-        miniGameModel.setMyName(nick);
+        guiUpdater.setCandidateNick(nick);
     }
 
     public void setNumOfPlayers(int numOfPlayers) {

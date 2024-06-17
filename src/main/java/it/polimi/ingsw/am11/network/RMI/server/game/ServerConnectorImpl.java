@@ -90,19 +90,6 @@ public record ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConn
         });
     }
 
-    @Override
-    public void notifyGodPlayer() {
-        LOGGER.info("SERVER RMI: Notifying god player");
-        executorService.submit(() -> {
-            try {
-                remoteConnector.notifyGodPlayer();
-            } catch (NoSuchObjectException e) {
-                LOGGER.warn("SERVER RMI: Player disconnected or closed while notifying god player");
-            } catch (RemoteException e) {
-                LOGGER.error("SERVER RMI: Error while notifying god player", e);
-            }
-        });
-    }
 
     @Override
     public void sendReconnection(@NotNull ReconnectionModelMemento memento) {
@@ -226,6 +213,21 @@ public record ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConn
                         "leaderboard");
             } catch (RemoteException e) {
                 LOGGER.error("SERVER RMI: Error while sending final leaderboard", e);
+            }
+        });
+    }
+
+    @Override
+    public void notifyGodPlayer() {
+        LOGGER.info("SERVER RMI: Notifying god player");
+        executorService.submit(() -> {
+            try {
+                remoteConnector.notifyGodPlayer();
+            } catch (NoSuchObjectException e) {
+                LOGGER.warn("SERVER RMI: Player disconnected or closed while notifying god " +
+                            "player", e);
+            } catch (RemoteException e) {
+                LOGGER.error("SERVER RMI: Error while notifying god player", e);
             }
         });
     }

@@ -155,24 +155,24 @@ public class NetworkPage {
             int portNumber;
             try {
                 portNumber = Integer.parseInt(port.getCharacters().toString());
-                try {
-                    guiActuator.connect(connectionTypeText, ip, portNumber);
-                    chooseRMI.setVisible(false);
-                    chooseSocket.setVisible(false);
-                    theBox.setVisible(false);
-                    connectionFailed.setVisible(false);
-                    connectionType.setVisible(false);
-                    joinButton.setVisible(false);
-
-                    codexNaturalis.showSettingNickPage();
-
-                } catch (Exception e) {
-                    ipAddress.setText("Fail");
-                    connectionFailed.setVisible(true);
-                    e.printStackTrace();
-                }
             } catch (NumberFormatException e) {
                 port.setText("Fail");
+                connectionFailed.setVisible(true);
+                return;
+            }
+            try {
+                guiActuator.connect(connectionTypeText, ip, portNumber);
+                chooseRMI.setVisible(false);
+                chooseSocket.setVisible(false);
+                theBox.setVisible(false);
+                connectionFailed.setVisible(false);
+                connectionType.setVisible(false);
+                joinButton.setVisible(false);
+
+                codexNaturalis.showSettingNickPage();
+
+            } catch (Exception e) {
+                ipAddress.setText("Fail");
                 connectionFailed.setVisible(true);
             }
         });

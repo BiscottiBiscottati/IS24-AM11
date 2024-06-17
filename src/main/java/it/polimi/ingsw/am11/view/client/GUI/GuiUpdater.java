@@ -8,6 +8,8 @@ import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
+import it.polimi.ingsw.am11.view.client.TUI.TuiExceptionReceiver;
+import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -16,19 +18,24 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(GuiUpdater.class);
 
-    private final GuiExceptionReceiver exceptionReceiver;
+    private GuiExceptionReceiver exceptionReceiver;
     private final GuiObserver guiObserver;
     MiniGameModel miniGameModel;
+    private String candidateNick = "";
 
-    public GuiUpdater(GuiExceptionReceiver exceptionReceiver, MiniGameModel miniGameModel,
-                      GuiObserver guiObserver) {
-        this.exceptionReceiver = exceptionReceiver;
-        this.miniGameModel = miniGameModel;
+    public GuiUpdater(GuiObserver guiObserver) {
         this.guiObserver = guiObserver;
+        reset();
+    }
+
+    public void reset() {
+        this.miniGameModel = new MiniGameModel();
+        this.exceptionReceiver = new GuiExceptionReceiver(guiObserver);
     }
 
     @Override
@@ -175,5 +182,17 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
         //TODO confimation of the message sent
+    }
+
+    public MiniGameModel getMiniGameModel() {
+        return miniGameModel;
+    }
+
+    public String getCandidateNick() {
+        return candidateNick;
+    }
+
+    public void setCandidateNick(String candidateNick) {
+        this.candidateNick = candidateNick;
     }
 }
