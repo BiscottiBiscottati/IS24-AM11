@@ -26,7 +26,6 @@ public class SetNickPage {
     Button goToNetwork;
     int halfButtonSize, distanceToBorder;
 
-
     public SetNickPage(CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
     }

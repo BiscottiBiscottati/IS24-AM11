@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am11.view.client.GUI.utils;
 
+import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.windows.LoadingScreen;
 import javafx.scene.image.Image;
@@ -17,6 +19,41 @@ public class GuiResources {
 
     public GuiResources() {
         urlMap = new EnumMap<>(GuiResEnum.class);
+    }
+
+    public static ImageView getTopDeck(PlayableCardType type, Color color) {
+        String urlString = "";
+        String typeName;
+        String colorName;
+
+        if (type == PlayableCardType.GOLD) {
+            typeName = "gold";
+        } else {
+            typeName = "res";
+        }
+
+        if (color == Color.RED) {
+            colorName = "red";
+        } else if (color == Color.GREEN) {
+            colorName = "green";
+        } else if (color == Color.BLUE) {
+            colorName = "blue";
+        } else {
+            colorName = "purple";
+        }
+        try {
+            URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
+                                                       "/windows/cards/retro/" + colorName + "_" +
+                                                       typeName + ".png");
+            urlString = String.valueOf(url);
+            System.out.println(urlString);
+            Image image = new Image(urlString);
+            ImageView imageView = new ImageView(image);
+            return imageView;
+        } catch (Exception e) {
+            System.err.println("Error loading front card image at Url: " + urlString);
+            return null;
+        }
     }
 
     public ImageView getTheImageView(GuiResEnum res) {

@@ -103,13 +103,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
         waitingRoomPage.createWaitingRoomPage();
         setNumOfPlayersPage = new SetNumOfPlayersPage(this);
         setNumOfPlayersPage.createNumOfPlayersPage();
-        Parent root1 = root.getParent();
-        try {
-            gamePage = fxmlLoader.getController();
-            gamePage.createGamePage(this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        gamePage = fxmlLoader.getController();
 
     }
 
@@ -176,8 +170,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
-
-
+        System.out.println("Updating deck top in gui: " + type + " " + color);
+        gamePage.updateDeckTop(type, color);
     }
 
     @Override
@@ -228,6 +222,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
+        System.out.println("Updating personal objective in gui: " + cardId);
+        gamePage.updatePersonalObjective(cardId, removeMode);
 
     }
 
@@ -240,6 +236,11 @@ public class CodexNaturalis extends Application implements GuiObserver {
             System.out.println("Created StarterCardPage");
             hideWaitingRoomPage();
             setStarterCardsPage.showStarterCardsPage();
+            try {
+                gamePage.createGamePage(this);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
