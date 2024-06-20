@@ -24,6 +24,9 @@ public class Reader {
         this.actuator = new Actuator(tuiUpdater);
     }
 
+    /**
+     * Reads the input from the user and passes it to the current TUI state
+     */
     public void listen() {
         String string = input.nextLine().strip();
         tuiUpdater.getCurrentTuiState().passArgs(actuator, SPACE_SPLIT.split(string));

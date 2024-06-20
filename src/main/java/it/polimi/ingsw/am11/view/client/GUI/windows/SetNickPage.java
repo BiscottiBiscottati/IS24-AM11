@@ -107,6 +107,7 @@ public class SetNickPage {
 
         chooseNick.setOnMouseClicked(event -> {
             String nick = writeNick.getCharacters().toString().strip();
+            System.out.println(nick);
             String[] nickSplit = SPACE_SPLIT.split(nick);
             if (nick.isEmpty()) {
                 writeNick.setPromptText("Fail");

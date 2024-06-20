@@ -45,6 +45,11 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         currentState.get().restart(false, null);
     }
 
+    /**
+     * Reset the TuiUpdater to the initial state
+     *
+     * @param startingState the state to start from
+     */
     public void reset(TuiStates startingState) {
         this.model = new MiniGameModel();
         for (TuiStates state : TuiStates.values()) {
@@ -55,6 +60,12 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         this.homeState = new AtomicReference<>();
     }
 
+    /**
+     * Update the deck top card
+     *
+     * @param type  the type of the deck
+     * @param color the color of the card
+     */
     @Override
     public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
         LOGGER.debug("{} picked a card from the {} deck, the {} deck top card is now {}",
@@ -67,6 +78,17 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Update the field of the player, it can place or remove a card, if the removeMode is true the
+     * cardId and isRetro are ignored.
+     *
+     * @param nickname   the nickname of the player
+     * @param x          the x coordinate of the card
+     * @param y          the y coordinate of the card
+     * @param cardId     the id of the card
+     * @param isRetro    if the card is placed on it's retro
+     * @param removeMode if you want to remove a card,
+     */
     @Override
     public void updateField(@NotNull String nickname, int x, int y, int cardId,
                             boolean isRetro, boolean removeMode) {
@@ -87,6 +109,12 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     }
 
+    /**
+     * Update the visible cards on the table, it will remove the previousId and add the currentId
+     *
+     * @param previousId the id of the card to remove
+     * @param currentId  the id of the card to add
+     */
     @Override
     public void updateShownPlayable(Integer previousId, Integer currentId) {
         if (previousId != null) model.table().pickVisible(previousId);
@@ -98,6 +126,11 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Update the current turn of the game
+     *
+     * @param nickname the nickname of the player that has the turn
+     */
     @Override
     public void updateTurnChange(@NotNull String nickname) {
         model.setCurrentTurn(nickname);
@@ -114,6 +147,12 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Update the points of a player
+     *
+     * @param nickname the nickname of the player
+     * @param points   the points to add to the already present points
+     */
     @Override
     public void updatePlayerPoint(@NotNull String nickname, int points) {
         model.getCliPlayer(nickname).addPoints(points);
@@ -123,6 +162,12 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Update the status of the game, it is referred to the status of the model, not the state of
+     * the TUI
+     *
+     * @param status the new status of the game
+     */
     @Override
     public void updateGameStatus(@NotNull GameStatus status) {
         model.table().setStatus(status);
@@ -162,6 +207,12 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Update the common objectives of the table
+     *
+     * @param cardId     the id of the card to add or remove
+     * @param removeMode if you want to remove the card
+     */
     @Override
     public void updateCommonObjective(@NotNull Set<Integer> cardId, boolean removeMode) {
         if (removeMode) {
@@ -177,6 +228,11 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Set the final leaderboard of the game
+     *
+     * @param finalLeaderboard the final leaderboard
+     */
     @Override
     public void receiveFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard) {
         model.setFinalLeaderboard(finalLeaderboard);
@@ -185,6 +241,12 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         currentState.get().restart(false, null);
     }
 
+    /**
+     * Update the hand of the player
+     *
+     * @param cardId     the id of the card to add or remove
+     * @param removeMode if you want to remove the card
+     */
     @Override
     public void updateHand(int cardId, boolean removeMode) {
         LOGGER.debug("UpdateHand, cardId: {}, removeMode: {}", cardId, removeMode);
@@ -203,6 +265,12 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Update the personal objective of the player
+     *
+     * @param cardId     the id of the card to add or remove
+     * @param removeMode if you want to remove the card
+     */
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
         LOGGER.debug("UpPersObj, cardId: {}, removeMode: {}", cardId, removeMode);
@@ -216,12 +284,22 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Receive the starter card of the player
+     *
+     * @param cardId the id of the card
+     */
     @Override
     public void receiveStarterCard(int cardId) {
         model.addStarterCard(cardId);
         LOGGER.debug("Receive starter event, card id: {}", cardId);
     }
 
+    /**
+     * Receive the candidate objectives of the player
+     *
+     * @param cardId Set of card id
+     */
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
         model.getCliPlayer(model.myName()).getSpace().addCandidateObjectives(cardId);
@@ -229,6 +307,10 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
                 x -> LOGGER.debug("Receive candidate objective event, card id: {}", x));
     }
 
+    /**
+     * Notify the player that he is the god player, the god player is the moderator of the game. It
+     * will set the god player and confirm the player name in the model
+     */
     @Override
     public void notifyGodPlayer() {
         LOGGER.debug("EVENT: God player notification");
@@ -239,6 +321,11 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         currentState.get().restart(false, null);
     }
 
+    /**
+     * Update the model with the playing players and their colors. It also confirms the player name
+     *
+     * @param currentPlayers the map of the players and their colors
+     */
     @Override
     public void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers) {
         if (! currentPlayers.containsValue(candidateNick)) {
@@ -250,11 +337,19 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
                       .forEach(x -> model.addPlayer(currentPlayers.get(x), x));
     }
 
+    /**
+     * Update the number of players in the game
+     *
+     * @param numOfPlayers the number of players
+     */
     @Override
     public void updateNumOfPlayers(int numOfPlayers) {
 
     }
 
+    /**
+     * Notify the player that there has been a disconnection from the server
+     */
     @Override
     public void disconnectedFromServer(@NotNull String message) {
         LOGGER.error("Disconnected from server: {}", message);
@@ -264,11 +359,21 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     }
 
+    /**
+     * Notify the player that there has been a reconnection from the server and update the model to
+     * the current situation of the game
+     *
+     * @param memento data structure that contains the current state of the game
+     */
     @Override
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
+        LOGGER.debug("Reconnection event received");
         model.setMyName(candidateNick);
-        model.setStartingPlayer(memento.playerManager().firstPlayer());
-        model.setCurrentTurn(memento.playerManager().currentPlayer());
+        model.setStartingPlayer(memento.playerManager().firstPlayer() == null ? "" :
+                                memento.playerManager().firstPlayer());
+        model.setCurrentTurn(memento.playerManager().currentPlayer() == null ? "" :
+                             memento.playerManager().currentPlayer());
+
 
         //table
         for (PlayableCardType deckTop : memento.table().deckTops().keySet()) {
@@ -281,7 +386,6 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         for (Integer commonObj : memento.table().commonObjs()) {
             model.table().addCommonObjectives(commonObj);
         }
-
         //players manager
         for (PlayerMemento player : memento.playerManager().players()) {
             model.addPlayer(player.nickname(), player.color());
@@ -310,7 +414,6 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         model.table().setStatus(memento.plateau().status());
         memento.plateau().playerPoints().forEach(
                 (nickname, points) -> model.getCliPlayer(nickname).addPoints(points));
-
 
         //Set Tui
         switch (model.table().getStatus()) {
@@ -350,27 +453,56 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
             }
 
         }
+        LOGGER.debug("Reconnection completed");
 
     }
 
+    /**
+     * Get the ExceptionThrower of the TuiUpdater
+     *
+     * @return the ExceptionThrower
+     */
     @Override
     public @NotNull ExceptionThrower getExceptionThrower() {
         return exceptionReceiver;
     }
 
+    /**
+     * Get the ClientChatUpdater of the TuiUpdater
+     *
+     * @return the ClientChatUpdater
+     */
     @Override
     public @NotNull ClientChatUpdater getChatUpdater() {
         return this;
     }
 
+
+    /**
+     * Set the current state of the TuiUpdater
+     *
+     * @param state the state to set
+     */
     public void setTuiState(TuiStates state) {
         currentState.set(tuiStates.get(state));
     }
 
+    /**
+     * Check if the current state is the same as the state passed as argument
+     *
+     * @param state the state to check
+     * @return true if the current state is the same as the state passed as argument
+     */
     public boolean isCurrentState(TuiStates state) {
         return currentState.get() == tuiStates.get(state);
     }
 
+    /**
+     * Receive a message from the chat
+     *
+     * @param sender the nickname of the sender
+     * @param msg    the message
+     */
     @Override
     public void receiveMsg(@NotNull String sender, @NotNull String msg) {
         model.addChatMessage("[PUBLIC] " + sender + ": " + msg);
@@ -379,6 +511,12 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Receive a private message from the chat
+     *
+     * @param sender the nickname of the sender
+     * @param msg    the message
+     */
     @Override
     public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
         model.addChatMessage("[PRIVATE] " + sender + ": " + msg);
@@ -387,6 +525,12 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Confirm that the message has been sent
+     *
+     * @param sender the nickname of the sender, it should be the same as the player's nickname
+     * @param msg    the message
+     */
     @Override
     public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
         if (sender.equals(model.myName())) {
@@ -394,27 +538,60 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         }
     }
 
+    /**
+     * Get the candidateNick, the candidateNick is the nickname that the player try to send to the
+     * server
+     *
+     * @return the candidateNick
+     */
     public String getCandidateNick() {
         return candidateNick;
     }
 
+    /**
+     * Set the candidateNick to the nickname passed as argument, the candidateNick is the nickname
+     * that the player try to send to the server
+     *
+     * @param candidateNick the candidateNick to set
+     */
     public void setCandidateNick(String candidateNick) {
         this.candidateNick = candidateNick;
     }
 
+    /**
+     * Get the current TuiState
+     *
+     * @return the current TuiState
+     */
     public TUIState getCurrentTuiState() {
         return currentState.get();
     }
 
+    /**
+     * Get a specific instance of TUIState, the TUI states are all allocated during the reset of the
+     * TuiUpdater
+     *
+     * @param state the state to get
+     * @return
+     */
     public TUIState getState(TuiStates state) {
         return tuiStates.get(state);
     }
 
+    /**
+     * Go back to the home state, the home state is the state that is considered default for a
+     * specific phase of the game
+     */
     public void goBack() {
         currentState.set(homeState.get());
         currentState.get().restart(false, null);
     }
 
+    /**
+     * Set the home state
+     *
+     * @param state the state to set as home state
+     */
     public void setHomeState(TuiStates state) {
         homeState.set(tuiStates.get(state));
     }
