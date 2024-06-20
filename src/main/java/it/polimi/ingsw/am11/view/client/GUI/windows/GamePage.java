@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -132,19 +133,23 @@ public class GamePage {
 
     public void updateDeckTop(PlayableCardType type,
                               it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {
-
-        log.info("Deck top updated");
-        if (type == PlayableCardType.RESOURCE) {
-            resourceDeck = GuiResources.getTopDeck(type, color);
-        } else {
-            goldDeck = GuiResources.getTopDeck(type, color);
-        }
+        Platform.runLater(() -> {
+            log.info("Deck top updated");
+            if (type == PlayableCardType.RESOURCE) {
+                resourceDeck = GuiResources.getTopDeck(type, color);
+            } else {
+                goldDeck = GuiResources.getTopDeck(type, color);
+            }
+        });
 
     }
 
     public void updatePersonalObjective(int cardId, boolean removeMode) {
-        log.info("Personal objective updated");
-        personalObj = guiResources.getCardImage(cardId);
+        Platform.runLater(() -> {
+            log.info("Personal objective updated");
+            personalObj = guiResources.getCardImage(cardId);
+            personalObjLabel.setText("Personal objective updated");
+        });
 
 
     }
