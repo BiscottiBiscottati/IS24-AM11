@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -25,7 +26,7 @@ public class GamePage {
     private static final Logger log = LoggerFactory.getLogger(GamePage.class);
     GuiResources guiResources;
     CodexNaturalis codexNaturalis;
-
+    MiniGameModel miniGameModel;
     @FXML
     Label decksLabel;
     @FXML
@@ -74,12 +75,11 @@ public class GamePage {
     }
 
     public void createGamePage(CodexNaturalis codexNaturalis) throws IOException {
+        this.codexNaturalis = codexNaturalis;
+        this.miniGameModel = codexNaturalis.getMiniGameModel();
         Font font = codexNaturalis.getFont();
         guiResources = codexNaturalis.getGuiResources();
-
         GPBackground = guiResources.getTheImageView(GuiResEnum.GAME_BACKGROUND);
-
-
         List<Label> labels = List.of(decksLabel, visiblesLabel, handLabel, objLabel,
                                      personalObjLabel);
         for (Label label : labels) {
