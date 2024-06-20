@@ -8,17 +8,15 @@ import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
-import it.polimi.ingsw.am11.view.client.TUI.TuiExceptionReceiver;
-import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(GuiUpdater.class);
@@ -72,7 +70,11 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     @Override
     public void updateGameStatus(@NotNull GameStatus status) {
-        guiObserver.updateGameStatus(status);
+        try {
+            guiObserver.updateGameStatus(status);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         miniGameModel.table().setStatus(status);
     }
 

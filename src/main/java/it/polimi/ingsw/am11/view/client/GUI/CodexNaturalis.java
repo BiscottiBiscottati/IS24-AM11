@@ -61,15 +61,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        fxmlLoader = new FXMLLoader(getClass().getResource(
-                "/it/polimi/ingsw/am11/view/client/GUI/window/GamePage.fxml"));
-        try {
-            root1 = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        root1.setVisible(false);
-
         try {
             initializeGUI();
         } catch (IOException e) {
@@ -82,7 +73,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
         loadingScreen.animateLoadingScreen();
-
     }
 
     public void initializeGUI() throws IOException {
@@ -103,7 +93,16 @@ public class CodexNaturalis extends Application implements GuiObserver {
         waitingRoomPage.createWaitingRoomPage();
         setNumOfPlayersPage = new SetNumOfPlayersPage(this);
         setNumOfPlayersPage.createNumOfPlayersPage();
+        fxmlLoader = new FXMLLoader(getClass().getResource(
+                "/it/polimi/ingsw/am11/view/client/GUI/window/GamePage.fxml"));
+        try {
+            root1 = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        root1.setVisible(false);
         gamePage = fxmlLoader.getController();
+
 
     }
 
@@ -170,8 +169,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
-        System.out.println("Updating deck top in gui: " + type + " " + color);
-        gamePage.updateDeckTop(type, color);
     }
 
     @Override
@@ -196,8 +193,15 @@ public class CodexNaturalis extends Application implements GuiObserver {
     }
 
     @Override
-    public void updateGameStatus(GameStatus status) {
-
+    public void updateGameStatus(GameStatus status) throws IOException {
+        System.out.println("Updating game status in gui: " + status);
+        String statusString = status.toString();
+        if (statusString.equals("ONGOING")) {
+            System.out.println("Game is ongoing");
+            waitingRoomPage.hideWaitingRoomPage();
+            gamePage.createGamePage(this);
+            showGamePage();
+        }
     }
 
     @Override
@@ -222,9 +226,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
-        System.out.println("Updating personal objective in gui: " + cardId);
-        gamePage.updatePersonalObjective(cardId, removeMode);
-
     }
 
     @Override
@@ -236,11 +237,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
             System.out.println("Created StarterCardPage");
             hideWaitingRoomPage();
             setStarterCardsPage.showStarterCardsPage();
-            try {
-                gamePage.createGamePage(this);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         });
     }
 

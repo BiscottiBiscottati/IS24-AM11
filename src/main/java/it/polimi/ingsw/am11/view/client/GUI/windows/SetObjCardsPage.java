@@ -92,7 +92,7 @@ public class SetObjCardsPage {
             layout.setVisible(false);
             vbox.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.get(1));
-            codexNaturalis.showGamePage();
+            codexNaturalis.showWaitingRoomPage();
         });
 
 

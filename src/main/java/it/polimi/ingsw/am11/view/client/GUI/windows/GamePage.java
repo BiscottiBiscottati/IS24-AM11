@@ -24,6 +24,7 @@ public class GamePage {
 
     private static final Logger log = LoggerFactory.getLogger(GamePage.class);
     GuiResources guiResources;
+    CodexNaturalis codexNaturalis;
 
     @FXML
     Label decksLabel;
@@ -73,7 +74,6 @@ public class GamePage {
     }
 
     public void createGamePage(CodexNaturalis codexNaturalis) throws IOException {
-
         Font font = codexNaturalis.getFont();
         guiResources = codexNaturalis.getGuiResources();
 

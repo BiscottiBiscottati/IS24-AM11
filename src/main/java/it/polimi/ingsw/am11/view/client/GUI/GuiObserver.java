@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public interface GuiObserver {
 
     void updatePlayerPoint(String nickname, int points);
 
-    void updateGameStatus(GameStatus status);
+    void updateGameStatus(GameStatus status) throws IOException;
 
     void updateCommonObjective(Set<Integer> cardId, boolean removeMode);
 
