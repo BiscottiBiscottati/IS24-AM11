@@ -21,7 +21,7 @@ public class GuiResources {
         urlMap = new EnumMap<>(GuiResEnum.class);
     }
 
-    public static ImageView getTopDeck(PlayableCardType type, Color color) {
+    public static Image getTopDeck(PlayableCardType type, Color color) {
         String urlString = "";
         String typeName = "";
         String colorName = "";
@@ -47,8 +47,7 @@ public class GuiResources {
                                                        typeName + ".png");
             urlString = String.valueOf(url);
             System.out.println(urlString);
-            Image image = new Image(urlString);
-            return new ImageView(image);
+            return new Image(urlString);
         } catch (Exception e) {
             System.err.println("Error loading retro card image at Url: " + urlString);
             return null;
@@ -75,7 +74,7 @@ public class GuiResources {
         return String.valueOf(getTheUrl(name));
     }
 
-    public ImageView getCardImage(int cardId) {
+    public Image getCardImage(int cardId) {
         String urlString = "";
         try {
             URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
@@ -83,8 +82,7 @@ public class GuiResources {
             urlString = String.valueOf(url);
             System.out.println(urlString);
             Image image = new Image(urlString);
-            ImageView imageView = new ImageView(image);
-            return imageView;
+            return image;
         } catch (Exception e) {
             System.err.println("Error loading front card image at Url: " + urlString);
             return null;

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -142,25 +143,38 @@ public class GamePage {
             log.info("Deck top updated");
             it.polimi.ingsw.am11.model.cards.utils.enums.Color color1 =
                     miniGameModel.table().getDeckTop(PlayableCardType.RESOURCE);
-            resourceDeck = GuiResources.getTopDeck(PlayableCardType.RESOURCE, color1);
+            Image resourceDeckImage = GuiResources.getTopDeck(PlayableCardType.RESOURCE, color1);
+            if (resourceDeckImage != null) {
+                resourceDeck.setImage(resourceDeckImage);
+            }
             it.polimi.ingsw.am11.model.cards.utils.enums.Color color2 =
                     miniGameModel.table().getDeckTop(PlayableCardType.GOLD);
-            goldDeck = GuiResources.getTopDeck(PlayableCardType.GOLD, color2);
+            Image goldDeckImage = GuiResources.getTopDeck(PlayableCardType.GOLD, color2);
+            if (goldDeckImage != null) {
+                goldDeck.setImage(goldDeckImage);
+            }
+            resourceDeck.getParent().layout();
+            goldDeck.getParent().layout();
         });
-
     }
 
     public void updatePersonalObjective() {
         Platform.runLater(() -> {
             log.info("Personal objective updated");
-            Set<Integer> cardIdSet =
-                    miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().getPlayerObjective();
+            Set<Integer> cardIdSet = miniGameModel.getCliPlayer(
+                    miniGameModel.myName()).getSpace().getPlayerObjective();
             int cardId = cardIdSet.iterator().next();
             System.out.println("Card id: " + cardId);
-            personalObj = guiResources.getCardImage(cardId);
+
+            // Ottieni l'immagine della carta
+            Image personalObjImage = guiResources.getCardImage(cardId);
+
+            // Aggiorna l'immagine dell'ImageView esistente
+            if (personalObjImage != null) {
+                personalObj.setImage(personalObjImage);
+                personalObj.getParent().layout();
+            }
         });
-
-
     }
 }
 

@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
@@ -36,7 +37,7 @@ public class SetObjCardsPage {
     }
 
 
-    public void createStarterCardsPage(Set<Integer> cardId) {
+    public void createObjCardsPage(Set<Integer> cardId) {
         root = codexNaturalis.getRoot();
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
@@ -49,11 +50,15 @@ public class SetObjCardsPage {
         cardIdList = List.copyOf(cardId);
         vbox = new VBox(10);
         try {
-            cardImage1 = guiResources.getCardImage(cardIdList.getFirst());
+            Image obj1;
+            obj1 = guiResources.getCardImage(cardIdList.getFirst());
+            cardImage1.setImage(obj1);
             cardImage1.setFitHeight(75);
             cardImage1.setFitWidth(120);
 
-            cardImage2 = guiResources.getCardImage(cardIdList.get(1));
+            Image obj2;
+            obj2 = guiResources.getCardImage(cardIdList.getFirst());
+            cardImage1.setImage(obj2);
             cardImage2.setFitHeight(75);
             cardImage2.setFitWidth(120);
         } catch (Exception e) {

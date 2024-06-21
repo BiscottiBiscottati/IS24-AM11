@@ -195,8 +195,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateGameStatus(GameStatus status) {
-        if(status == GameStatus.ONGOING) {
-           // showGamePage();
+        if (status == GameStatus.ONGOING) {
+            // showGamePage();
         }
     }
 
@@ -250,7 +250,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     public void receiveCandidateObjective(Set<Integer> cardId) {
         Platform.runLater(() -> {
             SetObjCardsPage setObjCardsPage = new SetObjCardsPage(this);
-            setObjCardsPage.createStarterCardsPage(cardId);
+            setObjCardsPage.createObjCardsPage(cardId);
             hideWaitingRoomPage();
             setObjCardsPage.showObjCardsPage();
         });
