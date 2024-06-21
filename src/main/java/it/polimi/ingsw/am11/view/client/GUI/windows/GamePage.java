@@ -219,6 +219,7 @@ public class GamePage {
         Platform.runLater(() -> {
             log.info("Shown playable updated");
             Set<Integer> shownPlayable = miniGameModel.table().getShownCards();
+            System.out.println("Shown playable: " + shownPlayable);
             for (int cardId : shownPlayable) {
                 Image cardImage = guiResources.getCardImage(cardId);
                 if (cardImage != null) {
@@ -238,7 +239,8 @@ public class GamePage {
 
     public void placeStarterCard() {
         int cardId = miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().getStarterCard();
-        if (! miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().getStarterIsRetro()) {
+        boolean isRetro = miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().getStarterIsRetro();
+        if (!isRetro) {
             Image cardImage = guiResources.getCardImage(cardId);
             ImageView starterCard = new ImageView(cardImage);
             starterCard.setFitHeight(100);
@@ -250,8 +252,7 @@ public class GamePage {
 
 
             }
-        } else if (miniGameModel.getCliPlayer(
-                miniGameModel.myName()).getSpace().getStarterIsRetro()) {
+        } else if (isRetro) {
             ImageView starterRetro = guiResources.getCardImageRetro(cardId);
             starterRetro.setFitHeight(100);
             starterRetro.setFitWidth(150);

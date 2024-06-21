@@ -193,6 +193,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
         if (status == GameStatus.ONGOING) {
             gamePage.updateHand();
             gamePage.updateShownPlayable();
+            gamePage.placeStarterCard();
         }
     }
 
