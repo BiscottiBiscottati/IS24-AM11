@@ -13,10 +13,28 @@ public abstract class TUIState {
         this.model = model;
     }
 
+    /**
+     * This method is used to pass the read line to the TUI state
+     *
+     * @param actuator the actuator that will call the methods of the CltToNetConnector
+     * @param args     the arguments passed by the user
+     */
     public abstract void passArgs(Actuator actuator, String[] args);
 
+    /**
+     * This method is used to restart the TUI state
+     *
+     * @param dueToEx   if the restart is due to an exception
+     * @param exception the exception that caused the restart if present
+     */
     public abstract void restart(boolean dueToEx, @Nullable Exception exception);
 
+    /**
+     * This method is used to identify the specific state of an instance of a class extending
+     * TUIState.
+     *
+     * @return the specific TuiStates enum value representing the state of the instance.
+     */
     public abstract TuiStates getState();
 }
 

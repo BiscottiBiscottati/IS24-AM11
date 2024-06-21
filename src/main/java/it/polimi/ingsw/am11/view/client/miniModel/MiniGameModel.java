@@ -17,7 +17,7 @@ public class MiniGameModel {
     private String godPlayer;
     private String myName;
     private boolean iPlaced;
-    private String startingPlayer = "";
+    private String startingPlayer;
 
 
     public MiniGameModel() {
@@ -28,6 +28,7 @@ public class MiniGameModel {
         this.currentTurn = "";
         this.godPlayer = "";
         this.chatMessages = new ArrayList<>(8);
+        this.startingPlayer = "";
     }
 
     public CliPlayer getCliPlayer(String nickname) {

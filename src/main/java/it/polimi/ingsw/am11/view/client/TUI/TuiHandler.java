@@ -12,6 +12,11 @@ import java.io.IOException;
 
 public class TuiHandler {
 
+    /**
+     * Starts the TUI
+     *
+     * @throws IOException
+     */
     public void start() throws IOException {
         ConsUtils.clear();
 
@@ -55,6 +60,11 @@ public class TuiHandler {
 
     }
 
+    /**
+     * Prints a loading bar that lasts for the given duration
+     *
+     * @param durationInSeconds the duration of the loading bar in seconds
+     */
     public static void printLoadingBar(int durationInSeconds) {
         int totalSteps = 100; // number of steps in the loading bar
         int stepDuration =
