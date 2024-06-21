@@ -8,13 +8,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
+import org.jetbrains.annotations.NotNull;
 
 public class LoadingScreen {
+    public static final Duration FADE_TIME = Duration.millis(300);
+    public static final Duration ROTATION_TIME = Duration.millis(800);
     private final CodexNaturalis codexNaturalis;
-    ImageView lDBackground, lDSquare, lDWritings, lDDisks, wolf, butterfly, mushroom, leaf;
-    SequentialTransition sqT;
-    ParallelTransition prT;
-    int size;
+    private ImageView lDBackground, lDSquare, lDWritings, lDDisks, wolf, butterfly, mushroom, leaf;
+    private SequentialTransition sqT;
+    private ParallelTransition prT;
+    private int size;
 
     public LoadingScreen(CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
@@ -41,6 +44,7 @@ public class LoadingScreen {
     }
 
     public void animateLoadingScreen() {
+        // setup for loading screen
         int symbolSize = size / 8;
         lDBackground.setFitHeight(size);
         lDBackground.setPreserveRatio(true);
@@ -66,26 +70,15 @@ public class LoadingScreen {
         leaf.setPreserveRatio(true);
         leaf.setTranslateX(- 123.0 * size / 512.0);
         leaf.setTranslateY(- 121.0 * size / 512.0);
-        // Make the writings fade away
-        Duration FadeTime = Duration.millis(3000);
 
-        FadeTransition WritingsFt = new FadeTransition(FadeTime, lDWritings);
+        FadeTransition WritingsFt = new FadeTransition(FADE_TIME, lDWritings);
         WritingsFt.setToValue(0.0);
 
-        Duration RotationTime = Duration.millis(5000);
-
         Rotate lbSelfRotation = new Rotate();
-        lbSelfRotation.setPivotX(size / 2);
-        lbSelfRotation.setPivotY(size / 2);
+        lbSelfRotation.setPivotX((double) size / 2);
+        lbSelfRotation.setPivotY((double) size / 2);
 
-        Timeline lbRotationTl = new Timeline(new KeyFrame(Duration.ZERO,
-                                                          new KeyValue(
-                                                                  lbSelfRotation.angleProperty(),
-                                                                  0)),
-                                             new KeyFrame(RotationTime,
-                                                          new KeyValue(
-                                                                  lbSelfRotation.angleProperty(),
-                                                                  45)));
+        Timeline lbRotationTl = getTl(lbSelfRotation, 45);
         lDDisks.getTransforms().add(lbSelfRotation);
         lDSquare.getTransforms().add(lbSelfRotation);
 
@@ -93,14 +86,9 @@ public class LoadingScreen {
 
         Rotate rotate = new Rotate();
 
-        Timeline symbolsSelfRotate = new Timeline(new KeyFrame(Duration.ZERO,
-                                                               new KeyValue(rotate.angleProperty(),
-                                                                            0)),
-                                                  new KeyFrame(RotationTime,
-                                                               new KeyValue(rotate.angleProperty(),
-                                                                            - 45)));
+        Timeline symbolsSelfRotate = getTl(rotate, - 45);
 
-        // Make symbols rotate around stage center
+        // Make symbols rotate around a stage center
 
         Rotate wolfCenterRt = new Rotate();
         Rotate leafCenterRt = new Rotate();
@@ -124,32 +112,10 @@ public class LoadingScreen {
         butterfly.getTransforms().add(butterflyCenterRt);
 
 
-        Timeline leafTl = new Timeline(new KeyFrame(Duration.ZERO,
-                                                    new KeyValue(leafCenterRt.angleProperty(), 0)),
-                                       new KeyFrame(RotationTime,
-                                                    new KeyValue(leafCenterRt.angleProperty(),
-                                                                 45)));
-        Timeline mushroomTl = new Timeline(new KeyFrame(Duration.ZERO,
-                                                        new KeyValue(
-                                                                mushroomCenterRt.angleProperty(),
-                                                                0)),
-                                           new KeyFrame(RotationTime,
-                                                        new KeyValue(
-                                                                mushroomCenterRt.angleProperty(),
-                                                                45)));
-        Timeline butterflyTl = new Timeline(new KeyFrame(Duration.ZERO,
-                                                         new KeyValue(
-                                                                 butterflyCenterRt.angleProperty(),
-                                                                 0)),
-                                            new KeyFrame(RotationTime,
-                                                         new KeyValue(
-                                                                 butterflyCenterRt.angleProperty(),
-                                                                 45)));
-        Timeline wolfTl = new Timeline(new KeyFrame(Duration.ZERO,
-                                                    new KeyValue(wolfCenterRt.angleProperty(), 0)),
-                                       new KeyFrame(RotationTime,
-                                                    new KeyValue(wolfCenterRt.angleProperty(),
-                                                                 45)));
+        Timeline leafTl = getTl(leafCenterRt, 45);
+        Timeline mushroomTl = getTl(mushroomCenterRt, 45);
+        Timeline butterflyTl = getTl(butterflyCenterRt, 45);
+        Timeline wolfTl = getTl(wolfCenterRt, 45);
 
         mushroom.getTransforms().add(rotate);
         wolf.getTransforms().add(rotate);
@@ -188,6 +154,15 @@ public class LoadingScreen {
         });
 
 
+    }
+
+    private static @NotNull Timeline getTl(@NotNull Rotate leafCenterRt,
+                                           int x) {
+        return new Timeline(
+                new KeyFrame(Duration.ZERO,
+                             new KeyValue(leafCenterRt.angleProperty(), 0)),
+                new KeyFrame(LoadingScreen.ROTATION_TIME,
+                             new KeyValue(leafCenterRt.angleProperty(), x)));
     }
 
 }

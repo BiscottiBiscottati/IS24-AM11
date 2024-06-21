@@ -7,7 +7,6 @@ import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.GUI.windows.*;
-import it.polimi.ingsw.am11.view.client.TUI.TuiUpdater;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -25,16 +24,14 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 
 public class CodexNaturalis extends Application implements GuiObserver {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CodexNaturalis.class);
     private final GuiActuator guiActuator;
     private final GuiUpdater guiUpdater;
 
 
     private final GuiResources guiResources;
-    private final CountDownLatch latch;
     Stage primaryStage;
     Scene scene;
     Font font, fontBig;
@@ -54,7 +51,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
         this.guiResources = new GuiResources();
         this.guiUpdater = new GuiUpdater(this);
         this.guiActuator = new GuiActuator(guiUpdater);
-        this.latch = new CountDownLatch(1);
     }
 
     @Override
@@ -88,9 +84,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
         setFullScreen(false);
         font = Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
                              1.5 * halfButtonSize);
-        fontBig =
-                Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
-                              3 * halfButtonSize);
+        fontBig = Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
+                                3 * halfButtonSize);
         root = new StackPane();
         loadingScreen = new LoadingScreen(this);
         loadingScreen.createLoadingScreen();
