@@ -191,7 +191,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void updateGameStatus(GameStatus status) {
         if (status == GameStatus.ONGOING) {
-            // showGamePage();
+            gamePage.updateHand();
+            gamePage.updateShownPlayable();
         }
     }
 

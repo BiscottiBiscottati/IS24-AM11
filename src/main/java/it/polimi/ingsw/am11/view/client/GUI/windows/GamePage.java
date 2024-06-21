@@ -75,6 +75,14 @@ public class GamePage {
     ImageView handCard2;
     @FXML
     ImageView handCard3;
+    @FXML
+    ImageView goldVis1;
+    @FXML
+    ImageView goldVis2;
+    @FXML
+    ImageView resVis1;
+    @FXML
+    ImageView resVis2;
 
 
     public GamePage() throws IOException {
@@ -211,12 +219,14 @@ public class GamePage {
             for (int cardId : shownPlayable) {
                 Image cardImage = guiResources.getCardImage(cardId);
                 if (cardImage != null) {
-                    if (handCard1.getImage() == null) {
-                        handCard1.setImage(cardImage);
-                    } else if (handCard2.getImage() == null) {
-                        handCard2.setImage(cardImage);
-                    } else if (handCard3.getImage() == null) {
-                        handCard3.setImage(cardImage);
+                    if (goldVis1.getImage() == null) {
+                        goldVis1.setImage(cardImage);
+                    } else if (goldVis2.getImage() == null) {
+                        goldVis2.setImage(cardImage);
+                    } else if (resVis1.getImage() == null) {
+                        resVis1.setImage(cardImage);
+                    } else if (resVis2.getImage() == null) {
+                        resVis2.setImage(cardImage);
                     }
                 }
             }
