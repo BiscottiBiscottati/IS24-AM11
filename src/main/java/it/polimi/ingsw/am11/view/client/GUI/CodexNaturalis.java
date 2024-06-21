@@ -82,7 +82,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     public void initializeGUI() throws IOException {
         setFullScreen(false);
-        font = Font.font("Verdana", 20);
+        font = Font.font("Verdana", 15);
         fontBig = Font.font("Verdana", 30);
         root = new StackPane();
         loadingScreen = new LoadingScreen(this);
