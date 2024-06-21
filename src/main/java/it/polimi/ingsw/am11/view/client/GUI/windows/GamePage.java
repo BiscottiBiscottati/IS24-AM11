@@ -68,6 +68,12 @@ public class GamePage {
     ImageView resourceDeck;
     @FXML
     ImageView personalObj;
+    @FXML
+    ImageView handCard1;
+    @FXML
+    ImageView handCard2;
+    @FXML
+    ImageView handCard3;
 
 
     public GamePage() throws IOException {
@@ -164,15 +170,30 @@ public class GamePage {
             Set<Integer> cardIdSet = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getPlayerObjective();
             int cardId = cardIdSet.iterator().next();
-            System.out.println("Card id: " + cardId);
-
-            // Ottieni l'immagine della carta
             Image personalObjImage = guiResources.getCardImage(cardId);
-
-            // Aggiorna l'immagine dell'ImageView esistente
             if (personalObjImage != null) {
                 personalObj.setImage(personalObjImage);
                 personalObj.getParent().layout();
+            }
+        });
+    }
+
+    public void updateHand() {
+        Platform.runLater(() -> {
+            log.info("Hand updated");
+            Set<Integer> hand = miniGameModel.getCliPlayer(
+                    miniGameModel.myName()).getSpace().getPlayerHand();
+            for (int cardId : hand) {
+                Image cardImage = guiResources.getCardImage(cardId);
+                if (cardImage != null) {
+                    if (handCard1.getImage() == null) {
+                        handCard1.setImage(cardImage);
+                    } else if (handCard2.getImage() == null) {
+                        handCard2.setImage(cardImage);
+                    } else if (handCard3.getImage() == null) {
+                        handCard3.setImage(cardImage);
+                    }
+                }
             }
         });
     }
