@@ -4,6 +4,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -18,12 +19,15 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class GamePage {
 
     private static final Logger log = LoggerFactory.getLogger(GamePage.class);
     GuiResources guiResources;
+    MiniGameModel miniGameModel;
+    CodexNaturalis codexNaturalis;
 
     @FXML
     Label decksLabel;
@@ -74,6 +78,8 @@ public class GamePage {
 
     public void createGamePage(CodexNaturalis codexNaturalis) throws IOException {
 
+        this.codexNaturalis = codexNaturalis;
+        this.miniGameModel = codexNaturalis.getMiniGameModel();
         Font font = codexNaturalis.getFont();
         guiResources = codexNaturalis.getGuiResources();
 
@@ -131,24 +137,27 @@ public class GamePage {
     }
 
 
-    public void updateDeckTop(PlayableCardType type,
-                              it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {
+    public void updateDeckTop() {
         Platform.runLater(() -> {
             log.info("Deck top updated");
-            if (type == PlayableCardType.RESOURCE) {
-                resourceDeck = GuiResources.getTopDeck(type, color);
-            } else {
-                goldDeck = GuiResources.getTopDeck(type, color);
-            }
+            it.polimi.ingsw.am11.model.cards.utils.enums.Color color1 =
+                    miniGameModel.table().getDeckTop(PlayableCardType.RESOURCE);
+            resourceDeck = GuiResources.getTopDeck(PlayableCardType.RESOURCE, color1);
+            it.polimi.ingsw.am11.model.cards.utils.enums.Color color2 =
+                    miniGameModel.table().getDeckTop(PlayableCardType.GOLD);
+            goldDeck = GuiResources.getTopDeck(PlayableCardType.GOLD, color2);
         });
 
     }
 
-    public void updatePersonalObjective(int cardId, boolean removeMode) {
+    public void updatePersonalObjective() {
         Platform.runLater(() -> {
             log.info("Personal objective updated");
+            Set<Integer> cardIdSet =
+                    miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().getPlayerObjective();
+            int cardId = cardIdSet.iterator().next();
+            System.out.println("Card id: " + cardId);
             personalObj = guiResources.getCardImage(cardId);
-            personalObjLabel.setText("Personal objective updated");
         });
 
 

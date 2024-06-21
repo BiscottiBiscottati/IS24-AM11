@@ -23,12 +23,12 @@ public class GuiResources {
 
     public static ImageView getTopDeck(PlayableCardType type, Color color) {
         String urlString = "";
-        String typeName;
-        String colorName;
+        String typeName = "";
+        String colorName = "";
 
         if (type == PlayableCardType.GOLD) {
             typeName = "gold";
-        } else {
+        } else if (type == PlayableCardType.RESOURCE) {
             typeName = "res";
         }
 
@@ -38,7 +38,7 @@ public class GuiResources {
             colorName = "green";
         } else if (color == Color.BLUE) {
             colorName = "blue";
-        } else {
+        } else if (color == Color.PURPLE) {
             colorName = "purple";
         }
         try {

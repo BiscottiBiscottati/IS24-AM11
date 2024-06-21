@@ -35,7 +35,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     private final GuiResources guiResources;
     private final CountDownLatch latch;
-    GuiExceptionReceiver guiExceptionReceiver;
     Stage primaryStage;
     Scene scene;
     Font font, fontBig;
@@ -170,8 +169,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
-        System.out.println("Updating deck top in gui: " + type + " " + color);
-        gamePage.updateDeckTop(type, color);
+        gamePage.updateDeckTop();
     }
 
     @Override
@@ -197,7 +195,9 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateGameStatus(GameStatus status) {
-
+        if(status == GameStatus.ONGOING) {
+           // showGamePage();
+        }
     }
 
     @Override
@@ -222,9 +222,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
-        System.out.println("Updating personal objective in gui: " + cardId);
-        gamePage.updatePersonalObjective(cardId, removeMode);
-
+        gamePage.updatePersonalObjective();
     }
 
     @Override
@@ -254,9 +252,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
             SetObjCardsPage setObjCardsPage = new SetObjCardsPage(this);
             setObjCardsPage.createStarterCardsPage(cardId);
             hideWaitingRoomPage();
-            setObjCardsPage.showStarterCardsPage();
+            setObjCardsPage.showObjCardsPage();
         });
-
     }
 
     @Override
@@ -284,6 +281,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     }
 
     public void showGamePage() {
+        root.setVisible(false);
         primaryStage.setScene(
                 new Scene(root1, WindowSize, WindowSize, javafx.scene.paint.Color.BLACK));
         this.setFullScreen(true);

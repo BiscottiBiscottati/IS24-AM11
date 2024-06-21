@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -27,9 +28,11 @@ public class SetObjCardsPage {
     Font font;
     int halfButtonSize;
     List<Integer> cardIdList;
+    MiniGameModel miniGameModel;
 
     public SetObjCardsPage(CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
+        this.miniGameModel = codexNaturalis.getMiniGameModel();
     }
 
 
@@ -74,14 +77,19 @@ public class SetObjCardsPage {
         }
     }
 
-    public void showStarterCardsPage() {
+    public void showObjCardsPage() {
         message.setVisible(true);
         layout.setVisible(true);
         vbox.setVisible(true);
 
         cardImage1.setOnMouseClicked(event -> {
-            root.setVisible(false);
-            guiActuator.setPersonalObjective(cardIdList.get(0));
+            cardImage1.setVisible(false);
+            cardImage2.setVisible(false);
+            message.setVisible(false);
+            layout.setVisible(false);
+            vbox.setVisible(false);
+            guiActuator.setPersonalObjective(cardIdList.getFirst());
+            miniGameModel.addPersonalObjective(cardIdList.getFirst());
             codexNaturalis.showGamePage();
         });
 
@@ -92,6 +100,7 @@ public class SetObjCardsPage {
             layout.setVisible(false);
             vbox.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.get(1));
+            miniGameModel.addPersonalObjective(cardIdList.get(1));
             codexNaturalis.showGamePage();
         });
 
