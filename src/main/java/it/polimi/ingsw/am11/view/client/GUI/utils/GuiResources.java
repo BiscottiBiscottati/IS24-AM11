@@ -37,7 +37,7 @@ public class GuiResources {
         } else if (color == Color.GREEN) {
             colorName = "green";
         } else if (color == Color.BLUE) {
-            colorName = "blue";
+            colorName = "blu";
         } else if (color == Color.PURPLE) {
             colorName = "purple";
         }
@@ -81,8 +81,22 @@ public class GuiResources {
                                                        "/windows/cards/front/" + cardId + ".png");
             urlString = String.valueOf(url);
             System.out.println(urlString);
+            return new Image(urlString);
+        } catch (Exception e) {
+            System.err.println("Error loading front card image at Url: " + urlString);
+            return null;
+        }
+    }
+
+    public ImageView getImageView(int cardId) {
+        String urlString = "";
+        try {
+            URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
+                                                       "/windows/cards/front/" + cardId + ".png");
+            urlString = String.valueOf(url);
+            System.out.println(urlString);
             Image image = new Image(urlString);
-            return image;
+            return new ImageView(image);
         } catch (Exception e) {
             System.err.println("Error loading front card image at Url: " + urlString);
             return null;
@@ -105,4 +119,6 @@ public class GuiResources {
             return null;
         }
     }
+
+    
 }

@@ -5,7 +5,6 @@ import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
@@ -42,8 +41,7 @@ public class SetStarterCardsPage {
         message.setBackground(Background.EMPTY);
         vbox = new VBox(10);
         try {
-            Image starter = guiResources.getCardImage(cardId);
-            cardImage.setImage(starter);
+            cardImage = guiResources.getImageView(cardId);
             cardImage.setFitHeight(75);
             cardImage.setFitWidth(120);
 
