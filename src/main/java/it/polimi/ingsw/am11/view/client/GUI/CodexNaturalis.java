@@ -82,10 +82,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     public void initializeGUI() throws IOException {
         setFullScreen(false);
-        font = Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
-                             1.5 * halfButtonSize);
-        fontBig = Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
-                                3 * halfButtonSize);
+        font = Font.font("Verdana", 20);
+        fontBig = Font.font("Verdana", 30);
         root = new StackPane();
         loadingScreen = new LoadingScreen(this);
         loadingScreen.createLoadingScreen();
@@ -192,9 +190,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
     public void updateGameStatus(GameStatus status) {
         if (status == GameStatus.ONGOING) {
             Platform.runLater(this::showGamePage);
-            gamePage.updateHand();
-            gamePage.updateShownPlayable();
-            gamePage.placeStarterCard();
         }
     }
 
