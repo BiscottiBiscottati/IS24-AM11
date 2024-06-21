@@ -149,12 +149,14 @@ public class GamePage {
             log.info("Deck top updated");
             it.polimi.ingsw.am11.model.cards.utils.enums.Color color1 =
                     miniGameModel.table().getDeckTop(PlayableCardType.RESOURCE);
+            System.out.println(color1 + "_res");
             Image resourceDeckImage = GuiResources.getTopDeck(PlayableCardType.RESOURCE, color1);
             if (resourceDeckImage != null) {
                 resourceDeck.setImage(resourceDeckImage);
             }
             it.polimi.ingsw.am11.model.cards.utils.enums.Color color2 =
                     miniGameModel.table().getDeckTop(PlayableCardType.GOLD);
+            System.out.println(color2 + "_gold");
             Image goldDeckImage = GuiResources.getTopDeck(PlayableCardType.GOLD, color2);
             if (goldDeckImage != null) {
                 goldDeck.setImage(goldDeckImage);
@@ -170,7 +172,9 @@ public class GamePage {
             Set<Integer> cardIdSet = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getPlayerObjective();
             int cardId = cardIdSet.iterator().next();
+            System.out.println("Card id: " + cardId);
             Image personalObjImage = guiResources.getCardImage(cardId);
+
             if (personalObjImage != null) {
                 personalObj.setImage(personalObjImage);
                 personalObj.getParent().layout();
