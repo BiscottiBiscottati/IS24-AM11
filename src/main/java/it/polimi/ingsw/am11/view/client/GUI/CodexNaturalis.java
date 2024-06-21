@@ -200,6 +200,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
+        gamePage.updateCommonObj();
 
     }
 
