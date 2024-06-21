@@ -203,5 +203,24 @@ public class GamePage {
             }
         });
     }
+
+    public void updateShownPlayable() {
+        Platform.runLater(() -> {
+            log.info("Shown playable updated");
+            Set<Integer> shownPlayable = miniGameModel.table().getShownCards();
+            for (int cardId : shownPlayable) {
+                Image cardImage = guiResources.getCardImage(cardId);
+                if (cardImage != null) {
+                    if (handCard1.getImage() == null) {
+                        handCard1.setImage(cardImage);
+                    } else if (handCard2.getImage() == null) {
+                        handCard2.setImage(cardImage);
+                    } else if (handCard3.getImage() == null) {
+                        handCard3.setImage(cardImage);
+                    }
+                }
+            }
+        });
+    }
 }
 

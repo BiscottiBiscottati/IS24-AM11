@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -23,6 +24,7 @@ public class SetStarterCardsPage {
     VBox vbox;
     Font font;
     int halfButtonSize;
+    MiniGameModel miniGameModel;
 
     public SetStarterCardsPage(CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
@@ -30,6 +32,7 @@ public class SetStarterCardsPage {
 
 
     public void createStarterCardsPage(int cardId) {
+        this.miniGameModel = codexNaturalis.getMiniGameModel();
         root = codexNaturalis.getRoot();
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
@@ -81,6 +84,7 @@ public class SetStarterCardsPage {
             layout.setVisible(false);
             vbox.setVisible(false);
             guiActuator.setStarterCard(false);
+            miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().setStarterIsRetro(false);
             codexNaturalis.showWaitingRoomPage();
         });
 
@@ -91,6 +95,7 @@ public class SetStarterCardsPage {
             layout.setVisible(false);
             vbox.setVisible(false);
             guiActuator.setStarterCard(true);
+            miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().setStarterIsRetro(true);
             codexNaturalis.showWaitingRoomPage();
         });
 

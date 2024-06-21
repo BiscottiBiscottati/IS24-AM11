@@ -9,6 +9,7 @@ public class CliSpace {
     private final Set<Integer> playerObjective;
     private Set<Integer> candidateObjectives;
     private Integer starterCard;
+    private boolean starterIsRetro;
 
     public CliSpace() {
         this.playerHand = new HashSet();
@@ -46,7 +47,13 @@ public class CliSpace {
     public void addCandidateObjectives(Set<Integer> candidates) {
         candidateObjectives = candidates;
     }
+    public void setStarterIsRetro(boolean isRetro) {
+        starterIsRetro = isRetro;
+    }
 
+    public boolean getStarterIsRetro() {
+        return starterIsRetro;
+    }
 
     public void addPersonalObjective(int cardId) {
         playerObjective.add(cardId);
