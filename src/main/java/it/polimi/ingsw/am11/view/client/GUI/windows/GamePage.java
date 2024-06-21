@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,11 +80,11 @@ public class GamePage {
     public GamePage() throws IOException {
     }
 
-    public static void showGamePage(Parent root1) {
+    public static void showGamePage(@NotNull Parent root1) {
         root1.setVisible(true);
     }
 
-    public void createGamePage(CodexNaturalis codexNaturalis) throws IOException {
+    public void createGamePage(@NotNull CodexNaturalis codexNaturalis) throws IOException {
 
         this.codexNaturalis = codexNaturalis;
         this.miniGameModel = codexNaturalis.getMiniGameModel();
@@ -169,8 +170,9 @@ public class GamePage {
     public void updatePersonalObjective() {
         Platform.runLater(() -> {
             log.info("Personal objective updated");
-            Set<Integer> cardIdSet = miniGameModel.getCliPlayer(
-                    miniGameModel.myName()).getSpace().getPlayerObjective();
+            Set<Integer> cardIdSet =
+                    miniGameModel.getCliPlayer(
+                            miniGameModel.myName()).getSpace().getPlayerObjective();
             int cardId = cardIdSet.iterator().next();
             System.out.println("Card id: " + cardId);
             Image personalObjImage = guiResources.getCardImage(cardId);
