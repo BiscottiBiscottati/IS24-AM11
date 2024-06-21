@@ -263,5 +263,19 @@ public class GamePage {
             }
         }
     }
+
+    public void updateTurnChange() {
+        Platform.runLater(() -> {
+            log.info("Turn changed");
+            String currentTurn = miniGameModel.getCurrentTurn();
+            for (Label label : List.of(player1, player2, player3, player4)) {
+                if (label.getText().equals(currentTurn)) {
+                    label.setStyle("-fx-background-color: #D7BC49");
+                } else {
+                    label.setStyle("-fx-background-color: #351F17");
+                }
+            }
+        });
+    }
 }
 

@@ -175,12 +175,12 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateShownPlayable(Integer previousId, Integer currentId) {
-
+        gamePage.updateShownPlayable();
     }
 
     @Override
     public void updateTurnChange(String nickname) {
-
+        gamePage.updateTurnChange();
     }
 
     @Override
@@ -214,7 +214,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateHand(int cardId, boolean removeMode) {
-
+        gamePage.updateHand();
     }
 
     @Override
