@@ -61,7 +61,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         fxmlLoader = new FXMLLoader(getClass().getResource(
-                "/it/polimi/ingsw/am11/view/client/GUI/window/GamePage.fxml"));
+                "/it/polimi/ingsw/am11/view/client/GUI/windows/GamePage.fxml"));
         try {
             root1 = fxmlLoader.load();
         } catch (IOException e) {

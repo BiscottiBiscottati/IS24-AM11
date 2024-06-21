@@ -112,8 +112,7 @@ public class GuiResources {
             urlString = String.valueOf(url);
             System.out.println(urlString);
             Image image = new Image(urlString);
-            ImageView imageView = new ImageView(image);
-            return imageView;
+            return new ImageView(image);
         } catch (Exception e) {
             System.err.println("Error loading retro card image at Url: " + urlString);
             return null;
