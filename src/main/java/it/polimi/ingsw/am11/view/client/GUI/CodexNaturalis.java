@@ -191,14 +191,13 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void updateGameStatus(GameStatus status) {
         if (status == GameStatus.ONGOING) {
-            gamePage.updateHand();
-            gamePage.updateShownPlayable();
             gamePage.placeStarterCard();
         }
     }
 
     @Override
     public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
+        gamePage.updateCommonObj();
 
     }
 

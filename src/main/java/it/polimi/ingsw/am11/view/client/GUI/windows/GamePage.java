@@ -86,6 +86,10 @@ public class GamePage {
     ImageView resVis2;
     @FXML
     Pane cardField;
+    @FXML
+    ImageView commonObj1;
+    @FXML
+    ImageView commonObj2;
 
 
     public GamePage() throws IOException {
@@ -238,30 +242,33 @@ public class GamePage {
     }
 
     public void placeStarterCard() {
-        int cardId = miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().getStarterCard();
-        boolean isRetro = miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().getStarterIsRetro();
-        if (!isRetro) {
-            Image cardImage = guiResources.getCardImage(cardId);
-            ImageView starterCard = new ImageView(cardImage);
-            starterCard.setFitHeight(100);
-            starterCard.setFitWidth(150);
-            cardField.getChildren().add(starterCard);
-            if (cardImage != null) {
+        Platform.runLater(() -> {
+            log.info("Starter card placed");
+            int cardId = miniGameModel.getCliPlayer(
+                    miniGameModel.myName()).getSpace().getStarterCard();
+            boolean isRetro = miniGameModel.getCliPlayer(
+                    miniGameModel.myName()).getSpace().getStarterIsRetro();
+            if (! isRetro) {
+                Image cardImage = guiResources.getCardImage(cardId);
+                ImageView starterCard = new ImageView(cardImage);
+                starterCard.setFitHeight(100);
+                starterCard.setFitWidth(150);
+                double centerX = (cardField.getWidth() - starterCard.getFitWidth()) / 2;
+                double centerY = (cardField.getHeight() - starterCard.getFitHeight()) / 2;
+                starterCard.setLayoutX(centerX);
+                starterCard.setLayoutY(centerY);
                 cardField.getChildren().add(starterCard);
-                cardField.getParent().layout();
-
-
-            }
-        } else if (isRetro) {
-            ImageView starterRetro = guiResources.getCardImageRetro(cardId);
-            starterRetro.setFitHeight(100);
-            starterRetro.setFitWidth(150);
-            cardField.getChildren().add(starterRetro);
-            if (starterRetro != null) {
+            } else if (isRetro) {
+                ImageView starterRetro = guiResources.getCardImageRetro(cardId);
+                starterRetro.setFitHeight(100);
+                starterRetro.setFitWidth(150);
+                double centerX = (cardField.getWidth() - starterRetro.getFitWidth()) / 2;
+                double centerY = (cardField.getHeight() - starterRetro.getFitHeight()) / 2;
+                starterRetro.setLayoutX(centerX);
+                starterRetro.setLayoutY(centerY);
                 cardField.getChildren().add(starterRetro);
-                cardField.getParent().layout();
             }
-        }
+        });
     }
 
     public void updateTurnChange() {
@@ -271,10 +278,26 @@ public class GamePage {
             for (Label label : List.of(player1, player2, player3, player4)) {
                 if (label.getText().equals(currentTurn)) {
                     label.setStyle("-fx-background-color: #D7BC49");
-                } else {
-                    label.setStyle("-fx-background-color: #351F17");
                 }
             }
+        });
+    }
+
+    public void updateCommonObj() {
+        Platform.runLater(() -> {
+            log.info("Common objective updated");
+            Set<Integer> cardIdSet = miniGameModel.table().getCommonObjectives();
+            for (int cardId : cardIdSet) {
+                Image cardImage = guiResources.getCardImage(cardId);
+                if (cardImage != null) {
+                    if (commonObj1.getImage() == null) {
+                        commonObj1.setImage(cardImage);
+                    } else if (commonObj2.getImage() == null) {
+                        commonObj2.setImage(cardImage);
+                    }
+                }
+            }
+
         });
     }
 }
