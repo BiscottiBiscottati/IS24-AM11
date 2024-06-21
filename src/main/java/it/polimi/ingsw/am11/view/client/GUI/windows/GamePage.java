@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -83,6 +84,8 @@ public class GamePage {
     ImageView resVis1;
     @FXML
     ImageView resVis2;
+    @FXML
+    Pane cardField;
 
 
     public GamePage() throws IOException {
@@ -231,6 +234,33 @@ public class GamePage {
                 }
             }
         });
+    }
+
+    public void placeStarterCard() {
+        int cardId = miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().getStarterCard();
+        if (! miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().getStarterIsRetro()) {
+            Image cardImage = guiResources.getCardImage(cardId);
+            ImageView starterCard = new ImageView(cardImage);
+            starterCard.setFitHeight(100);
+            starterCard.setFitWidth(150);
+            cardField.getChildren().add(starterCard);
+            if (cardImage != null) {
+                cardField.getChildren().add(starterCard);
+                cardField.getParent().layout();
+
+
+            }
+        } else if (miniGameModel.getCliPlayer(
+                miniGameModel.myName()).getSpace().getStarterIsRetro()) {
+            ImageView starterRetro = guiResources.getCardImageRetro(cardId);
+            starterRetro.setFitHeight(100);
+            starterRetro.setFitWidth(150);
+            cardField.getChildren().add(starterRetro);
+            if (starterRetro != null) {
+                cardField.getChildren().add(starterRetro);
+                cardField.getParent().layout();
+            }
+        }
     }
 }
 
