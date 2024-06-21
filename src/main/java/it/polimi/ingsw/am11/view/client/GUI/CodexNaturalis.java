@@ -191,6 +191,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void updateGameStatus(GameStatus status) {
         if (status == GameStatus.ONGOING) {
+            Platform.runLater(this::showGamePage);
             gamePage.updateHand();
             gamePage.updateShownPlayable();
             gamePage.placeStarterCard();
@@ -279,9 +280,9 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     public void showGamePage() {
         root.setVisible(false);
+        GamePage.showGamePage(root1);
         primaryStage.setScene(
                 new Scene(root1, WindowSize, WindowSize, javafx.scene.paint.Color.BLACK));
         this.setFullScreen(true);
-        GamePage.showGamePage(root1);
     }
 }

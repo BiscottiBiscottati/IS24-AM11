@@ -90,7 +90,7 @@ public class SetObjCardsPage {
             vbox.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.getFirst());
             miniGameModel.addPersonalObjective(cardIdList.getFirst());
-            codexNaturalis.showGamePage();
+            codexNaturalis.showWaitingRoomPage();
         });
 
         cardImage2.setOnMouseClicked(event -> {
@@ -101,7 +101,7 @@ public class SetObjCardsPage {
             vbox.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.get(1));
             miniGameModel.addPersonalObjective(cardIdList.get(1));
-            codexNaturalis.showGamePage();
+            codexNaturalis.showWaitingRoomPage();
         });
 
 
