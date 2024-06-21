@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.view.client.GUI;
 
+import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
@@ -206,7 +207,10 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void throwException(Exception ex) {
-
+        if (ex instanceof NotSetNumOfPlayerException) {
+            hideWaitingRoomPage();
+            showSettingNickPage();
+        }
     }
 
     @Override

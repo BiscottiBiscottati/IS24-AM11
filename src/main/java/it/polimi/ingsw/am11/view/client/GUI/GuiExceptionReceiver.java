@@ -77,7 +77,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(NotSetNumOfPlayerException ex) {
         LOGGER.debug("NotSetNumOfPlayerException received: {}", ex.getMessage());
-
+        guiObserver.throwException(ex);
     }
 
     @Override
