@@ -74,7 +74,7 @@ public class ClientConnectorImpl implements ClientGameConnector {
             future.get();
         } catch (ExecutionException | InterruptedException ignored) {}
 
-        this.nickname.compareAndSet(null, nickname);
+        this.nickname.set(nickname);
 
         LOGGER.debug("CLIENT RMI: Sending login request to server");
         future = commandExecutor.submit(() -> {

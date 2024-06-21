@@ -259,6 +259,7 @@ public class WatchingField extends TUIState {
             if (playerList.contains(secondWord)) {
                 currentFieldShowed = secondWord;
                 refresh();
+                return;
             }
 
             switch (secondWord.toLowerCase()) {

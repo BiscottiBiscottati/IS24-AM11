@@ -59,12 +59,12 @@ public class ClientGameReceiver implements MessageReceiver {
                                     Color.valueOf(jsonNode.get("color").asText()));
                     break;
                 case "updateField":
-                    clientPlayerView.updateField(jsonNode.get("nickname").asText(), jsonNode.
-                                                         get("x").asInt(), jsonNode.get("y").
-                                                                                   asInt(),
-                                                 jsonNode.get("cardId").asInt(), false,
-                                                 jsonNode.
-                                                         get("removeMode").asBoolean());
+                    clientPlayerView.updateField(jsonNode.get("nickname").asText(),
+                                                 jsonNode.get("x").asInt(),
+                                                 jsonNode.get("y").asInt(),
+                                                 jsonNode.get("cardId").asInt(),
+                                                 jsonNode.get("isRetro").asBoolean(),
+                                                 jsonNode.get("removeMode").asBoolean());
                     break;
                 case "updateShownPlayable":
                     clientPlayerView.updateShownPlayable(jsonNode.get("previousId").asInt(),

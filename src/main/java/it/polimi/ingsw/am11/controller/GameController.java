@@ -56,6 +56,7 @@ public class GameController {
         boolean isGodSet = godPlayer.compareAndSet(null, nickname);
 
         if (! isGodSet && currentMaxPlayers == - 1) {
+            LOGGER.info("CONTROLLER: NotSetNumOfPlayerException thrown for {}", nickname);
             throw new NotSetNumOfPlayerException("NumOfPlayers not yet set by godPlayer");
         }
 

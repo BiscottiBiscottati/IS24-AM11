@@ -9,6 +9,8 @@ public class MatrixFiller {
     private MatrixFiller() {
     }
 
+
+    // Fill a matrix with null values
     public static <T> @NotNull List<List<T>> fillMatrixWithNull(int rows, int cols, Class<T> type) {
         List<List<T>> matrix = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {

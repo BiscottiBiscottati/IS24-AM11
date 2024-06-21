@@ -27,16 +27,14 @@ class FieldPrinterTest {
     @BeforeAll
     static void beforeAll() {
         field = new CliField();
-        field.place(new Position(0, 0), 100, false);
-//        field.place(new Position(- 1, - 1), 2, false);
-//        field.place(new Position(1, 1), 3, false);
-//        field.place(new Position(- 1, 1), 5, false);
-//        field.place(new Position(2, 2), 6, false);
+        field.place(new Position(0, 0), 97, true);
+        field.place(new Position(- 1, 1), 76, true);
+        field.place(new Position(0, 2), 20, false);
     }
 
     @Test
     void render() throws IllegalCardBuildException {
-        FieldPrinter.render(field, false);
+        FieldPrinter.render(field, true);
         CardPrinter.printCardFrontAndBack(100);
         System.out.println(100);
         CardPrinter.printCardFrontAndBack(2);
