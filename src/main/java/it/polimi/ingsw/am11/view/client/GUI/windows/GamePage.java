@@ -268,6 +268,27 @@ public class GamePage {
                 starterRetro.setFitWidth(150);
                 cardField.getChildren().add(starterRetro);
             }
+            ImageView place1 = new ImageView();
+            place1.setTranslateX(- 75);
+            place1.setTranslateY(- 50);
+            System.out.println(place1.getTranslateX() + " " + place1.getTranslateY());
+            ImageView place2 = new ImageView();
+            place2.setTranslateX(+ 75);
+            place2.setTranslateY(- 50);
+            ImageView place3 = new ImageView();
+            place3.setTranslateX(- 75);
+            place3.setTranslateY(+ 50);
+            ImageView place4 = new ImageView();
+            place4.setTranslateX(+ 75);
+            place4.setTranslateY(+ 50);
+            List<ImageView> places = List.of(place1, place2, place3, place4);
+            for (ImageView place : places) {
+                place.setFitHeight(100);
+                place.setFitWidth(150);
+                place.setStyle("-fx-background-color: black");
+                place.setImage(guiResources.getCardImage(1));
+                cardField.getChildren().add(place);
+            }
         });
     }
 
