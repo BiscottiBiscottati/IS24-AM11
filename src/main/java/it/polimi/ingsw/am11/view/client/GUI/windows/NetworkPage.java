@@ -13,21 +13,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class NetworkPage {
-    private final CodexNaturalis codexNaturalis;
-    TextField ipAddress, port;
-    Font font;
-    int halfButtonSize, distanceToBorder;
-    Label connectionType, connectionFailed;
-    Button chooseSocket, chooseRMI, joinButton;
-    GuiActuator guiActuator;
-    VBox theBox;
+    private static CodexNaturalis codexNaturalis;
+    private static TextField ipAddress, port;
+    private static Font font;
+    private static int halfButtonSize, distanceToBorder;
+    private static Label connectionType, connectionFailed;
+    private static Button chooseSocket, chooseRMI, joinButton;
+    private static GuiActuator guiActuator;
+    private static VBox theBox;
 
-    public NetworkPage(CodexNaturalis codexNaturalis) {
-        this.codexNaturalis = codexNaturalis;
-    }
+    public static void createNetworkPage(CodexNaturalis codexNaturalis) {
+        NetworkPage.codexNaturalis = codexNaturalis;
 
-    public void createNetworkPage() {
-        StackPane root = codexNaturalis.getRoot();
+        StackPane root = codexNaturalis.getRootSmall();
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
         guiActuator = codexNaturalis.getGuiActuator();
@@ -126,7 +124,7 @@ public class NetworkPage {
         theBox.setVisible(false);
     }
 
-    public void showNetworkPage() {
+    public static void showNetworkPage() {
 
         connectionType.setVisible(true);
         ipAddress.setVisible(true);

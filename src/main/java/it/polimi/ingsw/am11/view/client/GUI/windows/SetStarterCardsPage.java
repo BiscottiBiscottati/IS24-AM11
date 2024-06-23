@@ -33,7 +33,7 @@ public class SetStarterCardsPage {
 
     public void createStarterCardsPage(int cardId) {
         this.miniGameModel = codexNaturalis.getMiniGameModel();
-        root = codexNaturalis.getRoot();
+        root = codexNaturalis.getRootSmall();
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
         guiResources = codexNaturalis.getGuiResources();

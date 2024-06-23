@@ -11,21 +11,21 @@ import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
 public class LoadingScreen {
-    public static final Duration FADE_TIME = Duration.millis(300);
-    public static final Duration ROTATION_TIME = Duration.millis(800);
-    private final CodexNaturalis codexNaturalis;
-    private ImageView lDBackground, lDSquare, lDWritings, lDDisks, wolf, butterfly, mushroom, leaf;
-    private SequentialTransition sqT;
-    private ParallelTransition prT;
-    private int size;
+    private static final Duration FADE_TIME = Duration.millis(300);
+    private static final Duration ROTATION_TIME = Duration.millis(800);
+    private static ImageView lDBackground, lDSquare, lDWritings, lDDisks, wolf, butterfly, mushroom,
+            leaf;
+    private static SequentialTransition sqT;
+    private static ParallelTransition prT;
+    private static int size;
 
-    public LoadingScreen(CodexNaturalis codexNaturalis) {
-        this.codexNaturalis = codexNaturalis;
-    }
+    private static CodexNaturalis codexNaturalis;
 
-    public void createLoadingScreen() {
+    public static void createLoadingScreen(CodexNaturalis codexNaturalis) {
+        LoadingScreen.codexNaturalis = codexNaturalis;
+
         GuiResources guiResources = codexNaturalis.getGuiResources();
-        StackPane root = codexNaturalis.getRoot();
+        StackPane root = codexNaturalis.getRootSmall();
         size = codexNaturalis.getWindowSize();
 
         lDBackground = guiResources.getTheImageView(GuiResEnum.LGIN_BACKGROUND);
@@ -43,7 +43,7 @@ public class LoadingScreen {
                                   wolf, butterfly, mushroom, leaf);
     }
 
-    public void animateLoadingScreen() {
+    public static void animateLoadingScreen() {
         // setup for loading screen
         int symbolSize = size / 8;
         lDBackground.setFitHeight(size);

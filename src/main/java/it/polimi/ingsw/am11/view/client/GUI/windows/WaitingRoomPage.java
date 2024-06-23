@@ -8,18 +8,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
 public class WaitingRoomPage {
-    private final CodexNaturalis codexNaturalis;
-    ProgressIndicator loadingWheel;
-    StackPane root;
-    Font font;
-    Label waitingForPlayers;
+    private static CodexNaturalis codexNaturalis;
+    private static ProgressIndicator loadingWheel;
+    private static StackPane root;
+    private static Font font;
+    private static Label waitingForPlayers;
 
-    public WaitingRoomPage(CodexNaturalis codexNaturalis) {
-        this.codexNaturalis = codexNaturalis;
-    }
 
-    public void createWaitingRoomPage() {
-        root = codexNaturalis.getRoot();
+    public static void createWaitingRoomPage(CodexNaturalis codexNaturalis) {
+        WaitingRoomPage.codexNaturalis = codexNaturalis;
+
+        root = codexNaturalis.getRootSmall();
         font = codexNaturalis.getFont();
         waitingForPlayers = new Label("Waiting...");
         loadingWheel = new ProgressIndicator();
@@ -45,13 +44,13 @@ public class WaitingRoomPage {
         StackPane.setAlignment(waitingForPlayers, Pos.CENTER);
     }
 
-    public void showWaitingRoomPage() {
+    public static void showWaitingRoomPage() {
         waitingForPlayers.setVisible(true);
         loadingWheel.setVisible(true);
 
     }
 
-    public void hideWaitingRoomPage() {
+    public static void hideWaitingRoomPage() {
         waitingForPlayers.setVisible(false);
         loadingWheel.setVisible(false);
     }

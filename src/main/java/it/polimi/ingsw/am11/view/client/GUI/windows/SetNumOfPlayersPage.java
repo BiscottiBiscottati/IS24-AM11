@@ -12,25 +12,24 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class SetNumOfPlayersPage {
-    private final CodexNaturalis codexNaturalis;
-    GuiActuator guiActuator;
-    Label numOfPlayers, invalidNumOfPlayers;
-    Font font;
-    int halfButtonSize, distanceToBorder;
-    TextField writeNumOfPlayers;
-    Button enterNumOfPlayers;
-    StackPane root;
+    private static CodexNaturalis codexNaturalis;
+    private static GuiActuator guiActuator;
+    private static Label numOfPlayers, invalidNumOfPlayers;
+    private static Font font;
+    private static int halfButtonSize, distanceToBorder;
+    private static TextField writeNumOfPlayers;
+    private static Button enterNumOfPlayers;
+    private static StackPane root;
 
-    public SetNumOfPlayersPage(CodexNaturalis codexNaturalis) {
-        this.codexNaturalis = codexNaturalis;
-    }
 
-    public void createNumOfPlayersPage() {
+    public static void createNumOfPlayersPage(CodexNaturalis codexNaturalis) {
+        SetNumOfPlayersPage.codexNaturalis = codexNaturalis;
+        
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
         guiActuator = codexNaturalis.getGuiActuator();
         distanceToBorder = codexNaturalis.getDistanceToBorder();
-        root = codexNaturalis.getRoot();
+        root = codexNaturalis.getRootSmall();
 
         numOfPlayers = new Label("Number of players:");
         numOfPlayers.setBackground(Background.EMPTY);
@@ -73,7 +72,7 @@ public class SetNumOfPlayersPage {
                                   enterNumOfPlayers);
     }
 
-    public void showSetNumOfPlayersPage() {
+    public static void showSetNumOfPlayersPage() {
         codexNaturalis.hideWaitingRoomPage();
         numOfPlayers.setVisible(true);
         writeNumOfPlayers.setVisible(true);

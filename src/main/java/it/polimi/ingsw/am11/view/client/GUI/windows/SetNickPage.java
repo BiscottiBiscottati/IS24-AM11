@@ -16,23 +16,21 @@ import java.util.regex.Pattern;
 
 public class SetNickPage {
     private static final Pattern SPACE_SPLIT = Pattern.compile("\\s+");
-    private final CodexNaturalis codexNaturalis;
-    MiniGameModel miniGameModel;
-    GuiActuator guiActuator;
-    TextField writeNick;
-    Label yourName, nameAlreadyTaken;
-    Font font, fontBig;
-    Button chooseNick;
-    Button goToNetwork;
-    int halfButtonSize, distanceToBorder;
+    private static CodexNaturalis codexNaturalis;
+    private static MiniGameModel miniGameModel;
+    private static GuiActuator guiActuator;
+    private static TextField writeNick;
+    private static Label yourName, nameAlreadyTaken;
+    private static Font font, fontBig;
+    private static Button chooseNick;
+    private static Button goToNetwork;
+    private static int halfButtonSize, distanceToBorder;
 
-    public SetNickPage(CodexNaturalis codexNaturalis) {
-        this.codexNaturalis = codexNaturalis;
-    }
+    public static void createSettingNickPage(CodexNaturalis codexNaturalis) {
+        SetNickPage.codexNaturalis = codexNaturalis;
 
-    public void createSettingNickPage() {
         guiActuator = codexNaturalis.getGuiActuator();
-        StackPane root = codexNaturalis.getRoot();
+        StackPane root = codexNaturalis.getRootSmall();
         miniGameModel = codexNaturalis.getMiniGameModel();
         font = codexNaturalis.getFont();
         fontBig = codexNaturalis.getFontBig();
@@ -97,7 +95,7 @@ public class SetNickPage {
         goToNetwork.setVisible(false);
     }
 
-    public void showSettingNickPage() {
+    public static void showSettingNickPage() {
 
         yourName.setVisible(true);
         writeNick.setVisible(true);

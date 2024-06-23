@@ -37,7 +37,9 @@ public class SetObjCardsPage {
 
 
     public void createObjCardsPage(Set<Integer> cardId) {
-        root = codexNaturalis.getRoot();
+
+
+        root = codexNaturalis.getRootSmall();
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
         guiResources = codexNaturalis.getGuiResources();
