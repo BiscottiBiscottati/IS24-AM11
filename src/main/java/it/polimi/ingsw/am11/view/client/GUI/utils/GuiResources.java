@@ -122,10 +122,13 @@ public class GuiResources {
 
     public Image getRetro(PlayableCardType typeName, Color colorName) {
         String urlString = "";
+        System.out.println("typeName: " + typeName);
+        System.out.println("colorName: " + colorName);
         try {
             URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
                                                        "/windows/cards/retro/" + colorName + "_" +
                                                        typeName + ".png");
+            System.out.println(url);
             urlString = String.valueOf(url);
             System.out.println(urlString);
             return new Image(urlString);

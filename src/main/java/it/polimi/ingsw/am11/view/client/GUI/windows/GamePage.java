@@ -2,7 +2,6 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
@@ -220,6 +219,7 @@ public class GamePage {
                         if (handCard.getImage() == null) {
                             handCard.setImage(cardImage);
                             handCard.getParent().layout();
+                            break;
                         }
                     }
                 }
