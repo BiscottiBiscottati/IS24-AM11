@@ -5,17 +5,22 @@ import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import it.polimi.ingsw.am11.view.client.TUI.TuiExceptionReceiver;
+import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GuiExceptionReceiver implements ExceptionThrower {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiExceptionReceiver.class);
-    final GuiObserver guiObserver;
 
-    public GuiExceptionReceiver(GuiObserver guiObserver) {
+    private final MiniGameModel model;
+    private final GuiObserver guiObserver;
+
+    public GuiExceptionReceiver(MiniGameModel model, GuiObserver guiObserver) {
         this.guiObserver = guiObserver;
+        this.model = model;
     }
 
+    //TODO everything
     @Override
     public void throwException(IllegalPlayerSpaceActionException ex) {
         LOGGER.debug("IllegalPlayerSpaceActionException {}", ex.getMessage());
@@ -24,7 +29,6 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(TurnsOrderException ex) {
         LOGGER.debug("TurnsOrderException {}", ex.getMessage());
-
     }
 
     @Override
