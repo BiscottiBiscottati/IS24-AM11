@@ -26,7 +26,7 @@
                                 <Font size="24.0" />
                             </font>
                         </Label>
-                        <ImageView fx:id="colorPl4" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="colorPl1" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                 </VBox>
                 <VBox alignment="CENTER" maxHeight="60.0" maxWidth="110.0" minHeight="180.0" minWidth="250.0" prefHeight="60.0" prefWidth="110.0">
@@ -41,7 +41,7 @@
                                 <Font size="24.0" />
                             </font>
                         </Label>
-                        <ImageView fx:id="colorPl1" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="colorPl2" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                 </VBox>
                 <VBox alignment="CENTER" maxHeight="60.0" maxWidth="110.0" minHeight="180.0" minWidth="250.0" prefHeight="60.0" prefWidth="110.0">
@@ -56,7 +56,7 @@
                                 <Font size="24.0" />
                             </font>
                         </Label>
-                        <ImageView fx:id="colorPl2" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="colorPl3" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                 </VBox>
                 <VBox alignment="CENTER" maxHeight="60.0" maxWidth="110.0" minHeight="180.0" minWidth="250.0" prefHeight="60.0" prefWidth="110.0">
@@ -71,7 +71,7 @@
                                 <Font size="24.0" />
                             </font>
                         </Label>
-                        <ImageView fx:id="colorPl3" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="colorPl4" fitHeight="90.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                 </VBox>
             </children>

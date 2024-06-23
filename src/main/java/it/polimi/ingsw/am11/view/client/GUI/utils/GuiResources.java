@@ -104,6 +104,7 @@ public class GuiResources {
     }
 
     public ImageView getCardImageRetro(int cardId) {
+        System.out.println("CardId: " + cardId);
         String urlString = "";
         try {
             URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
@@ -113,6 +114,21 @@ public class GuiResources {
             System.out.println(urlString);
             Image image = new Image(urlString);
             return new ImageView(image);
+        } catch (Exception e) {
+            System.err.println("Error loading retro card image at Url: " + urlString);
+            return null;
+        }
+    }
+
+    public Image getRetro(PlayableCardType typeName, Color colorName) {
+        String urlString = "";
+        try {
+            URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
+                                                       "/windows/cards/retro/" + colorName + "_" +
+                                                       typeName + ".png");
+            urlString = String.valueOf(url);
+            System.out.println(urlString);
+            return new Image(urlString);
         } catch (Exception e) {
             System.err.println("Error loading retro card image at Url: " + urlString);
             return null;

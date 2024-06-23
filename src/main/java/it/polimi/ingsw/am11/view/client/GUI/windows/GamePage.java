@@ -1,12 +1,14 @@
 package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import it.polimi.ingsw.am11.view.client.miniModel.Utils.CardInfo;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -83,13 +85,13 @@ public class GamePage {
     @FXML
     ImageView handCard3;
     @FXML
-    ImageView goldVis1;
+    ImageView vis1;
     @FXML
-    ImageView goldVis2;
+    ImageView vis2;
     @FXML
-    ImageView resVis1;
+    ImageView vis3;
     @FXML
-    ImageView resVis2;
+    ImageView vis4;
     @FXML
     StackPane cardField;
     @FXML
@@ -167,7 +169,8 @@ public class GamePage {
     }
 
 
-    public void updateDeckTop(PlayableCardType type, it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {
+    public void updateDeckTop(PlayableCardType type,
+                              it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {
         Platform.runLater(() -> {
             if (type == PlayableCardType.RESOURCE) {
                 Image resourceDeckImage = GuiResources.getTopDeck(PlayableCardType.RESOURCE, color);
@@ -226,22 +229,20 @@ public class GamePage {
 
     public void updateShownPlayable() {
         Platform.runLater(() -> {
-            goldVis1.setImage(null);
-            goldVis2.setImage(null);
-            resVis1.setImage(null);
-            resVis2.setImage(null);
-            Set<Integer> shownPlayable = miniGameModel.table().getShownCards();
+            List<ImageView> shownCards = List.of(vis1, vis2, vis3, vis4);
+            for (ImageView shownCard : shownCards) {
+                shownCard.setImage(null);
+            }
+            shownPlayable = miniGameModel.table().getShownCards();
             for (int cardId : shownPlayable) {
                 Image cardImage = guiResources.getCardImage(cardId);
                 if (cardImage != null) {
-                    if (goldVis1.getImage() == null) {
-                        goldVis1.setImage(cardImage);
-                    } else if (goldVis2.getImage() == null) {
-                        goldVis2.setImage(cardImage);
-                    } else if (resVis1.getImage() == null) {
-                        resVis1.setImage(cardImage);
-                    } else if (resVis2.getImage() == null) {
-                        resVis2.setImage(cardImage);
+                    for (ImageView shownCard : shownCards) {
+                        if (shownCard.getImage() == null) {
+                            shownCard.setImage(cardImage);
+                            shownCard.getParent().layout();
+                            break;
+                        }
                     }
                 }
             }
@@ -341,8 +342,11 @@ public class GamePage {
 
     public void card1Selected(MouseEvent mouseEvent) {
         System.out.println("Card 1 selected");
+        int id = miniGameModel.getCliPlayer(
+                miniGameModel.myName()).getSpace().getPlayerHand().stream().findFirst().orElse(
+                0);
         handCard1.setOnMouseClicked(event -> {
-            int id = hand.stream().findFirst().orElse(0);
+            System.out.println("Card id: " + id);
             boolean isRetro = handCard1.getImage().getUrl().contains(
                     "retro"); // Verifica se è già retro
 
@@ -352,7 +356,14 @@ public class GamePage {
                 cardImage = guiResources.getCardImage(id);
             } else {
                 // Mostra il retro altrimenti
-                cardImage = guiResources.getCardImageRetro(id).getImage();
+                try {
+                    PlayableCardType type = CardInfo.getPlayableCardType(id);
+                    it.polimi.ingsw.am11.model.cards.utils.enums.Color color =
+                            CardInfo.getPlayabelCardColor(id);
+                    cardImage = guiResources.getRetro(type, color);
+                } catch (IllegalCardBuildException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             handCard1.setImage(cardImage);
@@ -363,7 +374,7 @@ public class GamePage {
             double x = event.getX();
             double y = event.getY();
             boolean isRetro = handCard1.getImage().getUrl().contains("retro");
-            guiActuator.placeCard((int) x, (int) y, 0, isRetro);
+            guiActuator.placeCard((int) x, (int) y, id, isRetro);
         });
     }
 
