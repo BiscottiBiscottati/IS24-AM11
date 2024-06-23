@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.view.client.GUI;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
@@ -38,28 +39,30 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     @Override
     public void updateDeckTop(@NotNull PlayableCardType type, Color color) {
-        guiObserver.updateDeckTop(type, color);
         miniGameModel.table().refreshDeckTop(type, color);
+        guiObserver.updateDeckTop(type, color);
     }
 
     @Override
     public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro,
                             boolean removeMode) {
+        Position p = new Position(x, y);
+        miniGameModel.place(nickname, p, cardId, isRetro);
         guiObserver.updateField(nickname, x, y, cardId, isRetro, removeMode);
 
     }
 
     @Override
     public void updateShownPlayable(Integer previousId, Integer currentId) {
-        guiObserver.updateShownPlayable(previousId, currentId);
         miniGameModel.table().pickVisible(previousId);
         miniGameModel.table().addVisible(currentId);
+        guiObserver.updateShownPlayable(previousId, currentId);
     }
 
     @Override
     public void updateTurnChange(@NotNull String nickname) {
-        guiObserver.updateTurnChange(nickname);
         miniGameModel.setCurrentTurn(nickname);
+        guiObserver.updateTurnChange(nickname);
     }
 
     @Override
@@ -120,7 +123,6 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     @Override
     public void receiveStarterCard(int cardId) {
-        LOGGER.debug("Received starter card: {}", cardId);
         miniGameModel.addStarterCard(cardId);
         guiObserver.receiveStarterCard(cardId);
     }

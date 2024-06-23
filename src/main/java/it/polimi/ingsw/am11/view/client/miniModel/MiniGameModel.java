@@ -126,7 +126,6 @@ public class MiniGameModel {
         playerMap.get(nickname).getField().remove(pos);
     }
 
-
     public boolean getiPlaced() {
         return iPlaced;
     }
