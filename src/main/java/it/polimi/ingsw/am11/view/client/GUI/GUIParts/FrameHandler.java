@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.view.client.GUI.windows;
+package it.polimi.ingsw.am11.view.client.GUI.GUIParts;
 
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
@@ -15,20 +15,13 @@ import javafx.stage.Stage;
 import java.awt.*;
 
 public class FrameHandler {
-    private final GuiResources guiResources;
-    private final Stage stage;
 
-    private final StackPane root;
 
-    public FrameHandler(GuiResources guiResources, Stage stage, StackPane root) {
-        this.guiResources = guiResources;
-        this.stage = stage;
-        this.root = root;
+    //This class is responsible for setting the frame of the application, the frame is the top
+    // bar of the application, and the icons of the application.
 
-        setIcons();
-    }
+    public static void setIcons(GuiResources guiResources, Stage stage, StackPane root) {
 
-    private void setIcons() {
         //Proportions
         int size = (int) (Math.min(Screen.getPrimary().getBounds().getHeight(),
                                    Screen.getPrimary().getBounds().getWidth()) * 0.7);
@@ -55,7 +48,7 @@ public class FrameHandler {
         // Creating title bar buttons
 
         // Draggable Area
-        javafx.scene.shape.Rectangle draggableRect = new Rectangle(size, halfButtonSize << 2);
+        Rectangle draggableRect = new Rectangle(size, halfButtonSize << 2);
         draggableRect.setFill(Color.TRANSPARENT);
         draggableRect.setTranslateY(- size / 2 + halfButtonSize);
         draggableRect.setOnMousePressed(pressEvent -> {
@@ -74,7 +67,7 @@ public class FrameHandler {
         closeCross.setPreserveRatio(true);
         closeCross.setOpacity(0.5);
 
-        javafx.scene.control.Button closeButton = new javafx.scene.control.Button("_Cancel");
+        Button closeButton = new Button("_Cancel");
         closeButton.setPrefSize(2 * halfButtonSize, 2 * halfButtonSize);
         closeButton.setGraphic(closeCross);
         closeButton.setTranslateX(size / 2 - halfButtonSize);
@@ -94,11 +87,11 @@ public class FrameHandler {
         minimizeBar.setPreserveRatio(true);
         minimizeBar.setOpacity(0.5);
 
-        javafx.scene.control.Button minimizeButton = new Button("_Cancel");
+        Button minimizeButton = new Button("_Cancel");
         minimizeButton.setPrefSize(2 * halfButtonSize, 2 * halfButtonSize);
         minimizeButton.setGraphic(minimizeBar);
-        minimizeButton.setTranslateX(size / 2 - 3 * halfButtonSize - 4 * distanceToBorder);
-        minimizeButton.setTranslateY(- size / 2 + halfButtonSize + 2 * distanceToBorder);
+        minimizeButton.setTranslateX((double) size / 2 - 3 * halfButtonSize - 4 * distanceToBorder);
+        minimizeButton.setTranslateY((double) - size / 2 + halfButtonSize + 2 * distanceToBorder);
         minimizeButton.setBackground(Background.EMPTY);
         minimizeButton.setOnMouseEntered(event -> minimizeBar.setOpacity(0.7));
         minimizeButton.setOnMouseExited(event -> minimizeBar.setOpacity(0.5));

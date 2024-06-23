@@ -236,6 +236,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard) {
         model.setFinalLeaderboard(finalLeaderboard);
+        LOGGER.debug("Final leaderboard received");
         setTuiState(TuiStates.ENDED);
         homeState.set(tuiStates.get(TuiStates.ENDED));
         currentState.get().restart(false, null);
@@ -302,7 +303,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      */
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
-        model.getCliPlayer(model.myName()).getSpace().addCandidateObjectives(cardId);
+        model.addCandidateObjectives(cardId);
         cardId.forEach(
                 x -> LOGGER.debug("Receive candidate objective event, card id: {}", x));
     }
@@ -354,8 +355,8 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     public void disconnectedFromServer(@NotNull String message) {
         LOGGER.error("Disconnected from server: {}", message);
         reset(TuiStates.CONNECTING);
-        //FIXME
-        currentState.get().restart(false, null);
+        Exception e = new Exception("Disconnected from server: " + message);
+        currentState.get().restart(false, e);
 
     }
 
@@ -572,7 +573,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      * TuiUpdater
      *
      * @param state the state to get
-     * @return
+     * @return the instance of the state
      */
     public TUIState getState(TuiStates state) {
         return tuiStates.get(state);

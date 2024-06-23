@@ -37,10 +37,8 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 
-// FIXME playable cards doesn't show symbols on their corners
 public class CardPrinter {
 
-    // FIXME we should use a dedicated class for decoding is better for understanding
     private static final Deck<GoldCard> goldDeck = GoldDeckFactory.createDeck();
     private static final Deck<StarterCard> starterDeck = StarterDeckFactory.createDeck();
     private static final Deck<ResourceCard> resDeck = ResourceDeckFactory.createDeck();

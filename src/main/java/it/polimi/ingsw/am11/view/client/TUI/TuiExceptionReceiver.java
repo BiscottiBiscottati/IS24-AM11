@@ -194,7 +194,6 @@ public class TuiExceptionReceiver implements ExceptionThrower {
             tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
             tuiUpdater.setHomeState(TuiStates.SETTING_NAME);
             tuiUpdater.getCurrentTuiState().restart(true, ex);
-            return;
         }
     }
 
@@ -202,7 +201,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * Handles the IllegalPlateauActionException, thrown when the player tries to perform an action
      * that is not allowed on the plateau
      *
-     * @param ex
+     * @param ex the exception thrown
      */
     @Override
     public void throwException(IllegalPlateauActionException ex) {
@@ -214,7 +213,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * Handles the MaxHandSizeException, thrown when the player tries to draw a card when his hand
      * is full
      *
-     * @param ex
+     * @param ex the exception thrown
      */
     @Override
     public void throwException(MaxHandSizeException ex) {

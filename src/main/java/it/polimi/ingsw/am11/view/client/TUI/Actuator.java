@@ -86,6 +86,7 @@ public class Actuator {
         if (! tuiUpdater.getCandidateNick().isEmpty()) {
             throw new TooManyRequestsException("You already sent a nickname, wait for results");
         }
+
         tuiUpdater.setCandidateNick(nick);
         connector.setNickname(nick);
     }
@@ -170,7 +171,7 @@ public class Actuator {
     /**
      * Send a message to the chat
      *
-     * @param message
+     * @param message the message
      */
     public void sendChatMessage(String message) {
         chatConnector.pubMsg(message);
@@ -179,8 +180,8 @@ public class Actuator {
     /**
      * Send a private message to a player
      *
-     * @param recipient
-     * @param message
+     * @param recipient the recipient
+     * @param message   the message
      */
     public void sendPrivateMessage(String recipient, String message) {
         chatConnector.pubPrivateMsg(recipient, message);
