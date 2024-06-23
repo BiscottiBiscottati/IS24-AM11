@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
+import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -14,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -33,6 +33,9 @@ public class GamePage {
     GuiResources guiResources;
     MiniGameModel miniGameModel;
     CodexNaturalis codexNaturalis;
+    GuiActuator guiActuator;
+    Set<Integer> shownPlayable;
+    Set<Integer> hand;
 
     @FXML
     Label decksLabel;
@@ -79,15 +82,15 @@ public class GamePage {
     @FXML
     ImageView handCard3;
     @FXML
-    ImageView goldVis1;
+    ImageView vis1;
     @FXML
-    ImageView goldVis2;
+    ImageView vis2;
     @FXML
-    ImageView resVis1;
+    ImageView vis3;
     @FXML
-    ImageView resVis2;
+    ImageView vis4;
     @FXML
-    Pane cardField;
+    StackPane cardField;
     @FXML
     ImageView commonObj1;
     @FXML
@@ -107,6 +110,7 @@ public class GamePage {
         this.miniGameModel = codexNaturalis.getMiniGameModel();
         Font font = codexNaturalis.getFont();
         guiResources = codexNaturalis.getGuiResources();
+        guiActuator = codexNaturalis.getGuiActuator();
 
         GPBackground = guiResources.getTheImageView(GuiResEnum.GAME_BACKGROUND);
 
@@ -204,17 +208,18 @@ public class GamePage {
     public void updateHand() {
         Platform.runLater(() -> {
             log.info("Hand updated");
-            Set<Integer> hand = miniGameModel.getCliPlayer(
+            List<ImageView> handCards = List.of(handCard1, handCard2, handCard3);
+            hand = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getPlayerHand();
             for (int cardId : hand) {
                 Image cardImage = guiResources.getCardImage(cardId);
                 if (cardImage != null) {
-                    if (handCard1.getImage() == null) {
-                        handCard1.setImage(cardImage);
-                    } else if (handCard2.getImage() == null) {
-                        handCard2.setImage(cardImage);
-                    } else if (handCard3.getImage() == null) {
-                        handCard3.setImage(cardImage);
+                    for (ImageView handCard : handCards) {
+                        if (handCard.getImage() == null) {
+                            handCard.setImage(cardImage);
+                            handCard.getParent().layout();
+                            break;
+                        }
                     }
                 }
             }
@@ -224,20 +229,19 @@ public class GamePage {
     public void updateShownPlayable() {
         Platform.runLater(() -> {
             log.info("Shown playable updated");
+            List<ImageView> visibles = List.of(vis1, vis2, vis3, vis4);
 
-            Set<Integer> shownPlayable = miniGameModel.table().getShownCards();
+            shownPlayable = miniGameModel.table().getShownCards();
             System.out.println("Shown playable: " + shownPlayable);
             for (int cardId : shownPlayable) {
                 Image cardImage = guiResources.getCardImage(cardId);
                 if (cardImage != null) {
-                    if (goldVis1.getImage() == null) {
-                        goldVis1.setImage(cardImage);
-                    } else if (goldVis2.getImage() == null) {
-                        goldVis2.setImage(cardImage);
-                    } else if (resVis1.getImage() == null) {
-                        resVis1.setImage(cardImage);
-                    } else if (resVis2.getImage() == null) {
-                        resVis2.setImage(cardImage);
+                    for (ImageView visible : visibles) {
+                        if (visible.getImage() == null) {
+                            visible.setImage(cardImage);
+                            visible.getParent().layout();
+                            break;
+                        }
                     }
                 }
             }
@@ -309,24 +313,59 @@ public class GamePage {
     }
 
     public void pickFromGoldDeck(MouseEvent mouseEvent) {
+        guiActuator.drawCard(false, PlayableCardType.GOLD, 0);
     }
 
     public void pickFromResDeck(MouseEvent mouseEvent) {
+        guiActuator.drawCard(false, PlayableCardType.RESOURCE, 0);
     }
 
     public void chooseVis1(MouseEvent mouseEvent) {
+        guiActuator.drawCard(true, PlayableCardType.GOLD,
+                             shownPlayable.stream().findFirst().orElse(0));
     }
 
     public void chooseVis3(MouseEvent mouseEvent) {
+        guiActuator.drawCard(true, PlayableCardType.GOLD,
+                             shownPlayable.stream().skip(2).findFirst().orElse(0));
     }
 
     public void chooseVis2(MouseEvent mouseEvent) {
+        guiActuator.drawCard(true, PlayableCardType.GOLD,
+                             shownPlayable.stream().skip(1).findFirst().orElse(0));
     }
 
     public void chooseVis4(MouseEvent mouseEvent) {
+        guiActuator.drawCard(true, PlayableCardType.GOLD,
+                             shownPlayable.stream().skip(3).findFirst().orElse(0));
     }
 
     public void card1Selected(MouseEvent mouseEvent) {
+        System.out.println("Card 1 selected");
+        handCard1.setOnMouseClicked(event -> {
+            int id = hand.stream().findFirst().orElse(0);
+            boolean isRetro = handCard1.getImage().getUrl().contains(
+                    "retro"); // Verifica se è già retro
+
+            Image cardImage;
+            if (isRetro) {
+                // Mostra il fronte se è già retro
+                cardImage = guiResources.getCardImage(id);
+            } else {
+                // Mostra il retro altrimenti
+                cardImage = guiResources.getCardImageRetro(id).getImage();
+            }
+
+            handCard1.setImage(cardImage);
+            handCard1.getParent().layout();
+        });
+
+        cardField.setOnMouseClicked(event -> {
+            double x = event.getX();
+            double y = event.getY();
+            boolean isRetro = handCard1.getImage().getUrl().contains("retro");
+            guiActuator.placeCard((int) x, (int) y, 0, isRetro);
+        });
     }
 
     public void card2Selected(MouseEvent mouseEvent) {
