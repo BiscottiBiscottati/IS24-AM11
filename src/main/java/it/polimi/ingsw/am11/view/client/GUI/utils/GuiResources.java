@@ -124,10 +124,34 @@ public class GuiResources {
         String urlString = "";
         System.out.println("typeName: " + typeName);
         System.out.println("colorName: " + colorName);
+        String type = "";
+        String color = "";
+
+        if (typeName == PlayableCardType.GOLD) {
+            System.out.println("typeName: gold");
+            type = "gold";
+        } else if (typeName == PlayableCardType.RESOURCE) {
+            System.out.println("typeName: res");
+            type = "res";
+        }
+
+        if (colorName == it.polimi.ingsw.am11.model.cards.utils.enums.Color.BLUE) {
+            System.out.println("colorName: blue");
+            color = "blu";
+        } else if (colorName == it.polimi.ingsw.am11.model.cards.utils.enums.Color.GREEN) {
+            System.out.println("colorName: green");
+            color = "green";
+        } else if (colorName == it.polimi.ingsw.am11.model.cards.utils.enums.Color.PURPLE) {
+            System.out.println("colorName: purple");
+            color = "purple";
+        } else if (colorName == it.polimi.ingsw.am11.model.cards.utils.enums.Color.RED) {
+            System.out.println("colorName: red");
+            color = "red";
+        }
         try {
             URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
-                                                       "/windows/cards/retro/" + colorName + "_" +
-                                                       typeName + ".png");
+                                                       "/windows/cards/retro/" + color + "_" +
+                                                       type + ".png");
             System.out.println(url);
             urlString = String.valueOf(url);
             System.out.println(urlString);

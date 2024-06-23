@@ -255,19 +255,18 @@ public class GamePage {
                     miniGameModel.myName()).getSpace().getStarterCard();
             boolean isRetro = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getStarterIsRetro();
+            guiActuator.setStarterCard(isRetro);
             if (! isRetro) {
                 Image cardImage = guiResources.getCardImage(cardId);
                 ImageView starterCard = new ImageView(cardImage);
                 starterCard.setFitHeight(100);
                 starterCard.setFitWidth(150);
                 cardField.getChildren().add(starterCard);
-                guiActuator.placeCard(0, 0, cardId, isRetro);
             } else if (isRetro) {
                 ImageView starterRetro = guiResources.getCardImageRetro(cardId);
                 starterRetro.setFitHeight(100);
                 starterRetro.setFitWidth(150);
                 cardField.getChildren().add(starterRetro);
-                guiActuator.placeCard(0, 0, cardId, isRetro);
             }
         });
     }
@@ -373,15 +372,90 @@ public class GamePage {
         cardField.setOnMouseClicked(event -> {
             double x = event.getX();
             double y = event.getY();
+            double centreX = cardField.getWidth() / 2;
+            double centreY = cardField.getHeight() / 2;
+            System.out.println(x + " " + y);
             boolean isRetro = handCard1.getImage().getUrl().contains("retro");
-            guiActuator.placeCard((int) x, (int) y, id, isRetro);
+
         });
     }
 
     public void card2Selected(MouseEvent mouseEvent) {
+        System.out.println("Card 2 selected");
+        int id = miniGameModel.getCliPlayer(
+                miniGameModel.myName()).getSpace().getPlayerHand().stream().skip(
+                1).findFirst().orElse(
+                0);
+        handCard2.setOnMouseClicked(event -> {
+            System.out.println("Card id: " + id);
+            boolean isRetro = handCard2.getImage().getUrl().contains(
+                    "retro"); // Verifica se è già retro
+
+            Image cardImage;
+            if (isRetro) {
+                // Mostra il fronte se è già retro
+                cardImage = guiResources.getCardImage(id);
+            } else {
+                // Mostra il retro altrimenti
+                try {
+                    PlayableCardType type = CardInfo.getPlayableCardType(id);
+                    it.polimi.ingsw.am11.model.cards.utils.enums.Color color =
+                            CardInfo.getPlayabelCardColor(id);
+                    cardImage = guiResources.getRetro(type, color);
+                } catch (IllegalCardBuildException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            handCard2.setImage(cardImage);
+            handCard2.getParent().layout();
+        });
+
+        cardField.setOnMouseClicked(event -> {
+            double x = event.getX();
+            double y = event.getY();
+            boolean isRetro = handCard2.getImage().getUrl().contains("retro");
+            guiActuator.placeCard((int) x, (int) y, id, isRetro);
+        });
     }
 
     public void card3Selected(MouseEvent mouseEvent) {
+        System.out.println("Card 3 selected");
+        int id = miniGameModel.getCliPlayer(
+                miniGameModel.myName()).getSpace().getPlayerHand().stream().skip(
+                2).findFirst().orElse(
+                0);
+        handCard3.setOnMouseClicked(event -> {
+            System.out.println("Card id: " + id);
+            boolean isRetro = handCard3.getImage().getUrl().contains(
+                    "retro"); // Verifica se è già retro
+
+            Image cardImage;
+            if (isRetro) {
+                // Mostra il fronte se è già retro
+                cardImage = guiResources.getCardImage(id);
+            } else {
+                // Mostra il retro altrimenti
+                try {
+                    PlayableCardType type = CardInfo.getPlayableCardType(id);
+                    it.polimi.ingsw.am11.model.cards.utils.enums.Color color =
+                            CardInfo.getPlayabelCardColor(id);
+                    cardImage = guiResources.getRetro(type, color);
+                } catch (IllegalCardBuildException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            handCard3.setImage(cardImage);
+            handCard3.getParent().layout();
+        });
+
+        cardField.setOnMouseClicked(event -> {
+            double x = event.getX();
+            double y = event.getY();
+            boolean isRetro = handCard3.getImage().getUrl().contains("retro");
+            guiActuator.placeCard((int) x, (int) y, id, isRetro);
+        });
     }
 
     public void openChatBox(ActionEvent actionEvent) {
