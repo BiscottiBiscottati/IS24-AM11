@@ -204,7 +204,9 @@ public class GamePage {
 
     public void updateHand() {
         Platform.runLater(() -> {
-            log.info("Hand updated");
+            handCard1.setImage(null);
+            handCard2.setImage(null);
+            handCard3.setImage(null);
             List<ImageView> handCards = List.of(handCard1, handCard2, handCard3);
             hand = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getPlayerHand();
@@ -215,7 +217,6 @@ public class GamePage {
                         if (handCard.getImage() == null) {
                             handCard.setImage(cardImage);
                             handCard.getParent().layout();
-                            break;
                         }
                     }
                 }
@@ -249,7 +250,6 @@ public class GamePage {
 
     public void placeStarterCard() {
         Platform.runLater(() -> {
-            Position pos = new Position(0, 0);
             int cardId = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getStarterCard();
             boolean isRetro = miniGameModel.getCliPlayer(
@@ -260,13 +260,13 @@ public class GamePage {
                 starterCard.setFitHeight(100);
                 starterCard.setFitWidth(150);
                 cardField.getChildren().add(starterCard);
-                miniGameModel.place(miniGameModel.myName(), pos, cardId, isRetro);
+                guiActuator.placeCard(0, 0, cardId, isRetro);
             } else if (isRetro) {
                 ImageView starterRetro = guiResources.getCardImageRetro(cardId);
                 starterRetro.setFitHeight(100);
                 starterRetro.setFitWidth(150);
                 cardField.getChildren().add(starterRetro);
-                miniGameModel.place(miniGameModel.myName(), pos, cardId, isRetro);
+                guiActuator.placeCard(0, 0, cardId, isRetro);
             }
         });
     }
