@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
@@ -82,13 +83,13 @@ public class GamePage {
     @FXML
     ImageView handCard3;
     @FXML
-    ImageView vis1;
+    ImageView goldVis1;
     @FXML
-    ImageView vis2;
+    ImageView goldVis2;
     @FXML
-    ImageView vis3;
+    ImageView resVis1;
     @FXML
-    ImageView vis4;
+    ImageView resVis2;
     @FXML
     StackPane cardField;
     @FXML
@@ -166,22 +167,18 @@ public class GamePage {
     }
 
 
-    public void updateDeckTop() {
+    public void updateDeckTop(PlayableCardType type, it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {
         Platform.runLater(() -> {
-            log.info("Deck top updated");
-            it.polimi.ingsw.am11.model.cards.utils.enums.Color color1 =
-                    miniGameModel.table().getDeckTop(PlayableCardType.RESOURCE);
-            System.out.println(color1 + "_res");
-            Image resourceDeckImage = GuiResources.getTopDeck(PlayableCardType.RESOURCE, color1);
-            if (resourceDeckImage != null) {
-                resourceDeck.setImage(resourceDeckImage);
-            }
-            it.polimi.ingsw.am11.model.cards.utils.enums.Color color2 =
-                    miniGameModel.table().getDeckTop(PlayableCardType.GOLD);
-            System.out.println(color2 + "_gold");
-            Image goldDeckImage = GuiResources.getTopDeck(PlayableCardType.GOLD, color2);
-            if (goldDeckImage != null) {
-                goldDeck.setImage(goldDeckImage);
+            if (type == PlayableCardType.RESOURCE) {
+                Image resourceDeckImage = GuiResources.getTopDeck(PlayableCardType.RESOURCE, color);
+                if (resourceDeckImage != null) {
+                    resourceDeck.setImage(resourceDeckImage);
+                }
+            } else if (type == PlayableCardType.GOLD) {
+                Image goldDeckImage = GuiResources.getTopDeck(PlayableCardType.GOLD, color);
+                if (goldDeckImage != null) {
+                    goldDeck.setImage(goldDeckImage);
+                }
             }
             resourceDeck.getParent().layout();
             goldDeck.getParent().layout();
@@ -228,20 +225,22 @@ public class GamePage {
 
     public void updateShownPlayable() {
         Platform.runLater(() -> {
-            log.info("Shown playable updated");
-            List<ImageView> visibles = List.of(vis1, vis2, vis3, vis4);
-
-            shownPlayable = miniGameModel.table().getShownCards();
-            System.out.println("Shown playable: " + shownPlayable);
+            goldVis1.setImage(null);
+            goldVis2.setImage(null);
+            resVis1.setImage(null);
+            resVis2.setImage(null);
+            Set<Integer> shownPlayable = miniGameModel.table().getShownCards();
             for (int cardId : shownPlayable) {
                 Image cardImage = guiResources.getCardImage(cardId);
                 if (cardImage != null) {
-                    for (ImageView visible : visibles) {
-                        if (visible.getImage() == null) {
-                            visible.setImage(cardImage);
-                            visible.getParent().layout();
-                            break;
-                        }
+                    if (goldVis1.getImage() == null) {
+                        goldVis1.setImage(cardImage);
+                    } else if (goldVis2.getImage() == null) {
+                        goldVis2.setImage(cardImage);
+                    } else if (resVis1.getImage() == null) {
+                        resVis1.setImage(cardImage);
+                    } else if (resVis2.getImage() == null) {
+                        resVis2.setImage(cardImage);
                     }
                 }
             }
@@ -250,7 +249,7 @@ public class GamePage {
 
     public void placeStarterCard() {
         Platform.runLater(() -> {
-            log.info("Starter card placed");
+            Position pos = new Position(0, 0);
             int cardId = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getStarterCard();
             boolean isRetro = miniGameModel.getCliPlayer(
@@ -261,21 +260,21 @@ public class GamePage {
                 starterCard.setFitHeight(100);
                 starterCard.setFitWidth(150);
                 cardField.getChildren().add(starterCard);
+                miniGameModel.place(miniGameModel.myName(), pos, cardId, isRetro);
             } else if (isRetro) {
                 ImageView starterRetro = guiResources.getCardImageRetro(cardId);
                 starterRetro.setFitHeight(100);
                 starterRetro.setFitWidth(150);
                 cardField.getChildren().add(starterRetro);
+                miniGameModel.place(miniGameModel.myName(), pos, cardId, isRetro);
             }
         });
     }
 
-    public void updateTurnChange() {
+    public void updateTurnChange(String nickname) {
         Platform.runLater(() -> {
-            log.info("Turn changed");
-            String currentTurn = miniGameModel.getCurrentTurn();
             for (Label label : List.of(player1, player2, player3, player4)) {
-                if (label.getText().equals(currentTurn)) {
+                if (label.getText().equals(nickname)) {
                     label.setStyle("-fx-background-color: #D7BC49");
                 }
             }

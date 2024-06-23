@@ -158,7 +158,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
-        gamePage.updateDeckTop();
+        gamePage.updateDeckTop(type, color);
     }
 
     @Override
@@ -174,7 +174,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateTurnChange(String nickname) {
-        gamePage.updateTurnChange();
+        gamePage.updateTurnChange(nickname);
     }
 
     @Override
