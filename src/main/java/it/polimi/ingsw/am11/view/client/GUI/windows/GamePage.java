@@ -6,12 +6,14 @@ import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -222,6 +224,7 @@ public class GamePage {
     public void updateShownPlayable() {
         Platform.runLater(() -> {
             log.info("Shown playable updated");
+
             Set<Integer> shownPlayable = miniGameModel.table().getShownCards();
             System.out.println("Shown playable: " + shownPlayable);
             for (int cardId : shownPlayable) {
@@ -253,19 +256,11 @@ public class GamePage {
                 ImageView starterCard = new ImageView(cardImage);
                 starterCard.setFitHeight(100);
                 starterCard.setFitWidth(150);
-                double centerX = (cardField.getWidth() - starterCard.getFitWidth()) / 2;
-                double centerY = (cardField.getHeight() - starterCard.getFitHeight()) / 2;
-                starterCard.setLayoutX(centerX);
-                starterCard.setLayoutY(centerY);
                 cardField.getChildren().add(starterCard);
             } else if (isRetro) {
                 ImageView starterRetro = guiResources.getCardImageRetro(cardId);
                 starterRetro.setFitHeight(100);
                 starterRetro.setFitWidth(150);
-                double centerX = (cardField.getWidth() - starterRetro.getFitWidth()) / 2;
-                double centerY = (cardField.getHeight() - starterRetro.getFitHeight()) / 2;
-                starterRetro.setLayoutX(centerX);
-                starterRetro.setLayoutY(centerY);
                 cardField.getChildren().add(starterRetro);
             }
         });
@@ -299,6 +294,48 @@ public class GamePage {
             }
 
         });
+    }
+
+    public void showFieldPl1(MouseEvent mouseEvent) {
+    }
+
+    public void showFieldPl2(MouseEvent mouseEvent) {
+    }
+
+    public void showFieldPl3(MouseEvent mouseEvent) {
+    }
+
+    public void showFieldPl4(MouseEvent mouseEvent) {
+    }
+
+    public void pickFromGoldDeck(MouseEvent mouseEvent) {
+    }
+
+    public void pickFromResDeck(MouseEvent mouseEvent) {
+    }
+
+    public void chooseVis1(MouseEvent mouseEvent) {
+    }
+
+    public void chooseVis3(MouseEvent mouseEvent) {
+    }
+
+    public void chooseVis2(MouseEvent mouseEvent) {
+    }
+
+    public void chooseVis4(MouseEvent mouseEvent) {
+    }
+
+    public void card1Selected(MouseEvent mouseEvent) {
+    }
+
+    public void card2Selected(MouseEvent mouseEvent) {
+    }
+
+    public void card3Selected(MouseEvent mouseEvent) {
+    }
+
+    public void openChatBox(ActionEvent actionEvent) {
     }
 }
 

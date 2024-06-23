@@ -5,7 +5,6 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
-import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.GUI.windows.*;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
@@ -153,10 +152,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
         networkPage.showNetworkPage();
     }
 
-    public void showSettingNickPage() {
-        setNickPage.showSettingNickPage();
-    }
-
     public void showWaitingRoomPage() {
         waitingRoomPage.showWaitingRoomPage();
     }
@@ -190,6 +185,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void updateGameStatus(GameStatus status) {
         if (status == GameStatus.ONGOING) {
+            gamePage.placeStarterCard();
             Platform.runLater(this::showGamePage);
         }
     }
@@ -240,10 +236,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
         });
     }
 
-    public void hideWaitingRoomPage() {
-        waitingRoomPage.hideWaitingRoomPage();
-    }
-
     @Override
     public void receiveCandidateObjective(Set<Integer> cardId) {
         Platform.runLater(() -> {
@@ -276,6 +268,14 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void disconnectedFromServer() {
 
+    }
+
+    public void hideWaitingRoomPage() {
+        waitingRoomPage.hideWaitingRoomPage();
+    }
+
+    public void showSettingNickPage() {
+        setNickPage.showSettingNickPage();
     }
 
     public void showGamePage() {
