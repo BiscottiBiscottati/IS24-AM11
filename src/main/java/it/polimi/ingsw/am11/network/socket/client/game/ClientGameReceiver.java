@@ -64,8 +64,8 @@ public class ClientGameReceiver implements MessageReceiver {
                                                  jsonNode.get("x").asInt(),
                                                  jsonNode.get("y").asInt(),
                                                  jsonNode.get("cardId").asInt(),
-                                                 jsonNode.get("isRetro").asBoolean(),
-                                                 jsonNode.get("removeMode").asBoolean());
+                                                 jsonNode.get("isRetro").asBoolean()
+                    );
                     break;
                 case "updateShownPlayable":
                     clientPlayerView.updateShownPlayable(jsonNode.get("previousId").asInt(),

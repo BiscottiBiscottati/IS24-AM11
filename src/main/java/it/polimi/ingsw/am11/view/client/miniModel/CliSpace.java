@@ -1,5 +1,8 @@
 package it.polimi.ingsw.am11.view.client.miniModel;
 
+import it.polimi.ingsw.am11.model.utils.memento.PersonalSpaceMemento;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,8 +15,8 @@ public class CliSpace {
     private boolean starterIsRetro;
 
     public CliSpace() {
-        this.playerHand = new HashSet();
-        this.playerObjective = new HashSet<>();
+        this.playerHand = new HashSet<>(6);
+        this.playerObjective = new HashSet<>(2);
     }
 
     public Set<Integer> getPlayerHand() {
@@ -47,12 +50,9 @@ public class CliSpace {
     public void addCandidateObjectives(Set<Integer> candidates) {
         candidateObjectives = candidates;
     }
+
     public void setStarterIsRetro(boolean isRetro) {
         starterIsRetro = isRetro;
-    }
-
-    public boolean getStarterIsRetro() {
-        return starterIsRetro;
     }
 
     public void addPersonalObjective(int cardId) {
@@ -61,5 +61,14 @@ public class CliSpace {
 
     public void rmPersonalObjective(int cardId) {
         playerObjective.remove(cardId);
+    }
+
+    public void load(@NotNull PersonalSpaceMemento memento) {
+        playerHand.clear();
+        playerHand.addAll(memento.hand());
+        playerObjective.clear();
+        playerObjective.addAll(memento.personalObjs());
+        candidateObjectives = memento.candidateObjs();
+        starterCard = memento.starterCard();
     }
 }

@@ -93,7 +93,7 @@ public record ServerGameSender(@NotNull PrintWriter out)
 
     @Override
     public void updateField(@NotNull String nickname, int x, int y, int cardId,
-                            boolean isRetro, boolean removeMode) {
+                            boolean isRetro) {
         ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
         json.put("method", "updateField");
         json.put("nickname", nickname);
@@ -101,7 +101,6 @@ public record ServerGameSender(@NotNull PrintWriter out)
         json.put("y", y);
         json.put("cardId", cardId);
         json.put("isRetro", isRetro);
-        json.put("removeMode", removeMode);
         out.println(json);
     }
 

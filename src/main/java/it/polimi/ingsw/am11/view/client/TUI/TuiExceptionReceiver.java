@@ -80,7 +80,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull IllegalCardPlacingException ex) {
         LOGGER.debug("IllegalCardPlacingException {}", ex.getMessage());
-        model.setiPlaced(false);
+        model.setIPlaced(false);
         if (model.table().getStatus().equals(GameStatus.ONGOING) ||
             model.table().getStatus().equals(GameStatus.ARMAGEDDON) ||
             model.table().getStatus().equals(GameStatus.LAST_TURN)) {
@@ -113,7 +113,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull NotInHandException ex) {
         LOGGER.debug("NotInHandException {}", ex.getMessage());
-        model.setiPlaced(false);
+        model.setIPlaced(false);
         tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
         tuiUpdater.setHomeState(TuiStates.WATCHING_FIELD);
         tuiUpdater.getCurrentTuiState().restart(true, ex);

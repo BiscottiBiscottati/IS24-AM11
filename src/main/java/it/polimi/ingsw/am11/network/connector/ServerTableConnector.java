@@ -28,8 +28,7 @@ public interface ServerTableConnector {
 
     void updateDeckTop(@NotNull PlayableCardType type, Color color);
 
-    void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro,
-                     boolean removeMode);
+    void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro);
 
     void updateShownPlayable(@Nullable Integer previousId, @Nullable Integer currentId);
 
@@ -46,6 +45,4 @@ public interface ServerTableConnector {
     void updatePlayers(@NotNull SequencedMap<PlayerColor, String> currentPlayers);
 
     void updateNumOfPlayers(@NotNull Integer numOfPlayers);
-
-
 }

@@ -44,7 +44,7 @@ public class PositionManager {
      * cardsPositioned map is 64. These values are chosen as a performance optimization to reduce
      * the need for resizing the collections as cards are placed on the field.
      */
-    PositionManager() {
+    public PositionManager() {
         this.availablePositions = new HashSet<>(32);
         this.availablePositions.add(Position.of(0, 0));
         this.closedPositions = new HashSet<>(32);
@@ -119,7 +119,7 @@ public class PositionManager {
      * availablePositions set, effectively resetting the state of the PositionManager to its initial
      * state.
      */
-    void reset() {
+    public void reset() {
         this.availablePositions.clear();
         this.availablePositions.add(Position.of(0, 0));
         this.closedPositions.clear();
@@ -157,9 +157,9 @@ public class PositionManager {
      *                                     the card.
      */
     @NotNull
-    List<Item> placeCard(@NotNull FieldCard card,
-                         @NotNull Position position,
-                         boolean isRetro)
+    public List<Item> placeCard(@NotNull FieldCard card,
+                                @NotNull Position position,
+                                boolean isRetro)
     throws IllegalCardPlacingException {
 
         // Check if the position is available and position the card
@@ -238,7 +238,7 @@ public class PositionManager {
      *
      * @return A copy of the set of available positions.
      */
-    Set<Position> getAvailablePositions() {
+    public Set<Position> getAvailablePositions() {
         return Set.copyOf(availablePositions);
     }
 
@@ -253,7 +253,7 @@ public class PositionManager {
      * @param position The position to check.
      * @return True if the position is available for placing a card, false otherwise.
      */
-    boolean isAvailable(@NotNull Position position) {
+    public boolean isAvailable(@NotNull Position position) {
         return availablePositions.contains(position);
     }
 
@@ -267,7 +267,7 @@ public class PositionManager {
      * @param card The card to check.
      * @return True if the card is already placed on the field, false otherwise.
      */
-    boolean containsCard(@NotNull FieldCard card) {
+    public boolean containsCard(@NotNull FieldCard card) {
         return cardsPositioned.values()
                               .stream()
                               .anyMatch(cardContainer -> cardContainer.isCardEquals(card));
@@ -282,12 +282,12 @@ public class PositionManager {
      *
      * @return A copy of the map of positioned cards.
      */
-    Map<Position, CardContainer> getCardsPositioned() {
+    public Map<Position, CardContainer> getCardsPositioned() {
         return Map.copyOf(cardsPositioned);
     }
 
     @NotNull
-    PositionManagerMemento save() {
+    public PositionManagerMemento save() {
         Map<Position, CardContainerMemento> temp = new HashMap<>(64);
         cardsPositioned.forEach((position, container) -> temp.put(position, container.save()));
         return new PositionManagerMemento(Set.copyOf(availablePositions),
@@ -295,7 +295,7 @@ public class PositionManager {
                                           temp);
     }
 
-    void load(@NotNull PositionManagerMemento memento) {
+    public void load(@NotNull PositionManagerMemento memento) {
         this.availablePositions.clear();
         this.closedPositions.clear();
         this.cardsPositioned.clear();

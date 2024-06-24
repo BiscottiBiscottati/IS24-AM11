@@ -30,7 +30,7 @@ public class SetNickPage {
         SetNickPage.codexNaturalis = codexNaturalis;
 
         guiActuator = codexNaturalis.getGuiActuator();
-        StackPane root = codexNaturalis.getRootSmall();
+        StackPane root = codexNaturalis.getInitialRoot();
         miniGameModel = codexNaturalis.getMiniGameModel();
         font = codexNaturalis.getFont();
         fontBig = codexNaturalis.getFontBig();
@@ -127,7 +127,7 @@ public class SetNickPage {
                 yourName.setVisible(false);
                 nameAlreadyTaken.setVisible(false);
                 goToNetwork.setVisible(false);
-                codexNaturalis.showWaitingRoomPage();
+                CodexNaturalis.showWaitingRoomPage();
             }
         });
 
@@ -138,7 +138,7 @@ public class SetNickPage {
             nameAlreadyTaken.setVisible(false);
             goToNetwork.setVisible(false);
 
-            codexNaturalis.showNetworkPage();
+            CodexNaturalis.showNetworkPage();
         });
     }
 }

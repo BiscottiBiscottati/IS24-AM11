@@ -4,8 +4,6 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
-import it.polimi.ingsw.am11.model.utils.TurnAction;
-import it.polimi.ingsw.am11.model.utils.memento.PlayerMemento;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
@@ -27,7 +25,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private GuiExceptionReceiver exceptionReceiver;
     private String candidateNick = "";
 
-    public GuiUpdater(GuiObserver guiObserver) {
+    public GuiUpdater(@NotNull GuiObserver guiObserver) {
         this.guiObserver = guiObserver;
         reset();
     }
@@ -51,12 +49,11 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro,
-                            boolean removeMode) {
-        LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {}, " +
-                     "removemode: {}", nickname, x, y, cardId, isRetro, removeMode);
+    public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro) {
+        LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {},",
+                     nickname, x, y, cardId, isRetro);
 
-        guiObserver.updateField(nickname, x, y, cardId, isRetro, removeMode);
+        guiObserver.updateField(nickname, x, y, cardId, isRetro);
 
     }
 
@@ -89,7 +86,6 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     public void updateGameStatus(@NotNull GameStatus status) {
         miniGameModel.table().setStatus(status);
         LOGGER.debug("Game status event: {}", status);
-
         try {
             guiObserver.updateGameStatus(status);
         } catch (IOException e) {
@@ -100,10 +96,10 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void updateCommonObjective(@NotNull Set<Integer> cardId, boolean removeMode) {
         if (removeMode) {
-            cardId.stream().forEach(x -> miniGameModel.table().removeCommonObjective(x));
+            cardId.forEach(x -> miniGameModel.table().removeCommonObjective(x));
             LOGGER.debug("CommonObjRm: {}", cardId);
         } else {
-            cardId.stream().forEach(x -> miniGameModel.table().addCommonObjectives(x));
+            cardId.forEach(x -> miniGameModel.table().addCommonObjectives(x));
             LOGGER.debug("CommonObjAdd: {}", cardId);
         }
 
@@ -198,57 +194,10 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
         LOGGER.debug("Reconnection event received");
+        miniGameModel.load(memento);
 
         //FIXME I don't know if candidate nick is used
         miniGameModel.setMyName(candidateNick);
-        miniGameModel.setStartingPlayer(memento.playerManager().firstPlayer() == null ? "" :
-                                        memento.playerManager().firstPlayer());
-        miniGameModel.setCurrentTurn(memento.playerManager().currentPlayer() == null ? "" :
-                                     memento.playerManager().currentPlayer());
-
-
-        //table
-        for (PlayableCardType deckTop : memento.table().deckTops().keySet()) {
-            miniGameModel.table().refreshDeckTop(deckTop,
-                                                 memento.table().deckTops().get(deckTop));
-        }
-        for (PlayableCardType shown : memento.table().shownPlayable().keySet()) {
-            memento.table().shownPlayable().get(shown).forEach(
-                    x -> miniGameModel.table().addVisible(x));
-        }
-        for (Integer commonObj : memento.table().commonObjs()) {
-            miniGameModel.table().addCommonObjectives(commonObj);
-        }
-        //players manager
-        for (PlayerMemento player : memento.playerManager().players()) {
-            miniGameModel.addPlayer(player.nickname(), player.color());
-            if (miniGameModel.myName().equals(player.nickname())) {
-                player.space().hand().forEach(x -> miniGameModel.addCardInHand(x));
-                player.space().personalObjs().forEach(x -> miniGameModel.addPersonalObjective(x));
-                miniGameModel.getCliPlayer(
-                        miniGameModel.myName()).getSpace().addCandidateObjectives(
-                        player.space().candidateObjs());
-                miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().setStarterCard(
-                        player.space().starterCard());
-                miniGameModel.setiPlaced(
-                        memento.playerManager().currentAction().equals(TurnAction.DRAW_CARD));
-            }
-            player.field().positionManager().cardPositioned().forEach(
-                    (pos, cardContainerMemento) -> {
-                        miniGameModel.absolutePlace(player.nickname(), pos,
-                                                    cardContainerMemento.card(),
-                                                    cardContainerMemento.isRetro(),
-                                                    cardContainerMemento.coveredCorners());
-                    });
-        }
-
-        //Plateau
-        if (! memento.plateau().leaderboard().isEmpty()) {
-            miniGameModel.setFinalLeaderboard(memento.plateau().leaderboard());
-        }
-        miniGameModel.table().setStatus(memento.plateau().status());
-        memento.plateau().playerPoints().forEach(
-                (nickname, points) -> miniGameModel.getCliPlayer(nickname).addPoints(points));
 
         //TODO update the gui to the correct state
 

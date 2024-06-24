@@ -12,8 +12,7 @@ import java.util.Set;
 public interface GuiObserver {
     void updateDeckTop(PlayableCardType type, Color color);
 
-    void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
-                     boolean removeMode);
+    void updateField(String nickname, int x, int y, int cardId, boolean isRetro);
 
     void updateShownPlayable(Integer previousId, Integer currentId);
 

@@ -5,12 +5,10 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.MatrixFiller;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.miniModel.CliField;
-import it.polimi.ingsw.am11.view.client.miniModel.MiniCardContainer;
-
 import org.jetbrains.annotations.NotNull;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,21 +22,21 @@ public class FieldPrinter {
     public static final int CARD_WIDTH = 3;
 
 
-    public static void render(CliField field, boolean withSuggestions) {
+    public static void render(@NotNull CliField field, boolean withSuggestions) {
 
         int i;
         int j;
         int x;
         int y;
 
-        Map<Position, MiniCardContainer> cardsPositioned = field.getCardsPositioned();
+        Map<Position, CardContainer> cardsPositioned = field.getCardsPositioned();
 
         if (cardsPositioned.isEmpty()) {
             return;
         }
 
         //Get a matrix with all the positions of the cards
-        List<List<MiniCardContainer>> matrixOfCards = intoContainerMatrix(cardsPositioned);
+        List<List<CardContainer>> matrixOfCards = intoContainerMatrix(cardsPositioned);
         List<List<Position>> matrixOfPositions = intoPositionsMatrix(cardsPositioned);
 
         int PosSizeY = matrixOfPositions.size();
@@ -113,43 +111,45 @@ public class FieldPrinter {
     }
 
     /**
-     * Set the usable coordinates in the printMatrix
+     * Generate a matrix of CardContainer from the map of cards that represent the field
      *
-     * @param pos         the position to set
-     * @param rowIndex    the row index point to the central row of the coordinates ascii
-     *                    representation
-     * @param columnIndex the column index point to the central column of the coordinates ascii
-     *                    representation
-     * @param printMatrix
+     * @param cardsPositioned the map of cards
+     * @return the matrix of cards
      */
-    private static void setCoordinates(@NotNull Position pos, int rowIndex, int columnIndex,
-                                       @NotNull List<List<String>> printMatrix) {
+    private static @NotNull List<List<CardContainer>> intoContainerMatrix(
+            @NotNull Map<Position, CardContainer> cardsPositioned) {
+        int minX = cardsPositioned.keySet().stream()
+                                  .mapToInt(Position::x)
+                                  .min().orElseThrow();
+        int maxX = cardsPositioned.keySet().stream()
+                                  .mapToInt(Position::x)
+                                  .max().orElseThrow();
 
-        char[] xVal = String.valueOf(pos.x()).toCharArray();
-        char[] yVal = String.valueOf(pos.y()).toCharArray();
+        int minY = cardsPositioned.keySet().stream()
+                                  .mapToInt(Position::y)
+                                  .min().orElseThrow();
+        int maxY = cardsPositioned.keySet().stream()
+                                  .mapToInt(Position::y)
+                                  .max().orElseThrow();
 
-        if (xVal.length > 3 || yVal.length > 3) {
-            throw new RuntimeException("Value of position of card is out of bound ( > 3)");
-        }
+        int rangeX = maxX - minX + 1;
+        int rangeY = maxY - minY + 1;
 
-        printMatrix.get(rowIndex).set(columnIndex, xVal[xVal.length - 1] +
-                                                   ";" +
-                                                   yVal[0]);
+        List<List<CardContainer>> matrixOfCards =
+                MatrixFiller.fillMatrixWithNull(rangeY, rangeX, CardContainer.class);
 
-        if (xVal.length > 1) {
-            printMatrix.get(rowIndex).set(columnIndex - 1, String.valueOf(xVal[xVal.length - 2]));
+        cardsPositioned.forEach(
+                (pos, card) -> matrixOfCards.get(pos.y() - minY).set(pos.x() - minX, card));
+
+        int size = matrixOfCards.size();
+
+        // Reverse the matrix to have the first row on top
+        for (int i = 0; i < size / 2; i++) {
+            List<CardContainer> temp = matrixOfCards.get(i);
+            matrixOfCards.set(i, matrixOfCards.get(size - i - 1));
+            matrixOfCards.set(size - i - 1, temp);
         }
-        if (xVal.length > 2) {
-            printMatrix.get(rowIndex).set(columnIndex - 2,
-                                          " " + VERTICAL_COORD_SEP + xVal[0]);
-        }
-        if (yVal.length > 1) {
-            printMatrix.get(rowIndex).set(columnIndex + 1, String.valueOf(yVal[1]));
-        }
-        if (yVal.length > 2) {
-            printMatrix.get(rowIndex).set(columnIndex + 2,
-                                          yVal[2] + VERTICAL_COORD_SEP + " ");
-        }
+        return matrixOfCards;
     }
 
     /**
@@ -158,8 +158,8 @@ public class FieldPrinter {
      * @param cardsPositioned the map of cards
      * @return the matrix of positions
      */
-    private static @NotNull List<List<Position>> intoPositionsMatrix(@NotNull Map<Position,
-            MiniCardContainer> cardsPositioned) {
+    private static @NotNull List<List<Position>> intoPositionsMatrix(
+            @NotNull Map<Position, CardContainer> cardsPositioned) {
         int minX = cardsPositioned.keySet().stream()
                                   .mapToInt(Position::x)
                                   .min().orElseThrow();
@@ -213,45 +213,57 @@ public class FieldPrinter {
     }
 
     /**
-     * Generate a matrix of CardContainer from the map of cards that represent the field
+     * Check if the position is on the border of the matrix
      *
-     * @param cardsPositioned the map of cards
-     * @return the matrix of cards
+     * @param matrix the matrix
+     * @param x      the x coordinate
+     * @param y      the y coordinate
+     * @param <T>    the type of the matrix
+     * @return true if the position is on the border, false otherwise
      */
-    private static @NotNull List<List<MiniCardContainer>> intoContainerMatrix(
-            @NotNull Map<Position, MiniCardContainer> cardsPositioned) {
-        int minX = cardsPositioned.keySet().stream()
-                                  .mapToInt(Position::x)
-                                  .min().orElseThrow();
-        int maxX = cardsPositioned.keySet().stream()
-                                  .mapToInt(Position::x)
-                                  .max().orElseThrow();
+    private static <T> boolean isBorder(List<List<T>> matrix, int x, int y) {
+        return x == 0 || y == 0 || x == matrix.getFirst().size() - 1 ||
+               y == matrix.size() - 1;
+    }
 
-        int minY = cardsPositioned.keySet().stream()
-                                  .mapToInt(Position::y)
-                                  .min().orElseThrow();
-        int maxY = cardsPositioned.keySet().stream()
-                                  .mapToInt(Position::y)
-                                  .max().orElseThrow();
+    /**
+     * Set the usable coordinates in the printMatrix
+     *
+     * @param pos         the position to set
+     * @param rowIndex    the row index point to the central row of the coordinates ascii
+     *                    representation
+     * @param columnIndex the column index point to the central column of the coordinates ascii
+     *                    representation
+     * @param printMatrix
+     */
+    private static void setCoordinates(@NotNull Position pos, int rowIndex, int columnIndex,
+                                       @NotNull List<List<String>> printMatrix) {
 
-        int rangeX = maxX - minX + 1;
-        int rangeY = maxY - minY + 1;
+        char[] xVal = String.valueOf(pos.x()).toCharArray();
+        char[] yVal = String.valueOf(pos.y()).toCharArray();
 
-        List<List<MiniCardContainer>> matrixOfCards =
-                MatrixFiller.fillMatrixWithNull(rangeY, rangeX, MiniCardContainer.class);
-
-        cardsPositioned.forEach(
-                (pos, card) -> matrixOfCards.get(pos.y() - minY).set(pos.x() - minX, card));
-
-        int size = matrixOfCards.size();
-
-        // Reverse the matrix to have the first row on top
-        for (int i = 0; i < size / 2; i++) {
-            List<MiniCardContainer> temp = matrixOfCards.get(i);
-            matrixOfCards.set(i, matrixOfCards.get(size - i - 1));
-            matrixOfCards.set(size - i - 1, temp);
+        if (xVal.length > 3 || yVal.length > 3) {
+            throw new RuntimeException("Value of position of card is out of bound ( > 3)");
         }
-        return matrixOfCards;
+
+        printMatrix.get(rowIndex).set(columnIndex, xVal[xVal.length - 1] +
+                                                   ";" +
+                                                   yVal[0]);
+
+        if (xVal.length > 1) {
+            printMatrix.get(rowIndex).set(columnIndex - 1, String.valueOf(xVal[xVal.length - 2]));
+        }
+        if (xVal.length > 2) {
+            printMatrix.get(rowIndex).set(columnIndex - 2,
+                                          " " + VERTICAL_COORD_SEP + xVal[0]);
+        }
+        if (yVal.length > 1) {
+            printMatrix.get(rowIndex).set(columnIndex + 1, String.valueOf(yVal[1]));
+        }
+        if (yVal.length > 2) {
+            printMatrix.get(rowIndex).set(columnIndex + 2,
+                                          yVal[2] + VERTICAL_COORD_SEP + " ");
+        }
     }
 
     /**
@@ -264,8 +276,8 @@ public class FieldPrinter {
      * @param card        the card to set
      */
     private static void setCard(@NotNull List<List<String>> printMatrix, int rowIndex,
-                                int columnIndex, @NotNull MiniCardContainer card) {
-        System.out.println("DEBUG: id:" + card.getCardId() + " isRetro:" + card.isRetro());
+                                int columnIndex, @NotNull CardContainer card) {
+        System.out.println("DEBUG: id:" + card.getCard().getId() + " isRetro:" + card.isRetro());
         //TOP_LX corner
         setCorner(printMatrix, rowIndex - 1, columnIndex, card, Corner.TOP_LX);
         // top separator
@@ -280,7 +292,7 @@ public class FieldPrinter {
         String centers;
         try {
             Set<Color> colors =
-                    CardPrinter.getFieldCard(card.getCardId()).getCenter(card.isRetro());
+                    CardPrinter.getFieldCard(card.getCard().getId()).getCenter(card.isRetro());
             centers = colors.stream().map(Color::getTUICode).reduce("", String::concat);
         } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
@@ -294,7 +306,7 @@ public class FieldPrinter {
         setCorner(printMatrix, rowIndex + 1, columnIndex, card, Corner.DOWN_LX);
         // down separator
         printMatrix.get(rowIndex + 1).set(columnIndex + 1,
-                                          centerStr(String.valueOf(card.getCardId())
+                                          centerStr(String.valueOf(card.getCard().getId())
                                                   , CARD_WIDTH, HORIZONTAL_SEPARATOR.charAt(0)));
         //DOWN_RX corner
         setCorner(printMatrix, rowIndex + 1, columnIndex + 2, card, Corner.DOWN_RX);
@@ -311,10 +323,11 @@ public class FieldPrinter {
      * @param corner      the specific corner to set
      */
     private static void setCorner(@NotNull List<List<String>> printMatrix, int rowIndex,
-                                  int columnIndex, @NotNull MiniCardContainer card, Corner corner) {
+                                  int columnIndex, @NotNull CardContainer card, Corner corner) {
 
-        if (! card.isCovered(corner)) {
-            printMatrix.get(rowIndex).set(columnIndex, card.getContainerOn(corner).getTUICode());
+        if (! card.isCornerCovered(corner)) {
+            printMatrix.get(rowIndex).set(columnIndex,
+                                          card.getContainerOn(corner).getTUICode());
         }
 
     }
@@ -332,20 +345,6 @@ public class FieldPrinter {
         String strChar = String.valueOf(padChar);
         return strChar.repeat((width - string.length() + 1) / 2) + string +
                strChar.repeat((width - string.length()) / 2);
-    }
-
-    /**
-     * Check if the position is on the border of the matrix
-     *
-     * @param matrix the matrix
-     * @param x      the x coordinate
-     * @param y      the y coordinate
-     * @param <T>    the type of the matrix
-     * @return true if the position is on the border, false otherwise
-     */
-    private static <T> boolean isBorder(List<List<T>> matrix, int x, int y) {
-        return x == 0 || y == 0 || x == matrix.getFirst().size() - 1 ||
-               y == matrix.size() - 1;
     }
 
 

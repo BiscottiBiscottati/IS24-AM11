@@ -26,8 +26,8 @@ public interface ClientGameUpdatesInterface extends Remote {
 
     void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) throws RemoteException;
 
-    void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro,
-                     boolean removeMode) throws RemoteException;
+    void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro)
+    throws RemoteException;
 
     void updateShownPlayable(@Nullable Integer previousId, @Nullable Integer currentId)
     throws RemoteException;

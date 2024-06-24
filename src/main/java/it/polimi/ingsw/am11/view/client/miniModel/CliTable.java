@@ -3,6 +3,9 @@ package it.polimi.ingsw.am11.view.client.miniModel;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.model.utils.memento.PlateauMemento;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionTableMemento;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -17,8 +20,8 @@ public class CliTable {
 
     public CliTable() {
         this.deckTopColors = new EnumMap<>(PlayableCardType.class);
-        this.shownCards = new HashSet<>();
-        this.commonObjectives = new HashSet<>();
+        this.shownCards = new HashSet<>(8);
+        this.commonObjectives = new HashSet<>(4);
     }
 
     public Set<Integer> getCommonObjectives() {
@@ -59,5 +62,16 @@ public class CliTable {
 
     public void refreshDeckTop(PlayableCardType type, Color color) {
         deckTopColors.put(type, color);
+    }
+
+    public void load(@NotNull ReconnectionTableMemento memento,
+                     @NotNull PlateauMemento plateauMemento) {
+        deckTopColors.clear();
+        deckTopColors.putAll(memento.deckTops());
+        shownCards.clear();
+        memento.shownPlayable().values().forEach(shownCards::addAll);
+        commonObjectives.clear();
+        commonObjectives.addAll(memento.commonObjs());
+        status = plateauMemento.status();
     }
 }

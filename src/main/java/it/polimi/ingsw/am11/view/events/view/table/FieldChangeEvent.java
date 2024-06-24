@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 
 public class FieldChangeEvent extends TableViewEvent {
-    
+
     private final Map.Entry<Position, CardContainer> oldValue;
     private final Map.Entry<Position, CardContainer> newValue;
 

@@ -39,7 +39,7 @@ public class SetObjCardsPage {
     public void createObjCardsPage(Set<Integer> cardId) {
 
 
-        root = codexNaturalis.getRootSmall();
+        root = codexNaturalis.getInitialRoot();
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
         guiResources = codexNaturalis.getGuiResources();
@@ -92,7 +92,7 @@ public class SetObjCardsPage {
             vbox.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.getFirst());
             miniGameModel.addPersonalObjective(cardIdList.getFirst());
-            codexNaturalis.showWaitingRoomPage();
+            CodexNaturalis.showWaitingRoomPage();
         });
 
         cardImage2.setOnMouseClicked(event -> {
@@ -103,7 +103,7 @@ public class SetObjCardsPage {
             vbox.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.get(1));
             miniGameModel.addPersonalObjective(cardIdList.get(1));
-            codexNaturalis.showWaitingRoomPage();
+            CodexNaturalis.showWaitingRoomPage();
         });
 
 

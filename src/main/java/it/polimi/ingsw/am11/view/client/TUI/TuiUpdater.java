@@ -5,8 +5,6 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
-import it.polimi.ingsw.am11.model.utils.TurnAction;
-import it.polimi.ingsw.am11.model.utils.memento.PlayerMemento;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
@@ -25,10 +23,10 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 // This class is the implementation of the ClientViewUpdater and the ExceptionConnector.
-// The classes that handle the interpretation of the messages from the net will call these methods
-// There are also methods designed to be used by the Actuator ( and possibly other classes) to
-// update and get the TUIState and to save the candidateNick (the nickname that the player try to
-// send to the server)
+// The classes that handle the interpretation of the messages from the net will call these methods.
+// There are also methods designed to be used by the Actuator (and possibly other classes) to
+// update and get the TUIState and to save the candidateNick
+// (the nickname that the player tries to send to the server)
 
 public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
@@ -82,31 +80,24 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      * Update the field of the player, it can place or remove a card, if the removeMode is true the
      * cardId and isRetro are ignored.
      *
-     * @param nickname   the nickname of the player
-     * @param x          the x coordinate of the card
-     * @param y          the y coordinate of the card
-     * @param cardId     the id of the card
-     * @param isRetro    if the card is placed on it's retro
-     * @param removeMode if you want to remove a card,
+     * @param nickname the nickname of the player
+     * @param x        the x coordinate of the card
+     * @param y        the y coordinate of the card
+     * @param cardId   the id of the card
+     * @param isRetro  if the card is placed on it's retro
      */
     @Override
     public void updateField(@NotNull String nickname, int x, int y, int cardId,
-                            boolean isRetro, boolean removeMode) {
-        LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {}, " +
-                     "removemode: {}", nickname, x, y, cardId, isRetro, removeMode);
+                            boolean isRetro) {
+        LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {}",
+                     nickname, x, y, cardId, isRetro);
         Position pos = new Position(x, y);
-        if (! removeMode) {
-            model.getCliPlayer(nickname).getField().place(pos, cardId, isRetro);
-        } else {
-            model.getCliPlayer(nickname).getField().remove(pos);
-        }
+        model.getCliPlayer(nickname).getField().place(pos, cardId, isRetro);
 
         if (isCurrentState(TuiStates.WATCHING_FIELD)) {
             String[] args = {"notify", nickname};
             currentState.get().passArgs(null, args);
         }
-
-
     }
 
     /**
@@ -255,7 +246,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
             model.removeCardFromHand(cardId);
         } else {
             model.addCardInHand(cardId);
-            model.setiPlaced(false);
+            model.setIPlaced(false);
         }
 
         if (isCurrentState(TuiStates.WATCHING_TABLE)) {
@@ -369,52 +360,8 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
         LOGGER.debug("Reconnection event received");
+        model.load(memento);
         model.setMyName(candidateNick);
-        model.setStartingPlayer(memento.playerManager().firstPlayer() == null ? "" :
-                                memento.playerManager().firstPlayer());
-        model.setCurrentTurn(memento.playerManager().currentPlayer() == null ? "" :
-                             memento.playerManager().currentPlayer());
-
-
-        //table
-        for (PlayableCardType deckTop : memento.table().deckTops().keySet()) {
-            model.table().refreshDeckTop(deckTop,
-                                         memento.table().deckTops().get(deckTop));
-        }
-        for (PlayableCardType shown : memento.table().shownPlayable().keySet()) {
-            memento.table().shownPlayable().get(shown).forEach(x -> model.table().addVisible(x));
-        }
-        for (Integer commonObj : memento.table().commonObjs()) {
-            model.table().addCommonObjectives(commonObj);
-        }
-        //players manager
-        for (PlayerMemento player : memento.playerManager().players()) {
-            model.addPlayer(player.nickname(), player.color());
-            if (model.myName().equals(player.nickname())) {
-                player.space().hand().forEach(x -> model.addCardInHand(x));
-                player.space().personalObjs().forEach(x -> model.addPersonalObjective(x));
-                model.getCliPlayer(model.myName()).getSpace().addCandidateObjectives(
-                        player.space().candidateObjs());
-                model.getCliPlayer(model.myName()).getSpace().setStarterCard(
-                        player.space().starterCard());
-                model.setiPlaced(
-                        memento.playerManager().currentAction().equals(TurnAction.DRAW_CARD));
-            }
-            player.field().positionManager().cardPositioned().forEach(
-                    (pos, cardContainerMemento) -> {
-                        model.absolutePlace(player.nickname(), pos, cardContainerMemento.card(),
-                                            cardContainerMemento.isRetro(),
-                                            cardContainerMemento.coveredCorners());
-                    });
-        }
-
-        //Plateau
-        if (! memento.plateau().leaderboard().isEmpty()) {
-            model.setFinalLeaderboard(memento.plateau().leaderboard());
-        }
-        model.table().setStatus(memento.plateau().status());
-        memento.plateau().playerPoints().forEach(
-                (nickname, points) -> model.getCliPlayer(nickname).addPoints(points));
 
         //Set Tui
         switch (model.table().getStatus()) {

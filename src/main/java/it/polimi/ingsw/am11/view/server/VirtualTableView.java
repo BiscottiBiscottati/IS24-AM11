@@ -36,39 +36,22 @@ public class VirtualTableView {
 
         Consumer<ServerTableConnector> function;
 
-        switch (mode) {
-            case INSERTION -> {
-                entry.set(event.getNewValue());
-                LOGGER.debug("EVENT: Field change for {} on ({}, {}). Added card {}",
-                             event.getPlayer().orElseThrow(),
-                             entry.get().getKey().x(), entry.get().getKey().y(),
-                             entry.get().getValue().getCard().getId());
-                function = connector -> connector.updateField(
-                        event.getPlayer().orElseThrow(),
-                        entry.get().getKey().x(),
-                        entry.get().getKey().y(),
-                        entry.get().getValue().getCard().getId(),
-                        entry.get().getValue().isRetro(),
-                        false);
-            }
-            case REMOVAL -> function = connector -> {
-                entry.set(event.getOldValue());
-                LOGGER.debug("EVENT: Field change for {} on ({}, {}). Removed card {}",
-                             event.getPlayer().orElseThrow(),
-                             entry.get().getKey().x(), entry.get().getKey().y(),
-                             entry.get().getValue().getCard().getId());
-                connector.updateField(
-                        event.getPlayer().orElseThrow(),
-                        entry.get().getKey().x(),
-                        entry.get().getKey().y(),
-                        entry.get().getValue().getCard().getId(),
-                        entry.get().getValue().isRetro(),
-                        true);
-            };
-            default -> {
-                LOGGER.debug("Invalid ActionMode in FieldChangeEvent (most likely a clear event)");
-                return;
-            }
+        if (mode == ActionMode.INSERTION) {
+            entry.set(event.getNewValue());
+            LOGGER.debug("EVENT: Field change for {} on ({}, {}). Added card {}",
+                         event.getPlayer().orElseThrow(),
+                         entry.get().getKey().x(), entry.get().getKey().y(),
+                         entry.get().getValue().getCard().getId());
+            function = connector -> connector.updateField(
+                    event.getPlayer().orElseThrow(),
+                    entry.get().getKey().x(),
+                    entry.get().getKey().y(),
+                    entry.get().getValue().getCard().getId(),
+                    entry.get().getValue().isRetro()
+            );
+        } else {
+            LOGGER.debug("Invalid ActionMode in FieldChangeEvent (most likely a clear event)");
+            return;
         }
         broadcast(function);
     }

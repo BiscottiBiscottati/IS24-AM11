@@ -1,28 +1,19 @@
 package it.polimi.ingsw.am11.view.client.TUI.printers;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.miniModel.CliField;
-import it.polimi.ingsw.am11.view.client.miniModel.MiniCardContainer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class FieldPrinterTest {
 
 
-    FieldPrinter renderer;
-
     static CliField field;
+    FieldPrinter renderer;
 
     @BeforeAll
     static void beforeAll() {

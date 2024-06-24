@@ -24,12 +24,12 @@ public class SetNumOfPlayersPage {
 
     public static void createNumOfPlayersPage(CodexNaturalis codexNaturalis) {
         SetNumOfPlayersPage.codexNaturalis = codexNaturalis;
-        
+
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
         guiActuator = codexNaturalis.getGuiActuator();
         distanceToBorder = codexNaturalis.getDistanceToBorder();
-        root = codexNaturalis.getRootSmall();
+        root = codexNaturalis.getInitialRoot();
 
         numOfPlayers = new Label("Number of players:");
         numOfPlayers.setBackground(Background.EMPTY);
@@ -73,7 +73,7 @@ public class SetNumOfPlayersPage {
     }
 
     public static void showSetNumOfPlayersPage() {
-        codexNaturalis.hideWaitingRoomPage();
+        CodexNaturalis.hideWaitingRoomPage();
         numOfPlayers.setVisible(true);
         writeNumOfPlayers.setVisible(true);
         enterNumOfPlayers.setVisible(true);
@@ -86,7 +86,7 @@ public class SetNumOfPlayersPage {
                 enterNumOfPlayers.setVisible(false);
                 numOfPlayers.setVisible(false);
                 writeNumOfPlayers.setVisible(false);
-                codexNaturalis.showWaitingRoomPage();
+                CodexNaturalis.showWaitingRoomPage();
                 invalidNumOfPlayers.setVisible(false);
             }
         });

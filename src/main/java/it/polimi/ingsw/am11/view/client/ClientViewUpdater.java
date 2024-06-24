@@ -24,15 +24,14 @@ public interface ClientViewUpdater {
      * Update the field of the player, it can place or remove a card, if the removeMode is true the
      * cardId and isRetro are ignored.
      *
-     * @param nickname   the nickname of the player
-     * @param x          the x coordinate of the card
-     * @param y          the y coordinate of the card
-     * @param cardId     the id of the card
-     * @param isRetro    if the card is placed on it's retro
-     * @param removeMode if you want to remove a card,
+     * @param nickname the nickname of the player
+     * @param x        the x coordinate of the card
+     * @param y        the y coordinate of the card
+     * @param cardId   the id of the card
+     * @param isRetro  if the card is placed on it's retro
      */
     void updateField(@NotNull String nickname, int x, int y, int cardId,
-                     boolean isRetro, boolean removeMode);
+                     boolean isRetro);
 
     /**
      * Update the visible cards on the table, it will remove the previousId and add the currentId

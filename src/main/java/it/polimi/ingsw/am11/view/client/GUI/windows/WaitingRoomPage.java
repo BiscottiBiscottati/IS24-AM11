@@ -18,7 +18,7 @@ public class WaitingRoomPage {
     public static void createWaitingRoomPage(CodexNaturalis codexNaturalis) {
         WaitingRoomPage.codexNaturalis = codexNaturalis;
 
-        root = codexNaturalis.getRootSmall();
+        root = codexNaturalis.getInitialRoot();
         font = codexNaturalis.getFont();
         waitingForPlayers = new Label("Waiting...");
         loadingWheel = new ProgressIndicator();

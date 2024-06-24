@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
@@ -253,8 +254,10 @@ public class GamePage {
         Platform.runLater(() -> {
             int cardId = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getStarterCard();
-            boolean isRetro = miniGameModel.getCliPlayer(
-                    miniGameModel.myName()).getSpace().getStarterIsRetro();
+            boolean isRetro = miniGameModel.getCliPlayer(miniGameModel.myName())
+                                           .getField()
+                                           .getCardsPositioned()
+                                           .get(Position.of(0, 0)).isRetro();
             guiActuator.setStarterCard(isRetro);
             if (! isRetro) {
                 Image cardImage = guiResources.getCardImage(cardId);

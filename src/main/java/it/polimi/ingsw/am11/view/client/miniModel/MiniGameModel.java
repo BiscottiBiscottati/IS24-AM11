@@ -1,8 +1,9 @@
 package it.polimi.ingsw.am11.view.client.miniModel;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
+import it.polimi.ingsw.am11.model.utils.TurnAction;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -79,12 +80,12 @@ public class MiniGameModel {
         return playerMap.get(nickname).getPoints();
     }
 
-    public void setFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
-        this.finalLeaderboard = finalLeaderboard;
-    }
-
     public @Nullable Map<String, Integer> getFinalLeaderboard() {
         return finalLeaderboard;
+    }
+
+    public void setFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+        this.finalLeaderboard = finalLeaderboard;
     }
 
     public void addCardInHand(int cardId) {
@@ -117,13 +118,23 @@ public class MiniGameModel {
         playerMap.get(nickname).getField().place(pos, cardId, isRetro);
     }
 
-    public void absolutePlace(String nickname, Position pos, int cardId, boolean isRetro,
-                              Map<Corner, Boolean> coveredCorners) {
-        playerMap.get(nickname).getField().absolutePosition(pos, cardId, isRetro, coveredCorners);
-    }
+    public void load(@NotNull ReconnectionModelMemento memento) {
+        currentTurn = memento.playerManager().currentPlayer() == null ? "" :
+                      memento.playerManager().currentPlayer();
+        startingPlayer = memento.playerManager().firstPlayer() == null ? "" :
+                         memento.playerManager().firstPlayer();
 
-    public void removePlaced(String nickname, Position pos) {
-        playerMap.get(nickname).getField().remove(pos);
+        table.load(memento.table(), memento.plateau());
+        finalLeaderboard.clear();
+        finalLeaderboard.putAll(memento.plateau().leaderboard());
+        playerMap.clear();
+        memento.playerManager().players().forEach((player) -> {
+            CliPlayer cliPlayer = new CliPlayer(player.nickname(), player.color());
+            cliPlayer.load(player);
+            cliPlayer.addPoints(memento.plateau().playerPoints().get(player.nickname()));
+            playerMap.put(player.nickname(), cliPlayer);
+        });
+        iPlaced = memento.playerManager().currentAction().equals(TurnAction.DRAW_CARD);
     }
 
     public boolean getiPlaced() {
@@ -138,7 +149,7 @@ public class MiniGameModel {
         return chatMessages;
     }
 
-    public void setiPlaced(boolean iPlaced) {
+    public void setIPlaced(boolean iPlaced) {
         this.iPlaced = iPlaced;
     }
 
@@ -146,7 +157,4 @@ public class MiniGameModel {
         return startingPlayer;
     }
 
-    public void setStartingPlayer(String startingPlayer) {
-        this.startingPlayer = startingPlayer;
-    }
 }

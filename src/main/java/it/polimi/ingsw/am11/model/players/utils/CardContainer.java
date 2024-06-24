@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.model.players.utils;
 
 import com.google.common.collect.Maps;
+import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.Item;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
@@ -201,10 +202,23 @@ public class CardContainer {
      * empty {@link Optional} if there is no item on that corner.
      */
     public Optional<Item> getItemOn(@NotNull Corner corner) {
-        return this.card.getItemCorner(corner, isRetro).getItem();
+        return card.getItemCorner(corner, isRetro).getItem();
+    }
+
+    public CornerContainer getContainerOn(@NotNull Corner corner) {
+        return card.getItemCorner(corner, isRetro);
     }
 
     public @NotNull CardContainerMemento save() {
         return new CardContainerMemento(card.getId(), Map.copyOf(coveredCorners), isRetro);
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + card.getId() + " isRtr: " + isRetro +
+               " covered TL: " + coveredCorners.get(Corner.TOP_LX) +
+               " TR: " + coveredCorners.get(Corner.TOP_RX) +
+               " BL: " + coveredCorners.get(Corner.DOWN_LX) +
+               " BR: " + coveredCorners.get(Corner.DOWN_RX);
     }
 }

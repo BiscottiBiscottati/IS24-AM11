@@ -21,11 +21,11 @@ public class LoadingScreen {
 
     private static CodexNaturalis codexNaturalis;
 
-    public static void createLoadingScreen(CodexNaturalis codexNaturalis) {
+    public static void createLoadingScreen(@NotNull CodexNaturalis codexNaturalis) {
         LoadingScreen.codexNaturalis = codexNaturalis;
 
         GuiResources guiResources = codexNaturalis.getGuiResources();
-        StackPane root = codexNaturalis.getRootSmall();
+        StackPane root = codexNaturalis.getInitialRoot();
         size = codexNaturalis.getWindowSize();
 
         lDBackground = guiResources.getTheImageView(GuiResEnum.LGIN_BACKGROUND);
@@ -150,7 +150,7 @@ public class LoadingScreen {
 
         //no more necessary
         sqT.onFinishedProperty().set(event -> {
-            codexNaturalis.showNetworkPage();
+            CodexNaturalis.showNetworkPage();
         });
 
 

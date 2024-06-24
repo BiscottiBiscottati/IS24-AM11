@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am11.view.client.miniModel;
 
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.utils.memento.PlayerMemento;
+import org.jetbrains.annotations.NotNull;
 
 public class CliPlayer {
 
@@ -49,5 +51,10 @@ public class CliPlayer {
 
     public void addPoints(int i) {
         points += i;
+    }
+
+    public void load(@NotNull PlayerMemento playerMemento) {
+        space.load(playerMemento.space());
+        field.loadField(playerMemento.field().positionManager());
     }
 }

@@ -25,7 +25,7 @@ public class NetworkPage {
     public static void createNetworkPage(CodexNaturalis codexNaturalis) {
         NetworkPage.codexNaturalis = codexNaturalis;
 
-        StackPane root = codexNaturalis.getRootSmall();
+        StackPane root = codexNaturalis.getInitialRoot();
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
         guiActuator = codexNaturalis.getGuiActuator();
@@ -167,7 +167,7 @@ public class NetworkPage {
                 connectionType.setVisible(false);
                 joinButton.setVisible(false);
 
-                codexNaturalis.showSettingNickPage();
+                CodexNaturalis.showSettingNickPage();
 
             } catch (Exception e) {
                 ipAddress.setText("Fail");

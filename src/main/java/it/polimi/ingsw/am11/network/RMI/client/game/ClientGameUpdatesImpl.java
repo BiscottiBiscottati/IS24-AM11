@@ -51,10 +51,8 @@ public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater)
     }
 
     @Override
-    public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro,
-                            boolean removeMode) {
-        viewUpdater.updateField(nickname, x, y, cardId, isRetro, removeMode);
-
+    public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro) {
+        viewUpdater.updateField(nickname, x, y, cardId, isRetro);
     }
 
     @Override

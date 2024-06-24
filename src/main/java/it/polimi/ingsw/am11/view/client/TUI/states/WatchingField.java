@@ -123,69 +123,6 @@ public class WatchingField extends TUIState {
         }
     }
 
-    private void place(Actuator actuator, ArgParser parser) {
-        List<String> positionalArgs = parser.getPositionalArgs();
-
-        if (positionalArgs.size() == 2) {
-            String secondWord = parser.getPositionalArgs().get(1);
-            switch (secondWord.toLowerCase()) {
-                case "?", "help" -> {
-                    errorsHappensEvenTwice(helpPlace);
-                    alreadyError = true;
-                    TuiStates.printAskLine(this);
-                    return;
-                }
-            }
-        }
-
-        if (positionalArgs.size() != 5) {
-            errorsHappensEvenTwice("ERROR: wrong number of arguments for place command");
-            alreadyError = true;
-            TuiStates.printAskLine(this);
-            return;
-        }
-        int x;
-        int y;
-        int cardId;
-        String frontOrRetro = parser.getPositionalArgs().get(4).toLowerCase();
-        try {
-            x = Integer.parseInt(positionalArgs.get(1));
-            y = Integer.parseInt(positionalArgs.get(2));
-            cardId = Integer.parseInt(positionalArgs.get(3));
-        } catch (NumberFormatException e) {
-            errorsHappensEvenTwice("ERROR: Invalid arguments, <x>, <y> and <cardId> have to be an" +
-                                   " integer");
-            alreadyError = true;
-            TuiStates.printAskLine(this);
-            return;
-        }
-
-        if (! model.getCliPlayer(model.myName()).getSpace().getPlayerHand().contains(cardId)) {
-            errorsHappensEvenTwice("ERROR: You don't have this card in your hand");
-            alreadyError = true;
-            TuiStates.printAskLine(this);
-            return;
-        }
-
-
-        switch (frontOrRetro.toLowerCase()) {
-            case "front" -> {
-                actuator.place(x, y, cardId, false);
-                model.setiPlaced(true);
-            }
-            case "retro" -> {
-                actuator.place(x, y, cardId, true);
-                model.setiPlaced(true);
-            }
-            default -> {
-                errorsHappensEvenTwice("ERROR: Invalid argument, specify front or retro ");
-                alreadyError = true;
-                TuiStates.printAskLine(this);
-            }
-        }
-    }
-
-
     @Override
     public void restart(boolean dueToEx, @Nullable Exception exception) {
         if (model.table().getStatus().equals(GameStatus.ARMAGEDDON)) {
@@ -248,42 +185,6 @@ public class WatchingField extends TUIState {
         System.out.println("\033[F" + "\033[K" + text);
     }
 
-    private void get(Actuator actuator, ArgParser parser) {
-        List<String> positionalArgs = parser.getPositionalArgs();
-
-        Set<String> playerList = model.getPlayers();
-
-        String secondWord = parser.getPositionalArgs().get(1);
-
-        if (positionalArgs.size() == 2) {
-            if (playerList.contains(secondWord)) {
-                currentFieldShowed = secondWord;
-                refresh();
-                return;
-            }
-
-            switch (secondWord.toLowerCase()) {
-                case "?", "help" -> {
-                    errorsHappensEvenTwice(helpGet);
-                    alreadyError = true;
-                    TuiStates.printAskLine(this);
-                }
-                case "table" -> actuator.setTuiState(TuiStates.WATCHING_TABLE);
-                case "chat" -> actuator.setTuiState(TuiStates.CHAT);
-                default -> {
-                    errorsHappensEvenTwice("ERROR: " + secondWord + " is not a valid option");
-                    alreadyError = true;
-                    TuiStates.printAskLine(this);
-                }
-            }
-        } else {
-            errorsHappensEvenTwice("ERROR: wrong number of arguments for get command");
-            alreadyError = true;
-            TuiStates.printAskLine(this);
-        }
-
-    }
-
     private void refresh() {
         if (model.table().getStatus().equals(GameStatus.ARMAGEDDON)) {
             gameStatus = "ATTENTION: the game is going to end in 2 rounds!";
@@ -325,6 +226,104 @@ public class WatchingField extends TUIState {
         }
 
         TuiStates.printAskLine(this);
+    }
+
+    private void get(Actuator actuator, ArgParser parser) {
+        List<String> positionalArgs = parser.getPositionalArgs();
+
+        Set<String> playerList = model.getPlayers();
+
+        String secondWord = parser.getPositionalArgs().get(1);
+
+        if (positionalArgs.size() == 2) {
+            if (playerList.contains(secondWord)) {
+                currentFieldShowed = secondWord;
+                refresh();
+                return;
+            }
+
+            switch (secondWord.toLowerCase()) {
+                case "?", "help" -> {
+                    errorsHappensEvenTwice(helpGet);
+                    alreadyError = true;
+                    TuiStates.printAskLine(this);
+                }
+                case "table" -> actuator.setTuiState(TuiStates.WATCHING_TABLE);
+                case "chat" -> actuator.setTuiState(TuiStates.CHAT);
+                default -> {
+                    errorsHappensEvenTwice("ERROR: " + secondWord + " is not a valid option");
+                    alreadyError = true;
+                    TuiStates.printAskLine(this);
+                }
+            }
+        } else {
+            errorsHappensEvenTwice("ERROR: wrong number of arguments for get command");
+            alreadyError = true;
+            TuiStates.printAskLine(this);
+        }
+
+    }
+
+    private void place(Actuator actuator, ArgParser parser) {
+        List<String> positionalArgs = parser.getPositionalArgs();
+
+        if (positionalArgs.size() == 2) {
+            String secondWord = parser.getPositionalArgs().get(1);
+            switch (secondWord.toLowerCase()) {
+                case "?", "help" -> {
+                    errorsHappensEvenTwice(helpPlace);
+                    alreadyError = true;
+                    TuiStates.printAskLine(this);
+                    return;
+                }
+            }
+        }
+
+        if (positionalArgs.size() != 5) {
+            errorsHappensEvenTwice("ERROR: wrong number of arguments for place command");
+            alreadyError = true;
+            TuiStates.printAskLine(this);
+            return;
+        }
+        int x;
+        int y;
+        int cardId;
+        String frontOrRetro = parser.getPositionalArgs().get(4).toLowerCase();
+        try {
+            x = Integer.parseInt(positionalArgs.get(1));
+            y = Integer.parseInt(positionalArgs.get(2));
+            cardId = Integer.parseInt(positionalArgs.get(3));
+        } catch (NumberFormatException e) {
+            errorsHappensEvenTwice("ERROR: Invalid arguments, <x>, <y> and <cardId> have to be an" +
+                                   " integer");
+            alreadyError = true;
+            TuiStates.printAskLine(this);
+            return;
+        }
+
+        if (! model.getCliPlayer(model.myName()).getSpace().getPlayerHand().contains(cardId)) {
+            errorsHappensEvenTwice("ERROR: You don't have this card in your hand");
+            alreadyError = true;
+            TuiStates.printAskLine(this);
+            return;
+        }
+
+
+        switch (frontOrRetro.toLowerCase()) {
+            case "front" -> {
+                actuator.place(x, y, cardId, false);
+                model.setIPlaced(true);
+            }
+            case "retro" -> {
+                actuator.place(x, y, cardId, true);
+                model.setIPlaced(true);
+            }
+            default -> {
+                errorsHappensEvenTwice("ERROR: Invalid argument, specify front or retro ");
+                alreadyError = true;
+                TuiStates.printAskLine(this);
+            }
+        }
     }
 }
 

@@ -33,17 +33,12 @@ public class CodexNaturalis extends Application implements GuiObserver {
     private final GuiUpdater guiUpdater;
 
     private final GuiResources guiResources;
-
-    private StackPane rootSmall;
-    private Parent rootBig;
-
-
-    Stage primaryStage;
-    Scene scene;
-    Font font, fontBig;
-    int WindowSize, halfButtonSize, distanceToBorder;
-    GamePage gamePage;
-    FXMLLoader fxmlLoader;
+    private Stage primaryStage;
+    private Font font, fontBig;
+    private int WindowSize, halfButtonSize, distanceToBorder;
+    private GamePage gamePage;
+    private FXMLLoader fxmlLoader;
+    private StackPane initialRoot;
     private FrameHandler frameHandler;
 
     public CodexNaturalis() {
@@ -52,26 +47,33 @@ public class CodexNaturalis extends Application implements GuiObserver {
         this.guiActuator = new GuiActuator(guiUpdater);
     }
 
+    public static void showNetworkPage() {
+        NetworkPage.showNetworkPage();
+    }
+
+    public static void showWaitingRoomPage() {
+        WaitingRoomPage.showWaitingRoomPage();
+    }
+
+    public GuiResources getGuiResources() {
+        return guiResources;
+    }
+
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         fxmlLoader = new FXMLLoader(getClass().getResource(
-                "/it/polimi/ingsw/am11/view/client/GUI/windows/GamePage.fxml"));
-        try {
-            rootBig = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        rootBig.setVisible(false);
+                "windows/GamePage.fxml"));
 
         try {
             initializeGUI();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        FrameHandler.setIcons(guiResources, primaryStage, rootSmall);
+        FrameHandler.setIcons(guiResources, primaryStage, initialRoot);
 
-        scene = new Scene(rootSmall, WindowSize, WindowSize, javafx.scene.paint.Color.BLACK);
+        Scene scene = new Scene(initialRoot, WindowSize, WindowSize,
+                                javafx.scene.paint.Color.BLACK);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -79,14 +81,13 @@ public class CodexNaturalis extends Application implements GuiObserver {
         LoadingScreen.animateLoadingScreen();
     }
 
-    public void initializeGUI() throws IOException {
+    private void initializeGUI() throws IOException {
         setFullScreen(false);
         font = Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
                              1.5 * halfButtonSize);
-        fontBig =
-                Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
-                              3 * halfButtonSize);
-        rootSmall = new StackPane();
+        fontBig = Font.loadFont(guiResources.getUrlString(GuiResEnum.CLOISTER_BLACK),
+                                3 * halfButtonSize);
+        initialRoot = new StackPane();
 
         LoadingScreen.createLoadingScreen(this);
         NetworkPage.createNetworkPage(this);
@@ -94,7 +95,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
         WaitingRoomPage.createWaitingRoomPage(this);
         SetNumOfPlayersPage.createNumOfPlayersPage(this);
         gamePage = fxmlLoader.getController();
-
     }
 
     public void setFullScreen(boolean fullScreen) {
@@ -108,14 +108,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
             halfButtonSize = WindowSize / 48;
             distanceToBorder = halfButtonSize >> 2;
         }
-    }
-
-    public GuiResources getGuiResources() {
-        return guiResources;
-    }
-
-    public StackPane getRootSmall() {
-        return rootSmall;
     }
 
     public int getWindowSize() {
@@ -146,22 +138,13 @@ public class CodexNaturalis extends Application implements GuiObserver {
         return guiUpdater.getMiniGameModel();
     }
 
-    public void showNetworkPage() {
-        NetworkPage.showNetworkPage();
-    }
-
-    public void showWaitingRoomPage() {
-        WaitingRoomPage.showWaitingRoomPage();
-    }
-
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
         gamePage.updateDeckTop(type, color);
     }
 
     @Override
-    public void updateField(String nickname, int x, int y, int cardId, boolean isRetro,
-                            boolean removeMode) {
+    public void updateField(String nickname, int x, int y, int cardId, boolean isRetro) {
 
     }
 
@@ -219,11 +202,11 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void receiveStarterCard(int cardId) {
-        System.out.println("Received starter card in gui: " + cardId);
+        LOGGER.info("Received starter card in gui: {}", cardId);
         Platform.runLater(() -> {
             SetStarterCardsPage setStarterCardsPage = new SetStarterCardsPage(this);
             setStarterCardsPage.createStarterCardsPage(cardId);
-            System.out.println("Created StarterCardPage");
+            LOGGER.info("Created StarterCardPage");
             hideWaitingRoomPage();
             setStarterCardsPage.showStarterCardsPage();
             try {
@@ -249,7 +232,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
         showSetNumOfPlayersPage();
     }
 
-    public void showSetNumOfPlayersPage() {
+    public static void showSetNumOfPlayersPage() {
         SetNumOfPlayersPage.showSetNumOfPlayersPage();
     }
 
@@ -268,19 +251,28 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     }
 
-    public void hideWaitingRoomPage() {
+    public static void hideWaitingRoomPage() {
         WaitingRoomPage.hideWaitingRoomPage();
     }
 
-    public void showSettingNickPage() {
+    public static void showSettingNickPage() {
         SetNickPage.showSettingNickPage();
     }
 
     public void showGamePage() {
-        rootSmall.setVisible(false);
-        GamePage.showGamePage(rootBig);
+        Parent ongoingRoot;
+        try {
+            ongoingRoot = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ongoingRoot.setVisible(true);
         primaryStage.setScene(
-                new Scene(rootBig, WindowSize, WindowSize, javafx.scene.paint.Color.BLACK));
+                new Scene(ongoingRoot, WindowSize, WindowSize, javafx.scene.paint.Color.BLACK));
         this.setFullScreen(true);
+    }
+
+    public StackPane getInitialRoot() {
+        return initialRoot;
     }
 }

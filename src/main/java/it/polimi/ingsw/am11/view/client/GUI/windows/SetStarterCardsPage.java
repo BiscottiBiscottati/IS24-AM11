@@ -33,7 +33,7 @@ public class SetStarterCardsPage {
 
     public void createStarterCardsPage(int cardId) {
         this.miniGameModel = codexNaturalis.getMiniGameModel();
-        root = codexNaturalis.getRootSmall();
+        root = codexNaturalis.getInitialRoot();
         font = codexNaturalis.getFont();
         halfButtonSize = codexNaturalis.getHalfButtonSize();
         guiResources = codexNaturalis.getGuiResources();
@@ -85,7 +85,7 @@ public class SetStarterCardsPage {
             vbox.setVisible(false);
             guiActuator.setStarterCard(false);
             miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().setStarterIsRetro(false);
-            codexNaturalis.showWaitingRoomPage();
+            CodexNaturalis.showWaitingRoomPage();
         });
 
         cardRetro.setOnMouseClicked(event -> {
@@ -96,7 +96,7 @@ public class SetStarterCardsPage {
             vbox.setVisible(false);
             guiActuator.setStarterCard(true);
             miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().setStarterIsRetro(true);
-            codexNaturalis.showWaitingRoomPage();
+            CodexNaturalis.showWaitingRoomPage();
         });
 
 
