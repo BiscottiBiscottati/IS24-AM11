@@ -16,8 +16,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
-
 public class SetStarterCardsPage {
     private static CodexNaturalis codexNaturalis;
     private static StackPane root;
@@ -82,7 +80,6 @@ public class SetStarterCardsPage {
             layout.setVisible(false);
             vbox.setVisible(false);
             guiActuator.setStarterCard(false);
-            miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().setStarterIsRetro(false);
             WaitingRoomPage.showWaitingRoomPage();
         });
 
@@ -93,7 +90,6 @@ public class SetStarterCardsPage {
             layout.setVisible(false);
             vbox.setVisible(false);
             guiActuator.setStarterCard(true);
-            miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().setStarterIsRetro(true);
             WaitingRoomPage.showWaitingRoomPage();
         });
 

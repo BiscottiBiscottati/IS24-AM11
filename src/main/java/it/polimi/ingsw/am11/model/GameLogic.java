@@ -871,11 +871,7 @@ public class GameLogic implements GameModel {
 
         if (playerManager.areAllReconnected()) isLoadedGame = false;
 
-        ReconnectionModelMemento memento = new ReconnectionModelMemento(pickablesTable.savePublic(),
-                                                                        plateau.save(),
-                                                                        playerManager.save(
-                                                                                nickname));
-        pcs.fireEvent(new ReconnectionEvent(nickname, memento));
+        reSyncWith(nickname);
     }
 
     @Override
@@ -919,6 +915,15 @@ public class GameLogic implements GameModel {
         );
         isLoadedGame = true;
         playerManager.getPlayers().forEach(this::disconnectPlayer);
+    }
+
+    @Override
+    public void reSyncWith(@NotNull String nickname) {
+        ReconnectionModelMemento memento = new ReconnectionModelMemento(pickablesTable.savePublic(),
+                                                                        plateau.save(),
+                                                                        playerManager.save(
+                                                                                nickname));
+        pcs.fireEvent(new ReconnectionEvent(nickname, memento));
     }
 
     private void checkIfGameCanContinue(@NotNull String nickname) {

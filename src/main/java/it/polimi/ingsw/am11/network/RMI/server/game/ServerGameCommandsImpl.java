@@ -109,4 +109,13 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
         CentralController.INSTANCE.setNumOfPlayers(nick, numOfPlayers);
     }
 
+    @Override
+    public void syncMeUp(@NotNull String nick) {
+        synchronized (views) {
+            if (views.containsKey(nick)) {
+                VirtualPlayerView view = views.get(nick);
+                view.syncMeUp();
+            }
+        }
+    }
 }

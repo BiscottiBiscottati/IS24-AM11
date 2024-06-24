@@ -26,5 +26,5 @@ public interface ServerPlayerConnector {
 
     void notifyGodPlayer();
 
-    void sendReconnection(@NotNull ReconnectionModelMemento memento); //FIXME to implement
+    void sendReconnection(@NotNull ReconnectionModelMemento memento);
 }

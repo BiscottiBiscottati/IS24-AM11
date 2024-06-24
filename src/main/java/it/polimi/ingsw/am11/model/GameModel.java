@@ -121,4 +121,6 @@ public interface GameModel {
     GameModelMemento save();
 
     void load(@NotNull GameModelMemento memento);
+
+    void reSyncWith(@NotNull String nickname);
 }

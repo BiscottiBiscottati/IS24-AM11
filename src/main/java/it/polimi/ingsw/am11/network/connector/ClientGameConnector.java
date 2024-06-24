@@ -31,4 +31,6 @@ public interface ClientGameConnector {
     void setNumOfPlayers(int numOfPlayers);
 
     void setNickname(@NotNull String nickname);
+
+    void syncMeUp();
 }

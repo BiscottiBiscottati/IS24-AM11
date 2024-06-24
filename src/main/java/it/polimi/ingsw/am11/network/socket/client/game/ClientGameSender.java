@@ -71,4 +71,11 @@ public record ClientGameSender(@NotNull PrintWriter out, @NotNull PongHandler po
         pongHandler.start();
         chatSender.setNickname(nickname);
     }
+
+    @Override
+    public void syncMeUp() {
+        ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
+        json.put("method", "syncMeUp");
+        out.println(json);
+    }
 }

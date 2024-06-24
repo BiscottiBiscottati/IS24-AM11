@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.network.socket.server.game;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
@@ -56,9 +55,9 @@ public class ServerGameReceiver implements MessageReceiver {
                                                        PlayableCardType.valueOf(
                                                                jsonNode.get("type").asText()),
                                                        jsonNode.get("cardId").asInt());
-                case "setNumOfPlayers" -> {
-                    playerView.setNumOfPlayers(jsonNode.get("numOfPlayers").asInt());
-                }
+                case "setNumOfPlayers" -> playerView.setNumOfPlayers(jsonNode.get("numOfPlayers")
+                                                                             .asInt());
+                case "syncMeUp" -> playerView.syncMeUp();
             }
 
         } catch (IllegalPlayerSpaceActionException | TurnsOrderException | PlayerInitException |

@@ -146,4 +146,8 @@ public class GameController {
                            })
                            .orElse(false);
     }
+
+    void reSyncPlayer(@NotNull String nickname) {
+        model.reSyncWith(nickname);
+    }
 }

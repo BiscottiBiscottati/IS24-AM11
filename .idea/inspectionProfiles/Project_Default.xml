@@ -17,6 +17,7 @@
     <inspection_tool class="AccessToStaticFieldLockedOnInstance" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredClasses">
         <set>
+          <option value="java.util.concurrent.ExecutorService" />
           <option value="org.slf4j.Logger" />
         </set>
       </option>
