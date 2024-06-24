@@ -2,7 +2,10 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontManager;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontsEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import it.polimi.ingsw.am11.view.client.GUI.utils.Proportions;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -16,33 +19,29 @@ import javafx.scene.text.Font;
 import java.util.List;
 import java.util.Set;
 
+import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
+
 public class SetObjCardsPage {
-    private final CodexNaturalis codexNaturalis;
-    StackPane root;
-    GuiResources guiResources;
-    GuiActuator guiActuator;
-    Label message;
-    ImageView cardImage1, cardImage2;
-    HBox layout;
-    VBox vbox;
-    Font font;
-    int halfButtonSize;
-    List<Integer> cardIdList;
-    MiniGameModel miniGameModel;
-
-    public SetObjCardsPage(CodexNaturalis codexNaturalis) {
-        this.codexNaturalis = codexNaturalis;
-        this.miniGameModel = codexNaturalis.getMiniGameModel();
-    }
+    private static CodexNaturalis codexNaturalis;
+    private static StackPane root;
+    private static GuiResources guiResources;
+    private static GuiActuator guiActuator;
+    private static Label message;
+    private static ImageView cardImage1, cardImage2;
+    private static HBox layout;
+    private static VBox vbox;
+    private static Font font;
+    private static List<Integer> cardIdList;
+    private static MiniGameModel miniGameModel;
 
 
-    public void createObjCardsPage(Set<Integer> cardId) {
+    public static void createObjCardsPage(CodexNaturalis codexNaturalis, Set<Integer> cardId) {
+        SetObjCardsPage.codexNaturalis = codexNaturalis;
+        SetObjCardsPage.miniGameModel = codexNaturalis.getMiniGameModel();
 
-
-        root = codexNaturalis.getInitialRoot();
-        font = codexNaturalis.getFont();
-        halfButtonSize = codexNaturalis.getHalfButtonSize();
-        guiResources = codexNaturalis.getGuiResources();
+        root = codexNaturalis.getSmallRoot();
+        font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+                Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
         guiActuator = codexNaturalis.getGuiActuator();
         message = new Label("Choose your objective card:");
         message.setFont(font);
@@ -79,7 +78,7 @@ public class SetObjCardsPage {
         }
     }
 
-    public void showObjCardsPage() {
+    public static void showObjCardsPage() {
         message.setVisible(true);
         layout.setVisible(true);
         vbox.setVisible(true);
@@ -92,7 +91,7 @@ public class SetObjCardsPage {
             vbox.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.getFirst());
             miniGameModel.addPersonalObjective(cardIdList.getFirst());
-            CodexNaturalis.showWaitingRoomPage();
+            WaitingRoomPage.showWaitingRoomPage();
         });
 
         cardImage2.setOnMouseClicked(event -> {
@@ -103,7 +102,7 @@ public class SetObjCardsPage {
             vbox.setVisible(false);
             guiActuator.setPersonalObjective(cardIdList.get(1));
             miniGameModel.addPersonalObjective(cardIdList.get(1));
-            CodexNaturalis.showWaitingRoomPage();
+            WaitingRoomPage.showWaitingRoomPage();
         });
 
 

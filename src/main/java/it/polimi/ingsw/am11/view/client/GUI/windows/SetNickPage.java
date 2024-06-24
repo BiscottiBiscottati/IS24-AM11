@@ -2,6 +2,9 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontManager;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontsEnum;
+import it.polimi.ingsw.am11.view.client.GUI.utils.Proportions;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,6 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.util.regex.Pattern;
+
+import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.DISTANCE_TO_BORDER;
+import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
 
 public class SetNickPage {
     private static final Pattern SPACE_SPLIT = Pattern.compile("\\s+");
@@ -30,12 +36,14 @@ public class SetNickPage {
         SetNickPage.codexNaturalis = codexNaturalis;
 
         guiActuator = codexNaturalis.getGuiActuator();
-        StackPane root = codexNaturalis.getInitialRoot();
+        StackPane root = codexNaturalis.getSmallRoot();
         miniGameModel = codexNaturalis.getMiniGameModel();
-        font = codexNaturalis.getFont();
-        fontBig = codexNaturalis.getFontBig();
-        halfButtonSize = codexNaturalis.getHalfButtonSize();
-        distanceToBorder = codexNaturalis.getDistanceToBorder();
+        font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+                Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
+        fontBig = FontManager.getFont(FontsEnum.CLOISTER_BLACK,
+                                      (int) (Proportions.HALF_BUTTON_SIZE.getValue() * 3));
+        halfButtonSize = HALF_BUTTON_SIZE.getValue();
+        distanceToBorder = DISTANCE_TO_BORDER.getValue();
         writeNick = new TextField();
 
         writeNick.setAlignment(Pos.CENTER);
@@ -127,7 +135,7 @@ public class SetNickPage {
                 yourName.setVisible(false);
                 nameAlreadyTaken.setVisible(false);
                 goToNetwork.setVisible(false);
-                CodexNaturalis.showWaitingRoomPage();
+                WaitingRoomPage.showWaitingRoomPage();
             }
         });
 
@@ -138,7 +146,7 @@ public class SetNickPage {
             nameAlreadyTaken.setVisible(false);
             goToNetwork.setVisible(false);
 
-            CodexNaturalis.showNetworkPage();
+            WaitingRoomPage.showWaitingRoomPage();
         });
     }
 }

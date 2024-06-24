@@ -2,6 +2,9 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontManager;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontsEnum;
+import it.polimi.ingsw.am11.view.client.GUI.utils.Proportions;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,6 +13,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
+import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.DISTANCE_TO_BORDER;
+import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
 
 public class SetNumOfPlayersPage {
     private static CodexNaturalis codexNaturalis;
@@ -25,11 +31,12 @@ public class SetNumOfPlayersPage {
     public static void createNumOfPlayersPage(CodexNaturalis codexNaturalis) {
         SetNumOfPlayersPage.codexNaturalis = codexNaturalis;
 
-        font = codexNaturalis.getFont();
-        halfButtonSize = codexNaturalis.getHalfButtonSize();
+        font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+                Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
+        halfButtonSize = HALF_BUTTON_SIZE.getValue();
         guiActuator = codexNaturalis.getGuiActuator();
-        distanceToBorder = codexNaturalis.getDistanceToBorder();
-        root = codexNaturalis.getInitialRoot();
+        distanceToBorder = DISTANCE_TO_BORDER.getValue();
+        root = codexNaturalis.getSmallRoot();
 
         numOfPlayers = new Label("Number of players:");
         numOfPlayers.setBackground(Background.EMPTY);
@@ -73,7 +80,7 @@ public class SetNumOfPlayersPage {
     }
 
     public static void showSetNumOfPlayersPage() {
-        CodexNaturalis.hideWaitingRoomPage();
+        WaitingRoomPage.hideWaitingRoomPage();
         numOfPlayers.setVisible(true);
         writeNumOfPlayers.setVisible(true);
         enterNumOfPlayers.setVisible(true);
@@ -86,7 +93,7 @@ public class SetNumOfPlayersPage {
                 enterNumOfPlayers.setVisible(false);
                 numOfPlayers.setVisible(false);
                 writeNumOfPlayers.setVisible(false);
-                CodexNaturalis.showWaitingRoomPage();
+                WaitingRoomPage.showWaitingRoomPage();
                 invalidNumOfPlayers.setVisible(false);
             }
         });

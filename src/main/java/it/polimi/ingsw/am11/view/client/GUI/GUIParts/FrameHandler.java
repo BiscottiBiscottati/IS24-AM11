@@ -20,7 +20,7 @@ public class FrameHandler {
     //This class is responsible for setting the frame of the application, the frame is the top
     // bar of the application, and the icons of the application.
 
-    public static void setIcons(GuiResources guiResources, Stage stage, StackPane root) {
+    public static void setIcons(Stage stage, StackPane root) {
 
         //Proportions
         int size = (int) (Math.min(Screen.getPrimary().getBounds().getHeight(),
@@ -33,14 +33,14 @@ public class FrameHandler {
         stage.setTitle("CodexNaturalis");
 
         //Set icon on the application bar
-        stage.getIcons().add(guiResources.getTheImage(GuiResEnum.ICON));
+        stage.getIcons().add(GuiResources.getTheImage(GuiResEnum.ICON));
 
         //Set icon on the taskbar/dock
         if (Taskbar.isTaskbarSupported()) {
             var taskbar = Taskbar.getTaskbar();
             if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {
                 final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-                var dockIcon = defaultToolkit.getImage(guiResources.getTheUrl(GuiResEnum.ICON));
+                var dockIcon = defaultToolkit.getImage(GuiResources.getTheUrl(GuiResEnum.ICON));
                 taskbar.setIconImage(dockIcon);
             }
         }
@@ -62,7 +62,7 @@ public class FrameHandler {
 
         //Close Button
 
-        ImageView closeCross = guiResources.getTheImageView(GuiResEnum.CLOSE_CROSS);
+        ImageView closeCross = GuiResources.getTheImageView(GuiResEnum.CLOSE_CROSS);
         closeCross.setFitHeight(2 * halfButtonSize);
         closeCross.setPreserveRatio(true);
         closeCross.setOpacity(0.5);
@@ -82,7 +82,7 @@ public class FrameHandler {
 
         //Minimize Button
 
-        ImageView minimizeBar = guiResources.getTheImageView(GuiResEnum.MINIMIZE_BAR);
+        ImageView minimizeBar = GuiResources.getTheImageView(GuiResEnum.MINIMIZE_BAR);
         minimizeBar.setFitHeight(2 * halfButtonSize);
         minimizeBar.setPreserveRatio(true);
         minimizeBar.setOpacity(0.5);

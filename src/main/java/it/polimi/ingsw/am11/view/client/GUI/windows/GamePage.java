@@ -5,8 +5,7 @@ import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
-import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
-import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import it.polimi.ingsw.am11.view.client.GUI.utils.*;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import it.polimi.ingsw.am11.view.client.miniModel.utils.CardInfo;
 import javafx.application.Platform;
@@ -111,11 +110,12 @@ public class GamePage {
 
         this.codexNaturalis = codexNaturalis;
         this.miniGameModel = codexNaturalis.getMiniGameModel();
-        Font font = codexNaturalis.getFont();
-        guiResources = codexNaturalis.getGuiResources();
+        Font font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+                Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
+
         guiActuator = codexNaturalis.getGuiActuator();
 
-        GPBackground = guiResources.getTheImageView(GuiResEnum.GAME_BACKGROUND);
+        GPBackground = GuiResources.getTheImageView(GuiResEnum.GAME_BACKGROUND);
 
 
         List<Label> labels = List.of(decksLabel, visiblesLabel, handLabel, objLabel,

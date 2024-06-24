@@ -26,7 +26,7 @@ module it.polimi.ingsw.am11 {
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
     exports it.polimi.ingsw.am11;
-    
+
     exports it.polimi.ingsw.am11.view.client.GUI to javafx.graphics;
     exports it.polimi.ingsw.am11.view.client.GUI.utils;
     opens it.polimi.ingsw.am11.view.client.GUI.utils to javafx.fxml;
@@ -49,6 +49,7 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.model.cards.utils.enums;
     exports it.polimi.ingsw.am11.controller.exceptions;
     exports it.polimi.ingsw.am11.view.client.GUI.windows;
+    exports it.polimi.ingsw.am11.view.client.miniModel;
     opens it.polimi.ingsw.am11.view.client.GUI.windows to javafx.fxml;
 
     exports it.polimi.ingsw.am11.model.utils.memento to com.fasterxml.jackson.databind;

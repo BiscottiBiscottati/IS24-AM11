@@ -2,7 +2,10 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontManager;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontsEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import it.polimi.ingsw.am11.view.client.GUI.utils.Proportions;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -13,30 +16,25 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
+
 public class SetStarterCardsPage {
-    private final CodexNaturalis codexNaturalis;
-    StackPane root;
-    GuiResources guiResources;
-    GuiActuator guiActuator;
-    Label message;
-    ImageView cardImage, cardRetro;
-    HBox layout;
-    VBox vbox;
-    Font font;
-    int halfButtonSize;
-    MiniGameModel miniGameModel;
+    private static CodexNaturalis codexNaturalis;
+    private static StackPane root;
+    private static GuiActuator guiActuator;
+    private static Label message;
+    private static ImageView cardImage, cardRetro;
+    private static HBox layout;
+    private static VBox vbox;
+    private static Font font;
+    private static MiniGameModel miniGameModel;
 
-    public SetStarterCardsPage(CodexNaturalis codexNaturalis) {
-        this.codexNaturalis = codexNaturalis;
-    }
+    public static void createStarterCardsPage(CodexNaturalis codexNaturalis, int cardId) {
+        SetStarterCardsPage.codexNaturalis = codexNaturalis;
 
-
-    public void createStarterCardsPage(int cardId) {
-        this.miniGameModel = codexNaturalis.getMiniGameModel();
-        root = codexNaturalis.getInitialRoot();
-        font = codexNaturalis.getFont();
-        halfButtonSize = codexNaturalis.getHalfButtonSize();
-        guiResources = codexNaturalis.getGuiResources();
+        root = codexNaturalis.getSmallRoot();
+        font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+                Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
         guiActuator = codexNaturalis.getGuiActuator();
         message = new Label("This is your starter card:");
         message.setFont(font);
@@ -44,11 +42,11 @@ public class SetStarterCardsPage {
         message.setBackground(Background.EMPTY);
         vbox = new VBox(10);
         try {
-            cardImage = guiResources.getImageView(cardId);
+            cardImage = GuiResources.getImageView(cardId);
             cardImage.setFitHeight(75);
             cardImage.setFitWidth(120);
 
-            cardRetro = guiResources.getCardImageRetro(cardId);
+            cardRetro = GuiResources.getCardImageRetro(cardId);
             cardRetro.setFitHeight(75);
             cardRetro.setFitWidth(120);
         } catch (Exception e) {
@@ -72,7 +70,7 @@ public class SetStarterCardsPage {
         }
     }
 
-    public void showStarterCardsPage() {
+    public static void showStarterCardsPage() {
         message.setVisible(true);
         layout.setVisible(true);
         vbox.setVisible(true);
@@ -85,7 +83,7 @@ public class SetStarterCardsPage {
             vbox.setVisible(false);
             guiActuator.setStarterCard(false);
             miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().setStarterIsRetro(false);
-            CodexNaturalis.showWaitingRoomPage();
+            WaitingRoomPage.showWaitingRoomPage();
         });
 
         cardRetro.setOnMouseClicked(event -> {
@@ -96,7 +94,7 @@ public class SetStarterCardsPage {
             vbox.setVisible(false);
             guiActuator.setStarterCard(true);
             miniGameModel.getCliPlayer(miniGameModel.myName()).getSpace().setStarterIsRetro(true);
-            CodexNaturalis.showWaitingRoomPage();
+            WaitingRoomPage.showWaitingRoomPage();
         });
 
 

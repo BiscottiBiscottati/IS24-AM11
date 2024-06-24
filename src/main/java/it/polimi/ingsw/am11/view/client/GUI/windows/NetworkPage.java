@@ -2,6 +2,9 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontManager;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontsEnum;
+import it.polimi.ingsw.am11.view.client.GUI.utils.Proportions;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +14,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
+import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.DISTANCE_TO_BORDER;
+import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
 
 public class NetworkPage {
     private static CodexNaturalis codexNaturalis;
@@ -25,11 +31,13 @@ public class NetworkPage {
     public static void createNetworkPage(CodexNaturalis codexNaturalis) {
         NetworkPage.codexNaturalis = codexNaturalis;
 
-        StackPane root = codexNaturalis.getInitialRoot();
-        font = codexNaturalis.getFont();
-        halfButtonSize = codexNaturalis.getHalfButtonSize();
+        StackPane root = codexNaturalis.getSmallRoot();
+        font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+                Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
+
+        halfButtonSize = HALF_BUTTON_SIZE.getValue();
         guiActuator = codexNaturalis.getGuiActuator();
-        distanceToBorder = codexNaturalis.getDistanceToBorder();
+        distanceToBorder = DISTANCE_TO_BORDER.getValue();
 
         theBox = new VBox(2 * halfButtonSize);
         theBox.setAlignment(Pos.CENTER);
@@ -167,7 +175,7 @@ public class NetworkPage {
                 connectionType.setVisible(false);
                 joinButton.setVisible(false);
 
-                CodexNaturalis.showSettingNickPage();
+                SetNickPage.showSettingNickPage();
 
             } catch (Exception e) {
                 ipAddress.setText("Fail");
