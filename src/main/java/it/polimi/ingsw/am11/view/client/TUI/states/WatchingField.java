@@ -23,7 +23,7 @@ public class WatchingField extends TUIState {
     static final String askLine = "Try to ask something >>> \033[K";
     static final String askForCommand = "What you wanna do? Place a card? >>> \033[K";
     private static final String helpPlace = "HELP: place <x> <y> <cardId> <front/retro> \033[K";
-    private static final String helpGet = "GET: get <table/[nickname]> \033[K";
+    private static final String helpGet = "GET: get <table/[nickname]/chat> \033[K";
     private static String gameStatus = "";
     private boolean alreadyError = false;
     private String currentFieldShowed = "";

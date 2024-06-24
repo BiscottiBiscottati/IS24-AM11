@@ -22,7 +22,7 @@ public class WatchingTable extends TUIState {
     static final String askLine = "Try to ask something >>> \033[K";
     static final String askForCommand = "What you wanna do? Draw a card? >>> \033[K";
     private static final String helpDraw = "HELP: draw <cardId/gold/resource> \033[K";
-    private static final String helpGet = "GET: get <table/[nickname]> \033[K";
+    private static final String helpGet = "GET: get <table/[nickname]/chat> \033[K";
     private static String gameStatus = "";
     private boolean alreadyError = false;
 
@@ -196,6 +196,9 @@ public class WatchingTable extends TUIState {
                     errorsHappensEvenTwice("You already are watching the table");
                     alreadyError = true;
                     System.out.print(askLine);
+                }
+                case "chat" -> {
+                    actuator.setTuiState(TuiStates.CHAT);
                 }
                 default -> {
                     errorsHappensEvenTwice("ERROR: " + secondWord + " is not a valid option");

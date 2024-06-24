@@ -57,6 +57,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         this.currentState = new AtomicReference<>(tuiStates.get(startingState));
         this.exceptionReceiver = new TuiExceptionReceiver(model, this);
         this.homeState = new AtomicReference<>();
+        this.homeState.set(tuiStates.get(startingState));
     }
 
     /**
@@ -366,8 +367,9 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
         LOGGER.debug("Reconnection event received");
-        model.setMyName(candidateNick);
+        reset(TuiStates.CONNECTING);
         model.load(memento);
+        model.setMyName(candidateNick);
 
         //Set Tui
         switch (model.table().getStatus()) {
