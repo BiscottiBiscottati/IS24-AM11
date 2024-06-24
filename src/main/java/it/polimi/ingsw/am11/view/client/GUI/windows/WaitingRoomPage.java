@@ -1,6 +1,9 @@
 package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontManager;
+import it.polimi.ingsw.am11.view.client.GUI.utils.FontsEnum;
+import it.polimi.ingsw.am11.view.client.GUI.utils.Proportions;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -10,16 +13,15 @@ import javafx.scene.text.Font;
 public class WaitingRoomPage {
     private static CodexNaturalis codexNaturalis;
     private static ProgressIndicator loadingWheel;
-    private static StackPane root;
-    private static Font font;
     private static Label waitingForPlayers;
 
 
     public static void createWaitingRoomPage(CodexNaturalis codexNaturalis) {
         WaitingRoomPage.codexNaturalis = codexNaturalis;
 
-        root = codexNaturalis.getInitialRoot();
-        font = codexNaturalis.getFont();
+        StackPane root = codexNaturalis.getSmallRoot();
+        Font font = FontManager.getFont(FontsEnum.CLOISTER_BLACK,
+                                        (int) (Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
         waitingForPlayers = new Label("Waiting...");
         loadingWheel = new ProgressIndicator();
         root.getChildren().addAll(waitingForPlayers, loadingWheel);

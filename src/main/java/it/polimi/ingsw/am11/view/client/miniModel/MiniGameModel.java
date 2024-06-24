@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.view.client.miniModel;
 
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
-import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.utils.TurnAction;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import org.jetbrains.annotations.NotNull;
@@ -72,14 +71,6 @@ public class MiniGameModel {
         return table;
     }
 
-    public void addPoints(String nickname, int val) {
-        playerMap.get(nickname).addPoints(val);
-    }
-
-    public int getPoints(String nickname) {
-        return playerMap.get(nickname).getPoints();
-    }
-
     public @Nullable Map<String, Integer> getFinalLeaderboard() {
         return finalLeaderboard;
     }
@@ -112,10 +103,6 @@ public class MiniGameModel {
 
     public void addCandidateObjectives(Set<Integer> candidates) {
         playerMap.get(myName).getSpace().addCandidateObjectives(candidates);
-    }
-
-    public void place(String nickname, Position pos, int cardId, boolean isRetro) {
-        playerMap.get(nickname).getField().place(pos, cardId, isRetro);
     }
 
     public void load(@NotNull ReconnectionModelMemento memento) {

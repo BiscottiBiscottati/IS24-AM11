@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.windows.LoadingScreen;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 import java.util.EnumMap;
@@ -14,14 +15,9 @@ public class GuiResources {
 
     //Contains an enum map that links resources URLs to an enum
     //It has also the methods to get the resources like Images, ImageViews ...
-    private final EnumMap<GuiResEnum, URL> urlMap;
+    private static final EnumMap<GuiResEnum, URL> urlMap = new EnumMap<>(GuiResEnum.class);
 
-
-    public GuiResources() {
-        urlMap = new EnumMap<>(GuiResEnum.class);
-    }
-
-    public static Image getTopDeck(PlayableCardType type, Color color) {
+    public static @Nullable Image getTopDeck(PlayableCardType type, Color color) {
         String urlString = "";
         String typeName = "";
         String colorName = "";
@@ -54,27 +50,27 @@ public class GuiResources {
         }
     }
 
-    public ImageView getTheImageView(GuiResEnum res) {
-        Image image = new Image(String.valueOf(this.getTheUrl(res)));
+    public static ImageView getTheImageView(GuiResEnum res) {
+        Image image = new Image(String.valueOf(GuiResources.getTheUrl(res)));
         return new ImageView(image);
     }
 
-    public URL getTheUrl(GuiResEnum name) {
+    public static URL getTheUrl(GuiResEnum name) {
         if (urlMap.get(name) == null) {
             urlMap.put(name, LoadingScreen.class.getResource(name.getFileName()));
         }
         return urlMap.get(name);
     }
 
-    public Image getTheImage(GuiResEnum res) {
-        return new Image(String.valueOf(this.getTheUrl(res)));
+    public static Image getTheImage(GuiResEnum res) {
+        return new Image(String.valueOf(GuiResources.getTheUrl(res)));
     }
 
-    public String getUrlString(GuiResEnum name) {
+    public static String getUrlString(GuiResEnum name) {
         return String.valueOf(getTheUrl(name));
     }
 
-    public Image getCardImage(int cardId) {
+    public static @Nullable Image getCardImage(int cardId) {
         String urlString = "";
         try {
             URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
@@ -88,7 +84,7 @@ public class GuiResources {
         }
     }
 
-    public ImageView getImageView(int cardId) {
+    public static @Nullable ImageView getImageView(int cardId) {
         String urlString = "";
         try {
             URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
@@ -103,7 +99,7 @@ public class GuiResources {
         }
     }
 
-    public ImageView getCardImageRetro(int cardId) {
+    public static @Nullable ImageView getCardImageRetro(int cardId) {
         System.out.println("CardId: " + cardId);
         String urlString = "";
         try {
@@ -120,7 +116,7 @@ public class GuiResources {
         }
     }
 
-    public Image getRetro(PlayableCardType typeName, Color colorName) {
+    public static @Nullable Image getRetro(PlayableCardType typeName, Color colorName) {
         String urlString = "";
         System.out.println("typeName: " + typeName);
         System.out.println("colorName: " + colorName);

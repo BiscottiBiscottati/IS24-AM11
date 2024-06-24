@@ -10,6 +10,8 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
+import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.SQUARE_SIZE;
+
 public class LoadingScreen {
     private static final Duration FADE_TIME = Duration.millis(300);
     private static final Duration ROTATION_TIME = Duration.millis(800);
@@ -21,22 +23,21 @@ public class LoadingScreen {
 
     private static CodexNaturalis codexNaturalis;
 
-    public static void createLoadingScreen(@NotNull CodexNaturalis codexNaturalis) {
+    public static void createLoadingScreen(CodexNaturalis codexNaturalis) {
         LoadingScreen.codexNaturalis = codexNaturalis;
 
-        GuiResources guiResources = codexNaturalis.getGuiResources();
-        StackPane root = codexNaturalis.getInitialRoot();
-        size = codexNaturalis.getWindowSize();
+        StackPane root = codexNaturalis.getSmallRoot();
+        size = SQUARE_SIZE.getValue();
 
-        lDBackground = guiResources.getTheImageView(GuiResEnum.LGIN_BACKGROUND);
-        lDSquare = guiResources.getTheImageView(GuiResEnum.LGIN_SQUARE);
-        lDWritings = guiResources.getTheImageView(GuiResEnum.LGIN_WRITINGS);
-        lDDisks = guiResources.getTheImageView(GuiResEnum.LGIN_DISK);
+        lDBackground = GuiResources.getTheImageView(GuiResEnum.LGIN_BACKGROUND);
+        lDSquare = GuiResources.getTheImageView(GuiResEnum.LGIN_SQUARE);
+        lDWritings = GuiResources.getTheImageView(GuiResEnum.LGIN_WRITINGS);
+        lDDisks = GuiResources.getTheImageView(GuiResEnum.LGIN_DISK);
 
-        wolf = guiResources.getTheImageView(GuiResEnum.WOLF_ICON);
-        butterfly = guiResources.getTheImageView(GuiResEnum.BUTTERLFY_ICON);
-        mushroom = guiResources.getTheImageView(GuiResEnum.MUSHROOM_ICON);
-        leaf = guiResources.getTheImageView(GuiResEnum.LEAF_ICON);
+        wolf = GuiResources.getTheImageView(GuiResEnum.WOLF_ICON);
+        butterfly = GuiResources.getTheImageView(GuiResEnum.BUTTERLFY_ICON);
+        mushroom = GuiResources.getTheImageView(GuiResEnum.MUSHROOM_ICON);
+        leaf = GuiResources.getTheImageView(GuiResEnum.LEAF_ICON);
         sqT = new SequentialTransition();
         prT = new ParallelTransition();
         root.getChildren().addAll(lDBackground, lDSquare, lDWritings, lDDisks,
@@ -150,7 +151,7 @@ public class LoadingScreen {
 
         //no more necessary
         sqT.onFinishedProperty().set(event -> {
-            CodexNaturalis.showNetworkPage();
+            NetworkPage.showNetworkPage();
         });
 
 
