@@ -10,7 +10,6 @@ public record ClientChatReceiver(@NotNull ClientChatUpdater chatUpdater)
 
     @Override
     public void receive(@NotNull JsonNode jsonNode) {
-        // FIXME to fix
         // Switch on the method
         switch (jsonNode.get("method").asText()) {
             case "sendPublicMsg" -> chatUpdater.receiveMsg(jsonNode.get("sender").asText(),

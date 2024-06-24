@@ -29,6 +29,7 @@ public final class ClientChatConnectorImpl
     public void pubMsg(@NotNull String msg) {
         try {
             if (sender == null) return;
+            LOGGER.debug("CLIENT RMI: Sending public message: {}", msg);
             ((ServerChatInterface) registry.lookup("chat"))
                     .pubMsg(sender, msg);
         } catch (RemoteException | NotBoundException e) {
@@ -40,6 +41,7 @@ public final class ClientChatConnectorImpl
     public void pubPrivateMsg(@NotNull String recipient, @NotNull String msg) {
         try {
             if (sender == null) return;
+            LOGGER.debug("CLIENT RMI: Sending private message to {}: {}", recipient, msg);
             ((ServerChatInterface) registry.lookup("chat"))
                     .pubPrivateMsg(sender, recipient, msg);
         } catch (RemoteException | NotBoundException e) {
