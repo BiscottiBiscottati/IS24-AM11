@@ -16,6 +16,8 @@ public record ClientChatReceiver(@NotNull ClientChatUpdater chatUpdater)
                                                            jsonNode.get("msg").asText());
             case "sendPrivateMsg" -> chatUpdater.receivePrivateMsg(jsonNode.get("sender").asText(),
                                                                    jsonNode.get("msg").asText());
+            case "confirmSentMsg" -> chatUpdater.confirmSentMsg(jsonNode.get("sender").asText(),
+                                                                jsonNode.get("msg").asText());
         }
     }
 }
