@@ -11,8 +11,6 @@ import it.polimi.ingsw.am11.view.client.miniModel.utils.CardInfo;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,10 +20,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,7 @@ public class GamePage {
 
     private static final Logger log = LoggerFactory.getLogger(GamePage.class);
     private static Parent root1;
+    private static Stage primaryStage;
     GuiResources guiResources;
     MiniGameModel miniGameModel;
     CodexNaturalis codexNaturalis;
@@ -49,6 +51,8 @@ public class GamePage {
     Position selectedPosition;
     int centreX;
     int centreY;
+    VBox commentsBox;
+    Popup popup = new Popup();
 
     @FXML
     Label decksLabel;
@@ -113,9 +117,11 @@ public class GamePage {
     public GamePage() throws IOException {
     }
 
-    public static void showGamePage(@NotNull Parent root1) {
+    public static void showGamePage(@NotNull Parent root1, Stage primaryStage) {
         GamePage.root1 = root1;
+        GamePage.primaryStage = primaryStage;
         root1.setVisible(true);
+
     }
 
     public void createGamePage(@NotNull CodexNaturalis codexNaturalis) throws IOException {
@@ -272,7 +278,7 @@ public class GamePage {
             boolean isRetro = miniGameModel.getCliPlayer(miniGameModel.myName())
                                            .getField()
                                            .getCardsPositioned()
-                                           .get(Position.of(0,0)).isRetro();
+                                           .get(Position.of(0, 0)).isRetro();
             if (! isRetro) {
                 Image cardImage = GuiResources.getCardImage(cardId);
                 ImageView starterCard = new ImageView(cardImage);
@@ -287,6 +293,29 @@ public class GamePage {
             }
             createButtonsForAvailablePositions();
         });
+    }
+
+    public void createButtonsForAvailablePositions() {
+        availablePositions = miniGameModel.getCliPlayer(
+                miniGameModel.myName()).getField().getAvailablePositions();
+        // Rimuovi tutti i bottoni esistenti dal cardField
+        cardField.getChildren().removeIf(Button.class::isInstance);
+        // Crea un nuovo bottone per ogni posizione disponibile
+        for (Position position : availablePositions) {
+            Button newButton = new Button();
+            int realX = position.x() * 75 + centreX;
+            int realY = position.y() * 50 + centreY;
+            newButton.setTranslateX(realX);
+            newButton.setTranslateY(- realY);
+            System.out.println("Button position: " + realX + " " + realY);
+            newButton.setOnMouseClicked(event -> {
+                selectedPosition = position;
+                System.out.println("Selected position: " + selectedPosition
+                                   + "real position" + realX + " " + realY);
+            });
+
+            cardField.getChildren().add(newButton);
+        }
     }
 
     public void updateTurnChange(String nickname) {
@@ -368,29 +397,6 @@ public class GamePage {
     public void chooseVis4(MouseEvent mouseEvent) {
         guiActuator.drawCard(true, PlayableCardType.GOLD,
                              shownPlayable.stream().skip(3).findFirst().orElse(0));
-    }
-
-    public void createButtonsForAvailablePositions() {
-        availablePositions = miniGameModel.getCliPlayer(
-                miniGameModel.myName()).getField().getAvailablePositions();
-        // Rimuovi tutti i bottoni esistenti dal cardField
-        cardField.getChildren().removeIf(Button.class::isInstance);
-        // Crea un nuovo bottone per ogni posizione disponibile
-        for (Position position : availablePositions) {
-            Button newButton = new Button();
-            int realX = position.x() * 75 + centreX;
-            int realY = position.y() * 50 + centreY;
-            newButton.setTranslateX(realX);
-            newButton.setTranslateY(-realY);
-            System.out.println("Button position: " + realX + " " + realY);
-            newButton.setOnMouseClicked(event -> {
-                selectedPosition = position;
-                System.out.println("Selected position: " + selectedPosition
-                + "real position" + realX + " " + realY);
-            });
-
-            cardField.getChildren().add(newButton);
-        }
     }
 
     public void card1Selected(MouseEvent mouseEvent) {
@@ -517,38 +523,78 @@ public class GamePage {
     public void openChatBox(ActionEvent actionEvent) {
         System.out.println("Chat button pressed");
         VBox chatBox = new VBox();
-        chatBox.setStyle("-fx-background-color: black; -fx-padding: 10px;");
 
         ScrollPane scrollPane = new ScrollPane();
-        VBox commentsBox = new VBox();
+        commentsBox = new VBox();
+        chatBox.setPrefWidth(500);
+        chatBox.setPrefHeight(400);
+        chatBox.setStyle("-fx-background-color: black; -fx-padding: 10px;");
         miniGameModel.getChatMessages().forEach(comment -> {
             Label commentLabel = new Label(comment);
             commentsBox.getChildren().add(commentLabel);
+            commentsBox.setAlignment(javafx.geometry.Pos.TOP_LEFT);
         });
         scrollPane.setContent(commentsBox);
-        scrollPane.setPrefHeight(200);
+        scrollPane.setPrefHeight(300);
 
         TextField commentField = new TextField();
 
-        Button sendButton = new Button("Invia");
+        Button goBackButton = new Button("Close");
+        goBackButton.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
+        goBackButton.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
+        goBackButton.setTextFill(Color.web("#351F17"));
+        goBackButton.setOnMousePressed(
+                event -> goBackButton.setStyle(
+                        "-fx-background-color: #685C19; -fx-background-radius: 5"));
+        goBackButton.setOnMouseReleased(event -> goBackButton.setStyle(
+                "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
+
+        Button sendButton = new Button("Send");
+        sendButton.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
+        sendButton.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
+        sendButton.setTextFill(Color.web("#351F17"));
+        sendButton.setOnMousePressed(
+                event -> sendButton.setStyle(
+                        "-fx-background-color: #685C19; -fx-background-radius: 5"));
+        sendButton.setOnMouseReleased(event -> sendButton.setStyle(
+                "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
+
         sendButton.setOnAction(e -> {
             String comment = commentField.getText();
             guiActuator.sendChatMessage(comment);
-            miniGameModel.addChatMessage(comment);
             commentField.clear();
         });
 
-        if (root1.getParent() instanceof StackPane rootStackPane) {
-            rootStackPane.getChildren().add(chatBox);
+        HBox chatInput = new HBox();
+        chatInput.getChildren().addAll(commentField, sendButton, goBackButton);
 
-            StackPane.setAlignment(chatBox, Pos.BOTTOM_LEFT);
-            StackPane.setMargin(chatBox, new Insets(20)); // Aggiungi un margine di 20 pixel
-        } else {
-            System.err.println("Il parent di root1 non è uno StackPane");
-        }
+        chatBox.getChildren().addAll(scrollPane, chatInput);
 
-        chatBox.setLayoutX(root1.getLayoutBounds().getWidth() - chatBox.getWidth() - 20);
-        chatBox.setLayoutY(root1.getLayoutBounds().getHeight() - chatBox.getHeight() - 20);
+        popup.getContent().add(chatBox);
+        popup.setAutoHide(false); // Impedisce al popup di chiudersi automaticamente
+
+
+        popup.show(chatButton,
+                   chatButton.localToScreen(chatButton.getBoundsInLocal()).getMinX() + 20,
+                   chatButton.localToScreen(chatButton.getBoundsInLocal()).getMinY() - 100);
+
+        goBackButton.setOnAction(e -> {
+            popup.hide();
+        });
+
+    }
+
+    public void updateChat() {
+        Platform.runLater(() -> {
+            if (popup.isShowing()) {
+                commentsBox.getChildren().clear();
+                miniGameModel.getChatMessages().forEach(comment -> {
+                    Label commentLabel = new Label(comment);
+                    commentsBox.getChildren().add(commentLabel);
+                    commentsBox.setAlignment(javafx.geometry.Pos.TOP_LEFT);
+                });
+            }
+        });
     }
 }
 

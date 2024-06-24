@@ -197,10 +197,15 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     }
 
+    @Override
+    public void updateChat() {
+        System.out.println("Chat updated");
+        gamePage.updateChat();
+    }
 
     private void showGamePage() {
         smallRoot.setVisible(false);
-        GamePage.showGamePage(bigRoot);
+        GamePage.showGamePage(bigRoot, primaryStage);
         primaryStage.setScene(
                 new Scene(bigRoot, Proportions.RECTANGLE_SIZE.getValue(),
                           Proportions.RECTANGLE_SIZE.getValue(),

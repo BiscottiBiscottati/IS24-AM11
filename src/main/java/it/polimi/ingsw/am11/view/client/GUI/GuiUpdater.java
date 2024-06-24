@@ -226,21 +226,22 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveMsg(@NotNull String sender, @NotNull String msg) {
         miniGameModel.addChatMessage("[PUBLIC] " + sender + ": " + msg);
-        //TODO implement in gui
+        guiObserver.updateChat();
     }
 
     @Override
     public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
         miniGameModel.addChatMessage("[PRIVATE] " + sender + ": " + msg);
-        //TODO implement in gui
+        guiObserver.updateChat();
     }
 
     @Override
     public void confirmSentMsg(@NotNull String sender, @NotNull String msg) {
+        LOGGER.debug("Message sent confirmation received");
         if (sender.equals(miniGameModel.myName())) {
             miniGameModel.addChatMessage("[YOU] " + sender + ": " + msg);
         }
-        //TODO implement in gui
+        guiObserver.updateChat();
     }
 
     public MiniGameModel getMiniGameModel() {

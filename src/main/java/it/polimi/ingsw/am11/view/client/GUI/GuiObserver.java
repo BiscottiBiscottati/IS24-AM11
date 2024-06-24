@@ -44,4 +44,6 @@ public interface GuiObserver {
     void updateNumOfPlayers(int numOfPlayers);
 
     void disconnectedFromServer();
+
+    void updateChat();
 }
