@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.view.client;
 import it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException;
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.*;
+import org.jetbrains.annotations.NotNull;
 
 public interface ExceptionThrower {
 
@@ -12,7 +13,7 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(IllegalPlayerSpaceActionException ex);
+    void throwException(@NotNull IllegalPlayerSpaceActionException ex);
 
     /**
      * Handles the TurnsOrderException, thrown when the player tries to perform an action while it's
@@ -20,7 +21,7 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(TurnsOrderException ex);
+    void throwException(@NotNull TurnsOrderException ex);
 
     /**
      * Handles the PlayerInitException, thrown when the player tries to initialize the game with an
@@ -28,7 +29,7 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(PlayerInitException ex);
+    void throwException(@NotNull PlayerInitException ex);
 
     /**
      * Handles the IllegalCardPlacingException, thrown when the player tries to place a card in an
@@ -36,7 +37,7 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(IllegalCardPlacingException ex);
+    void throwException(@NotNull IllegalCardPlacingException ex);
 
     /**
      * Handles the IllegalPickActionException, thrown when the player tries to pick that is not
@@ -44,7 +45,7 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(IllegalPickActionException ex);
+    void throwException(@NotNull IllegalPickActionException ex);
 
     /**
      * Handles the NotInHandException, thrown when the player tries to use a card that is not in his
@@ -52,7 +53,7 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(NotInHandException ex);
+    void throwException(@NotNull NotInHandException ex);
 
     /**
      * Handles the EmptyDeckException, thrown when the player tries to draw a card from an empty
@@ -60,7 +61,7 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(EmptyDeckException ex);
+    void throwException(@NotNull EmptyDeckException ex);
 
     /**
      * Handles the NumOfPlayersException, thrown when the player tries to set an invalid number of
@@ -68,7 +69,7 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(NumOfPlayersException ex);
+    void throwException(@NotNull NumOfPlayersException ex);
 
     /**
      * Handles the NotGodPlayerException, thrown when the player tries to perform an action that is
@@ -76,7 +77,7 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(NotGodPlayerException ex);
+    void throwException(@NotNull NotGodPlayerException ex);
 
     /**
      * Handles the GameStatusException, thrown when the player tries to perform an action that is
@@ -84,7 +85,7 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(GameStatusException ex);
+    void throwException(@NotNull GameStatusException ex);
 
     /**
      * Handles the NotSetNumOfPlayerException, thrown when the player tries to connect before the
@@ -92,15 +93,15 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(NotSetNumOfPlayerException ex);
+    void throwException(@NotNull NotSetNumOfPlayerException ex);
 
     /**
      * Handles the IllegalPlateauActionException, thrown when the player tries to perform an action
-     * that is not allowed on the plateau
+     * not allowed on the plateau
      *
      * @param ex the exception thrown
      */
-    void throwException(IllegalPlateauActionException ex);
+    void throwException(@NotNull IllegalPlateauActionException ex);
 
     /**
      * Handles the MaxHandSizeException, thrown when the player tries to draw a card when his hand
@@ -108,5 +109,5 @@ public interface ExceptionThrower {
      *
      * @param ex the exception thrown
      */
-    void throwException(MaxHandSizeException ex);
+    void throwException(@NotNull MaxHandSizeException ex);
 }

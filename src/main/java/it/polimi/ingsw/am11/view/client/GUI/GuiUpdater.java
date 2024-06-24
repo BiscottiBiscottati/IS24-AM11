@@ -22,10 +22,9 @@ import java.util.Set;
 
 public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(GuiUpdater.class);
-
-    private GuiExceptionReceiver exceptionReceiver;
     private final GuiObserver guiObserver;
     MiniGameModel miniGameModel;
+    private GuiExceptionReceiver exceptionReceiver;
     private String candidateNick = "";
 
     public GuiUpdater(GuiObserver guiObserver) {
@@ -42,7 +41,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updateDeckTop(@NotNull PlayableCardType type, Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
         LOGGER.debug("{} picked a card from the {} deck, the {} deck top card is now {}",
                      miniGameModel.getCurrentTurn(), type.getName(), type.getName(),
                      color.getColumnName());
@@ -153,7 +152,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void receiveCandidateObjective(Set<Integer> cardId) {
+    public void receiveCandidateObjective(@NotNull Set<Integer> cardId) {
         cardId.forEach(
                 x -> LOGGER.debug("Receive candidate objective event, card id: {}", x));
 

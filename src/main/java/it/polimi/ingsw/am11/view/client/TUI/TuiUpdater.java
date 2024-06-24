@@ -302,7 +302,7 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      * @param cardId Set of card id
      */
     @Override
-    public void receiveCandidateObjective(Set<Integer> cardId) {
+    public void receiveCandidateObjective(@NotNull Set<Integer> cardId) {
         model.addCandidateObjectives(cardId);
         cardId.forEach(
                 x -> LOGGER.debug("Receive candidate objective event, card id: {}", x));

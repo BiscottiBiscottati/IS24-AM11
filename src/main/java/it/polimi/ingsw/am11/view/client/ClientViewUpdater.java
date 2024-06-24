@@ -108,7 +108,7 @@ public interface ClientViewUpdater {
      *
      * @param cardId Set of card id
      */
-    void receiveCandidateObjective(Set<Integer> cardId);
+    void receiveCandidateObjective(@NotNull Set<Integer> cardId);
 
     /**
      * Notify the player that he is the god player, the god player is the moderator of the game. It
