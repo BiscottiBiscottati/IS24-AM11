@@ -3,12 +3,14 @@ package it.polimi.ingsw.am11.view.client.GUI;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
+import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import it.polimi.ingsw.am11.view.client.miniModel.exceptions.SyncIssueException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +54,13 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro) {
         LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {},",
                      nickname, x, y, cardId, isRetro);
+        try {
+            miniGameModel.getCliPlayer(nickname).getField()
+                         .place(new Position(x, y), cardId, isRetro);
+        } catch (SyncIssueException e) {
+            //TODO handle this exception
+            throw new RuntimeException(e);
+        }
 
         guiObserver.updateField(nickname, x, y, cardId, isRetro);
 
