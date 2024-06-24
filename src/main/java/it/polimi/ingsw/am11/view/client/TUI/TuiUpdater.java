@@ -360,8 +360,8 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
         LOGGER.debug("Reconnection event received");
-        model.load(memento);
         model.setMyName(candidateNick);
+        model.load(memento);
 
         //Set Tui
         switch (model.table().getStatus()) {

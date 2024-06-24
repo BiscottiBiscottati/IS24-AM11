@@ -205,6 +205,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
                 new Scene(bigRoot, Proportions.SQUARE_SIZE.getValue(),
                           Proportions.SQUARE_SIZE.getValue(),
                           javafx.scene.paint.Color.BLACK));
-        primaryStage.setResizable(true);
+        primaryStage.setFullScreen(true);
     }
 }
