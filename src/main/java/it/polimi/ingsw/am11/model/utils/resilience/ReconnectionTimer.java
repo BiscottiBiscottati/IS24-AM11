@@ -108,7 +108,13 @@ public class ReconnectionTimer {
             public void run() {
                 isWaitingForReconnection = false;
                 CentralController.INSTANCE.destroyGame();
+                currentTurnTimer.cancel();
             }
         }, RECONNECTION_TIME);
+    }
+
+    public void cancelAll() {
+        reconnectionTimer.cancel();
+        currentTurnTimer.cancel();
     }
 }

@@ -711,7 +711,6 @@ public class GameLogic implements GameModel {
             plateau.setStatus(GameStatus.LAST_TURN);
         }
 
-        // TODO to implement logic when all player are disconnected
         if (playerManager.isCurrentDisconnected()) {
             LOGGER.info("MODEL: Player {} is disconnected, skipping his turn",
                         playerManager.getCurrentTurnPlayer().orElseThrow());
@@ -856,7 +855,12 @@ public class GameLogic implements GameModel {
         playerManager.disconnectPlayer(player);
         pcs.removeListener(nickname);
 
-        if (! isLoadedGame) checkIfGameCanContinue(nickname);
+        if (! isLoadedGame) {
+            checkIfGameCanContinue();
+            if (playerManager.isTurnOf(nickname)) {
+                reconnectionTimer.disconnectCurrent(nickname, playerManager.getCurrentAction());
+            }
+        }
     }
 
     @Override
@@ -932,15 +936,11 @@ public class GameLogic implements GameModel {
         pcs.fireEvent(new ReconnectionEvent(nickname, memento));
     }
 
-    private void checkIfGameCanContinue(@NotNull String nickname) {
+    private void checkIfGameCanContinue() {
         if (playerManager.areAllDisconnected()) {
             LOGGER.info("MODEL: All players are disconnected, stopping the game");
             CentralController.INSTANCE.destroyGame();
-            return;
-        }
-
-        if (playerManager.isTurnOf(nickname)) {
-            reconnectionTimer.disconnectCurrent(nickname, playerManager.getCurrentAction());
+            reconnectionTimer.cancelAll();
         }
     }
 
