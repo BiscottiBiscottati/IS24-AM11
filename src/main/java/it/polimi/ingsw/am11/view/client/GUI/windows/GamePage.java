@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -49,6 +50,7 @@ public class GamePage {
     Set<Integer> hand;
     Set<Position> availablePositions;
     Position selectedPosition;
+    List<Integer> handIDs;
     int centreX;
     int centreY;
     VBox commentsBox;
@@ -114,7 +116,7 @@ public class GamePage {
     ImageView commonObj2;
 
 
-    public GamePage() throws IOException {
+    public GamePage() {
     }
 
     public static void showGamePage(@NotNull Parent root1, Stage primaryStage) {
@@ -178,6 +180,7 @@ public class GamePage {
 
         centreX = (int) (cardField.getWidth() / 2);
         centreY = (int) (cardField.getHeight() / 2);
+        handIDs = new ArrayList<>(3);
 
         chatButton.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
         chatButton.setFont(font);
@@ -231,6 +234,7 @@ public class GamePage {
             handCard1.setImage(null);
             handCard2.setImage(null);
             handCard3.setImage(null);
+            handIDs.clear();
             List<ImageView> handCards = List.of(handCard1, handCard2, handCard3);
             hand = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getPlayerHand();
@@ -241,6 +245,7 @@ public class GamePage {
                         if (handCard.getImage() == null) {
                             handCard.setImage(cardImage);
                             handCard.getParent().layout();
+                            handIDs.add(cardId);
                             break;
                         }
                     }
@@ -401,9 +406,7 @@ public class GamePage {
 
     public void card1Selected(MouseEvent mouseEvent) {
         System.out.println("Card 1 selected");
-        int id = miniGameModel.getCliPlayer(
-                miniGameModel.myName()).getSpace().getPlayerHand().stream().findFirst().orElse(
-                0);
+        int id = handIDs.get(0);
         handCard1.setOnMouseClicked(event -> {
             System.out.println("Card id: " + id);
             if (event.getButton() == MouseButton.SECONDARY) {
@@ -440,16 +443,12 @@ public class GamePage {
 
     public void card2Selected(MouseEvent mouseEvent) {
         System.out.println("Card 2 selected");
-        int id = miniGameModel.getCliPlayer(
-                miniGameModel.myName()).getSpace().getPlayerHand().stream().skip(
-                1).findFirst().orElse(
-                0);
+        int id = handIDs.get(1);
         handCard2.setOnMouseClicked(event -> {
             System.out.println("Card id: " + id);
             if (event.getButton() == MouseButton.SECONDARY) {
                 boolean isRetro = handCard2.getImage().getUrl().contains(
                         "retro"); // Verifica se è già retro
-
                 Image cardImage;
                 if (isRetro) {
                     // Mostra il fronte se è già retro
@@ -469,28 +468,23 @@ public class GamePage {
                 handCard2.setImage(cardImage);
                 handCard2.getParent().layout();
             } else if (event.getButton() == MouseButton.PRIMARY) {
-                cardField.setOnMouseClicked(event1 -> {
-                    double x = event.getX();
-                    double y = event.getY();
-                    boolean isRetro = handCard2.getImage().getUrl().contains("retro");
-                    guiActuator.placeCard((int) x, (int) y, id, isRetro);
-                });
+                boolean isRetro = handCard2.getImage().getUrl().contains("retro");
+                int x = selectedPosition.x();
+                int y = selectedPosition.y();
+                guiActuator.placeCard(x, y, id, isRetro);
+                System.out.println("Card placed at: " + x + " " + y);
             }
         });
     }
 
     public void card3Selected(MouseEvent mouseEvent) {
-        System.out.println("Card 3 selected");
-        int id = miniGameModel.getCliPlayer(
-                miniGameModel.myName()).getSpace().getPlayerHand().stream().skip(
-                2).findFirst().orElse(
-                0);
+        System.out.println("Card 2 selected");
+        int id = handIDs.get(2);
         handCard3.setOnMouseClicked(event -> {
             System.out.println("Card id: " + id);
             if (event.getButton() == MouseButton.SECONDARY) {
                 boolean isRetro = handCard3.getImage().getUrl().contains(
                         "retro"); // Verifica se è già retro
-
                 Image cardImage;
                 if (isRetro) {
                     // Mostra il fronte se è già retro
@@ -510,12 +504,11 @@ public class GamePage {
                 handCard3.setImage(cardImage);
                 handCard3.getParent().layout();
             } else if (event.getButton() == MouseButton.PRIMARY) {
-                cardField.setOnMouseClicked(event1 -> {
-                    double x = event.getX();
-                    double y = event.getY();
-                    boolean isRetro = handCard3.getImage().getUrl().contains("retro");
-                    guiActuator.placeCard((int) x, (int) y, id, isRetro);
-                });
+                boolean isRetro = handCard2.getImage().getUrl().contains("retro");
+                int x = selectedPosition.x();
+                int y = selectedPosition.y();
+                guiActuator.placeCard(x, y, id, isRetro);
+                System.out.println("Card placed at: " + x + " " + y);
             }
         });
     }
