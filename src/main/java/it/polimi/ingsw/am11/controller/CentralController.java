@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.network.ServerNetworkManager;
 import it.polimi.ingsw.am11.network.connector.ServerChatConnector;
 import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
@@ -25,9 +26,15 @@ public enum CentralController {
 
     private final @NotNull ChatController chatController;
 
+    private ServerNetworkManager networkManager;
+
     CentralController() {
         this.gameControllers = new ArrayList<>(4);
         this.chatController = new ChatController();
+    }
+
+    public void setNetworkManager(@NotNull ServerNetworkManager networkManager) {
+        this.networkManager = networkManager;
     }
 
     @NotNull
@@ -70,6 +77,7 @@ public enum CentralController {
     public void destroyGame() {
         LOGGER.info("CONTROLLER: Destroying current Game and recreating a new one");
         gameControllers.clear();
+        networkManager.kickAllPlayers();
         chatController.clear();
         createNewGame();
     }

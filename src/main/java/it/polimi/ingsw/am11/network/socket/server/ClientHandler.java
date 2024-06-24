@@ -28,6 +28,7 @@ public class ClientHandler implements Runnable {
     private final @NotNull Socket clientSocket;
     private final @NotNull BufferedReader in;
     private final @NotNull PrintWriter out;
+    private final @NotNull PingHandler pingHandler;
     private @Nullable ServerMessageHandler messageHandler;
     private @Nullable String nickname;
     private boolean isRunning;
@@ -42,6 +43,8 @@ public class ClientHandler implements Runnable {
             // TODO could throw a custom exception
             throw new RuntimeException(e);
         }
+
+        pingHandler = new PingHandler(clientSocket, out);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             stop();
             LOGGER.info("SERVER TCP: Server ClientHandler {} closed", nickname);
@@ -51,6 +54,7 @@ public class ClientHandler implements Runnable {
     public void stop() {
         LOGGER.debug("SERVER TCP: Stopping client handler");
         isRunning = false;
+        pingHandler.close();
         if (messageHandler != null) messageHandler.close();
         try {
             if (! clientSocket.isClosed()) clientSocket.close();
@@ -95,7 +99,6 @@ public class ClientHandler implements Runnable {
                 ServerGameReceiver messageReceiver =
                         new ServerGameReceiver(view, exceptionSender);
                 ServerChatReceiver chatReceiver = new ServerChatReceiver(exceptionSender);
-                PingHandler pingHandler = new PingHandler(clientSocket, out);
 
                 messageHandler = new ServerMessageHandler(messageReceiver, pingHandler,
                                                           chatReceiver);

@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
+import it.polimi.ingsw.am11.network.RMI.client.ClientRMI;
 import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +17,8 @@ import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
 
-public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater)
+public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater,
+                                    @NotNull ClientRMI clientRMI)
         implements ClientGameUpdatesInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientGameUpdatesImpl.class);
@@ -110,6 +112,12 @@ public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater)
     @Override
     public void sendReconnection(@NotNull ReconnectionModelMemento memento) throws RemoteException {
         viewUpdater.receiveReconnection(memento);
+    }
+
+    @Override
+    public void youUgly() {
+        viewUpdater.disconnectedFromServer("Game ended!");
+        clientRMI.close();
     }
 
 

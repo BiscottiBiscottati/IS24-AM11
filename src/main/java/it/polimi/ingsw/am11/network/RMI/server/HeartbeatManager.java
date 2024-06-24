@@ -56,7 +56,12 @@ public class HeartbeatManager implements HeartbeatInterface {
     }
 
     public void close() {
-        lastHeartbeat.clear();
+        clear();
         heartbeatsService.shutdown();
+        disconnectService.shutdown();
+    }
+
+    public void clear() {
+        lastHeartbeat.clear();
     }
 }

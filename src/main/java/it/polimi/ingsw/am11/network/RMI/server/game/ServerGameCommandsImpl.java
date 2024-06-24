@@ -43,6 +43,12 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
         }
     }
 
+    public void clearPlayers() {
+        synchronized (views) {
+            views.clear();
+        }
+    }
+
     @Override
     public void setStarterCard(@NotNull String nick, boolean isRetro)
     throws RemoteException, PlayerInitException, IllegalCardPlacingException, GameStatusException {

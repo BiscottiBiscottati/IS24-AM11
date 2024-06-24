@@ -42,9 +42,7 @@ public class SocketManager {
     public void stop() {
         isRunning = false;
         try {
-            for (ClientHandler clientHandler : clientHandlers) {
-                clientHandler.stop();
-            }
+            removeClients();
             threadPool.shutdown(); // Stop accepting new tasks
             if (! threadPool.awaitTermination(10, TimeUnit.SECONDS)) throw new RuntimeException();
             if (! serverSocket.isClosed()) serverSocket.close();
@@ -53,6 +51,12 @@ public class SocketManager {
         } catch (InterruptedException e) {
             LOGGER.error("SERVER TCP: Error while waiting for termination because of {}",
                          e.getMessage());
+        }
+    }
+
+    public void removeClients() {
+        for (ClientHandler clientHandler : clientHandlers) {
+            clientHandler.stop();
         }
     }
 

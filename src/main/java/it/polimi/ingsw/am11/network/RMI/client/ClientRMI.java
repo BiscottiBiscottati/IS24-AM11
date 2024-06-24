@@ -43,7 +43,7 @@ public class ClientRMI implements ClientNetworkHandler {
         Registry registry = LocateRegistry.getRegistry(ip, port);
         LOGGER.debug("CLIENT RMI: Registry located {}", registry.toString());
         // Creating the client remote interface
-        clientObject = new ClientGameUpdatesImpl(updater);
+        clientObject = new ClientGameUpdatesImpl(updater, this);
         gameUpdatesInterface = (ClientGameUpdatesInterface) UnicastRemoteObject.exportObject(
                 clientObject, 0);
         LOGGER.debug("CLIENT RMI: Client Game object exported: {}", gameUpdatesInterface);

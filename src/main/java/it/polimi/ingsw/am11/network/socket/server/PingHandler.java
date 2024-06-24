@@ -60,6 +60,6 @@ public class PingHandler implements Runnable {
     }
 
     public void close() {
-        pingExecutor.shutdown();
+        if (! pingExecutor.isShutdown()) pingExecutor.shutdown();
     }
 }

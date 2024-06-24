@@ -25,6 +25,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerRMI implements ServerLoggable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerRMI.class);
@@ -34,9 +36,11 @@ public class ServerRMI implements ServerLoggable {
     private final @NotNull ServerGameCommandsImpl ServerGameCommands;
     private final @NotNull ServerChatInterfaceImpl chatInterface;
     private final @NotNull HeartbeatManager heartbeatManager;
+    private final @NotNull List<ClientGameUpdatesInterface> playersRemote;
 
     public ServerRMI(int port) {
         this.port = port;
+        this.playersRemote = new ArrayList<>(4);
         try {
             registry = LocateRegistry.createRegistry(port);
         } catch (RemoteException e) {
@@ -112,6 +116,12 @@ public class ServerRMI implements ServerLoggable {
         }
     }
 
+    public void removeAllPlayers() {
+        ServerGameCommands.clearPlayers();
+        playersRemote.forEach(ClientGameUpdatesInterface::youUgly);
+        heartbeatManager.clear();
+    }
+
     public void removePlayer(@NotNull String nick) {
         ServerGameCommands.removePlayer(nick);
     }
@@ -122,9 +132,9 @@ public class ServerRMI implements ServerLoggable {
     throws RemoteException, NumOfPlayersException, PlayerInitException, NotSetNumOfPlayerException,
            GameStatusException {
         LOGGER.debug("SERVER RMI: login: {}, {}", nick, remoteConnector);
+        playersRemote.add(remoteConnector);
         ServerConnectorImpl connector = new ServerConnectorImpl(remoteConnector);
-        ServerChatConnectorImpl chatConnector = new ServerChatConnectorImpl(remoteChat); // FIXME to
-        // fix
+        ServerChatConnectorImpl chatConnector = new ServerChatConnectorImpl(remoteChat);
         ServerGameCommands.addPlayer(nick, connector, chatConnector);
         LOGGER.info("SERVER RMI: Player connected: {}", nick);
     }

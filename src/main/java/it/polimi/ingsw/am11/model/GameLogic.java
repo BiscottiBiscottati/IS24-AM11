@@ -711,6 +711,11 @@ public class GameLogic implements GameModel {
             plateau.setStatus(GameStatus.LAST_TURN);
         }
 
+        if (playerManager.areAllDisconnected()) {
+            LOGGER.info("MODEL: All players are disconnected, waiting for reconnection");
+            return;
+        }
+
         if (playerManager.isCurrentDisconnected()) {
             LOGGER.info("MODEL: Player {} is disconnected, skipping his turn",
                         playerManager.getCurrentTurnPlayer().orElseThrow());
@@ -910,6 +915,9 @@ public class GameLogic implements GameModel {
                                             .findFirst().orElseThrow();
 
         plateau.setWinner(winningPlayer.nickname());
+        pcs.clearListeners();
+        reconnectionTimer.cancelAll();
+        CentralController.INSTANCE.destroyGame();
     }
 
     public @NotNull GameModelMemento save() {
