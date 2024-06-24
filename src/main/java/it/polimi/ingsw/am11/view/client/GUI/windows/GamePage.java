@@ -285,6 +285,7 @@ public class GamePage {
                 starterRetro.setFitWidth(150);
                 cardField.getChildren().add(starterRetro);
             }
+            createButtonsForAvailablePositions();
         });
     }
 
@@ -370,19 +371,22 @@ public class GamePage {
     }
 
     public void createButtonsForAvailablePositions() {
+        availablePositions = miniGameModel.getCliPlayer(
+                miniGameModel.myName()).getField().getAvailablePositions();
         // Rimuovi tutti i bottoni esistenti dal cardField
         cardField.getChildren().removeIf(Button.class::isInstance);
         // Crea un nuovo bottone per ogni posizione disponibile
         for (Position position : availablePositions) {
             Button newButton = new Button();
-            int realX = position.x() * 150 + centreX;
-            int realY = position.y() * 100 + centreY;
+            int realX = position.x() * 75 + centreX;
+            int realY = position.y() * 50 + centreY;
             newButton.setTranslateX(realX);
-            newButton.setTranslateY(realY);
-
+            newButton.setTranslateY(-realY);
+            System.out.println("Button position: " + realX + " " + realY);
             newButton.setOnMouseClicked(event -> {
                 selectedPosition = position;
-                System.out.println("Selected position: " + selectedPosition);
+                System.out.println("Selected position: " + selectedPosition
+                + "real position" + realX + " " + realY);
             });
 
             cardField.getChildren().add(newButton);
