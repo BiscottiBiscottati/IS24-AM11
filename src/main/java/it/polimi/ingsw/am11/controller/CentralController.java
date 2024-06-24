@@ -96,6 +96,12 @@ public enum CentralController {
         return gameControllers.stream().findFirst().orElseThrow();
     }
 
+    public synchronized void reSyncPlayer(@NotNull String nickname) {
+        gameControllers.stream().findFirst()
+                       .orElseThrow()
+                       .reSyncPlayer(nickname);
+    }
+
     public @NotNull ChatController getChatController() {
         return chatController;
     }

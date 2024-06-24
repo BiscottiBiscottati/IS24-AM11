@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.view.client.TUI.printers;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.miniModel.CliField;
+import it.polimi.ingsw.am11.view.client.miniModel.exceptions.SyncIssueException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +17,7 @@ class FieldPrinterTest {
     FieldPrinter renderer;
 
     @BeforeAll
-    static void beforeAll() {
+    static void beforeAll() throws SyncIssueException {
         field = new CliField();
         field.place(new Position(0, 0), 97, true);
         field.place(new Position(- 1, 1), 76, true);

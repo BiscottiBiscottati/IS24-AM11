@@ -6,7 +6,9 @@ public enum Proportions {
     SQUARE_SIZE((int) (Math.min(Screen.getPrimary().getBounds().getHeight(),
                                 Screen.getPrimary().getBounds().getWidth()) * 0.7)),
     HALF_BUTTON_SIZE(Proportions.SQUARE_SIZE.value / 48),
-    DISTANCE_TO_BORDER(Proportions.HALF_BUTTON_SIZE.value >> 2);
+    DISTANCE_TO_BORDER(Proportions.HALF_BUTTON_SIZE.value >> 2),
+    RECTANGLE_SIZE((int) (Math.min(Screen.getPrimary().getBounds().getHeight(),
+                                   Screen.getPrimary().getBounds().getWidth()) * 0.6));
 
     private final int value;
 

@@ -62,6 +62,11 @@ public class VirtualPlayerView {
         cardController.drawCard(fromVisible, type, nickname, cardId);
     }
 
+    public void syncMeUp() {
+        LOGGER.debug("COMMAND: Syncing up for {}", nickname);
+        CentralController.INSTANCE.reSyncPlayer(nickname);
+    }
+
     public void updatePlayer(@NotNull CandidateObjectiveEvent event) {
         LOGGER.debug("EVENT: Candidate objective {} sent to {}", event.getNewValue(), nickname);
         connector.sendCandidateObjective(event.getNewValue());

@@ -12,6 +12,7 @@ import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import it.polimi.ingsw.am11.view.client.miniModel.exceptions.SyncIssueException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,7 +93,12 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {}",
                      nickname, x, y, cardId, isRetro);
         Position pos = new Position(x, y);
-        model.getCliPlayer(nickname).getField().place(pos, cardId, isRetro);
+        try {
+            model.getCliPlayer(nickname).getField().place(pos, cardId, isRetro);
+        } catch (SyncIssueException e) {
+            //TODO to handle
+            throw new RuntimeException(e);
+        }
 
         if (isCurrentState(TuiStates.WATCHING_FIELD)) {
             String[] args = {"notify", nickname};
@@ -360,8 +366,8 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
         LOGGER.debug("Reconnection event received");
-        model.load(memento);
         model.setMyName(candidateNick);
+        model.load(memento);
 
         //Set Tui
         switch (model.table().getStatus()) {

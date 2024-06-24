@@ -101,6 +101,33 @@ public class ClientConnectorImpl implements ClientGameConnector {
     }
 
     @Override
+    public void syncMeUp() {
+        try {
+            future.get();
+        } catch (ExecutionException | InterruptedException ignored) {}
+
+        LOGGER.debug("CLIENT RMI: Sending syncMeUp request to server");
+
+        checkIfNickSet();
+
+        future = commandExecutor.submit(() -> {
+            try {
+                ((ServerGameCommandsInterface) registry.lookup("PlayerView"))
+                        .syncMeUp(nickname.get());
+            } catch (NotBoundException | RemoteException e) {
+                LOGGER.debug("CLIENT RMI: Connection error while syncing up: {}", e.getMessage());
+                updater.disconnectedFromServer(e.getMessage());
+            }
+        });
+    }
+
+    private void checkIfNickSet() {
+        if (nickname.get() == null) {
+            throw new RuntimeException("Nickname not set");
+        }
+    }
+
+    @Override
     public synchronized void setStarterCard(boolean isRetro) {
         try {
             future.get();
@@ -259,11 +286,5 @@ public class ClientConnectorImpl implements ClientGameConnector {
                 exceptionThrower.throwException(e);
             }
         });
-    }
-
-    private void checkIfNickSet() {
-        if (nickname.get() == null) {
-            throw new RuntimeException("Nickname not set");
-        }
     }
 }
