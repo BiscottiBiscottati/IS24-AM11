@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
+import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.network.socket.MessageReceiver;
 import it.polimi.ingsw.am11.network.socket.utils.JsonFactory;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
@@ -110,6 +111,12 @@ public class ClientGameReceiver implements MessageReceiver {
                     break;
                 case "youGodPlayer":
                     clientPlayerView.notifyGodPlayer();
+                    break;
+                case "sendReconnection":
+                    ReconnectionModelMemento memento = JsonFactory.readValue(
+                            jsonNode.get("memento").asText(),
+                            new TypeReference<>() {});
+                    clientPlayerView.receiveReconnection(memento);
                     break;
             }
         } catch (IOException e) {

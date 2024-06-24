@@ -74,6 +74,7 @@ public record ServerGameSender(@NotNull PrintWriter out)
     @Override
     public void sendReconnection(@NotNull ReconnectionModelMemento memento) {
         ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
+        json.put("method", "sendReconnection");
         try {
             json.put("memento", JsonFactory.writeValueAsString(memento));
         } catch (JsonProcessingException e) {
