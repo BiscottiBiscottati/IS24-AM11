@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am11.view.client.miniModel.Utils;
+package it.polimi.ingsw.am11.view.client.miniModel.utils;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.playable.GoldCard;

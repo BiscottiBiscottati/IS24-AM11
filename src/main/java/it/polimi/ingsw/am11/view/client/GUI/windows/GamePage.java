@@ -8,7 +8,7 @@ import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
-import it.polimi.ingsw.am11.view.client.miniModel.Utils.CardInfo;
+import it.polimi.ingsw.am11.view.client.miniModel.utils.CardInfo;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
