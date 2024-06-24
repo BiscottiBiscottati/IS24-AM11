@@ -25,12 +25,12 @@ import java.util.Set;
 public class CodexNaturalis extends Application implements GuiObserver {
     private final GuiActuator guiActuator;
     private final GuiUpdater guiUpdater;
-    private Stage primaryStage;
-    private StackPane smallRoot;
-    private Parent bigRoot;
     Scene scene;
     GamePage gamePage;
     FXMLLoader fxmlLoader;
+    private Stage primaryStage;
+    private StackPane smallRoot;
+    private Parent bigRoot;
 
 
     public CodexNaturalis() {
@@ -202,8 +202,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
         smallRoot.setVisible(false);
         GamePage.showGamePage(bigRoot);
         primaryStage.setScene(
-                new Scene(bigRoot, Proportions.SQUARE_SIZE.getValue(),
-                          Proportions.SQUARE_SIZE.getValue(),
+                new Scene(bigRoot, Proportions.RECTANGLE_SIZE.getValue(),
+                          Proportions.RECTANGLE_SIZE.getValue(),
                           javafx.scene.paint.Color.BLACK));
         primaryStage.setFullScreen(true);
     }
