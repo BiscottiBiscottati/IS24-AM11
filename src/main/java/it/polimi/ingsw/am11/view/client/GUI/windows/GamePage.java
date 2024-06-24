@@ -39,6 +39,7 @@ public class GamePage {
     GuiActuator guiActuator;
     Set<Integer> shownPlayable;
     Set<Integer> hand;
+    Set<Position> availablePositions;
 
     @FXML
     Label decksLabel;
@@ -114,10 +115,7 @@ public class GamePage {
         Font font = codexNaturalis.getFont();
         guiResources = codexNaturalis.getGuiResources();
         guiActuator = codexNaturalis.getGuiActuator();
-
         GPBackground = guiResources.getTheImageView(GuiResEnum.GAME_BACKGROUND);
-
-
         List<Label> labels = List.of(decksLabel, visiblesLabel, handLabel, objLabel,
                                      personalObjLabel);
         for (Label label : labels) {
@@ -254,44 +252,21 @@ public class GamePage {
         Platform.runLater(() -> {
             int cardId = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getStarterCard();
-            boolean isRetro = miniGameModel.getCliPlayer(miniGameModel.myName())
-                                           .getField()
-                                           .getCardsPositioned()
-                                           .get(Position.of(0, 0)).isRetro();
-            guiActuator.setStarterCard(isRetro);
+            boolean isRetro = miniGameModel.getCliPlayer(
+                    miniGameModel.myName()).getSpace().isStarterRetro();
             if (! isRetro) {
                 Image cardImage = guiResources.getCardImage(cardId);
                 ImageView starterCard = new ImageView(cardImage);
                 starterCard.setFitHeight(100);
                 starterCard.setFitWidth(150);
                 cardField.getChildren().add(starterCard);
-            } else if (isRetro) {
+            } else {
                 ImageView starterRetro = guiResources.getCardImageRetro(cardId);
                 starterRetro.setFitHeight(100);
                 starterRetro.setFitWidth(150);
                 cardField.getChildren().add(starterRetro);
             }
-            ImageView place1 = new ImageView();
-            place1.setTranslateX(- 75);
-            place1.setTranslateY(- 50);
-            System.out.println(place1.getTranslateX() + " " + place1.getTranslateY());
-            ImageView place2 = new ImageView();
-            place2.setTranslateX(+ 75);
-            place2.setTranslateY(- 50);
-            ImageView place3 = new ImageView();
-            place3.setTranslateX(- 75);
-            place3.setTranslateY(+ 50);
-            ImageView place4 = new ImageView();
-            place4.setTranslateX(+ 75);
-            place4.setTranslateY(+ 50);
-            List<ImageView> places = List.of(place1, place2, place3, place4);
-            for (ImageView place : places) {
-                place.setFitHeight(100);
-                place.setFitWidth(150);
-                place.setStyle("-fx-background-color: black");
-                place.setImage(guiResources.getCardImage(1));
-                cardField.getChildren().add(place);
-            }
+            guiActuator.placeCard(0, 0, cardId, isRetro);
         });
     }
 
@@ -320,6 +295,19 @@ public class GamePage {
                 }
             }
 
+        });
+    }
+    
+    public void updatePlayerPoints(String nickname, int points) {
+        Platform.runLater(() -> {
+            List<Label> pointsLabels = List.of(pointsPl1, pointsPl2, pointsPl3, pointsPl4);
+            List<Label> playerLabels = List.of(player1, player2, player3, player4);
+            int size = playerLabels.size();
+            for (int i = 0; i < size; i++) {
+                if (playerLabels.get(i).getText().equals(nickname)) {
+                    pointsLabels.get(i).setText(String.valueOf(points));
+                }
+            }
         });
     }
 
@@ -394,13 +382,16 @@ public class GamePage {
         });
 
         cardField.setOnMouseClicked(event -> {
-            double x = event.getX();
-            double y = event.getY();
-            double centreX = cardField.getWidth() / 2;
-            double centreY = cardField.getHeight() / 2;
+            int x = (int) event.getX();
+            int y = (int) event.getY();
+            int centreX = (int) (cardField.getWidth() / 2);
+            int centreY = (int) (cardField.getHeight() / 2);
             System.out.println(x + " " + y);
+            int posX = x - centreX;
+            int posY = y - centreY;
+            System.out.println(posX + " " + posY);
             boolean isRetro = handCard1.getImage().getUrl().contains("retro");
-
+            //guiActuator.placeCard(posX, posY, id, isRetro);
         });
     }
 

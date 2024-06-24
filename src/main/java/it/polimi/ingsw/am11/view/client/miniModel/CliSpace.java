@@ -55,6 +55,10 @@ public class CliSpace {
         starterIsRetro = isRetro;
     }
 
+    public boolean isStarterRetro() {
+        return starterIsRetro;
+    }
+
     public void addPersonalObjective(int cardId) {
         playerObjective.add(cardId);
     }

@@ -160,7 +160,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updatePlayerPoint(String nickname, int points) {
-
+        gamePage.updatePlayerPoints(nickname, points);
     }
 
     @Override
