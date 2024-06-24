@@ -39,6 +39,9 @@ public class GamePage {
     Set<Integer> shownPlayable;
     Set<Integer> hand;
     Set<Position> availablePositions;
+    Position selectedPosition;
+    int centreX;
+    int centreY;
 
     @FXML
     Label decksLabel;
@@ -159,6 +162,9 @@ public class GamePage {
             pointsLabels.get(i).setStyle("-fx-background-radius: 5");
         }
 
+        centreX = (int) (cardField.getWidth() / 2);
+        centreY = (int) (cardField.getHeight() / 2);
+
         chatButton.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
         chatButton.setFont(font);
         chatButton.setTextFill(Color.web("#351F17"));
@@ -255,21 +261,22 @@ public class GamePage {
         Platform.runLater(() -> {
             int cardId = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getSpace().getStarterCard();
-            boolean isRetro = miniGameModel.getCliPlayer(
-                    miniGameModel.myName()).getSpace().isStarterRetro();
+            boolean isRetro = miniGameModel.getCliPlayer(miniGameModel.myName())
+                                           .getField()
+                                           .getCardsPositioned()
+                                           .get(Position.of(0,0)).isRetro();
             if (! isRetro) {
-                Image cardImage = guiResources.getCardImage(cardId);
+                Image cardImage = GuiResources.getCardImage(cardId);
                 ImageView starterCard = new ImageView(cardImage);
                 starterCard.setFitHeight(100);
                 starterCard.setFitWidth(150);
                 cardField.getChildren().add(starterCard);
             } else {
-                ImageView starterRetro = guiResources.getCardImageRetro(cardId);
+                ImageView starterRetro = GuiResources.getCardImageRetro(cardId);
                 starterRetro.setFitHeight(100);
                 starterRetro.setFitWidth(150);
                 cardField.getChildren().add(starterRetro);
             }
-            guiActuator.placeCard(0, 0, cardId, isRetro);
         });
     }
 
@@ -354,6 +361,26 @@ public class GamePage {
                              shownPlayable.stream().skip(3).findFirst().orElse(0));
     }
 
+    public void createButtonsForAvailablePositions() {
+        // Rimuovi tutti i bottoni esistenti dal cardField
+        cardField.getChildren().removeIf(Button.class::isInstance);
+        // Crea un nuovo bottone per ogni posizione disponibile
+        for (Position position : availablePositions) {
+            Button newButton = new Button();
+            int realX = position.x() * 150 + centreX;
+            int realY = position.y() * 100 + centreY;
+            newButton.setTranslateX(realX);
+            newButton.setTranslateY(realY);
+
+            newButton.setOnMouseClicked(event -> {
+                selectedPosition = position;
+                System.out.println("Selected position: " + selectedPosition);
+            });
+
+            cardField.getChildren().add(newButton);
+        }
+    }
+
     public void card1Selected(MouseEvent mouseEvent) {
         System.out.println("Card 1 selected");
         int id = miniGameModel.getCliPlayer(
@@ -384,18 +411,6 @@ public class GamePage {
             handCard1.getParent().layout();
         });
 
-        cardField.setOnMouseClicked(event -> {
-            int x = (int) event.getX();
-            int y = (int) event.getY();
-            int centreX = (int) (cardField.getWidth() / 2);
-            int centreY = (int) (cardField.getHeight() / 2);
-            System.out.println(x + " " + y);
-            int posX = x - centreX;
-            int posY = y - centreY;
-            System.out.println(posX + " " + posY);
-            boolean isRetro = handCard1.getImage().getUrl().contains("retro");
-
-        });
     }
 
     public void card2Selected(MouseEvent mouseEvent) {
