@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(IllegalPlayerSpaceActionException ex) {
+    public void throwException(@NotNull IllegalPlayerSpaceActionException ex) {
         LOGGER.debug("IllegalPlayerSpaceActionException {}", ex.getMessage());
         //CASE: trying to set objective that is not yours
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
@@ -47,7 +48,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(TurnsOrderException ex) {
+    public void throwException(@NotNull TurnsOrderException ex) {
         LOGGER.debug("TurnsOrderException {}", ex.getMessage());
         throw new RuntimeException(ex);
     }
@@ -59,7 +60,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(PlayerInitException ex) {
+    public void throwException(@NotNull PlayerInitException ex) {
         LOGGER.debug("PlayerInitException {}", ex.getMessage());
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
             tuiUpdater.setCandidateNick("");
@@ -77,7 +78,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(IllegalCardPlacingException ex) {
+    public void throwException(@NotNull IllegalCardPlacingException ex) {
         LOGGER.debug("IllegalCardPlacingException {}", ex.getMessage());
         model.setiPlaced(false);
         if (model.table().getStatus().equals(GameStatus.ONGOING) ||
@@ -96,7 +97,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(IllegalPickActionException ex) {
+    public void throwException(@NotNull IllegalPickActionException ex) {
         LOGGER.debug("IllegalPickActionException {}", ex.getMessage());
         tuiUpdater.setTuiState(TuiStates.WATCHING_TABLE);
         tuiUpdater.setHomeState(TuiStates.WATCHING_TABLE);
@@ -110,7 +111,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(NotInHandException ex) {
+    public void throwException(@NotNull NotInHandException ex) {
         LOGGER.debug("NotInHandException {}", ex.getMessage());
         model.setiPlaced(false);
         tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
@@ -125,7 +126,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(EmptyDeckException ex) {
+    public void throwException(@NotNull EmptyDeckException ex) {
         LOGGER.debug("EmptyDeckException {}", ex.getMessage());
         tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
         tuiUpdater.setHomeState(TuiStates.WATCHING_FIELD);
@@ -139,7 +140,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(NumOfPlayersException ex) {
+    public void throwException(@NotNull NumOfPlayersException ex) {
         LOGGER.debug("NumOfPlayersException {}", ex.getMessage());
         if (model.getGodPlayer().equals(model.myName())) {
             tuiUpdater.setTuiState(TuiStates.SETTING_NUM);
@@ -160,7 +161,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(NotGodPlayerException ex) {
+    public void throwException(@NotNull NotGodPlayerException ex) {
         LOGGER.debug("NotGodPlayerException {}", ex.getMessage());
         model.setGodPlayer(null);
         tuiUpdater.setTuiState(TuiStates.SETTING_NAME);
@@ -175,7 +176,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(GameStatusException ex) {
+    public void throwException(@NotNull GameStatusException ex) {
         LOGGER.debug("GameStatusException received: {}", ex.getMessage());
 
     }
@@ -187,7 +188,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(NotSetNumOfPlayerException ex) {
+    public void throwException(@NotNull NotSetNumOfPlayerException ex) {
         LOGGER.debug("NotSetNumOfPlayerException received: {}", ex.getMessage());
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
             tuiUpdater.setCandidateNick("");
@@ -204,7 +205,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(IllegalPlateauActionException ex) {
+    public void throwException(@NotNull IllegalPlateauActionException ex) {
         LOGGER.debug("IllegalPlateauActionException {}", ex.getMessage());
         tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
@@ -216,7 +217,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
      * @param ex the exception thrown
      */
     @Override
-    public void throwException(MaxHandSizeException ex) {
+    public void throwException(@NotNull MaxHandSizeException ex) {
         LOGGER.debug("MaxHandSizeException {}", ex.getMessage());
         tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
