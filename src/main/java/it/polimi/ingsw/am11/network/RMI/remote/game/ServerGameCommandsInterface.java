@@ -30,5 +30,5 @@ public interface ServerGameCommandsInterface extends Remote {
     void setNumOfPlayers(@NotNull String nick, int numOfPlayers)
     throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException;
 
-    void syncMeUp(@NotNull String nick);
+    void syncMeUp(@NotNull String nick) throws RemoteException;
 }
