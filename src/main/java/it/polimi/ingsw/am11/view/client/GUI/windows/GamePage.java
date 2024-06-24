@@ -403,7 +403,6 @@ public class GamePage {
             if (event.getButton() == MouseButton.SECONDARY) {
                 boolean isRetro = handCard1.getImage().getUrl().contains(
                         "retro"); // Verifica se è già retro
-
                 Image cardImage;
                 if (isRetro) {
                     // Mostra il fronte se è già retro
@@ -423,15 +422,11 @@ public class GamePage {
                 handCard1.setImage(cardImage);
                 handCard1.getParent().layout();
             } else if (event.getButton() == MouseButton.PRIMARY) {
-                cardField.setOnMouseClicked(event1 -> {
-                    double x = event.getX();
-                    double y = event.getY();
-                    double centreX = cardField.getWidth() / 2;
-                    double centreY = cardField.getHeight() / 2;
-                    System.out.println(x + " " + y);
-                    boolean isRetro = handCard1.getImage().getUrl().contains("retro");
-                    guiActuator.placeCard((int) x, (int) y, id, isRetro);
-                });
+                boolean isRetro = handCard1.getImage().getUrl().contains("retro");
+                int x = selectedPosition.x();
+                int y = selectedPosition.y();
+                guiActuator.placeCard(x, y, id, isRetro);
+                System.out.println("Card placed at: " + x + " " + y);
             }
         });
 

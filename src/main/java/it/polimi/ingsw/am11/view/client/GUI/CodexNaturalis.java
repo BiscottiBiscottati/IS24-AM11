@@ -99,7 +99,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateField(String nickname, int x, int y, int cardId, boolean isRetro) {
-
+        gamePage.createButtonsForAvailablePositions();
     }
 
     @Override
