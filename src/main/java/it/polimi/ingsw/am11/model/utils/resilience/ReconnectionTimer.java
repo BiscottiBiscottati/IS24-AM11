@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.model.utils.resilience;
 
+import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.GameModel;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
@@ -16,6 +17,8 @@ public class ReconnectionTimer {
     private final @NotNull Timer currentTurnTimer;
     private final @NotNull Timer reconnectionTimer;
     private final @NotNull GameModel model;
+    private boolean isWaitingForReconnection = false;
+    private int numberOfDisconnected = 0;
 
     public ReconnectionTimer(@NotNull GameModel model) {
         this.model = model;
@@ -74,15 +77,38 @@ public class ReconnectionTimer {
     }
 
     public void waitForReconnection() {
+        this.numberOfDisconnected = 1;
+        isWaitingForReconnection = true;
         reconnectionTimer.schedule(new TimerTask() {
             @Override
             public void run() {
+                isWaitingForReconnection = false;
                 model.endGameEarly();
             }
         }, RECONNECTION_TIME);
     }
 
     public void reconnect() {
-        reconnectionTimer.cancel();
+        if (numberOfDisconnected == 1) {
+            reconnectionTimer.cancel();
+            isWaitingForReconnection = false;
+        }
+        numberOfDisconnected--;
+    }
+
+    public void waitForTotalReconnection() {
+        if (isWaitingForReconnection) {
+            numberOfDisconnected++;
+            return;
+        }
+        numberOfDisconnected = 1;
+        isWaitingForReconnection = true;
+        reconnectionTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                isWaitingForReconnection = false;
+                CentralController.INSTANCE.destroyGame();
+            }
+        }, RECONNECTION_TIME);
     }
 }

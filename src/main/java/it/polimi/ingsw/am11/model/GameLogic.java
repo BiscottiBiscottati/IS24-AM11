@@ -845,6 +845,12 @@ public class GameLogic implements GameModel {
             return;
         }
 
+        if (plateau.getStatus() == GameStatus.CHOOSING_STARTERS ||
+            plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
+            LOGGER.info("MODEL: Disconnecting player {} during setup", nickname);
+            reconnectionTimer.waitForTotalReconnection();
+        }
+
         LOGGER.info("MODEL: Adding {} to unavailable players", nickname);
 
         playerManager.disconnectPlayer(player);

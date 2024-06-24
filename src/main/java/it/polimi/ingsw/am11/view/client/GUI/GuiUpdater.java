@@ -139,7 +139,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
-        LOGGER.debug("UpPersObj, cardId: {}, removeMode: {}", cardId, removeMode);
+        LOGGER.debug("UpPersonalObj, cardId: {}, removeMode: {}", cardId, removeMode);
 
         if (removeMode) {
             miniGameModel.rmPersonalObjective(cardId);
