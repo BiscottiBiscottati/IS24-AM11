@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentStyleType="text/css"
+     height="989px" preserveAspectRatio="none" style="width:554px;height:989px;background:#F8F8FF;" version="1.1"
+     viewBox="0 0 554 989" width="554px" zoomAndPan="magnify">
+    <defs/>
+    <g>
+        <rect fill="#F8F8FF" height="989" style="stroke:none;stroke-width:1.0;" width="554" x="0"
+              y="0"/><!--cluster players-->
+        <g id="cluster_players">
+            <path d="M8.5,6 L68.5,6 A3.75,3.75 0 0 1 71,8.5 L78,28.2969 L544.5,28.2969 A2.5,2.5 0 0 1 547,30.7969 L547,979.5 A2.5,2.5 0 0 1 544.5,982 L8.5,982 A2.5,2.5 0 0 1 6,979.5 L6,8.5 A2.5,2.5 0 0 1 8.5,6 "
+                  fill="none" style="stroke:#000000;stroke-width:1.5;"/>
+            <line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="78" y1="28.2969" y2="28.2969"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing"
+                  textLength="59" x="10" y="20.9951">players
+            </text>
+        </g><!--class Player-->
+        <g id="elem_Player">
+            <rect codeLine="4" fill="#F1F1F1" height="178.375" id="Player" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="194" x="179" y="501"/>
+            <ellipse cx="249.75" cy="517" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M252.0938,512.6719 C251.1563,512.2344 250.5625,512.0938 249.6875,512.0938 C247.0625,512.0938 245.0625,514.1719 245.0625,516.8906 L245.0625,518.0156 C245.0625,520.5938 247.1719,522.4844 250.0625,522.4844 C251.2813,522.4844 252.4375,522.1875 253.1875,521.6406 C253.7656,521.2344 254.0938,520.7813 254.0938,520.3906 C254.0938,519.9375 253.7031,519.5469 253.2344,519.5469 C253.0156,519.5469 252.8125,519.625 252.625,519.8125 C252.1719,520.2969 252.1719,520.2969 251.9844,520.3906 C251.5625,520.6563 250.875,520.7813 250.1094,520.7813 C248.0625,520.7813 246.7656,519.6875 246.7656,517.9844 L246.7656,516.8906 C246.7656,515.1094 248.0156,513.7969 249.75,513.7969 C250.3281,513.7969 250.9375,513.9531 251.4063,514.2031 C251.8906,514.4844 252.0625,514.7031 252.1563,515.1094 C252.2188,515.5156 252.25,515.6406 252.3906,515.7656 C252.5313,515.9063 252.7656,516.0156 252.9844,516.0156 C253.25,516.0156 253.5156,515.875 253.6875,515.6563 C253.7969,515.5 253.8281,515.3125 253.8281,514.8906 L253.8281,513.4688 C253.8281,513.0313 253.8125,512.9063 253.7188,512.75 C253.5625,512.4844 253.2813,512.3438 252.9844,512.3438 C252.6875,512.3438 252.4844,512.4375 252.2656,512.75 L252.0938,512.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44"
+                  x="270.25" y="521.8467">Player
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="180" x2="372" y1="533" y2="533"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="187" y="543.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="123" x="199"
+                  y="549.9951">nickname: String
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="187" y="559.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="127" x="199"
+                  y="566.292">color: PlayerColor
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="187" y="576.2422"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="156" x="199"
+                  y="582.5889">space: PersonalSpace
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="187" y="592.5391"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="119" x="199"
+                  y="598.8857">field: PlayerField
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="180" x2="372" y1="606.1875" y2="606.1875"/>
+            <ellipse cx="190" cy="619.8359" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="159" x="199"
+                  y="623.1826">getNickname(): String
+            </text>
+            <ellipse cx="190" cy="636.1328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="120" x="199"
+                  y="639.4795">getColor(): Color
+            </text>
+            <ellipse cx="190" cy="652.4297" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="168" x="199"
+                  y="655.7764">Space(): PersonalSpace
+            </text>
+            <ellipse cx="190" cy="668.7266" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="131" x="199"
+                  y="672.0732">Field(): PlayerField
+            </text>
+        </g><!--class PersonalSpace-->
+        <g id="elem_PersonalSpace">
+            <rect codeLine="16" fill="#F1F1F1" height="227.2656" id="PersonalSpace" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="328" x="112" y="739"/>
+            <ellipse cx="219.25" cy="755" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M221.5938,750.6719 C220.6563,750.2344 220.0625,750.0938 219.1875,750.0938 C216.5625,750.0938 214.5625,752.1719 214.5625,754.8906 L214.5625,756.0156 C214.5625,758.5938 216.6719,760.4844 219.5625,760.4844 C220.7813,760.4844 221.9375,760.1875 222.6875,759.6406 C223.2656,759.2344 223.5938,758.7813 223.5938,758.3906 C223.5938,757.9375 223.2031,757.5469 222.7344,757.5469 C222.5156,757.5469 222.3125,757.625 222.125,757.8125 C221.6719,758.2969 221.6719,758.2969 221.4844,758.3906 C221.0625,758.6563 220.375,758.7813 219.6094,758.7813 C217.5625,758.7813 216.2656,757.6875 216.2656,755.9844 L216.2656,754.8906 C216.2656,753.1094 217.5156,751.7969 219.25,751.7969 C219.8281,751.7969 220.4375,751.9531 220.9063,752.2031 C221.3906,752.4844 221.5625,752.7031 221.6563,753.1094 C221.7188,753.5156 221.75,753.6406 221.8906,753.7656 C222.0313,753.9063 222.2656,754.0156 222.4844,754.0156 C222.75,754.0156 223.0156,753.875 223.1875,753.6563 C223.2969,753.5 223.3281,753.3125 223.3281,752.8906 L223.3281,751.4688 C223.3281,751.0313 223.3125,750.9063 223.2188,750.75 C223.0625,750.4844 222.7813,750.3438 222.4844,750.3438 C222.1875,750.3438 221.9844,750.4375 221.7656,750.75 L221.5938,750.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="105"
+                  x="239.75" y="759.8467">PersonalSpace
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="113" x2="439" y1="771" y2="771"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="120" y="781.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="265" x="132"
+                  y="787.9951">playerHand: Arraylist&lt;PlayableCard&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="120" y="797.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="227" x="132"
+                  y="804.292">playerObjective: ObjectiveCard
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="120" y="814.2422"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="110" x="132"
+                  y="820.5889">sizeOfHand: int
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="120" y="830.5391"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="136" x="132"
+                  y="836.8857">maxObjectives: int
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="113" x2="439" y1="844.1875" y2="844.1875"/>
+            <ellipse cx="123" cy="857.8359" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="299" x="132"
+                  y="861.1826">getPlayerHand(): Arraylist&lt;PlayableCard&gt;
+            </text>
+            <ellipse cx="123" cy="874.1328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="261" x="132"
+                  y="877.4795">getPlayerObjective(): ObjectiveCard
+            </text>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="132"
+                  y="893.7764">&#160;
+            </text>
+            <ellipse cx="123" cy="906.7266" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="268" x="132"
+                  y="910.0732">clearAll(Map&lt;DeckType,Deck&gt;): void
+            </text>
+            <ellipse cx="123" cy="923.0234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="255" x="132"
+                  y="926.3701">addCardToHand(PlayableCard): void
+            </text>
+            <ellipse cx="123" cy="939.3203" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="302" x="132"
+                  y="942.667">addObjectiveToHand(ObjectiveCard): void
+            </text>
+            <ellipse cx="123" cy="955.6172" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="196" x="132"
+                  y="958.9639">pickCard(int): PlayableCard
+            </text>
+        </g><!--class PlayerField-->
+        <g id="elem_PlayerField">
+            <rect codeLine="32" fill="#F1F1F1" height="227.2656" id="PlayerField" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="417" x="67.5" y="214"/>
+            <ellipse cx="232.75" cy="230" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M235.0938,225.6719 C234.1563,225.2344 233.5625,225.0938 232.6875,225.0938 C230.0625,225.0938 228.0625,227.1719 228.0625,229.8906 L228.0625,231.0156 C228.0625,233.5938 230.1719,235.4844 233.0625,235.4844 C234.2813,235.4844 235.4375,235.1875 236.1875,234.6406 C236.7656,234.2344 237.0938,233.7813 237.0938,233.3906 C237.0938,232.9375 236.7031,232.5469 236.2344,232.5469 C236.0156,232.5469 235.8125,232.625 235.625,232.8125 C235.1719,233.2969 235.1719,233.2969 234.9844,233.3906 C234.5625,233.6563 233.875,233.7813 233.1094,233.7813 C231.0625,233.7813 229.7656,232.6875 229.7656,230.9844 L229.7656,229.8906 C229.7656,228.1094 231.0156,226.7969 232.75,226.7969 C233.3281,226.7969 233.9375,226.9531 234.4063,227.2031 C234.8906,227.4844 235.0625,227.7031 235.1563,228.1094 C235.2188,228.5156 235.25,228.6406 235.3906,228.7656 C235.5313,228.9063 235.7656,229.0156 235.9844,229.0156 C236.25,229.0156 236.5156,228.875 236.6875,228.6563 C236.7969,228.5 236.8281,228.3125 236.8281,227.8906 L236.8281,226.4688 C236.8281,226.0313 236.8125,225.9063 236.7188,225.75 C236.5625,225.4844 236.2813,225.3438 235.9844,225.3438 C235.6875,225.3438 235.4844,225.4375 235.2656,225.75 L235.0938,225.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="78"
+                  x="253.25" y="234.8467">PlayerField
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="68.5" x2="483.5" y1="246" y2="246"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="75.5" y="256.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="381"
+                  x="87.5" y="262.9951">cardsPositioned: Hashmap&lt;Position, CardContainer&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="75.5" y="272.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="338"
+                  x="87.5" y="279.292">exposedSymbols: EnumMap&lt;Symbol, Integer&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="75.5" y="289.2422"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="306"
+                  x="87.5" y="295.5889">exposedColors: EnumMap&lt;Color, Integer&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="75.5" y="305.5391"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="326"
+                  x="87.5" y="311.8857">placedCardColors: EnumMap&lt;Color, Integer&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="75.5" y="321.8359"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="242"
+                  x="87.5" y="328.1826">availablePositions: Set&lt;Position&gt;
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="68.5" x2="483.5" y1="335.4844" y2="335.4844"/>
+            <ellipse cx="78.5" cy="349.1328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="181"
+                  x="87.5" y="352.4795">place(PlayableCard): void
+            </text>
+            <ellipse cx="78.5" cy="365.4297" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="261"
+                  x="87.5" y="368.7764">clearAll(Map&lt;DeckType, Deck): void
+            </text>
+            <ellipse cx="78.5" cy="381.7266" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="382"
+                  x="87.5" y="385.0732">getPositionedCards(): Map&lt;Position, CardContainer&gt;
+            </text>
+            <ellipse cx="78.5" cy="398.0234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="309"
+                  x="87.5" y="401.3701">getNumberOfPositionedCardsOf(Color): int
+            </text>
+            <ellipse cx="78.5" cy="414.3203" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="279"
+                  x="87.5" y="417.667">getAvailablePositions(): Set&lt;Position&gt;
+            </text>
+            <ellipse cx="78.5" cy="430.6172" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="391"
+                  x="87.5" y="433.9639">countObjectivesPoints(ArrayList&lt;ObjectiveCard&gt;): int
+            </text>
+        </g><!--class CardContainer-->
+        <g id="elem_CardContainer">
+            <rect codeLine="51" fill="#F1F1F1" height="113.1875" id="CardContainer" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="356" x="175" y="41"/>
+            <ellipse cx="296.75" cy="57" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M299.0938,52.6719 C298.1563,52.2344 297.5625,52.0938 296.6875,52.0938 C294.0625,52.0938 292.0625,54.1719 292.0625,56.8906 L292.0625,58.0156 C292.0625,60.5938 294.1719,62.4844 297.0625,62.4844 C298.2813,62.4844 299.4375,62.1875 300.1875,61.6406 C300.7656,61.2344 301.0938,60.7813 301.0938,60.3906 C301.0938,59.9375 300.7031,59.5469 300.2344,59.5469 C300.0156,59.5469 299.8125,59.625 299.625,59.8125 C299.1719,60.2969 299.1719,60.2969 298.9844,60.3906 C298.5625,60.6563 297.875,60.7813 297.1094,60.7813 C295.0625,60.7813 293.7656,59.6875 293.7656,57.9844 L293.7656,56.8906 C293.7656,55.1094 295.0156,53.7969 296.75,53.7969 C297.3281,53.7969 297.9375,53.9531 298.4063,54.2031 C298.8906,54.4844 299.0625,54.7031 299.1563,55.1094 C299.2188,55.5156 299.25,55.6406 299.3906,55.7656 C299.5313,55.9063 299.7656,56.0156 299.9844,56.0156 C300.25,56.0156 300.5156,55.875 300.6875,55.6563 C300.7969,55.5 300.8281,55.3125 300.8281,54.8906 L300.8281,53.4688 C300.8281,53.0313 300.8125,52.9063 300.7188,52.75 C300.5625,52.4844 300.2813,52.3438 299.9844,52.3438 C299.6875,52.3438 299.4844,52.4375 299.2656,52.75 L299.0938,52.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="104"
+                  x="317.25" y="61.8467">CardContainer
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="176" x2="530" y1="73" y2="73"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="183" y="83.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="330" x="195"
+                  y="89.9951">coveredCorners: EnumMap&lt;Corner, boolean&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="183" y="99.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="133" x="195"
+                  y="106.292">card: PlayableCard
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="176" x2="530" y1="113.5938" y2="113.5938"/>
+            <ellipse cx="186" cy="127.2422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="138" x="195"
+                  y="130.5889">cover(Corner): void
+            </text>
+            <ellipse cx="186" cy="143.5391" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="170" x="195"
+                  y="146.8857">getCard(): PlayableCard
+            </text>
+        </g><!--class Position-->
+        <g id="elem_Position">
+            <rect codeLine="59" fill="#F1F1F1" height="96.8906" id="Position" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="118" x="22" y="49"/>
+            <ellipse cx="49.6" cy="65" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M51.9438,60.6719 C51.0063,60.2344 50.4125,60.0938 49.5375,60.0938 C46.9125,60.0938 44.9125,62.1719 44.9125,64.8906 L44.9125,66.0156 C44.9125,68.5938 47.0219,70.4844 49.9125,70.4844 C51.1313,70.4844 52.2875,70.1875 53.0375,69.6406 C53.6156,69.2344 53.9438,68.7813 53.9438,68.3906 C53.9438,67.9375 53.5531,67.5469 53.0844,67.5469 C52.8656,67.5469 52.6625,67.625 52.475,67.8125 C52.0219,68.2969 52.0219,68.2969 51.8344,68.3906 C51.4125,68.6563 50.725,68.7813 49.9594,68.7813 C47.9125,68.7813 46.6156,67.6875 46.6156,65.9844 L46.6156,64.8906 C46.6156,63.1094 47.8656,61.7969 49.6,61.7969 C50.1781,61.7969 50.7875,61.9531 51.2563,62.2031 C51.7406,62.4844 51.9125,62.7031 52.0063,63.1094 C52.0688,63.5156 52.1,63.6406 52.2406,63.7656 C52.3813,63.9063 52.6156,64.0156 52.8344,64.0156 C53.1,64.0156 53.3656,63.875 53.5375,63.6563 C53.6469,63.5 53.6781,63.3125 53.6781,62.8906 L53.6781,61.4688 C53.6781,61.0313 53.6625,60.9063 53.5688,60.75 C53.4125,60.4844 53.1313,60.3438 52.8344,60.3438 C52.5375,60.3438 52.3344,60.4375 52.1156,60.75 L51.9438,60.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="58" x="66.4"
+                  y="69.8467">Position
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="139" y1="81" y2="81"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="30" y="91.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="42"
+                  y="97.9951">x: int
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="30" y="107.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="42"
+                  y="114.292">y: int
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="139" y1="121.5938" y2="121.5938"/>
+            <ellipse cx="33" cy="135.2422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92" x="42"
+                  y="138.5889">Position(x, y)
+            </text>
+        </g><!--link Player to PersonalSpace-->
+        <g id="link_Player_PersonalSpace">
+            <path codeLine="48" d="M276,679.193 C276,698.382 276,718.935 276,738.922 " fill="none"
+                  id="Player-PersonalSpace" style="stroke:#181818;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8"
+                  x="267.6563" y="699.559">1
+            </text>
+            <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8"
+                  x="267.7313" y="727.8495">1
+            </text>
+        </g><!--link PlayerField to Player-->
+        <g id="link_PlayerField_Player">
+            <path codeLine="49" d="M276,441.244 C276,461.182 276,481.678 276,500.817 " fill="none"
+                  id="PlayerField-Player" style="stroke:#181818;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8"
+                  x="267.7313" y="461.4525">1
+            </text>
+            <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8"
+                  x="267.6688" y="489.8673">1
+            </text>
+        </g><!--link Position to PlayerField-->
+        <g id="link_Position_PlayerField">
+            <path codeLine="66" d="M121.641,146.019 C138.607,165.856 159.104,189.822 179.54,213.716 " fill="none"
+                  id="Position-PlayerField" style="stroke:#181818;stroke-width:1.0;"/>
+        </g><!--link CardContainer to PlayerField-->
+        <g id="link_CardContainer_PlayerField">
+            <path codeLine="67" d="M334.164,154.275 C328.064,172.336 321.064,193.063 314.083,213.735 " fill="none"
+                  id="CardContainer-PlayerField" style="stroke:#181818;stroke-width:1.0;"/>
+        </g><!--SRC=[bLJ1Zfim4Btp5TPUIXHow7MrYfIcNMsbReEK_G433l76sCXsqj1g_xqpXe0DgBlb0ipCcnc_UHvpuhAccbRa2yrFfLPdMMoLK9gKHsNihoEtB8fgyD6IaLhGXcdp9oBmv88QGr9d8gq9dvNa-KdIYjsJlTLSbeCdnyJt7SHL6Nm6QW0aXVHAKh77ty5xu4mKD-GZ_aIzSrao-xEh6IycLT7jQg4lBBfqLT0-NtRfAZc_LnWzRv5FWG_scMZfUg8IMjzeJHl1ZNt0N3GJR4jriHu7xx9Nbbj-0IhwJmpqYEA_sUxG9kNI3ewANdk8QNq12MdV3PxelNu6H9yKOM5JVVIdPIuOrHiXCEYY-D3mu7cczSDNbfzUcfeb-B6UnDAYmCGlohNfTpONsZVJnGVDJG0rQ0GTCJ3JZVIMV6Qcmy2zWUOGQr9bkELACXZ04pN72evrioK4qssLj9HBfhtnickj32lsJPKf0UFv9iyL4j8Q4l9TMbRE8PnaFO3xdui70UMiQEj_448lb0iauTO_WFRCziTPUmfowVyvalyN0S6lIImgh-SO2ndCz_mHcjqkE5SPgFOmoh4xn8w7HNXj4B6PqE3sI434S19OaNQuQAc2R2Psr-a7NgT0X6klMgUlRc7UVRuZgvLxJPUFfxuWq9bzcGOq-49L5wPHEnhiWHBGa91CAHY8TomdxT6byCyCwU8MF3SkTwtUlrCTcLwVrz4EQyPxwuQ9hmbf5W6FdGV96Q_dW9PnmDjV]-->
+    </g>
+</svg>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentStyleType="text/css"
+     height="564px" preserveAspectRatio="none" style="width:553px;height:564px;background:#F8F8FF;" version="1.1"
+     viewBox="0 0 553 564" width="553px" zoomAndPan="magnify">
+    <defs/>
+    <g>
+        <rect fill="#F8F8FF" height="564" style="stroke:none;stroke-width:1.0;" width="553" x="0"
+              y="0"/><!--cluster cards-->
+        <g id="cluster_cards">
+            <path d="M8.5,6 L54.5,6 A3.75,3.75 0 0 1 57,8.5 L64,28.2969 L543.5,28.2969 A2.5,2.5 0 0 1 546,30.7969 L546,554.5 A2.5,2.5 0 0 1 543.5,557 L8.5,557 A2.5,2.5 0 0 1 6,554.5 L6,8.5 A2.5,2.5 0 0 1 8.5,6 "
+                  fill="none" style="stroke:#000000;stroke-width:1.5;"/>
+            <line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="64" y1="28.2969" y2="28.2969"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing"
+                  textLength="45" x="10" y="20.9951">cards
+            </text>
+        </g><!--cluster starter-->
+        <g id="cluster_starter">
+            <path d="M32.5,49 L91.5,49 A3.75,3.75 0 0 1 94,51.5 L101,71.2969 L519.5,71.2969 A2.5,2.5 0 0 1 522,73.7969 L522,530.5 A2.5,2.5 0 0 1 519.5,533 L32.5,533 A2.5,2.5 0 0 1 30,530.5 L30,51.5 A2.5,2.5 0 0 1 32.5,49 "
+                  fill="none" style="stroke:#000000;stroke-width:1.5;"/>
+            <line style="stroke:#000000;stroke-width:1.5;" x1="30" x2="101" y1="71.2969" y2="71.2969"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing"
+                  textLength="58" x="34" y="63.9951">starter
+            </text>
+        </g><!--class StarterCard-->
+        <g id="elem_StarterCard">
+            <rect codeLine="4" fill="#F1F1F1" height="194.6719" id="StarterCard" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="459" x="46.5" y="84"/>
+            <ellipse cx="229.25" cy="100" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M231.5938,95.6719 C230.6563,95.2344 230.0625,95.0938 229.1875,95.0938 C226.5625,95.0938 224.5625,97.1719 224.5625,99.8906 L224.5625,101.0156 C224.5625,103.5938 226.6719,105.4844 229.5625,105.4844 C230.7813,105.4844 231.9375,105.1875 232.6875,104.6406 C233.2656,104.2344 233.5938,103.7813 233.5938,103.3906 C233.5938,102.9375 233.2031,102.5469 232.7344,102.5469 C232.5156,102.5469 232.3125,102.625 232.125,102.8125 C231.6719,103.2969 231.6719,103.2969 231.4844,103.3906 C231.0625,103.6563 230.375,103.7813 229.6094,103.7813 C227.5625,103.7813 226.2656,102.6875 226.2656,100.9844 L226.2656,99.8906 C226.2656,98.1094 227.5156,96.7969 229.25,96.7969 C229.8281,96.7969 230.4375,96.9531 230.9063,97.2031 C231.3906,97.4844 231.5625,97.7031 231.6563,98.1094 C231.7188,98.5156 231.75,98.6406 231.8906,98.7656 C232.0313,98.9063 232.2656,99.0156 232.4844,99.0156 C232.75,99.0156 233.0156,98.875 233.1875,98.6563 C233.2969,98.5 233.3281,98.3125 233.3281,97.8906 L233.3281,96.4688 C233.3281,96.0313 233.3125,95.9063 233.2188,95.75 C233.0625,95.4844 232.7813,95.3438 232.4844,95.3438 C232.1875,95.3438 231.9844,95.4375 231.7656,95.75 L231.5938,95.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85"
+                  x="249.75" y="104.8467">StarterCard
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="47.5" x2="504.5" y1="116" y2="116"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="54.5" y="126.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="66.5"
+                  y="132.9951">id: int
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="54.5" y="142.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="433"
+                  x="66.5" y="149.292">availableCornersFront: ImmutableMap&lt;Corner, Availability&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="54.5" y="159.2422"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="419"
+                  x="66.5" y="165.5889">availableColorCornerBack: ImmutableMap&lt;Corner, Color&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="54.5" y="175.5391"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="304"
+                  x="66.5" y="181.8857">centerColorsFront: ImmutableSet&lt;Color&gt;
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="47.5" x2="504.5" y1="189.1875" y2="189.1875"/>
+            <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="54.5" y="199.8359"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150"
+                  x="66.5" y="206.1826">StarterCard(Builder):
+            </text>
+            <ellipse cx="57.5" cy="219.1328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="77" x="66.5"
+                  y="222.4795">getId(): int
+            </text>
+            <ellipse cx="57.5" cy="235.4297" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="223"
+                  x="66.5" y="238.7764">getRetroColorIn(Corner): Color
+            </text>
+            <ellipse cx="57.5" cy="251.7266" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="259"
+                  x="66.5" y="255.0732">isFrontCornerAvail(Corner): boolean
+            </text>
+            <ellipse cx="57.5" cy="268.0234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="263"
+                  x="66.5" y="271.3701">getCenterColorsFront(): Set&lt;Color&gt;
+            </text>
+        </g><!--class StarterCardBuilder-->
+        <g id="elem_StarterCardBuilder">
+            <rect codeLine="16" fill="#F1F1F1" height="178.375" id="StarterCardBuilder" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="421" x="65.5" y="339"/>
+            <ellipse cx="204.25" cy="355" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M206.5938,350.6719 C205.6563,350.2344 205.0625,350.0938 204.1875,350.0938 C201.5625,350.0938 199.5625,352.1719 199.5625,354.8906 L199.5625,356.0156 C199.5625,358.5938 201.6719,360.4844 204.5625,360.4844 C205.7813,360.4844 206.9375,360.1875 207.6875,359.6406 C208.2656,359.2344 208.5938,358.7813 208.5938,358.3906 C208.5938,357.9375 208.2031,357.5469 207.7344,357.5469 C207.5156,357.5469 207.3125,357.625 207.125,357.8125 C206.6719,358.2969 206.6719,358.2969 206.4844,358.3906 C206.0625,358.6563 205.375,358.7813 204.6094,358.7813 C202.5625,358.7813 201.2656,357.6875 201.2656,355.9844 L201.2656,354.8906 C201.2656,353.1094 202.5156,351.7969 204.25,351.7969 C204.8281,351.7969 205.4375,351.9531 205.9063,352.2031 C206.3906,352.4844 206.5625,352.7031 206.6563,353.1094 C206.7188,353.5156 206.75,353.6406 206.8906,353.7656 C207.0313,353.9063 207.2656,354.0156 207.4844,354.0156 C207.75,354.0156 208.0156,353.875 208.1875,353.6563 C208.2969,353.5 208.3281,353.3125 208.3281,352.8906 L208.3281,351.4688 C208.3281,351.0313 208.3125,350.9063 208.2188,350.75 C208.0625,350.4844 207.7813,350.3438 207.4844,350.3438 C207.1875,350.3438 206.9844,350.4375 206.7656,350.75 L206.5938,350.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="135"
+                  x="224.75" y="359.8467">StarterCardBuilder
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="66.5" x2="485.5" y1="371" y2="371"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="73.5" y="381.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="395"
+                  x="85.5" y="387.9951">availableCornersFront: EnumMap&lt;Corner, Availability&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="73.5" y="397.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="381"
+                  x="85.5" y="404.292">availableColorCornerBack: EnumMap&lt;Corner, Color&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="73.5" y="414.2422"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="227"
+                  x="85.5" y="420.5889">centerColors: EnumSet&lt;Color&gt;
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="66.5" x2="485.5" y1="427.8906" y2="427.8906"/>
+            <ellipse cx="76.5" cy="441.5391" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="380"
+                  x="85.5" y="444.8857">hasAvailableFrontCorner(Corner): StarterCardBuilder
+            </text>
+            <ellipse cx="76.5" cy="457.8359" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="359"
+                  x="85.5" y="461.1826">hasColorBackIn(Corner, Color): StarterCardBuilder
+            </text>
+            <ellipse cx="76.5" cy="474.1328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="358"
+                  x="85.5" y="477.4795">hasCenterColors(Set&lt;Color&gt;): StarterCardBuilder
+            </text>
+            <ellipse cx="76.5" cy="490.4297" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="311"
+                  x="85.5" y="493.7764">hasCenterColors(Color): StarterCardBuilder
+            </text>
+            <ellipse cx="76.5" cy="506.7266" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="139"
+                  x="85.5" y="510.0732">build(): StarterCard
+            </text>
+        </g><!--reverse link StarterCard to StarterCardBuilder-->
+        <g id="link_StarterCard_StarterCardBuilder">
+            <path codeLine="28" d="M276,295.133 C276,314.754 276,319.298 276,338.616 " fill="none"
+                  id="StarterCard-backto-StarterCardBuilder" style="stroke:#181818;stroke-width:1.0;"/>
+            <ellipse cx="276" cy="287.133" fill="#F8F8FF" rx="8" ry="8" style="stroke:#181818;stroke-width:1.0;"/>
+            <line style="stroke:#181818;stroke-width:1.0;" x1="276" x2="276" y1="295.133" y2="279.133"/>
+            <line style="stroke:#181818;stroke-width:1.0;" x1="268" x2="284" y1="287.133" y2="287.133"/>
+        </g><!--SRC=[bLD1ReCm4Bpx5NiaIka3K5GfGQt4ePVa1GjOOCNOo3QDgYf_BxOf648IbPjdPtTdPeK-Cz6YmWOEM9mh9JjHff9B1LKjjRdKp512shw65OK2LQbVjK5bgFeXq7y5HwtXvA6qhuF70M9WPG9CcF4TiA93ntX9rIOPg_Y5Z6FEQIgLe4f_A2bC0bdJTCR2dzZkVEa5zfxBE3FVRsiJUWUUQstT6U9OKtT1XHLdmPlT9sfsC_eMAcgoCjg43Xruf4P9nyr4v5Vr90UCDEON-AhpCZ5pAJb54OvCbyhiseMaAo4hnnXI7cvoD-DtqJMFutqKxh8xK3LFrLC3uSHRh57l_wO7mKoPt3gQEjqeAsICUr3mh2yG5asQ_jFrT4rkNz6SGOPRXR_CDexNXbn_0G00]-->
+    </g>
+</svg>

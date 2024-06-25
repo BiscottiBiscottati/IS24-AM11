@@ -1,0 +1,502 @@
+@startuml ProjectIngSoftModel
+
+skinparam BackgroundColor ghostwhite
+
+package cards.playable{
+
+
+    abstract class PlayableCard{
+      # PlayableCard(PlayableCardBuilder):
+      - id: int
+      - color: Color
+      - points: int
+      + getId(): int
+      + getSymbolToCollect(): Optional<Symbol>
+      + getPlacingRequirements(): ImmutableMap<Color, Integer>
+      + isAvailable(Corner): boolean
+      + getColor(): Color
+      + getType(): PlayableCardType
+      + getPointsRequirements(): PointsRequirementsType
+      + getPoints(): int
+      + checkItemCorner(Corner): CornerContainer
+    }
+
+    class GoldCard extends PlayableCard{
+      - GoldCard(GoldCardBuilder):
+      - colorPlacingRequirements: ImmutableMap<Color, Integer>
+      - pointsRequirements: PointsRequirementsType
+      - symbolToCollect: Symbol
+      - availableCorners: ImmutableMap<Corner, Availability>
+    }
+
+    class ResourceCard extends PlayableCard{
+      - ResourceCard(ResourceCardBuilder):
+      - availableCornerOrItem: ImmutableMap<Corner, CornerContainer>
+    }
+
+    abstract class Builder <T extends PlayableCard>{
+      - cardPoints: int
+      - primaryColor: Color
+
+      # Builder(int, Color)
+      + {abstract} build(): <T>
+    }
+
+    class GoldCardBuilder extends Builder <GoldCard>{
+      - availableCorners: EnumMap<Corner, Availability>
+      - colorPlacingRequirements: EnumMap<Color, Integer>
+      - pointsRequirements: PointsRequirementsType
+      - symbolToCollect: Symbol
+
+      + GoldCardBuilder(int, Color)
+      + hasCorner(Corner, boolean): GoldCardBuilder
+      + hasCorner(Corner): GoldCardBuilder
+      + hasRequirements(Color, int): GoldCardBuilder
+      + hasPointsRequirements(PointsRequirementsType): GoldCardBuilder
+      + hasSymbolToCollect(Symbol): GoldCardBuilder
+    }
+
+
+    class ResourceCardBuilder extends Builder <PlayableCard>{
+      - availableCornerOrItem: EnumMap<Corne, CornerContainer>
+
+      + ResourceCardBuilder(int, Color)
+      + hasIn(Corner, CornerContainer): ResourceCardBuilder
+    }
+
+    PlayableCard +-- Builder
+    GoldCard +-- GoldCardBuilder
+    ResourceCard +-- ResourceCardBuilder
+}
+package cards.starter{
+    class StarterCard {
+      - id: int
+      - StarterCard(Builder):
+      - availableCornersFront: ImmutableMap<Corner, Availability>
+      - availableColorCornerBack: ImmutableMap<Corner, Color>
+      - centerColorsFront: ImmutableSet<Color>
+      + getId(): int
+      + getRetroColorIn(Corner): Color
+      + isFrontCornerAvail(Corner): boolean
+      + getCenterColorsFront(): Set<Color>
+    }
+
+  class StarterCardBuilder {
+    - availableCornersFront: EnumMap<Corner, Availability>
+    - availableColorCornerBack: EnumMap<Corner, Color>
+    - centerColors: EnumSet<Color>
+
+    + hasAvailableFrontCorner(Corner): StarterCardBuilder
+    + hasColorBackIn(Corner, Color): StarterCardBuilder
+    + hasCenterColors(Set<Color>): StarterCardBuilder
+    + hasCenterColors(Color): StarterCardBuilder
+    + build(): StarterCard
+  }
+
+  StarterCard +-- StarterCardBuilder
+}
+
+package cards.utils{
+    interface FieldCard <<sealed>>
+
+
+}
+
+FieldCard <|.. PlayableCard
+FieldCard <|.. StarterCard
+
+package cards.utils{
+    interface CornerContainer << sealed >> {
+      + isAvailable(): boolean
+    }
+
+    interface Item << sealed >>
+
+    enum Corner << enumeration >> {
+      + DOWN_RX:
+      + TOP_RX:
+      + DOWN_LX:
+      + TOP_LX:
+    }
+
+    enum Availability << enumeration >> implements CornerContainer{
+      + USABLE
+      + NOT_USABLE
+    }
+    enum Color << enumeration >> implements CornerContainer, Item{
+      + RED:
+      + PURPLE:
+      + BLUE:
+      + GREEN:
+    }
+    enum Symbol << enumeration >> implements CornerContainer, Item{
+      + PAPER:
+      + GLASS:
+      + FEATHER:
+    }
+    enum ObjectiveCardType << enumeration >> {
+      + ObjectiveCardType():
+      + L_SHAPE:
+      + TRIPLET:
+      + OBJECT_COLLECT:
+      + COLOR_COLLECT:
+      + values(): ObjectiveCardType[]
+      + valueOf(String): ObjectiveCardType
+    }
+    enum PlayableCardType << enumeration >> {
+      + PlayableCardType():
+      + GOLD:
+      + RESOURCE:
+      + STARTER:
+      + valueOf(String): PlayableCardType
+      + values(): PlayableCardType[]
+    }
+    enum PointsRequirementsType << enumeration >> {
+      + PointsRequirementsType():
+      + CLASSIC:
+      + COVERING_CORNERS:
+      + SYMBOLS:
+      + values(): PointsRequirementsType[]
+      + valueOf(String): PointsRequirementsType
+    }
+}
+
+package cards.objective{
+    abstract class ObjectiveCard {
+      # ObjectiveCard(ObjectiveBuilder):
+      - id: int
+      - points: int
+      + getId(): int
+      + getColorRequirements(): ImmutableMap<Color, Integer>
+      + getType(): ObjectiveCardType
+      + getPoints(): int
+      + getSymbolRequirements(): ImmutableMap<Symbol, Integer>
+      + countPoints(PlayerField): int
+    }
+
+    abstract class CollectingCard extends ObjectiveCard{
+      # CollectingCard(CollectingBuilder):
+    }
+    abstract class PositioningCard extends ObjectiveCard{
+      # PositioningCard(PositioningBuilder):
+      - colorsOfPattern: ImmutableMap<Color, Integer>
+      + isFlipped(): boolean
+      + isRotated(): boolean
+    }
+
+    class ColorCollectCard extends CollectingCard{
+      - ColorCollectCard(ColorCollectBuilder):
+      - colorToCollect: ImmutableMap<Color, Integer>
+    }
+    class SymbolCollectCard extends CollectingCard{
+      - SymbolCollectCard(SymbolCollectBuilder):
+      - symbolToCollect: ImmutableMap<Symbol, Integer>
+    }
+
+    class TripletCard extends PositioningCard{
+      - TripletCard(TripletBuilder):
+      - flippedFlag: boolean
+    }
+    class LCard extends PositioningCard{
+      - LCard(LBuilder):
+      - isFlippedFlag: boolean
+      - isRotatedFlag: boolean
+    }
+
+    abstract class ObjectiveBuilder <T extends ObjectiveCard> {
+        - id: int
+        - points: int
+        # ObjectiveBuilder(id, int)
+
+        + {abstract} build(): <T>
+    }
+
+    abstract class CollectingBuilder extends ObjectiveBuilder{
+
+    }
+
+    abstract class PositioningBuilder extends ObjectiveBuilder{
+
+    }
+
+    class ColorCollectBuilder extends CollectingBuilder{
+        - colorToCollect: EnumMap<Color, Integer>
+        + hasColor(Color, int): ColorCollectBuilder
+        + hasColor(Color): ColorCollectBuilder
+    }
+
+    class SymbolCollectBuilder extends CollectingBuilder{
+        - symbolToCollect: EnumMap<Symbol, Integer>
+
+        + hasSymbol(Symbol, int): SymbolCollectBuilder
+        + hasSymbol(Symbol): SymbolCollectBuilder
+    }
+
+    class TripletBuilder extends PositioningBuilder{
+        # colorRequirements: EnumMap<Color, Integer>
+        - flippedFlag: boolean
+        - colorOfPattern: Color
+
+        + isFlipped(boolean): TripletBuilder
+        + hasColor(Color): TripletBuilder
+    }
+
+    class LBuilder extends PositioningBuilder{
+        - flippedFlag: boolean
+        - rotatedFlag: boolean
+        - primaryColor: Color
+        - secondaryColor: Color
+        - colorRequirements: EnumMap<Color, Integer>
+
+        + isFlipped(boolean): LBuilder
+        + isRotated(boolean): LBuilder
+        + hasPrimaryColor(Color): LBuilder
+        + hasSecondaryColor(Color): LBuilder
+    }
+
+    ObjectiveCard +-- ObjectiveBuilder
+    CollectingCard +-- CollectingBuilder
+    PositioningCard +-- PositioningBuilder
+    ColorCollectCard +-- ColorCollectBuilder
+    SymbolCollectCard +-- SymbolCollectBuilder
+    TripletCard +-- TripletBuilder
+    LCard +-- LBuilder
+
+}
+
+package decks{
+    package utils {
+        interface DeckType <<sealed>>{
+
+        }
+
+        enum PlayableDeckType implements DeckType{
+            GOLD
+            RESOURCE
+        }
+
+        enum UtilitiesDeckType implements DeckType{
+            STARTER
+            OBJECTIVE
+        }
+    }
+
+    interface Deck <T>{
+        +shuffle(): Deck<T>
+        +drawCard(): T
+        +getRemainingCards(): int
+        +getDeckType(): DeckType
+        +addCard(): void
+        +reset(): void
+        +getCardByID(int): T
+    }
+
+    class GoldDeck implements Deck{
+        -goldCards: Arraylist<GoldCard>
+    }
+
+    class ResourceDeck implements Deck{
+        -resourceCards: Arraylist<ResourceDeck>
+    }
+
+    class StarterDeck implements Deck{
+        -starterCards: Arraylist<StarterCard>
+    }
+
+    class ObjectiveDeck implements Deck{
+        -objectiveCards: Arraylist<ObjectiveCard>
+    }
+
+
+    package factories{
+        interface DeckFactory <T>{
+            +createDeck(DeckType): Deck<T>
+        }
+
+        class GoldCardFactory implements DeckFactory
+
+        class ResourceCardFactory implements DeckFactory
+
+        class StarterCardFactory implements DeckFactory
+
+        class ObjectiveCardFactory implements DeckFactory
+
+    }
+
+
+    Deck -- DeckType
+    DeckFactory -- DeckType
+
+}
+
+package players{
+    class Player {
+        -nickname: String
+        -color: PlayerColor
+        -space: PersonalSpace
+        -field: PlayerField
+
+        +getNickname(): String
+        +getColor(): Color
+        +Space(): PersonalSpace
+        +Field(): PlayerField
+    }
+
+    class PersonalSpace {
+        -playerHand: Arraylist<PlayableCard>
+        -playerObjective: ObjectiveCard
+        -sizeOfHand: int
+        -maxObjectives: int
+
+        +getPlayerHand(): Arraylist<PlayableCard>
+        +getPlayerObjective(): ObjectiveCard
+
+        '+clearAll(): void'
+        +clearAll(Map<DeckType,Deck>): void
+        +addCardToHand(PlayableCard): void
+        +addObjectiveToHand(ObjectiveCard): void
+        +pickCard(int): PlayableCard
+    }
+
+    class PlayerField{
+        -cardsPositioned: Hashmap<Position, CardContainer>
+        -exposedSymbols: EnumMap<Symbol, Integer>
+        -exposedColors: EnumMap<Color, Integer>
+        -placedCardColors: EnumMap<Color, Integer>
+        -availablePositions: Set<Position>
+
+        +place(PlayableCard): void
+        '+clearAll(): void'
+        +clearAll(Map<DeckType, Deck): void
+        +getPositionedCards(): Map<Position, CardContainer>
+        +getNumberOfPositionedCardsOf(Color): int
+        +getAvailablePositions(): Set<Position>
+        +countObjectivesPoints(ArrayList<ObjectiveCard>): int
+    }
+
+    Player "1" -- "1" PersonalSpace
+    PlayerField "1" -- "1" Player
+
+    class CardContainer{
+        -coveredCorners: EnumMap<Corner, boolean>
+        -card: PlayableCard
+
+        +cover(Corner): void
+        +getCard(): PlayableCard
+    }
+
+    class Position{
+        -x: int
+        -y: int
+
+        +Position(x, y)
+    }
+
+    Position -- PlayerField
+    CardContainer -- PlayerField
+}
+
+package table{
+    class PickablesTable{
+        -commonObjectives : Arraylist<ObjectiveCard>
+        -shownCards: Arraylist<PlayableCard>
+        -NumOfObjectives : int
+        -NumOfShownPerType : int
+        -decks : EnumMap<DeckType, Deck>
+
+        +getShownCards(): Arraylist<PlayableCard>
+        +getCommonObjectives(): Arraylist<ObjectiveCard>
+        +getResouceDeckTop(): Color
+        +getGoldDeckTop(): Color
+
+        +loadPickableTable(): void
+        +loadCommonOnjective(): void
+
+        +pickCardFromTable(int): PlayableCard
+        +pickFromDeck(DeckType): PlayableCard
+        +clearTable(): void
+        +resetDeck(DeckType): void
+
+         
+    }
+
+    class Plateau{
+        -playerPoints: Map<Player, Integer>
+        -armageddonTime : int
+        -numOfPlayers : int
+        -isArmageddonTime : boolean
+
+        +reset(): void
+        +addPlayer(Player): void
+        +addPlayerPoints(Player, int): void
+        +getPlayerPoints(Player): int
+        +getLeadingPlayer(): List<Player>
+    }
+}
+
+interface GameModel{
+
+    'il controller identifica i players con il loro nome'
+    +initGame(): void
+    +addPlayerToTable(String, PlayerColor): void
+    +shufflePlayers(): void
+    +setStartingPlayer(): void
+    +goNextTurn(): void
+    +placeCard(int): void
+    +drawCardFrom(PlayableDeckType): PlayableCard
+
+    +getExposedCards(): ArrayList<PlayableCard>
+    +getPlayerHand(String): ArrayList<PlayableCard>
+    +getPlayerObjective(String): ObjectiveCard
+    +getCommonObjectives(): ArrayList<ObjectiveCard>
+    +getPlateau(): Map<String, Integer>
+    +getPlayerColor(String): PlayerColor
+    +getPlayers(): ArrayList<String>
+    +getCurrentTurnPlayer(): String
+    +isFinished(): boolean
+    +getResults(): Map<String, Integer>
+    +getWinner(): String
+    -getPlayer(String): Player
+}
+
+class GameLogic implements GameModel{
+    -playerQueue: LinkedList<Player>
+    -numOfPlayers: int
+    -gameTable: Table
+    -gamePlateau: Plateau
+    -firstPlayer: Player
+    -decks: EnumMap<DeckType, Deck>
+}
+
+
+package ruleset{
+    interface RuleSet{
+        +MaxHandSize(): int
+        '+MaxShownCardsOf(PlayableCardType): int'
+        +MaxShownCardsPerType(): int
+        +MaxPlayerObjectives(): int
+        +MaxTableObjectives(): int
+        +MaxPlayers(): int
+        +ToArmageddon(): int
+    }
+
+    class BasicRuleset implements RuleSet{
+        -maxHandCards: int
+        '-maxShownCards: EnumMap<PlayableCardType, Integer>'
+        -maxShownCardsPerType: int
+        -maxPersonalObjectives: int
+        -maxCommonObjectives: int
+        -maxPlayers: int
+        -pointsToArmageddon: int
+    }
+}
+RuleSet -- GameLogic
+
+GameLogic -- decks
+GameLogic -- cards
+GameLogic -- Plateau
+GameLogic -- PickablesTable
+GameLogic -- Player
+
+
+@enduml

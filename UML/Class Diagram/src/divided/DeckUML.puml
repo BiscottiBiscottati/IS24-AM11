@@ -1,0 +1,68 @@
+@startuml DeckUML
+
+skinparam BackgroundColor ghostwhite
+
+package decks{
+    package utils {
+        interface DeckType <<sealed>>{
+
+        }
+
+        enum PlayableDeckType implements DeckType{
+            GOLD
+            RESOURCE
+        }
+
+        enum UtilitiesDeckType implements DeckType{
+            STARTER
+            OBJECTIVE
+        }
+    }
+
+    interface Deck <T>{
+        +shuffle(): Deck<T>
+        +drawCard(): T
+        +getRemainingCards(): int
+        +getDeckType(): DeckType
+        +addCard(): void
+    }
+
+    class GoldDeck implements Deck{
+        -goldCards: Arraylist<GoldCard>
+    }
+
+    class ResourceDeck implements Deck{
+        -resourceCards: Arraylist<ResourceDeck>
+    }
+
+    class StarterDeck implements Deck{
+        -starterCards: Arraylist<StarterCard>
+    }
+
+    class ObjectiveDeck implements Deck{
+        -objectiveCards: Arraylist<ObjectiveCard>
+    }
+
+
+    package factories{
+        interface DeckFactory <T>{
+            +createDeck(DeckType): Deck<T>
+        }
+
+        class GoldCardFactory implements DeckFactory
+
+        class ResourceCardFactory implements DeckFactory
+
+        class StarterCardFactory implements DeckFactory
+
+        class ObjectiveCardFactory implements DeckFactory
+
+    }
+
+
+    Deck -- DeckType
+    DeckFactory -- DeckType
+
+}
+
+@enduml

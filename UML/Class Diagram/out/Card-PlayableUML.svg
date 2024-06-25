@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentStyleType="text/css"
+     height="851px" preserveAspectRatio="none" style="width:1348px;height:851px;background:#F8F8FF;" version="1.1"
+     viewBox="0 0 1348 851" width="1348px" zoomAndPan="magnify">
+    <defs/>
+    <g>
+        <rect fill="#F8F8FF" height="851" style="stroke:none;stroke-width:1.0;" width="1348" x="0"
+              y="0"/><!--cluster cards-->
+        <g id="cluster_cards">
+            <path d="M8.5,6 L54.5,6 A3.75,3.75 0 0 1 57,8.5 L64,28.2969 L1338.5,28.2969 A2.5,2.5 0 0 1 1341,30.7969 L1341,841.5 A2.5,2.5 0 0 1 1338.5,844 L8.5,844 A2.5,2.5 0 0 1 6,841.5 L6,8.5 A2.5,2.5 0 0 1 8.5,6 "
+                  fill="none" style="stroke:#000000;stroke-width:1.5;"/>
+            <line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="64" y1="28.2969" y2="28.2969"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing"
+                  textLength="45" x="10" y="20.9951">cards
+            </text>
+        </g><!--cluster playable-->
+        <g id="cluster_playable">
+            <path d="M32.5,49 L101.5,49 A3.75,3.75 0 0 1 104,51.5 L111,71.2969 L1314.5,71.2969 A2.5,2.5 0 0 1 1317,73.7969 L1317,817.5 A2.5,2.5 0 0 1 1314.5,820 L32.5,820 A2.5,2.5 0 0 1 30,817.5 L30,51.5 A2.5,2.5 0 0 1 32.5,49 "
+                  fill="none" style="stroke:#000000;stroke-width:1.5;"/>
+            <line style="stroke:#000000;stroke-width:1.5;" x1="30" x2="111" y1="71.2969" y2="71.2969"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing"
+                  textLength="68" x="34" y="63.9951">playable
+            </text>
+        </g><!--class PlayableCard-->
+        <g id="elem_PlayableCard">
+            <rect codeLine="6" fill="#F1F1F1" height="259.8594" id="PlayableCard" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="451" x="421.5" y="84"/>
+            <ellipse cx="595.75" cy="100" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M597.8281,101.8125 L598.2188,102.7969 L597.8281,102.7969 C597.375,102.7969 597.2656,102.8125 597.1094,102.9219 C596.8594,103.0781 596.7031,103.3594 596.7031,103.6563 C596.7031,103.9219 596.8438,104.1719 597.0625,104.3281 C597.2031,104.4531 597.4063,104.5 597.8281,104.5 L600.1875,104.5 C600.5469,104.5 600.7656,104.4688 600.9063,104.375 C601.1563,104.2344 601.3125,103.9375 601.3125,103.6563 C601.3125,103.375 601.1719,103.125 600.9531,102.9688 C600.7813,102.8281 600.625,102.7969 600.1563,102.7969 L596.7656,94.5938 L593.0938,94.5938 C592.6406,94.5938 592.5156,94.6094 592.3594,94.7031 C592.1094,94.875 591.9531,95.1563 591.9531,95.4375 C591.9531,95.7188 592.0938,95.9688 592.3125,96.1406 C592.4844,96.25 592.6563,96.2813 593.0938,96.2813 L594.1719,96.2813 L591.5313,102.7969 C591.1094,102.7969 590.9531,102.8125 590.7969,102.9219 C590.5469,103.0781 590.3906,103.3594 590.3906,103.6563 C590.3906,104.2188 590.7656,104.5 591.5156,104.5 L593.7813,104.5 C594.1406,104.5 594.3594,104.4688 594.4844,104.375 C594.75,104.2344 594.8906,103.9375 594.8906,103.6563 C594.8906,103.375 594.7656,103.125 594.5469,102.9531 C594.375,102.8281 594.2344,102.7969 593.7813,102.7969 L593.3906,102.7969 L593.7813,101.8125 L597.8281,101.8125 Z M597.125,100.1094 L594.4531,100.1094 L595.7969,96.8438 L597.125,100.1094 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing"
+                  textLength="94" x="616.25" y="104.8467">PlayableCard
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="422.5" x2="871.5" y1="116" y2="116"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="429.5" y="126.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42"
+                  x="441.5" y="132.9951">id: int
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="429.5" y="142.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="83"
+                  x="441.5" y="149.292">color: Color
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="429.5" y="159.2422"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75"
+                  x="441.5" y="165.5889">points: int
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="422.5" x2="871.5" y1="172.8906" y2="172.8906"/>
+            <polygon fill="#FFFF44" points="432.5,181.5391,436.5,185.5391,432.5,189.5391,428.5,185.5391"
+                     style="stroke:#B38D22;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="251"
+                  x="441.5" y="189.8857">PlayableCard(PlayableCardBuilder):
+            </text>
+            <ellipse cx="432.5" cy="202.8359" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="77"
+                  x="441.5" y="206.1826">getId(): int
+            </text>
+            <ellipse cx="432.5" cy="219.1328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="305"
+                  x="441.5" y="222.4795">getSymbolToCollect(): Optional&lt;Symbol&gt;
+            </text>
+            <ellipse cx="432.5" cy="235.4297" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="425"
+                  x="441.5" y="238.7764">getPlacingRequirements(): ImmutableMap&lt;Color, Integer&gt;
+            </text>
+            <ellipse cx="432.5" cy="251.7266" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="202"
+                  x="441.5" y="255.0732">isAvailable(Corner): boolean
+            </text>
+            <ellipse cx="432.5" cy="268.0234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="120"
+                  x="441.5" y="271.3701">getColor(): Color
+            </text>
+            <ellipse cx="432.5" cy="284.3203" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="209"
+                  x="441.5" y="287.667">getType(): PlayableCardType
+            </text>
+            <ellipse cx="432.5" cy="300.6172" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="372"
+                  x="441.5" y="303.9639">getPointsRequirements(): PointsRequirementsType
+            </text>
+            <ellipse cx="432.5" cy="316.9141" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="109"
+                  x="441.5" y="320.2607">getPoints(): int
+            </text>
+            <ellipse cx="432.5" cy="333.2109" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="314"
+                  x="441.5" y="336.5576">checkItemCorner(Corner): CornerContainer
+            </text>
+        </g><!--class GoldCard-->
+        <g id="elem_GoldCard">
+            <rect codeLine="22" fill="#F1F1F1" height="129.4844" id="GoldCard" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="452" x="46" y="404"/>
+            <ellipse cx="234.75" cy="420" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M237.0938,415.6719 C236.1563,415.2344 235.5625,415.0938 234.6875,415.0938 C232.0625,415.0938 230.0625,417.1719 230.0625,419.8906 L230.0625,421.0156 C230.0625,423.5938 232.1719,425.4844 235.0625,425.4844 C236.2813,425.4844 237.4375,425.1875 238.1875,424.6406 C238.7656,424.2344 239.0938,423.7813 239.0938,423.3906 C239.0938,422.9375 238.7031,422.5469 238.2344,422.5469 C238.0156,422.5469 237.8125,422.625 237.625,422.8125 C237.1719,423.2969 237.1719,423.2969 236.9844,423.3906 C236.5625,423.6563 235.875,423.7813 235.1094,423.7813 C233.0625,423.7813 231.7656,422.6875 231.7656,420.9844 L231.7656,419.8906 C231.7656,418.1094 233.0156,416.7969 234.75,416.7969 C235.3281,416.7969 235.9375,416.9531 236.4063,417.2031 C236.8906,417.4844 237.0625,417.7031 237.1563,418.1094 C237.2188,418.5156 237.25,418.6406 237.3906,418.7656 C237.5313,418.9063 237.7656,419.0156 237.9844,419.0156 C238.25,419.0156 238.5156,418.875 238.6875,418.6563 C238.7969,418.5 238.8281,418.3125 238.8281,417.8906 L238.8281,416.4688 C238.8281,416.0313 238.8125,415.9063 238.7188,415.75 C238.5625,415.4844 238.2813,415.3438 237.9844,415.3438 C237.6875,415.3438 237.4844,415.4375 237.2656,415.75 L237.0938,415.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="66"
+                  x="255.25" y="424.8467">GoldCard
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="47" x2="497" y1="436" y2="436"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="54" y="446.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="426" x="66"
+                  y="452.9951">colorPlacingRequirements: ImmutableMap&lt;Color, Integer&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="54" y="462.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="338" x="66"
+                  y="469.292">pointsRequirements: PointsRequirementsType
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="54" y="479.2422"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="184" x="66"
+                  y="485.5889">symbolToCollect: Symbol
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="54" y="495.5391"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="394" x="66"
+                  y="501.8857">availableCorners: ImmutableMap&lt;Corner, Availability&gt;
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="47" x2="497" y1="509.1875" y2="509.1875"/>
+            <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="54" y="519.8359"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="197" x="66"
+                  y="526.1826">GoldCard(GoldCardBuilder):
+            </text>
+        </g><!--class ResourceCard-->
+        <g id="elem_ResourceCard">
+            <rect codeLine="29" fill="#F1F1F1" height="80.5938" id="ResourceCard" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="505" x="795.5" y="428"/>
+            <ellipse cx="994.25" cy="444" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M996.5938,439.6719 C995.6563,439.2344 995.0625,439.0938 994.1875,439.0938 C991.5625,439.0938 989.5625,441.1719 989.5625,443.8906 L989.5625,445.0156 C989.5625,447.5938 991.6719,449.4844 994.5625,449.4844 C995.7813,449.4844 996.9375,449.1875 997.6875,448.6406 C998.2656,448.2344 998.5938,447.7813 998.5938,447.3906 C998.5938,446.9375 998.2031,446.5469 997.7344,446.5469 C997.5156,446.5469 997.3125,446.625 997.125,446.8125 C996.6719,447.2969 996.6719,447.2969 996.4844,447.3906 C996.0625,447.6563 995.375,447.7813 994.6094,447.7813 C992.5625,447.7813 991.2656,446.6875 991.2656,444.9844 L991.2656,443.8906 C991.2656,442.1094 992.5156,440.7969 994.25,440.7969 C994.8281,440.7969 995.4375,440.9531 995.9063,441.2031 C996.3906,441.4844 996.5625,441.7031 996.6563,442.1094 C996.7188,442.5156 996.75,442.6406 996.8906,442.7656 C997.0313,442.9063 997.2656,443.0156 997.4844,443.0156 C997.75,443.0156 998.0156,442.875 998.1875,442.6563 C998.2969,442.5 998.3281,442.3125 998.3281,441.8906 L998.3281,440.4688 C998.3281,440.0313 998.3125,439.9063 998.2188,439.75 C998.0625,439.4844 997.7813,439.3438 997.4844,439.3438 C997.1875,439.3438 996.9844,439.4375 996.7656,439.75 L996.5938,439.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="99"
+                  x="1014.75" y="448.8467">ResourceCard
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="796.5" x2="1299.5" y1="460" y2="460"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="803.5" y="470.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="479"
+                  x="815.5" y="476.9951">availableCornerOrItem: ImmutableMap&lt;Corner, CornerContainer&gt;
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="796.5" x2="1299.5" y1="484.2969" y2="484.2969"/>
+            <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="803.5" y="494.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="263"
+                  x="815.5" y="501.292">ResourceCard(ResourceCardBuilder):
+            </text>
+        </g><!--class Builder-->
+        <g id="elem_Builder">
+            <rect codeLine="34" fill="#F1F1F1" height="113.1875" id="Builder" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="227" x="533.5" y="412"/>
+            <ellipse cx="548.5" cy="428" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M550.5781,429.8125 L550.9688,430.7969 L550.5781,430.7969 C550.125,430.7969 550.0156,430.8125 549.8594,430.9219 C549.6094,431.0781 549.4531,431.3594 549.4531,431.6563 C549.4531,431.9219 549.5938,432.1719 549.8125,432.3281 C549.9531,432.4531 550.1563,432.5 550.5781,432.5 L552.9375,432.5 C553.2969,432.5 553.5156,432.4688 553.6563,432.375 C553.9063,432.2344 554.0625,431.9375 554.0625,431.6563 C554.0625,431.375 553.9219,431.125 553.7031,430.9688 C553.5313,430.8281 553.375,430.7969 552.9063,430.7969 L549.5156,422.5938 L545.8438,422.5938 C545.3906,422.5938 545.2656,422.6094 545.1094,422.7031 C544.8594,422.875 544.7031,423.1563 544.7031,423.4375 C544.7031,423.7188 544.8438,423.9688 545.0625,424.1406 C545.2344,424.25 545.4063,424.2813 545.8438,424.2813 L546.9219,424.2813 L544.2813,430.7969 C543.8594,430.7969 543.7031,430.8125 543.5469,430.9219 C543.2969,431.0781 543.1406,431.3594 543.1406,431.6563 C543.1406,432.2188 543.5156,432.5 544.2656,432.5 L546.5313,432.5 C546.8906,432.5 547.1094,432.4688 547.2344,432.375 C547.5,432.2344 547.6406,431.9375 547.6406,431.6563 C547.6406,431.375 547.5156,431.125 547.2969,430.9531 C547.125,430.8281 546.9844,430.7969 546.5313,430.7969 L546.1406,430.7969 L546.5313,429.8125 L550.5781,429.8125 Z M549.875,428.1094 L547.2031,428.1094 L548.5469,424.8438 L549.875,428.1094 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing"
+                  textLength="51" x="562.5" y="432.8467">Builder
+            </text>
+            <rect fill="#F8F8FF" height="15.9688" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;"
+                  width="142" x="621.5" y="409"/>
+            <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing"
+                  textLength="140" x="622.5" y="421.1387">T extends PlayableCard
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="534.5" x2="759.5" y1="444" y2="444"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="541.5" y="454.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="105"
+                  x="553.5" y="460.9951">cardPoints: int
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="541.5" y="470.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="141"
+                  x="553.5" y="477.292">primaryColor: Color
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="534.5" x2="759.5" y1="484.5938" y2="484.5938"/>
+            <polygon fill="#FFFF44" points="544.5,493.2422,548.5,497.2422,544.5,501.2422,540.5,497.2422"
+                     style="stroke:#B38D22;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="126"
+                  x="553.5" y="501.5889">Builder(int, Color)
+            </text>
+            <ellipse cx="544.5" cy="514.5391" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing"
+                  textLength="87" x="553.5" y="517.8857">build(): &lt;T&gt;
+            </text>
+        </g><!--class GoldCardBuilder-->
+        <g id="elem_GoldCardBuilder">
+            <rect codeLine="42" fill="#F1F1F1" height="210.9688" id="GoldCardBuilder" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="513" x="157.5" y="593"/>
+            <ellipse cx="351.75" cy="609" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M354.0938,604.6719 C353.1563,604.2344 352.5625,604.0938 351.6875,604.0938 C349.0625,604.0938 347.0625,606.1719 347.0625,608.8906 L347.0625,610.0156 C347.0625,612.5938 349.1719,614.4844 352.0625,614.4844 C353.2813,614.4844 354.4375,614.1875 355.1875,613.6406 C355.7656,613.2344 356.0938,612.7813 356.0938,612.3906 C356.0938,611.9375 355.7031,611.5469 355.2344,611.5469 C355.0156,611.5469 354.8125,611.625 354.625,611.8125 C354.1719,612.2969 354.1719,612.2969 353.9844,612.3906 C353.5625,612.6563 352.875,612.7813 352.1094,612.7813 C350.0625,612.7813 348.7656,611.6875 348.7656,609.9844 L348.7656,608.8906 C348.7656,607.1094 350.0156,605.7969 351.75,605.7969 C352.3281,605.7969 352.9375,605.9531 353.4063,606.2031 C353.8906,606.4844 354.0625,606.7031 354.1563,607.1094 C354.2188,607.5156 354.25,607.6406 354.3906,607.7656 C354.5313,607.9063 354.7656,608.0156 354.9844,608.0156 C355.25,608.0156 355.5156,607.875 355.6875,607.6563 C355.7969,607.5 355.8281,607.3125 355.8281,606.8906 L355.8281,605.4688 C355.8281,605.0313 355.8125,604.9063 355.7188,604.75 C355.5625,604.4844 355.2813,604.3438 354.9844,604.3438 C354.6875,604.3438 354.4844,604.4375 354.2656,604.75 L354.0938,604.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="116"
+                  x="372.25" y="613.8467">GoldCardBuilder
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="158.5" x2="669.5" y1="625" y2="625"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="165.5" y="635.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="356"
+                  x="177.5" y="641.9951">availableCorners: EnumMap&lt;Corner, Availability&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="165.5" y="651.9453"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="388"
+                  x="177.5" y="658.292">colorPlacingRequirements: EnumMap&lt;Color, Integer&gt;
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="165.5" y="668.2422"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="338"
+                  x="177.5" y="674.5889">pointsRequirements: PointsRequirementsType
+            </text>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="165.5" y="684.5391"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="184"
+                  x="177.5" y="690.8857">symbolToCollect: Symbol
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="158.5" x2="669.5" y1="698.1875" y2="698.1875"/>
+            <ellipse cx="168.5" cy="711.8359" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="192"
+                  x="177.5" y="715.1826">GoldCardBuilder(int, Color)
+            </text>
+            <ellipse cx="168.5" cy="728.1328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="323"
+                  x="177.5" y="731.4795">hasCorner(Corner, boolean): GoldCardBuilder
+            </text>
+            <ellipse cx="168.5" cy="744.4297" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="257"
+                  x="177.5" y="747.7764">hasCorner(Corner): GoldCardBuilder
+            </text>
+            <ellipse cx="168.5" cy="760.7266" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="326"
+                  x="177.5" y="764.0732">hasRequirements(Color, int): GoldCardBuilder
+            </text>
+            <ellipse cx="168.5" cy="777.0234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="487"
+                  x="177.5" y="780.3701">hasPointsRequirements(PointsRequirementsType): GoldCardBuilder
+            </text>
+            <ellipse cx="168.5" cy="793.3203" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="336"
+                  x="177.5" y="796.667">hasSymbolToCollect(Symbol): GoldCardBuilder
+            </text>
+        </g><!--class ResourceCardBuilder-->
+        <g id="elem_ResourceCardBuilder">
+            <rect codeLine="57" fill="#F1F1F1" height="96.8906" id="ResourceCardBuilder" rx="2.5" ry="2.5"
+                  style="stroke:#181818;stroke-width:0.5;" width="461" x="761.5" y="650"/>
+            <ellipse cx="913.25" cy="666" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/>
+            <path d="M915.5938,661.6719 C914.6563,661.2344 914.0625,661.0938 913.1875,661.0938 C910.5625,661.0938 908.5625,663.1719 908.5625,665.8906 L908.5625,667.0156 C908.5625,669.5938 910.6719,671.4844 913.5625,671.4844 C914.7813,671.4844 915.9375,671.1875 916.6875,670.6406 C917.2656,670.2344 917.5938,669.7813 917.5938,669.3906 C917.5938,668.9375 917.2031,668.5469 916.7344,668.5469 C916.5156,668.5469 916.3125,668.625 916.125,668.8125 C915.6719,669.2969 915.6719,669.2969 915.4844,669.3906 C915.0625,669.6563 914.375,669.7813 913.6094,669.7813 C911.5625,669.7813 910.2656,668.6875 910.2656,666.9844 L910.2656,665.8906 C910.2656,664.1094 911.5156,662.7969 913.25,662.7969 C913.8281,662.7969 914.4375,662.9531 914.9063,663.2031 C915.3906,663.4844 915.5625,663.7031 915.6563,664.1094 C915.7188,664.5156 915.75,664.6406 915.8906,664.7656 C916.0313,664.9063 916.2656,665.0156 916.4844,665.0156 C916.75,665.0156 917.0156,664.875 917.1875,664.6563 C917.2969,664.5 917.3281,664.3125 917.3281,663.8906 L917.3281,662.4688 C917.3281,662.0313 917.3125,661.9063 917.2188,661.75 C917.0625,661.4844 916.7813,661.3438 916.4844,661.3438 C916.1875,661.3438 915.9844,661.4375 915.7656,661.75 L915.5938,661.6719 Z "
+                  fill="#000000"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="149"
+                  x="933.75" y="670.8467">ResourceCardBuilder
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="762.5" x2="1221.5" y1="682" y2="682"/>
+            <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="769.5" y="692.6484"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="435"
+                  x="781.5" y="698.9951">availableCornerOrItem: EnumMap&lt;Corne, CornerContainer&gt;
+            </text>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="762.5" x2="1221.5" y1="706.2969" y2="706.2969"/>
+            <ellipse cx="772.5" cy="719.9453" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="225"
+                  x="781.5" y="723.292">ResourceCardBuilder(int, Color)
+            </text>
+            <ellipse cx="772.5" cy="736.2422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/>
+            <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="382"
+                  x="781.5" y="739.5889">hasIn(Corner, CornerContainer): ResourceCardBuilder
+            </text>
+        </g><!--reverse link PlayableCard to GoldCard-->
+        <g id="link_PlayableCard_GoldCard">
+            <path d="M440.4492,354.0774 C409.6042,374.8464 393.838,385.463 366.631,403.782 " fill="none"
+                  id="PlayableCard-backto-GoldCard" style="stroke:#181818;stroke-width:1.0;"/>
+            <polygon fill="none" points="455.38,344.024,437.0981,349.1005,443.8003,359.0544,455.38,344.024"
+                     style="stroke:#181818;stroke-width:1.0;"/>
+        </g><!--reverse link PlayableCard to ResourceCard-->
+        <g id="link_PlayableCard_ResourceCard">
+            <path d="M867.137,353.6149 C915.746,384.2219 948.777,405.022 985.259,427.994 " fill="none"
+                  id="PlayableCard-backto-ResourceCard" style="stroke:#181818;stroke-width:1.0;"/>
+            <polygon fill="none" points="851.905,344.024,863.94,358.6923,870.334,348.5376,851.905,344.024"
+                     style="stroke:#181818;stroke-width:1.0;"/>
+        </g><!--reverse link Builder to GoldCardBuilder-->
+        <g id="link_Builder_GoldCardBuilder">
+            <path d="M577.1365,537.8639 C556.2535,558.2979 544.75,569.555 520.92,592.875 " fill="none"
+                  id="Builder-backto-GoldCardBuilder" style="stroke:#181818;stroke-width:1.0;"/>
+            <polygon fill="none" points="590.002,525.275,572.9402,533.5754,581.3328,542.1524,590.002,525.275"
+                     style="stroke:#181818;stroke-width:1.0;"/>
+        </g><!--reverse link Builder to ResourceCardBuilder-->
+        <g id="link_Builder_ResourceCardBuilder">
+            <path d="M746.413,535.1992 C804.165,573.3652 864.908,613.509 919.848,649.817 " fill="none"
+                  id="Builder-backto-ResourceCardBuilder" style="stroke:#181818;stroke-width:1.0;"/>
+            <polygon fill="none" points="731.396,525.275,743.105,540.2048,749.7211,530.1935,731.396,525.275"
+                     style="stroke:#181818;stroke-width:1.0;"/>
+        </g><!--reverse link PlayableCard to Builder-->
+        <g id="link_PlayableCard_Builder">
+            <path codeLine="64" d="M647,360.209 C647,383.99 647,391.632 647,411.756 " fill="none"
+                  id="PlayableCard-backto-Builder" style="stroke:#181818;stroke-width:1.0;"/>
+            <ellipse cx="647" cy="352.209" fill="#F8F8FF" rx="8" ry="8" style="stroke:#181818;stroke-width:1.0;"/>
+            <line style="stroke:#181818;stroke-width:1.0;" x1="647" x2="647" y1="360.209" y2="344.209"/>
+            <line style="stroke:#181818;stroke-width:1.0;" x1="639" x2="655" y1="352.209" y2="352.209"/>
+        </g><!--reverse link GoldCard to GoldCardBuilder-->
+        <g id="link_GoldCard_GoldCardBuilder">
+            <path codeLine="65" d="M320.0138,546.5922 C331.5848,565.1702 336.093,572.41 348.81,592.829 " fill="none"
+                  id="GoldCard-backto-GoldCardBuilder" style="stroke:#181818;stroke-width:1.0;"/>
+            <ellipse cx="315.7844" cy="539.8016" fill="#F8F8FF" rx="8" ry="8" style="stroke:#181818;stroke-width:1.0;"/>
+            <line style="stroke:#181818;stroke-width:1.0;" x1="320.0138" x2="311.555" y1="546.5922" y2="533.011"/>
+            <line style="stroke:#181818;stroke-width:1.0;" x1="308.9938" x2="322.575" y1="544.031" y2="535.5722"/>
+        </g><!--reverse link ResourceCard to ResourceCardBuilder-->
+        <g id="link_ResourceCard_ResourceCardBuilder">
+            <path codeLine="66" d="M1034.4337,524.7532 C1024.8137,563.9212 1013.92,608.275 1003.68,649.955 " fill="none"
+                  id="ResourceCard-backto-ResourceCardBuilder" style="stroke:#181818;stroke-width:1.0;"/>
+            <ellipse cx="1036.3418" cy="516.9841" fill="#F8F8FF" rx="8" ry="8"
+                     style="stroke:#181818;stroke-width:1.0;"/>
+            <line style="stroke:#181818;stroke-width:1.0;" x1="1034.4337" x2="1038.25" y1="524.7532" y2="509.215"/>
+            <line style="stroke:#181818;stroke-width:1.0;" x1="1028.5727" x2="1044.1109" y1="515.0759" y2="518.8923"/>
+        </g><!--SRC=[jLJBZfmm4Bpp5ItbmcY7_O3H22cBeeX3jAlD_801Yx76sCGscw3H_7ji7iQ0GNjPJjXTRPUhkblU2AkHG1MyeFnM2jwm8k6K2oYlNAg_Lw9m4DGwXaeCEHA5VAufQb56yJq80j0VogGIA5UGKoGbl0tXH8Fl7G3WssmtT1Sl3Q455eVJ08s052SWJDbrRlYSeADbDskk8T85Fa69LLg4XzNcxxRAEBrmVGB5kJA8rreHpX0zzx7OXMjsEM7bE_xJ484hhEynAMbLDSgm_eNgSqVc22bJkCHYIYVo-mSYrC32X0jc7WOPvnGZvjxHvPjJtLTraKjROnDmDJ9xCuRTuvS4rxl-lAL2-HNdjrJXgYSyyUv_4iuK8lgdItZqdlTM_-IqCFm0_rEO5Nxl8miBnv-rvvt77k4_9VjO3VF4NJaYaFEYE45V2JQEHXzx5TPCpEuH1hi99QgD1uKcWTwnv8t8yIT4Sg6XkrYBjQ3sAenv6_mM7iQkYOl67Iw2yyLBDPwucZdmjcf0ROCW5H9juZQidG33yQ5EEFQnWot1-qZb0Pc1cH8zN-BjYXkvZaGjzn7Wi5qx-OCrrRw9-pKvvNzvELg95Y_todX5SjR3nt7qQ3aN-Piv-z3Pp1cUhvdi9td6bL-D_MEMOxnVR-GyWc2Z3pTBPwFODxfjLaEUFhFCFNTlcPUoSADlzIizvxZzuRA7foW25sC7jGduv9eDAWFotVRu3m00]-->
+    </g>
+</svg>

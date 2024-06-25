@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentStyleType="text/css"
+     height="333px" preserveAspectRatio="none" style="width:311px;height:333px;background:#FFFFFF;" version="1.1"
+     viewBox="0 0 311 333" width="311px" zoomAndPan="magnify">
+    <defs/>
+    <g>
+        <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing"
+              textLength="80" x="112.75" y="27.9951">Ping-Pong
+        </text>
+        <rect fill="#DDDDDD" height="284.125" style="stroke:#181818;stroke-width:0.5;" width="51" x="16" y="43.2969"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="33" x="25" y="55.3638">User
+        </text>
+        <rect fill="#DDDDDD" height="284.125" style="stroke:#181818;stroke-width:0.5;" width="229" x="76.5"
+              y="43.2969"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="47" x="167.5" y="55.3638">Server
+        </text>
+        <rect fill="#FFFFFF" height="29.1328" style="stroke:#181818;stroke-width:1.0;" width="10" x="36.5"
+              y="193.9922"/>
+        <rect fill="#FFFFFF" height="29.1328" style="stroke:#181818;stroke-width:1.0;" width="10" x="115.5"
+              y="193.9922"/>
+        <rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="180" x="10" y="155.7266"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="41" x2="41" y1="138.7266"
+              y2="248.125"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="120.5" x2="120.5" y1="138.7266"
+              y2="248.125"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="206.5" x2="206.5" y1="138.7266"
+              y2="248.125"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="277.5" x2="277.5" y1="138.7266"
+              y2="248.125"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="20"
+              y="135.4248">Mario
+        </text>
+        <ellipse cx="41.5" cy="70.9297" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M41.5,78.9297 L41.5,105.9297 M28.5,86.9297 L54.5,86.9297 M41.5,105.9297 L28.5,120.9297 M41.5,105.9297 L54.5,120.9297 "
+              fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="20"
+              y="260.1201">Mario
+        </text>
+        <ellipse cx="41.5" cy="271.9219" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M41.5,279.9219 L41.5,306.9219 M28.5,287.9219 L54.5,287.9219 M41.5,306.9219 L28.5,321.9219 M41.5,306.9219 L54.5,321.9219 "
+              fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="80.5"
+              y="135.4248">VirtualView
+        </text>
+        <ellipse cx="120.5" cy="106.4297" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="108.5" x2="132.5" y1="120.4297" y2="120.4297"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="80.5"
+              y="260.1201">VirtualView
+        </text>
+        <ellipse cx="120.5" cy="279.4219" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="108.5" x2="132.5" y1="293.4219" y2="293.4219"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="170.5"
+              y="135.4248">Controller
+        </text>
+        <ellipse cx="207" cy="106.4297" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="195" x2="219" y1="120.4297" y2="120.4297"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="170.5"
+              y="260.1201">Controller
+        </text>
+        <ellipse cx="207" cy="279.4219" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="195" x2="219" y1="293.4219" y2="293.4219"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="253.5"
+              y="135.4248">Model
+        </text>
+        <ellipse cx="277.5" cy="106.4297" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="265.5" x2="289.5" y1="120.4297" y2="120.4297"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="253.5"
+              y="260.1201">Model
+        </text>
+        <ellipse cx="277.5" cy="279.4219" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="265.5" x2="289.5" y1="293.4219" y2="293.4219"/>
+        <rect fill="#FFFFFF" height="29.1328" style="stroke:#181818;stroke-width:1.0;" width="10" x="36.5"
+              y="193.9922"/>
+        <rect fill="#FFFFFF" height="29.1328" style="stroke:#181818;stroke-width:1.0;" width="10" x="115.5"
+              y="193.9922"/>
+        <path d="M10,155.7266 L87,155.7266 L87,162.8594 L77,172.8594 L10,172.8594 L10,155.7266 " fill="#EEEEEE"
+              style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="180" x="10" y="155.7266"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="32" x="25" y="168.7935">loop
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="83" x="102" y="167.937">[every n sec]
+        </text>
+        <polygon fill="#181818" points="57.5,189.9922,47.5,193.9922,57.5,197.9922,53.5,193.9922"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="51.5" x2="114.5" y1="193.9922" y2="193.9922"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="63.5" y="188.9263">1
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="27" x="76.5"
+              y="188.9263">ping
+        </text>
+        <polygon fill="#181818" points="108.5,219.125,118.5,223.125,108.5,227.125,112.5,223.125"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="41.5" x2="114.5" y1="223.125"
+              y2="223.125"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="48.5" y="218.0591">2
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="32" x="61.5"
+              y="218.0591">pong
+        </text><!--SRC=[RO_12eCm38RlUOgyW2-mmoux2yAOzsg35Bf4QkhcsozJXnMMK_c_vEEloogSdnqbW4xU-9ZivNgLXBLBGO3Oeu6DtYdDnearw89jI9fTR0EzVj5DM9F4U2pLuYaU5iiYOHDug1hX0I2AZ4XcNP1neXxGfZ1ZTTsQN72qgnLRlp0xfRtYAIfBVS6wWfLP2c8ksLsU_jYAyFn9_m40]-->
+    </g>
+</svg>

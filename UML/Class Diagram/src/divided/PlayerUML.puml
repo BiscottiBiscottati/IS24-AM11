@@ -1,0 +1,72 @@
+@startuml PlayerUML
+
+skinparam BackgroundColor ghostwhite
+
+package players{
+    class Player {
+        -nickname: String
+        -color: PlayerColor
+        -space: PersonalSpace
+        -field: PlayerField
+
+        +getNickname(): String
+        +getColor(): Color
+        +Space(): PersonalSpace
+        +Field(): PlayerField
+    }
+
+    class PersonalSpace {
+        -playerHand: Arraylist<PlayableCard>
+        -playerObjective: ObjectiveCard
+        -sizeOfHand: int
+        -maxObjectives: int
+
+        +getPlayerHand(): Arraylist<PlayableCard>
+        +getPlayerObjective(): ObjectiveCard
+
+        '+clearAll(): void
+        +clearAll(Map<DeckType,Deck>): void
+        +addCardToHand(PlayableCard): void
+        +addObjectiveToHand(ObjectiveCard): void
+        +pickCard(int): PlayableCard
+    }
+
+    class PlayerField{
+        -cardsPositioned: Hashmap<Position, CardContainer>
+        -exposedSymbols: EnumMap<Symbol, Integer>
+        -exposedColors: EnumMap<Color, Integer>
+        -placedCardColors: EnumMap<Color, Integer>
+        -availablePositions: Set<Position>
+
+        +place(PlayableCard): void
+        '+clearAll(): void
+        +clearAll(Map<DeckType, Deck): void
+        +getPositionedCards(): Map<Position, CardContainer>
+        +getNumberOfPositionedCardsOf(Color): int
+        +getAvailablePositions(): Set<Position>
+        +countObjectivesPoints(ArrayList<ObjectiveCard>): int
+    }
+
+    Player "1" -- "1" PersonalSpace
+    PlayerField "1" -- "1" Player
+
+    class CardContainer{
+        -coveredCorners: EnumMap<Corner, boolean>
+        -card: PlayableCard
+
+        +cover(Corner): void
+        +getCard(): PlayableCard
+    }
+
+    class Position{
+        -x: int
+        -y: int
+
+        +Position(x, y)
+    }
+
+    Position -- PlayerField
+    CardContainer -- PlayerField
+}
+
+@enduml

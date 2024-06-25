@@ -1,0 +1,62 @@
+@startuml ModelAndRulesetUML
+
+skinparam BackgroundColor ghostwhite
+
+interface GameModel{
+
+    'il controller identifica i players con il loro nome
+    +initGame(): void
+    +addPlayerToTable(String, PlayerColor): void
+    +shufflePlayers(): void
+    +setStartingPlayer(): void
+    +goNextTurn(): void
+    +placeCard(int): void
+    +drawCardFrom(PlayableDeckType): PlayableCard
+
+    +getExposedCards(): ArrayList<PlayableCard>
+    +getPlayerHand(String): ArrayList<PlayableCard>
+    +getPlayerObjective(String): ObjectiveCard
+    +getCommonObjectives(): ArrayList<ObjectiveCard>
+    +getPlateau(): Map<String, Integer>
+    +getPlayerColor(String): PlayerColor
+    +getPlayers(): ArrayList<String>
+    +getCurrentTurnPlayer(): String
+    +isFinished(): boolean
+    +getResults(): Map<String, Integer>
+    +getWinner(): String
+}
+
+class GameLogic implements GameModel{
+    -playerQueue: LinkedList<Player>
+    -numOfPlayers: int
+    -gameTable: Table
+    -gamePlateau: Plateau
+    -firstPlayer: Player
+    -decks: EnumMap<DeckType, Deck>
+}
+
+
+package ruleset{
+    interface RuleSet{
+        +MaxHandSize(): int
+        '+MaxShownCardsOf(PlayableCardType): int
+        +MaxShownCardsPerType(): int
+        +MaxPlayerObjectives(): int
+        +MaxTableObjectives(): int
+        +MaxPlayers(): int
+        +ToArmageddon(): int
+    }
+
+    class BasicRuleset implements RuleSet{
+        -maxHandCards: int
+        '-maxShownCards: EnumMap<PlayableCardType, Integer>
+        -maxShownCardsPerType: int
+        -maxPersonalObjectives: int
+        -maxCommonObjectives: int
+        -maxPlayers: int
+        -pointsToArmageddon: int
+    }
+}
+RuleSet -- GameLogic
+
+@enduml

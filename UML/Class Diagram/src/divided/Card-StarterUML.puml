@@ -1,0 +1,33 @@
+@startuml StarterCard
+
+skinparam BackgroundColor ghostwhite
+
+package cards.starter{
+    class StarterCard {
+      - id: int
+      - StarterCard(Builder):
+      - availableCornersFront: ImmutableMap<Corner, Availability>
+      - availableColorCornerBack: ImmutableMap<Corner, Color>
+      - centerColorsFront: ImmutableSet<Color>
+      + getId(): int
+      + getRetroColorIn(Corner): Color
+      + isFrontCornerAvail(Corner): boolean
+      + getCenterColorsFront(): Set<Color>
+    }
+
+  class StarterCardBuilder {
+    - availableCornersFront: EnumMap<Corner, Availability>
+    - availableColorCornerBack: EnumMap<Corner, Color>
+    - centerColors: EnumSet<Color>
+
+    + hasAvailableFrontCorner(Corner): StarterCardBuilder
+    + hasColorBackIn(Corner, Color): StarterCardBuilder
+    + hasCenterColors(Set<Color>): StarterCardBuilder
+    + hasCenterColors(Color): StarterCardBuilder
+    + build(): StarterCard
+  }
+
+  StarterCard +-- StarterCardBuilder
+}
+
+@enduml

@@ -1,0 +1,354 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+box User
+actor Mario
+end box
+
+box Server
+entity VirtualView
+entity Controller
+entity Model
+end box
+
+title Ping-Pong
+
+loop every n sec
+    VirtualView -> Mario: ping
+    activate Mario
+    activate VirtualView
+    Mario --> VirtualView: pong
+    deactivate Mario
+    deactivate VirtualView
+end
+
+newpage Initialization
+
+Mario -> VirtualView: String username
+activate VirtualView
+activate Mario
+
+VirtualView -> Controller: connectPlayer(username)
+activate Controller
+
+Controller -> Model: addPlayer(username)
+activate Model
+
+Model --> Controller: playerChangeEvent
+deactivate Model
+
+Controller --> VirtualView: firstPlayerEvent
+
+VirtualView --> Mario: firstPlayer(username, color)
+Mario -> VirtualView: numberOfPlayer(int)
+VirtualView -> Controller: setNumberOfPlayers(int)
+Controller --> VirtualView: int numberOfPlayers
+deactivate Controller
+
+VirtualView --> Mario: String waitingForPlayers
+deactivate Mario
+deactivate VirtualView
+
+'TODO first player entry need to set number of players
+
+loop n-1 players
+    Mario -> VirtualView: Username
+    activate Mario
+    activate VirtualView
+
+    VirtualView -> Controller: connectPlayer(username)
+    activate Controller
+
+    Controller -> Model: addPlayer(username)
+    activate Model
+
+    alt player added successfully
+        Model --> Controller: playerChangeEvent
+        Controller --> VirtualView: playerChangeEvent
+        VirtualView --> Mario: player added(username, color)
+
+    else nickname already taken
+        Model --> Controller: PLayerInitException
+        Controller --> VirtualView: PLayerInitException
+        VirtualView --> Mario: Nickname taken
+
+    else game in progress
+        Model --> Controller: GameStatusException
+        deactivate Model
+        Controller --> VirtualView: GameStatusException
+        VirtualView --> Mario: Game in progress
+
+deactivate VirtualView
+deactivate Mario
+
+    end
+end
+
+|||
+
+note right of Controller
+    When n players
+    are connected
+end note
+Controller ->> Model: initGame()
+deactivate Controller
+activate Model
+
+Model ->> VirtualView: GameStatusChangeEvent(choosing_starters)
+Activate VirtualView
+Model ->> VirtualView: StarterCardEvent(card id)
+
+deactivate Model
+
+VirtualView ->> Mario: StarterCard (card id)
+activate Mario
+
+Mario -> VirtualView: isRetro
+
+VirtualView -> Controller: SetStarterFor(nickname, isRetro)
+activate Controller
+
+Controller -> Model: setStarterFor(nickname, isRetro)
+activate Model
+
+alt game already running
+    Model --> Controller: GameStatusException
+    Controller --> VirtualView: GameStatusException
+    VirtualView --> Mario: Game already started
+
+else cannot place twice
+    Model --> Controller: StarterPlacedException
+    Controller --> VirtualView: StarterPlacedException
+    VirtualView --> Mario: Starter already placed
+
+else no exception thrown
+    Model --> VirtualView: starterPlacedEvent
+    VirtualView --> Mario: Starter placed (card id, isRetro)
+end
+deactivate Model
+deactivate Controller
+deactivate VirtualView
+deactivate Mario
+
+|||
+
+note left of Model
+    When all Starter cards
+    are placed
+end note
+Model ->> VirtualView:GameStatusChangeEvent(choosing_objectives)
+activate VirtualView
+Model ->> VirtualView: CandidateObjectiveEvent(set<card id>)
+
+VirtualView ->> Mario: CandidateObjective (set<card id>)
+activate Mario
+
+Mario -> VirtualView: card chosen (card id)
+
+VirtualView -> Controller: SetObjectiveFor(nickname, card id)
+activate Controller
+
+Controller -> Model: setObjectiveFor(nickname, card id)
+activate Model
+
+alt not in hand
+    Model --> Controller: NotInHandException
+    Controller --> VirtualView: NotInHandException
+    VirtualView --> Mario: Not in hand
+
+else game already running
+    Model --> Controller: GameStatusException
+    Controller --> VirtualView: GameStatusException
+    VirtualView --> Mario: Game already started
+
+else no exception thrown
+    Model --> VirtualView: PersonalObjectiveEvent
+    VirtualView --> Mario: Objective set (card id)
+end
+
+deactivate Mario
+deactivate VirtualView
+deactivate Controller
+deactivate Model
+
+|||
+
+note left of Model
+    When all Objectives
+    are set
+end note
+Model ->> VirtualView: GameStatusChangeEvent(ongoing)
+activate VirtualView
+Model ->> VirtualView: GameStartEvent(player hand, table, deck top color, firstPlayer turn)
+
+VirtualView ->> Mario: GameStart data
+
+deactivate VirtualView
+
+newpage Game Loop
+
+loop until the game end
+    Mario -> VirtualView: PlaceCard (card id, x, y, isRetro)
+    activate Mario
+    activate VirtualView
+
+    VirtualView -> Controller: PlaceCard(nickname, position, card id, isRetro)
+    activate Controller
+
+    Controller -> Model: placeCard(nickname, position, card id, isRetro)
+    activate Model
+
+    alt game already ended
+        Model --> Controller: GameStatusException
+        Controller --> VirtualView: GameStatusException
+        VirtualView --> Mario: Game ended
+    else not your turn
+        Model --> Controller: NotYourTurnException
+        Controller --> VirtualView: NotYourTurnException
+        VirtualView --> Mario: Not your turn
+    else not valid position
+        Model --> Controller: InvalidPositionException
+        Controller --> VirtualView: InvalidPositionException
+        VirtualView --> Mario: Invalid position
+    else not valid card
+        Model --> Controller: InvalidCardException
+        Controller --> VirtualView: InvalidCardException
+        VirtualView --> Mario: Invalid card
+    else no exception thrown
+        deactivate Controller
+        Model --> VirtualView: HandChangeEvent
+        VirtualView --> Mario: remove from hand (card id)
+
+        Model ->> VirtualView: FieldChangeEvent
+        VirtualView ->> Mario: place on field (card id, x, y, isRetro)
+
+        opt 20 pts reached
+            Model ->> VirtualView: GameStatusChangeEvent(armageddon)
+            VirtualView ->> Mario: Armageddon is starting
+
+        end
+
+        Model ->> VirtualView: PlayerPointsChangeEvent
+        VirtualView ->> Mario: update points (nickname, points)
+    end
+
+    deactivate VirtualView
+    deactivate Model
+    deactivate Mario
+
+
+    Mario -> VirtualView: DrawCard (card type, fromVisible, card id)
+    activate Mario
+    activate VirtualView
+
+    VirtualView -> Controller: DrawCard(nickname, card type, fromVisible, card id)
+    activate Controller
+
+    alt fromVisible
+        Controller -> Model: drawFromVisible(nickname, card id)
+        activate Model
+    else fromDeck
+        Controller -> Model: drawFrom(nickname, card type)
+    end
+
+    alt game not in progress
+        Model --> Controller: GameStatusException
+        Controller --> VirtualView: GameStatusException
+        VirtualView --> Mario: Game ended
+    else not your turn
+        Model --> Controller: NotYourTurnException
+        Controller --> VirtualView: NotYourTurnException
+        VirtualView --> Mario: Not your turn
+    else invalid card id
+        Model --> Controller: InvalidCardException
+        Controller --> VirtualView: InvalidCardException
+        VirtualView --> Mario: Invalid card
+    else deck empty
+        Model --> Controller: DeckEmptyException
+        Controller --> VirtualView: DeckEmptyException
+        VirtualView --> Mario: Deck empty
+    else no exception thrown
+        deactivate Controller
+
+        opt decks are empty
+            Model ->> VirtualView: GameStatusChangeEvent (armageddon)
+            VirtualView ->> Mario: armageddon is starting
+        end
+
+        Model --> VirtualView: HandChangeEvent
+        VirtualView --> Mario: add to hand (card id)
+    end
+
+    alt fromVisible
+        Model ->> VirtualView: ShownPlayableChangeEvent
+        VirtualView ->> Mario: replace on field (old card id, new card id)
+    else fromDeck
+        Model ->> VirtualView: DeckTopChangeEvent
+        VirtualView ->> Mario: deck top change (color, type)
+    end
+
+    opt last turn
+        Model ->> VirtualView: GameStatusChangeEvent(last turn)
+        VirtualView ->> Mario: last turn
+    end
+
+    Model ->> VirtualView: TurnChangeEvent
+    VirtualView ->> Mario: turn of (nickname)
+
+    deactivate Mario
+    deactivate VirtualView
+    deactivate Model
+end
+
+
+newpage Game End
+note left of Model
+    When the last
+    turn has ended
+end note
+
+Model ->> VirtualView: GameStatusChangeEvent(ended)
+activate VirtualView
+
+VirtualView ->> Mario: Game has ended
+deactivate VirtualView
+
+loop n players
+    Model ->> VirtualView: PlayerPointsChangeEvent
+    activate VirtualView
+
+    VirtualView ->> Mario: update points(nickname, points)
+    deactivate VirtualView
+end
+
+Model ->> VirtualView: LeaderboardCalculatedEvent(Map<int, String>)
+activate VirtualView
+
+VirtualView ->> Mario: Leaderboard(Map<int, String>)
+deactivate VirtualView
+
+opt new game
+    Mario -> VirtualView: newGame
+    VirtualView -> Controller: restartGame
+    Controller -> Model: forceEnd()
+end
+deactivate Mario
+deactivate VirtualView
+
+newpage Client disconnection
+
+VirtualView ->x Mario: ping
+activate VirtualView
+note right of VirtualView
+    timeout
+end note
+VirtualView -> Controller: disconnectPlayer(username)
+deactivate VirtualView
+activate Controller
+
+Controller -> Model: disconnectPlayer(username)
+deactivate Controller
+
+@enduml

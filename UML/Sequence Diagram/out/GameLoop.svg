@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentStyleType="text/css"
+     height="2126px" preserveAspectRatio="none" style="width:1156px;height:2126px;background:#FFFFFF;" version="1.1"
+     viewBox="0 0 1156 2126" width="1156px" zoomAndPan="magnify">
+    <defs/>
+    <g>
+        <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing"
+              textLength="84" x="537.75" y="27.9951">Game loop
+        </text>
+        <rect fill="#DDDDDD" height="2077.6094" style="stroke:#181818;stroke-width:0.5;" width="51" x="36" y="43.2969"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="33" x="45" y="55.3638">User
+        </text>
+        <rect fill="#DDDDDD" height="2077.6094" style="stroke:#181818;stroke-width:0.5;" width="794" x="330.5"
+              y="43.2969"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="47" x="704" y="55.3638">Server
+        </text>
+        <rect fill="#FFFFFF" height="770.4063" style="stroke:#181818;stroke-width:1.0;" width="10" x="56.5"
+              y="193.9922"/>
+        <rect fill="#FFFFFF" height="1031.0781" style="stroke:#181818;stroke-width:1.0;" width="10" x="56.5"
+              y="985.5313"/>
+        <rect fill="#FFFFFF" height="770.4063" style="stroke:#181818;stroke-width:1.0;" width="10" x="369.5"
+              y="193.9922"/>
+        <rect fill="#FFFFFF" height="1031.0781" style="stroke:#181818;stroke-width:1.0;" width="10" x="369.5"
+              y="985.5313"/>
+        <rect fill="#FFFFFF" height="447.2734" style="stroke:#181818;stroke-width:1.0;" width="10" x="752.5"
+              y="223.125"/>
+        <rect fill="#FFFFFF" height="522.3438" style="stroke:#181818;stroke-width:1.0;" width="10" x="752.5"
+              y="1014.6641"/>
+        <rect fill="#FFFFFF" height="712.1406" style="stroke:#181818;stroke-width:1.0;" width="10" x="1091.5"
+              y="252.2578"/>
+        <rect fill="#FFFFFF" height="948.6797" style="stroke:#181818;stroke-width:1.0;" width="10" x="1091.5"
+              y="1067.9297"/>
+        <rect fill="none" height="1868.8828" style="stroke:#000000;stroke-width:1.5;" width="1140.5" x="10"
+              y="155.7266"/>
+        <rect fill="none" height="690.1406" style="stroke:#000000;stroke-width:1.5;" width="1120.5" x="20"
+              y="267.2578"/>
+        <rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="1100.5" x="30" y="816.7344"/>
+        <rect fill="none" height="90.2031" style="stroke:#000000;stroke-width:1.5;" width="419.5" x="711"
+              y="1029.6641"/>
+        <rect fill="none" height="573.6094" style="stroke:#000000;stroke-width:1.5;" width="1120.5" x="20"
+              y="1133.8672"/>
+        <rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="1100.5" x="30"
+              y="1566.8125"/>
+        <rect fill="none" height="148.4688" style="stroke:#000000;stroke-width:1.5;" width="1100.5" x="30"
+              y="1721.4766"/>
+        <rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="1100.5" x="30"
+              y="1883.9453"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="61" x2="61" y1="138.7266"
+              y2="2041.6094"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="374.5" x2="374.5" y1="138.7266"
+              y2="2041.6094"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="757" x2="757" y1="138.7266"
+              y2="2041.6094"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="1096.5" x2="1096.5" y1="138.7266"
+              y2="2041.6094"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="40"
+              y="135.4248">Mario
+        </text>
+        <ellipse cx="61.5" cy="70.9297" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M61.5,78.9297 L61.5,105.9297 M48.5,86.9297 L74.5,86.9297 M61.5,105.9297 L48.5,120.9297 M61.5,105.9297 L74.5,120.9297 "
+              fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="40"
+              y="2053.6045">Mario
+        </text>
+        <ellipse cx="61.5" cy="2065.4063" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M61.5,2073.4063 L61.5,2100.4063 M48.5,2081.4063 L74.5,2081.4063 M61.5,2100.4063 L48.5,2115.4063 M61.5,2100.4063 L74.5,2115.4063 "
+              fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="334.5"
+              y="135.4248">VirtualView
+        </text>
+        <ellipse cx="374.5" cy="106.4297" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="362.5" x2="386.5" y1="120.4297" y2="120.4297"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="334.5"
+              y="2053.6045">VirtualView
+        </text>
+        <ellipse cx="374.5" cy="2072.9063" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="362.5" x2="386.5" y1="2086.9063" y2="2086.9063"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="721"
+              y="135.4248">Controller
+        </text>
+        <ellipse cx="757.5" cy="106.4297" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="745.5" x2="769.5" y1="120.4297" y2="120.4297"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="721"
+              y="2053.6045">Controller
+        </text>
+        <ellipse cx="757.5" cy="2072.9063" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="745.5" x2="769.5" y1="2086.9063" y2="2086.9063"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="1072.5"
+              y="135.4248">Model
+        </text>
+        <ellipse cx="1096.5" cy="106.4297" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="1084.5" x2="1108.5" y1="120.4297" y2="120.4297"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="1072.5"
+              y="2053.6045">Model
+        </text>
+        <ellipse cx="1096.5" cy="2072.9063" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="1084.5" x2="1108.5" y1="2086.9063" y2="2086.9063"/>
+        <rect fill="#FFFFFF" height="770.4063" style="stroke:#181818;stroke-width:1.0;" width="10" x="56.5"
+              y="193.9922"/>
+        <rect fill="#FFFFFF" height="1031.0781" style="stroke:#181818;stroke-width:1.0;" width="10" x="56.5"
+              y="985.5313"/>
+        <rect fill="#FFFFFF" height="770.4063" style="stroke:#181818;stroke-width:1.0;" width="10" x="369.5"
+              y="193.9922"/>
+        <rect fill="#FFFFFF" height="1031.0781" style="stroke:#181818;stroke-width:1.0;" width="10" x="369.5"
+              y="985.5313"/>
+        <rect fill="#FFFFFF" height="447.2734" style="stroke:#181818;stroke-width:1.0;" width="10" x="752.5"
+              y="223.125"/>
+        <rect fill="#FFFFFF" height="522.3438" style="stroke:#181818;stroke-width:1.0;" width="10" x="752.5"
+              y="1014.6641"/>
+        <rect fill="#FFFFFF" height="712.1406" style="stroke:#181818;stroke-width:1.0;" width="10" x="1091.5"
+              y="252.2578"/>
+        <rect fill="#FFFFFF" height="948.6797" style="stroke:#181818;stroke-width:1.0;" width="10" x="1091.5"
+              y="1067.9297"/>
+        <path d="M10,155.7266 L87,155.7266 L87,162.8594 L77,172.8594 L10,172.8594 L10,155.7266 " fill="#EEEEEE"
+              style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="1868.8828" style="stroke:#000000;stroke-width:1.5;" width="1140.5" x="10"
+              y="155.7266"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="32" x="25" y="168.7935">loop
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="131" x="102" y="167.937">[until the game end]
+        </text>
+        <polygon fill="#181818" points="357.5,189.9922,367.5,193.9922,357.5,197.9922,361.5,193.9922"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="66.5" x2="363.5" y1="193.9922" y2="193.9922"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="73.5" y="188.9263">1
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="203" x="86.5"
+              y="188.9263">PlaceCard (card id, x, y, isRetro)
+        </text>
+        <polygon fill="#181818" points="740.5,219.125,750.5,223.125,740.5,227.125,744.5,223.125"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="379.5" x2="746.5" y1="223.125" y2="223.125"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="386.5" y="218.0591">2
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="297" x="399.5"
+              y="218.0591">PlaceCard(nickname, position, card id, isRetro)
+        </text>
+        <polygon fill="#181818" points="1079.5,248.2578,1089.5,252.2578,1079.5,256.2578,1083.5,252.2578"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="762.5" x2="1085.5" y1="252.2578" y2="252.2578"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="769.5" y="247.1919">3
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="297" x="782.5"
+              y="247.1919">placeCard(nickname, position, card id, isRetro)
+        </text>
+        <path d="M20,267.2578 L84,267.2578 L84,274.3906 L74,284.3906 L20,284.3906 L20,267.2578 " fill="#EEEEEE"
+              style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="690.1406" style="stroke:#000000;stroke-width:1.5;" width="1120.5" x="20"
+              y="267.2578"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="19" x="35" y="280.3247">alt
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="141" x="99" y="279.4683">[game already ended]
+        </text>
+        <polygon fill="#181818" points="773.5,301.5234,763.5,305.5234,773.5,309.5234,769.5,305.5234"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="767.5" x2="1090.5" y1="305.5234"
+              y2="305.5234"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="779.5" y="300.4575">4
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="143" x="792.5"
+              y="300.4575">GameStatusException
+        </text>
+        <polygon fill="#181818" points="390.5,330.6563,380.5,334.6563,390.5,338.6563,386.5,334.6563"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="384.5" x2="751.5" y1="334.6563"
+              y2="334.6563"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="396.5" y="329.5903">5
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="143" x="409.5"
+              y="329.5903">GameStatusException
+        </text>
+        <polygon fill="#181818" points="77.5,359.7891,67.5,363.7891,77.5,367.7891,73.5,363.7891"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="71.5" x2="368.5" y1="363.7891"
+              y2="363.7891"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="83.5" y="358.7231">6
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="83" x="96.5"
+              y="358.7231">Game ended
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="1140.5" y1="372.7891"
+              y2="372.7891"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="93" x="25" y="382.9995">[not your turn]
+        </text>
+        <polygon fill="#181818" points="773.5,403.7266,763.5,407.7266,773.5,411.7266,769.5,407.7266"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="767.5" x2="1090.5" y1="407.7266"
+              y2="407.7266"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="779.5" y="402.6606">7
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="141" x="792.5"
+              y="402.6606">NotYourTurnException
+        </text>
+        <polygon fill="#181818" points="390.5,432.8594,380.5,436.8594,390.5,440.8594,386.5,436.8594"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="384.5" x2="751.5" y1="436.8594"
+              y2="436.8594"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="396.5" y="431.7935">8
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="141" x="409.5"
+              y="431.7935">NotYourTurnException
+        </text>
+        <polygon fill="#181818" points="77.5,461.9922,67.5,465.9922,77.5,469.9922,73.5,465.9922"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="71.5" x2="368.5" y1="465.9922"
+              y2="465.9922"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="9" x="83.5" y="460.9263">9
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="85" x="96.5"
+              y="460.9263">Not your turn
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="1140.5" y1="474.9922"
+              y2="474.9922"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="122" x="25" y="485.2026">[not valid position]
+        </text>
+        <polygon fill="#181818" points="773.5,505.9297,763.5,509.9297,773.5,513.9297,769.5,509.9297"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="767.5" x2="1090.5" y1="509.9297"
+              y2="509.9297"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="779.5" y="504.8638">10
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="152" x="801.5"
+              y="504.8638">InvalidPositionException
+        </text>
+        <polygon fill="#181818" points="390.5,535.0625,380.5,539.0625,390.5,543.0625,386.5,539.0625"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="384.5" x2="751.5" y1="539.0625"
+              y2="539.0625"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="533.9966">11
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="152" x="418.5"
+              y="533.9966">InvalidPositionException
+        </text>
+        <polygon fill="#181818" points="77.5,564.1953,67.5,568.1953,77.5,572.1953,73.5,568.1953"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="71.5" x2="368.5" y1="568.1953"
+              y2="568.1953"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="563.1294">12
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="94" x="105.5"
+              y="563.1294">Invalid position
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="1140.5" y1="577.1953"
+              y2="577.1953"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="98" x="25" y="587.4058">[not valid card]
+        </text>
+        <polygon fill="#181818" points="773.5,608.1328,763.5,612.1328,773.5,616.1328,769.5,612.1328"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="767.5" x2="1090.5" y1="612.1328"
+              y2="612.1328"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="779.5" y="607.0669">13
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="132" x="801.5"
+              y="607.0669">InvalidCardException
+        </text>
+        <polygon fill="#181818" points="390.5,637.2656,380.5,641.2656,390.5,645.2656,386.5,641.2656"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="384.5" x2="751.5" y1="641.2656"
+              y2="641.2656"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="636.1997">14
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="132" x="418.5"
+              y="636.1997">InvalidCardException
+        </text>
+        <polygon fill="#181818" points="77.5,666.3984,67.5,670.3984,77.5,674.3984,73.5,670.3984"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="71.5" x2="368.5" y1="670.3984"
+              y2="670.3984"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="665.3325">15
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="72" x="105.5"
+              y="665.3325">Invalid card
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="1140.5" y1="679.3984"
+              y2="679.3984"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="142" x="25" y="689.6089">[no exception thrown]
+        </text>
+        <polygon fill="#181818" points="390.5,710.3359,380.5,714.3359,390.5,718.3359,386.5,714.3359"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="384.5" x2="1090.5" y1="714.3359"
+              y2="714.3359"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="709.27">16
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="119" x="418.5"
+              y="709.27">HandChangeEvent
+        </text>
+        <polygon fill="#181818" points="77.5,739.4688,67.5,743.4688,77.5,747.4688,73.5,743.4688"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="71.5" x2="368.5" y1="743.4688"
+              y2="743.4688"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="738.4028">17
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="176" x="105.5"
+              y="738.4028">remove from hand (card id)
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="772.6016" y2="768.6016"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="772.6016" y2="776.6016"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="379.5" x2="1090.5" y1="772.6016" y2="772.6016"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="767.5356">18
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="114" x="418.5"
+              y="767.5356">FieldChangeEvent
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="801.7344" y2="797.7344"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="801.7344" y2="805.7344"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="66.5" x2="368.5" y1="801.7344" y2="801.7344"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="796.6685">19
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="223" x="105.5"
+              y="796.6685">place on field (card id, x, y, isRetro)
+        </text>
+        <path d="M30,816.7344 L100,816.7344 L100,823.8672 L90,833.8672 L30,833.8672 L30,816.7344 " fill="#EEEEEE"
+              style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="1100.5" x="30" y="816.7344"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="25" x="45" y="829.8013">opt
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="106" x="115" y="828.9448">[20 pts reached]
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="855" y2="851"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="855" y2="859"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="379.5" x2="1090.5" y1="855" y2="855"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="849.9341">20
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="258" x="418.5"
+              y="849.9341">GameStatusChangeEvent(armageddon)
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="884.1328" y2="880.1328"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="884.1328" y2="888.1328"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="66.5" x2="368.5" y1="884.1328" y2="884.1328"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="879.0669">21
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="150" x="105.5"
+              y="879.0669">Armageddon is starting
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="920.2656" y2="916.2656"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="920.2656" y2="924.2656"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="379.5" x2="1090.5" y1="920.2656" y2="920.2656"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="915.1997">22
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="163" x="418.5"
+              y="915.1997">PlayerPointsChangeEvent
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="949.3984" y2="945.3984"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="949.3984" y2="953.3984"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="66.5" x2="368.5" y1="949.3984" y2="949.3984"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="944.3325">23
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="211" x="105.5"
+              y="944.3325">update points (nickname, points)
+        </text>
+        <polygon fill="#181818" points="357.5,981.5313,367.5,985.5313,357.5,989.5313,361.5,985.5313"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="66.5" x2="363.5" y1="985.5313" y2="985.5313"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="73.5" y="980.4653">24
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="266" x="95.5"
+              y="980.4653">DrawCard (card type, fromVisible, card id)
+        </text>
+        <polygon fill="#181818" points="740.5,1010.6641,750.5,1014.6641,740.5,1018.6641,744.5,1014.6641"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="379.5" x2="746.5" y1="1014.6641" y2="1014.6641"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="386.5" y="1009.5981">25
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="332" x="408.5"
+              y="1009.5981">DrawCard(nickname, card type, fromVisible, card id)
+        </text>
+        <path d="M711,1029.6641 L775,1029.6641 L775,1036.7969 L765,1046.7969 L711,1046.7969 L711,1029.6641 "
+              fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="90.2031" style="stroke:#000000;stroke-width:1.5;" width="419.5" x="711"
+              y="1029.6641"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="19" x="726" y="1042.731">alt
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="82" x="790" y="1041.8745">[fromVisible]
+        </text>
+        <polygon fill="#181818" points="1079.5,1063.9297,1089.5,1067.9297,1079.5,1071.9297,1083.5,1067.9297"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="762.5" x2="1085.5" y1="1067.9297" y2="1067.9297"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="769.5" y="1062.8638">26
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="227" x="791.5"
+              y="1062.8638">drawFromVisible(nickname, card id)
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="711" x2="1130.5" y1="1076.9297"
+              y2="1076.9297"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="70" x="716" y="1087.1401">[fromDeck]
+        </text>
+        <polygon fill="#181818" points="1079.5,1107.8672,1089.5,1111.8672,1079.5,1115.8672,1083.5,1111.8672"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="762.5" x2="1085.5" y1="1111.8672" y2="1111.8672"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="769.5" y="1106.8013">27
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="203" x="791.5"
+              y="1106.8013">drawFrom(nickname, card type)
+        </text>
+        <path d="M20,1133.8672 L84,1133.8672 L84,1141 L74,1151 L20,1151 L20,1133.8672 " fill="#EEEEEE"
+              style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="573.6094" style="stroke:#000000;stroke-width:1.5;" width="1120.5" x="20"
+              y="1133.8672"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="19" x="35" y="1146.9341">alt
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="146" x="99" y="1146.0776">[game not in progress]
+        </text>
+        <polygon fill="#181818" points="773.5,1168.1328,763.5,1172.1328,773.5,1176.1328,769.5,1172.1328"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="767.5" x2="1090.5" y1="1172.1328"
+              y2="1172.1328"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="779.5" y="1167.0669">28
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="143" x="801.5"
+              y="1167.0669">GameStatusException
+        </text>
+        <polygon fill="#181818" points="390.5,1197.2656,380.5,1201.2656,390.5,1205.2656,386.5,1201.2656"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="384.5" x2="751.5" y1="1201.2656"
+              y2="1201.2656"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="1196.1997">29
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="143" x="418.5"
+              y="1196.1997">GameStatusException
+        </text>
+        <polygon fill="#181818" points="77.5,1226.3984,67.5,1230.3984,77.5,1234.3984,73.5,1230.3984"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="71.5" x2="368.5" y1="1230.3984"
+              y2="1230.3984"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="1225.3325">30
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="83" x="105.5"
+              y="1225.3325">Game ended
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="1140.5" y1="1239.3984"
+              y2="1239.3984"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="93" x="25" y="1249.6089">[not your turn]
+        </text>
+        <polygon fill="#181818" points="773.5,1270.3359,763.5,1274.3359,773.5,1278.3359,769.5,1274.3359"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="767.5" x2="1090.5" y1="1274.3359"
+              y2="1274.3359"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="779.5" y="1269.27">31
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="141" x="801.5"
+              y="1269.27">NotYourTurnException
+        </text>
+        <polygon fill="#181818" points="390.5,1299.4688,380.5,1303.4688,390.5,1307.4688,386.5,1303.4688"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="384.5" x2="751.5" y1="1303.4688"
+              y2="1303.4688"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="1298.4028">32
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="141" x="418.5"
+              y="1298.4028">NotYourTurnException
+        </text>
+        <polygon fill="#181818" points="77.5,1328.6016,67.5,1332.6016,77.5,1336.6016,73.5,1332.6016"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="71.5" x2="368.5" y1="1332.6016"
+              y2="1332.6016"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="1327.5356">33
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="85" x="105.5"
+              y="1327.5356">Not your turn
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="1140.5" y1="1341.6016"
+              y2="1341.6016"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="101" x="25" y="1351.812">[invalid card id]
+        </text>
+        <polygon fill="#181818" points="773.5,1372.5391,763.5,1376.5391,773.5,1380.5391,769.5,1376.5391"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="767.5" x2="1090.5" y1="1376.5391"
+              y2="1376.5391"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="779.5" y="1371.4731">34
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="132" x="801.5"
+              y="1371.4731">InvalidCardException
+        </text>
+        <polygon fill="#181818" points="390.5,1401.6719,380.5,1405.6719,390.5,1409.6719,386.5,1405.6719"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="384.5" x2="751.5" y1="1405.6719"
+              y2="1405.6719"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="1400.606">35
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="132" x="418.5"
+              y="1400.606">InvalidCardException
+        </text>
+        <polygon fill="#181818" points="77.5,1430.8047,67.5,1434.8047,77.5,1438.8047,73.5,1434.8047"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="71.5" x2="368.5" y1="1434.8047"
+              y2="1434.8047"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="1429.7388">36
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="72" x="105.5"
+              y="1429.7388">Invalid card
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="1140.5" y1="1443.8047"
+              y2="1443.8047"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="83" x="25" y="1454.0151">[deck empty]
+        </text>
+        <polygon fill="#181818" points="773.5,1474.7422,763.5,1478.7422,773.5,1482.7422,769.5,1478.7422"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="767.5" x2="1090.5" y1="1478.7422"
+              y2="1478.7422"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="779.5" y="1473.6763">37
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="135" x="801.5"
+              y="1473.6763">DeckEmptyException
+        </text>
+        <polygon fill="#181818" points="390.5,1503.875,380.5,1507.875,390.5,1511.875,386.5,1507.875"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="384.5" x2="751.5" y1="1507.875"
+              y2="1507.875"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="1502.8091">38
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="135" x="418.5"
+              y="1502.8091">DeckEmptyException
+        </text>
+        <polygon fill="#181818" points="77.5,1533.0078,67.5,1537.0078,77.5,1541.0078,73.5,1537.0078"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="71.5" x2="368.5" y1="1537.0078"
+              y2="1537.0078"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="1531.9419">39
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="77" x="105.5"
+              y="1531.9419">Deck empty
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="1140.5" y1="1546.0078"
+              y2="1546.0078"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="142" x="25" y="1556.2183">[no exception thrown]
+        </text>
+        <path d="M30,1566.8125 L100,1566.8125 L100,1573.9453 L90,1583.9453 L30,1583.9453 L30,1566.8125 " fill="#EEEEEE"
+              style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="1100.5" x="30"
+              y="1566.8125"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="25" x="45" y="1579.8794">opt
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="115" x="115" y="1579.0229">[decks are empty]
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="1605.0781" y2="1601.0781"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="1605.0781" y2="1609.0781"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="379.5" x2="1090.5" y1="1605.0781" y2="1605.0781"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="1600.0122">40
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="262" x="418.5"
+              y="1600.0122">GameStatusChangeEvent (armageddon)
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="1634.2109" y2="1630.2109"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="1634.2109" y2="1638.2109"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="66.5" x2="368.5" y1="1634.2109" y2="1634.2109"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="1629.145">41
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="149" x="105.5"
+              y="1629.145">armageddon is starting
+        </text>
+        <polygon fill="#181818" points="390.5,1666.3438,380.5,1670.3438,390.5,1674.3438,386.5,1670.3438"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="384.5" x2="1090.5" y1="1670.3438"
+              y2="1670.3438"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="1665.2778">42
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="119" x="418.5"
+              y="1665.2778">HandChangeEvent
+        </text>
+        <polygon fill="#181818" points="77.5,1695.4766,67.5,1699.4766,77.5,1703.4766,73.5,1699.4766"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="71.5" x2="368.5" y1="1699.4766"
+              y2="1699.4766"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="1694.4106">43
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="134" x="105.5"
+              y="1694.4106">add to hand (card id)
+        </text>
+        <path d="M30,1721.4766 L94,1721.4766 L94,1728.6094 L84,1738.6094 L30,1738.6094 L30,1721.4766 " fill="#EEEEEE"
+              style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="148.4688" style="stroke:#000000;stroke-width:1.5;" width="1100.5" x="30"
+              y="1721.4766"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="19" x="45" y="1734.5435">alt
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="82" x="109" y="1733.687">[fromVisible]
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="1759.7422" y2="1755.7422"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="1759.7422" y2="1763.7422"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="379.5" x2="1090.5" y1="1759.7422" y2="1759.7422"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="1754.6763">44
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="180" x="418.5"
+              y="1754.6763">ShownPlayableChangeEvent
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="1788.875" y2="1784.875"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="1788.875" y2="1792.875"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="66.5" x2="368.5" y1="1788.875" y2="1788.875"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="1783.8091">45
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="257" x="105.5"
+              y="1783.8091">replace on field (old card id, new card id)
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="30" x2="1130.5" y1="1797.875"
+              y2="1797.875"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="70" x="35" y="1808.0854">[fromDeck]
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="1832.8125" y2="1828.8125"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="1832.8125" y2="1836.8125"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="379.5" x2="1090.5" y1="1832.8125" y2="1832.8125"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="1827.7466">46
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="140" x="418.5"
+              y="1827.7466">DeckTopChangeEvent
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="1861.9453" y2="1857.9453"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="1861.9453" y2="1865.9453"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="66.5" x2="368.5" y1="1861.9453" y2="1861.9453"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="1856.8794">47
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="187" x="105.5"
+              y="1856.8794">deck top change (color, type)
+        </text>
+        <path d="M30,1883.9453 L100,1883.9453 L100,1891.0781 L90,1901.0781 L30,1901.0781 L30,1883.9453 " fill="#EEEEEE"
+              style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="75.3984" style="stroke:#000000;stroke-width:1.5;" width="1100.5" x="30"
+              y="1883.9453"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="25" x="45" y="1897.0122">opt
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="64" x="115" y="1896.1558">[last turn]
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="1922.2109" y2="1918.2109"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="1922.2109" y2="1926.2109"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="379.5" x2="1090.5" y1="1922.2109" y2="1922.2109"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="1917.145">48
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="229" x="418.5"
+              y="1917.145">GameStatusChangeEvent(last turn)
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="1951.3438" y2="1947.3438"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="67.5" x2="77.5" y1="1951.3438" y2="1955.3438"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="66.5" x2="368.5" y1="1951.3438" y2="1951.3438"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="83.5" y="1946.2778">49
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53" x="105.5"
+              y="1946.2778">last turn
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="1987.4766" y2="1983.4766"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="380.5" x2="390.5" y1="1987.4766" y2="1991.4766"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="379.5" x2="1090.5" y1="1987.4766" y2="1987.4766"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="396.5" y="1982.4106">50
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="113" x="418.5"
+              y="1982.4106">TurnChangeEvent
+        </text>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="72.5" y1="2016.6094" y2="2012.6094"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="72.5" y1="2016.6094" y2="2020.6094"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="61.5" x2="373.5" y1="2016.6094" y2="2016.6094"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="18" x="78.5" y="2011.5435">51
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="118" x="100.5"
+              y="2011.5435">turn of (nickname)
+        </text><!--SRC=[xPTDRzim38Rl_XKyDa0A33lsK63enxP3YsBj2koeMcmYL94CMKxhVp_IJcHPjUEwxM67vM0a4Ya-f2I-ZgYyDTNc0LsMFTWN-5tIDv5xw-1AE6KpD19eefszHRUbUJHU-HhkbVELqFSAd_T3PzPuPxNkZAwiHDsjGcCQuRlO86XhYopZ9rHagy6l4LOyGzOPqASXWEFJED89t6YHuvbm4evoVYgvX9Sbr4jGvI-ay8l6cP9GM-5nbqTlA2PlPg81ZjUb4OKxCYf_CiItXCAMoYjhbX08XcD7zMWckjySfgdD2HGVYT3MjntJlgsVq0w5hBcEs5QogIPRmd6I7c_5hHU-AYzUSYmuPl28QTDTEEJNgoRdoJlGkaHCg4i4OptKjdBWAsScKA-j_qEcTsGvZ_MWumZizIkmmBiLMicmGnFGFqrZVhEpdWS-wJm2l_FhCoRyVAxUniv7yrtSmuuJp85hnmkuNu4QXBFFtK8IX-xPwvHwQ3-4aMThOLPuiQKMDKNbS6Et28_ERe2ykfwpoD98fqcaIuLwEjHf2DMq0Q0q7zbnlBc5TMpXuUiNA7n9c29VHtVz05PtSIEs8-4sOeLIMhFeBJB2-YsO4nUKNZYlpAf3umu-LHzgh3Mw6wkCBsUKgIeaxtZH-46lPV98Yn_YHsSaRlh9LDj4qy56Dx83IdJkn7CaHBuk28EFohqgrOF6qBm_Lv7sOQFSvyLFLOc58t8RlE91hIH5l-oCKuXzi06H2fUQOvrZ_lIsG4Df9hiSb8_Rcp9GEBjoM9R_jUypjKz57Phs-TyN3qbd371J-7g2bG_Z1TlD8ptWDi9vtYTwfyJr582JB44uJ3ATAm4mLmF4i0OSae0FYh6GTFjjgiElEi5GAnkfnEsQgir29CXuXWWvJDNQQjczgXkoxlCDjhqHABQviyKCdEQWU_eZbJS-L1ohhLiEjKe-CbgKVh3flErT8RWlfhZwWGB3I3JkKMdI8mlpcc0VE_bVPCFoFVSTW1Z_0W00]-->
+    </g>
+</svg>

@@ -1,0 +1,71 @@
+@startuml PlayableCardUML
+
+skinparam BackgroundColor ghostwhite
+
+package cards.playable{
+
+
+    abstract class PlayableCard{
+      # PlayableCard(PlayableCardBuilder):
+      - id: int
+      - color: Color
+      - points: int
+      + getId(): int
+      + getSymbolToCollect(): Optional<Symbol>
+      + getPlacingRequirements(): ImmutableMap<Color, Integer>
+      + isAvailable(Corner): boolean
+      + getColor(): Color
+      + getType(): PlayableCardType
+      + getPointsRequirements(): PointsRequirementsType
+      + getPoints(): int
+      + checkItemCorner(Corner): CornerContainer
+    }
+
+    class GoldCard extends PlayableCard{
+      - GoldCard(GoldCardBuilder):
+      - colorPlacingRequirements: ImmutableMap<Color, Integer>
+      - pointsRequirements: PointsRequirementsType
+      - symbolToCollect: Symbol
+      - availableCorners: ImmutableMap<Corner, Availability>
+    }
+    class ResourceCard extends PlayableCard{
+      - ResourceCard(ResourceCardBuilder):
+      - availableCornerOrItem: ImmutableMap<Corner, CornerContainer>
+    }
+
+    abstract class Builder <T extends PlayableCard>{
+      - cardPoints: int
+      - primaryColor: Color
+
+      # Builder(int, Color)
+      + {abstract} build(): <T>
+    }
+
+    class GoldCardBuilder extends Builder <GoldCard>{
+      - availableCorners: EnumMap<Corner, Availability>
+      - colorPlacingRequirements: EnumMap<Color, Integer>
+      - pointsRequirements: PointsRequirementsType
+      - symbolToCollect: Symbol
+
+      + GoldCardBuilder(int, Color)
+      + hasCorner(Corner, boolean): GoldCardBuilder
+      + hasCorner(Corner): GoldCardBuilder
+      + hasRequirements(Color, int): GoldCardBuilder
+      + hasPointsRequirements(PointsRequirementsType): GoldCardBuilder
+      + hasSymbolToCollect(Symbol): GoldCardBuilder
+    }
+
+
+    class ResourceCardBuilder extends Builder <PlayableCard>{
+      - availableCornerOrItem: EnumMap<Corne, CornerContainer>
+
+      + ResourceCardBuilder(int, Color)
+      + hasIn(Corner, CornerContainer): ResourceCardBuilder
+    }
+
+    PlayableCard +-- Builder
+    GoldCard +-- GoldCardBuilder
+    ResourceCard +-- ResourceCardBuilder
+}
+
+@enduml
