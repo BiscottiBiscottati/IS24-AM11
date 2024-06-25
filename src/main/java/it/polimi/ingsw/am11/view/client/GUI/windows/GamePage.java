@@ -134,6 +134,7 @@ public class GamePage {
         Font font = FontManager.getFont(FontsEnum.VINQUE, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
 
+        guiActuator = codexNaturalis.getGuiActuator();
 
         GPBackground = GuiResources.getTheImageView(GuiResEnum.GAME_BACKGROUND);
 
@@ -292,30 +293,30 @@ public class GamePage {
 
     public void createButtonsForAvailablePositions() {
         Platform.runLater(() -> {
-            availablePositions = miniGameModel.getCliPlayer(
-                    miniGameModel.myName()).getField().getAvailablePositions();
-            // Rimuovi tutti i bottoni esistenti dal cardField
-            cardField.getChildren().removeIf(Button.class::isInstance);
-            // Crea un nuovo bottone per ogni posizione disponibile
-            for (Position position : availablePositions) {
-                Button newButton = new Button();
-                int realX = position.x() * 75 + centreX;
-                int realY = position.y() * 50 + centreY;
-                newButton.setTranslateX(realX);
-                newButton.setTranslateY(- realY);
-                System.out.println("Button position: " + realX + " " + realY);
-                newButton.setOnMouseClicked(event -> {
-                    selectedPosition = position;
-                    System.out.println("Selected position: " + selectedPosition
-                                       + "real position" + realX + " " + realY);
-                });
+        availablePositions = miniGameModel.getCliPlayer(
+                miniGameModel.myName()).getField().getAvailablePositions();
+        // Rimuovi tutti i bottoni esistenti dal cardField
+        cardField.getChildren().removeIf(Button.class::isInstance);
+        // Crea un nuovo bottone per ogni posizione disponibile
+        for (Position position : availablePositions) {
+            Button newButton = new Button();
+            int realX = position.x() * 75 + centreX;
+            int realY = position.y() * 50 + centreY;
+            newButton.setTranslateX(realX);
+            newButton.setTranslateY(- realY);
+            System.out.println("Button position: " + realX + " " + realY);
+            newButton.setOnMouseClicked(event -> {
+                selectedPosition = position;
+                System.out.println("Selected position: " + selectedPosition
+                                   + "real position" + realX + " " + realY);
+            });
 
-                cardField.getChildren().add(newButton);
-            }
+            cardField.getChildren().add(newButton);
+        }
         });
     }
 
-    public void printCardsOnField() {
+    public void printCardsOnField () {
         Platform.runLater(() -> {
             cardField.getChildren().removeIf(ImageView.class::isInstance);
             miniGameModel.getCliPlayer(miniGameModel.myName()).getField().getCardsPositioned()
@@ -333,8 +334,8 @@ public class GamePage {
                              assert cardImageView != null;
                              cardImageView.setFitHeight(100);
                              cardImageView.setFitWidth(150);
-                             cardImageView.setTranslateX(position.x() * 75 + centreX);
-                             cardImageView.setTranslateY(- position.y() * 50 + centreY);
+                             cardImageView.setTranslateX(position.x() * 90 + centreX);
+                             cardImageView.setTranslateY(- position.y() * 65 + centreY);
                              cardField.getChildren().add(cardImageView);
                          });
         });
@@ -345,6 +346,8 @@ public class GamePage {
             for (Label label : List.of(player1, player2, player3, player4)) {
                 if (label.getText().equals(nickname)) {
                     label.setStyle("-fx-background-color: #D7BC49");
+                } else {
+                    label.setStyle("-fx-background-color: #351F17");
                 }
             }
         });
