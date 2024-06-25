@@ -53,5 +53,5 @@ public interface ClientGameUpdatesInterface extends Remote {
 
     void sendReconnection(@NotNull ReconnectionModelMemento memento) throws RemoteException;
 
-    void youUgly();
+    void youUgly() throws RemoteException;
 }

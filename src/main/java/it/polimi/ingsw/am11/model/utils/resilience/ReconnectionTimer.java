@@ -6,14 +6,17 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.utils.TurnAction;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class ReconnectionTimer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReconnectionTimer.class);
+    private static final int TOTAL_RECONNECTION_TIME = 30000;
     private static int RECONNECTION_TIME = 10000;
-
     private final @NotNull Timer currentTurnTimer;
     private final @NotNull Timer reconnectionTimer;
     private final @NotNull GameModel model;
@@ -41,6 +44,8 @@ public class ReconnectionTimer {
                 @Override
                 public void run() {
                     try {
+                        LOGGER.info("MODEL: disconnected current player during placing, " +
+                                    "skipping its turn");
                         model.goNextTurn();
                     } catch (GameBreakingException | GameStatusException e) {
                         throw new RuntimeException(e);
@@ -50,6 +55,8 @@ public class ReconnectionTimer {
             case DRAW_CARD -> currentTurnTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    LOGGER.info("MODEL: disconnected current player during drawing, " +
+                                "drawing a random card");
                     Random generator = new Random();
                     PlayableCardType type = PlayableCardType.values()[generator.nextInt(2)];
                     try {
@@ -73,6 +80,7 @@ public class ReconnectionTimer {
     }
 
     public void reconnectCurrent() {
+        LOGGER.info("MODEL: reconnected current player, cancelling timer");
         currentTurnTimer.cancel();
     }
 
@@ -82,6 +90,7 @@ public class ReconnectionTimer {
         reconnectionTimer.schedule(new TimerTask() {
             @Override
             public void run() {
+                LOGGER.info("MODEL: started timer for reconnection");
                 isWaitingForReconnection = false;
                 model.endGameEarly();
             }
@@ -90,6 +99,7 @@ public class ReconnectionTimer {
 
     public void reconnect() {
         if (numberOfDisconnected == 1) {
+            LOGGER.info("MODEL: all players reconnected, stopping timer");
             reconnectionTimer.cancel();
             isWaitingForReconnection = false;
         }
@@ -106,14 +116,16 @@ public class ReconnectionTimer {
         reconnectionTimer.schedule(new TimerTask() {
             @Override
             public void run() {
+                LOGGER.info("MODEL: started timer for total reconnection");
                 isWaitingForReconnection = false;
                 CentralController.INSTANCE.destroyGame();
                 currentTurnTimer.cancel();
             }
-        }, RECONNECTION_TIME);
+        }, TOTAL_RECONNECTION_TIME);
     }
 
     public void cancelAll() {
+        LOGGER.info("MODEL: cancelling all timers");
         reconnectionTimer.cancel();
         currentTurnTimer.cancel();
     }

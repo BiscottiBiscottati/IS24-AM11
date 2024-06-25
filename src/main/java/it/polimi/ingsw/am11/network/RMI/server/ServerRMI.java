@@ -118,7 +118,13 @@ public class ServerRMI implements ServerLoggable {
 
     public void removeAllPlayers() {
         ServerGameCommands.clearPlayers();
-        playersRemote.forEach(ClientGameUpdatesInterface::youUgly);
+        for (ClientGameUpdatesInterface player : playersRemote) {
+            try {
+                player.youUgly();
+            } catch (RemoteException e) {
+                LOGGER.debug("SERVER RMI: unable to disconnect player or already disconnected");
+            }
+        }
         heartbeatManager.clear();
     }
 
