@@ -14,8 +14,6 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -30,11 +28,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.*;
@@ -43,10 +38,9 @@ import java.util.stream.Stream;
 
 public class GamePage {
 
+    private static final Popup popup = new Popup();
     private static MiniGameModel miniGameModel;
     private static GuiActuator guiActuator;
-
-
     private static List<Integer> handIDs;
     private static List<Integer> shownPlayable;
     private static Set<Position> availablePositions;
@@ -56,7 +50,6 @@ public class GamePage {
     private static double xOffset;
     private static double yOffset;
     private static VBox commentsBox;
-    private static final Popup popup = new Popup();
     @FXML
     Label errorLabel;
     @FXML
@@ -125,17 +118,21 @@ public class GamePage {
     }
 
     public void showErrorMessage(String message) {
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+        Platform.runLater(() -> {
+            errorLabel.setText(message);
+            errorLabel.setVisible(true);
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(5));
-        pause.setOnFinished(event -> errorLabel.setVisible(false));
-        pause.play();
+            PauseTransition pause = new PauseTransition(Duration.seconds(5));
+            pause.setOnFinished(event -> errorLabel.setVisible(false));
+            pause.play();
+        });
     }
 
     public void createGamePage(@NotNull CodexNaturalis codexNaturalis) throws IOException {
         miniGameModel = codexNaturalis.getMiniGameModel();
         guiActuator = codexNaturalis.getGuiActuator();
+
+        errorLabel.setVisible(false);
 
         Font font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
