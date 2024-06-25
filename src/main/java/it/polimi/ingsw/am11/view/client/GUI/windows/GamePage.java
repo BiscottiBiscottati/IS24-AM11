@@ -456,7 +456,6 @@ public class GamePage {
     public void card1Selected(MouseEvent mouseEvent) {
         AtomicBoolean chooseRetro = new AtomicBoolean(false);
         Platform.runLater(() -> {
-            System.out.println("Card 1 selected");
             handCard1.setOnMouseClicked(event -> {
                 int id = handIDs.getFirst();
                 System.out.println("Card id: " + id);
@@ -495,8 +494,8 @@ public class GamePage {
     }
 
     public void card2Selected(MouseEvent mouseEvent) {
+        AtomicBoolean chooseRetro = new AtomicBoolean(false);
         Platform.runLater(() -> {
-            System.out.println("Card 2 selected");
             handCard2.setOnMouseClicked(event -> {
                 int id = handIDs.get(1);
                 System.out.println("Card id: " + id);
@@ -507,6 +506,7 @@ public class GamePage {
                     if (isRetro) {
                         // Mostra il fronte se è già retro
                         cardImage = GuiResources.getCardImage(id);
+                        chooseRetro.set(false);
                     } else {
                         // Mostra il retro altrimenti
                         try {
@@ -514,6 +514,7 @@ public class GamePage {
                             it.polimi.ingsw.am11.model.cards.utils.enums.Color color =
                                     CardInfo.getPlayabelCardColor(id);
                             cardImage = GuiResources.getRetro(type, color);
+                            chooseRetro.set(true);
                         } catch (IllegalCardBuildException e) {
                             throw new RuntimeException(e);
                         }
@@ -522,10 +523,9 @@ public class GamePage {
                     handCard2.setImage(cardImage);
                     handCard2.getParent().layout();
                 } else if (event.getButton() == MouseButton.PRIMARY) {
-                    boolean isRetro = handCard2.getImage().getUrl().contains("retro");
                     int x = selectedPosition.x();
                     int y = selectedPosition.y();
-                    guiActuator.placeCard(x, y, id, isRetro);
+                    guiActuator.placeCard(x, y, id, chooseRetro.get());
                     System.out.println("Card placed at: " + x + " " + y);
                 }
             });
@@ -533,8 +533,8 @@ public class GamePage {
     }
 
     public void card3Selected(MouseEvent mouseEvent) {
+        AtomicBoolean chooseRetro = new AtomicBoolean(false);
         Platform.runLater(() -> {
-            System.out.println("Card 2 selected");
             handCard3.setOnMouseClicked(event -> {
                 int id = handIDs.get(2);
                 System.out.println("Card id: " + id);
@@ -545,6 +545,7 @@ public class GamePage {
                     if (isRetro) {
                         // Mostra il fronte se è già retro
                         cardImage = GuiResources.getCardImage(id);
+                        chooseRetro.set(false);
                     } else {
                         // Mostra il retro altrimenti
                         try {
@@ -552,6 +553,7 @@ public class GamePage {
                             it.polimi.ingsw.am11.model.cards.utils.enums.Color color =
                                     CardInfo.getPlayabelCardColor(id);
                             cardImage = GuiResources.getRetro(type, color);
+                            chooseRetro.set(true);
                         } catch (IllegalCardBuildException e) {
                             throw new RuntimeException(e);
                         }
@@ -560,10 +562,9 @@ public class GamePage {
                     handCard3.setImage(cardImage);
                     handCard3.getParent().layout();
                 } else if (event.getButton() == MouseButton.PRIMARY) {
-                    boolean isRetro = handCard2.getImage().getUrl().contains("retro");
                     int x = selectedPosition.x();
                     int y = selectedPosition.y();
-                    guiActuator.placeCard(x, y, id, isRetro);
+                    guiActuator.placeCard(x, y, id, chooseRetro.get());
                     System.out.println("Card placed at: " + x + " " + y);
                 }
             });
