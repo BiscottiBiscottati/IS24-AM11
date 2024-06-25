@@ -118,6 +118,9 @@ public class ClientGameReceiver implements MessageReceiver {
                             new TypeReference<>() {});
                     clientPlayerView.receiveReconnection(memento);
                     break;
+                case "youUgly":
+                    clientPlayerView.disconnectedFromServer("Game finished");
+                    break;
             }
         } catch (IOException e) {
             System.out.println("Received invalid message.");

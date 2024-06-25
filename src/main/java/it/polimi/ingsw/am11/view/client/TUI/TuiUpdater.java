@@ -355,7 +355,6 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         reset(TuiStates.CONNECTING);
         Exception e = new Exception("Disconnected from server: " + message);
         currentState.get().restart(false, e);
-
     }
 
     /**

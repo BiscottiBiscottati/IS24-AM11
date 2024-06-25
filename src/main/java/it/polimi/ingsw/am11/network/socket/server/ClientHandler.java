@@ -30,6 +30,7 @@ public class ClientHandler implements Runnable {
     private final @NotNull PrintWriter out;
     private final @NotNull PingHandler pingHandler;
     private @Nullable ServerMessageHandler messageHandler;
+    private ServerGameSender gameSender;
     private @Nullable String nickname;
     private boolean isRunning;
 
@@ -92,10 +93,10 @@ public class ClientHandler implements Runnable {
             LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
 
             try {
-                ServerGameSender messageSender = new ServerGameSender(out);
+                gameSender = new ServerGameSender(out);
                 ServerChatSender chatSender = new ServerChatSender(out);
                 VirtualPlayerView view = CentralController.INSTANCE
-                        .connectPlayer(nickname, messageSender, messageSender, chatSender);
+                        .connectPlayer(nickname, gameSender, gameSender, chatSender);
                 ServerGameReceiver messageReceiver =
                         new ServerGameReceiver(view, exceptionSender);
                 ServerChatReceiver chatReceiver = new ServerChatReceiver(exceptionSender);
@@ -142,5 +143,9 @@ public class ClientHandler implements Runnable {
             LOGGER.error("SERVER TCP: Error while reading input: {}", e.getMessage());
             return null;
         }
+    }
+
+    public void youUgly() {
+        gameSender.youUgly();
     }
 }

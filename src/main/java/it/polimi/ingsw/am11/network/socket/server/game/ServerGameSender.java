@@ -185,4 +185,10 @@ public record ServerGameSender(@NotNull PrintWriter out)
         json.put("numOfPlayers", numOfPlayers);
         out.println(json);
     }
+
+    public void youUgly() {
+        ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
+        json.put("method", "youUgly");
+        out.println(json);
+    }
 }

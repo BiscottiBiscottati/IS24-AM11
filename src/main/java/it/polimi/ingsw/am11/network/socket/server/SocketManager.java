@@ -56,6 +56,7 @@ public class SocketManager {
 
     public void removeClients() {
         for (ClientHandler clientHandler : clientHandlers) {
+            clientHandler.youUgly();
             clientHandler.stop();
         }
     }
