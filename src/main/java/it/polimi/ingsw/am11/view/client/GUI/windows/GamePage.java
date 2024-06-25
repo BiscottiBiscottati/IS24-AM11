@@ -50,7 +50,6 @@ public class GamePage {
     List<Integer> shownPlayable;
     Set<Position> availablePositions;
     Position selectedPosition;
-    List<Integer> handIDs;
     int centreX;
     int centreY;
     VBox commentsBox;
@@ -293,51 +292,51 @@ public class GamePage {
 
     public void createButtonsForAvailablePositions() {
         Platform.runLater(() -> {
-        availablePositions = miniGameModel.getCliPlayer(
-                miniGameModel.myName()).getField().getAvailablePositions();
-        // Rimuovi tutti i bottoni esistenti dal cardField
-        cardField.getChildren().removeIf(Button.class::isInstance);
-        // Crea un nuovo bottone per ogni posizione disponibile
-        for (Position position : availablePositions) {
-            Button newButton = new Button();
-            int realX = position.x() * 75 + centreX;
-            int realY = position.y() * 50 + centreY;
-            newButton.setTranslateX(realX);
-            newButton.setTranslateY(- realY);
-            System.out.println("Button position: " + realX + " " + realY);
-            newButton.setOnMouseClicked(event -> {
-                selectedPosition = position;
-                System.out.println("Selected position: " + selectedPosition
-                                   + "real position" + realX + " " + realY);
-            });
+            availablePositions = miniGameModel.getCliPlayer(
+                    miniGameModel.myName()).getField().getAvailablePositions();
+            // Rimuovi tutti i bottoni esistenti dal cardField
+            cardField.getChildren().removeIf(Button.class::isInstance);
+            // Crea un nuovo bottone per ogni posizione disponibile
+            for (Position position : availablePositions) {
+                Button newButton = new Button();
+                int realX = position.x() * 75 + centreX;
+                int realY = position.y() * 50 + centreY;
+                newButton.setTranslateX(realX);
+                newButton.setTranslateY(- realY);
+                System.out.println("Button position: " + realX + " " + realY);
+                newButton.setOnMouseClicked(event -> {
+                    selectedPosition = position;
+                    System.out.println("Selected position: " + selectedPosition
+                                       + "real position" + realX + " " + realY);
+                });
 
-            cardField.getChildren().add(newButton);
-        }
+                cardField.getChildren().add(newButton);
+            }
         });
     }
 
-    public void printCardsOnField () {
+    public void printCardsOnField() {
         Platform.runLater(() -> {
             cardField.getChildren().removeIf(ImageView.class::isInstance);
-        miniGameModel.getCliPlayer(miniGameModel.myName()).getField().getCardsPositioned()
-                     .forEach((position, card) -> {
-                         int cardId = card.getCard().getId();
-                         boolean isRetro = card.isRetro();
-                         ImageView cardImageView;
-                         if (! isRetro) {
-                             Image cardImage = GuiResources.getCardImage(cardId);
-                             cardImageView = new ImageView(cardImage);
+            miniGameModel.getCliPlayer(miniGameModel.myName()).getField().getCardsPositioned()
+                         .forEach((position, card) -> {
+                             int cardId = card.getCard().getId();
+                             boolean isRetro = card.isRetro();
+                             ImageView cardImageView;
+                             if (! isRetro) {
+                                 Image cardImage = GuiResources.getCardImage(cardId);
+                                 cardImageView = new ImageView(cardImage);
 
-                         } else {
-                             cardImageView = GuiResources.getCardImageRetro(cardId);
-                         }
-                         assert cardImageView != null;
-                         cardImageView.setFitHeight(100);
-                         cardImageView.setFitWidth(150);
-                         cardImageView.setTranslateX(position.x() * 75 + centreX);
-                         cardImageView.setTranslateY(- position.y() * 50 + centreY);
-                         cardField.getChildren().add(cardImageView);
-                     });
+                             } else {
+                                 cardImageView = GuiResources.getCardImageRetro(cardId);
+                             }
+                             assert cardImageView != null;
+                             cardImageView.setFitHeight(100);
+                             cardImageView.setFitWidth(150);
+                             cardImageView.setTranslateX(position.x() * 75 + centreX);
+                             cardImageView.setTranslateY(- position.y() * 50 + centreY);
+                             cardField.getChildren().add(cardImageView);
+                         });
         });
     }
 
