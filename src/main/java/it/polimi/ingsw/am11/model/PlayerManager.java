@@ -156,6 +156,10 @@ public class PlayerManager {
         unavailablePlayers.remove(player);
     }
 
+    public boolean isConnected(@NotNull String nickname) {
+        return ! isDisconnected(nickname);
+    }
+
     public boolean isDisconnected(@NotNull String nickname) {
         return unavailablePlayers.parallelStream()
                                  .map(Player::nickname)

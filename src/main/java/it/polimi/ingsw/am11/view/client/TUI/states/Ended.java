@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class Ended extends TUIState {
     static String tellNothing = "Nothing to do here, you can exit the game >>> \033[K";
-    private static String infoBar = "STATUS: The game has ended";
+    private static final String infoBar = "STATUS: The game has ended";
     private boolean alreadyError = false;
 
     public Ended(MiniGameModel model) {
@@ -35,7 +35,6 @@ public class Ended extends TUIState {
         switch (word.toLowerCase()) {
             case "help" -> {
                 Actuator.help();
-                return;
             }
             case "get" -> {
                 get(actuator, parser);
@@ -55,7 +54,6 @@ public class Ended extends TUIState {
                     errorsHappensEvenTwice(note);
                     alreadyError = true;
                     TuiStates.printAskLine(this);
-                    return;
                 }
             }
             //Maybe a return is needed after help
@@ -71,6 +69,29 @@ public class Ended extends TUIState {
         return new ArgParser();
     }
 
+    private void get(Actuator actuator, ArgParser parser) {
+        if (parser.getPositionalArgs().size() < 2) {
+            errorsHappensEvenTwice("ERROR: get command requires an argument");
+            alreadyError = true;
+            TuiStates.printAskLine(this);
+            return;
+        }
+
+        String word = parser.getPositionalArgs().get(1);
+
+        if (word.equalsIgnoreCase("chat")) {
+            actuator.setTuiState(TuiStates.CHAT);
+        }
+
+    }
+
+    private void errorsHappensEvenTwice(String text) {
+        if (alreadyError) {
+            System.out.print("\033[F" + "\033[K");
+        }
+        System.out.println("\033[F" + "\033[K" + text);
+    }
+
     @Override
     public void restart(boolean dueToEx, @Nullable Exception exception) {
         ConsUtils.clear();
@@ -83,30 +104,6 @@ public class Ended extends TUIState {
     @Override
     public TuiStates getState() {
         return TuiStates.ENDED;
-    }
-
-    private void errorsHappensEvenTwice(String text) {
-        if (alreadyError) {
-            System.out.print("\033[F" + "\033[K");
-        }
-        System.out.println("\033[F" + "\033[K" + text);
-    }
-
-    private void get(Actuator actuator, ArgParser parser) {
-        if (parser.getPositionalArgs().size() < 2) {
-            errorsHappensEvenTwice("ERROR: get command requires an argument");
-            alreadyError = true;
-            TuiStates.printAskLine(this);
-            return;
-        }
-
-        String word = parser.getPositionalArgs().get(1);
-
-        if (word.toLowerCase().equals("chat")) {
-            actuator.setTuiState(TuiStates.CHAT);
-            return;
-        }
-
     }
 
 

@@ -29,8 +29,8 @@ public class ClientHandler implements Runnable {
     private final @NotNull BufferedReader in;
     private final @NotNull PrintWriter out;
     private final @NotNull PingHandler pingHandler;
+    private final ServerGameSender gameSender;
     private @Nullable ServerMessageHandler messageHandler;
-    private ServerGameSender gameSender;
     private @Nullable String nickname;
     private boolean isRunning;
 
@@ -46,6 +46,7 @@ public class ClientHandler implements Runnable {
         }
 
         pingHandler = new PingHandler(clientSocket, out);
+        gameSender = new ServerGameSender(out);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             stop();
             LOGGER.info("SERVER TCP: Server ClientHandler {} closed", nickname);
@@ -93,7 +94,6 @@ public class ClientHandler implements Runnable {
             LOGGER.info("SERVER TCP: Received nickname: {}", nickname);
 
             try {
-                gameSender = new ServerGameSender(out);
                 ServerChatSender chatSender = new ServerChatSender(out);
                 VirtualPlayerView view = CentralController.INSTANCE
                         .connectPlayer(nickname, gameSender, gameSender, chatSender);
@@ -133,9 +133,10 @@ public class ClientHandler implements Runnable {
         try {
             String message = null;
             if (! clientSocket.isClosed()) message = in.readLine();
-            LOGGER.info("SERVER TCP: Received message: {}", message);
             if (message == null) {
+                LOGGER.info("SERVER TCP: Received message: {}", message);
                 LOGGER.info("SERVER TCP: Client {} disconnected", nickname);
+                assert nickname != null;
                 CentralController.INSTANCE.disconnectPlayer(nickname);
                 isRunning = false;
             }

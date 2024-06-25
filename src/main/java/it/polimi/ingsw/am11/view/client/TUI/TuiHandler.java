@@ -1,10 +1,6 @@
 package it.polimi.ingsw.am11.view.client.TUI;
 
-import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
-import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
-import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
-import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 
 import java.io.IOException;
 
@@ -17,7 +13,7 @@ public class TuiHandler {
      *
      * @throws IOException
      */
-    public void start() throws IOException {
+    public static void start() throws IOException {
         ConsUtils.clear();
 
         System.out.println("""

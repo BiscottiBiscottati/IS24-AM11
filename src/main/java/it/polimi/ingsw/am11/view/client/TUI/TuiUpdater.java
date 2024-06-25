@@ -352,6 +352,9 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void disconnectedFromServer(@NotNull String message) {
         LOGGER.error("Disconnected from server: {}", message);
+        if (model.table().getStatus() == GameStatus.ENDED) {
+            System.exit(0);
+        }
         reset(TuiStates.CONNECTING);
         Exception e = new Exception("Disconnected from server: " + message);
         currentState.get().restart(false, e);

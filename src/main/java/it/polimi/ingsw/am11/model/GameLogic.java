@@ -882,7 +882,6 @@ public class GameLogic implements GameModel {
         pcs.addListener(nickname, playerListener);
         LOGGER.info("MODEL: Reconnected player {}", nickname);
 
-        //FIXME
         if (reconnectionTimer.isWaitingForReconnection()) {
             reconnectionTimer.reconnect();
             if (plateau.getStatus() == GameStatus.ONGOING && ! playerManager.isTurnOf(nickname)) {
@@ -924,7 +923,7 @@ public class GameLogic implements GameModel {
     public void endGameEarly() {
         plateau.setStatus(GameStatus.ENDED);
         Player winningPlayer = playerManager.getPlayers().stream()
-                                            .filter(playerManager::isDisconnected)
+                                            .filter(playerManager::isConnected)
                                             .map(playerManager::getPlayer)
                                             .filter(Optional::isPresent)
                                             .map(Optional::get)

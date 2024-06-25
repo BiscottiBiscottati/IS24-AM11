@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="client tui" type="Application" factoryName="Application" singleton="false">
+    <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.am11.Main" />
+    <module name="AM11" />
+    <option name="PROGRAM_PARAMETERS" value="client -ui tui -v" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

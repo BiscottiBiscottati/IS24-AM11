@@ -14,7 +14,7 @@ public class Client {
         String uiMode = parser.getOption("ui").orElseThrow().getValue();
         switch (uiMode) {
             case "gui" -> Application.launch(CodexNaturalis.class);
-            case "tui" -> new TuiHandler().start();
+            case "tui" -> TuiHandler.start();
             case null, default -> System.out.println("Invalid UI mode " + uiMode + ". Please " +
                                                      "choose between " +
                                                      "'gui' and 'tui'");
