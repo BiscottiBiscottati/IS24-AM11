@@ -26,7 +26,6 @@ public class CliField {
 
     public void place(@NotNull Position pos, int cardId, boolean isRetro)
     throws SyncIssueException {
-
         FieldCard card = CardDecoder.decodeFieldCard(cardId).orElseThrow();
 
         try {

@@ -301,6 +301,7 @@ public class GamePage {
     }
 
     public void createButtonsForAvailablePositions() {
+        Platform.runLater(() -> {
         availablePositions = miniGameModel.getCliPlayer(
                 miniGameModel.myName()).getField().getAvailablePositions();
         // Rimuovi tutti i bottoni esistenti dal cardField
@@ -321,9 +322,12 @@ public class GamePage {
 
             cardField.getChildren().add(newButton);
         }
+        });
     }
 
     public void printCardsOnField () {
+        Platform.runLater(() -> {
+            cardField.getChildren().removeIf(ImageView.class::isInstance);
         miniGameModel.getCliPlayer(miniGameModel.myName()).getField().getCardsPositioned()
                      .forEach((position, card) -> {
                          int cardId = card.getCard().getId();
@@ -343,6 +347,7 @@ public class GamePage {
                          cardImageView.setTranslateY(- position.y() * 50 + centreY);
                          cardField.getChildren().add(cardImageView);
                      });
+        });
     }
 
     public void updateTurnChange(String nickname) {
