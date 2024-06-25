@@ -442,8 +442,8 @@ public class GamePage {
     public void card1Selected(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             System.out.println("Card 1 selected");
-            int id = handIDs.getFirst();
             handCard1.setOnMouseClicked(event -> {
+                int id = handIDs.getFirst();
                 System.out.println("Card id: " + id);
                 if (event.getButton() == MouseButton.SECONDARY) {
                     boolean isRetro = handCard1.getImage().getUrl().contains(
@@ -481,8 +481,8 @@ public class GamePage {
     public void card2Selected(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             System.out.println("Card 2 selected");
-            int id = handIDs.get(1);
             handCard2.setOnMouseClicked(event -> {
+                int id = handIDs.get(1);
                 System.out.println("Card id: " + id);
                 if (event.getButton() == MouseButton.SECONDARY) {
                     boolean isRetro = handCard2.getImage().getUrl().contains(
@@ -519,8 +519,8 @@ public class GamePage {
     public void card3Selected(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             System.out.println("Card 2 selected");
-            int id = handIDs.get(2);
             handCard3.setOnMouseClicked(event -> {
+                int id = handIDs.get(2);
                 System.out.println("Card id: " + id);
                 if (event.getButton() == MouseButton.SECONDARY) {
                     boolean isRetro = handCard3.getImage().getUrl().contains(
