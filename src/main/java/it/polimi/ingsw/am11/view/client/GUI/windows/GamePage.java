@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -594,7 +595,21 @@ public class GamePage {
 
         sendButton.setOnAction(e -> {
             String comment = commentField.getText();
-            guiActuator.sendChatMessage(comment);
+            Stream<String> playerStream = codexNaturalis.getMiniGameModel().getPlayers().stream();
+            List<String> playerNames = playerStream.toList();
+            int i = playerNames.size();
+            boolean isPrivate = false;
+            for (int j = 0; j < i; j++) {
+                if (comment.contains("/" + playerNames.get(j)) &&
+                    ! Objects.equals(miniGameModel.myName(), playerNames.get(j))) {
+                    comment = comment.replace("/" + playerNames.get(j), "");
+                    guiActuator.sendPrivateMessage(playerNames.get(j), comment);
+                    isPrivate = true;
+                }
+            }
+            if (! isPrivate) {
+                guiActuator.sendChatMessage(comment);
+            }
             commentField.clear();
         });
 
