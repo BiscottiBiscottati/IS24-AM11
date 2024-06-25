@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
 import it.polimi.ingsw.am11.view.client.GUI.utils.*;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import it.polimi.ingsw.am11.view.client.miniModel.utils.CardInfo;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -124,6 +126,10 @@ public class GamePage {
     public void showErrorMessage(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        pause.setOnFinished(event -> errorLabel.setVisible(false));
+        pause.play();
     }
 
     public void showGamePage(@NotNull Parent root, Stage primaryStage) {
@@ -158,7 +164,7 @@ public class GamePage {
             label.setStyle("-fx-background-radius: 5");
         }
 
-        yourName.setText(miniGameModel.myName());
+        yourName.setText("YOUR NAME:\n" + miniGameModel.myName());
 
         // Get the stream of player names
         Stream<String> playerStream = codexNaturalis.getMiniGameModel().getPlayers().stream();
@@ -366,7 +372,7 @@ public class GamePage {
                 if (label.getText().equals(nickname)) {
                     label.setStyle("-fx-background-color: #D7BC49");
                 } else {
-                    label.setStyle("-fx-background-color: #351F17");
+                    label.setStyle("--fx-background-image: transparent");
                 }
             }
         });

@@ -224,7 +224,7 @@
                 <StackPane fx:id="cardField" maxHeight="8000.0" maxWidth="12000.0" prefHeight="8000.0" prefWidth="12000.0" style="-fx-background-color: #8B0000;" />
             </content>
         </ScrollPane>
-      <Label fx:id="errorLabel" text="Illegal action pls stop!!!!!" textFill="RED" StackPane.alignment="BOTTOM_CENTER">
+      <Label fx:id="errorLabel" text="It's not your turn, pls stop!" textFill="RED" StackPane.alignment="BOTTOM_CENTER">
          <StackPane.margin>
             <Insets bottom="150.0" />
          </StackPane.margin>
@@ -232,10 +232,13 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="yourName" text="Label">
+      <Label fx:id="yourName" text="Label" textAlignment="CENTER">
          <StackPane.margin>
-            <Insets left="400.0" top="30.0" />
+            <Insets left="450.0" top="30.0" />
          </StackPane.margin>
+         <font>
+            <Font size="20.0" />
+         </font>
       </Label>
     </children>
 </StackPane>
