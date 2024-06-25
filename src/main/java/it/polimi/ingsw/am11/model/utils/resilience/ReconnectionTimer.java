@@ -39,6 +39,7 @@ public class ReconnectionTimer {
 
     public void disconnectCurrent(@NotNull String nickname,
                                   @NotNull TurnAction turnAction) {
+        LOGGER.info("MODEL: disconnected current player, starting timer");
         switch (turnAction) {
             case PLACE_CARD -> currentTurnTimer.schedule(new TimerTask() {
                 @Override
@@ -87,10 +88,11 @@ public class ReconnectionTimer {
     public void waitForReconnection() {
         this.numberOfDisconnected = 1;
         isWaitingForReconnection = true;
+        LOGGER.info("MODEL: started timer for reconnection");
         reconnectionTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                LOGGER.info("MODEL: started timer for reconnection");
+                LOGGER.info("MODEL: player didn't reconnect in time, ending game");
                 isWaitingForReconnection = false;
                 model.endGameEarly();
             }
@@ -99,7 +101,7 @@ public class ReconnectionTimer {
 
     public void reconnect() {
         if (numberOfDisconnected == 1) {
-            LOGGER.info("MODEL: all players reconnected, stopping timer");
+            LOGGER.info("MODEL: enough players reconnected, stopping timer");
             reconnectionTimer.cancel();
             isWaitingForReconnection = false;
         }
@@ -113,10 +115,11 @@ public class ReconnectionTimer {
         }
         numberOfDisconnected = 1;
         isWaitingForReconnection = true;
+        LOGGER.info("MODEL: started timer for total reconnection");
         reconnectionTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                LOGGER.info("MODEL: started timer for total reconnection");
+                LOGGER.info("MODEL: total reconnection failed, destroying the game");
                 isWaitingForReconnection = false;
                 CentralController.INSTANCE.destroyGame();
                 currentTurnTimer.cancel();
@@ -128,5 +131,9 @@ public class ReconnectionTimer {
         LOGGER.info("MODEL: cancelling all timers");
         reconnectionTimer.cancel();
         currentTurnTimer.cancel();
+    }
+
+    public boolean isWaitingForReconnection() {
+        return isWaitingForReconnection;
     }
 }

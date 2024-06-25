@@ -882,7 +882,19 @@ public class GameLogic implements GameModel {
         pcs.addListener(nickname, playerListener);
         LOGGER.info("MODEL: Reconnected player {}", nickname);
 
-        reconnectionTimer.reconnect();
+        if (reconnectionTimer.isWaitingForReconnection()) {
+            reconnectionTimer.reconnect();
+            if (! playerManager.isTurnOf(nickname)) {
+                try {
+                    goNextTurn();
+                } catch (GameStatusException e) {
+                    LOGGER.error("MODEL: Something broke while reconnecting player! Error: {}",
+                                 e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
         if (playerManager.isTurnOf(nickname)) {
             reconnectionTimer.reconnectCurrent();
         }
