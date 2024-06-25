@@ -113,6 +113,7 @@ public class ClientGameReceiver implements MessageReceiver {
                     clientPlayerView.notifyGodPlayer();
                     break;
                 case "sendReconnection":
+                    LOGGER.debug("Received reconnection message");
                     ReconnectionModelMemento memento = JsonFactory.readValue(
                             jsonNode.get("memento").asText(),
                             new TypeReference<>() {});

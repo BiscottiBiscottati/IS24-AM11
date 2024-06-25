@@ -1,7 +1,8 @@
 package it.polimi.ingsw.am11.view.client.GUI.utils;
 
 public enum FontsEnum {
-    CLOISTER_BLACK(GuiResEnum.CLOISTER_BLACK);
+    CLOISTER_BLACK(GuiResEnum.CLOISTER_BLACK),
+    VINQUE(GuiResEnum.VINQUE);
 
     private final GuiResEnum font;
 

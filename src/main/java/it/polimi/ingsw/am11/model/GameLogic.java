@@ -882,6 +882,7 @@ public class GameLogic implements GameModel {
         pcs.addListener(nickname, playerListener);
         LOGGER.info("MODEL: Reconnected player {}", nickname);
 
+        //FIXME
         if (reconnectionTimer.isWaitingForReconnection()) {
             reconnectionTimer.reconnect();
             if (plateau.getStatus() == GameStatus.ONGOING && ! playerManager.isTurnOf(nickname)) {

@@ -11,6 +11,7 @@ import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
 import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,21 @@ public class Actuator {
      * Shows the help message
      */
     public static void help() {
-        //TODO
+        System.out.println(
+                """
+                        Commands:
+                        exit - Close the application
+                        msg/send    </help> - Chat help;
+                                    </msg> <Nickname> <Message> - Send a private message;
+                                    <Message> - Send a message to the chat;
+                        get <chat> - Open the chat;
+                            <table> - View the table;
+                            <?/help> -View the get help;
+                            [nickname] - View the field of the player with that nickname;
+                        place <x> <y> <cardId> <front/retro> - Place a card on the table;
+                        draw <cardId/gold/resource> - Draw a card from the deck;
+                        """
+        );
     }
 
     /**

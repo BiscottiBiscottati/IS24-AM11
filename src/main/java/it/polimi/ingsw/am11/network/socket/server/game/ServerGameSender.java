@@ -80,6 +80,7 @@ public record ServerGameSender(@NotNull PrintWriter out)
         } catch (JsonProcessingException e) {
             LOGGER.error("Error while sending reconnection", e);
         }
+        out.println(json);
     }
 
     @Override

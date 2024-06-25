@@ -39,15 +39,15 @@ import java.util.stream.Stream;
 
 public class GamePage {
 
-    private static final Logger log = LoggerFactory.getLogger(GamePage.class);
-    private static Parent root1;
-    private static Stage primaryStage;
-    GuiResources guiResources;
-    MiniGameModel miniGameModel;
-    CodexNaturalis codexNaturalis;
-    GuiActuator guiActuator;
-    Set<Integer> shownPlayable;
-    Set<Integer> hand;
+    private Parent root;
+    private Stage primaryStage;
+    private CodexNaturalis codexNaturalis;
+    private MiniGameModel miniGameModel;
+    private GuiActuator guiActuator;
+
+
+    List<Integer> handIDs;
+    List<Integer> shownPlayable;
     Set<Position> availablePositions;
     Position selectedPosition;
     List<Integer> handIDs;
@@ -119,10 +119,10 @@ public class GamePage {
     public GamePage() {
     }
 
-    public static void showGamePage(@NotNull Parent root1, Stage primaryStage) {
-        GamePage.root1 = root1;
-        GamePage.primaryStage = primaryStage;
-        root1.setVisible(true);
+    public void showGamePage(@NotNull Parent root, Stage primaryStage) {
+        this.root = root;
+        this.primaryStage = primaryStage;
+        root.setVisible(true);
 
     }
 
@@ -130,10 +130,11 @@ public class GamePage {
 
         this.codexNaturalis = codexNaturalis;
         this.miniGameModel = codexNaturalis.getMiniGameModel();
-        Font font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+        this.guiActuator = codexNaturalis.getGuiActuator();
+
+        Font font = FontManager.getFont(FontsEnum.VINQUE, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
 
-        guiActuator = codexNaturalis.getGuiActuator();
 
         GPBackground = GuiResources.getTheImageView(GuiResEnum.GAME_BACKGROUND);
 
@@ -214,7 +215,6 @@ public class GamePage {
 
     public void updatePersonalObjective() {
         Platform.runLater(() -> {
-            log.info("Personal objective updated");
             Set<Integer> cardIdSet =
                     miniGameModel.getCliPlayer(
                             miniGameModel.myName()).getSpace().getPlayerObjective();
@@ -236,19 +236,14 @@ public class GamePage {
             handCard3.setImage(null);
             handIDs.clear();
             List<ImageView> handCards = List.of(handCard1, handCard2, handCard3);
-            hand = miniGameModel.getCliPlayer(
-                    miniGameModel.myName()).getSpace().getPlayerHand();
-            for (int cardId : hand) {
-                Image cardImage = GuiResources.getCardImage(cardId);
+            handIDs = new ArrayList<>(miniGameModel.getCliPlayer(
+                    miniGameModel.myName()).getSpace().getPlayerHand());
+            int size = handIDs.size();
+            for (int i = 0; i < size; i++) {
+                Image cardImage = GuiResources.getCardImage(handIDs.get(i));
                 if (cardImage != null) {
-                    for (ImageView handCard : handCards) {
-                        if (handCard.getImage() == null) {
-                            handCard.setImage(cardImage);
-                            handCard.getParent().layout();
-                            handIDs.add(cardId);
-                            break;
-                        }
-                    }
+                    handCards.get(i).setImage(cardImage);
+                    handCards.get(i).getParent().layout();
                 }
             }
         });
@@ -260,17 +255,13 @@ public class GamePage {
             for (ImageView shownCard : shownCards) {
                 shownCard.setImage(null);
             }
-            shownPlayable = miniGameModel.table().getShownCards();
-            for (int cardId : shownPlayable) {
-                Image cardImage = GuiResources.getCardImage(cardId);
+            shownPlayable = new ArrayList<>(miniGameModel.table().getShownCards());
+            int size = shownPlayable.size();
+            for (int i = 0; i < size; i++) {
+                Image cardImage = GuiResources.getCardImage(shownPlayable.get(i));
                 if (cardImage != null) {
-                    for (ImageView shownCard : shownCards) {
-                        if (shownCard.getImage() == null) {
-                            shownCard.setImage(cardImage);
-                            shownCard.getParent().layout();
-                            break;
-                        }
-                    }
+                    shownCards.get(i).setImage(cardImage);
+                    shownCards.get(i).getParent().layout();
                 }
             }
         });
@@ -362,7 +353,6 @@ public class GamePage {
 
     public void updateCommonObj() {
         Platform.runLater(() -> {
-            log.info("Common objective updated");
             Set<Integer> cardIdSet = miniGameModel.table().getCommonObjectives();
             for (int cardId : cardIdSet) {
                 Image cardImage = GuiResources.getCardImage(cardId);
@@ -410,27 +400,37 @@ public class GamePage {
     }
 
     public void pickFromResDeck(MouseEvent mouseEvent) {
-        guiActuator.drawCard(false, PlayableCardType.RESOURCE, 0);
+        Platform.runLater(() -> {
+            guiActuator.drawCard(false, PlayableCardType.RESOURCE, 0);
+        });
     }
 
     public void chooseVis1(MouseEvent mouseEvent) {
-        guiActuator.drawCard(true, PlayableCardType.GOLD,
-                             shownPlayable.stream().findFirst().orElse(0));
+        Platform.runLater(() -> {
+            guiActuator.drawCard(true, PlayableCardType.GOLD,
+                                 shownPlayable.getFirst());
+        });
     }
 
     public void chooseVis3(MouseEvent mouseEvent) {
-        guiActuator.drawCard(true, PlayableCardType.GOLD,
-                             shownPlayable.stream().skip(2).findFirst().orElse(0));
+        Platform.runLater(() -> {
+            guiActuator.drawCard(true, PlayableCardType.GOLD,
+                                 shownPlayable.get(2));
+        });
     }
 
     public void chooseVis2(MouseEvent mouseEvent) {
-        guiActuator.drawCard(true, PlayableCardType.GOLD,
-                             shownPlayable.stream().skip(1).findFirst().orElse(0));
+        Platform.runLater(() -> {
+            guiActuator.drawCard(true, PlayableCardType.GOLD,
+                                 shownPlayable.get(1));
+        });
     }
 
     public void chooseVis4(MouseEvent mouseEvent) {
-        guiActuator.drawCard(true, PlayableCardType.GOLD,
-                             shownPlayable.stream().skip(3).findFirst().orElse(0));
+        Platform.runLater(() -> {
+            guiActuator.drawCard(true, PlayableCardType.GOLD,
+                                 shownPlayable.get(3));
+        });
     }
 
     public void card1Selected(MouseEvent mouseEvent) {

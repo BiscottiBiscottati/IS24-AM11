@@ -23,7 +23,7 @@ public class MiniGameModel {
     public MiniGameModel() {
         this.playerMap = new LinkedHashMap<>(8);
         this.table = new CliTable();
-        this.finalLeaderboard = null;
+        this.finalLeaderboard = new HashMap<>(8);
         this.iPlaced = false;
         this.currentTurn = "";
         this.godPlayer = "";

@@ -366,7 +366,6 @@ public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
         LOGGER.debug("Reconnection event received");
-        reset(TuiStates.CONNECTING);
         model.load(memento);
         model.setMyName(candidateNick);
 
