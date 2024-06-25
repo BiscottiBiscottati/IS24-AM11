@@ -702,6 +702,9 @@ public class GameLogic implements GameModel {
 
             plateau.setFinalLeaderboard();
 
+            pcs.clearListeners();
+            reconnectionTimer.cancelAll();
+            CentralController.INSTANCE.destroyGame();
             return;
         } else if (plateau.getStatus() == GameStatus.ARMAGEDDON &&
                    playerManager.isFirstTheCurrent()) {
