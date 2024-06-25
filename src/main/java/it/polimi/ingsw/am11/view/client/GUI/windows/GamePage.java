@@ -235,8 +235,8 @@ public class GamePage {
             handCard3.setImage(null);
             handIDs.clear();
             List<ImageView> handCards = List.of(handCard1, handCard2, handCard3);
-            handIDs = new ArrayList<>(miniGameModel.getCliPlayer(
-                    miniGameModel.myName()).getSpace().getPlayerHand());
+            handIDs = new ArrayList<>(miniGameModel.getCliPlayer(miniGameModel.myName())
+                                                   .getSpace().getPlayerHand());
             int size = handIDs.size();
             for (int i = 0; i < size; i++) {
                 Image cardImage = GuiResources.getCardImage(handIDs.get(i));
@@ -435,8 +435,9 @@ public class GamePage {
     }
 
     public void card1Selected(MouseEvent mouseEvent) {
+        Platform.runLater(() -> {
         System.out.println("Card 1 selected");
-        int id = handIDs.get(0);
+        int id = handIDs.getFirst();
         handCard1.setOnMouseClicked(event -> {
             System.out.println("Card id: " + id);
             if (event.getButton() == MouseButton.SECONDARY) {
@@ -468,10 +469,12 @@ public class GamePage {
                 System.out.println("Card placed at: " + x + " " + y);
             }
         });
+        });
 
     }
 
     public void card2Selected(MouseEvent mouseEvent) {
+        Platform.runLater(() -> {
         System.out.println("Card 2 selected");
         int id = handIDs.get(1);
         handCard2.setOnMouseClicked(event -> {
@@ -505,9 +508,11 @@ public class GamePage {
                 System.out.println("Card placed at: " + x + " " + y);
             }
         });
+        });
     }
 
     public void card3Selected(MouseEvent mouseEvent) {
+        Platform.runLater(() -> {
         System.out.println("Card 2 selected");
         int id = handIDs.get(2);
         handCard3.setOnMouseClicked(event -> {
@@ -530,7 +535,6 @@ public class GamePage {
                         throw new RuntimeException(e);
                     }
                 }
-
                 handCard3.setImage(cardImage);
                 handCard3.getParent().layout();
             } else if (event.getButton() == MouseButton.PRIMARY) {
@@ -540,6 +544,7 @@ public class GamePage {
                 guiActuator.placeCard(x, y, id, isRetro);
                 System.out.println("Card placed at: " + x + " " + y);
             }
+        });
         });
     }
 
