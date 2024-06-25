@@ -884,7 +884,7 @@ public class GameLogic implements GameModel {
 
         if (reconnectionTimer.isWaitingForReconnection()) {
             reconnectionTimer.reconnect();
-            if (! playerManager.isTurnOf(nickname)) {
+            if (plateau.getStatus() == GameStatus.ONGOING && ! playerManager.isTurnOf(nickname)) {
                 try {
                     goNextTurn();
                 } catch (GameStatusException e) {
