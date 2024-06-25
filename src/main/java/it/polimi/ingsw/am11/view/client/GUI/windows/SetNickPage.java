@@ -41,7 +41,7 @@ public class SetNickPage {
         font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
         fontBig = FontManager.getFont(FontsEnum.CLOISTER_BLACK,
-                                      (int) (Proportions.HALF_BUTTON_SIZE.getValue() * 3));
+                                      Proportions.HALF_BUTTON_SIZE.getValue() * 3);
         halfButtonSize = HALF_BUTTON_SIZE.getValue();
         distanceToBorder = DISTANCE_TO_BORDER.getValue();
         writeNick = new TextField();
@@ -148,5 +148,10 @@ public class SetNickPage {
 
             WaitingRoomPage.showWaitingRoomPage();
         });
+    }
+
+    public static void showErrorMesssage() {
+        nameAlreadyTaken.setText("Wait for the God player to set the number of players");
+        nameAlreadyTaken.setVisible(true);
     }
 }

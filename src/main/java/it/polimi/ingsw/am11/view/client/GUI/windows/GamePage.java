@@ -11,7 +11,6 @@ import it.polimi.ingsw.am11.view.client.miniModel.utils.CardInfo;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,8 +28,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,24 +38,9 @@ import java.util.stream.Stream;
 
 public class GamePage {
 
-    private Parent root;
-    private Stage primaryStage;
-    private CodexNaturalis codexNaturalis;
-    private MiniGameModel miniGameModel;
-    private GuiActuator guiActuator;
-
-
-    private List<Integer> handIDs;
-    private List<Integer> shownPlayable;
-    private Set<Position> availablePositions;
-    private Position selectedPosition;
-    private int centreX;
-    private int centreY;
-    private double xOffset;
-    private double yOffset;
-    private VBox commentsBox;
-    private Popup popup = new Popup();
-
+    private final Popup popup = new Popup();
+    @FXML
+    Label errorLabel;
     @FXML
     Label decksLabel;
     @FXML
@@ -117,15 +99,38 @@ public class GamePage {
     ImageView commonObj1;
     @FXML
     ImageView commonObj2;
+    @FXML
+    Label yourName;
+
+    private Parent root;
+    private Stage primaryStage;
+    private CodexNaturalis codexNaturalis;
+    private MiniGameModel miniGameModel;
+    private GuiActuator guiActuator;
+    private List<Integer> handIDs;
+    private List<Integer> shownPlayable;
+    private Set<Position> availablePositions;
+    private Position selectedPosition;
+    private int centreX;
+    private int centreY;
+    private double xOffset;
+    private double yOffset;
+    private VBox commentsBox;
 
 
     public GamePage() {
+    }
+
+    public void showErrorMessage(String message) {
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
     }
 
     public void showGamePage(@NotNull Parent root, Stage primaryStage) {
         this.root = root;
         this.primaryStage = primaryStage;
         root.setVisible(true);
+        errorLabel.setVisible(false);
 
     }
 
@@ -144,7 +149,7 @@ public class GamePage {
 
 
         List<Label> labels = List.of(decksLabel, visiblesLabel, handLabel, objLabel,
-                                     personalObjLabel);
+                                     personalObjLabel, errorLabel, yourName);
         for (Label label : labels) {
             label.setFont(font);
             label.setStyle("-fx-font-size: 30");
@@ -152,6 +157,8 @@ public class GamePage {
             label.setStyle("-fx-background-color: #351F17");
             label.setStyle("-fx-background-radius: 5");
         }
+
+        yourName.setText(miniGameModel.myName());
 
         // Get the stream of player names
         Stream<String> playerStream = codexNaturalis.getMiniGameModel().getPlayers().stream();
@@ -196,7 +203,6 @@ public class GamePage {
         chatButton.setOnMouseReleased(event -> chatButton.setStyle(
                 "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
     }
-
 
     public void updateDeckTop(PlayableCardType type,
                               it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {

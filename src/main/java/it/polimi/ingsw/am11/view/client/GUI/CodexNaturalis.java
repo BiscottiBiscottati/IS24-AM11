@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.view.client.GUI;
 
-import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
@@ -137,15 +136,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
     }
 
     @Override
-    public void throwException(Exception ex) {
-        //FIXME: to be completed
-        if (ex instanceof NotSetNumOfPlayerException) {
-            WaitingRoomPage.hideWaitingRoomPage();
-            SetNickPage.showSettingNickPage();
-        }
-    }
-
-    @Override
     public void updateHand(int cardId, boolean removeMode) {
         gamePage.updateHand();
     }
@@ -202,6 +192,11 @@ public class CodexNaturalis extends Application implements GuiObserver {
     public void updateChat() {
         System.out.println("Chat updated");
         gamePage.updateChat();
+    }
+
+    @Override
+    public void showErrorGamePage(String message) {
+        gamePage.showErrorMessage(message);
     }
 
     private void showGamePage() {

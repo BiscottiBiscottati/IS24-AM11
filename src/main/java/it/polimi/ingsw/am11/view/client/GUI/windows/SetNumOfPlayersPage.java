@@ -85,7 +85,12 @@ public class SetNumOfPlayersPage {
         writeNumOfPlayers.setVisible(true);
         enterNumOfPlayers.setVisible(true);
         enterNumOfPlayers.setOnMouseClicked(event -> {
-            int num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
+            int num = 0;
+            try {
+                num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
+            } catch (NumberFormatException e) {
+                invalidNumOfPlayers.setVisible(true);
+            }
             if (num < 2 || num > 4) {
                 invalidNumOfPlayers.setVisible(true);
             } else {
@@ -98,4 +103,9 @@ public class SetNumOfPlayersPage {
             }
         });
     }
+
+    public static void showErrorMesssage() {
+        invalidNumOfPlayers.setVisible(true);
+    }
+
 }

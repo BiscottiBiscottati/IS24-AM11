@@ -26,8 +26,6 @@ public interface GuiObserver {
 
     void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard);
 
-    void throwException(Exception ex);
-
     void updateHand(int cardId, boolean removeMode);
 
     void updatePersonalObjective(int cardId, boolean removeMode);
@@ -46,4 +44,6 @@ public interface GuiObserver {
     void disconnectedFromServer();
 
     void updateChat();
+
+    void showErrorGamePage(String message);
 }
