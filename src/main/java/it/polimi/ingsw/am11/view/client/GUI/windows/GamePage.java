@@ -131,7 +131,7 @@ public class GamePage {
         this.miniGameModel = codexNaturalis.getMiniGameModel();
         this.guiActuator = codexNaturalis.getGuiActuator();
 
-        Font font = FontManager.getFont(FontsEnum.VINQUE, (int) (
+        Font font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
 
         guiActuator = codexNaturalis.getGuiActuator();

@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.view.client.GUI.GUIParts;
 
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
+import it.polimi.ingsw.am11.view.client.GUI.utils.Proportions;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -23,11 +24,10 @@ public class FrameHandler {
     public static void setIcons(Stage stage, StackPane root) {
 
         //Proportions
-        int size = (int) (Math.min(Screen.getPrimary().getBounds().getHeight(),
-                                   Screen.getPrimary().getBounds().getWidth()) * 0.7);
+        int size = Proportions.SQUARE_SIZE.getValue();
 
-        int halfButtonSize = size / 48;
-        int distanceToBorder = halfButtonSize >> 2;
+        int halfButtonSize = Proportions.HALF_BUTTON_SIZE.getValue();
+        int distanceToBorder = Proportions.DISTANCE_TO_BORDER.getValue();
 
         //Set title
         stage.setTitle("CodexNaturalis");
