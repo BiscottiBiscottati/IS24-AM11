@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am11.view.client.GUI.windows;
 
+import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
@@ -12,6 +14,7 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,18 +33,30 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 public class GamePage {
 
-    private final Popup popup = new Popup();
+    private static MiniGameModel miniGameModel;
+    private static GuiActuator guiActuator;
+
+
+    private static List<Integer> handIDs;
+    private static List<Integer> shownPlayable;
+    private static Set<Position> availablePositions;
+    private static Position selectedPosition;
+    private static int centreX;
+    private static int centreY;
+    private static double xOffset;
+    private static double yOffset;
+    private static VBox commentsBox;
+    private static final Popup popup = new Popup();
     @FXML
     Label errorLabel;
     @FXML
@@ -105,21 +120,6 @@ public class GamePage {
     @FXML
     Label yourName;
 
-    private Parent root;
-    private Stage primaryStage;
-    private CodexNaturalis codexNaturalis;
-    private MiniGameModel miniGameModel;
-    private GuiActuator guiActuator;
-    private List<Integer> handIDs;
-    private List<Integer> shownPlayable;
-    private Set<Position> availablePositions;
-    private Position selectedPosition;
-    private int centreX;
-    private int centreY;
-    private double xOffset;
-    private double yOffset;
-    private VBox commentsBox;
-
 
     public GamePage() {
     }
@@ -133,19 +133,9 @@ public class GamePage {
         pause.play();
     }
 
-    public void showGamePage(@NotNull Parent root, Stage primaryStage) {
-        this.root = root;
-        this.primaryStage = primaryStage;
-        root.setVisible(true);
-        errorLabel.setVisible(false);
-
-    }
-
     public void createGamePage(@NotNull CodexNaturalis codexNaturalis) throws IOException {
-
-        this.codexNaturalis = codexNaturalis;
-        this.miniGameModel = codexNaturalis.getMiniGameModel();
-        this.guiActuator = codexNaturalis.getGuiActuator();
+        miniGameModel = codexNaturalis.getMiniGameModel();
+        guiActuator = codexNaturalis.getGuiActuator();
 
         Font font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
@@ -210,6 +200,7 @@ public class GamePage {
         chatButton.setOnMouseReleased(event -> chatButton.setStyle(
                 "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
     }
+
 
     public void updateDeckTop(PlayableCardType type,
                               it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {
@@ -334,30 +325,55 @@ public class GamePage {
         });
     }
 
+    private void recursivePrinter(Map<Position, ImageView> placedCards,
+                                  Map<Position, CardContainer> cardsPositioned,
+                                  Position pos) {
+
+        CardContainer cardContainer = cardsPositioned.get(pos);
+        if (placedCards.containsKey(pos)) {
+            //if we already placed that card we simply put it to the front
+            placedCards.get(pos).toFront();
+        } else {
+            //if the card has not been placed yet we place it and save it in the placedCards Map
+            int cardId = cardContainer.getCard().getId();
+            boolean isRetro = cardContainer.isRetro();
+            ImageView cardImageView;
+            if (! isRetro) {
+                Image cardImage = GuiResources.getCardImage(cardId);
+                cardImageView = new ImageView(cardImage);
+            } else {
+                cardImageView = GuiResources.getCardImageRetro(cardId);
+            }
+            cardImageView.setFitHeight(100);
+            cardImageView.setFitWidth(150);
+            cardImageView.setTranslateX(pos.x() * 117 + centreX);
+            cardImageView.setTranslateY(- pos.y() * 67 + centreY);
+            placedCards.put(pos, cardImageView);
+            cardField.getChildren().add(cardImageView);
+            cardImageView.toFront();
+        }
+
+        //now let's check the neighbouring cards
+        for (Corner corner : Corner.values()) {
+            if (cardsPositioned.get(pos).isCornerCovered(corner)) {
+                recursivePrinter(placedCards, cardsPositioned, pos.getPositionOn(corner));
+            }
+        }
+    }
+
     public void printCardsOnField() {
         Platform.runLater(() -> {
             cardField.getChildren().removeIf(ImageView.class::isInstance);
-            miniGameModel.getCliPlayer(miniGameModel.myName()).getField().getCardsPositioned()
-                         .forEach((position, card) -> {
-                             int cardId = card.getCard().getId();
-                             boolean isRetro = card.isRetro();
-                             ImageView cardImageView;
-                             if (! isRetro) {
-                                 Image cardImage = GuiResources.getCardImage(cardId);
-                                 cardImageView = new ImageView(cardImage);
+            Map<Position, ImageView> placedCards = new HashMap<>(8);
+            Map<Position, CardContainer> cardsPositioned =
+                    miniGameModel.getCliPlayer(
+                            miniGameModel.myName()).getField().getCardsPositioned();
 
-                             } else {
-                                 cardImageView = GuiResources.getCardImageRetro(cardId);
-                             }
-                             cardImageView.setFitHeight(100);
-                             cardImageView.setFitWidth(150);
-                             cardImageView.setTranslateX(position.x() * 100 + centreX);
-                             cardImageView.setTranslateY(- position.y() * 65 + centreY);
-                             cardField.getChildren().add(cardImageView);
-                             cardImageView.toFront();
-                         });
+            recursivePrinter(placedCards, cardsPositioned, new Position(0, 0));
+
         });
     }
+
 
     public void updateTurnChange(String nickname) {
         Platform.runLater(() -> {
@@ -612,7 +628,7 @@ public class GamePage {
 
         sendButton.setOnAction(e -> {
             String comment = commentField.getText();
-            Stream<String> playerStream = codexNaturalis.getMiniGameModel().getPlayers().stream();
+            Stream<String> playerStream = miniGameModel.getPlayers().stream();
             List<String> playerNames = playerStream.toList();
             int i = playerNames.size();
             boolean isPrivate = false;

@@ -209,6 +209,7 @@ public class CardContainer {
         return card.getItemCorner(corner, isRetro);
     }
 
+
     public @NotNull CardContainerMemento save() {
         return new CardContainerMemento(card.getId(), Map.copyOf(coveredCorners), isRetro);
     }

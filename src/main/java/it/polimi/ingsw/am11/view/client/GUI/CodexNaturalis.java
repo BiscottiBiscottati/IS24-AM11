@@ -202,7 +202,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     private void showGamePage() {
         smallRoot.setVisible(false);
         primaryStage.setResizable(true);
-        gamePage.showGamePage(bigRoot, primaryStage);
+        bigRoot.setVisible(true);
         primaryStage.setScene(
                 new Scene(bigRoot, 1920,
                           1080,

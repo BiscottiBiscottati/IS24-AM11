@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.model.players.utils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -55,5 +56,15 @@ public record Position(int x, int y) implements Serializable {
     public @NotNull String toString() {
         return x + ";" + y;
     }
+
+    public @NotNull Position getPositionOn(Corner corner) {
+        return switch (corner) {
+            case TOP_LX -> new Position(x - 1, y + 1);
+            case TOP_RX -> new Position(x + 1, y + 1);
+            case DOWN_LX -> new Position(x - 1, y - 1);
+            case DOWN_RX -> new Position(x + 1, y - 1);
+        };
+    }
+
 
 }

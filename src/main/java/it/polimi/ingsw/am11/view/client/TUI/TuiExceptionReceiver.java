@@ -178,7 +178,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull GameStatusException ex) {
         LOGGER.debug("GameStatusException received: {}", ex.getMessage());
-
+        throw new RuntimeException(ex);
     }
 
     /**
