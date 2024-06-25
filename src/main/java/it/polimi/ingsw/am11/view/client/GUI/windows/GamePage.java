@@ -316,6 +316,7 @@ public class GamePage {
                 });
 
                 cardField.getChildren().add(newButton);
+                newButton.toFront();
             }
         });
     }
@@ -333,14 +334,22 @@ public class GamePage {
                                  cardImageView = new ImageView(cardImage);
 
                              } else {
-                                 cardImageView = GuiResources.getCardImageRetro(cardId);
+                                 try {
+                                     PlayableCardType type = CardInfo.getPlayableCardType(cardId);
+                                     it.polimi.ingsw.am11.model.cards.utils.enums.Color color =
+                                             CardInfo.getPlayabelCardColor(cardId);
+                                     Image cardImage = GuiResources.getRetro(type, color);
+                                     cardImageView = new ImageView(cardImage);
+                                 } catch (IllegalCardBuildException e) {
+                                     throw new RuntimeException(e);
+                                 }
                              }
-                             assert cardImageView != null;
                              cardImageView.setFitHeight(100);
                              cardImageView.setFitWidth(150);
-                             cardImageView.setTranslateX(position.x() * 90 + centreX);
+                             cardImageView.setTranslateX(position.x() * 100 + centreX);
                              cardImageView.setTranslateY(- position.y() * 65 + centreY);
                              cardField.getChildren().add(cardImageView);
+                             cardImageView.toFront();
                          });
         });
     }
