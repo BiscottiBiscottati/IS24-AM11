@@ -1,20 +1,17 @@
 package it.polimi.ingsw.am11.view.client.GUI;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
-import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.network.ClientNetworkHandler;
 import it.polimi.ingsw.am11.network.ConnectionType;
 import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
 import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
-import it.polimi.ingsw.am11.view.client.TUI.exceptions.TooManyRequestsException;
-import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 
 public class GuiActuator {
 
-    private static ClientNetworkHandler connection;
     private final GuiUpdater guiUpdater;
+    private ClientNetworkHandler connection;
     private ClientGameConnector connector;
     private ClientChatConnector chatConnector;
 
@@ -22,6 +19,7 @@ public class GuiActuator {
         this.guiUpdater = guiUpdater;
         this.connector = null;
         this.chatConnector = null;
+        this.connection = null;
     }
 
     /**
@@ -45,7 +43,6 @@ public class GuiActuator {
      * Sets the nickname of the player
      *
      * @param nick the nickname
-     * @throws TooManyRequestsException if the player already sent a nickname
      */
     public void setName(String nick) {
         connector.setNickname(nick);
