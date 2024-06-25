@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 public class GamePage {
@@ -303,7 +304,7 @@ public class GamePage {
                 starterRetro.setFitWidth(150);
                 cardField.getChildren().add(starterRetro);
             }
-            createButtonsForAvailablePositions();
+            //reateButtonsForAvailablePositions();
         });
     }
 
@@ -346,15 +347,7 @@ public class GamePage {
                                  cardImageView = new ImageView(cardImage);
 
                              } else {
-                                 try {
-                                     PlayableCardType type = CardInfo.getPlayableCardType(cardId);
-                                     it.polimi.ingsw.am11.model.cards.utils.enums.Color color =
-                                             CardInfo.getPlayabelCardColor(cardId);
-                                     Image cardImage = GuiResources.getRetro(type, color);
-                                     cardImageView = new ImageView(cardImage);
-                                 } catch (IllegalCardBuildException e) {
-                                     throw new RuntimeException(e);
-                                 }
+                                 cardImageView = GuiResources.getCardImageRetro(cardId);
                              }
                              cardImageView.setFitHeight(100);
                              cardImageView.setFitWidth(150);
@@ -461,6 +454,7 @@ public class GamePage {
     }
 
     public void card1Selected(MouseEvent mouseEvent) {
+        AtomicBoolean chooseRetro = new AtomicBoolean(false);
         Platform.runLater(() -> {
             System.out.println("Card 1 selected");
             handCard1.setOnMouseClicked(event -> {
@@ -473,6 +467,7 @@ public class GamePage {
                     if (isRetro) {
                         // Mostra il fronte se è già retro
                         cardImage = GuiResources.getCardImage(id);
+                        chooseRetro.set(false);
                     } else {
                         // Mostra il retro altrimenti
                         try {
@@ -480,6 +475,7 @@ public class GamePage {
                             it.polimi.ingsw.am11.model.cards.utils.enums.Color color =
                                     CardInfo.getPlayabelCardColor(id);
                             cardImage = GuiResources.getRetro(type, color);
+                            chooseRetro.set(true);
                         } catch (IllegalCardBuildException e) {
                             throw new RuntimeException(e);
                         }
@@ -488,10 +484,9 @@ public class GamePage {
                     handCard1.setImage(cardImage);
                     handCard1.getParent().layout();
                 } else if (event.getButton() == MouseButton.PRIMARY) {
-                    boolean isRetro = handCard1.getImage().getUrl().contains("retro");
                     int x = selectedPosition.x();
                     int y = selectedPosition.y();
-                    guiActuator.placeCard(x, y, id, isRetro);
+                    guiActuator.placeCard(x, y, id, chooseRetro.get());
                     System.out.println("Card placed at: " + x + " " + y);
                 }
             });

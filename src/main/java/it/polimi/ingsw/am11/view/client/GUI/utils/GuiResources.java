@@ -2,14 +2,19 @@ package it.polimi.ingsw.am11.view.client.GUI.utils;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
+import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.windows.LoadingScreen;
+import it.polimi.ingsw.am11.view.client.miniModel.utils.CardInfo;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 
 public class GuiResources {
 
@@ -100,26 +105,71 @@ public class GuiResources {
     }
 
     public static @Nullable ImageView getCardImageRetro(int cardId) {
-        System.out.println("CardId: " + cardId);
-        String urlString = "";
-        try {
-            URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
-                                                       "/windows/cards/retro/" + cardId + "_Retro" +
-                                                       ".png");
-            urlString = String.valueOf(url);
-            System.out.println(urlString);
-            Image image = new Image(urlString);
-            return new ImageView(image);
-        } catch (Exception e) {
-            System.err.println("Error loading retro card image at Url: " + urlString);
-            return null;
+        List<Integer> invalidIds = Arrays.asList(97, 98, 99, 100, 101, 102);
+        if (invalidIds.contains(cardId)) {
+            String urlString = "";
+            try {
+                URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
+                                                           "/windows/cards/retro/" + cardId + "_Retro" +
+                                                           ".png");
+                urlString = String.valueOf(url);
+                System.out.println(urlString);
+                Image image = new Image(urlString);
+                return new ImageView(image);
+            } catch (Exception e) {
+                System.err.println("Error loading retro card image at Url: " + urlString);
+                return null;
+            }
+        } else {
+            PlayableCardType typeName;
+            Color colorName;
+            try {
+                typeName = CardInfo.getPlayableCardType(cardId);
+                colorName = CardInfo.getPlayabelCardColor(cardId);
+            } catch (IllegalCardBuildException e) {
+                throw new RuntimeException(e);
+            }
+            String urlString = "";
+            String type = "";
+            String color = "";
+
+            if (typeName == PlayableCardType.GOLD) {
+                System.out.println("typeName: gold");
+                type = "gold";
+            } else if (typeName == PlayableCardType.RESOURCE) {
+                System.out.println("typeName: res");
+                type = "res";
+            }
+
+            if (colorName == it.polimi.ingsw.am11.model.cards.utils.enums.Color.BLUE) {
+                System.out.println("colorName: blue");
+                color = "blu";
+            } else if (colorName == it.polimi.ingsw.am11.model.cards.utils.enums.Color.GREEN) {
+                System.out.println("colorName: green");
+                color = "green";
+            } else if (colorName == it.polimi.ingsw.am11.model.cards.utils.enums.Color.PURPLE) {
+                System.out.println("colorName: purple");
+                color = "purple";
+            } else if (colorName == it.polimi.ingsw.am11.model.cards.utils.enums.Color.RED) {
+                System.out.println("colorName: red");
+                color = "red";
+            }
+            try {
+                URL url = CodexNaturalis.class.getResource("/it/polimi/ingsw/am11/view/client/GUI" +
+                                                           "/windows/cards/retro/" + color + "_" +
+                                                           type + ".png");
+                urlString = String.valueOf(url);
+                Image image = new Image(urlString);
+                return new ImageView(image);
+            } catch (Exception e) {
+                System.err.println("Error loading retro card image at Url: " + urlString);
+                return null;
+            }
         }
     }
 
     public static @Nullable Image getRetro(PlayableCardType typeName, Color colorName) {
         String urlString = "";
-        System.out.println("typeName: " + typeName);
-        System.out.println("colorName: " + colorName);
         String type = "";
         String color = "";
 
