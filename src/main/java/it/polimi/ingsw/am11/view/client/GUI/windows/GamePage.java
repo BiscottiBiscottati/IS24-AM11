@@ -11,6 +11,7 @@ import it.polimi.ingsw.am11.view.client.miniModel.utils.CardInfo;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,8 +29,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,22 +38,16 @@ import java.util.stream.Stream;
 
 public class GamePage {
 
-    private Parent root;
-    private Stage primaryStage;
-    private CodexNaturalis codexNaturalis;
-    private MiniGameModel miniGameModel;
-    private GuiActuator guiActuator;
-
-
     List<Integer> handIDs;
     List<Integer> shownPlayable;
     Set<Position> availablePositions;
     Position selectedPosition;
     int centreX;
     int centreY;
+    double xOffset;
+    double yOffset;
     VBox commentsBox;
     Popup popup = new Popup();
-
     @FXML
     Label decksLabel;
     @FXML
@@ -113,7 +106,13 @@ public class GamePage {
     ImageView commonObj1;
     @FXML
     ImageView commonObj2;
-
+    @FXML
+    Node chatBox;
+    private Parent root;
+    private Stage primaryStage;
+    private CodexNaturalis codexNaturalis;
+    private MiniGameModel miniGameModel;
+    private GuiActuator guiActuator;
 
     public GamePage() {
     }
@@ -293,30 +292,30 @@ public class GamePage {
 
     public void createButtonsForAvailablePositions() {
         Platform.runLater(() -> {
-        availablePositions = miniGameModel.getCliPlayer(
-                miniGameModel.myName()).getField().getAvailablePositions();
-        // Rimuovi tutti i bottoni esistenti dal cardField
-        cardField.getChildren().removeIf(Button.class::isInstance);
-        // Crea un nuovo bottone per ogni posizione disponibile
-        for (Position position : availablePositions) {
-            Button newButton = new Button();
-            int realX = position.x() * 75 + centreX;
-            int realY = position.y() * 50 + centreY;
-            newButton.setTranslateX(realX);
-            newButton.setTranslateY(- realY);
-            System.out.println("Button position: " + realX + " " + realY);
-            newButton.setOnMouseClicked(event -> {
-                selectedPosition = position;
-                System.out.println("Selected position: " + selectedPosition
-                                   + "real position" + realX + " " + realY);
-            });
+            availablePositions = miniGameModel.getCliPlayer(
+                    miniGameModel.myName()).getField().getAvailablePositions();
+            // Rimuovi tutti i bottoni esistenti dal cardField
+            cardField.getChildren().removeIf(Button.class::isInstance);
+            // Crea un nuovo bottone per ogni posizione disponibile
+            for (Position position : availablePositions) {
+                Button newButton = new Button();
+                int realX = position.x() * 75 + centreX;
+                int realY = position.y() * 50 + centreY;
+                newButton.setTranslateX(realX);
+                newButton.setTranslateY(- realY);
+                System.out.println("Button position: " + realX + " " + realY);
+                newButton.setOnMouseClicked(event -> {
+                    selectedPosition = position;
+                    System.out.println("Selected position: " + selectedPosition
+                                       + "real position" + realX + " " + realY);
+                });
 
-            cardField.getChildren().add(newButton);
-        }
+                cardField.getChildren().add(newButton);
+            }
         });
     }
 
-    public void printCardsOnField () {
+    public void printCardsOnField() {
         Platform.runLater(() -> {
             cardField.getChildren().removeIf(ImageView.class::isInstance);
             miniGameModel.getCliPlayer(miniGameModel.myName()).getField().getCardsPositioned()
@@ -552,7 +551,7 @@ public class GamePage {
         commentsBox = new VBox();
         chatBox.setPrefWidth(500);
         chatBox.setPrefHeight(400);
-        chatBox.setStyle("-fx-background-color: black; -fx-padding: 10px;");
+        chatBox.setStyle("-fx-background-color: #8B0000; -fx-padding: 10px;");
         miniGameModel.getChatMessages().forEach(comment -> {
             Label commentLabel = new Label(comment);
             commentsBox.getChildren().add(commentLabel);
@@ -604,6 +603,17 @@ public class GamePage {
 
         goBackButton.setOnAction(e -> {
             popup.hide();
+        });
+
+
+        chatBox.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        chatBox.setOnMouseDragged(event -> {
+            popup.setX(event.getScreenX() - xOffset);
+            popup.setY(event.getScreenY() - yOffset);
         });
 
     }
