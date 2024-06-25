@@ -323,6 +323,28 @@ public class GamePage {
         }
     }
 
+    public void printCardsOnField () {
+        miniGameModel.getCliPlayer(miniGameModel.myName()).getField().getCardsPositioned()
+                     .forEach((position, card) -> {
+                         int cardId = card.getCard().getId();
+                         boolean isRetro = card.isRetro();
+                         ImageView cardImageView;
+                         if (! isRetro) {
+                             Image cardImage = GuiResources.getCardImage(cardId);
+                             cardImageView = new ImageView(cardImage);
+
+                         } else {
+                             cardImageView = GuiResources.getCardImageRetro(cardId);
+                         }
+                         assert cardImageView != null;
+                         cardImageView.setFitHeight(100);
+                         cardImageView.setFitWidth(150);
+                         cardImageView.setTranslateX(position.x() * 75 + centreX);
+                         cardImageView.setTranslateY(- position.y() * 50 + centreY);
+                         cardField.getChildren().add(cardImageView);
+                     });
+    }
+
     public void updateTurnChange(String nickname) {
         Platform.runLater(() -> {
             for (Label label : List.of(player1, player2, player3, player4)) {
@@ -377,7 +399,9 @@ public class GamePage {
     }
 
     public void pickFromGoldDeck(MouseEvent mouseEvent) {
-        guiActuator.drawCard(false, PlayableCardType.GOLD, 0);
+        Platform.runLater(() -> {
+            guiActuator.drawCard(false, PlayableCardType.GOLD, 0);
+        });
     }
 
     public void pickFromResDeck(MouseEvent mouseEvent) {
