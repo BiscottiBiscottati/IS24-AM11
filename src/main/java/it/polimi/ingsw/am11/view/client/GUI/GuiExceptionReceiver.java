@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GuiExceptionReceiver implements ExceptionThrower {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TuiExceptionReceiver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GuiExceptionReceiver.class);
 
     private final MiniGameModel model;
     private final GuiObserver guiObserver;

@@ -204,11 +204,14 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
         LOGGER.debug("Reconnection event received");
         miniGameModel.load(memento);
-
-        //FIXME I don't know if candidate nick is used
         miniGameModel.setMyName(candidateNick);
 
-        //TODO update the gui to the correct state
+        //Set Gui
+        switch (miniGameModel.table().getStatus()) {
+            case CHOOSING_STARTERS -> {
+
+            }
+        }
 
         LOGGER.debug("Reconnection completed");
     }
