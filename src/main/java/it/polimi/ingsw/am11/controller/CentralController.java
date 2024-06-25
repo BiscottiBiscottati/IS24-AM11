@@ -77,7 +77,7 @@ public enum CentralController {
     public void destroyGame() {
         LOGGER.info("CONTROLLER: Destroying current Game and recreating a new one");
         gameControllers.clear();
-        networkManager.kickAllPlayers();
+        if (networkManager != null) networkManager.kickAllPlayers();
         chatController.clear();
         createNewGame();
     }

@@ -19,11 +19,118 @@ import java.util.Optional;
 
 public class CardArchitect {
 
+    public static List<String> buildTable(List<Integer> visiblesId, @Nullable Color goldColor,
+                                          @Nullable Color resColor)
+    throws IllegalCardBuildException {
+
+        //size: 73*19
+
+
+        List<String> result = new ArrayList<>(8);
+
+        List<String> goldDeckLines = buildDeck(goldColor, PlayableCardType.GOLD);
+        List<String> resDeckLines = buildDeck(resColor, PlayableCardType.RESOURCE);
+
+        //FIXME case of empty deck
+
+        List<String> card1 = buildCard(visiblesId.get(0));
+        List<String> card2 = buildCard(visiblesId.get(1));
+        List<String> card3 = buildCard(visiblesId.get(2));
+        List<String> card4 = buildCard(visiblesId.get(3));
+
+        result.add("╔═ Table: " + "═".repeat(12) + "═".repeat(42) + "═".repeat(8) + "╗");
+
+        int i;
+
+        int size = card1.size();
+        for (i = 0; i < size; i++) {
+            result.add("║" + card1.get(i) + CardPrinter.spaces(4) + card2.get(i) +
+                       CardPrinter.spaces(4) + goldDeckLines.get(i) + "║");
+        }
+
+        result.add("║" + spaces(71) + "║");
+
+        for (i = 0; i < size; i++) {
+            result.add("║" + card3.get(i) + CardPrinter.spaces(4) + card4.get(i) +
+                       CardPrinter.spaces(4) + resDeckLines.get(i) + "║");
+        }
+        result.add("╚" + "═".repeat(63) + "═".repeat(8) + "╝");
+
+        return result;
+    }
+
+    public static List<String> buildHand(List<Integer> cardIds) throws IllegalCardBuildException {
+
+        //size 73 * 10
+        if (cardIds.size() > 3) {
+            throw new IllegalCardBuildException("Hand can have 3 cards at maximum");
+        }
+
+        List<String> result = new ArrayList<>(8);
+
+        List<List<String>> cards = new ArrayList<>(3);
+
+        for (Integer i : cardIds) {
+            cards.add(buildCard(i));
+        }
+
+        result.add("╔═ Hand: " + "═".repeat(13) + "═".repeat(42) + "═".repeat(8) + "╗");
+
+        int i;
+        int size = buildCard(1).size();
+        int cardLenght = 21;
+        for (i = 0; i < size; i++) {
+            List<String> strings = new ArrayList<>();
+
+            for (List<String> card : cards) {
+                strings.add(card.get(i));
+            }
+            for (int j = 0; strings.size() < 3; j++) {
+                strings.add(CardPrinter.spaces(cardLenght));
+            }
+
+            result.add("║" + strings.get(0) + CardPrinter.spaces(4) + strings.get(1) +
+                       CardPrinter.spaces(4) + strings.get(2) + "║");
+        }
+
+        result.add("╚" + "═".repeat(63) + "═".repeat(8) + "╝");
+
+        return result;
+    }
+
+    public static List<String> buildCard(int id) throws IllegalCardBuildException {
+
+        List<String> card = new ArrayList<>();
+
+        PlayableCard pCard = CardPrinter.getPlayableCard(id);
+        char tlf = CardPrinter.getLetter(pCard.getItemCorner(Corner.TOP_LX, false));
+        char trf = CardPrinter.getLetter(pCard.getItemCorner(Corner.TOP_RX, false));
+        char blf = CardPrinter.getLetter(pCard.getItemCorner(Corner.DOWN_LX, false));
+        char brf = CardPrinter.getLetter(pCard.getItemCorner(Corner.DOWN_RX, false));
+
+        List<Color> center = new ArrayList<>(pCard.getCenter(true));
+
+        List<String> topLinesFront = buildCornerLines(tlf, trf, true, pCard);
+
+        String centerLineFront = buildCenterString(center);
+
+        List<String> bottomLinesFront = buildCornerLines(blf, brf, false, pCard);
+
+        card.add(topLinesFront.get(0));
+        card.add(topLinesFront.get(1));
+        card.add(topLinesFront.get(2));
+        card.add(centerLineFront);
+        card.add(bottomLinesFront.get(0));
+        card.add(bottomLinesFront.get(1));
+        card.add(bottomLinesFront.get(2));
+        return card;
+    }
+
     public static List<String> buildCornerLines(char left, char right, boolean isTop,
                                                 PlayableCard card) {
-        String line1 = "";
-        String line2 = "";
-        String line3 = "";
+        String line1;
+        String line2;
+        String line3;
 
         List<Line> linesComposite = new ArrayList<>(3);
         List<String> lines = new ArrayList<>(3);
@@ -253,278 +360,6 @@ public class CardArchitect {
         }
     }
 
-    public static List<String> buildTable(List<Integer> visiblesId, @Nullable Color goldColor,
-                                          @Nullable Color resColor)
-    throws IllegalCardBuildException {
-
-        //size: 73*19
-
-
-        List<String> result = new ArrayList<>(8);
-
-        List<String> goldDeckLines = buildDeck(goldColor, PlayableCardType.GOLD);
-        List<String> resDeckLines = buildDeck(resColor, PlayableCardType.RESOURCE);
-
-        //FIXME case of empty deck
-
-        List<String> card1 = buildCard(visiblesId.get(0));
-        List<String> card2 = buildCard(visiblesId.get(1));
-        List<String> card3 = buildCard(visiblesId.get(2));
-        List<String> card4 = buildCard(visiblesId.get(3));
-
-        result.add("╔═ Table: " + "═".repeat(12) + "═".repeat(42) + "═".repeat(8) + "╗");
-
-        int i;
-
-        int size = card1.size();
-        for (i = 0; i < size; i++) {
-            result.add("║" + card1.get(i) + CardPrinter.spaces(4) + card2.get(i) +
-                       CardPrinter.spaces(4) + goldDeckLines.get(i) + "║");
-        }
-
-        result.add("║" + spaces(71) + "║");
-
-        for (i = 0; i < size; i++) {
-            result.add("║" + card3.get(i) + CardPrinter.spaces(4) + card4.get(i) +
-                       CardPrinter.spaces(4) + resDeckLines.get(i) + "║");
-        }
-        result.add("╚" + "═".repeat(63) + "═".repeat(8) + "╝");
-
-        return result;
-    }
-
-    public static List<String> buildHand(List<Integer> cardIds) throws IllegalCardBuildException {
-
-        //size 73 * 10
-        if (cardIds.size() > 3) {
-            throw new IllegalCardBuildException("Hand can have 3 cards at maximum");
-        }
-
-        List<String> result = new ArrayList<>(8);
-
-        List<List<String>> cards = new ArrayList<>(3);
-
-        for (Integer i : cardIds) {
-            cards.add(buildCard(i));
-        }
-
-        result.add("╔═ Hand: " + "═".repeat(13) + "═".repeat(42) + "═".repeat(8) + "╗");
-
-        int i;
-        int size = buildCard(1).size();
-        int cardLenght = 21;
-        for (i = 0; i < size; i++) {
-            List<String> strings = new ArrayList<>();
-
-            for (List<String> card : cards) {
-                strings.add(card.get(i));
-            }
-            for (int j = 0; strings.size() < 3; j++) {
-                strings.add(CardPrinter.spaces(cardLenght));
-            }
-
-            result.add("║" + strings.get(0) + CardPrinter.spaces(4) + strings.get(1) +
-                       CardPrinter.spaces(4) + strings.get(2) + "║");
-        }
-
-        result.add("╚" + "═".repeat(63) + "═".repeat(8) + "╝");
-
-        return result;
-    }
-
-    public static List<String> buildCard(int id) throws IllegalCardBuildException {
-
-        List<String> card = new ArrayList<>();
-
-        PlayableCard pCard = CardPrinter.getPlayableCard(id);
-        char tlf = CardPrinter.getLetter(pCard.getItemCorner(Corner.TOP_LX, false));
-        char trf = CardPrinter.getLetter(pCard.getItemCorner(Corner.TOP_RX, false));
-        char blf = CardPrinter.getLetter(pCard.getItemCorner(Corner.DOWN_LX, false));
-        char brf = CardPrinter.getLetter(pCard.getItemCorner(Corner.DOWN_RX, false));
-
-        List<Color> center = new ArrayList<>(pCard.getCenter(true));
-
-        List<String> topLinesFront = buildCornerLines(tlf, trf, true, pCard);
-
-        String centerLineFront = buildCenterString(center);
-
-        List<String> bottomLinesFront = buildCornerLines(blf, brf, false, pCard);
-
-        card.add(topLinesFront.get(0));
-        card.add(topLinesFront.get(1));
-        card.add(topLinesFront.get(2));
-        card.add(centerLineFront);
-        card.add(bottomLinesFront.get(0));
-        card.add(bottomLinesFront.get(1));
-        card.add(bottomLinesFront.get(2));
-        return card;
-    }
-
-    public static List<String> buildObjective(int id) throws IllegalCardBuildException {
-        List<String> result = new ArrayList<>();
-        ObjectiveCard objectiveCard = CardPrinter.getObjective(id);
-
-        String line1 = "╔══════";
-        String line2 = "║ ┌───┐";
-        String line3 = "║ │ " + objectiveCard.getPoints() + " │";
-        String line4 = "║ └───┘";
-        String line5 = "║      ";
-        String line6 = "╚══════";
-        String line7;
-        if (id < 10) {
-            line7 = spaces(10) + id + spaces(10);
-        } else if (id < 100) {
-            line7 = spaces(10) + id + spaces(9);
-        } else {
-            line7 = spaces(9) + id + spaces(9);
-        }
-
-        switch (objectiveCard) {
-            case ColorCollectCard colorCollectCard -> {
-//              1╔═══════ Gather: ═══╗
-//              2║ ┌───┐    ┌───┐    ║
-//              3║ │ 2 │  ┌─┘ R └─┐  ║
-//              4║ └───┘  │ R   R │  ║
-//              5║        └───────┘  ║
-//              6╚═══════════════════╝
-//              7          id
-                Map<Color, Integer> req = colorCollectCard.getColorRequirements();
-                Color color = Color.RED;
-
-                for (Color col : req.keySet()) {
-                    if (req.get(col) > 0) {
-                        color = col;
-                        break;
-                    }
-                }
-
-                line1 = line1 + "═ Gather: ═══╗";
-                line2 = line2 + "    ┌───┐    ║";
-                line3 = line3 + "  ┌─┘ " + color.getTUICode() + " └─┐  ║";
-                line4 = line4 + "  │ " + color.getTUICode() + "   " + color.getTUICode() + " │  ║";
-                line5 = line5 + "  └───────┘  ║";
-                line6 = line6 + "═════════════╝";
-
-            }
-            case SymbolCollectCard symbolCollectCard -> {
-//              1╔═══════ Gather: ═══╗    ╔═══════ Gather: ═══╗
-//              2║ ┌───┐             ║    ║ ┌───┐             ║
-//              3║ │ 2 │  ┌───────┐  ║    ║ │ 2 │ ┌─────────┐ ║
-//              4║ └───┘  │ Q   I │  ║    ║ └───┘ │ Q  S  I │ ║
-//              5║        └───────┘  ║    ║       └─────────┘ ║
-//              6╚═══════════════════╝    ╚═══════════════════╝
-//              7          id                       id
-                Map<Symbol, Integer> symbols = symbolCollectCard.getSymbolRequirements();
-
-                line1 = line1 + "═ Gather: ═══╗";
-                line2 = line2 + "             ║";
-
-                if (symbols.values().stream().reduce(0, Integer::sum) == 2) {
-                    Symbol symbol = Symbol.FEATHER;
-                    for (Symbol sym : symbols.keySet()) {
-                        if (symbols.get(sym) > 0) {
-                            symbol = sym;
-                            break;
-                        }
-                    }
-                    line3 = line3 + "  ┌───────┐  ║";
-                    line4 = line4 + "  │ " + symbol.getTUICode() + "   " + symbol.getTUICode() +
-                            " │ " +
-                            " ║";
-                    line5 = line5 + "  └───────┘  ║";
-
-                } else {
-                    line3 = line3 + " ┌─────────┐ ║";
-                    line4 = line4 + " │ Q  S  I │ ║";
-                    line5 = line5 + " └─────────┘ ║";
-                }
-
-                line6 = line6 + "═════════════╝";
-            }
-            case TripletCard tripletCard -> {
-//              1╔═══════ Pattern: ══╗  ╔═══════ Pattern: ══╗
-//              2║ ┌───┐    ┌──│ R │ ║  ║ ┌───┐ │ R │──┐    ║
-//              3║ │ 2 │ ┌──│ R │──┘ ║  ║ │ 2 │ └──│ R │──┐ ║
-//              4║ └───┘ │ R │──┘    ║  ║ └───┘    └──│ R │ ║
-//              5║       └───┘       ║  ║             └───┘ ║
-//              6╚═══════════════════╝  ╚═══════════════════╝
-//              7          id                     id
-//              Flipped: F              Flipped: T
-
-
-                line1 = line1 + "═ Pattern: ══╗";
-
-                List<List<Color>> pattern = tripletCard.getPattern();
-
-                if (! tripletCard.isFlipped()) {
-                    line2 = line2 + "    ┌──│ " + pattern.get(0).get(2).getTUICode() + " │ ║";
-                    line3 = line3 + " ┌──│ " + pattern.get(1).get(1).getTUICode() + " │──┘ ║";
-                    line4 = line4 + " │ " + pattern.get(2).get(0).getTUICode() + " │──┘    ║";
-                    line5 = line5 + " └───┘       ║";
-                } else {
-                    line2 = line2 + " │ " + pattern.get(0).get(0).getTUICode() + " │──┐    ║";
-                    line3 = line3 + " └──│ " + pattern.get(1).get(1).getTUICode() + " │──┐ ║";
-                    line4 = line4 + "    └──│ " + pattern.get(2).get(2).getTUICode() + " │ ║";
-                    line5 = line5 + "       └───┘ ║";
-                }
-
-                line6 = line6 + "═════════════╝";
-            }
-            case LCard lCard -> {
-//          1╔═══════ Pattern: ══╗╔═══════ Pattern: ══╗╔═══════ Pattern: ══╗╔═══════ Pattern: ══╗
-//          2║ ┌───┐  │ R │      ║║ ┌───┐     │ R │   ║║ ┌───┐  │ G │──┐   ║║ ┌───┐  ┌──│ R │   ║
-//          3║ │ 3 │  ╞═══╡      ║║ │ 3 │     ╞═══╡   ║║ │ 3 │  └──│ R │   ║║ │ 3 │  │ R │──┘   ║
-//          4║ └───┘  │ R │──┐   ║║ └───┘  ┌──│ R │   ║║ └───┘     ╞═══╡   ║║ └───┘  ╞═══╡      ║
-//          5║        └──│ G │   ║║        │ G │──┘   ║║           │ R │   ║║        │ R │      ║
-//          6╚═══════════╧═══╧═══╝╚════════╧═══╧══════╝╚═══════════╧═══╧═══╝╚════════╧═══╧══════╝
-//          7          id                   id                   id                   id
-//               Flip: T Rot: T       Flip: F Rot: T       Flip: T Rot: F       Flip: F Rot: F
-
-                line1 = line1 + "═ Pattern: ══╗";
-
-                List<List<Color>> pattern = lCard.getPattern();
-
-                if (! lCard.isFlipped() && ! lCard.isRotated()) {
-                    line2 = line2 + "  ┌──│ " + pattern.get(0).get(2).getTUICode() + " │   ║";
-                    line3 = line3 + "  │ " + pattern.get(1).get(1).getTUICode() + " │──┘   ║";
-                    line4 = line4 + "  ╞═══╡      ║";
-                    line5 = line5 + "  │ " + pattern.get(3).get(1).getTUICode() + " │      ║";
-                    line6 = line6 + "══╧═══╧══════╝";
-                } else if (lCard.isFlipped() && ! lCard.isRotated()) {
-                    line2 = line2 + "  │ " + pattern.get(0).get(0).getTUICode() + " │──┐   ║";
-                    line3 = line3 + "  └──│ " + pattern.get(1).get(1).getTUICode() + " │   ║";
-                    line4 = line4 + "     ╞═══╡   ║";
-                    line5 = line5 + "     │ " + pattern.get(3).get(1).getTUICode() + " │   ║";
-                    line6 = line6 + "═════╧═══╧═══╝";
-                } else if (! lCard.isFlipped() && lCard.isRotated()) {
-                    line2 = line2 + "     │ " + pattern.get(0).get(1).getTUICode() + " │   ║";
-                    line3 = line3 + "     ╞═══╡   ║";
-                    line4 = line4 + "  ┌──│ " + pattern.get(2).get(1).getTUICode() + " │   ║";
-                    line5 = line5 + "  │ " + pattern.get(3).get(0).getTUICode() + " │──┘   ║";
-                    line6 = line6 + "══╧═══╧══════╝";
-                } else {
-                    line2 = line2 + "  │ " + pattern.get(0).get(1).getTUICode() + " │      ║";
-                    line3 = line3 + "  ╞═══╡      ║";
-                    line4 = line4 + "  │ " + pattern.get(2).get(1).getTUICode() + " │──┐   ║";
-                    line5 = line5 + "  └──│ " + pattern.get(3).get(2).getTUICode() + " │   ║";
-                    line6 = line6 + "═════╧═══╧═══╝";
-                }
-            }
-            default -> throw new IllegalCardBuildException("Is not objective");
-
-        }
-
-        result.add(line1);
-        result.add(line2);
-        result.add(line3);
-        result.add(line4);
-        result.add(line5);
-        result.add(line6);
-        result.add(line7);
-
-        return result;
-    }
-
     public static List<String> buildDeck(@Nullable Color color, PlayableCardType type) {
         List<String> deck = new ArrayList<>(8);
         List<Color> center = new ArrayList<>(1);
@@ -595,6 +430,171 @@ public class CardArchitect {
         res.add("╚═══════════════════════╝");
 
         return res;
+    }
+
+    public static List<String> buildObjective(int id) throws IllegalCardBuildException {
+        List<String> result = new ArrayList<>();
+        ObjectiveCard objectiveCard = CardPrinter.getObjective(id);
+
+        String line1 = "╔══════";
+        String line2 = "║ ┌───┐";
+        String line3 = "║ │ " + objectiveCard.getPoints() + " │";
+        String line4 = "║ └───┘";
+        String line5 = "║      ";
+        String line6 = "╚══════";
+        String line7;
+        if (id < 10) {
+            line7 = spaces(10) + id + spaces(10);
+        } else if (id < 100) {
+            line7 = spaces(10) + id + spaces(9);
+        } else {
+            line7 = spaces(9) + id + spaces(9);
+        }
+
+        switch (objectiveCard) {
+            case ColorCollectCard colorCollectCard -> {
+//              1╔═══════ Gather: ═══╗
+//              2║ ┌───┐    ┌───┐    ║
+//              3║ │ 2 │  ┌─┘ R └─┐  ║
+//              4║ └───┘  │ R   R │  ║
+//              5║        └───────┘  ║
+//              6╚═══════════════════╝
+//              7          id
+                Map<Color, Integer> req = colorCollectCard.getColorRequirements();
+                Color color = Color.RED;
+
+                for (Map.Entry<Color, Integer> entry : req.entrySet()) {
+                    if (entry.getValue() > 0) {
+                        color = entry.getKey();
+                        break;
+                    }
+                }
+
+                line1 = line1 + "═ Gather: ═══╗";
+                line2 = line2 + "    ┌───┐    ║";
+                line3 = line3 + "  ┌─┘ " + color.getTUICode() + " └─┐  ║";
+                line4 = line4 + "  │ " + color.getTUICode() + "   " + color.getTUICode() + " │  ║";
+                line5 = line5 + "  └───────┘  ║";
+                line6 = line6 + "═════════════╝";
+
+            }
+            case SymbolCollectCard symbolCollectCard -> {
+//              1╔═══════ Gather: ═══╗    ╔═══════ Gather: ═══╗
+//              2║ ┌───┐             ║    ║ ┌───┐             ║
+//              3║ │ 2 │  ┌───────┐  ║    ║ │ 2 │ ┌─────────┐ ║
+//              4║ └───┘  │ Q   I │  ║    ║ └───┘ │ Q  S  I │ ║
+//              5║        └───────┘  ║    ║       └─────────┘ ║
+//              6╚═══════════════════╝    ╚═══════════════════╝
+//              7          id                       id
+                Map<Symbol, Integer> symbols = symbolCollectCard.getSymbolRequirements();
+
+                line1 = line1 + "═ Gather: ═══╗";
+                line2 = line2 + "             ║";
+
+                if (symbols.values().stream().reduce(0, Integer::sum) == 2) {
+                    Symbol symbol = Symbol.FEATHER;
+                    for (Map.Entry<Symbol, Integer> entry : symbols.entrySet()) {
+                        if (entry.getValue() > 0) {
+                            symbol = entry.getKey();
+                            break;
+                        }
+                    }
+                    line3 = line3 + "  ┌───────┐  ║";
+                    line4 = line4 + "  │ " + symbol.getTUICode() + "   " + symbol.getTUICode() +
+                            " │ " +
+                            " ║";
+                    line5 = line5 + "  └───────┘  ║";
+
+                } else {
+                    line3 = line3 + " ┌─────────┐ ║";
+                    line4 = line4 + " │ Q  S  I │ ║";
+                    line5 = line5 + " └─────────┘ ║";
+                }
+
+                line6 = line6 + "═════════════╝";
+            }
+            case TripletCard tripletCard -> {
+//              1╔═══════ Pattern: ══╗  ╔═══════ Pattern: ══╗
+//              2║ ┌───┐    ┌──│ R │ ║  ║ ┌───┐ │ R │──┐    ║
+//              3║ │ 2 │ ┌──│ R │──┘ ║  ║ │ 2 │ └──│ R │──┐ ║
+//              4║ └───┘ │ R │──┘    ║  ║ └───┘    └──│ R │ ║
+//              5║       └───┘       ║  ║             └───┘ ║
+//              6╚═══════════════════╝  ╚═══════════════════╝
+//              7          id                     id
+//              Flipped: F              Flipped: T
+
+
+                line1 = line1 + "═ Pattern: ══╗";
+
+                List<List<Color>> pattern = tripletCard.getPattern();
+
+                if (! tripletCard.isFlipped()) {
+                    line2 = line2 + "    ┌──│ " + pattern.get(0).get(2).getTUICode() + " │ ║";
+                    line3 = line3 + " ┌──│ " + pattern.get(1).get(1).getTUICode() + " │──┘ ║";
+                    line4 = line4 + " │ " + pattern.get(2).getFirst().getTUICode() + " │──┘    ║";
+                    line5 = line5 + " └───┘       ║";
+                } else {
+                    line2 = line2 + " │ " + pattern.get(0).getFirst().getTUICode() + " │──┐    ║";
+                    line3 = line3 + " └──│ " + pattern.get(1).get(1).getTUICode() + " │──┐ ║";
+                    line4 = line4 + "    └──│ " + pattern.get(2).get(2).getTUICode() + " │ ║";
+                    line5 = line5 + "       └───┘ ║";
+                }
+
+                line6 = line6 + "═════════════╝";
+            }
+            case LCard lCard -> {
+//          1╔═══════ Pattern: ══╗╔═══════ Pattern: ══╗╔═══════ Pattern: ══╗╔═══════ Pattern: ══╗
+//          2║ ┌───┐  │ R │      ║║ ┌───┐     │ R │   ║║ ┌───┐  │ G │──┐   ║║ ┌───┐  ┌──│ R │   ║
+//          3║ │ 3 │  ╞═══╡      ║║ │ 3 │     ╞═══╡   ║║ │ 3 │  └──│ R │   ║║ │ 3 │  │ R │──┘   ║
+//          4║ └───┘  │ R │──┐   ║║ └───┘  ┌──│ R │   ║║ └───┘     ╞═══╡   ║║ └───┘  ╞═══╡      ║
+//          5║        └──│ G │   ║║        │ G │──┘   ║║           │ R │   ║║        │ R │      ║
+//          6╚═══════════╧═══╧═══╝╚════════╧═══╧══════╝╚═══════════╧═══╧═══╝╚════════╧═══╧══════╝
+//          7          id                   id                   id                   id
+//               Flip: T Rot: T       Flip: F Rot: T       Flip: T Rot: F       Flip: F Rot: F
+
+                line1 = line1 + "═ Pattern: ══╗";
+
+                List<List<Color>> pattern = lCard.getPattern();
+
+                if (! lCard.isFlipped() && ! lCard.isRotated()) {
+                    line2 = line2 + "  ┌──│ " + pattern.get(0).get(2).getTUICode() + " │   ║";
+                    line3 = line3 + "  │ " + pattern.get(1).get(1).getTUICode() + " │──┘   ║";
+                    line4 = line4 + "  ╞═══╡      ║";
+                    line5 = line5 + "  │ " + pattern.get(3).get(1).getTUICode() + " │      ║";
+                    line6 = line6 + "══╧═══╧══════╝";
+                } else if (lCard.isFlipped() && ! lCard.isRotated()) {
+                    line2 = line2 + "  │ " + pattern.get(0).getFirst().getTUICode() + " │──┐   ║";
+                    line3 = line3 + "  └──│ " + pattern.get(1).get(1).getTUICode() + " │   ║";
+                    line4 = line4 + "     ╞═══╡   ║";
+                    line5 = line5 + "     │ " + pattern.get(3).get(1).getTUICode() + " │   ║";
+                    line6 = line6 + "═════╧═══╧═══╝";
+                } else if (! lCard.isFlipped()) {
+                    line2 = line2 + "     │ " + pattern.get(0).get(1).getTUICode() + " │   ║";
+                    line3 = line3 + "     ╞═══╡   ║";
+                    line4 = line4 + "  ┌──│ " + pattern.get(2).get(1).getTUICode() + " │   ║";
+                    line5 = line5 + "  │ " + pattern.get(3).getFirst().getTUICode() + " │──┘   ║";
+                    line6 = line6 + "══╧═══╧══════╝";
+                } else {
+                    line2 = line2 + "  │ " + pattern.get(0).get(1).getTUICode() + " │      ║";
+                    line3 = line3 + "  ╞═══╡      ║";
+                    line4 = line4 + "  │ " + pattern.get(2).get(1).getTUICode() + " │──┐   ║";
+                    line5 = line5 + "  └──│ " + pattern.get(3).get(2).getTUICode() + " │   ║";
+                    line6 = line6 + "═════╧═══╧═══╝";
+                }
+            }
+            default -> throw new IllegalCardBuildException("Is not objective");
+
+        }
+
+        result.add(line1);
+        result.add(line2);
+        result.add(line3);
+        result.add(line4);
+        result.add(line5);
+        result.add(line6);
+        result.add(line7);
+
+        return result;
     }
 
     public static String spaces(int num) {

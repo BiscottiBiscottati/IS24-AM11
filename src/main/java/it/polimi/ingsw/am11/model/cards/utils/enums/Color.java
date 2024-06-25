@@ -3,6 +3,8 @@ package it.polimi.ingsw.am11.model.cards.utils.enums;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.DatabaseSearchable;
 import it.polimi.ingsw.am11.model.cards.utils.Item;
+import it.polimi.ingsw.am11.model.cards.utils.helpers.AnsiHelper;
+import org.fusesource.jansi.Ansi;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,10 +17,10 @@ import java.util.Optional;
  * Can be <code>RED</code>, <code>BLUE</code>, <code>GREEN</code> or <code>PURPLE</code>.
  */
 public enum Color implements CornerContainer, Item, DatabaseSearchable {
-    RED("red", "R"),
-    BLUE("blue", "B"),
-    GREEN("green", "G"),
-    PURPLE("purple", "P");
+    RED("red", AnsiHelper.addColors("R", Ansi.Color.RED)),
+    BLUE("blue", AnsiHelper.addColors("B", Ansi.Color.BLUE)),
+    GREEN("green", AnsiHelper.addColors("G", Ansi.Color.GREEN)),
+    PURPLE("purple", AnsiHelper.addColors("P", Ansi.Color.MAGENTA));
 
     private final String columnName;
     private final String TUIRepresentation;

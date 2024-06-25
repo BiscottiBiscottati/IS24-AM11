@@ -83,7 +83,7 @@ public class FieldPrinter {
                                    columnIndex,
                                    printMatrix);
                 }
-                // Fill center with coord
+                // Fill the center with cord
                 else if (withSuggestions && matrixOfPositions.get(y).get(x) != null &&
                          matrixOfCards.get(y - 1).get(x - 1) == null) {
                     setCoordinates(matrixOfPositions.get(y).get(x),
@@ -290,15 +290,17 @@ public class FieldPrinter {
         printMatrix.get(rowIndex).set(columnIndex, VERTICAL_SEPARATOR);
         // center
         String centers;
+        int numOfCenters;
         try {
             Set<Color> colors =
                     CardPrinter.getFieldCard(card.getCard().getId()).getCenter(card.isRetro());
+            numOfCenters = colors.size();
             centers = colors.stream().map(Color::getTUICode).reduce("", String::concat);
         } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
         printMatrix.get(rowIndex).set(columnIndex + 1,
-                                      centerStr(centers, CARD_WIDTH, ' '));
+                                      centerStr(centers, CARD_WIDTH, ' ', numOfCenters));
         // right vertical separator
         printMatrix.get(rowIndex).set(columnIndex + 2, VERTICAL_SEPARATOR);
 
@@ -307,13 +309,13 @@ public class FieldPrinter {
         // down separator
         printMatrix.get(rowIndex + 1).set(columnIndex + 1,
                                           centerStr(String.valueOf(card.getCard().getId())
-                                                  , CARD_WIDTH, HORIZONTAL_SEPARATOR.charAt(0)));
+                                                  , CARD_WIDTH, HORIZONTAL_SEPARATOR.charAt(0), 1));
         //DOWN_RX corner
         setCorner(printMatrix, rowIndex + 1, columnIndex + 2, card, Corner.DOWN_RX);
     }
 
     /**
-     * Set the corner of the card in the printMatrix, if the corner is not covered by a card the
+     * Set the corner of the card in the printMatrix, if the corner is not covered by a card, the
      * corner will be set in the printMatrix to the corner code
      *
      * @param printMatrix the matrix to set the corner
@@ -334,17 +336,18 @@ public class FieldPrinter {
 
     /**
      * Center a string in a string of a given width with a given padding character, in case the
-     * string length is odd the padding character will be added to the left
+     * string length is odd, the padding character will be added to the left
      *
      * @param string  the string to center
      * @param width   the width of the string
      * @param padChar the padding character
      * @return the centered string
      */
-    private static @NotNull String centerStr(@NotNull String string, int width, char padChar) {
+    private static @NotNull String centerStr(@NotNull String string, int width, char padChar,
+                                             int numOfElements) {
         String strChar = String.valueOf(padChar);
-        return strChar.repeat((width - string.length() + 1) / 2) + string +
-               strChar.repeat((width - string.length()) / 2);
+        return strChar.repeat((width - numOfElements + 1) / 2) + string +
+               strChar.repeat((width - numOfElements) / 2);
     }
 
 
