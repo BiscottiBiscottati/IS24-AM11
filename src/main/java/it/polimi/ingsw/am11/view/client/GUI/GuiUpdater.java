@@ -214,10 +214,14 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         switch (miniGameModel.table().getStatus()) {
             case CHOOSING_STARTERS -> {
                 WaitingRoomPage.hideWaitingRoomPage();
+                guiObserver.receiveStarterCard(miniGameModel.getCliPlayer(
+                        miniGameModel.myName()).getSpace().getStarterCard());
                 SetStarterCardsPage.showStarterCardsPage();
             }
             case CHOOSING_OBJECTIVES -> {
                 WaitingRoomPage.hideWaitingRoomPage();
+                guiObserver.receiveCandidateObjective(miniGameModel.getCliPlayer(
+                        miniGameModel.myName()).getSpace().getCandidateObjectives());
                 SetObjCardsPage.showObjCardsPage();
             }
             case SETUP -> {
