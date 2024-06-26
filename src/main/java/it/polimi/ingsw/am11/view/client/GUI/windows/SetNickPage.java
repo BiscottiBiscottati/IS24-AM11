@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.view.client.GUI.utils.FontManager;
 import it.polimi.ingsw.am11.view.client.GUI.utils.FontsEnum;
 import it.polimi.ingsw.am11.view.client.GUI.utils.Proportions;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -162,7 +163,9 @@ public class SetNickPage {
     }
 
     public static void showErrorMesssage() {
-        nameAlreadyTaken.setText("Wait for the God player to set the number of players");
-        nameAlreadyTaken.setVisible(true);
+        Platform.runLater(() -> {
+            nameAlreadyTaken.setText("Wait for the God player to set the number of players");
+            nameAlreadyTaken.setVisible(true);
+        });
     }
 }

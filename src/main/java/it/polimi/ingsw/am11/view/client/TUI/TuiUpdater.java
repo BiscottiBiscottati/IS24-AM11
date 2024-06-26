@@ -29,7 +29,8 @@ import java.util.concurrent.atomic.AtomicReference;
 // update and get the TUIState and to save the candidateNick
 // (the nickname that the player tries to send to the server)
 
-public class TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
+public class
+TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
     private final EnumMap<TuiStates, TUIState> tuiStates;
     private MiniGameModel model;

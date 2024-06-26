@@ -194,6 +194,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
         if (getMiniGameModel().table().getStatus().equals(GameStatus.ENDED)) {
             gamePage.gameEnded();
         } else {
+            bigRoot.setVisible(false);
+            smallRoot.setVisible(false);
             NetworkPage.showNetworkPage();
         }
     }
@@ -229,6 +231,11 @@ public class CodexNaturalis extends Application implements GuiObserver {
                 gamePage.gameEnded();
             }
             case ONGOING -> {
+                try {
+                    gamePage.createGamePage(this);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 Platform.runLater(this::showGamePage);
             }
         }
