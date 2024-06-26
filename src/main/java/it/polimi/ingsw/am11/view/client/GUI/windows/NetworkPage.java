@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -147,40 +148,50 @@ public class NetworkPage {
             connectionType.setText("Socket");
             ipAddress.setText("localhost");
             port.setText("12345");
+            port.requestFocus();
         });
 
         chooseRMI.setOnAction(event -> {
             connectionType.setText("Rmi");
             ipAddress.setText("localhost");
             port.setText("54321");
+            port.requestFocus();
         });
 
-        joinButton.setOnMouseClicked(event -> {
-            String connectionTypeText = connectionType.getText().toLowerCase();
-            String ip = ipAddress.getCharacters().toString();
-            int portNumber;
-            try {
-                portNumber = Integer.parseInt(port.getCharacters().toString());
-            } catch (NumberFormatException e) {
-                port.setText("Fail");
-                connectionFailed.setVisible(true);
-                return;
-            }
-            try {
-                guiActuator.connect(connectionTypeText, ip, portNumber);
-                chooseRMI.setVisible(false);
-                chooseSocket.setVisible(false);
-                theBox.setVisible(false);
-                connectionFailed.setVisible(false);
-                connectionType.setVisible(false);
-                joinButton.setVisible(false);
+        joinButton.setOnMouseClicked(event -> handleJoinButton());
 
-                SetNickPage.showSettingNickPage();
-
-            } catch (Exception e) {
-                ipAddress.setText("Fail");
-                connectionFailed.setVisible(true);
+        port.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                handleJoinButton();
             }
         });
+    }
+
+    public static void handleJoinButton() {
+        String connectionTypeText = connectionType.getText().toLowerCase();
+        String ip = ipAddress.getCharacters().toString();
+        int portNumber;
+        try {
+            portNumber = Integer.parseInt(port.getCharacters().toString());
+        } catch (NumberFormatException e) {
+            port.setText("Fail");
+            connectionFailed.setVisible(true);
+            return;
+        }
+        try {
+            guiActuator.connect(connectionTypeText, ip, portNumber);
+            chooseRMI.setVisible(false);
+            chooseSocket.setVisible(false);
+            theBox.setVisible(false);
+            connectionFailed.setVisible(false);
+            connectionType.setVisible(false);
+            joinButton.setVisible(false);
+
+            SetNickPage.showSettingNickPage();
+
+        } catch (Exception e) {
+            ipAddress.setText("Fail");
+            connectionFailed.setVisible(true);
+        }
     }
 }

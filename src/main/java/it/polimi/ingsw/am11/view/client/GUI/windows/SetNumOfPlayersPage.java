@@ -84,24 +84,33 @@ public class SetNumOfPlayersPage {
         numOfPlayers.setVisible(true);
         writeNumOfPlayers.setVisible(true);
         enterNumOfPlayers.setVisible(true);
-        enterNumOfPlayers.setOnMouseClicked(event -> {
-            int num = 0;
-            try {
-                num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
-            } catch (NumberFormatException e) {
-                invalidNumOfPlayers.setVisible(true);
-            }
-            if (num < 2 || num > 4) {
-                invalidNumOfPlayers.setVisible(true);
-            } else {
-                guiActuator.setNumOfPlayers(num);
-                enterNumOfPlayers.setVisible(false);
-                numOfPlayers.setVisible(false);
-                writeNumOfPlayers.setVisible(false);
-                WaitingRoomPage.showWaitingRoomPage();
-                invalidNumOfPlayers.setVisible(false);
+        writeNumOfPlayers.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                handleEnterNumOfPlayers();
             }
         });
+        enterNumOfPlayers.setOnMouseClicked(event -> {
+            handleEnterNumOfPlayers();
+        });
+    }
+
+    public static void handleEnterNumOfPlayers() {
+        int num = 0;
+        try {
+            num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
+        } catch (NumberFormatException e) {
+            invalidNumOfPlayers.setVisible(true);
+        }
+        if (num < 2 || num > 4) {
+            invalidNumOfPlayers.setVisible(true);
+        } else {
+            guiActuator.setNumOfPlayers(num);
+            enterNumOfPlayers.setVisible(false);
+            numOfPlayers.setVisible(false);
+            writeNumOfPlayers.setVisible(false);
+            WaitingRoomPage.showWaitingRoomPage();
+            invalidNumOfPlayers.setVisible(false);
+        }
     }
 
     public static void showErrorMesssage() {

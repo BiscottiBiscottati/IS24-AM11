@@ -111,32 +111,15 @@ public class SetNickPage {
         chooseNick.setVisible(true);
         goToNetwork.setVisible(true);
 
-        chooseNick.setOnMouseClicked(event -> {
-            String nick = writeNick.getCharacters().toString().strip();
-            System.out.println(nick);
-            String[] nickSplit = SPACE_SPLIT.split(nick);
-            if (nick.isEmpty()) {
-                writeNick.setPromptText("Fail");
-                nameAlreadyTaken.setText("Name cannot be empty");
-                nameAlreadyTaken.setVisible(true);
-            } else if (nickSplit.length > 1) {
-                writeNick.setPromptText("Fail");
-                nameAlreadyTaken.setText("Name cannot contain spaces");
-                nameAlreadyTaken.setVisible(true);
-            } else if (nick.length() > 19) {
-                writeNick.setPromptText("Fail");
-                nameAlreadyTaken.setText("Name must be shorter than 19 characters");
-                nameAlreadyTaken.setVisible(true);
-            } else {
-                miniGameModel.setMyName(nick);
-                guiActuator.setName(nick);
-                chooseNick.setVisible(false);
-                writeNick.setVisible(false);
-                yourName.setVisible(false);
-                nameAlreadyTaken.setVisible(false);
-                goToNetwork.setVisible(false);
-                WaitingRoomPage.showWaitingRoomPage();
+        writeNick.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                handleEnterBtn();
             }
+        });
+
+
+        chooseNick.setOnMouseClicked(event -> {
+            handleEnterBtn();
         });
 
         goToNetwork.setOnMouseClicked(event -> {
@@ -146,8 +129,36 @@ public class SetNickPage {
             nameAlreadyTaken.setVisible(false);
             goToNetwork.setVisible(false);
 
-            WaitingRoomPage.showWaitingRoomPage();
+            NetworkPage.showNetworkPage();
         });
+    }
+
+    public static void handleEnterBtn() {
+        String nick = writeNick.getCharacters().toString().strip();
+        System.out.println(nick);
+        String[] nickSplit = SPACE_SPLIT.split(nick);
+        if (nick.isEmpty()) {
+            writeNick.setPromptText("Fail");
+            nameAlreadyTaken.setText("Name cannot be empty");
+            nameAlreadyTaken.setVisible(true);
+        } else if (nickSplit.length > 1) {
+            writeNick.setPromptText("Fail");
+            nameAlreadyTaken.setText("Name cannot contain spaces");
+            nameAlreadyTaken.setVisible(true);
+        } else if (nick.length() > 19) {
+            writeNick.setPromptText("Fail");
+            nameAlreadyTaken.setText("Name must be shorter than 19 characters");
+            nameAlreadyTaken.setVisible(true);
+        } else {
+            miniGameModel.setMyName(nick);
+            guiActuator.setName(nick);
+            chooseNick.setVisible(false);
+            writeNick.setVisible(false);
+            yourName.setVisible(false);
+            nameAlreadyTaken.setVisible(false);
+            goToNetwork.setVisible(false);
+            WaitingRoomPage.showWaitingRoomPage();
+        }
     }
 
     public static void showErrorMesssage() {
