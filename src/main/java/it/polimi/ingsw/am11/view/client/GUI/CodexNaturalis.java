@@ -153,7 +153,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
-
+        gamePage.gameEnded();
     }
 
     @Override

@@ -12,14 +12,6 @@
 
 <StackPane fx:id="gamePage" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #A58559;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am11.view.client.GUI.windows.GamePage">
     <children>
-      <Label fx:id="lastTurnLabel" text="Label" textAlignment="CENTER" StackPane.alignment="BOTTOM_LEFT">
-         <StackPane.margin>
-            <Insets bottom="100.0" left="158.0" />
-         </StackPane.margin>
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
         <HBox alignment="TOP_RIGHT" maxHeight="50.0" maxWidth="440.0" minHeight="150.0" minWidth="1000.0" prefHeight="50.0" prefWidth="440.0" StackPane.alignment="TOP_RIGHT">
             <children>
                 <VBox alignment="CENTER" maxHeight="60.0" maxWidth="110.0" minHeight="180.0" minWidth="250.0" prefHeight="60.0" prefWidth="110.0">
@@ -238,6 +230,14 @@
          </StackPane.margin>
          <font>
             <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lastTurnLabel" text="Label" textAlignment="CENTER" StackPane.alignment="BOTTOM_LEFT">
+         <StackPane.margin>
+            <Insets bottom="50.0" left="400.0" />
+         </StackPane.margin>
+         <font>
+            <Font size="15.0" />
          </font>
       </Label>
       <Label fx:id="yourName" text="Label" textAlignment="CENTER">
