@@ -21,10 +21,7 @@ public class LoadingScreen {
     private static ParallelTransition prT;
     private static int size;
 
-    private static CodexNaturalis codexNaturalis;
-
     public static void createLoadingScreen(CodexNaturalis codexNaturalis) {
-        LoadingScreen.codexNaturalis = codexNaturalis;
 
         StackPane root = codexNaturalis.getSmallRoot();
         size = SQUARE_SIZE.getValue();

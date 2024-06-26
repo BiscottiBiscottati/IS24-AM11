@@ -336,6 +336,7 @@ public class GamePage {
                                           handIDs.get(selectedHandPose),
                                           handRetro.get(selectedHandPose));
                     signal.setVisible(false);
+                    selectedPosition = null;
                 }
             });
             // New buttons for available positions
@@ -499,12 +500,6 @@ public class GamePage {
         });
     }
 
-    /**
-     * dfhakhfadskhfakdshf
-     *
-     * @param mouseEvent the event
-     * @see MouseEvent
-     */
     public void pickFromResDeck(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             guiActuator.drawCard(false, PlayableCardType.RESOURCE, 0);

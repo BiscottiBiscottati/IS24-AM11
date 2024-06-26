@@ -212,17 +212,12 @@ public class CodexNaturalis extends Application implements GuiObserver {
             } else if (getMiniGameModel().table().getStatus().equals(GameStatus.ONGOING) ||
                        getMiniGameModel().table().getStatus().equals(GameStatus.LAST_TURN) ||
                        getMiniGameModel().table().getStatus().equals(GameStatus.ARMAGEDDON)) {
+
                 primaryStage.close();
                 primaryStage = new Stage();
-
-                try {
-                    bigRoot = fxmlLoader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
                 bigRoot.setVisible(false);
 
-                initializeGUI(false);
+                initializeGUI(true);
                 FrameHandler.setIcons(primaryStage, smallRoot);
                 scene = new Scene(smallRoot,
                                   Proportions.SQUARE_SIZE.getValue(),
@@ -233,6 +228,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
                 primaryStage.setResizable(false);
                 primaryStage.initStyle(StageStyle.UNDECORATED);
                 primaryStage.show();
+                LoadingScreen.animateLoadingScreen();
             } else {
                 SetNumOfPlayersPage.hideSetNumOfPlayersPage();
                 SetObjCardsPage.hideObjCardsPage();
@@ -265,11 +261,10 @@ public class CodexNaturalis extends Application implements GuiObserver {
         switch (status) {
             case LAST_TURN -> {
                 Platform.runLater(this::showGamePage);
-                gamePage.showLastTurnMessage("LAST TURN!");
+
             }
             case ARMAGEDDON -> {
                 Platform.runLater(this::showGamePage);
-                gamePage.showLastTurnMessage("PREPARE FOR YOUR LAST TURN!");
             }
             case ENDED -> {
                 Platform.runLater(this::showGamePage);
@@ -281,8 +276,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                Platform.runLater(this::showGamePage);
                 Platform.runLater(() -> {
+                    showGamePage();
                     gamePage.placeStarterCard();
                     gamePage.updateHand();
                     gamePage.updateCommonObj();
