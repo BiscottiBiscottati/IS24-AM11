@@ -19,6 +19,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.SequencedSet;
 import java.util.Set;
 
 public class CodexNaturalis extends Application implements GuiObserver {
@@ -266,9 +267,10 @@ public class CodexNaturalis extends Application implements GuiObserver {
                                                    PlayableCardType.GOLD));
                     gamePage.printCardsOnField(getMiniGameModel().myName());
                     gamePage.updateTurnChange(getMiniGameModel().getCurrentTurn());
-                    gamePage.updatePlayerPoints(getMiniGameModel().myName(),
-                                                getMiniGameModel().getCliPlayer(
-                                                        getMiniGameModel().myName()).getPoints());
+                    SequencedSet<String> players = getMiniGameModel().getPlayers();
+                    players.forEach(player -> gamePage.updatePlayerPoints(player,
+                                                                          getMiniGameModel().getCliPlayer(
+                                                                                  player).getPoints()));
                 });
             }
         }
