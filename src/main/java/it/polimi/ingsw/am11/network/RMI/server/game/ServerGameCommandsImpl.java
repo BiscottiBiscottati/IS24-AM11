@@ -57,6 +57,9 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
                 VirtualPlayerView view = views.get(nick);
                 view.setStarterCard(isRetro);
             } else {
+                LOGGER.warn("Player {} tried to set starter card without being logged in. Players" +
+                            " {}",
+                            nick, views.keySet());
                 throw new RemoteException("Use login method to add player first.");
             }
         }
@@ -71,6 +74,9 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
                 VirtualPlayerView view = views.get(nick);
                 view.setObjectiveCard(cardId);
             } else {
+                LOGGER.warn("Player {} tried to set objective card without being logged in. " +
+                            "Players {}",
+                            nick, views.keySet());
                 throw new RemoteException("Use login method to add player first.");
             }
         }
@@ -87,6 +93,8 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
                 VirtualPlayerView view = views.get(nick);
                 view.placeCard(cardId, x, y, isRetro);
             } else {
+                LOGGER.warn("Player {} tried to place card without being logged in. Players {}",
+                            nick, views.keySet());
                 throw new RemoteException("Use login method to add player first.");
             }
         }
@@ -104,6 +112,8 @@ public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
                 VirtualPlayerView view = views.get(nick);
                 view.drawCard(fromVisible, type, cardId);
             } else {
+                LOGGER.warn("Player {} tried to draw card without being logged in. Players {}",
+                            nick, views.keySet());
                 throw new RemoteException("Use login method to add player first.");
             }
         }
