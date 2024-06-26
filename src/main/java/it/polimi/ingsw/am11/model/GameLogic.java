@@ -35,12 +35,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GameLogic implements GameModel {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameLogic.class);
+    private static final int CLOSING_GRACE_TIME = 5;
 
     private final @NotNull RuleSet ruleSet;
     private final @NotNull PlayerManager playerManager;
@@ -707,9 +709,7 @@ public class GameLogic implements GameModel {
 
             plateau.setFinalLeaderboard();
 
-            pcs.clearListeners();
-            reconnectionTimer.cancelAll();
-            CentralController.INSTANCE.destroyGame();
+            closeGame();
             return;
         } else if (plateau.getStatus() == GameStatus.ARMAGEDDON &&
                    playerManager.isFirstTheCurrent()) {
@@ -925,6 +925,15 @@ public class GameLogic implements GameModel {
                                             .findFirst().orElseThrow();
 
         plateau.setWinner(winningPlayer.nickname());
+        closeGame();
+    }
+
+    private void closeGame() {
+        try {
+            TimeUnit.SECONDS.sleep(CLOSING_GRACE_TIME);
+        } catch (InterruptedException ignored) {
+        }
+
         pcs.clearListeners();
         reconnectionTimer.cancelAll();
         CentralController.INSTANCE.destroyGame();

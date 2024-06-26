@@ -122,7 +122,7 @@ public class ServerRMI implements ServerLoggable {
             try {
                 player.youUgly();
             } catch (RemoteException e) {
-                LOGGER.debug("SERVER RMI: unable to disconnect player or already disconnected");
+                LOGGER.warn("SERVER RMI: unable to disconnect player or already disconnected");
             }
         }
         heartbeatManager.clear();

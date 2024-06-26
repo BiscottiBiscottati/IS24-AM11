@@ -13,8 +13,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 
 public class Ended extends TUIState {
-    static String tellNothing = "Nothing to do here, you can exit the game >>> \033[K";
     private static final String infoBar = "STATUS: The game has ended";
+    static String tellNothing = "Nothing to do here, you can exit the game >>> \033[K";
     private boolean alreadyError = false;
 
     public Ended(MiniGameModel model) {
@@ -98,6 +98,7 @@ public class Ended extends TUIState {
         InfoBarPrinter.printInfoBar(infoBar);
 
         System.out.println("This is the final leaderboard:");
+        assert model.getFinalLeaderboard() != null;
         PlayersPrinter.printLeaderboard(model.getFinalLeaderboard());
     }
 

@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.view.client.TUI.printers;
 
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,16 +85,16 @@ public class PlayersPrinter {
 //                                   """);
     }
 
-    public static String spaces(int num) {
-        return " ".repeat(Math.max(0, num));
-    }
-
     public static String baseLine(boolean isBottom) {
         if (isBottom) {
             return "╚═══════════════════╝";
         } else {
             return "╔═══════════════════╗";
         }
+    }
+
+    public static String spaces(int num) {
+        return " ".repeat(Math.max(0, num));
     }
 
     public static List<String> infoLine(String nick, PlayerColor color, int points) {
@@ -135,12 +136,14 @@ public class PlayersPrinter {
         return spaces + word;
     }
 
-    public static void printLeaderboard(Map<String, Integer> leaderboard) {
-        for (String player : leaderboard.keySet()) {
-            if (leaderboard.get(player) == 1) {
+    public static void printLeaderboard(@NotNull Map<String, Integer> leaderboard) {
+        for (Map.Entry<String, Integer> entry : leaderboard.entrySet()) {
+            String player = entry.getKey();
+            if (entry.getValue() == 1) {
                 System.out.println(
                         "╔ Winner: " + "═".repeat(Math.max(player.length() - 9, 0)) + "╗");
-                System.out.println("║ " + player + spaces(Math.max(9 - player.length(), 0)) + " ║");
+                System.out.println("║ " + player + spaces(Math.max(9 - player.length() - 2, 0)) +
+                                   " ║");
                 System.out.println("╚" + "═".repeat(Math.max(player.length(), 9)) + "╝");
             } else {
                 for (int i = 2; i < leaderboard.size(); i++) {
