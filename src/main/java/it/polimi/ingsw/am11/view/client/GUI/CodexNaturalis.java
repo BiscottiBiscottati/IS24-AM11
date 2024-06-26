@@ -190,13 +190,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void disconnectedFromServer() {
         if (getMiniGameModel().table().getStatus().equals(GameStatus.ENDED)) {
-            bigRoot.setVisible(false);
-            primaryStage.setResizable(false);
-            smallRoot.setVisible(true);
-            primaryStage.setScene(scene);
-            primaryStage.setFullScreen(false);
-            primaryStage.show();
-            NetworkPage.showNetworkPage();
+            gamePage.gameEnded();
         } else {
             NetworkPage.showNetworkPage();
         }

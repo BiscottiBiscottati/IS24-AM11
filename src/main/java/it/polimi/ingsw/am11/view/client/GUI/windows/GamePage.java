@@ -497,6 +497,11 @@ public class GamePage {
         });
     }
 
+    /**
+     * dfhakhfadskhfakdshf
+     * @param mouseEvent the event
+     * @see MouseEvent
+     */
     public void pickFromResDeck(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             guiActuator.drawCard(false, PlayableCardType.RESOURCE, 0);
