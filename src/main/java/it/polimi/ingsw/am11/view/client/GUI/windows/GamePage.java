@@ -616,7 +616,6 @@ public class GamePage {
     }
 
     public void openChatBox(ActionEvent actionEvent) {
-        System.out.println("Chat button pressed");
         VBox chatBox = new VBox();
 
         ScrollPane scrollPane = new ScrollPane();

@@ -12,6 +12,8 @@ import it.polimi.ingsw.am11.view.client.GUI.windows.*;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -234,75 +236,15 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     private void showGamePage() {
         smallRoot.setVisible(false);
+        primaryStage = new Stage();
         primaryStage.setResizable(true);
         bigRoot.setVisible(true);
         primaryStage.setScene(
                 new Scene(bigRoot, 1920,
                           1080,
                           javafx.scene.paint.Color.BLACK));
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode().toString().equals("ESCAPE")) {
-                    int size = 1920;
-                    int halfButtonSize = Proportions.HALF_BUTTON_SIZE.getValue();
-                    int distanceToBorder = Proportions.DISTANCE_TO_BORDER.getValue();
-                    Rectangle draggableRect = new Rectangle(
-                            size, halfButtonSize << 2);
-                    draggableRect.setFill(javafx.scene.paint.Color.BLACK);
-                    draggableRect.setTranslateY(- size / 2 + halfButtonSize);
-                    draggableRect.setOnMousePressed(pressEvent -> {
-                        draggableRect.setOnMouseDragged(dragEvent -> {
-                            primaryStage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
-                            primaryStage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
-                        });
-                    });
-                    bigRoot.getChildrenUnmodifiable().add(draggableRect);
-
-                    ImageView closeCross = GuiResources.getTheImageView(GuiResEnum.CLOSE_CROSS);
-                    closeCross.setFitHeight(2 * halfButtonSize);
-                    closeCross.setPreserveRatio(true);
-                    closeCross.setOpacity(0.5);
-
-                    Button closeButton = new Button("_Cancel");
-                    closeButton.setPrefSize(2 * halfButtonSize, 2 * halfButtonSize);
-                    closeButton.setGraphic(closeCross);
-                    closeButton.setTranslateX(size / 2 - halfButtonSize);
-                    closeButton.setTranslateY(- size / 2 + halfButtonSize + 2 * distanceToBorder);
-                    closeButton.setBackground(Background.EMPTY);
-                    closeButton.setOnMouseEntered(event -> closeCross.setOpacity(0.7));
-                    closeButton.setOnMouseExited(event -> closeCross.setOpacity(0.5));
-                    closeButton.setOnMousePressed(event -> closeCross.setOpacity(1));
-
-                    closeButton.setOnAction(event -> Platform.exit());
-                    bigRoot.getChildrenUnmodifiable().add(closeButton);
-
-                    //Minimize Button
-
-                    ImageView minimizeBar = GuiResources.getTheImageView(GuiResEnum.MINIMIZE_BAR);
-                    minimizeBar.setFitHeight(2 * halfButtonSize);
-                    minimizeBar.setPreserveRatio(true);
-                    minimizeBar.setOpacity(0.5);
-
-                    Button minimizeButton = new Button("_Cancel");
-                    minimizeButton.setPrefSize(2 * halfButtonSize, 2 * halfButtonSize);
-                    minimizeButton.setGraphic(minimizeBar);
-                    minimizeButton.setTranslateX(
-                            (double) size / 2 - 3 * halfButtonSize - 4 * distanceToBorder);
-                    minimizeButton.setTranslateY(
-                            (double) - size / 2 + halfButtonSize + 2 * distanceToBorder);
-                    minimizeButton.setBackground(Background.EMPTY);
-                    minimizeButton.setOnMouseEntered(event -> minimizeBar.setOpacity(0.7));
-                    minimizeButton.setOnMouseExited(event -> minimizeBar.setOpacity(0.5));
-                    minimizeButton.setOnMousePressed(event -> minimizeBar.setOpacity(1));
-
-                    minimizeButton.setOnAction(event -> {primaryStage.setIconified(true);});
-                    bigRoot.getChildrenUnmodifiable().add(minimizeButton);
-                    primaryStage.setOnShowing(event -> {primaryStage.setIconified(false);});
-
-                }
-            }
-        });
+        primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.show();
         primaryStage.setFullScreen(true);
     }
 }
