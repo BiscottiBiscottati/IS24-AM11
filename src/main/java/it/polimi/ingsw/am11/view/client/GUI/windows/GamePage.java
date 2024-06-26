@@ -34,27 +34,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 public class GamePage {
 
     private final Popup popup = new Popup();
-    private MiniGameModel miniGameModel;
-    private GuiActuator guiActuator;
-    private List<Integer> handIDs;
-    private List<Boolean> handRetro;
-    private List<Integer> shownPlayable;
-    private Set<Position> availablePositions;
-    private Position selectedPosition;
-    private Integer selectedHandPose;
-    private String currentSeenField;
-
-    private int centreX;
-    private int centreY;
-    private double xOffset;
-    private double yOffset;
-    private VBox commentsBox;
     @FXML
     Label errorLabel;
     @FXML
@@ -119,6 +103,20 @@ public class GamePage {
     Label yourName;
     @FXML
     Label lastTurnLabel;
+    private MiniGameModel miniGameModel;
+    private GuiActuator guiActuator;
+    private List<Integer> handIDs;
+    private List<Boolean> handRetro;
+    private List<Integer> shownPlayable;
+    private Set<Position> availablePositions;
+    private Position selectedPosition;
+    private Integer selectedHandPose;
+    private String currentSeenField;
+    private int centreX;
+    private int centreY;
+    private double xOffset;
+    private double yOffset;
+    private VBox commentsBox;
 
 
     public GamePage() {
@@ -350,7 +348,7 @@ public class GamePage {
                 newRectangle.setTranslateX(pos.x() * 117 + centreX);
                 newRectangle.setTranslateY(- pos.y() * 60 + centreY);
                 newRectangle.setOnMouseClicked(event -> {
-                    System.out.println(pos.toString() + " clicked");
+                    System.out.println(pos + " clicked");
                     if (selectedPosition != pos) {
                         selectedPosition = pos;
                         signal.setVisible(true);
@@ -533,6 +531,13 @@ public class GamePage {
         });
     }
 
+    public void card1Selected(MouseEvent mouseEvent) {
+        Platform.runLater(() -> {
+            handSelect(mouseEvent, 0);
+        });
+
+    }
+
     private void handSelect(MouseEvent mouseEvent, int handPos) {
         boolean isRetro = false;
         if (selectedHandPose == null || selectedHandPose != handPos) {
@@ -590,13 +595,6 @@ public class GamePage {
                 }
             }
         }
-
-    }
-
-    public void card1Selected(MouseEvent mouseEvent) {
-        Platform.runLater(() -> {
-            handSelect(mouseEvent, 0);
-        });
 
     }
 
@@ -749,7 +747,7 @@ public class GamePage {
                     "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
 
             closeBtn.setOnAction(e -> {
-
+                popup.hide();
             });
 
             endGameBox.getChildren().addAll(endGameLabel, finalLeaderboardLabel, closeBtn);

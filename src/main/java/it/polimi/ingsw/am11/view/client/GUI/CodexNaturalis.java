@@ -197,9 +197,9 @@ public class CodexNaturalis extends Application implements GuiObserver {
             primaryStage.setFullScreen(false);
             primaryStage.show();
             NetworkPage.showNetworkPage();
+        } else {
+            NetworkPage.showNetworkPage();
         }
-        NetworkPage.showNetworkPage();
-
     }
 
     public MiniGameModel getMiniGameModel() {
@@ -221,13 +221,19 @@ public class CodexNaturalis extends Application implements GuiObserver {
     public void reconnectedToServer(GameStatus status) {
         switch (status) {
             case LAST_TURN -> {
+                Platform.runLater(this::showGamePage);
                 gamePage.showLastTurnMessage("LAST TURN!");
             }
             case ARMAGEDDON -> {
+                Platform.runLater(this::showGamePage);
                 gamePage.showLastTurnMessage("PREPARE FOR YOUR LAST TURN!");
             }
             case ENDED -> {
-
+                Platform.runLater(this::showGamePage);
+                gamePage.gameEnded();
+            }
+            case ONGOING -> {
+                Platform.runLater(this::showGamePage);
             }
         }
     }
