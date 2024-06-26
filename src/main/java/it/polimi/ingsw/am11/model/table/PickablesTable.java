@@ -223,7 +223,7 @@ public class PickablesTable {
     }
 
     public int getRemainingDeckOf(@NotNull PlayableCardType type) {
-        return deckManager.getNumberRemainingOf(type);
+        return deckManager.getRemainingCardsOf(type);
     }
 
     public @NotNull PickablesTableMemento save() {

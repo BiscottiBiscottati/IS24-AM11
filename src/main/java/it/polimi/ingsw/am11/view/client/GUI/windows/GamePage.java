@@ -3,6 +3,7 @@ package it.polimi.ingsw.am11.view.client.GUI.windows;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
+import it.polimi.ingsw.am11.model.players.field.PositionManager;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
@@ -395,7 +396,8 @@ public class GamePage {
         //now let's check the neighbouring cards
         for (Corner corner : Corner.values()) {
             if (cardsPositioned.get(pos).isCornerCovered(corner)) {
-                recursivePrinter(placedCards, cardsPositioned, pos.getPositionOn(corner));
+                recursivePrinter(placedCards, cardsPositioned,
+                                 PositionManager.getPositionIn(pos, corner));
             }
         }
     }

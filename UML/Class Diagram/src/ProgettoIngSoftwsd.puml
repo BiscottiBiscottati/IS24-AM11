@@ -409,171 +409,382 @@ package decks{
     }
 }
 
+cards -- decks
+
 package players{
     class Player {
-        -nickname: String
-        -color: PlayerColor
-        -space: PersonalSpace
-        -field: PlayerField
+        - nickname: String
+        - color: PlayerColor
+        - space: PersonalSpace
+        - field: PlayerField
 
-        +getNickname(): String
-        +getColor(): Color
-        +Space(): PersonalSpace
-        +Field(): PlayerField
+        + nickname(): String
+        + color(): Color
+        + space(): PersonalSpace
+        + field(): PlayerField
+        + load(PlayerMemento): void
+        + save(): PlayerMemento
     }
 
     class PersonalSpace {
-        -playerHand: Arraylist<PlayableCard>
-        -playerObjective: ObjectiveCard
-        -sizeOfHand: int
-        -maxObjectives: int
+        - {static}maxSizeOfHand: int
+        - {static}maxObjectives: int
+        - {static}maxCandidateObjectives: int
 
-        +getPlayerHand(): Arraylist<PlayableCard>
-        +getPlayerObjective(): ObjectiveCard
+        - playerHand: Set<PlayableCard>
+        - playerObjective: Set<ObjectiveCard>
+        - candidateObjectives: Set<ObjectiveCard>
+        - starterCard: StarterCard
 
-        '+clearAll(): void'
-        +clearAll(Map<DeckType,Deck>): void
-        +addCardToHand(PlayableCard): void
-        +addObjectiveToHand(ObjectiveCard): void
-        +pickCard(int): PlayableCard
+        + getPlayerHand(): Set<PlayableCard>
+        + getPlayerObjective(): Set<ObjectiveCard>
+        + getCandidateObjectives(): Set<ObjectiveCard>
+        + getCandidateObjectiveByID(int): ObjectiveCard
+        + setNewCandidateObjective(ObjectiveCard): void
+        + availableSpaceInHand(): int
+        + addCardToHand(PlayableCard): void
+        + pickCard(int): PlayableCard
+        + addObjective(ObjectiveCard): void
+        + setStarterCard(StarterCard): void
+        + areObjectiveGiven(): boolean
+
+        + save(): PersonalSpaceMemento
+        + load(PersonalSpaceMemento): void
+
+        + clearAll(): void
     }
 
-    class PlayerField{
-        -cardsPositioned: Hashmap<Position, CardContainer>
-        -exposedSymbols: EnumMap<Symbol, Integer>
-        -exposedColors: EnumMap<Color, Integer>
-        -placedCardColors: EnumMap<Color, Integer>
-        -availablePositions: Set<Position>
+    package field {
 
-        +place(PlayableCard): void
-        '+clearAll(): void'
-        +clearAll(Map<DeckType, Deck): void
-        +getPositionedCards(): Map<Position, CardContainer>
-        +getNumberOfPositionedCardsOf(Color): int
-        +getAvailablePositions(): Set<Position>
-        +countObjectivesPoints(ArrayList<ObjectiveCard>): int
+        class ExposedItemManager {
+            - exposedColors: EnumMap<Color, Integer>
+            - exposedSymbols: EnumMap<Symbol, Integer>
+            - placedCardColors: EnumMap<Color, Integer>
+
+            ~ ExposedItemManager()
+            ~ reset(): void
+            ~ subToExposed(Item): void
+            ~ addCardColor(Color): void
+            ~ addExposedItemOn(FieldCard, isRetro: boolean): void
+            ~ addToExposed(Item): void
+            ~ getPlacedCardOf(Color): int
+            ~ isRequirementsMet(PlayableCard, isRetro: boolean): boolean
+            ~ getExposedItem(Item): int
+
+            ~ save(): ExposedItemManagerMemento
+            ~ load(ExposedItemManagerMemento): void
+        }
+
+        class PositionManager {
+            - availablePositions: Set<Position>
+            - closedPositions: Set<Position>
+            - cardsPositioned: Map<Position, CardContainer>
+
+            + {static}getMovementOfPositions(Position, List<Corner>): Position
+            + {static}getPositionIn(Position, Corner): Position
+            + {static}getCornerFromPositions(Position, Position): Optional<Corner>
+
+            + reset(): void
+            + placeCard(FieldCard, Position, isRetro: boolean): List<Item>
+            + getAvailablePositions(): Set<Position>
+            + isAvailable(Position): boolean
+            + containsCard(FieldCard): boolean
+            + getCardsPositioned(): Map<Position, CardContainer>
+
+            + save(): PositionManagerMemento
+            + load(PositionManagerMemento): void
+
+        }
+
+
+        class PlayerField{
+            - itemManager: ExposedItemManager
+            - positionManager: PositionManager
+
+            + clearAll(): void
+            + placeStartingCard(StarterCard, isRetro: boolean): void
+            + place(PlayableCard, Position, isRetro: boolean): void
+            + getAvailablePositions(): Set<Position>
+            + isAvailable(Position): boolean
+            + getNumberOf(Item): int
+            + containsCard(FieldCard): boolean
+            + getCardsPositioned(): Map<Position, CardContainer>
+            + getPlacedCardColours(): Map<Color, Integer>
+            + getNumberOfPositionedColor(Color): int
+            + isRequirementMet(FieldCard, isRetro: boolean): boolean
+
+            + save(): FieldMemento
+            + load(FieldMemento): void
+        }
+
+        PlayerField -- ExposedItemManager
+        PlayerField -- PositionManager
     }
+
 
     Player "1" -- "1" PersonalSpace
     PlayerField "1" -- "1" Player
 
-    class CardContainer{
-        -coveredCorners: EnumMap<Corner, boolean>
-        -card: PlayableCard
+    package utils {
+        class CardContainer{
+            - card: FieldCard
+            - coveredCorners: EnumMap<Corner, boolean>
+            - isRetro: boolean
 
-        +cover(Corner): void
-        +getCard(): PlayableCard
+            + getCard(): FieldCard
+            + isCornerCovered(Corner): boolean
+            + cover(Corner): Optional<Item>
+            + isColorEqual(Color): boolean
+            + isRetro(): boolean
+            + getContainerOn(Corner): CornerContainer
+
+            + save(): CardContainerMemento
+        }
+
+        class Position{
+            -x: int
+            -y: int
+
+            + Position(x, y)
+            + of(x, y): Position
+        }
+
+        enum PlayerColor{
+            + RED
+            + BLUE
+            + GREEN
+            + YELLOW
+        }
     }
-
-    class Position{
-        -x: int
-        -y: int
-
-        +Position(x, y)
-    }
-
-    Position -- PlayerField
-    CardContainer -- PlayerField
 }
 
 package table{
+
+    class DeckManager {
+        - goldDeck: Deck<GoldCard>
+        - resourceDeck: Deck<ResourceCard>
+        - objectiveDeck: Deck<ObjectiveCard>
+        - starterDeck: Deck<StarterCard>
+
+        + reset(): void
+        + shuffle(): void
+        + getDeckTop(PlayableCardType): Optional<Color>
+        + drawPlayableFrom(PlayableDeckType): Optional<PlayableCard>
+        + drawStarter(): Optional<StarterCard>
+        + drawObjective(): Optional<ObjectiveCard>
+        + getRemainingCardsOf(PlayableDeckType): int
+
+        + save(): DeckManagerMemento
+        + load(DeckManagerMemento): void
+    }
+
     class PickablesTable{
-        -commonObjectives : Arraylist<ObjectiveCard>
-        -shownCards: Arraylist<PlayableCard>
-        -NumOfObjectives : int
-        -NumOfShownPerType : int
-        -decks : EnumMap<DeckType, Deck>
 
-        +getShownCards(): Arraylist<PlayableCard>
-        +getCommonObjectives(): Arraylist<ObjectiveCard>
-        +getResouceDeckTop(): Color
-        +getGoldDeckTop(): Color
+        - {static}numOfCommonObjectives: int
+        - {static}numOfShownPerType: int
+        - {static}numOfCandidatesObjectives: int
 
-        +loadPickableTable(): void
-        +loadCommonOnjective(): void
+        - deckManager: DeckManager
+        - shownPlayable: Map<PlayableCardType, Set<PlayableCard>>
+        - commonObjectives: Set<ObjectiveCard>
+        - pcs: GameListenerSupport
 
-        +pickCardFromTable(int): PlayableCard
-        +pickFromDeck(DeckType): PlayableCard
-        +clearTable(): void
-        +resetDeck(DeckType): void
+        + resetDecks(): void
+        + shuffleDecks(): void
+        + initialize(): void
+        + getDeckTop(PlayableCardType): Optional<Color>
+        + getCommonObjectives(): Set<ObjectiveCard>
+        + getShownPlayable(PlayableCardType): Set<PlayableCard>
+        + getRemainingCardsOf(PlayableDeckType): int
+        + drawPlayableFrom(PlayableDeckType): PlayableCard
+        + pickStarterCard(): StarterCard
+        + pickObjectiveCandidates(): Set<ObjectiveCard>
+        + pickObjectiveCard(): ObjectiveCard
+        + pickCommonObjectives(): void
+        + pickPlayableVisible(id): PlayableCard
 
-         
+        + save(): PickablesTableMemento
+        + savePublic(): ReconnectionTableMemento
+        + load(PickablesTableMemento): void
     }
 
     class Plateau{
-        -playerPoints: Map<Player, Integer>
-        -armageddonTime : int
-        -numOfPlayers : int
-        -isArmageddonTime : boolean
+        - {static}armageddonTime: int
+        - playerPoints: Map<String, Integer>
+        - counterObjective: Map<String, Integer>
+        - finalLeaderboard: Map<String, Integer>
+        - status: AtomicReference<GameStatus>
+        - pcs: GameListenerSupport
 
-        +reset(): void
-        +addPlayer(Player): void
-        +addPlayerPoints(Player, int): void
-        +getPlayerPoints(Player): int
-        +getLeadingPlayer(): List<Player>
+        + setStatus(GameStatus): void
+        + addPlayerPoints(player, points): void
+        + isArmageddonTime(): boolean
+        + activateArmageddon(): void
+        + removePlayer(player): void
+        + reset(): void
+        + addPlayer(player): void
+        + addCounterObjective(player): void
+        + getPlayerPoints(player): int
+        + getCounterObjective(player): int
+        + setFinalLeaderboard(): void
+        + getPlayerFinishingPosition(player): int
+        + setWinner(player): void
+
+        + save(): PlateauMemento
+        + load(PlateauMemento): void
     }
+
+    DeckManager -- PickablesTable
 }
 
+DeckManager -- decks
+
 interface GameModel{
+    + getRuleSet(): RuleSet
+    + getPlayers(): Set<String>
+    + getCurrentTurnPlayer(): String
+    + getFirstPlayer(): String
+    + getPlayerHand(String): Set<id>
+    + getPlayerObjective(String): Set<id>
+    + getPlayerColor(String): PlayerColor
+    + getPositionedCards(String): Map<Position, CardContainer>
+    + getAvailablePositions(String): Set<Position>
+    + getCommonObjectives(): Set<id>
+    + getExposedCards(PlayableCardType): Set<id>
+    + getPlayerPoints(String): int
+    + getPlayerFinishingPosition(String): int
+    + getWinner(): String
+    + getGameStatus(): GameStatus
+    + getDeckTop(PlayableCardType): Optional<Color>
+    + getCandidateObjectives(String): Set<id>
+    + getStarterCard(String): Optional<id>
+    + isDisconnected(String): boolean
 
-    'il controller identifica i players con il loro nome'
-    +initGame(): void
-    +addPlayerToTable(String, PlayerColor): void
-    +shufflePlayers(): void
-    +setStartingPlayer(): void
-    +goNextTurn(): void
-    +placeCard(int): void
-    +drawCardFrom(PlayableDeckType): PlayableCard
+    + initGame(): void
+    + addPlayerToTable(String, PlayerColor): void
+    + removePlayer(String): void
+    + setStarterFor(String, isRetro: boolean): void
+    + setObjectiveFor(String, id): void
+    + placeCard(String, id, Position, isRetro: boolean): void
+    + drawFromDeckOf(PlayableCardType, String): id
+    + goNextTurn(): void
+    + drawVisibleOf(PlayableCardType, String, id): id
+    + forceEnd(): void
+    + addPlayerListener(String, PlayerListener): void
+    + addTableListener(TableListener): void
+    + disconnectPlayer(String): void
+    + reconnectPlayer(String, PlayerListener): void
+    + endGameEarly(): void
 
-    +getExposedCards(): ArrayList<PlayableCard>
-    +getPlayerHand(String): ArrayList<PlayableCard>
-    +getPlayerObjective(String): ObjectiveCard
-    +getCommonObjectives(): ArrayList<ObjectiveCard>
-    +getPlateau(): Map<String, Integer>
-    +getPlayerColor(String): PlayerColor
-    +getPlayers(): ArrayList<String>
-    +getCurrentTurnPlayer(): String
-    +isFinished(): boolean
-    +getResults(): Map<String, Integer>
-    +getWinner(): String
-    -getPlayer(String): Player
+    + save(): GameModelMemento
+    + load(GameModelMemento): void
+    + reSyncWith(String): void
 }
 
 class GameLogic implements GameModel{
-    -playerQueue: LinkedList<Player>
-    -numOfPlayers: int
-    -gameTable: Table
-    -gamePlateau: Plateau
-    -firstPlayer: Player
-    -decks: EnumMap<DeckType, Deck>
+    - ruleSet: RuleSet
+    - playerManager: PlayerManager
+    - pickablesTable: PickablesTable
+    - plateau: Plateau
+    - reconnectionTimer: ReconnectionTimer
+    - isLoadedGame: boolean
+    - pcs: GameListenerSupport
 }
 
+class PlayerManager {
+    - {static} maxNumberOfPlayers: int
 
-package ruleset{
+    - players: SequencedMap<String, Player>
+    - playerQueue: Queue<Player>
+    - unavailablePlayers: Set<Player>
+    - firstPlayer: Player
+    - currentPlaying: Player
+    - currentAction: TurnAction
+    - pcs: GameListenerSupport
+
+    + getPlayers(): SequencedSet<String>
+    + getCurrentTurnPlayer(): Optional<String>
+    + areAllReconnected(): boolean
+    + getFirstPlayer(): Optional<String>
+    + getPlayer(String): Optional<Player>
+    + getHand(String): Set<id>
+    + getPlayerObjective(String): Set<id>
+    + getStarterCard(String): Optional<StarterCard>
+    + getCandidateObjectives(String): Set<ObjectiveCard>
+    + getCurrentAction(): TurnAction
+    + getPlayerColor(String): Optional<PlayerColor>
+    + getAvailablePositions(String): Set<Position>
+    + isFirstTheCurrent(): boolean
+    + areStarterSet(): boolean
+    + areObjectivesSet(): boolean
+    + isTurnOf(String): boolean
+    + isCurrentDisconnected(): boolean
+    + areAllDisconnected(): boolean
+    + getNumberOfConnected(): int
+    + isConnected(String): boolean
+    + isDisconnected(String): boolean
+
+    + addPlayerToTable(String, PlayerColor): void
+    + removePlayer(String): void
+    + chooseFirstPlayer(): void
+    + goNextTurn(): void
+    + setCurrentAction(TurnAction): void
+    + reconnectPlayer(Player): void
+    + disconnectPlayer(Player): void
+    + setStarterCard(String, StarterCard): void
+    + setCandidateObjectives(String, Set<ObjectiveCard>): void
+    + resetAll(): void
+    + hardReset(): void
+
+    + save(): PlayerManagerMemento
+    + save(String): PlayerManagerMemento
+    + load(PlayerManagerMemento): void
+}
+
+GameLogic -- PlayerManager
+
+
+package utils{
+    enum GameStatus {
+        + SETUP
+        + CHOOSING_STARTERS
+        + CHOOSING_OBJECTIVES
+        + ONGOING
+        + ARMAGEDDON
+        + LAST_TURN
+        + ENDED
+    }
+
+    enum TurnAction {
+        + PLACE_CARD
+        + DRAW_CARD
+    }
+
     interface RuleSet{
-        +MaxHandSize(): int
-        '+MaxShownCardsOf(PlayableCardType): int'
-        +MaxShownCardsPerType(): int
-        +MaxPlayerObjectives(): int
-        +MaxTableObjectives(): int
-        +MaxPlayers(): int
-        +ToArmageddon(): int
+        + getObjectiveToChooseFrom(): int
+        + getResourceAtStart: int
+        + getGoldAtStart: int
+        + getHandSize(): int
+        + getNumOfPersonalObjective(): int
+        + getNumOfCommonObjectives(): int
+        + getMaxPlayers(): int
+        + getPointsToArmageddon(): int
     }
 
     class BasicRuleset implements RuleSet{
-        -maxHandCards: int
-        '-maxShownCards: EnumMap<PlayableCardType, Integer>'
-        -maxShownCardsPerType: int
-        -maxPersonalObjectives: int
-        -maxCommonObjectives: int
-        -maxPlayers: int
-        -pointsToArmageddon: int
+        - {static} handSize: int
+        - {static} maxRevealedCardsPerType: int
+        - {static} numOfPersonalObjective: int
+        - {static} numOfCommonObjectives: int
+        - {static} maxPlayers: int
+        - {static} pointsToArmageddon: int
+        - {static} resourceAtStart: int
+        - {static} goldAtStart: int
+        - {static} objectiveToChooseFrom: int
     }
 }
 RuleSet -- GameLogic
 
-GameLogic -- decks
-GameLogic -- cards
 GameLogic -- Plateau
 GameLogic -- PickablesTable
 GameLogic -- Player

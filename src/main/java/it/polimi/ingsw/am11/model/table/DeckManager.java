@@ -66,7 +66,7 @@ public class DeckManager {
         return objectiveDeck.draw();
     }
 
-    public int getNumberRemainingOf(@NotNull PlayableCardType type) {
+    public int getRemainingCardsOf(@NotNull PlayableCardType type) {
         return switch (type) {
             case GOLD -> goldDeck.getRemainingCards();
             case RESOURCE -> resourceDeck.getRemainingCards();

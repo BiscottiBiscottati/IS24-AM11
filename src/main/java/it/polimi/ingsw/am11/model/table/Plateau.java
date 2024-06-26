@@ -21,8 +21,8 @@ public class Plateau {
     private final @NotNull Map<String, Integer> playerPoints;
     private final @NotNull Map<String, Integer> counterObjective;
     private final @NotNull Map<String, Integer> finalLeaderboard;
-    private final @NotNull GameListenerSupport pcs;
     private final @NotNull AtomicReference<GameStatus> status;
+    private final @NotNull GameListenerSupport pcs;
 
 
     public Plateau(@NotNull GameListenerSupport pcs) {

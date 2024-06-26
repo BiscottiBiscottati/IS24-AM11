@@ -17,6 +17,7 @@ public class BasicRuleset implements RuleSet {
     /**
      * @return the number of objectives that a player can choose between at the start of the game
      */
+    @Override
     public int getObjectiveToChooseFrom() {
         return objectiveToChooseFrom;
     }
@@ -24,6 +25,7 @@ public class BasicRuleset implements RuleSet {
     /**
      * @return the number of resource cards dealt at the beginning
      */
+    @Override
     public int getResourceAtStart() {
         return resourceAtStart;
     }
@@ -31,6 +33,7 @@ public class BasicRuleset implements RuleSet {
     /**
      * @return the number of gold cards dealt at the beginning
      */
+    @Override
     public int getGoldAtStart() {
         return goldAtStart;
     }
@@ -38,6 +41,7 @@ public class BasicRuleset implements RuleSet {
     /**
      * @return the number of cards that the hand can hold
      */
+    @Override
     public int getHandSize() {
         return HandSize;
     }
@@ -47,6 +51,7 @@ public class BasicRuleset implements RuleSet {
      *
      * @return the number of revealed cards on the table per type (e.g., Resource, Gold)
      */
+    @Override
     public int getMaxRevealedCardsPerType() {
         return maxRevealedCardsPerType;
     }
@@ -54,6 +59,7 @@ public class BasicRuleset implements RuleSet {
     /**
      * @return the number of personal Objectives that a player has to receive
      */
+    @Override
     public int getNumOfPersonalObjective() {
         return numOfPersonalObjective;
     }
@@ -61,6 +67,7 @@ public class BasicRuleset implements RuleSet {
     /**
      * @return the number of Objectives that are in common between players
      */
+    @Override
     public int getNumOfCommonObjectives() {
         return numOfCommonObjectives;
     }
@@ -68,6 +75,7 @@ public class BasicRuleset implements RuleSet {
     /**
      * @return the maximum number of players that can join in a match
      */
+    @Override
     public int getMaxPlayers() {
         return maxPlayers;
     }
@@ -76,6 +84,7 @@ public class BasicRuleset implements RuleSet {
      * @return the minimum number of points that are needed for the beginning of the final phase of
      * the game
      */
+    @Override
     public int getPointsToArmageddon() {
         return pointsToArmageddon;
     }

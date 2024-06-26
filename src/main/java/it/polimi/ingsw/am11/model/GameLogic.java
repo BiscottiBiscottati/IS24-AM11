@@ -910,16 +910,6 @@ public class GameLogic implements GameModel {
     }
 
     @Override
-    public void forceReset() {
-        LOGGER.info("MODEL: RESET: Forcing the reset of the game");
-        pcs.clearListeners();
-        plateau.hardReset();
-        pickablesTable.hardReset();
-        playerManager.hardReset();
-        plateau.setStatus(GameStatus.SETUP);
-    }
-
-    @Override
     public void endGameEarly() {
         plateau.setStatus(GameStatus.ENDED);
         Player winningPlayer = playerManager.getPlayers().stream()
@@ -935,12 +925,14 @@ public class GameLogic implements GameModel {
         CentralController.INSTANCE.destroyGame();
     }
 
+    @Override
     public @NotNull GameModelMemento save() {
         return new GameModelMemento(pickablesTable.save(),
                                     plateau.save(),
                                     playerManager.save());
     }
 
+    @Override
     public void load(@NotNull GameModelMemento memento) {
         pickablesTable.load(memento.table());
         playerManager.load(memento.playerManager());

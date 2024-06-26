@@ -282,6 +282,7 @@ public class PlayerManager {
     }
 
     public void goNextTurn() {
+        assert currentPlaying != null;
         String previousPlayer = currentPlaying.nickname();
         playerQueue.remove();
         playerQueue.add(currentPlaying);
@@ -304,7 +305,6 @@ public class PlayerManager {
                .map(Player::field)
                .forEach(PlayerField::clearAll);
 
-        // FIXME we may not need to fire a clear event
         players.forEach((name, player) -> {
             LOGGER.debug("MODEL: Clearing player {} hand and field", name);
             pcs.fireEvent(new HandChangeEvent(
