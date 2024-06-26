@@ -117,6 +117,8 @@ public class GamePage {
     ImageView commonObj2;
     @FXML
     Label yourName;
+    @FXML
+    Label lastTurnLabel;
 
 
     public GamePage() {
@@ -133,12 +135,24 @@ public class GamePage {
         });
     }
 
+    public void showLastTurnMessage(String msg) {
+        Platform.runLater(() -> {
+            lastTurnLabel.setText(msg);
+            lastTurnLabel.setVisible(true);
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(5));
+            pause.setOnFinished(event -> lastTurnLabel.setVisible(false));
+            pause.play();
+        });
+    }
+
     public void createGamePage(@NotNull CodexNaturalis codexNaturalis) throws IOException {
         miniGameModel = codexNaturalis.getMiniGameModel();
         guiActuator = codexNaturalis.getGuiActuator();
         currentSeenField = miniGameModel.myName();
 
         errorLabel.setVisible(false);
+        lastTurnLabel.setVisible(false);
 
         Font font = FontManager.getFont(FontsEnum.VINQUE, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
@@ -149,7 +163,7 @@ public class GamePage {
 
 
         List<Label> labels = List.of(decksLabel, visiblesLabel, handLabel, objLabel,
-                                     personalObjLabel, errorLabel, yourName);
+                                     personalObjLabel, errorLabel, yourName, lastTurnLabel);
         for (Label label : labels) {
             label.setFont(font);
             label.setStyle("-fx-font-size: 30");
@@ -698,6 +712,55 @@ public class GamePage {
                 });
             }
         });
+    }
+
+    public void gameEnded() {
+
+        Platform.runLater(() -> {
+            VBox endGameBox = new VBox();
+            endGameBox.setPrefWidth(500);
+            endGameBox.setPrefHeight(400);
+            endGameBox.setStyle("-fx-background-color: #8B0000; -fx-padding: 10px;");
+
+            Label endGameLabel = new Label("The game has ended!");
+            endGameLabel.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
+            endGameLabel.setTextFill(Color.web("#D7BC49"));
+
+            Label finalLeaderboardLabel = new Label("Final Leaderboard:");
+            finalLeaderboardLabel.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
+            finalLeaderboardLabel.setTextFill(Color.web("#D7BC49"));
+
+            Map<String, Integer> finalLeaderboard = miniGameModel.getFinalLeaderboard();
+            finalLeaderboard.forEach((player, points) -> {
+                Label playerLabel = new Label(player + ": " + points + " points");
+                playerLabel.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
+                playerLabel.setTextFill(Color.web("#D7BC49"));
+                endGameBox.getChildren().add(playerLabel);
+            });
+
+            Button closeBtn = new Button("Go back to the main menu");
+            closeBtn.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
+            closeBtn.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
+            closeBtn.setTextFill(Color.web("#351F17"));
+            closeBtn.setOnMousePressed(
+                    event -> closeBtn.setStyle(
+                            "-fx-background-color: #685C19; -fx-background-radius: 5"));
+            closeBtn.setOnMouseReleased(event -> closeBtn.setStyle(
+                    "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
+
+            closeBtn.setOnAction(e -> {
+
+            });
+
+            endGameBox.getChildren().addAll(endGameLabel, finalLeaderboardLabel, closeBtn);
+
+            popup.getContent().add(endGameBox);
+            popup.setAutoHide(false); // Impedisce al popup di chiudersi automaticamente
+
+
+            popup.centerOnScreen();
+        });
+
     }
 }
 

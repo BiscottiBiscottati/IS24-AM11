@@ -46,4 +46,6 @@ public interface GuiObserver {
     void updateChat();
 
     void showErrorGamePage(String message);
+
+    void reconnectedToServer(GameStatus status);
 }

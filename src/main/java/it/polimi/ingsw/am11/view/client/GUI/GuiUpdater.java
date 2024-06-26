@@ -9,6 +9,9 @@ import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
+import it.polimi.ingsw.am11.view.client.GUI.windows.SetNickPage;
+import it.polimi.ingsw.am11.view.client.GUI.windows.SetObjCardsPage;
+import it.polimi.ingsw.am11.view.client.GUI.windows.SetStarterCardsPage;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import it.polimi.ingsw.am11.view.client.miniModel.exceptions.SyncIssueException;
 import org.jetbrains.annotations.NotNull;
@@ -209,7 +212,16 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         //Set Gui
         switch (miniGameModel.table().getStatus()) {
             case CHOOSING_STARTERS -> {
-
+                SetStarterCardsPage.showStarterCardsPage();
+            }
+            case CHOOSING_OBJECTIVES -> {
+                SetObjCardsPage.showObjCardsPage();
+            }
+            case SETUP -> {
+                SetNickPage.showSettingNickPage();
+            }
+            case ONGOING, ENDED, ARMAGEDDON, LAST_TURN -> {
+                guiObserver.reconnectedToServer(miniGameModel.table().getStatus());
             }
         }
 

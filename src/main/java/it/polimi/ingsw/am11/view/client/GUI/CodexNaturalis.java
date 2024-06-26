@@ -95,10 +95,6 @@ public class CodexNaturalis extends Application implements GuiObserver {
         return guiActuator;
     }
 
-    public MiniGameModel getMiniGameModel() {
-        return guiUpdater.getMiniGameModel();
-    }
-
     @Override
     public void updateDeckTop(PlayableCardType type, Color color) {
         gamePage.updateDeckTop(type, color);
@@ -193,7 +189,21 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void disconnectedFromServer() {
+        if (getMiniGameModel().table().getStatus().equals(GameStatus.ENDED)) {
+            bigRoot.setVisible(false);
+            primaryStage.setResizable(false);
+            smallRoot.setVisible(true);
+            primaryStage.setScene(scene);
+            primaryStage.setFullScreen(false);
+            primaryStage.show();
+            NetworkPage.showNetworkPage();
+        }
+        NetworkPage.showNetworkPage();
 
+    }
+
+    public MiniGameModel getMiniGameModel() {
+        return guiUpdater.getMiniGameModel();
     }
 
     @Override
@@ -205,6 +215,21 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void showErrorGamePage(String message) {
         gamePage.showErrorMessage(message);
+    }
+
+    @Override
+    public void reconnectedToServer(GameStatus status) {
+        switch (status) {
+            case LAST_TURN -> {
+                gamePage.showLastTurnMessage("LAST TURN!");
+            }
+            case ARMAGEDDON -> {
+                gamePage.showLastTurnMessage("PREPARE FOR YOUR LAST TURN!");
+            }
+            case ENDED -> {
+
+            }
+        }
     }
 
     private void showGamePage() {
