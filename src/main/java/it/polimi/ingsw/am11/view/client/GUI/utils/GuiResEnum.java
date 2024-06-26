@@ -13,7 +13,7 @@ public enum GuiResEnum {
     CLOSE_CROSS("elements/close.png"),
     MINIMIZE_BAR("elements/minus.png"),
     CLOISTER_BLACK("elements/CloisterBlack.ttf"),
-    VINQUE("elements/Vinque.ttf"),
+    VINQUE("elements/vinque_rg.otf"),
     BLU_GLD_RTR("elements/blu_gold.png"),
     BLU_RES_RTR("elements/blu_res.png"),
     GREEN_RES_RTR("elements/green_res.png"),

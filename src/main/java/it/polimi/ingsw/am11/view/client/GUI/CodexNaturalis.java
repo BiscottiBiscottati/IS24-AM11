@@ -106,8 +106,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateField(String nickname, int x, int y, int cardId, boolean isRetro) {
-        gamePage.printCardsOnField();
-        gamePage.createButtonsForAvailablePositions();
+        gamePage.printCardsOnField(nickname);
     }
 
     @Override
@@ -118,6 +117,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
     @Override
     public void updateTurnChange(String nickname) {
         gamePage.updateTurnChange(nickname);
+        gamePage.printCardsOnField(nickname);
     }
 
     @Override
