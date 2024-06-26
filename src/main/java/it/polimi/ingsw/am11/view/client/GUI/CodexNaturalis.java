@@ -153,6 +153,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
+        System.out.println("Leaderboard received");
         gamePage.gameEnded();
     }
 
@@ -297,8 +298,10 @@ public class CodexNaturalis extends Application implements GuiObserver {
                     gamePage.updateTurnChange(getMiniGameModel().getCurrentTurn());
                     SequencedSet<String> players = getMiniGameModel().getPlayers();
                     players.forEach(player -> gamePage.updatePlayerPoints(player,
-                                                                          getMiniGameModel().getCliPlayer(
-                                                                                  player).getPoints()));
+                                                                          getMiniGameModel().
+                                                                                  getCliPlayer(
+                                                                                          player).
+                                                                                  getPoints()));
                 });
             }
         }

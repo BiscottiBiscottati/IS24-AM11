@@ -761,10 +761,10 @@ public class GamePage {
             endGameBox.getChildren().addAll(endGameLabel, finalLeaderboardLabel, closeBtn);
 
             popup.getContent().add(endGameBox);
-            popup.setAutoHide(false); // Impedisce al popup di chiudersi automaticamente
-
+            popup.setAutoHide(false);
 
             popup.centerOnScreen();
+            popup.setAutoHide(false);
         });
 
     }
