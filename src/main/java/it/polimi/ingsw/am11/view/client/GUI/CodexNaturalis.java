@@ -128,9 +128,21 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateGameStatus(GameStatus status) {
-        if (status == GameStatus.ONGOING) {
-            gamePage.placeStarterCard();
-            Platform.runLater(this::showGamePage);
+        switch (status) {
+            case ONGOING -> {
+                gamePage.placeStarterCard();
+                Platform.runLater(this::showGamePage);
+            }
+            case ENDED -> {
+                gamePage.gameEnded();
+            }
+            case LAST_TURN -> {
+                gamePage.showLastTurnMessage("LAST TURN!");
+            }
+            case ARMAGEDDON -> {
+                gamePage.showLastTurnMessage("PREPARE FOR YOUR LAST TURN!");
+            }
+
         }
     }
 
@@ -252,6 +264,11 @@ public class CodexNaturalis extends Application implements GuiObserver {
                     gamePage.updateDeckTop(PlayableCardType.GOLD,
                                            getMiniGameModel().table().getDeckTop(
                                                    PlayableCardType.GOLD));
+                    gamePage.printCardsOnField(getMiniGameModel().myName());
+                    gamePage.updateTurnChange(getMiniGameModel().getCurrentTurn());
+                    gamePage.updatePlayerPoints(getMiniGameModel().myName(),
+                                                getMiniGameModel().getCliPlayer(
+                                                        getMiniGameModel().myName()).getPoints());
                 });
             }
         }
