@@ -236,12 +236,13 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     private void showGamePage() {
         smallRoot.setVisible(false);
+        primaryStage.hide();
         primaryStage = new Stage();
         primaryStage.setResizable(true);
         bigRoot.setVisible(true);
         primaryStage.setScene(
-                new Scene(bigRoot, 1920,
-                          1080,
+                new Scene(bigRoot, 1080,
+                          720,
                           javafx.scene.paint.Color.BLACK));
         primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.show();
