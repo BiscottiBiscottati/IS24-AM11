@@ -23,10 +23,9 @@ import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON
 
 public class SetNickPage {
     private static final Pattern SPACE_SPLIT = Pattern.compile("\\s+");
-    private static CodexNaturalis codexNaturalis;
     private static MiniGameModel miniGameModel;
     private static GuiActuator guiActuator;
-    private static TextField writeNick;
+    private static TextField writeNick = null;
     private static Label yourName, nameAlreadyTaken;
     private static Font font, fontBig;
     private static Button chooseNick;
@@ -34,8 +33,6 @@ public class SetNickPage {
     private static int halfButtonSize, distanceToBorder;
 
     public static void createSettingNickPage(CodexNaturalis codexNaturalis) {
-        SetNickPage.codexNaturalis = codexNaturalis;
-
         guiActuator = codexNaturalis.getGuiActuator();
         StackPane root = codexNaturalis.getSmallRoot();
         miniGameModel = codexNaturalis.getMiniGameModel();
@@ -162,10 +159,21 @@ public class SetNickPage {
         }
     }
 
-    public static void showErrorMesssage() {
+    public static void showErrorMesssage(String message) {
         Platform.runLater(() -> {
-            nameAlreadyTaken.setText("Wait for the God player to set the number of players");
+            nameAlreadyTaken.setText(message);
             nameAlreadyTaken.setVisible(true);
         });
+    }
+
+    public static void hideSettingNickPage() {
+        if (writeNick != null) {
+            chooseNick.setVisible(false);
+            writeNick.setVisible(false);
+            yourName.setVisible(false);
+            nameAlreadyTaken.setVisible(false);
+            goToNetwork.setVisible(false);
+        }
+
     }
 }

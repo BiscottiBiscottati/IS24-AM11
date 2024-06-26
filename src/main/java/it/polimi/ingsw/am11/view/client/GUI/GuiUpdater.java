@@ -157,7 +157,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     public void receiveStarterCard(int cardId) {
         LOGGER.debug("Received starter card: {}", cardId);
         miniGameModel.addStarterCard(cardId);
-        guiObserver.receiveStarterCard(cardId);
+        guiObserver.receiveStarterCard();
     }
 
     @Override
@@ -167,7 +167,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
         miniGameModel.addCandidateObjectives(cardId);
 
-        guiObserver.receiveCandidateObjective(cardId);
+        guiObserver.receiveCandidateObjective();
     }
 
     @Override
@@ -214,14 +214,12 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         switch (miniGameModel.table().getStatus()) {
             case CHOOSING_STARTERS -> {
                 WaitingRoomPage.hideWaitingRoomPage();
-                guiObserver.receiveStarterCard(miniGameModel.getCliPlayer(
-                        miniGameModel.myName()).getSpace().getStarterCard());
+                guiObserver.receiveStarterCard();
                 SetStarterCardsPage.showStarterCardsPage();
             }
             case CHOOSING_OBJECTIVES -> {
                 WaitingRoomPage.hideWaitingRoomPage();
-                guiObserver.receiveCandidateObjective(miniGameModel.getCliPlayer(
-                        miniGameModel.myName()).getSpace().getCandidateObjectives());
+                guiObserver.receiveCandidateObjective();
                 SetObjCardsPage.showObjCardsPage();
             }
             case SETUP -> {

@@ -194,4 +194,5 @@ public class NetworkPage {
             connectionFailed.setVisible(true);
         }
     }
+
 }

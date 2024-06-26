@@ -80,6 +80,11 @@ public class GameLogic implements GameModel {
         Plateau.setArmageddonTime(ruleSet.getPointsToArmageddon());
     }
 
+    /**
+     * Used to get the parameters to regulate various aspects of the game
+     *
+     * @return the rule set of the game
+     */
     @Override
     public @NotNull RuleSet getRuleSet() {
         return ruleSet;

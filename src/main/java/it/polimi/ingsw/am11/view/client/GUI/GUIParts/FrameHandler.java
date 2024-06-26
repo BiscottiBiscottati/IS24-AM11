@@ -102,8 +102,5 @@ public class FrameHandler {
         stage.setOnShowing(event -> {stage.setIconified(false);});
     }
 
-    FrameHandler() {
-    }
-
 
 }

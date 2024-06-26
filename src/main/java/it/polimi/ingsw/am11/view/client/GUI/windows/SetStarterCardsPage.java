@@ -17,21 +17,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 public class SetStarterCardsPage {
-    private static CodexNaturalis codexNaturalis;
-    private static StackPane root;
     private static GuiActuator guiActuator;
-    private static Label message;
-    private static ImageView cardImage, cardRetro;
-    private static HBox layout;
-    private static VBox vbox;
-    private static Font font;
+    private static Label message = null;
+    private static ImageView cardImage = null;
+    private static ImageView cardRetro = null;
+    private static HBox layout = null;
+    private static VBox vbox = null;
     private static MiniGameModel miniGameModel;
 
-    public static void createStarterCardsPage(CodexNaturalis codexNaturalis, int cardId) {
-        SetStarterCardsPage.codexNaturalis = codexNaturalis;
+    public static void createStarterCardsPage(CodexNaturalis codexNaturalis) {
+        miniGameModel = codexNaturalis.getMiniGameModel();
 
-        root = codexNaturalis.getSmallRoot();
-        font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+        StackPane root = codexNaturalis.getSmallRoot();
+        Font font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
         guiActuator = codexNaturalis.getGuiActuator();
         message = new Label("This is your starter card:");
@@ -39,39 +37,37 @@ public class SetStarterCardsPage {
         message.setAlignment(Pos.CENTER);
         message.setBackground(Background.EMPTY);
         vbox = new VBox(10);
-        try {
-            cardImage = GuiResources.getImageView(cardId);
-            cardImage.setFitHeight(75);
-            cardImage.setFitWidth(120);
 
-            cardRetro = GuiResources.getCardImageRetro(cardId);
-            cardRetro.setFitHeight(75);
-            cardRetro.setFitWidth(120);
-        } catch (Exception e) {
-            System.err.println("Error loading card image in SetStarterCardsPage");
-        }
+        message.setVisible(false);
+        layout = new HBox(10);
+        layout.setAlignment(Pos.CENTER);
+        vbox.getChildren().addAll(message, layout);
+        vbox.setAlignment(Pos.CENTER);
+        root.getChildren().addAll(vbox);
+        layout.setVisible(false);
+        vbox.setVisible(false);
 
-        System.out.println("Added starter card");
-        try {
-            message.setVisible(false);
-            layout = new HBox(10);
-            layout.getChildren().addAll(cardImage, cardRetro);
-            layout.setAlignment(Pos.CENTER);
-            vbox.getChildren().addAll(message, layout);
-            vbox.setAlignment(Pos.CENTER);
-            root.getChildren().addAll(vbox);
-            layout.setVisible(false);
-            vbox.setVisible(false);
-        } catch (Exception e) {
-            System.err.println("Error adding starter card to root in SetStarterCardsPage");
-            e.printStackTrace();
-        }
     }
 
     public static void showStarterCardsPage() {
+        cardImage =
+                GuiResources.getImageView(miniGameModel.getCliPlayer(
+                        miniGameModel.myName()).getSpace().getStarterCard());
+        cardRetro =
+                GuiResources.getCardImageRetro(miniGameModel.getCliPlayer(
+                        miniGameModel.myName()).getSpace().getStarterCard());
+        cardImage.setFitHeight(75);
+        cardImage.setFitWidth(120);
+
+        cardRetro.setFitHeight(75);
+        cardRetro.setFitWidth(120);
+        layout.getChildren().addAll(cardImage, cardRetro);
+
         message.setVisible(true);
         layout.setVisible(true);
         vbox.setVisible(true);
+        cardImage.setVisible(true);
+        cardRetro.setVisible(true);
 
         cardImage.setOnMouseClicked(event -> {
             cardImage.setVisible(false);
@@ -92,7 +88,15 @@ public class SetStarterCardsPage {
             guiActuator.setStarterCard(true);
             WaitingRoomPage.showWaitingRoomPage();
         });
+    }
 
-
+    public static void hideStarterCardsPage() {
+        if (cardImage != null) {
+            cardImage.setVisible(false);
+            cardRetro.setVisible(false);
+            message.setVisible(false);
+            layout.setVisible(false);
+            vbox.setVisible(false);
+        }
     }
 }

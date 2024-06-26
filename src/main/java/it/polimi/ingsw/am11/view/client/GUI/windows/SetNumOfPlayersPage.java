@@ -20,11 +20,12 @@ import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON
 public class SetNumOfPlayersPage {
     private static CodexNaturalis codexNaturalis;
     private static GuiActuator guiActuator;
-    private static Label numOfPlayers, invalidNumOfPlayers;
+    private static Label numOfPlayers = null;
+    private static Label invalidNumOfPlayers = null;
     private static Font font;
     private static int halfButtonSize, distanceToBorder;
-    private static TextField writeNumOfPlayers;
-    private static Button enterNumOfPlayers;
+    private static TextField writeNumOfPlayers = null;
+    private static Button enterNumOfPlayers = null;
     private static StackPane root;
 
 
@@ -115,6 +116,15 @@ public class SetNumOfPlayersPage {
 
     public static void showErrorMesssage() {
         invalidNumOfPlayers.setVisible(true);
+    }
+
+    public static void hideSetNumOfPlayersPage() {
+        if (numOfPlayers != null) {
+            numOfPlayers.setVisible(false);
+            writeNumOfPlayers.setVisible(false);
+            enterNumOfPlayers.setVisible(false);
+            invalidNumOfPlayers.setVisible(false);
+        }
     }
 
 }

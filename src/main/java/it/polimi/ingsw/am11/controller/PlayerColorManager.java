@@ -24,6 +24,10 @@ public class PlayerColorManager {
         return color;
     }
 
+    void putBack(PlayerColor color) {
+        colors.add(color);
+    }
+
     boolean isAvailable(PlayerColor color) {
         return colors.contains(color);
     }

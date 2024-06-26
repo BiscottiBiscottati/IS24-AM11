@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.model.exceptions.GameBreakingException;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.persistence.SavesManager;
 import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
@@ -77,7 +78,13 @@ public class GameController {
             }
 
             LOGGER.info("CONTROLLER: Adding player {} to model", nickname);
-            model.addPlayerToTable(nickname, playerColor.pullAnyColor());
+            PlayerColor color = playerColor.pullAnyColor();
+            try {
+                model.addPlayerToTable(nickname, color);
+            } catch (PlayerInitException | NumOfPlayersException | GameStatusException ex) {
+                playerColor.putBack(color);
+                throw ex;
+            }
 
             VirtualPlayerView playerView = new VirtualPlayerView(playerConnector, nickname);
             tableView.addConnector(nickname, tableConnector);

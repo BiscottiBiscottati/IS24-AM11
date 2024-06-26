@@ -63,17 +63,14 @@ public class CodexNaturalis extends Application implements GuiObserver {
         }
         bigRoot.setVisible(false);
 
-        try {
-            initializeGUI();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        initializeGUI(true);
         FrameHandler.setIcons(primaryStage, smallRoot);
 
         scene = new Scene(smallRoot,
                           Proportions.SQUARE_SIZE.getValue(),
                           Proportions.SQUARE_SIZE.getValue(),
                           javafx.scene.paint.Color.BLACK);
+        primaryStage.setFullScreen(false);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -81,16 +78,18 @@ public class CodexNaturalis extends Application implements GuiObserver {
         LoadingScreen.animateLoadingScreen();
     }
 
-    private void initializeGUI() throws IOException {
-        primaryStage.setFullScreen(false);
+    private void initializeGUI(boolean withLoadingScreen) {
         smallRoot = new StackPane();
-        LoadingScreen.createLoadingScreen(this);
+        if (withLoadingScreen) {
+            LoadingScreen.createLoadingScreen(this);
+        }
         NetworkPage.createNetworkPage(this);
         SetNickPage.createSettingNickPage(this);
         WaitingRoomPage.createWaitingRoomPage(this);
         SetNumOfPlayersPage.createNumOfPlayersPage(this);
+        SetObjCardsPage.createObjCardsPage(this);
+        SetStarterCardsPage.createStarterCardsPage(this);
         gamePage = fxmlLoader.getController();
-
     }
 
     public StackPane getSmallRoot() {
@@ -168,9 +167,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
     }
 
     @Override
-    public void receiveStarterCard(int cardId) {
+    public void receiveStarterCard() {
         Platform.runLater(() -> {
-            SetStarterCardsPage.createStarterCardsPage(this, cardId);
             WaitingRoomPage.hideWaitingRoomPage();
             SetStarterCardsPage.showStarterCardsPage();
             try {
@@ -182,9 +180,9 @@ public class CodexNaturalis extends Application implements GuiObserver {
     }
 
     @Override
-    public void receiveCandidateObjective(Set<Integer> cardId) {
+    public void receiveCandidateObjective() {
         Platform.runLater(() -> {
-            SetObjCardsPage.createObjCardsPage(this, cardId);
+
             WaitingRoomPage.hideWaitingRoomPage();
             SetObjCardsPage.showObjCardsPage();
         });
@@ -207,13 +205,43 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void disconnectedFromServer() {
-        if (getMiniGameModel().table().getStatus().equals(GameStatus.ENDED)) {
-            gamePage.gameEnded();
-        } else {
-            bigRoot.setVisible(false);
-            smallRoot.setVisible(false);
-            NetworkPage.showNetworkPage();
-        }
+        Platform.runLater(() -> {
+            if (getMiniGameModel().table().getStatus().equals(GameStatus.ENDED)) {
+                gamePage.gameEnded();
+            } else if (getMiniGameModel().table().getStatus().equals(GameStatus.ONGOING) ||
+                       getMiniGameModel().table().getStatus().equals(GameStatus.LAST_TURN) ||
+                       getMiniGameModel().table().getStatus().equals(GameStatus.ARMAGEDDON)) {
+                primaryStage.close();
+                primaryStage = new Stage();
+
+                try {
+                    bigRoot = fxmlLoader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                bigRoot.setVisible(false);
+
+                initializeGUI(false);
+                FrameHandler.setIcons(primaryStage, smallRoot);
+                scene = new Scene(smallRoot,
+                                  Proportions.SQUARE_SIZE.getValue(),
+                                  Proportions.SQUARE_SIZE.getValue(),
+                                  javafx.scene.paint.Color.BLACK);
+                primaryStage.setFullScreen(false);
+                primaryStage.setScene(scene);
+                primaryStage.setResizable(false);
+                primaryStage.initStyle(StageStyle.UNDECORATED);
+                primaryStage.show();
+            } else {
+                SetNumOfPlayersPage.hideSetNumOfPlayersPage();
+                SetObjCardsPage.hideObjCardsPage();
+                SetStarterCardsPage.hideStarterCardsPage();
+                WaitingRoomPage.hideWaitingRoomPage();
+                SetNickPage.hideSettingNickPage();
+
+                NetworkPage.showNetworkPage();
+            }
+        });
     }
 
     public MiniGameModel getMiniGameModel() {
@@ -278,7 +306,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     private void showGamePage() {
         smallRoot.setVisible(false);
-        primaryStage.hide();
+        primaryStage.close();
         primaryStage = new Stage();
         primaryStage.setResizable(true);
         bigRoot.setVisible(true);

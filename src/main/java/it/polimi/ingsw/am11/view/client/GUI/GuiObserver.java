@@ -31,9 +31,9 @@ public interface GuiObserver {
     void updatePersonalObjective(int cardId, boolean removeMode);
 
 
-    void receiveStarterCard(int cardId);
+    void receiveStarterCard();
 
-    void receiveCandidateObjective(Set<Integer> cardId);
+    void receiveCandidateObjective();
 
     void notifyGodPlayer();
 

@@ -40,7 +40,9 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull PlayerInitException ex) {
         LOGGER.debug("PlayerInitException {}", ex.getMessage());
-        SetNickPage.showErrorMesssage();
+        WaitingRoomPage.hideWaitingRoomPage();
+        SetNickPage.showSettingNickPage();
+        SetNickPage.showErrorMesssage("Nickname already taken, please choose another one");
 
     }
 
@@ -100,7 +102,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
         LOGGER.debug("NotSetNumOfPlayerException received: {}", ex.getMessage());
         WaitingRoomPage.hideWaitingRoomPage();
         SetNickPage.showSettingNickPage();
-        SetNickPage.showErrorMesssage();
+        SetNickPage.showErrorMesssage("The moderator has not set the number of players yet");
     }
 
     @Override
