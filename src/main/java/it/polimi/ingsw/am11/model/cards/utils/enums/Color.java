@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.model.cards.utils.enums;
 
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
-import it.polimi.ingsw.am11.model.cards.utils.DatabaseSearchable;
 import it.polimi.ingsw.am11.model.cards.utils.Item;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.AnsiHelper;
 import org.fusesource.jansi.Ansi;
@@ -16,7 +15,7 @@ import java.util.Optional;
  * <p>
  * Can be <code>RED</code>, <code>BLUE</code>, <code>GREEN</code> or <code>PURPLE</code>.
  */
-public enum Color implements CornerContainer, Item, DatabaseSearchable {
+public enum Color implements CornerContainer, Item {
     RED("red", AnsiHelper.addColors("R", Ansi.Color.RED)),
     BLUE("blue", AnsiHelper.addColors("B", Ansi.Color.BLUE)),
     GREEN("green", AnsiHelper.addColors("G", Ansi.Color.GREEN)),

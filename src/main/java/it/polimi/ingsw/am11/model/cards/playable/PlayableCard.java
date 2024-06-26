@@ -228,13 +228,6 @@ public abstract sealed class PlayableCard implements
         return this.color == color;
     }
 
-    @Override
-    public abstract boolean isAvailable(@NotNull Corner corner, boolean isRetro);
-
-    @Override
-    public abstract @NotNull CornerContainer getItemCorner(@NotNull Corner corner,
-                                                           boolean isRetro);
-
     /**
      * Retrieves the center color of this <code>PlayableCard</code>. If the card is in retro mode,
      * it returns a

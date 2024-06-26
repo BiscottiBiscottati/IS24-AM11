@@ -48,6 +48,7 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.model.cards.objective;
     exports it.polimi.ingsw.am11.model.cards.utils;
     exports it.polimi.ingsw.am11.model.cards.utils.enums;
+    exports it.polimi.ingsw.am11.model.players.field;
     exports it.polimi.ingsw.am11.controller.exceptions;
     exports it.polimi.ingsw.am11.view.client.GUI.windows;
     exports it.polimi.ingsw.am11.view.client.miniModel;

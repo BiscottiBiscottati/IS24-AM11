@@ -130,6 +130,7 @@ public final class ResourceCard extends PlayableCard {
          *
          * @return A fully constructed instance of <code>ResourceCard</code>.
          */
+        @Override
         @NotNull
         public ResourceCard build() {
             return new ResourceCard(this);

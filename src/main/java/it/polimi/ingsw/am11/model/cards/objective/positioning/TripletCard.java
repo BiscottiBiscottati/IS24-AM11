@@ -84,7 +84,7 @@ public final class TripletCard extends PositioningCard {
 
     public static class Builder extends PositioningCard.Builder<TripletCard> {
 
-        protected EnumMap<Color, Integer> colorRequirements;
+        private EnumMap<Color, Integer> colorRequirements;
         private boolean flippedFlag;
         private @Nullable Color colorOfPattern;
 

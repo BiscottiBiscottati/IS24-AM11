@@ -11,45 +11,50 @@ package cards.playable{
       - color: Color
       - points: int
       + getId(): int
-      + getSymbolToCollect(): Optional<Symbol>
-      + getPlacingRequirements(): ImmutableMap<Color, Integer>
-      + isAvailable(Corner): boolean
-      + getColor(): Color
-      + getType(): PlayableCardType
-      + getPointsRequirements(): PointsRequirementsType
       + getPoints(): int
-      + checkItemCorner(Corner): CornerContainer
+      + getColor(): Color
+      + getCenter(isRetro: boolean): Set<Color>
+      + countPoints(PlayerField, Position): int
+      + {abstract} getType(): PlayableCardType
+      + {abstract} isFrontAvailable(Corner): boolean
+      + {abstract} getPlacingRequirements(): Map<Color, Integer>
+      + {abstract} getPlacingRequirementsOf(Color): int
+      + {abstract} getPointsRequirements(): PointsRequirementsType
+      + {abstract} getItemCorner(Corner): CornerContainer
+      + {abstract} getSymbolToCollect(): Optional<Symbol>
     }
 
     class GoldCard extends PlayableCard{
-      - GoldCard(GoldCardBuilder):
-      - colorPlacingRequirements: ImmutableMap<Color, Integer>
+      - colorPlacingRequirements: Map<Color, Integer>
+      - availableCornersOrSymbol: Map<Corner, CornerContainer>
       - pointsRequirements: PointsRequirementsType
       - symbolToCollect: Symbol
-      - availableCorners: ImmutableMap<Corner, Availability>
+      - GoldCard(GoldCardBuilder)
     }
 
     class ResourceCard extends PlayableCard{
-      - ResourceCard(ResourceCardBuilder):
-      - availableCornerOrItem: ImmutableMap<Corner, CornerContainer>
+      - availableCornerOrItem: Map<Corner, CornerContainer>
+      - ResourceCard(ResourceCardBuilder)
     }
 
     abstract class Builder <T extends PlayableCard>{
+      - id: int
       - cardPoints: int
       - primaryColor: Color
 
-      # Builder(int, Color)
-      + {abstract} build(): <T>
+      # Builder(id, cardPoints, Color)
+      + {abstract} hasIn(Corner, CornerContainer): Builder<T>
+      + {abstract} build(): Builder<T>
     }
 
     class GoldCardBuilder extends Builder <GoldCard>{
-      - availableCorners: EnumMap<Corner, Availability>
+      - availableCornersOrSymbol: EnumMap<Corner, CornerContainer>
       - colorPlacingRequirements: EnumMap<Color, Integer>
       - pointsRequirements: PointsRequirementsType
       - symbolToCollect: Symbol
 
-      + GoldCardBuilder(int, Color)
-      + hasCorner(Corner, boolean): GoldCardBuilder
+      + GoldCardBuilder(id, points, Color)
+      + hasCorner(Corner, isAvailable: boolean): GoldCardBuilder
       + hasCorner(Corner): GoldCardBuilder
       + hasRequirements(Color, int): GoldCardBuilder
       + hasPointsRequirements(PointsRequirementsType): GoldCardBuilder
@@ -57,11 +62,10 @@ package cards.playable{
     }
 
 
-    class ResourceCardBuilder extends Builder <PlayableCard>{
+    class ResourceCardBuilder extends Builder <ResourceCard>{
       - availableCornerOrItem: EnumMap<Corne, CornerContainer>
 
-      + ResourceCardBuilder(int, Color)
-      + hasIn(Corner, CornerContainer): ResourceCardBuilder
+      + ResourceCardBuilder(id, points, Color)
     }
 
     PlayableCard +-- Builder
@@ -69,12 +73,13 @@ package cards.playable{
     ResourceCard +-- ResourceCardBuilder
 }
 package cards.starter{
-    class StarterCard {
+    class StarterCard{
       - id: int
-      - StarterCard(Builder):
-      - availableCornersFront: ImmutableMap<Corner, Availability>
-      - availableColorCornerBack: ImmutableMap<Corner, Color>
-      - centerColorsFront: ImmutableSet<Color>
+      - availableCornersFront: Map<Corner, Availability>
+      - availableColorCornerRetro: Map<Corner, Color>
+      - centerColorsFront: Set<Color>
+
+      - StarterCard(StarterCardBuilder)
       + getId(): int
       + getRetroColorIn(Corner): Color
       + isFrontCornerAvail(Corner): boolean
@@ -97,8 +102,16 @@ package cards.starter{
 }
 
 package cards.utils{
-    interface FieldCard <<sealed>>
+    interface CardIdentity <<sealed>> {
+      + getId(): int
+    }
 
+    interface FieldCard <<sealed>> implements CardIdentity {
+      + isColorEqual(Color): boolean
+      + isAvailable(Corner, isRetro: boolean): boolean
+      + getItemCorner(Corner, isRetro: boolean): CornerContainer
+      + getCenter(isRetro: boolean): Set<Color>
+    }
 
 }
 
@@ -106,153 +119,221 @@ FieldCard <|.. PlayableCard
 FieldCard <|.. StarterCard
 
 package cards.utils{
+    interface DatabaseSearchable {
+        + getColumnName(): String
+    }
+
     interface CornerContainer << sealed >> {
       + isAvailable(): boolean
+      + getItem(): Optional<Item>
+      + getTUICode(): String
     }
 
-    interface Item << sealed >>
+    interface Item << sealed >> implements DatabaseSearchable{
+    }
+    
+    package enums{
+        enum Corner{
+          + DOWN_RX
+          + TOP_RX
+          + DOWN_LX
+          + TOP_LX
+        }
 
-    enum Corner << enumeration >> {
-      + DOWN_RX:
-      + TOP_RX:
-      + DOWN_LX:
-      + TOP_LX:
+        enum Availability{
+          + USABLE
+          + NOT_USABLE
+        }
+
+        enum Color{
+          + RED
+          + PURPLE
+          + BLUE
+          + GREEN
+        }
+
+        enum Symbol{
+          + PAPER
+          + GLASS
+          + FEATHER
+        }
+        enum ObjectiveCardType  {
+          + L_SHAPE
+          + TRIPLET
+          + OBJECT_COLLECT
+          + COLOR_COLLECT
+
+          + getPositions(isFlipped: boolean, isRotated: boolean): Optional<Set<Position>>
+        }
+
+        enum PlayableCardType  {
+          + GOLD
+          + RESOURCE
+
+          + getName(): String
+        }
+
+        enum PointsRequirementsType  {
+          + CLASSIC
+          + COVERING_CORNERS
+          + SYMBOLS
+        }
+
+        enum PatternPurpose {
+            + ADJACENT_LX
+            + ADJACENT_RX
+            + NEXT_CHECK
+            + PREVIOUS_CHECK
+            + TO_COMPLETE
+        }
     }
 
-    enum Availability << enumeration >> implements CornerContainer{
-      + USABLE
-      + NOT_USABLE
-    }
-    enum Color << enumeration >> implements CornerContainer, Item{
-      + RED:
-      + PURPLE:
-      + BLUE:
-      + GREEN:
-    }
-    enum Symbol << enumeration >> implements CornerContainer, Item{
-      + PAPER:
-      + GLASS:
-      + FEATHER:
-    }
-    enum ObjectiveCardType << enumeration >> {
-      + ObjectiveCardType():
-      + L_SHAPE:
-      + TRIPLET:
-      + OBJECT_COLLECT:
-      + COLOR_COLLECT:
-      + values(): ObjectiveCardType[]
-      + valueOf(String): ObjectiveCardType
-    }
-    enum PlayableCardType << enumeration >> {
-      + PlayableCardType():
-      + GOLD:
-      + RESOURCE:
-      + STARTER:
-      + valueOf(String): PlayableCardType
-      + values(): PlayableCardType[]
-    }
-    enum PointsRequirementsType << enumeration >> {
-      + PointsRequirementsType():
-      + CLASSIC:
-      + COVERING_CORNERS:
-      + SYMBOLS:
-      + values(): PointsRequirementsType[]
-      + valueOf(String): PointsRequirementsType
-    }
+    DatabaseSearchable <|.. Corner
+    CornerContainer <|.. Availability
+    CornerContainer <|.. Color
+    CornerContainer <|.. Symbol
+    Item <|.. Color
+    Item <|.. Symbol
+
 }
 
 package cards.objective{
     abstract class ObjectiveCard {
-      # ObjectiveCard(ObjectiveBuilder):
       - id: int
       - points: int
-      + getId(): int
-      + getColorRequirements(): ImmutableMap<Color, Integer>
-      + getType(): ObjectiveCardType
+
+      # ObjectiveCard(ObjectiveBuilder):
       + getPoints(): int
-      + getSymbolRequirements(): ImmutableMap<Symbol, Integer>
-      + countPoints(PlayerField): int
+      + hasItemRequirements(Item): int
+      + {abstract} getColorRequirements(): Map<Color, Integer>
+      + {abstract} getSymbolRequirements(): Map<Symbol, Integer>
+      + {abstract} getType(): ObjectiveCardType
+      + {abstract} countPoints(PlayerField): int
     }
 
     abstract class CollectingCard extends ObjectiveCard{
       # CollectingCard(CollectingBuilder):
     }
     abstract class PositioningCard extends ObjectiveCard{
-      # PositioningCard(PositioningBuilder):
-      - colorsOfPattern: ImmutableMap<Color, Integer>
-      + isFlipped(): boolean
-      + isRotated(): boolean
-    }
-
-    class ColorCollectCard extends CollectingCard{
-      - ColorCollectCard(ColorCollectBuilder):
-      - colorToCollect: ImmutableMap<Color, Integer>
-    }
-    class SymbolCollectCard extends CollectingCard{
-      - SymbolCollectCard(SymbolCollectBuilder):
-      - symbolToCollect: ImmutableMap<Symbol, Integer>
-    }
-
-    class TripletCard extends PositioningCard{
-      - TripletCard(TripletBuilder):
-      - flippedFlag: boolean
-    }
-    class LCard extends PositioningCard{
-      - LCard(LBuilder):
-      - isFlippedFlag: boolean
-      - isRotatedFlag: boolean
+      - colorsOfPattern: Map<Color, Integer>
+      # PositioningCard(PositioningBuilder)
+      + {abstract} getPattern(): List<List<Color>>
     }
 
     abstract class ObjectiveBuilder <T extends ObjectiveCard> {
         - id: int
         - points: int
+
         # ObjectiveBuilder(id, int)
 
         + {abstract} build(): <T>
     }
 
-    abstract class CollectingBuilder extends ObjectiveBuilder{
-
+    abstract class CollectingBuilder <T extends CollectingCard> extends ObjectiveBuilder{
+        # CollectingBuilder(id, points)
     }
 
-    abstract class PositioningBuilder extends ObjectiveBuilder{
-
+    abstract class PositioningBuilder <T extends PositioningCard> extends ObjectiveBuilder{
+        # PositioningBuilder(id, points)
     }
 
-    class ColorCollectBuilder extends CollectingBuilder{
-        - colorToCollect: EnumMap<Color, Integer>
-        + hasColor(Color, int): ColorCollectBuilder
-        + hasColor(Color): ColorCollectBuilder
+    package collecting {
+        class ColorCollectCard{
+          - colorToCollect: Map<Color, Integer>
+          - ColorCollectCard(ColorCollectBuilder)
+        }
+        class SymbolCollectCard{
+          - SymbolCollectCard(SymbolCollectBuilder)
+          - symbolToCollect: Map<Symbol, Integer>
+        }
+
+        class ColorCollectBuilder{
+            - colorToCollect: EnumMap<Color, Integer>
+
+            + ColorCollectBuilder(id, points)
+            + hasColor(Color, int): ColorCollectBuilder
+            + hasColor(Color): ColorCollectBuilder
+        }
+
+        class SymbolCollectBuilder{
+            - symbolToCollect: EnumMap<Symbol, Integer>
+
+            + SymbolCollectBuilder(id, points)
+            + hasSymbol(Symbol, int): SymbolCollectBuilder
+            + hasSymbol(Symbol): SymbolCollectBuilder
+        }
     }
 
-    class SymbolCollectBuilder extends CollectingBuilder{
-        - symbolToCollect: EnumMap<Symbol, Integer>
+    CollectingCard <|-- ColorCollectCard
+    CollectingCard <|-- SymbolCollectCard
+    CollectingBuilder <|-- ColorCollectBuilder
+    CollectingBuilder <|-- SymbolCollectBuilder
 
-        + hasSymbol(Symbol, int): SymbolCollectBuilder
-        + hasSymbol(Symbol): SymbolCollectBuilder
+    package positioning{
+        class TripletCard{
+          - flippedFlag: boolean
+          - colorOfPattern: Color
+          - counter: PatternCounter
+          - pattern: List<List<Color>>
+
+          - TripletCard(TripletBuilder)
+          + isFlipped(): boolean
+        }
+
+        class LCard{
+          - isFlippedFlag: boolean
+          - isRotatedFlag: boolean
+          - primaryColor: Color
+          - secondaryColor: Color
+          - pattern: List<List<Color>>
+
+          - LCard(LBuilder)
+          + isFlipped(): boolean
+          + isRotated(): boolean
+        }
+
+        class TripletBuilder{
+            - colorRequirements: EnumMap<Color, Integer>
+            - flippedFlag: boolean
+            - colorOfPattern: Color
+
+            + isFlipped(boolean): TripletBuilder
+            + hasColor(Color): TripletBuilder
+        }
+
+        class LBuilder{
+            - flippedFlag: boolean
+            - rotatedFlag: boolean
+            - primaryColor: Color
+            - secondaryColor: Color
+            - colorRequirements: EnumMap<Color, Integer>
+            - counter: PatternCounter
+
+            + isFlipped(boolean): LBuilder
+            + isRotated(boolean): LBuilder
+            + hasPrimaryColor(Color): LBuilder
+            + hasSecondaryColor(Color): LBuilder
+        }
+
+        interface PatternCounter{
+            + count(PlayerField): int
+        }
+
+        class LPatternCounter implements PatternCounter{
+        }
+
+        class TripletPatternCounter implements PatternCounter{
+        }
     }
 
-    class TripletBuilder extends PositioningBuilder{
-        # colorRequirements: EnumMap<Color, Integer>
-        - flippedFlag: boolean
-        - colorOfPattern: Color
+    PositioningCard <|-- TripletCard
+    PositioningCard <|-- LCard
+    PositioningBuilder <|-- TripletBuilder
+    PositioningBuilder <|-- LBuilder
 
-        + isFlipped(boolean): TripletBuilder
-        + hasColor(Color): TripletBuilder
-    }
 
-    class LBuilder extends PositioningBuilder{
-        - flippedFlag: boolean
-        - rotatedFlag: boolean
-        - primaryColor: Color
-        - secondaryColor: Color
-        - colorRequirements: EnumMap<Color, Integer>
 
-        + isFlipped(boolean): LBuilder
-        + isRotated(boolean): LBuilder
-        + hasPrimaryColor(Color): LBuilder
-        + hasSecondaryColor(Color): LBuilder
-    }
+
 
     ObjectiveCard +-- ObjectiveBuilder
     CollectingCard +-- CollectingBuilder
@@ -264,69 +345,68 @@ package cards.objective{
 
 }
 
+CardIdentity <|.. ObjectiveCard
+
 package decks{
     package utils {
-        interface DeckType <<sealed>>{
 
+        class CardDecoder{
+            - {static}objectiveDeck: Deck<ObjectiveCard>
+            - {static}starterDeck: Deck<StarterCard>
+            - {static}goldDeck: Deck<GoldCard>
+            - {static}resourceDeck: Deck<ResourceCard>
+
+            + {static}decodeObjectiveCard(int): Optional<ObjectiveCard>
+            + {static}decodeFieldCard(int): Optional<FieldCard>
+            + {static}decodePlayableCard(int): Optional<PlayableCard>
+            + {static}decodeResourceCard(int): Optional<ResourceCard>
+            + {static}decodeGoldCard(int): Optional<GoldCard>
+            + {static}decodeStarterCard(int): Optional<StarterCard>
         }
 
-        enum PlayableDeckType implements DeckType{
-            GOLD
-            RESOURCE
-        }
-
-        enum UtilitiesDeckType implements DeckType{
-            STARTER
-            OBJECTIVE
+        class DatabaseConstants{
+            + {static}DATABASE_URL
         }
     }
 
-    interface Deck <T>{
-        +shuffle(): Deck<T>
-        +drawCard(): T
-        +getRemainingCards(): int
-        +getDeckType(): DeckType
-        +addCard(): void
-        +reset(): void
-        +getCardByID(int): T
+    class Deck <T extends CardIdentity>{
+        - mappingIdToCard: Map<Integer, T>
+        - deck: ArrayDeque<T>
+
+        + Deck(mappingIdToCard: Map<Integer, T>)
+
+        + shuffle(): Deck<T>
+        + draw(): Optional<T>
+        + getRemainingCards(): int
+        + getDeckType(): DeckType
+        + reset(): void
+        + getCardByID(int): T
+        + peekTop(): Optional<T>
+        + save(): DeckMemento
+        + load(DeckMemento): void
     }
 
-    class GoldDeck implements Deck{
-        -goldCards: Arraylist<GoldCard>
+    package objective{
+        class ObjectiveDeckFactory {
+            + {static} createDeck(): Deck<ObjectiveCard>
+        }
     }
 
-    class ResourceDeck implements Deck{
-        -resourceCards: Arraylist<ResourceDeck>
-    }
-
-    class StarterDeck implements Deck{
-        -starterCards: Arraylist<StarterCard>
-    }
-
-    class ObjectiveDeck implements Deck{
-        -objectiveCards: Arraylist<ObjectiveCard>
-    }
-
-
-    package factories{
-        interface DeckFactory <T>{
-            +createDeck(DeckType): Deck<T>
+    package playable{
+        class GoldDeckFactory {
+            + {static} createDeck(): Deck<GoldCard>
         }
 
-        class GoldCardFactory implements DeckFactory
-
-        class ResourceCardFactory implements DeckFactory
-
-        class StarterCardFactory implements DeckFactory
-
-        class ObjectiveCardFactory implements DeckFactory
-
+        class ResourceDeckFactory {
+            + {static} createDeck(): Deck<ResourceCard>
+        }
     }
 
-
-    Deck -- DeckType
-    DeckFactory -- DeckType
-
+    package starter {
+        class StarterDeckFactory {
+            + {static} createDeck(): Deck<StarterCard>
+        }
+    }
 }
 
 package players{

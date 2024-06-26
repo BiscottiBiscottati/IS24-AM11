@@ -40,7 +40,7 @@ public final class GoldCard extends PlayableCard {
      */
     private GoldCard(@NotNull Builder builder) {
         super(builder);
-        this.availableCornersOrSymbol = Maps.immutableEnumMap(builder.availableCorners);
+        this.availableCornersOrSymbol = Maps.immutableEnumMap(builder.availableCornersOrSymbol);
         this.colorPlacingRequirements = Maps.immutableEnumMap(builder.colorPlacingRequirements);
         this.pointsRequirements = builder.pointsRequirements;
         this.symbolToCollect = builder.symbolToCollect;
@@ -86,18 +86,6 @@ public final class GoldCard extends PlayableCard {
     }
 
     @Override
-    public boolean isAvailable(@NotNull Corner corner, boolean isRetro) {
-        if (isRetro) return true;
-        else return availableCornersOrSymbol.get(corner).isAvailable();
-    }
-
-    @Override
-    public @NotNull CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
-        if (isRetro) return Availability.USABLE;
-        else return availableCornersOrSymbol.get(corner);
-    }
-
-    @Override
     public int countPoints(@NotNull PlayerField playerField,
                            @NotNull Position positionOfCard) {
         switch (this.pointsRequirements) {
@@ -119,13 +107,25 @@ public final class GoldCard extends PlayableCard {
         }
     }
 
+    @Override
+    public boolean isAvailable(@NotNull Corner corner, boolean isRetro) {
+        if (isRetro) return true;
+        else return availableCornersOrSymbol.get(corner).isAvailable();
+    }
+
+    @Override
+    public @NotNull CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro) {
+        if (isRetro) return Availability.USABLE;
+        else return availableCornersOrSymbol.get(corner);
+    }
+
     /**
      * Builder class for creating instances of {@link GoldCard}. This builder provides methods to
      * set the required attributes for the target object.
      */
     public static class Builder extends PlayableCard.Builder<GoldCard> {
 
-        private final @NotNull EnumMap<Corner, CornerContainer> availableCorners;
+        private final @NotNull EnumMap<Corner, CornerContainer> availableCornersOrSymbol;
         private final @NotNull EnumMap<Color, Integer> colorPlacingRequirements;
         private PointsRequirementsType pointsRequirements;
         private @Nullable Symbol symbolToCollect;
@@ -142,7 +142,8 @@ public final class GoldCard extends PlayableCard {
         public Builder(int id, int points, @NotNull Color primaryColor)
         throws IllegalCardBuildException {
             super(id, points, primaryColor);
-            this.availableCorners = EnumMapUtils.init(Corner.class, Availability.NOT_USABLE);
+            this.availableCornersOrSymbol = EnumMapUtils.init(Corner.class,
+                                                              Availability.NOT_USABLE);
             this.colorPlacingRequirements = EnumMapUtils.init(Color.class, 0);
             this.symbolToCollect = null;
         }
@@ -155,7 +156,8 @@ public final class GoldCard extends PlayableCard {
          * @return the modified builder
          */
         public @NotNull Builder hasCorner(@NotNull Corner corner, boolean available) {
-            availableCorners.put(corner, available ? Availability.USABLE : Availability.NOT_USABLE);
+            availableCornersOrSymbol.put(corner,
+                                         available ? Availability.USABLE : Availability.NOT_USABLE);
             return this;
         }
 
@@ -166,7 +168,7 @@ public final class GoldCard extends PlayableCard {
          * @return The modified builder
          */
         public @NotNull Builder hasCorner(@NotNull Corner corner) {
-            availableCorners.put(corner, Availability.USABLE);
+            availableCornersOrSymbol.put(corner, Availability.USABLE);
             return this;
         }
 
@@ -175,8 +177,8 @@ public final class GoldCard extends PlayableCard {
         public Builder hasIn(@NotNull Corner corner, @NotNull CornerContainer item)
         throws IllegalCardBuildException {
             switch (item) {
-                case Availability ignored -> availableCorners.put(corner, item);
-                case Symbol ignored -> availableCorners.put(corner, item);
+                case Availability ignored -> availableCornersOrSymbol.put(corner, item);
+                case Symbol ignored -> availableCornersOrSymbol.put(corner, item);
                 default -> throw new IllegalCardBuildException(
                         "Invalid corner container for GoldCard!");
             }
