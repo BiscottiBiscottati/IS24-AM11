@@ -5,25 +5,15 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.view.client.GUI.GUIParts.FrameHandler;
-import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum;
-import it.polimi.ingsw.am11.view.client.GUI.utils.GuiResources;
 import it.polimi.ingsw.am11.view.client.GUI.utils.Proportions;
 import it.polimi.ingsw.am11.view.client.GUI.windows.*;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -237,6 +227,19 @@ public class CodexNaturalis extends Application implements GuiObserver {
                     throw new RuntimeException(e);
                 }
                 Platform.runLater(this::showGamePage);
+                Platform.runLater(() -> {
+                    gamePage.placeStarterCard();
+                    gamePage.updateHand();
+                    gamePage.updateCommonObj();
+                    gamePage.updatePersonalObjective();
+                    gamePage.updateShownPlayable();
+                    gamePage.updateDeckTop(PlayableCardType.RESOURCE,
+                                           getMiniGameModel().table().getDeckTop(
+                                                   PlayableCardType.RESOURCE));
+                    gamePage.updateDeckTop(PlayableCardType.GOLD,
+                                           getMiniGameModel().table().getDeckTop(
+                                                   PlayableCardType.GOLD));
+                });
             }
         }
     }
