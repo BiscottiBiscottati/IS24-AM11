@@ -22,14 +22,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class CodexNaturalis extends Application implements GuiObserver {
+    private static Stage primaryStage;
+    private static Parent bigRoot;
     private final GuiActuator guiActuator;
     private final GuiUpdater guiUpdater;
     Scene scene;
     GamePage gamePage;
     FXMLLoader fxmlLoader;
-    private Stage primaryStage;
     private StackPane smallRoot;
-    private Parent bigRoot;
 
 
     public CodexNaturalis() {
@@ -37,9 +37,22 @@ public class CodexNaturalis extends Application implements GuiObserver {
         this.guiActuator = new GuiActuator(guiUpdater);
     }
 
+    public static void restart() {
+        Platform.runLater(() -> {
+            try {
+                bigRoot.setVisible(false);
+                primaryStage.hide();
+                primaryStage.close();
+                new CodexNaturalis().start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        CodexNaturalis.primaryStage = primaryStage;
         fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/it/polimi/ingsw/am11/view/client/GUI/windows/GamePage.fxml"));
         try {

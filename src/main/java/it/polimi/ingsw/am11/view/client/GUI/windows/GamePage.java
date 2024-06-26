@@ -501,6 +501,7 @@ public class GamePage {
 
     /**
      * dfhakhfadskhfakdshf
+     *
      * @param mouseEvent the event
      * @see MouseEvent
      */
@@ -735,14 +736,14 @@ public class GamePage {
             finalLeaderboardLabel.setTextFill(Color.web("#D7BC49"));
 
             Map<String, Integer> finalLeaderboard = miniGameModel.getFinalLeaderboard();
-            finalLeaderboard.forEach((player, points) -> {
-                Label playerLabel = new Label(player + ": " + points + " points");
+            finalLeaderboard.forEach((player, position) -> {
+                Label playerLabel = new Label(player + " - " + position);
                 playerLabel.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
                 playerLabel.setTextFill(Color.web("#D7BC49"));
                 endGameBox.getChildren().add(playerLabel);
             });
 
-            Button closeBtn = new Button("Go back to the main menu");
+            Button closeBtn = new Button("Close");
             closeBtn.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
             closeBtn.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
             closeBtn.setTextFill(Color.web("#351F17"));
@@ -754,6 +755,7 @@ public class GamePage {
 
             closeBtn.setOnAction(e -> {
                 popup.hide();
+                CodexNaturalis.restart();
             });
 
             endGameBox.getChildren().addAll(endGameLabel, finalLeaderboardLabel, closeBtn);

@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 
 @Disabled
 @ExtendWith(MockitoExtension.class)
-class ClientToServerConnectorTest {
+class SomeRMITest {
 
     ServerRMI serverRMI;
 
