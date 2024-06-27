@@ -10,8 +10,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -21,7 +21,7 @@ public class FrameHandler {
     //This class is responsible for setting the frame of the application, the frame is the top
     // bar of the application, and the icons of the application.
 
-    public static void setIcons(Stage stage, StackPane root) {
+    public static void setIcons(@NotNull Stage stage, StackPane root) {
 
         //Proportions
         int size = Proportions.SQUARE_SIZE.getValue();
@@ -48,58 +48,62 @@ public class FrameHandler {
         // Creating title bar buttons
 
         // Draggable Area
-        Rectangle draggableRect = new Rectangle(size, halfButtonSize << 2);
-        draggableRect.setFill(Color.TRANSPARENT);
-        draggableRect.setTranslateY(- size / 2 + halfButtonSize);
-        draggableRect.setOnMousePressed(pressEvent -> {
-            draggableRect.setOnMouseDragged(dragEvent -> {
-                stage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
-                stage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
-            });
-        });
+        Rectangle draggableRect = getDraggableRect(stage, size, halfButtonSize);
 
         root.getChildren().add(draggableRect);
 
         //Close Button
 
         ImageView closeCross = GuiResources.getTheImageView(GuiResEnum.CLOSE_CROSS);
-        closeCross.setFitHeight(2 * halfButtonSize);
-        closeCross.setPreserveRatio(true);
-        closeCross.setOpacity(0.5);
+        Button closeButton = setUpTilebarButton(size, halfButtonSize, distanceToBorder, closeCross);
+        closeButton.setTranslateX((double) size / 2 - halfButtonSize);
 
-        Button closeButton = new Button("_Cancel");
-        closeButton.setPrefSize(2 * halfButtonSize, 2 * halfButtonSize);
-        closeButton.setGraphic(closeCross);
-        closeButton.setTranslateX(size / 2 - halfButtonSize);
-        closeButton.setTranslateY(- size / 2 + halfButtonSize + 2 * distanceToBorder);
-        closeButton.setBackground(Background.EMPTY);
-        closeButton.setOnMouseEntered(event -> closeCross.setOpacity(0.7));
-        closeButton.setOnMouseExited(event -> closeCross.setOpacity(0.5));
-        closeButton.setOnMousePressed(event -> closeCross.setOpacity(1));
-
-        closeButton.setOnAction(event -> Platform.exit());
+        closeButton.setOnAction(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
         root.getChildren().add(closeButton);
 
         //Minimize Button
 
         ImageView minimizeBar = GuiResources.getTheImageView(GuiResEnum.MINIMIZE_BAR);
-        minimizeBar.setFitHeight(2 * halfButtonSize);
-        minimizeBar.setPreserveRatio(true);
-        minimizeBar.setOpacity(0.5);
-
-        Button minimizeButton = new Button("_Cancel");
-        minimizeButton.setPrefSize(2 * halfButtonSize, 2 * halfButtonSize);
-        minimizeButton.setGraphic(minimizeBar);
+        Button minimizeButton = setUpTilebarButton(size, halfButtonSize, distanceToBorder,
+                                                   minimizeBar);
         minimizeButton.setTranslateX((double) size / 2 - 3 * halfButtonSize - 4 * distanceToBorder);
-        minimizeButton.setTranslateY((double) - size / 2 + halfButtonSize + 2 * distanceToBorder);
-        minimizeButton.setBackground(Background.EMPTY);
-        minimizeButton.setOnMouseEntered(event -> minimizeBar.setOpacity(0.7));
-        minimizeButton.setOnMouseExited(event -> minimizeBar.setOpacity(0.5));
-        minimizeButton.setOnMousePressed(event -> minimizeBar.setOpacity(1));
 
-        minimizeButton.setOnAction(event -> {stage.setIconified(true);});
+        minimizeButton.setOnAction(event -> stage.setIconified(true));
         root.getChildren().add(minimizeButton);
-        stage.setOnShowing(event -> {stage.setIconified(false);});
+        stage.setOnShowing(event -> stage.setIconified(false));
+    }
+
+    private static @NotNull Rectangle getDraggableRect(@NotNull Stage stage, int size,
+                                                       int halfButtonSize) {
+        Rectangle draggableRect = new Rectangle(size, halfButtonSize << 2);
+        draggableRect.setFill(Color.TRANSPARENT);
+        draggableRect.setTranslateY((double) - size / 2 + halfButtonSize);
+        draggableRect.setOnMousePressed(pressEvent -> draggableRect.setOnMouseDragged(dragEvent -> {
+            stage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+            stage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+        }));
+        return draggableRect;
+    }
+
+    private static @NotNull Button setUpTilebarButton(int size, int halfButtonSize,
+                                                      int distanceToBorder,
+                                                      @NotNull ImageView imageView) {
+        imageView.setFitHeight(2 * halfButtonSize);
+        imageView.setPreserveRatio(true);
+        imageView.setOpacity(0.5);
+
+        Button newButton = new Button("_Cancel");
+        newButton.setPrefSize(2 * halfButtonSize, 2 * halfButtonSize);
+        newButton.setGraphic(imageView);
+        newButton.setTranslateY((double) - size / 2 + halfButtonSize + 2 * distanceToBorder);
+        newButton.setBackground(Background.EMPTY);
+        newButton.setOnMouseEntered(event -> imageView.setOpacity(0.7));
+        newButton.setOnMouseExited(event -> imageView.setOpacity(0.5));
+        newButton.setOnMousePressed(event -> imageView.setOpacity(1));
+        return newButton;
     }
 
 
