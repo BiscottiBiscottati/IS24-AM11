@@ -125,6 +125,8 @@ public class GamePage {
     Button closeBtn;
     @FXML
     Button audioBtn;
+    Media soundtrack;
+    MediaPlayer soundtrack_p;
     private MiniGameModel miniGameModel;
     private GuiActuator guiActuator;
     private List<Integer> handIDs;
@@ -139,8 +141,6 @@ public class GamePage {
     private double xOffset;
     private double yOffset;
     private VBox commentsBox;
-    Media soundtrack;
-    MediaPlayer soundtrack_p;
 
     public GamePage() {
         this.handIDs = new ArrayList<>(3);
@@ -177,8 +177,8 @@ public class GamePage {
         finalLB.setVisible(false);
         try {
             soundtrack = new Media(Objects.requireNonNull(getClass()
-                                                             .getResource("/soundtrack.mp3"))
-                                             .toExternalForm());
+                                                                  .getResource("/soundtrack.mp3"))
+                                          .toExternalForm());
             soundtrack_p = new MediaPlayer(soundtrack);
             soundtrack_p.setCycleCount(MediaPlayer.INDEFINITE);
         } catch (Exception e) {
@@ -474,7 +474,8 @@ public class GamePage {
                 try {
                     Media turn_sound =
                             new Media(Objects.requireNonNull(getClass()
-                                                                     .getResource("/turn_change.mp3"))
+                                                                     .getResource(
+                                                                             "/turn_change.mp3"))
                                              .toExternalForm());
                     // Crea un MediaPlayer
                     MediaPlayer turn_sound_p = new MediaPlayer(turn_sound);
@@ -839,10 +840,10 @@ public class GamePage {
         Platform.runLater(() -> {
             if (audioBtn.getText().equals("Mute")) {
                 audioBtn.setText("Unmute");
-                soundtrack_p.pause();
+                if (soundtrack_p != null) soundtrack_p.pause();
             } else {
                 audioBtn.setText("Mute");
-                soundtrack_p.play();
+                if (soundtrack_p != null) soundtrack_p.play();
             }
         });
     }
