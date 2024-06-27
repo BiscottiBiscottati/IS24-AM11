@@ -143,6 +143,8 @@ public class ClientHandler implements Runnable {
             return message;
         } catch (IOException e) {
             LOGGER.error("SERVER TCP: Error while reading input: {}", e.getMessage());
+            assert nickname != null;
+            CentralController.INSTANCE.disconnectPlayer(nickname);
             return null;
         }
     }
