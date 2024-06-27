@@ -6,7 +6,7 @@
 
     <groupId>it.polimi.ingsw</groupId>
     <artifactId>AM11</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-ALPHA</version>
     <name>IS24-AM11</name>
 
     <properties>
