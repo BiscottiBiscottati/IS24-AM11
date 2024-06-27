@@ -26,9 +26,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull IllegalPlayerSpaceActionException ex) {
         LOGGER.debug("IllegalPlayerSpaceActionException {}", ex.getMessage());
-        throw new RuntimeException(ex);
-
-
+        guiObserver.showErrorGamePage("You can't place a worker in that space");
     }
 
     @Override
@@ -56,8 +54,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull IllegalPickActionException ex) {
         LOGGER.debug("IllegalPickActionException {}", ex.getMessage());
-        throw new RuntimeException(ex);
-
+        guiObserver.showErrorGamePage("You can't pick a card from the deck");
     }
 
     @Override
@@ -94,7 +91,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull GameStatusException ex) {
         LOGGER.debug("GameStatusException received: {}", ex.getMessage());
-        throw new RuntimeException(ex);
+        guiObserver.showErrorGamePage("Game is not started yet");
     }
 
     @Override
@@ -108,7 +105,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull IllegalPlateauActionException ex) {
         LOGGER.debug("IllegalPlateauActionException {}", ex.getMessage());
-        throw new RuntimeException(ex);
+        guiObserver.showErrorGamePage("You can't place a worker in that space");
     }
 
     @Override
