@@ -182,7 +182,7 @@ public class GamePage {
             soundtrack_p = new MediaPlayer(soundtrack);
             soundtrack_p.setCycleCount(MediaPlayer.INDEFINITE);
         } catch (Exception e) {
-            LOGGER.error("Error while playing sound");
+            LOGGER.warn("Error while loading sounds files");
         }
 
         Font font = FontManager.getFont(FontsEnum.VINQUE, (int) (
@@ -481,7 +481,7 @@ public class GamePage {
                     MediaPlayer turn_sound_p = new MediaPlayer(turn_sound);
                     turn_sound_p.play();
                 } catch (Exception e) {
-                    LOGGER.error("Error while playing sound");
+                    LOGGER.warn("Error while playing turn sound");
                 }
             }
             for (Label label : List.of(player1, player2, player3, player4)) {
@@ -634,7 +634,7 @@ public class GamePage {
                 MediaPlayer flip_sound_p = new MediaPlayer(flip_sound);
                 flip_sound_p.play();
             } catch (Exception e) {
-                LOGGER.error("Error while playing sound");
+                LOGGER.warn("Error while playing flip sound");
             }
             if (isRetro) {
                 cardImage = GuiResources.getCardImage(id);
@@ -794,7 +794,7 @@ public class GamePage {
                 MediaPlayer message_sound_p = new MediaPlayer(message_sound);
                 message_sound_p.play();
             } catch (Exception e) {
-                LOGGER.error("Error while playing sound");
+                LOGGER.warn("Error while playing message sound");
             }
             if (popup.isShowing()) {
                 commentsBox.getChildren().clear();
