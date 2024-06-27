@@ -137,15 +137,8 @@ public class CodexNaturalis extends Application implements GuiObserver {
                 gamePage.placeStarterCard();
                 Platform.runLater(this::showGamePage);
             }
-            case ENDED -> {
-                gamePage.gameEnded();
-            }
-            case LAST_TURN -> {
-                gamePage.showLastTurnMessage("LAST TURN!");
-            }
-            case ARMAGEDDON -> {
-                gamePage.showLastTurnMessage("PREPARE FOR YOUR LAST TURN!");
-            }
+            case LAST_TURN -> gamePage.showLastTurnMessage("LAST TURN!");
+            case ARMAGEDDON -> gamePage.showLastTurnMessage("ARMAGEDDON!");
 
         }
     }

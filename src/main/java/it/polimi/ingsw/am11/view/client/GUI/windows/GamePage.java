@@ -109,6 +109,20 @@ public class GamePage {
     Label yourName;
     @FXML
     Label lastTurnLabel;
+    @FXML
+    VBox finalLB;
+    @FXML
+    Label finalLBLabel;
+    @FXML
+    Label first;
+    @FXML
+    Label second;
+    @FXML
+    Label third;
+    @FXML
+    Label fourth;
+    @FXML
+    Button closeBtn;
     private MiniGameModel miniGameModel;
     private GuiActuator guiActuator;
     private List<Integer> handIDs;
@@ -157,6 +171,7 @@ public class GamePage {
 
         errorLabel.setVisible(false);
         lastTurnLabel.setVisible(false);
+        finalLB.setVisible(false);
 
         Font font = FontManager.getFont(FontsEnum.VINQUE, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
@@ -167,7 +182,8 @@ public class GamePage {
 
 
         List<Label> labels = List.of(decksLabel, visiblesLabel, handLabel, objLabel,
-                                     personalObjLabel, errorLabel, yourName, lastTurnLabel);
+                                     personalObjLabel, errorLabel, yourName, lastTurnLabel, first
+                , second, third, fourth, finalLBLabel);
         for (Label label : labels) {
             label.setFont(font);
             label.setStyle("-fx-font-size: 30");
@@ -723,28 +739,20 @@ public class GamePage {
     public void gameEnded() {
 
         Platform.runLater(() -> {
-            VBox endGameBox = new VBox();
-            endGameBox.setPrefWidth(500);
-            endGameBox.setPrefHeight(400);
-            endGameBox.setStyle("-fx-background-color: #8B0000; -fx-padding: 10px;");
-
-            Label endGameLabel = new Label("The game has ended!");
-            endGameLabel.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
-            endGameLabel.setTextFill(Color.web("#D7BC49"));
-
-            Label finalLeaderboardLabel = new Label("Final Leaderboard:");
-            finalLeaderboardLabel.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
-            finalLeaderboardLabel.setTextFill(Color.web("#D7BC49"));
+            finalLB.setVisible(true);
 
             Map<String, Integer> finalLeaderboard = miniGameModel.getFinalLeaderboard();
-            finalLeaderboard.forEach((player, position) -> {
-                Label playerLabel = new Label(player + " - " + position);
-                playerLabel.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
-                playerLabel.setTextFill(Color.web("#D7BC49"));
-                endGameBox.getChildren().add(playerLabel);
+            finalLeaderboard.forEach((key, value) -> {
+                switch (value) {
+                    case 1 -> first.setText(key + " - " + value);
+                    case 2 -> second.setText(key + " - " + value);
+                    case 3 -> third.setText(key + " - " + value);
+                    case 4 -> fourth.setText(key + " - " + value);
+                }
             });
 
-            Button closeBtn = new Button("Close");
+
+            closeBtn = new Button("Close");
             closeBtn.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
             closeBtn.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
             closeBtn.setTextFill(Color.web("#351F17"));
@@ -754,20 +762,7 @@ public class GamePage {
             closeBtn.setOnMouseReleased(event -> closeBtn.setStyle(
                     "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
 
-            Popup popupEnding = new Popup();
 
-            closeBtn.setOnAction(e -> {
-                popupEnding.hide();
-                CodexNaturalis.restart();
-            });
-
-            endGameBox.getChildren().addAll(endGameLabel, finalLeaderboardLabel, closeBtn);
-
-            popupEnding.getContent().add(endGameBox);
-            popupEnding.setAutoHide(false);
-
-            popupEnding.centerOnScreen();
-            popupEnding.setAutoHide(false);
         });
 
     }
