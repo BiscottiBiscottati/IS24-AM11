@@ -96,6 +96,7 @@ public class SavesManager {
 
         try (Connection conn = DriverManager.getConnection(CONNECTION_URL);
              Statement statement = conn.createStatement()) {
+            LOGGER.debug("Deleting all saves");
             statement.addBatch(SQLQuery.DELETE_ALL_SAVES);
             statement.addBatch(SQLQuery.DELETE_ALL_CUSTOM);
             statement.executeBatch();

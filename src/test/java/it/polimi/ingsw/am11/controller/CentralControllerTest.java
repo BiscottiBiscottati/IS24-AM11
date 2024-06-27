@@ -1,9 +1,11 @@
 package it.polimi.ingsw.am11.controller;
 
 import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
+import it.polimi.ingsw.am11.model.utils.persistence.SavesManager;
 import it.polimi.ingsw.am11.network.connector.ServerChatConnector;
 import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +33,11 @@ class CentralControllerTest {
 
     @Mock
     ServerChatConnector chatConnector;
+
+    @AfterAll
+    static void afterAll() {
+        SavesManager.deleteAll();
+    }
 
     @BeforeEach
     void setUp() {

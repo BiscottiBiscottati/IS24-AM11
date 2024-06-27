@@ -42,7 +42,7 @@ import java.util.stream.Stream;
 public class GameLogic implements GameModel {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameLogic.class);
-    private static final int CLOSING_GRACE_TIME = 5;
+    private static final int CLOSING_GRACE_TIME = 50;
 
     private final @NotNull RuleSet ruleSet;
     private final @NotNull PlayerManager playerManager;
@@ -354,10 +354,10 @@ public class GameLogic implements GameModel {
 
 
     /**
-     * This method initialize a new game, it has to be called after all the players have joined the
-     * games This method shuffle the players Set in order to randomize the turns order, it chooses
-     * the first player, it clears the field, the hand and the objectives for each player, it resets
-     * the plateau and the pickableTable.
+     * This method initializes a new game, it has to be called after all the players have joined the
+     * games This method shuffles the players Set a new turn order, it chooses, the first player, it
+     * clears the field, the hand, and the objectives for each player, it resets the plateau and the
+     * pickableTable.
      *
      * @throws NumOfPlayersException If there aren't at least two players in the game
      * @throws GameStatusException   if a game is in progress
@@ -1022,7 +1022,7 @@ public class GameLogic implements GameModel {
 
     private void closeGame() {
         try {
-            TimeUnit.SECONDS.sleep(CLOSING_GRACE_TIME);
+            TimeUnit.MILLISECONDS.sleep(CLOSING_GRACE_TIME);
         } catch (InterruptedException ignored) {
         }
 
@@ -1165,7 +1165,7 @@ public class GameLogic implements GameModel {
             plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
             throw new GameStatusException("the game is not ongoing");
         }
-        // chef if current player not a player
+        // check if current player not a player
         Optional<String> currentTurnPlayer = playerManager.getCurrentTurnPlayer();
         if (! Objects.equals(currentTurnPlayer, Optional.of(nickname))) {
             throw new TurnsOrderException(
