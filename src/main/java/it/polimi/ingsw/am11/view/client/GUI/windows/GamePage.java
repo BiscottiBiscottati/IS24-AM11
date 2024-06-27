@@ -751,18 +751,20 @@ public class GamePage {
             closeBtn.setOnMouseReleased(event -> closeBtn.setStyle(
                     "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
 
+            Popup popupEnding = new Popup();
+
             closeBtn.setOnAction(e -> {
-                popup.hide();
+                popupEnding.hide();
                 CodexNaturalis.restart();
             });
 
             endGameBox.getChildren().addAll(endGameLabel, finalLeaderboardLabel, closeBtn);
 
-            popup.getContent().add(endGameBox);
-            popup.setAutoHide(false);
+            popupEnding.getContent().add(endGameBox);
+            popupEnding.setAutoHide(false);
 
-            popup.centerOnScreen();
-            popup.setAutoHide(false);
+            popupEnding.centerOnScreen();
+            popupEnding.setAutoHide(false);
         });
 
     }
