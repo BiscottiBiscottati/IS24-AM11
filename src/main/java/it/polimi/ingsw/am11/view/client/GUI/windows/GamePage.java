@@ -446,15 +446,18 @@ public class GamePage {
 
     public void updateTurnChange(String nickname) {
         Platform.runLater(() -> {
-            // Carica il file audio
-            Media sound =
-                    new Media(Objects.requireNonNull(getClass()
-                                                             .getResource("/turn_change.mp3"))
-                                     .toExternalForm());
-            // Crea un MediaPlayer
-            MediaPlayer mediaPlayer2 = new MediaPlayer(sound);
             if (miniGameModel.myName().equals(nickname)) {
-                mediaPlayer2.play();
+                try {
+                    Media turn_sound =
+                            new Media(Objects.requireNonNull(getClass()
+                                                                     .getResource("/turn_change.mp3"))
+                                             .toExternalForm());
+                    // Crea un MediaPlayer
+                    MediaPlayer turn_sound_p = new MediaPlayer(turn_sound);
+                    turn_sound_p.play();
+                } catch (Exception e) {
+                    LOGGER.error("Error while playing sound");
+                }
             }
             for (Label label : List.of(player1, player2, player3, player4)) {
                 if (label.getText().equals(nickname)) {
@@ -598,6 +601,16 @@ public class GamePage {
         int id = handIDs.get(selectedHandPose);
         if (mouseEvent.getButton() == MouseButton.SECONDARY) {
             Image cardImage;
+            try {
+                Media flip_sound =
+                        new Media(Objects.requireNonNull(getClass()
+                                                                 .getResource("/flip_card.mp3"))
+                                         .toExternalForm());
+                MediaPlayer flip_sound_p = new MediaPlayer(flip_sound);
+                flip_sound_p.play();
+            } catch (Exception e) {
+                LOGGER.error("Error while playing sound");
+            }
             if (isRetro) {
                 cardImage = GuiResources.getCardImage(id);
                 handRetro.set(handPos, false);
@@ -609,11 +622,6 @@ public class GamePage {
                                     handIDs.get(handPos));
                     cardImage = GuiResources.getRetro(type, color);
                     handRetro.set(handPos, true);
-                    Media sound =
-                            new Media(Objects.requireNonNull(getClass()
-                                                                     .getResource("/flip_card.mp3"))
-                                             .toExternalForm());
-                    MediaPlayer mediaPlayer = new MediaPlayer(sound);
                 } catch (IllegalCardBuildException e) {
                     throw new RuntimeException(e);
                 }
@@ -753,12 +761,16 @@ public class GamePage {
 
     public void updateChat() {
         Platform.runLater(() -> {
-            Media sound =
-                    new Media(Objects.requireNonNull(getClass()
-                                                             .getResource("/new_message.mp3"))
-                                     .toExternalForm());
-            MediaPlayer mediaPlayer2 = new MediaPlayer(sound);
-            mediaPlayer2.play();
+            try {
+                Media message_sound =
+                        new Media(Objects.requireNonNull(getClass()
+                                                                 .getResource("/new_message.mp3"))
+                                         .toExternalForm());
+                MediaPlayer message_sound_p = new MediaPlayer(message_sound);
+                message_sound_p.play();
+            } catch (Exception e) {
+                LOGGER.error("Error while playing sound");
+            }
             if (popup.isShowing()) {
                 commentsBox.getChildren().clear();
                 miniGameModel.getChatMessages().forEach(comment -> {
@@ -795,8 +807,6 @@ public class GamePage {
                     "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
 
             closeBtn.setOnMouseClicked(event -> CodexNaturalis.restart());
-
-
         });
 
     }
