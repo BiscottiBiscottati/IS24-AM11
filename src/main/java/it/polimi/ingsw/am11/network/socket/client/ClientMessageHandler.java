@@ -12,12 +12,24 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The handler of the messages received from the server by the client socket connection.
+ * It is responsible for dispatching the messages to the correct receiver.
+ * @param messageReceiver The receiver of the game messages from the server
+ * @param exceptionReceiver The receiver of the exceptions from the server
+ * @param pongHandler The handler of the pong messages
+ * @param chatReceiver The receiver of the chat messages from the server
+ */
 public record ClientMessageHandler(@NotNull ClientGameReceiver messageReceiver,
                                    @NotNull ClientExceptionReceiver exceptionReceiver,
                                    @NotNull PongHandler pongHandler,
                                    @NotNull ClientChatReceiver chatReceiver) {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientMessageHandler.class);
 
+    /**
+     * Receives a message from the server and dispatches it to the correct receiver
+     * @param message The message received from the server
+     */
     public void receive(@NotNull String message) {
         JsonNode jsonNode;
         try {
@@ -39,6 +51,9 @@ public record ClientMessageHandler(@NotNull ClientGameReceiver messageReceiver,
         }
     }
 
+    /**
+     * Closes the pong handler
+     */
     public void close() {
         pongHandler.close();
     }
