@@ -130,7 +130,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         } else {
             miniGameModel.addCardInHand(cardId);
             // FIXME check if it is not necessary to use iPlaced
-            // miniGameModel.setiPlaced(false);
+            // miniGameModel.setIPlaced(false);
         }
 
         codexNaturalis.updateHand(cardId, removeMode);
@@ -221,9 +221,8 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
                 WaitingRoomPage.hideWaitingRoomPage();
                 SetNickPage.showSettingNickPage();
             }
-            case ONGOING, ENDED, ARMAGEDDON, LAST_TURN -> {
-                codexNaturalis.reconnectedToServer(miniGameModel.table().getStatus());
-            }
+            case ONGOING, ENDED, ARMAGEDDON, LAST_TURN ->
+                    codexNaturalis.reconnectedToServer(miniGameModel.table().getStatus());
         }
 
         LOGGER.debug("Reconnection completed");

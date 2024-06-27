@@ -96,6 +96,18 @@ public class CodexNaturalis extends Application {
         gamePage = fxmlLoader.getController();
     }
 
+    public static void receiveCandidateObjective() {
+        Platform.runLater(() -> {
+
+            WaitingRoomPage.hideWaitingRoomPage();
+            SetObjCardsPage.showObjCardsPage();
+        });
+    }
+
+    public static void notifyGodPlayer() {
+        SetNumOfPlayersPage.showSetNumOfPlayersPage();
+    }
+
     public StackPane getSmallRoot() {
         return smallRoot;
     }
@@ -104,32 +116,26 @@ public class CodexNaturalis extends Application {
         return guiActuator;
     }
 
-
     public void updateDeckTop(PlayableCardType type, Color color) {
         gamePage.updateDeckTop(type, color);
     }
-
 
     public void updateField(String nickname, int x, int y, int cardId, boolean isRetro) {
         gamePage.printCardsOnField(nickname);
     }
 
-
     public void updateShownPlayable(Integer previousId, Integer currentId) {
         gamePage.updateShownPlayable();
     }
-
 
     public void updateTurnChange(String nickname) {
         gamePage.updateTurnChange(nickname);
         gamePage.printCardsOnField(nickname);
     }
 
-
     public void updatePlayerPoint(String nickname, int points) {
         gamePage.updatePlayerPoints(nickname, points);
     }
-
 
     public void updateGameStatus(GameStatus status) {
         switch (status) {
@@ -143,27 +149,37 @@ public class CodexNaturalis extends Application {
         }
     }
 
+    private void showGamePage() {
+        smallRoot.setVisible(false);
+        primaryStage.close();
+        primaryStage = new Stage();
+        primaryStage.setResizable(true);
+        bigRoot.setVisible(true);
+        primaryStage.setScene(
+                new Scene(bigRoot, 1080,
+                          720,
+                          javafx.scene.paint.Color.BLACK));
+        primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.show();
+        primaryStage.setFullScreen(true);
+    }
 
     public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
         gamePage.updateCommonObj();
     }
-
 
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
         LOGGER.debug("Leaderboard received");
         gamePage.gameEnded();
     }
 
-
     public void updateHand(int cardId, boolean removeMode) {
         gamePage.updateHand();
     }
 
-
     public void updatePersonalObjective(int cardId, boolean removeMode) {
         gamePage.updatePersonalObjective();
     }
-
 
     public void receiveStarterCard() {
         Platform.runLater(() -> {
@@ -177,30 +193,13 @@ public class CodexNaturalis extends Application {
         });
     }
 
-
-    public void receiveCandidateObjective() {
-        Platform.runLater(() -> {
-
-            WaitingRoomPage.hideWaitingRoomPage();
-            SetObjCardsPage.showObjCardsPage();
-        });
-    }
-
-
-    public void notifyGodPlayer() {
-        SetNumOfPlayersPage.showSetNumOfPlayersPage();
-    }
-
-
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
 
     }
 
-
     public void updateNumOfPlayers(int numOfPlayers) {
 
     }
-
 
     public void disconnectedFromServer() {
         Platform.runLater(() -> {
@@ -242,17 +241,14 @@ public class CodexNaturalis extends Application {
         return guiUpdater.getMiniGameModel();
     }
 
-
     public void updateChat() {
         LOGGER.debug("Chat updated");
         gamePage.updateChat();
     }
 
-
     public void showErrorGamePage(String message) {
         gamePage.showErrorMessage(message);
     }
-
 
     public void reconnectedToServer(GameStatus status) {
         switch (status) {
@@ -296,20 +292,5 @@ public class CodexNaturalis extends Application {
                 });
             }
         }
-    }
-
-    private void showGamePage() {
-        smallRoot.setVisible(false);
-        primaryStage.close();
-        primaryStage = new Stage();
-        primaryStage.setResizable(true);
-        bigRoot.setVisible(true);
-        primaryStage.setScene(
-                new Scene(bigRoot, 1080,
-                          720,
-                          javafx.scene.paint.Color.BLACK));
-        primaryStage.initStyle(StageStyle.DECORATED);
-        primaryStage.show();
-        primaryStage.setFullScreen(true);
     }
 }
