@@ -1,0 +1,339 @@
+@startuml Initialization
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+box User
+actor Mario
+entity ClientViewUpdater
+entity ClientConnector
+end box
+
+box Server
+entity ServerConnector
+entity VirtualView
+entity Controller
+entity Model
+end box
+
+Mario -> ClientConnector: setNickname(username)
+activate Mario
+activate ClientConnector
+
+ClientConnector ->> Controller: login(username)
+deactivate ClientConnector
+activate Controller
+
+Controller -> Model: addPlayerToTable(username)
+
+activate Model
+
+Model --> Controller: OK
+deactivate Model
+Controller ->> VirtualView: notifyGodPlayer()
+deactivate Controller
+
+activate VirtualView
+
+VirtualView ->> ServerConnector: notifyGodPlayer()
+deactivate VirtualView
+activate ServerConnector
+
+ServerConnector ->> ClientViewUpdater: notifyGodPlayer()
+deactivate ServerConnector
+activate ClientViewUpdater
+
+ClientViewUpdater --> Mario: god player notification
+
+deactivate ClientViewUpdater
+deactivate Mario
+
+Mario -> ClientConnector: setNumOfPlayers(int)
+activate Mario
+activate ClientConnector
+
+ClientConnector ->> VirtualView: setNumOfPlayers(int)
+deactivate ClientConnector
+activate VirtualView
+
+VirtualView -> Controller: setNumberOfPlayers(int)
+
+activate Controller
+
+Controller --> VirtualView: updateTable(NumOfPlayerEvent)
+deactivate Controller
+
+VirtualView ->> ClientViewUpdater: updateNumOfPlayers(int)
+deactivate VirtualView
+activate ClientViewUpdater
+
+ClientViewUpdater --> Mario: num of players updated
+deactivate ClientViewUpdater
+
+deactivate Mario
+
+loop n-1 players
+    Mario -> ClientConnector: setNickname(username)
+    activate Mario
+    activate ClientConnector
+
+    ClientConnector ->> Controller: login(username)
+    deactivate ClientConnector
+    activate Controller
+
+    Controller -> Model: addPlayerToTable(username)
+    activate Model
+
+    Model --> Controller: OK
+    deactivate Model
+end
+
+|||
+
+note right of Controller
+    When n players
+    are connected
+end note
+Controller ->> Model: initGame()
+deactivate Controller
+activate Model
+
+Model ->> VirtualView: updateTable(PlayerInfoEvent)
+activate VirtualView
+
+VirtualView ->> ClientViewUpdater: updatePlayers(SequencedMap<Color, String>)
+activate ClientViewUpdater
+
+ClientViewUpdater ->> Mario: players updated
+
+loop n players
+    Model ->> VirtualView: updatePlayer(StarterCardEvent(id))
+    VirtualView ->> ClientViewUpdater: updateStarterCard(id)
+    ClientViewUpdater ->> Mario: starter card given
+end
+
+Model ->> VirtualView: updateTable(GameStatusChangeEvent(choosing_starters))
+deactivate Model
+
+VirtualView ->> ClientViewUpdater: updateGameStatus(choosing_starters)
+deactivate VirtualView
+
+ClientViewUpdater --> Mario: time to choose starter cards
+
+deactivate ClientViewUpdater
+deactivate Mario
+
+
+loop n-1 players
+    Mario -> ClientConnector: setStarterCard(isRetro: boolean)
+    activate Mario
+    activate ClientConnector
+
+    ClientConnector ->> VirtualView: setStarterCard(isRetro: boolean)
+    deactivate ClientConnector
+    activate VirtualView
+
+    VirtualView ->> Controller: setStarterFor(nickname, isRetro: boolean)
+    deactivate VirtualView
+    activate Controller
+
+    Controller -> Model: setStarterFor(nickname, isRetro: boolean)
+    activate Model
+
+    Model ->> VirtualView: updateTable(FieldChangeEvent)
+    activate VirtualView
+
+    VirtualView ->> ClientViewUpdater: updateField(player, x, y, id, isRetro)
+    deactivate VirtualView
+    activate ClientViewUpdater
+
+    ClientViewUpdater ->> Mario: field updated
+    deactivate ClientViewUpdater
+    Model --> Controller: OK
+    deactivate Model
+    deactivate Controller
+end
+
+Mario -> ClientConnector: setStarterCard(isRetro: boolean)
+activate Mario
+activate ClientConnector
+
+ClientConnector ->> VirtualView: setStarterCard(isRetro: boolean)
+deactivate ClientConnector
+activate VirtualView
+
+VirtualView ->> Controller: setStarterFor(nickname, isRetro: boolean)
+deactivate VirtualView
+activate Controller
+
+Controller -> Model: setStarterFor(nickname, isRetro: boolean)
+activate Model
+
+Model ->> VirtualView: updateTable(FieldChangeEvent)
+activate VirtualView
+
+VirtualView ->> ClientViewUpdater: updateField(player, x, y, id, isRetro)
+deactivate VirtualView
+activate ClientViewUpdater
+
+ClientViewUpdater ->> Mario: field updated
+deactivate ClientViewUpdater
+
+|||
+
+note left of Model
+    When all Starter cards
+    are placed
+end note
+
+loop n players
+    Model ->> VirtualView: updatePlayer\n(player,\nCandidateObjectiveEvent(set<card id>))
+    activate VirtualView
+
+    VirtualView ->> ClientViewUpdater: receiveCandidateObjective(set<card id>)
+    deactivate VirtualView
+    activate ClientViewUpdater
+
+    ClientViewUpdater ->> Mario: candidate objectives received
+    deactivate ClientViewUpdater
+end
+
+Model ->> VirtualView: updateTable\n(GameStatusChangeEvent\n(choosing_objectives))
+activate VirtualView
+
+Model --> Controller: OK
+deactivate Model
+deactivate Controller
+
+VirtualView ->> ClientViewUpdater: updateGameStatus(choosing_objectives)
+deactivate VirtualView
+activate ClientViewUpdater
+
+ClientViewUpdater --> Mario: time to choose objectives
+deactivate ClientViewUpdater
+deactivate Mario
+
+deactivate Mario
+
+|||
+
+loop n-1 players
+    Mario -> ClientConnector: setPersonalObjective(id)
+    activate Mario
+    activate ClientConnector
+
+    ClientConnector ->> VirtualView: setPersonalObjective(id)
+    deactivate ClientConnector
+    activate VirtualView
+
+    VirtualView ->> Controller: SetObjectiveFor(nickname, id)
+    deactivate VirtualView
+    activate Controller
+
+    Controller -> Model: setObjectiveFor(nickname, id)
+    activate Model
+
+    Model ->> VirtualView: updatePlayer(player,\nPersonalObjectiveEvent(id))
+    activate VirtualView
+
+    Model --> Controller: OK
+    deactivate Model
+    deactivate Controller
+
+    VirtualView ->> ClientViewUpdater: updatePersonalObjective(id)
+    deactivate VirtualView
+    activate ClientViewUpdater
+
+    ClientViewUpdater ->> Mario: personal objective updated
+    deactivate ClientViewUpdater
+end
+
+Mario -> ClientConnector: setPersonalObjective(id)
+activate Mario
+activate ClientConnector
+
+ClientConnector ->> VirtualView: setPersonalObjective(id)
+deactivate ClientConnector
+activate VirtualView
+
+VirtualView ->> Controller: SetObjectiveFor(nickname, id)
+deactivate VirtualView
+activate Controller
+
+Controller -> Model: setObjectiveFor(nickname, id)
+activate Model
+
+Model ->> VirtualView: updatePlayer(player,\nPersonalObjectiveEvent(id))
+activate VirtualView
+
+VirtualView ->> ClientViewUpdater: updatePersonalObjective(id)
+deactivate VirtualView
+activate ClientViewUpdater
+
+ClientViewUpdater ->> Mario: personal objective updated
+deactivate ClientViewUpdater
+
+|||
+
+note left of Model
+    When all Objectives
+    are set
+end note
+Model ->> VirtualView: updateTable\n(CommonObjectiveEvent(set<card id>))
+activate VirtualView
+
+VirtualView ->> ClientViewUpdater: updateCommonObjective(set<card id>)
+activate ClientViewUpdater
+ClientViewUpdater ->> Mario: common objective updated
+deactivate ClientViewUpdater
+
+loop number of shown playable
+    Model ->> VirtualView: updateTable\n(ShownPlayableEvent(id))
+    VirtualView ->> ClientViewUpdater: updateShownPlayable(id)
+    activate ClientViewUpdater
+    ClientViewUpdater ->> Mario: shown playable updated
+    deactivate ClientViewUpdater
+end
+
+loop two times
+    Model ->> VirtualView: updateTable\n(DeckTopChangeEvent(Color))
+    VirtualView ->> ClientViewUpdater: updateDeckTop(Color)
+    activate ClientViewUpdater
+    ClientViewUpdater ->> Mario: deck top color changed
+    deactivate ClientViewUpdater
+end
+
+loop n players
+
+    loop number of cards
+        Model ->> VirtualView: updatePlayer(player,\nHandChangeEvent(id))
+        VirtualView ->> ClientViewUpdater: updateHand(id)
+        activate ClientViewUpdater
+        ClientViewUpdater ->> Mario: drawn card updated
+        deactivate ClientViewUpdater
+    end
+
+end
+
+Model ->> VirtualView: updateTable\n(TurnChangeEvent(nickname))
+VirtualView ->> ClientViewUpdater: updateTurn(nickname)
+activate ClientViewUpdater
+ClientViewUpdater ->> Mario: turn changed
+deactivate ClientViewUpdater
+
+
+Model ->> VirtualView: GameStatusChangeEvent(ongoing)
+
+VirtualView ->> ClientViewUpdater: updateGameStatus(ongoing)
+deactivate VirtualView
+activate ClientViewUpdater
+
+ClientViewUpdater --> Mario: game started
+deactivate ClientViewUpdater
+deactivate Mario
+
+deactivate Mario
+Model --> Controller: OK
+deactivate Model
+deactivate Controller
+@enduml
