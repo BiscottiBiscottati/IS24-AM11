@@ -16,6 +16,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+/**
+ * This class is used to create the page where the player can choose the starter card.
+ */
 public class SetStarterCardsPage {
     private static GuiActuator guiActuator;
     private static Label message = null;
@@ -25,6 +28,12 @@ public class SetStarterCardsPage {
     private static VBox vbox = null;
     private static MiniGameModel miniGameModel;
 
+    /**
+     * This static method is used to create the starter cards page in the GUI. It initializes the
+     * necessary components and sets their properties.
+     *
+     * @param codexNaturalis The GUI instance that the starter cards page is a part of.
+     */
     public static void createStarterCardsPage(CodexNaturalis codexNaturalis) {
         miniGameModel = codexNaturalis.getMiniGameModel();
 
@@ -49,6 +58,12 @@ public class SetStarterCardsPage {
 
     }
 
+    /**
+     * This static method is used to display the starter cards page in the GUI. It retrieves the
+     * starter card images, sets their properties, and adds them to the layout. It also sets up the
+     * event handlers for the card images, which hide the current page and navigate to the waiting
+     * room page when clicked.
+     */
     public static void showStarterCardsPage() {
         cardImage =
                 GuiResources.getImageView(miniGameModel.getCliPlayer(
@@ -90,6 +105,10 @@ public class SetStarterCardsPage {
         });
     }
 
+    /**
+     * This static method is used to hide the starter cards page in the GUI. It sets the visibility
+     * of the starter cards page to false.
+     */
     public static void hideStarterCardsPage() {
         if (cardImage != null) {
             cardImage.setVisible(false);

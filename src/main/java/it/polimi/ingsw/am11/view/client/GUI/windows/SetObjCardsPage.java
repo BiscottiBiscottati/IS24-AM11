@@ -17,10 +17,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.List;
-import java.util.Set;
 
-import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
-
+/**
+ * The SetObjCardsPage class is responsible for creating and managing the Objective Cards Page in
+ * the GUI. It provides methods to create the page, show the page with the objective cards, and hide
+ * the page. It also handles the events when the objective cards are clicked.
+ */
 public class SetObjCardsPage {
     private static GuiActuator guiActuator;
     private static Label message;
@@ -30,7 +32,13 @@ public class SetObjCardsPage {
     private static VBox vbox;
     private static MiniGameModel miniGameModel;
 
-
+    /**
+     * This static method is used to create the Objective Cards Page in the GUI. It initializes the
+     * necessary components and sets their properties. It also sets up the layout for the page and
+     * adds it to the root of the GUI.
+     *
+     * @param codexNaturalis The GUI instance that the Objective Cards Page is a part of.
+     */
     public static void createObjCardsPage(CodexNaturalis codexNaturalis) {
         SetObjCardsPage.miniGameModel = codexNaturalis.getMiniGameModel();
 
@@ -56,6 +64,11 @@ public class SetObjCardsPage {
         vbox.setVisible(false);
     }
 
+    /**
+     * This static method is used to show the Objective Cards Page in the GUI. It sets the images of
+     * the objective cards and shows them on the page. It also sets up the event handlers for the
+     * objective cards.
+     */
     public static void showObjCardsPage() {
         List<Integer> cardIdList =
                 List.copyOf(miniGameModel.getCliPlayer(
@@ -100,6 +113,10 @@ public class SetObjCardsPage {
         });
     }
 
+    /**
+     * This static method is used to hide the Objective Cards Page in the GUI. It sets the
+     * visibility of the page to false.
+     */
     public static void hideObjCardsPage() {
         if (cardImage1 != null) {
             cardImage1.setVisible(false);

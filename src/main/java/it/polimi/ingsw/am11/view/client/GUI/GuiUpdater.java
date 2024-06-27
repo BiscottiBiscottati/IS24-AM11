@@ -24,6 +24,9 @@ import java.util.SequencedMap;
 import java.util.Set;
 
 
+/**
+ * This class is responsible for updating the GUI based on the events received from the server
+ */
 public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(GuiUpdater.class);
     private final CodexNaturalis codexNaturalis;
@@ -31,6 +34,12 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private GuiExceptionReceiver exceptionReceiver;
     private String candidateNick = "";
 
+    /**
+     * Create a new GuiUpdater
+     * <p>
+     *
+     * @param codexNaturalis the GUI that needs to be updated
+     */
     public GuiUpdater(@NotNull CodexNaturalis codexNaturalis) {
         this.codexNaturalis = codexNaturalis;
         reset();
@@ -44,6 +53,13 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         this.exceptionReceiver = new GuiExceptionReceiver(miniGameModel, codexNaturalis);
     }
 
+    /**
+     * Update the GUI with the new card that has been picked from the deck
+     * <p>
+     *
+     * @param type  the type of the deck
+     * @param color the color of the card
+     */
     @Override
     public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
         LOGGER.debug("{} picked a card from the {} deck, the {} deck top card is now {}",
@@ -54,6 +70,16 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         codexNaturalis.updateDeckTop(type, color);
     }
 
+    /**
+     * Update the GUI with the new card that has been picked from the hand placed on the table
+     * <p>
+     *
+     * @param nickname the nickname of the player
+     * @param x        the x coordinate of the card
+     * @param y        the y coordinate of the card
+     * @param cardId   the id of the card
+     * @param isRetro  if the card is placed on it's retro
+     */
     @Override
     public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro) {
         LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {},",
@@ -182,13 +208,10 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         miniGameModel.setMyName(candidateNick);
         currentPlayers.sequencedKeySet()
                       .forEach(x -> miniGameModel.addPlayer(currentPlayers.get(x), x));
-
-        codexNaturalis.updatePlayers(currentPlayers);
     }
 
     @Override
     public void updateNumOfPlayers(int numOfPlayers) {
-        codexNaturalis.updateNumOfPlayers(numOfPlayers);
     }
 
     @Override

@@ -8,6 +8,10 @@ import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
 import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This class is used to interact with the GUI, it is used to send messages to the server and to
+ * update the GUI
+ */
 public class GuiActuator {
 
     private final GuiUpdater guiUpdater;
@@ -15,6 +19,11 @@ public class GuiActuator {
     private ClientGameConnector connector;
     private ClientChatConnector chatConnector;
 
+    /**
+     * Creates a new GuiActuator with the given gui updater and sets the connection to null
+     *
+     * @param guiUpdater the gui updater to use to update the GUI state and the GUI elements
+     */
     public GuiActuator(@NotNull GuiUpdater guiUpdater) {
         this.guiUpdater = guiUpdater;
         this.connector = null;

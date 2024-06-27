@@ -258,6 +258,18 @@ public class GamePage {
                 "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
         audioBtn.setText("Mute");
 
+        audioBtn.setOnMouseClicked(event -> {
+            Platform.runLater(() -> {
+                if (audioBtn.getText().equals("Mute")) {
+                    audioBtn.setText("Unmute");
+                    if (soundtrack_p != null) soundtrack_p.pause();
+                } else {
+                    audioBtn.setText("Mute");
+                    if (soundtrack_p != null) soundtrack_p.play();
+                }
+            });
+        });
+
     }
 
 
@@ -809,6 +821,9 @@ public class GamePage {
         });
     }
 
+    /**
+     *
+     */
     public void gameEnded() {
 
         Platform.runLater(() -> {
@@ -838,16 +853,10 @@ public class GamePage {
 
     }
 
-    public void clickedAudioBtn(MouseEvent mouseEvent) {
-        Platform.runLater(() -> {
-            if (audioBtn.getText().equals("Mute")) {
-                audioBtn.setText("Unmute");
-                if (soundtrack_p != null) soundtrack_p.pause();
-            } else {
-                audioBtn.setText("Mute");
-                if (soundtrack_p != null) soundtrack_p.play();
-            }
-        });
+    public void stopMusic() {
+        if (soundtrack_p != null) {
+            soundtrack_p.stop();
+        }
     }
 }
 

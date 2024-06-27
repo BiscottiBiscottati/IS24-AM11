@@ -10,12 +10,22 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
+/**
+ * This class is used to create the waiting room page, where the player waits for the other players
+ * to join the game or for the game to start
+ */
 public class WaitingRoomPage {
     private static CodexNaturalis codexNaturalis;
     private static ProgressIndicator loadingWheel;
     private static Label waitingForPlayers;
 
 
+    /**
+     * This static method is used to create the waiting room page in the GUI. It initializes the
+     * necessary components and sets their properties.
+     *
+     * @param codexNaturalis The GUI instance that the waiting room page is a part of.
+     */
     public static void createWaitingRoomPage(CodexNaturalis codexNaturalis) {
         WaitingRoomPage.codexNaturalis = codexNaturalis;
 
@@ -46,12 +56,20 @@ public class WaitingRoomPage {
         StackPane.setAlignment(waitingForPlayers, Pos.CENTER);
     }
 
+    /**
+     * This static method is used to show the waiting room page in the GUI. It sets the visibility
+     * of the waiting room page to true.
+     */
     public static void showWaitingRoomPage() {
         waitingForPlayers.setVisible(true);
         loadingWheel.setVisible(true);
 
     }
 
+    /**
+     * This static method is used to hide the waiting room page in the GUI. It sets the visibility
+     * of the waiting room page to false.
+     */
     public static void hideWaitingRoomPage() {
         waitingForPlayers.setVisible(false);
         loadingWheel.setVisible(false);
