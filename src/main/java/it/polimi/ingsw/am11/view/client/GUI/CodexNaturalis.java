@@ -252,17 +252,11 @@ public class CodexNaturalis extends Application {
 
     public void reconnectedToServer(GameStatus status) {
         switch (status) {
-            case LAST_TURN -> {
-                Platform.runLater(this::showGamePage);
-            }
-            case ARMAGEDDON -> {
-                Platform.runLater(this::showGamePage);
-            }
             case ENDED -> {
                 Platform.runLater(this::showGamePage);
                 gamePage.gameEnded();
             }
-            case ONGOING -> {
+            case ONGOING, ARMAGEDDON, LAST_TURN -> {
                 try {
                     gamePage.createGamePage(this);
                 } catch (IOException e) {
@@ -289,6 +283,11 @@ public class CodexNaturalis extends Application {
                                                                                   getCliPlayer(
                                                                                           player).
                                                                                   getPoints()));
+                    if (status == GameStatus.ARMAGEDDON) {
+                        gamePage.showLastTurnMessage("ARMAGEDDON!");
+                    } else if (status == GameStatus.LAST_TURN) {
+                        gamePage.showLastTurnMessage("LAST TURN!");
+                    }
                 });
             }
         }
