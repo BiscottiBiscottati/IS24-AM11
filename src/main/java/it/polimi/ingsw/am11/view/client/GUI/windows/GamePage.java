@@ -438,6 +438,7 @@ public class GamePage {
 
     public void printCardsOnField(String nickname) {
         Platform.runLater(() -> {
+            mediaPlayer1.play();
             if (currentSeenField.equals(nickname)) {
                 if (currentSeenField.equals(miniGameModel.myName()) &&
                     miniGameModel.myName().equals(miniGameModel.getCurrentTurn())) {
@@ -465,9 +466,9 @@ public class GamePage {
                                                              .getResource("/turn_change.mp3"))
                                      .toExternalForm());
             // Crea un MediaPlayer
-            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            MediaPlayer mediaPlayer2 = new MediaPlayer(sound);
             if (miniGameModel.myName().equals(nickname)) {
-                mediaPlayer.play();
+                mediaPlayer2.play();
             }
             for (Label label : List.of(player1, player2, player3, player4)) {
                 if (label.getText().equals(nickname)) {
@@ -513,7 +514,6 @@ public class GamePage {
         Platform.runLater(() -> {
             currentSeenField = player1.getText();
             printCardsOnField(player1.getText());
-            mediaPlayer1.play();
         });
     }
 
@@ -521,7 +521,6 @@ public class GamePage {
         Platform.runLater(() -> {
             currentSeenField = player2.getText();
             printCardsOnField(player2.getText());
-            mediaPlayer1.play();
         });
     }
 
@@ -529,7 +528,6 @@ public class GamePage {
         Platform.runLater(() -> {
             currentSeenField = player3.getText();
             printCardsOnField(player3.getText());
-            mediaPlayer1.play();
         });
     }
 
@@ -537,7 +535,6 @@ public class GamePage {
         Platform.runLater(() -> {
             currentSeenField = player4.getText();
             printCardsOnField(player4.getText());
-            mediaPlayer1.play();
         });
     }
 
@@ -761,6 +758,12 @@ public class GamePage {
 
     public void updateChat() {
         Platform.runLater(() -> {
+            Media sound =
+                    new Media(Objects.requireNonNull(getClass()
+                                                             .getResource("/new_message.mp3"))
+                                     .toExternalForm());
+            MediaPlayer mediaPlayer2 = new MediaPlayer(sound);
+            mediaPlayer2.play();
             if (popup.isShowing()) {
                 commentsBox.getChildren().clear();
                 miniGameModel.getChatMessages().forEach(comment -> {
