@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class PongHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(PongHandler.class);
     private static final int PONG_INTERVAL = 1000;
-    private static final int PONG_TIMEOUT = 3000;
+    private static final int PONG_TIMEOUT = 5000;
 
     private final @NotNull Socket socket;
     private final @NotNull PrintWriter out;

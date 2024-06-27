@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.model.cards.starter;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Availability;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,15 +22,15 @@ class StarterCardTest {
     @BeforeEach
     void setUp() throws IllegalCardBuildException {
         starter = new StarterCard.Builder(1)
-                .hasCenterColors(Set.of(Color.RED, Color.BLUE))
-                .hasCenterColor(Color.BLUE)
-                .hasCenterColor(Color.GREEN)
+                .hasCenterColors(Set.of(GameColor.RED, GameColor.BLUE))
+                .hasCenterColor(GameColor.BLUE)
+                .hasCenterColor(GameColor.GREEN)
                 .hasItemFrontIn(Corner.TOP_LX, Availability.USABLE)
-                .hasItemFrontIn(Corner.TOP_RX, Color.RED)
-                .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
-                .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
-                .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
-                .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
+                .hasItemFrontIn(Corner.TOP_RX, GameColor.RED)
+                .hasColorRetroIn(Corner.TOP_RX, GameColor.BLUE)
+                .hasColorRetroIn(Corner.TOP_LX, GameColor.GREEN)
+                .hasColorRetroIn(Corner.DOWN_RX, GameColor.RED)
+                .hasColorRetroIn(Corner.DOWN_LX, GameColor.PURPLE)
                 .build();
 
     }
@@ -45,16 +45,17 @@ class StarterCardTest {
 
     @Test
     void checkRetroColorIn() {
-        assertSame(Color.BLUE, starter.checkRetroColorIn(Corner.TOP_RX));
-        assertSame(Color.GREEN, starter.checkRetroColorIn(Corner.TOP_LX));
-        assertSame(Color.RED, starter.checkRetroColorIn(Corner.DOWN_RX));
-        assertSame(Color.PURPLE, starter.checkRetroColorIn(Corner.DOWN_LX));
+        assertSame(GameColor.BLUE, starter.checkRetroColorIn(Corner.TOP_RX));
+        assertSame(GameColor.GREEN, starter.checkRetroColorIn(Corner.TOP_LX));
+        assertSame(GameColor.RED, starter.checkRetroColorIn(Corner.DOWN_RX));
+        assertSame(GameColor.PURPLE, starter.checkRetroColorIn(Corner.DOWN_LX));
 
     }
 
     @Test
     void getCenterColorsFront() {
-        assertEquals(Set.of(Color.RED, Color.BLUE, Color.GREEN), starter.getCenterColorsFront());
+        assertEquals(Set.of(GameColor.RED, GameColor.BLUE, GameColor.GREEN),
+                     starter.getCenterColorsFront());
     }
 
     @Test
@@ -63,19 +64,19 @@ class StarterCardTest {
         assertThrows(
                 IllegalCardBuildException.class,
                 () -> new StarterCard.Builder(54)
-                        .hasCenterColors(Set.of(Color.RED, Color.BLUE))
-                        .hasItemFrontIn(Corner.DOWN_LX, Color.PURPLE)
-                        .hasItemFrontIn(Corner.TOP_LX, Color.RED)
-                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
+                        .hasCenterColors(Set.of(GameColor.RED, GameColor.BLUE))
+                        .hasItemFrontIn(Corner.DOWN_LX, GameColor.PURPLE)
+                        .hasItemFrontIn(Corner.TOP_LX, GameColor.RED)
+                        .hasColorRetroIn(Corner.TOP_RX, GameColor.BLUE)
                         .build()
         );
         assertThrows(
                 IllegalCardBuildException.class,
                 () -> new StarterCard.Builder(100)
-                        .hasCenterColors(Set.of(Color.RED, Color.BLUE))
-                        .hasItemFrontIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasCenterColors(Set.of(GameColor.RED, GameColor.BLUE))
+                        .hasItemFrontIn(Corner.DOWN_LX, GameColor.PURPLE)
                         .hasItemFrontIn(Corner.TOP_LX, Symbol.FEATHER)
-                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
+                        .hasColorRetroIn(Corner.TOP_RX, GameColor.BLUE)
                         .build()
         );
 
@@ -89,46 +90,46 @@ class StarterCardTest {
                 RuntimeException.class,
                 () -> new StarterCard.Builder(1)
                         .hasCenterColor(null)
-                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
-                        .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
-                        .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
-                        .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasColorRetroIn(Corner.TOP_RX, GameColor.BLUE)
+                        .hasColorRetroIn(Corner.TOP_LX, GameColor.GREEN)
+                        .hasColorRetroIn(Corner.DOWN_RX, GameColor.RED)
+                        .hasColorRetroIn(Corner.DOWN_LX, GameColor.PURPLE)
         );
         assertThrows(
                 RuntimeException.class,
                 () -> new StarterCard.Builder(1)
-                        .hasItemFrontIn(null, Color.BLUE)
-                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
-                        .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
-                        .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
-                        .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasItemFrontIn(null, GameColor.BLUE)
+                        .hasColorRetroIn(Corner.TOP_RX, GameColor.BLUE)
+                        .hasColorRetroIn(Corner.TOP_LX, GameColor.GREEN)
+                        .hasColorRetroIn(Corner.DOWN_RX, GameColor.RED)
+                        .hasColorRetroIn(Corner.DOWN_LX, GameColor.PURPLE)
         );
         assertThrows(
                 RuntimeException.class,
                 () -> new StarterCard.Builder(2)
                         .hasCenterColors(null)
-                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
-                        .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
-                        .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
-                        .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasColorRetroIn(Corner.TOP_RX, GameColor.BLUE)
+                        .hasColorRetroIn(Corner.TOP_LX, GameColor.GREEN)
+                        .hasColorRetroIn(Corner.DOWN_RX, GameColor.RED)
+                        .hasColorRetroIn(Corner.DOWN_LX, GameColor.PURPLE)
         );
         assertThrows(
                 RuntimeException.class,
                 () -> new StarterCard.Builder(3)
-                        .hasColorRetroIn(null, Color.BLUE)
-                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
-                        .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
-                        .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
-                        .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasColorRetroIn(null, GameColor.BLUE)
+                        .hasColorRetroIn(Corner.TOP_RX, GameColor.BLUE)
+                        .hasColorRetroIn(Corner.TOP_LX, GameColor.GREEN)
+                        .hasColorRetroIn(Corner.DOWN_RX, GameColor.RED)
+                        .hasColorRetroIn(Corner.DOWN_LX, GameColor.PURPLE)
         );
         assertThrows(
                 IllegalArgumentException.class,
                 () -> new StarterCard.Builder(4)
                         .hasColorRetroIn(Corner.TOP_LX, null)
-                        .hasColorRetroIn(Corner.TOP_RX, Color.BLUE)
-                        .hasColorRetroIn(Corner.TOP_LX, Color.GREEN)
-                        .hasColorRetroIn(Corner.DOWN_RX, Color.RED)
-                        .hasColorRetroIn(Corner.DOWN_LX, Color.PURPLE)
+                        .hasColorRetroIn(Corner.TOP_RX, GameColor.BLUE)
+                        .hasColorRetroIn(Corner.TOP_LX, GameColor.GREEN)
+                        .hasColorRetroIn(Corner.DOWN_RX, GameColor.RED)
+                        .hasColorRetroIn(Corner.DOWN_LX, GameColor.PURPLE)
         );
     }
 
@@ -148,7 +149,7 @@ class StarterCardTest {
 
     @Test
     void isColorEqual() {
-        Arrays.stream(Color.values()).forEach(
+        Arrays.stream(GameColor.values()).forEach(
                 color -> assertFalse(starter.isColorEqual(color))
         );
     }
@@ -160,7 +161,7 @@ class StarterCardTest {
 
     @Test
     void checkFront() {
-        assertEquals(Color.RED, starter.checkFront(Corner.TOP_RX));
+        assertEquals(GameColor.RED, starter.checkFront(Corner.TOP_RX));
         assertEquals(Availability.USABLE, starter.checkFront(Corner.TOP_LX));
         assertEquals(Availability.NOT_USABLE, starter.checkFront(Corner.DOWN_RX));
         assertEquals(Availability.NOT_USABLE, starter.checkFront(Corner.DOWN_LX));

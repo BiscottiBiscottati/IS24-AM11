@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.view.client.GUI;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.view.client.GUI.GUIParts.FrameHandler;
@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -151,7 +152,7 @@ public class CodexNaturalis extends Application {
      * @param type  The type of the playable card. It can be RESOURCE, GOLD, etc.
      * @param color The color of the card. It can be RED, BLUE, etc.
      */
-    public void updateDeckTop(PlayableCardType type, Color color) {
+    public void updateDeckTop(PlayableCardType type, @Nullable GameColor color) {
         gamePage.updateDeckTop(type, color);
     }
 

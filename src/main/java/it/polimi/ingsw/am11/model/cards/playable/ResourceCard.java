@@ -24,8 +24,9 @@ import java.util.Optional;
  */
 @SuppressWarnings("DataFlowIssue")
 public final class ResourceCard extends PlayableCard {
-    private final static ImmutableMap<Color, Integer> PLACING_REQUIREMENTS = Maps.immutableEnumMap(
-            EnumMapUtils.init(Color.class, 0)
+    private final static ImmutableMap<GameColor, Integer> PLACING_REQUIREMENTS =
+            Maps.immutableEnumMap(
+            EnumMapUtils.init(GameColor.class, 0)
     );
     private final @NotNull ImmutableMap<Corner, CornerContainer> availableCornerOrItem;
 
@@ -52,12 +53,12 @@ public final class ResourceCard extends PlayableCard {
     }
 
     @Override
-    public @NotNull Map<Color, Integer> getPlacingRequirements() {
+    public @NotNull Map<GameColor, Integer> getPlacingRequirements() {
         return PLACING_REQUIREMENTS;
     }
 
     @Override
-    public int getPlacingRequirementsOf(Color color) {
+    public int getPlacingRequirementsOf(GameColor color) {
         return PLACING_REQUIREMENTS.get(color);
     }
 
@@ -104,7 +105,7 @@ public final class ResourceCard extends PlayableCard {
          * @param cardPrimaryColor the color of the card
          * @throws IllegalCardBuildException if points are negative
          */
-        public Builder(int id, int cardPoints, @NotNull Color cardPrimaryColor)
+        public Builder(int id, int cardPoints, @NotNull GameColor cardPrimaryColor)
         throws IllegalCardBuildException {
             super(id, cardPoints, cardPrimaryColor);
             this.availableCornerOrItem = EnumMapUtils.init(Corner.class, Availability.NOT_USABLE);

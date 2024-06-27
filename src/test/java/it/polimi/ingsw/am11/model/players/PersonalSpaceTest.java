@@ -5,7 +5,7 @@ import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
@@ -55,12 +55,12 @@ class PersonalSpaceTest {
         PersonalSpace personalSpace = player.space();
         assertNotNull(personalSpace.getPlayerHand());
 
-        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, Color.BLUE);
+        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, GameColor.BLUE);
         PlayableCard card = builder.build();
         personalSpace.addCardToHand(card);
         assertEquals(1, personalSpace.getPlayerHand().size());
 
-        PlayableCard.Builder builder2 = new ResourceCard.Builder(2, 0, Color.BLUE);
+        PlayableCard.Builder builder2 = new ResourceCard.Builder(2, 0, GameColor.BLUE);
         PlayableCard card2 = builder2.build();
         personalSpace.addCardToHand(card2);
 
@@ -92,12 +92,12 @@ class PersonalSpaceTest {
         PersonalSpace personalSpace = player.space();
         assertEquals(3, personalSpace.availableSpaceInHand());
 
-        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, Color.BLUE);
+        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, GameColor.BLUE);
         PlayableCard card = builder.build();
         personalSpace.addCardToHand(card);
         assertEquals(2, personalSpace.availableSpaceInHand());
 
-        PlayableCard.Builder builder2 = new ResourceCard.Builder(2, 3, Color.BLUE);
+        PlayableCard.Builder builder2 = new ResourceCard.Builder(2, 3, GameColor.BLUE);
         PlayableCard card2 = builder2.build();
         personalSpace.addCardToHand(card2);
 
@@ -111,7 +111,7 @@ class PersonalSpaceTest {
         PersonalSpace personalSpace = player.space();
         assertEquals(3, personalSpace.availableSpaceInHand());
 
-        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, Color.BLUE);
+        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, GameColor.BLUE);
         PlayableCard card = null;
         try {
             card = builder.build();
@@ -127,7 +127,7 @@ class PersonalSpaceTest {
         assertEquals(card, personalSpace.getPlayerHand().iterator().next());
         assertEquals(1, personalSpace.getPlayerHand().size());
 
-        PlayableCard.Builder builder2 = new ResourceCard.Builder(2, 0, Color.BLUE);
+        PlayableCard.Builder builder2 = new ResourceCard.Builder(2, 0, GameColor.BLUE);
         PlayableCard card2 = null;
         try {
             card2 = builder2.build();
@@ -152,7 +152,7 @@ class PersonalSpaceTest {
         PersonalSpace personalSpace = player.space();
         assertNotNull(personalSpace.getPlayerHand());
 
-        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, Color.BLUE);
+        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, GameColor.BLUE);
         PlayableCard card = builder.build();
         personalSpace.addCardToHand(card);
 
@@ -189,7 +189,7 @@ class PersonalSpaceTest {
 
         Player player = new Player("test player", PlayerColor.BLUE);
         PersonalSpace personalSpace = player.space();
-        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, Color.BLUE);
+        PlayableCard.Builder builder = new ResourceCard.Builder(1, 0, GameColor.BLUE);
         PlayableCard card = builder.build();
         personalSpace.addCardToHand(card);
 

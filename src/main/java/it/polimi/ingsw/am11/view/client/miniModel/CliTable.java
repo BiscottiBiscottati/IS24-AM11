@@ -1,19 +1,21 @@
 package it.polimi.ingsw.am11.view.client.miniModel;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.model.utils.memento.PlateauMemento;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionTableMemento;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class CliTable {
 
-    private final EnumMap<PlayableCardType, Color> deckTopColors;
+    private final Map<PlayableCardType, GameColor> deckTopColors;
     private final Set<Integer> shownCards;
     private final Set<Integer> commonObjectives;
     private @NotNull GameStatus status;
@@ -25,8 +27,8 @@ public class CliTable {
         this.status = GameStatus.SETUP;
     }
 
-    public Set<Integer> getCommonObjectives() {
-        return new HashSet<>(commonObjectives);
+    public @NotNull Set<Integer> getCommonObjectives() {
+        return Set.copyOf(commonObjectives);
     }
 
     public void addCommonObjectives(int cardId) {
@@ -45,12 +47,12 @@ public class CliTable {
         this.status = status;
     }
 
-    public Color getDeckTop(PlayableCardType type) {
+    public GameColor getDeckTop(PlayableCardType type) {
         return deckTopColors.get(type);
     }
 
-    public Set<Integer> getShownCards() {
-        return new HashSet<>(shownCards);
+    public @NotNull Set<Integer> getShownCards() {
+        return Set.copyOf(shownCards);
     }
 
     public void pickVisible(int cardId) {
@@ -61,7 +63,7 @@ public class CliTable {
         shownCards.add(cardId);
     }
 
-    public void refreshDeckTop(PlayableCardType type, Color color) {
+    public void refreshDeckTop(@NotNull PlayableCardType type, @Nullable GameColor color) {
         deckTopColors.put(type, color);
     }
 

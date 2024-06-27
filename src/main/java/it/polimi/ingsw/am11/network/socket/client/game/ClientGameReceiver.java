@@ -2,7 +2,8 @@ package it.polimi.ingsw.am11.network.socket.client.game;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import com.google.common.base.Enums;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
@@ -57,7 +58,9 @@ public class ClientGameReceiver implements MessageReceiver {
                     clientPlayerView.
                             updateDeckTop(
                                     PlayableCardType.valueOf(jsonNode.get("type").asText()),
-                                    Color.valueOf(jsonNode.get("color").asText()));
+                                    Enums.getIfPresent(GameColor.class,
+                                                       jsonNode.get("color").asText())
+                                         .orNull());
                     break;
                 case "updateField":
                     clientPlayerView.updateField(jsonNode.get("nickname").asText(),

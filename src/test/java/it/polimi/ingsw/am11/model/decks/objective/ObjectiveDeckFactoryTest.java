@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.model.cards.objective.PositioningCard;
 import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
 import it.polimi.ingsw.am11.model.cards.objective.positioning.TripletCard;
 import it.polimi.ingsw.am11.model.cards.utils.Item;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
@@ -98,7 +98,7 @@ class ObjectiveDeckFactoryTest {
             if (resultSet.next()) {
                 assertEquals(card.getPoints(), resultSet.getInt("points"));
                 assertEquals(card.getType().name(), resultSet.getString("card_type"));
-                for (Color color : Color.values()) {
+                for (GameColor color : GameColor.values()) {
                     assertEquals(card.hasItemRequirements(color),
                                  resultSet.getInt(color.getColumnName()));
                 }
@@ -122,7 +122,8 @@ class ObjectiveDeckFactoryTest {
                 switch (positioningCard) {
                     case TripletCard triplet -> {
                         assertEquals(triplet.isFlipped(), resultSet.getBoolean("is_flipped"));
-                        Color colorToCheck = Color.valueOf(resultSet.getString("primary_color"));
+                        GameColor colorToCheck = GameColor.valueOf(
+                                resultSet.getString("primary_color"));
                         assertEquals(3, triplet.hasItemRequirements(colorToCheck));
                         getItems().filter(item -> item != colorToCheck)
                                   .forEach(item -> assertEquals(0,
@@ -131,8 +132,9 @@ class ObjectiveDeckFactoryTest {
                     case LCard lCard -> {
                         assertEquals(lCard.isFlipped(), resultSet.getBoolean("is_flipped"));
                         assertEquals(lCard.isRotated(), resultSet.getBoolean("is_rotated"));
-                        Color colorToCheck = Color.valueOf(resultSet.getString("primary_color"));
-                        Color secondColorToCheck = Color.valueOf(
+                        GameColor colorToCheck = GameColor.valueOf(
+                                resultSet.getString("primary_color"));
+                        GameColor secondColorToCheck = GameColor.valueOf(
                                 resultSet.getString("secondary_color"));
                         assertEquals(2, lCard.hasItemRequirements(colorToCheck));
                         assertEquals(1, lCard.hasItemRequirements(secondColorToCheck));
@@ -153,6 +155,6 @@ class ObjectiveDeckFactoryTest {
     }
 
     private static @NotNull Stream<Item> getItems() {
-        return Stream.concat(Arrays.stream(Color.values()), Arrays.stream(Symbol.values()));
+        return Stream.concat(Arrays.stream(GameColor.values()), Arrays.stream(Symbol.values()));
     }
 }

@@ -1,19 +1,20 @@
 package it.polimi.ingsw.am11.view.events.view.table;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.view.events.TableViewEvent;
 import it.polimi.ingsw.am11.view.server.VirtualTableView;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class DeckTopChangeEvent extends TableViewEvent {
 
     private final @NotNull PlayableCardType cardType;
-    private final Color oldValue;
-    private final Color newValue;
+    private final GameColor oldValue;
+    private final GameColor newValue;
 
-    public DeckTopChangeEvent(@NotNull PlayableCardType cardType, Color oldValue,
-                              Color newValue) {
+    public DeckTopChangeEvent(@NotNull PlayableCardType cardType, GameColor oldValue,
+                              GameColor newValue) {
         this.cardType = cardType;
         this.oldValue = oldValue;
         this.newValue = newValue;
@@ -25,17 +26,17 @@ public class DeckTopChangeEvent extends TableViewEvent {
     }
 
     @Override
-    public Color getOldValue() {
+    public @Nullable GameColor getOldValue() {
         return this.oldValue;
     }
 
     @Override
-    public Color getNewValue() {
+    public @Nullable GameColor getNewValue() {
         return this.newValue;
     }
 
     @Override
-    public @NotNull Color getValueOfAction() {
+    public @NotNull GameColor getValueOfAction() {
         return newValue;
     }
 

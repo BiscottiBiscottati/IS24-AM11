@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.CardIdentity;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
@@ -19,7 +19,6 @@ import it.polimi.ingsw.am11.view.events.view.table.ShownPlayableEvent;
 import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.TestOnly;
 import org.jetbrains.annotations.Unmodifiable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +85,7 @@ public class PickablesTable {
      * @param type the type of the deck
      * @return the color of the top card of the deck, if present
      */
-    public @NotNull Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
+    public @NotNull Optional<GameColor> getDeckTop(@NotNull PlayableCardType type) {
         return deckManager.getDeckTop(type);
     }
 
@@ -337,7 +336,7 @@ public class PickablesTable {
      * @return
      */
     public @NotNull ReconnectionTableMemento savePublic() {
-        Map<PlayableCardType, Color> deckTops = new EnumMap<>(PlayableCardType.class);
+        Map<PlayableCardType, GameColor> deckTops = new EnumMap<>(PlayableCardType.class);
         for (PlayableCardType type : PlayableCardType.values()) {
             deckTops.put(type, getDeckTop(type).orElse(null));
         }

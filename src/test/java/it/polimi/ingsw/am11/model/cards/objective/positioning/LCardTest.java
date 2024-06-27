@@ -3,8 +3,8 @@ package it.polimi.ingsw.am11.model.cards.objective.positioning;
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
@@ -54,20 +54,20 @@ class LCardTest {
     static void beforeAll() {
         try {
             lCardStandard = new LCard.Builder(1, 2)
-                    .hasPrimaryColor(Color.RED)
-                    .hasSecondaryColor(Color.BLUE)
+                    .hasPrimaryColor(GameColor.RED)
+                    .hasSecondaryColor(GameColor.BLUE)
                     .isFlipped(false)
                     .isRotated(false)
                     .build();
             lCardRotated = new LCard.Builder(2, 2)
-                    .hasPrimaryColor(Color.RED)
-                    .hasSecondaryColor(Color.BLUE)
+                    .hasPrimaryColor(GameColor.RED)
+                    .hasSecondaryColor(GameColor.BLUE)
                     .isRotated(true)
                     .isFlipped(false)
                     .build();
             lCardFlipped = new LCard.Builder(3, 2)
-                    .hasPrimaryColor(Color.RED)
-                    .hasSecondaryColor(Color.BLUE)
+                    .hasPrimaryColor(GameColor.RED)
+                    .hasSecondaryColor(GameColor.BLUE)
                     .isFlipped(true)
                     .isRotated(false)
                     .build();
@@ -76,11 +76,11 @@ class LCardTest {
 
             StarterCard.Builder builder = new StarterCard.Builder(1);
             Arrays.stream(Corner.values()).forEach(
-                    corner -> builder.hasColorRetroIn(corner, Color.PURPLE));
+                    corner -> builder.hasColorRetroIn(corner, GameColor.PURPLE));
             starterCard = builder.build();
-            redCard = new ResourceCard.Builder(1, 0, Color.RED).build();
-            blueCard = new ResourceCard.Builder(2, 0, Color.BLUE).build();
-            purpleCard = new ResourceCard.Builder(3, 0, Color.PURPLE).build();
+            redCard = new ResourceCard.Builder(1, 0, GameColor.RED).build();
+            blueCard = new ResourceCard.Builder(2, 0, GameColor.BLUE).build();
+            purpleCard = new ResourceCard.Builder(3, 0, GameColor.PURPLE).build();
 
         } catch (IllegalCardBuildException e) {
             fail(e);
@@ -140,16 +140,16 @@ class LCardTest {
 
         // Test for a simple field
         Mockito.when(playerField.getCardsPositioned()).thenReturn(field);
-        Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(2);
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(1);
+        Mockito.when(playerField.getNumberOf(GameColor.RED)).thenReturn(2);
+        Mockito.when(playerField.getNumberOf(GameColor.BLUE)).thenReturn(1);
         assertEquals(2, lCardStandard.countPoints(playerField));
         assertEquals(2, lCardRotated.countPoints(playerField));
         assertEquals(2, lCardFlipped.countPoints(playerField));
 
         // Test on a larger field
         Mockito.when(playerField.getCardsPositioned()).thenReturn(largeField);
-        Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(6);
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(3);
+        Mockito.when(playerField.getNumberOf(GameColor.RED)).thenReturn(6);
+        Mockito.when(playerField.getNumberOf(GameColor.BLUE)).thenReturn(3);
         assertEquals(6, lCardStandard.countPoints(playerField));
         assertEquals(2, lCardRotated.countPoints(playerField));
         assertEquals(4, lCardFlipped.countPoints(playerField));
@@ -160,13 +160,13 @@ class LCardTest {
         assertEquals(0, lCardRotated.countPoints(playerField));
 
         // Test on not enough cards of primary color
-        Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(1);
+        Mockito.when(playerField.getNumberOf(GameColor.RED)).thenReturn(1);
         assertEquals(0, lCardStandard.countPoints(playerField));
         assertEquals(0, lCardRotated.countPoints(playerField));
 
         // Test on not enough cards of secondary color
-        Mockito.when(playerField.getNumberOf(Color.RED)).thenReturn(3);
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(0);
+        Mockito.when(playerField.getNumberOf(GameColor.RED)).thenReturn(3);
+        Mockito.when(playerField.getNumberOf(GameColor.BLUE)).thenReturn(0);
         assertEquals(0, lCardStandard.countPoints(playerField));
         assertEquals(0, lCardRotated.countPoints(playerField));
     }

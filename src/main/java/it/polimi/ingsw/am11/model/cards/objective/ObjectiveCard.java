@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.model.cards.objective;
 
 import it.polimi.ingsw.am11.model.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.model.cards.utils.Item;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
@@ -102,7 +102,7 @@ public abstract sealed class ObjectiveCard implements CardIdentity
      */
     public int hasItemRequirements(@NotNull Item item) {
         switch (item) {
-            case Color color -> {
+            case GameColor color -> {
                 return Objects.requireNonNull(getColorRequirements().get(color));
             }
             case Symbol symbol -> {
@@ -128,7 +128,7 @@ public abstract sealed class ObjectiveCard implements CardIdentity
      *
      * @return A <code>Map</code> of the color requirements of this <code>ObjectiveCard</code>.
      */
-    public abstract @NotNull Map<Color, Integer> getColorRequirements();
+    public abstract @NotNull Map<GameColor, Integer> getColorRequirements();
 
     /**
      * Retrieves the symbol requirements of this <code>ObjectiveCard</code>.

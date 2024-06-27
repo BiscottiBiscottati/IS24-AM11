@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.model.cards.objective.collecting;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.model.cards.objective.CollectingCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.Validator;
@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 public final class ColorCollectCard extends CollectingCard {
 
-    private final @NotNull ImmutableMap<Color, Integer> colorToCollect;
+    private final @NotNull ImmutableMap<GameColor, Integer> colorToCollect;
 
 
     private ColorCollectCard(@NotNull Builder builder) {
@@ -36,7 +36,7 @@ public final class ColorCollectCard extends CollectingCard {
     }
 
     @Override
-    public @NotNull Map<Color, Integer> getColorRequirements() {
+    public @NotNull Map<GameColor, Integer> getColorRequirements() {
         return this.colorToCollect;
     }
 
@@ -48,7 +48,7 @@ public final class ColorCollectCard extends CollectingCard {
     @Override
     public int countPoints(
             @NotNull PlayerField playerField) {
-        return Arrays.stream(Color.values())
+        return Arrays.stream(GameColor.values())
                      .filter(color -> Objects.requireNonNull(colorToCollect.get(color)) != 0)
                      .map(color -> playerField.getNumberOf(color) /
                                    Objects.requireNonNull(colorToCollect.get(color)))
@@ -61,19 +61,19 @@ public final class ColorCollectCard extends CollectingCard {
 
     public static class Builder extends CollectingCard.Builder<ColorCollectCard> {
 
-        private final @NotNull EnumMap<Color, Integer> colorToCollect;
+        private final @NotNull EnumMap<GameColor, Integer> colorToCollect;
 
         public Builder(int id, int points) {
             super(id, points);
-            this.colorToCollect = EnumMapUtils.init(Color.class, 0);
+            this.colorToCollect = EnumMapUtils.init(GameColor.class, 0);
         }
 
-        public @NotNull Builder hasColor(Color color, int quantity) {
+        public @NotNull Builder hasColor(GameColor color, int quantity) {
             this.colorToCollect.put(color, quantity);
             return this;
         }
 
-        public @NotNull Builder hasColor(Color color) {
+        public @NotNull Builder hasColor(GameColor color) {
             this.colorToCollect.compute(color, (key, value) -> value == null ? 0 : value + 1);
             return this;
         }

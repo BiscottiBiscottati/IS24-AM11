@@ -4,8 +4,8 @@ import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.Item;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.model.utils.memento.CardContainerMemento;
@@ -148,15 +148,15 @@ public class CardContainer {
     /**
      * Checks if the color of the card in the container equals the specified color.
      * <p>
-     * This method takes a {@link Color} object as a parameter and compares it with the color of the
-     * card in the container. If the specified color is not null and equals the color of the card,
-     * this method returns true; otherwise, it returns false.
+     * This method takes a {@link GameColor} object as a parameter and compares it with the color of
+     * the card in the container. If the specified color is not null and equals the color of the
+     * card, this method returns true; otherwise, it returns false.
      *
      * @param color The color to compare with the color of the card.
      * @return true if the specified color is not null and equals the color of the card, false
      * otherwise.
      */
-    public boolean isColorEquals(@Nullable Color color) {
+    public boolean isColorEquals(@Nullable GameColor color) {
         if (color != null) return this.card.isColorEqual(color);
         return false;
     }

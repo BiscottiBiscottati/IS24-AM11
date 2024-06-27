@@ -27,14 +27,14 @@ class GoldCardTest {
     @BeforeAll
     static void beforeAll() {
         try {
-            goldClassic = new GoldCard.Builder(1, 3, Color.RED)
+            goldClassic = new GoldCard.Builder(1, 3, GameColor.RED)
                     .hasCorner(Corner.TOP_LX)
                     .hasCorner(Corner.TOP_RX, true)
                     .hasPointRequirements(PointsRequirementsType.CLASSIC)
-                    .hasRequirements(Color.RED, 3)
-                    .hasRequirements(Color.GREEN, 1)
+                    .hasRequirements(GameColor.RED, 3)
+                    .hasRequirements(GameColor.GREEN, 1)
                     .build();
-            goldSymbols = new GoldCard.Builder(2, 2, Color.BLUE)
+            goldSymbols = new GoldCard.Builder(2, 2, GameColor.BLUE)
                     .hasCorner(Corner.TOP_LX)
                     .hasCorner(Corner.TOP_RX)
                     .hasCorner(Corner.DOWN_LX, false)
@@ -42,7 +42,7 @@ class GoldCardTest {
                     .hasPointRequirements(PointsRequirementsType.SYMBOLS)
                     .hasSymbolToCollect(Symbol.FEATHER)
                     .build();
-            goldCovering = new GoldCard.Builder(3, 2, Color.PURPLE)
+            goldCovering = new GoldCard.Builder(3, 2, GameColor.PURPLE)
                     .hasCorner(Corner.TOP_LX)
                     .hasCorner(Corner.TOP_RX)
                     .hasPointRequirements(PointsRequirementsType.COVERING_CORNERS)
@@ -82,7 +82,7 @@ class GoldCardTest {
 
     @Test
     void getPlacingRequirements() {
-        for (Color color : Color.values()) {
+        for (GameColor color : GameColor.values()) {
             assertEquals(
                     0,
                     goldSymbols.getPlacingRequirements()
@@ -91,11 +91,11 @@ class GoldCardTest {
         }
         assertEquals(
                 3,
-                goldClassic.getPlacingRequirements().get(Color.RED)
+                goldClassic.getPlacingRequirements().get(GameColor.RED)
         );
         assertEquals(
                 1,
-                goldClassic.getPlacingRequirements().get(Color.GREEN)
+                goldClassic.getPlacingRequirements().get(GameColor.GREEN)
         );
     }
 
@@ -134,21 +134,21 @@ class GoldCardTest {
         assertThrows(IllegalArgumentException.class,
                      () -> new GoldCard.Builder(12, 10, null));
         assertThrows(IllegalArgumentException.class,
-                     () -> new GoldCard.Builder(13, 10, Color.RED)
+                     () -> new GoldCard.Builder(13, 10, GameColor.RED)
                              .hasCorner(null)
         );
         assertThrows(IllegalArgumentException.class,
                      () -> new GoldCard.Builder(14, 10, null));
         assertThrows(IllegalArgumentException.class,
-                     () -> new GoldCard.Builder(15, 10, Color.RED)
+                     () -> new GoldCard.Builder(15, 10, GameColor.RED)
                              .hasCorner(null, true)
         );
         assertThrows(IllegalArgumentException.class,
-                     () -> new GoldCard.Builder(16, 10, Color.RED)
+                     () -> new GoldCard.Builder(16, 10, GameColor.RED)
                              .hasRequirements(null, 10)
         );
         assertThrows(IllegalArgumentException.class,
-                     () -> new GoldCard.Builder(17, 10, Color.RED)
+                     () -> new GoldCard.Builder(17, 10, GameColor.RED)
                              .hasPointRequirements(null)
         );
     }
@@ -156,8 +156,8 @@ class GoldCardTest {
     @Test
     void checkNegativePlacingRequirements() {
         assertThrows(IllegalCardBuildException.class,
-                     () -> new GoldCard.Builder(18, 3, Color.GREEN)
-                             .hasRequirements(Color.BLUE, - 1)
+                     () -> new GoldCard.Builder(18, 3, GameColor.GREEN)
+                             .hasRequirements(GameColor.BLUE, - 1)
                              .build()
         );
     }
@@ -166,7 +166,7 @@ class GoldCardTest {
     void checkNegativePoints() {
         assertThrows(
                 IllegalCardBuildException.class,
-                () -> new GoldCard.Builder(190, - 1, Color.PURPLE)
+                () -> new GoldCard.Builder(190, - 1, GameColor.PURPLE)
                         .build()
         );
     }
@@ -175,7 +175,7 @@ class GoldCardTest {
     void checkNoPointsRequirements() {
         assertThrows(
                 IllegalCardBuildException.class,
-                () -> new GoldCard.Builder(191, 3, Color.PURPLE)
+                () -> new GoldCard.Builder(191, 3, GameColor.PURPLE)
                         .build()
         );
     }
@@ -190,10 +190,10 @@ class GoldCardTest {
 
     @Test
     void getPlacingRequirementsOf() {
-        assertEquals(3, goldClassic.getPlacingRequirementsOf(Color.RED));
-        assertEquals(1, goldClassic.getPlacingRequirementsOf(Color.GREEN));
-        assertEquals(0, goldClassic.getPlacingRequirementsOf(Color.BLUE));
-        assertEquals(0, goldClassic.getPlacingRequirementsOf(Color.PURPLE));
+        assertEquals(3, goldClassic.getPlacingRequirementsOf(GameColor.RED));
+        assertEquals(1, goldClassic.getPlacingRequirementsOf(GameColor.GREEN));
+        assertEquals(0, goldClassic.getPlacingRequirementsOf(GameColor.BLUE));
+        assertEquals(0, goldClassic.getPlacingRequirementsOf(GameColor.PURPLE));
     }
 
     @Test

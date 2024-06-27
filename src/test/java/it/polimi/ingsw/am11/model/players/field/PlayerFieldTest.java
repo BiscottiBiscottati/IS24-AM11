@@ -6,8 +6,8 @@ import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.Item;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
@@ -82,7 +82,7 @@ class PlayerFieldTest {
                    .forEach((color, integer) -> assertEquals(0, integer));
 
         ResourceCard resourceCard = resourceDeck.draw().orElseThrow();
-        Color colorOfCard = resourceCard.getColor();
+        GameColor colorOfCard = resourceCard.getColor();
         assertDoesNotThrow(() -> playerField.place(resourceCard, Position.of(1, 1), false));
         assertEquals(1, playerField.getPlacedCardColours().get(colorOfCard));
     }
@@ -221,7 +221,7 @@ class PlayerFieldTest {
     @Test
     void getNumberOf() {
         Map<Item, Integer> itemCount = new HashMap<>(16);
-        Stream.concat(Stream.of(Color.values()),
+        Stream.concat(Stream.of(GameColor.values()),
                       Stream.of(Symbol.values()))
               .forEach(item -> {
                   assertEquals(0, playerField.getNumberOf(item));
@@ -233,7 +233,7 @@ class PlayerFieldTest {
         assertDoesNotThrow(() -> playerField.placeStartingCard(starterCard, true));
 
         // Checking that colors have been updated and symbol are 0 because of StarterCard retro
-        Stream.of(Color.values())
+        Stream.of(GameColor.values())
               .forEach(color -> {
                   assertEquals(1, playerField.getNumberOf(color));
                   itemCount.put(color, 1);
@@ -257,7 +257,7 @@ class PlayerFieldTest {
               .map(Optional::get)
               .forEach(item -> itemCount.merge(item, 1, Integer::sum));
 
-        Stream.concat(Stream.of(Color.values()), Stream.of(Symbol.values()))
+        Stream.concat(Stream.of(GameColor.values()), Stream.of(Symbol.values()))
               .forEach(item -> assertEquals(itemCount.get(item), playerField.getNumberOf(item)));
 
     }
@@ -270,9 +270,9 @@ class PlayerFieldTest {
         assertTrue(playerField.isAvailable(Position.of(0, 0)));
         assertFalse(playerField.containsCard(card));
 
-        Stream.concat(Stream.of(Color.values()), Stream.of(Symbol.values()))
+        Stream.concat(Stream.of(GameColor.values()), Stream.of(Symbol.values()))
               .forEach(item -> assertEquals(0, playerField.getNumberOf(item)));
-        Stream.of(Color.values())
+        Stream.of(GameColor.values())
               .forEach(color -> assertEquals(0, playerField.getNumberOfPositionedColor(color)));
     }
 
@@ -292,7 +292,7 @@ class PlayerFieldTest {
     void getNumberOfPositionedColor() {
         StarterCard card = starterDeck.draw().orElseThrow();
         assertDoesNotThrow(() -> playerField.placeStartingCard(card, true));
-        Stream.of(Color.values())
+        Stream.of(GameColor.values())
               .forEach(color -> assertEquals(0, playerField.getNumberOfPositionedColor(color)));
 
         ResourceCard resourceCard = resourceDeck.draw().orElseThrow();

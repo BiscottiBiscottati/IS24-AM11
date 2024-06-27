@@ -19,8 +19,8 @@ import java.util.Optional;
 
 public class CardArchitect {
 
-    public static List<String> buildTable(List<Integer> visiblesId, @Nullable Color goldColor,
-                                          @Nullable Color resColor)
+    public static List<String> buildTable(List<Integer> visiblesId, @Nullable GameColor goldColor,
+                                          @Nullable GameColor resColor)
     throws IllegalCardBuildException {
 
         //size: 73*19
@@ -108,7 +108,7 @@ public class CardArchitect {
         char blf = CardPrinter.getLetter(pCard.getItemCorner(Corner.DOWN_LX, false));
         char brf = CardPrinter.getLetter(pCard.getItemCorner(Corner.DOWN_RX, false));
 
-        List<Color> center = new ArrayList<>(pCard.getCenter(true));
+        List<GameColor> center = new ArrayList<>(pCard.getCenter(true));
 
         List<String> topLinesFront = buildCornerLines(tlf, trf, true, pCard);
 
@@ -261,7 +261,7 @@ public class CardArchitect {
     }
 
     // FIXME the center does not print as it says there's a null
-    public static String buildCenterString(@Nullable List<Color> center) {
+    public static String buildCenterString(@Nullable List<GameColor> center) {
         char center1;
         char center2;
         char center3;
@@ -317,13 +317,13 @@ public class CardArchitect {
         return "   error   ";
     }
 
-    public static String buildRequirementsString(Map<Color, Integer> requirements) {
+    public static String buildRequirementsString(Map<GameColor, Integer> requirements) {
         int i;
 
-        int numOfRed = requirements.get(Color.RED);
-        int numOfBlue = requirements.get(Color.BLUE);
-        int numOfGreen = requirements.get(Color.GREEN);
-        int numOfPurple = requirements.get(Color.PURPLE);
+        int numOfRed = requirements.get(GameColor.RED);
+        int numOfBlue = requirements.get(GameColor.BLUE);
+        int numOfGreen = requirements.get(GameColor.GREEN);
+        int numOfPurple = requirements.get(GameColor.PURPLE);
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -360,9 +360,9 @@ public class CardArchitect {
         }
     }
 
-    public static List<String> buildDeck(@Nullable Color color, PlayableCardType type) {
+    public static List<String> buildDeck(@Nullable GameColor color, PlayableCardType type) {
         List<String> deck = new ArrayList<>(8);
-        List<Color> center = new ArrayList<>(1);
+        List<GameColor> center = new ArrayList<>(1);
         center.add(color);
 
         List<String> topLines = buildCornerLines(' ', ' ', true, null);
@@ -460,10 +460,10 @@ public class CardArchitect {
 //              5║        └───────┘  ║
 //              6╚═══════════════════╝
 //              7          id
-                Map<Color, Integer> req = colorCollectCard.getColorRequirements();
-                Color color = Color.RED;
+                Map<GameColor, Integer> req = colorCollectCard.getColorRequirements();
+                GameColor color = GameColor.RED;
 
-                for (Map.Entry<Color, Integer> entry : req.entrySet()) {
+                for (Map.Entry<GameColor, Integer> entry : req.entrySet()) {
                     if (entry.getValue() > 0) {
                         color = entry.getKey();
                         break;
@@ -526,7 +526,7 @@ public class CardArchitect {
 
                 line1 = line1 + "═ Pattern: ══╗";
 
-                List<List<Color>> pattern = tripletCard.getPattern();
+                List<List<GameColor>> pattern = tripletCard.getPattern();
 
                 if (! tripletCard.isFlipped()) {
                     line2 = line2 + "    ┌──│ " + pattern.get(0).get(2).getTUICode() + " │ ║";
@@ -554,7 +554,7 @@ public class CardArchitect {
 
                 line1 = line1 + "═ Pattern: ══╗";
 
-                List<List<Color>> pattern = lCard.getPattern();
+                List<List<GameColor>> pattern = lCard.getPattern();
 
                 if (! lCard.isFlipped() && ! lCard.isRotated()) {
                     line2 = line2 + "  ┌──│ " + pattern.get(0).get(2).getTUICode() + " │   ║";

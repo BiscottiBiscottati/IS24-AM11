@@ -2,8 +2,8 @@ package it.polimi.ingsw.am11.model.cards.utils;
 
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -24,7 +24,7 @@ public sealed interface FieldCard extends CardIdentity
      * @param color the color to check
      * @return true if equal, false otherwise
      */
-    boolean isColorEqual(@NotNull Color color);
+    boolean isColorEqual(@NotNull GameColor color);
 
     /**
      * This method is part of the <code>FieldCard</code> interface.
@@ -60,5 +60,5 @@ public sealed interface FieldCard extends CardIdentity
     CornerContainer getItemCorner(@NotNull Corner corner, boolean isRetro);
 
     @NotNull
-    Set<Color> getCenter(boolean isRetro);
+    Set<GameColor> getCenter(boolean isRetro);
 }

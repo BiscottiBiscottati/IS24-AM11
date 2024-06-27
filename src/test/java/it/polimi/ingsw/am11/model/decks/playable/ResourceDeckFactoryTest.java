@@ -3,8 +3,8 @@ package it.polimi.ingsw.am11.model.decks.playable;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Availability;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
@@ -98,7 +98,7 @@ class ResourceDeckFactoryTest {
                                 assertTrue(card.isFrontAvailable(corner));
                                 assertEquals(symbol, card.getItemCorner(corner));
                             }
-                            case Color color -> {
+                            case GameColor color -> {
                                 assertTrue(card.isFrontAvailable(corner));
                                 assertEquals(color, card.getItemCorner(corner));
                             }

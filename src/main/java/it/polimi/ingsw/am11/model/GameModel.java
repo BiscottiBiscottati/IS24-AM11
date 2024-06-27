@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.model;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
@@ -320,7 +320,7 @@ public interface GameModel {
      * @return the color of the top card of the specified type
      * @throws GameStatusException if the game is not ongoing
      */
-    Optional<Color> getDeckTop(@NotNull PlayableCardType type) throws GameStatusException;
+    Optional<GameColor> getDeckTop(@NotNull PlayableCardType type) throws GameStatusException;
 
     /**
      * Used to get a Set of the candidate objectives of the specified player

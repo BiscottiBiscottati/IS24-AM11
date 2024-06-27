@@ -1,11 +1,12 @@
 package it.polimi.ingsw.am11.view.client;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.SequencedMap;
@@ -23,7 +24,7 @@ public interface ClientViewUpdater {
      * @param type  the type of the deck
      * @param color the color of the card
      */
-    void updateDeckTop(@NotNull PlayableCardType type, Color color);
+    void updateDeckTop(@NotNull PlayableCardType type, @Nullable GameColor color);
 
     /**
      * Update the field of the player, it can place or remove a card, if the removeMode is true the

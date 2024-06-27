@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.model.cards.objective.positioning;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.field.PositionManager;
@@ -16,12 +16,13 @@ import java.util.Set;
 
 public class TripletPatternCounter implements PatternCounter {
 
-    private final Color tripletColor;
+    private final GameColor tripletColor;
     private final EnumMap<PatternPurpose, Corner> cornersPurpose;
     private final @NotNull Set<Position> seenPositions;
     private int numberOfPatterns;
 
-    protected TripletPatternCounter(Color color, EnumMap<PatternPurpose, Corner> cornersPurpose) {
+    protected TripletPatternCounter(GameColor color,
+                                    EnumMap<PatternPurpose, Corner> cornersPurpose) {
         this.seenPositions = new HashSet<>(16);
         this.numberOfPatterns = 0;
         this.tripletColor = color;

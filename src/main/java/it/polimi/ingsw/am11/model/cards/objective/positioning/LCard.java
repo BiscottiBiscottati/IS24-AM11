@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.model.cards.objective.positioning;
 
 import it.polimi.ingsw.am11.model.cards.objective.PositioningCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
@@ -21,9 +21,9 @@ public final class LCard extends PositioningCard {
 
     private final boolean isFlippedFlag;
     private final boolean isRotatedFlag;
-    private final @Nullable Color primaryColor;
-    private final @Nullable Color secondaryColor;
-    private final @NotNull List<List<Color>> pattern;
+    private final @Nullable GameColor primaryColor;
+    private final @Nullable GameColor secondaryColor;
+    private final @NotNull List<List<GameColor>> pattern;
 
     private final @NotNull PatternCounter counter;
 
@@ -74,7 +74,7 @@ public final class LCard extends PositioningCard {
         Set<Position> positions = getType().getPositions(isFlippedFlag,
                                                          isRotatedFlag).orElseThrow();
 
-        this.pattern = MatrixFiller.fillMatrixWithNull(4, 3, Color.class);
+        this.pattern = MatrixFiller.fillMatrixWithNull(4, 3, GameColor.class);
 
         for (Position position : positions) {
             this.pattern.get(position.y()).set(position.x(), position.x() == 1 ?
@@ -107,24 +107,24 @@ public final class LCard extends PositioningCard {
     }
 
     @Override
-    public @NotNull List<List<Color>> getPattern() {
+    public @NotNull List<List<GameColor>> getPattern() {
 
         return pattern;
     }
 
     public static class Builder extends PositioningCard.Builder<LCard> {
 
-        private final @NotNull EnumMap<Color, Integer> colorRequirements;
+        private final @NotNull EnumMap<GameColor, Integer> colorRequirements;
         private boolean isFlippedFlag;
         private boolean isRotatedFlag;
-        private @Nullable Color primaryColor;
-        private @Nullable Color secondaryColor;
+        private @Nullable GameColor primaryColor;
+        private @Nullable GameColor secondaryColor;
 
         public Builder(int id, int points) {
             super(id, points);
             this.primaryColor = null;
             this.secondaryColor = null;
-            this.colorRequirements = EnumMapUtils.init(Color.class, 0);
+            this.colorRequirements = EnumMapUtils.init(GameColor.class, 0);
         }
 
         public @NotNull Builder isFlipped(boolean flippedFlag) {
@@ -137,14 +137,14 @@ public final class LCard extends PositioningCard {
             return this;
         }
 
-        public @NotNull Builder hasPrimaryColor(@NotNull Color color) {
+        public @NotNull Builder hasPrimaryColor(@NotNull GameColor color) {
             if (this.primaryColor != null) this.colorRequirements.put(this.primaryColor, 0);
             this.primaryColor = color;
             this.colorRequirements.put(color, 2);
             return this;
         }
 
-        public @NotNull Builder hasSecondaryColor(@NotNull Color color) {
+        public @NotNull Builder hasSecondaryColor(@NotNull GameColor color) {
             if (this.secondaryColor != null) this.colorRequirements.put(this.secondaryColor, 0);
             this.secondaryColor = color;
             this.colorRequirements.put(color, 1);

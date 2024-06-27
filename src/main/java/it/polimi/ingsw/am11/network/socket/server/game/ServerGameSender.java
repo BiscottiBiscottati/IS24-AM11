@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.network.socket.server.game;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
@@ -12,6 +12,7 @@ import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
 import it.polimi.ingsw.am11.network.socket.utils.ContextJSON;
 import it.polimi.ingsw.am11.network.socket.utils.JsonFactory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,11 +85,11 @@ public record ServerGameSender(@NotNull PrintWriter out)
     }
 
     @Override
-    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @Nullable GameColor color) {
         ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
         json.put("method", "updateDeckTop");
         json.put("type", type.toString().toUpperCase());
-        json.put("color", color.toString().toUpperCase());
+        json.put("color", color == null ? "null" : color.toString());
         out.println(json);
     }
 

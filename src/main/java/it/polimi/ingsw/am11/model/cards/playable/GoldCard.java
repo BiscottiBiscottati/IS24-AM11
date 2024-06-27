@@ -29,7 +29,7 @@ import java.util.Optional;
 public final class GoldCard extends PlayableCard {
 
     private final @NotNull ImmutableMap<Corner, CornerContainer> availableCornersOrSymbol;
-    private final @NotNull ImmutableMap<Color, Integer> colorPlacingRequirements;
+    private final @NotNull ImmutableMap<GameColor, Integer> colorPlacingRequirements;
     private final PointsRequirementsType pointsRequirements;
     private final @Nullable Symbol symbolToCollect;
 
@@ -58,12 +58,12 @@ public final class GoldCard extends PlayableCard {
     }
 
     @Override
-    public @NotNull Map<Color, Integer> getPlacingRequirements() {
+    public @NotNull Map<GameColor, Integer> getPlacingRequirements() {
         return colorPlacingRequirements;
     }
 
     @Override
-    public int getPlacingRequirementsOf(Color color) {
+    public int getPlacingRequirementsOf(GameColor color) {
         return colorPlacingRequirements.get(color);
     }
 
@@ -126,7 +126,7 @@ public final class GoldCard extends PlayableCard {
     public static class Builder extends PlayableCard.Builder<GoldCard> {
 
         private final @NotNull EnumMap<Corner, CornerContainer> availableCornersOrSymbol;
-        private final @NotNull EnumMap<Color, Integer> colorPlacingRequirements;
+        private final @NotNull EnumMap<GameColor, Integer> colorPlacingRequirements;
         private PointsRequirementsType pointsRequirements;
         private @Nullable Symbol symbolToCollect;
 
@@ -139,12 +139,12 @@ public final class GoldCard extends PlayableCard {
          * @param primaryColor the color of the card
          * @throws IllegalCardBuildException if points are negative
          */
-        public Builder(int id, int points, @NotNull Color primaryColor)
+        public Builder(int id, int points, @NotNull GameColor primaryColor)
         throws IllegalCardBuildException {
             super(id, points, primaryColor);
             this.availableCornersOrSymbol = EnumMapUtils.init(Corner.class,
                                                               Availability.NOT_USABLE);
-            this.colorPlacingRequirements = EnumMapUtils.init(Color.class, 0);
+            this.colorPlacingRequirements = EnumMapUtils.init(GameColor.class, 0);
             this.symbolToCollect = null;
         }
 
@@ -210,7 +210,7 @@ public final class GoldCard extends PlayableCard {
          * @param number The number of the specified color needed on the field
          * @return The modified builder
          */
-        public @NotNull Builder hasRequirements(@NotNull Color color, Integer number) {
+        public @NotNull Builder hasRequirements(@NotNull GameColor color, Integer number) {
             colorPlacingRequirements.put(color, number);
             return this;
         }

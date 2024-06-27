@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.network.RMI.remote.game;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
@@ -24,7 +24,8 @@ public interface ClientGameUpdatesInterface extends Remote {
 
     void receiveCandidateObjective(@NotNull Set<Integer> cardsId) throws RemoteException;
 
-    void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) throws RemoteException;
+    void updateDeckTop(@NotNull PlayableCardType type, @NotNull GameColor color)
+    throws RemoteException;
 
     void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro)
     throws RemoteException;

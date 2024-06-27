@@ -3,8 +3,8 @@ package it.polimi.ingsw.am11.model.decks.playable;
 import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PointsRequirementsType;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
@@ -63,7 +63,7 @@ public class GoldDeckFactory {
                 GoldCard.Builder cardBuilder = new GoldCard.Builder(
                         id,
                         resultSet.getInt("points"),
-                        Color.valueOf(resultSet.getString("card_color")));
+                        GameColor.valueOf(resultSet.getString("card_color")));
 
                 // Set the front corners, placing requirements, and points requirements of the card
                 setFrontCorners(cardBuilder, resultSet);
@@ -98,7 +98,7 @@ public class GoldDeckFactory {
             supportStatement.setInt(1, result.getInt("placing_requirements_id"));
             try (ResultSet placingResult = supportStatement.executeQuery()) {
                 placingResult.next();
-                for (Color color : Color.values()) {
+                for (GameColor color : GameColor.values()) {
                     cardBuilder.hasRequirements(color, placingResult.getInt(color.getColumnName()));
                 }
             }

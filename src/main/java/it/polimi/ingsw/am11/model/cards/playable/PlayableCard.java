@@ -31,7 +31,7 @@ import java.util.Set;
  */
 public abstract sealed class PlayableCard implements
                                           FieldCard permits GoldCard, ResourceCard {
-    private final @NotNull Color color;
+    private final @NotNull GameColor color;
     private final int points;
     private final int id;
 
@@ -88,7 +88,7 @@ public abstract sealed class PlayableCard implements
      */
     @Contract(pure = true)
     @NotNull
-    public Color getColor() {
+    public GameColor getColor() {
         return color;
     }
 
@@ -160,7 +160,7 @@ public abstract sealed class PlayableCard implements
      * field in int
      */
     @Contract(pure = true)
-    public abstract @NotNull Map<Color, Integer> getPlacingRequirements();
+    public abstract @NotNull Map<GameColor, Integer> getPlacingRequirements();
 
     /**
      * Retrieves the number of the given color required to place this card on the field.
@@ -169,7 +169,7 @@ public abstract sealed class PlayableCard implements
      * @return The number of colors required to place this card on the field.
      */
     @Contract(pure = true)
-    public abstract int getPlacingRequirementsOf(Color color);
+    public abstract int getPlacingRequirementsOf(GameColor color);
 
     /**
      * Gets the method needed to score this card points value.
@@ -224,7 +224,7 @@ public abstract sealed class PlayableCard implements
      */
     @Contract(pure = true)
     @Override
-    public boolean isColorEqual(@NotNull Color color) {
+    public boolean isColorEqual(@NotNull GameColor color) {
         return this.color == color;
     }
 
@@ -238,7 +238,7 @@ public abstract sealed class PlayableCard implements
      * @param isRetro A boolean indicating whether the card is in retro mode.
      * @return A <code>Set</code> of <code>Color</code> representing the center color of the card.
      */
-    public @NotNull Set<Color> getCenter(boolean isRetro) {
+    public @NotNull Set<GameColor> getCenter(boolean isRetro) {
         if (isRetro) return Set.of(this.color);
         else return Set.of();
     }
@@ -282,7 +282,7 @@ public abstract sealed class PlayableCard implements
      */
     public abstract static class Builder<T extends PlayableCard> {
         private final int cardPoints;
-        private final @NotNull Color primaryColor;
+        private final @NotNull GameColor primaryColor;
 
         private final int id;
 
@@ -295,7 +295,7 @@ public abstract sealed class PlayableCard implements
          * @param primaryColor Color of the card to create
          * @throws IllegalCardBuildException if cardPoints are negative
          */
-        protected Builder(int id, int cardPoints, @NotNull Color primaryColor)
+        protected Builder(int id, int cardPoints, @NotNull GameColor primaryColor)
         throws IllegalCardBuildException {
             if (cardPoints < 0)
                 throw new IllegalCardBuildException("Points cannot be less than 0!");

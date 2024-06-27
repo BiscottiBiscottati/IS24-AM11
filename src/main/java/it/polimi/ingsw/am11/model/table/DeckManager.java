@@ -5,7 +5,7 @@ import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
@@ -57,7 +57,7 @@ public class DeckManager {
      * @param type the type of the deck
      * @return the color of the top card of the deck, if present
      */
-    public @NotNull Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
+    public @NotNull Optional<GameColor> getDeckTop(@NotNull PlayableCardType type) {
         return switch (type) {
             case GOLD -> goldDeck.peekTop().map(GoldCard::getColor);
             case RESOURCE -> resourceDeck.peekTop().map(ResourceCard::getColor);

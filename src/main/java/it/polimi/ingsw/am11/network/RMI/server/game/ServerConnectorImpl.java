@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.network.RMI.server.game;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
@@ -120,7 +120,7 @@ public record ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConn
     }
 
     @Override
-    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull GameColor color) {
         executorService.submit(() -> {
             try {
                 remoteConnector.updateDeckTop(type, color);

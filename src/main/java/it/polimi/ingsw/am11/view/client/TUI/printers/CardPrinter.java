@@ -1,20 +1,14 @@
 package it.polimi.ingsw.am11.view.client.TUI.printers;
 
-import com.google.common.base.Strings;
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
-import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
-import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
-import it.polimi.ingsw.am11.model.cards.objective.positioning.TripletCard;
 import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.model.cards.utils.CardIdentity;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
@@ -23,18 +17,11 @@ import it.polimi.ingsw.am11.model.decks.playable.GoldDeckFactory;
 import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
-import it.polimi.ingsw.am11.view.client.TUI.utils.Line;
-import it.polimi.ingsw.am11.view.client.TUI.utils.Matrix;
-import it.polimi.ingsw.am11.view.client.TUI.utils.Part;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.Nullable;
-import org.w3c.dom.ls.LSOutput;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.IntStream;
 
 
 public class CardPrinter {
@@ -43,20 +30,6 @@ public class CardPrinter {
     private static final Deck<StarterCard> starterDeck = StarterDeckFactory.createDeck();
     private static final Deck<ResourceCard> resDeck = ResourceDeckFactory.createDeck();
     private static final Deck<ObjectiveCard> objDeck = ObjectiveDeckFactory.createDeck();
-
-    public static void printObjectives(List<Integer> ids) throws IllegalCardBuildException {
-        List<List<String>> allObj = new ArrayList<>();
-        for (Integer id : ids) {
-            allObj.add(CardArchitect.buildObjective(id));
-        }
-
-        for (int i = 0; i < 7; i++) {
-            for (List<String> singObj : allObj) {
-                System.out.print(singObj.get(i));
-            }
-            System.out.print("\n");
-        }
-    }
 
     public static void printCardFrontAndBack(int id) throws IllegalCardBuildException {
         if (starterDeck.getCardById(id).isPresent()) {
@@ -73,7 +46,7 @@ public class CardPrinter {
             char blb = getLetter(sCard.getItemCorner(Corner.DOWN_LX, true));
             char brb = getLetter(sCard.getItemCorner(Corner.DOWN_RX, true));
 
-            List<Color> center = new ArrayList<>(sCard.getCenter(false));
+            List<GameColor> center = new ArrayList<>(sCard.getCenter(false));
 
             List<String> topLinesFront = CardArchitect.buildCornerLines(tlf, trf, true, null);
             List<String> topLinesBack = CardArchitect.buildCornerLines(tlb, trb, true, null);
@@ -120,7 +93,7 @@ public class CardPrinter {
             char blb = getLetter(pCard.getItemCorner(Corner.DOWN_LX, true));
             char brb = getLetter(pCard.getItemCorner(Corner.DOWN_RX, true));
 
-            List<Color> center = new ArrayList<>(pCard.getCenter(true));
+            List<GameColor> center = new ArrayList<>(pCard.getCenter(true));
 
             List<String> topLinesFront = CardArchitect.buildCornerLines(tlf, trf, true, null);
             List<String> topLinesBack = CardArchitect.buildCornerLines(tlb, trb, true, null);
@@ -164,10 +137,10 @@ public class CardPrinter {
         }
 
         switch (container.getItem().orElseThrow()) {
-            case Color.RED -> {return 'R';}
-            case Color.BLUE -> {return 'B';}
-            case Color.GREEN -> {return 'G';}
-            case Color.PURPLE -> {return 'P';}
+            case GameColor.RED -> {return 'R';}
+            case GameColor.BLUE -> {return 'B';}
+            case GameColor.GREEN -> {return 'G';}
+            case GameColor.PURPLE -> {return 'P';}
             case Symbol.FEATHER -> {return 'F';}
             case Symbol.GLASS -> {return 'I';}
             case Symbol.PAPER -> {return 'S';}
@@ -181,14 +154,17 @@ public class CardPrinter {
         return " ".repeat(Math.max(0, num));
     }
 
-    public static char getColorLetter(Color color) {
-        switch (color.getColumnName()) {
-            case "red" -> {return 'R';}
-            case "blue" -> {return 'B';}
-            case "green" -> {return 'G';}
-            case "purple" -> {return 'P';}
-            default -> throw new RuntimeException("Color is not one of the default ones: "
-                                                  + color.getItem().orElseThrow());
+    public static void printObjectives(List<Integer> ids) throws IllegalCardBuildException {
+        List<List<String>> allObj = new ArrayList<>();
+        for (Integer id : ids) {
+            allObj.add(CardArchitect.buildObjective(id));
+        }
+
+        for (int i = 0; i < 7; i++) {
+            for (List<String> singObj : allObj) {
+                System.out.print(singObj.get(i));
+            }
+            System.out.print("\n");
         }
     }
 
@@ -197,6 +173,17 @@ public class CardPrinter {
                       .map(PlayableCard.class::cast)
                       .or(() -> goldDeck.getCardById(id))
                       .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
+    }
+
+    public static char getColorLetter(GameColor color) {
+        switch (color.getColumnName()) {
+            case "red" -> {return 'R';}
+            case "blue" -> {return 'B';}
+            case "green" -> {return 'G';}
+            case "purple" -> {return 'P';}
+            default -> throw new RuntimeException("Color is not one of the default ones: "
+                                                  + color.getItem().orElseThrow());
+        }
     }
 
     public static FieldCard getFieldCard(int id) throws IllegalCardBuildException {

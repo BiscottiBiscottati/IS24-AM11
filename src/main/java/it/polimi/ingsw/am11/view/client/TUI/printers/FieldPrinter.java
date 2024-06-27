@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.view.client.TUI.printers;
 
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.MatrixFiller;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
@@ -292,10 +292,10 @@ public class FieldPrinter {
         String centers;
         int numOfCenters;
         try {
-            Set<Color> colors =
+            Set<GameColor> colors =
                     CardPrinter.getFieldCard(card.getCard().getId()).getCenter(card.isRetro());
             numOfCenters = colors.size();
-            centers = colors.stream().map(Color::getTUICode).reduce("", String::concat);
+            centers = colors.stream().map(GameColor::getTUICode).reduce("", String::concat);
         } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }

@@ -15,7 +15,7 @@ import java.util.Optional;
  * <p>
  * Can be <code>RED</code>, <code>BLUE</code>, <code>GREEN</code> or <code>PURPLE</code>.
  */
-public enum Color implements CornerContainer, Item {
+public enum GameColor implements CornerContainer, Item {
     RED("red", AnsiHelper.addColors("R", Ansi.Color.RED)),
     BLUE("blue", AnsiHelper.addColors("B", Ansi.Color.BLUE)),
     GREEN("green", AnsiHelper.addColors("G", Ansi.Color.GREEN)),
@@ -24,7 +24,7 @@ public enum Color implements CornerContainer, Item {
     private final String columnName;
     private final String TUIRepresentation;
 
-    Color(String columnName, String TUIRepresentation) {
+    GameColor(String columnName, String TUIRepresentation) {
         this.columnName = columnName;
         this.TUIRepresentation = TUIRepresentation;
     }

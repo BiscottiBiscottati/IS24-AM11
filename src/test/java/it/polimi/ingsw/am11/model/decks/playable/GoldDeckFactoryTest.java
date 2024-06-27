@@ -3,8 +3,8 @@ package it.polimi.ingsw.am11.model.decks.playable;
 import it.polimi.ingsw.am11.model.cards.playable.GoldCard;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Availability;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
@@ -103,7 +103,7 @@ class GoldDeckFactoryTest {
                     placingReqQuery.setInt(1, placingRequirementsId);
                     try (ResultSet placingResult = placingReqQuery.executeQuery()) {
                         placingResult.next();
-                        for (Color color : Color.values()) {
+                        for (GameColor color : GameColor.values()) {
                             assertEquals(placingResult.getInt(color.getColumnName()),
                                          card.getPlacingRequirements().get(color));
                         }

@@ -3,8 +3,8 @@ package it.polimi.ingsw.am11.model.decks.playable;
 import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
@@ -59,7 +59,7 @@ public class ResourceDeckFactory {
                 ResourceCard.Builder cardBuilder = new ResourceCard.Builder(
                         id,
                         resultSet.getInt("points"),
-                        Color.valueOf(resultSet.getString("card_color"))
+                        GameColor.valueOf(resultSet.getString("card_color"))
                 );
 
                 // Set the front corners of the card

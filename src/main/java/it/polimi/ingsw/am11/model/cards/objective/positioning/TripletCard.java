@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.model.cards.objective.positioning;
 
 import it.polimi.ingsw.am11.model.cards.objective.PositioningCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
@@ -19,9 +19,9 @@ import java.util.Set;
 
 public final class TripletCard extends PositioningCard {
     private final boolean flippedFlag;
-    private final @Nullable Color colorOfPattern;
+    private final @Nullable GameColor colorOfPattern;
     private final @NotNull PatternCounter counter;
-    private final @NotNull List<List<Color>> pattern;
+    private final @NotNull List<List<GameColor>> pattern;
 
     private TripletCard(@NotNull Builder builder) {
         super(builder, builder.colorRequirements);
@@ -52,7 +52,7 @@ public final class TripletCard extends PositioningCard {
 
         Set<Position> positions = getType().getPositions(flippedFlag, false).orElseThrow();
 
-        this.pattern = MatrixFiller.fillMatrixWithNull(4, 3, Color.class);
+        this.pattern = MatrixFiller.fillMatrixWithNull(4, 3, GameColor.class);
 
         positions.forEach(position -> {
             this.pattern.get(position.y()).set(position.x(), colorOfPattern);
@@ -78,15 +78,15 @@ public final class TripletCard extends PositioningCard {
     }
 
     @Override
-    public @NotNull List<List<Color>> getPattern() {
+    public @NotNull List<List<GameColor>> getPattern() {
         return pattern;
     }
 
     public static class Builder extends PositioningCard.Builder<TripletCard> {
 
-        private EnumMap<Color, Integer> colorRequirements;
+        private EnumMap<GameColor, Integer> colorRequirements;
         private boolean flippedFlag;
-        private @Nullable Color colorOfPattern;
+        private @Nullable GameColor colorOfPattern;
 
         public Builder(int id, int points) {
             super(id, points);
@@ -99,9 +99,9 @@ public final class TripletCard extends PositioningCard {
             return this;
         }
 
-        public @NotNull Builder hasColor(@NotNull Color color) {
+        public @NotNull Builder hasColor(@NotNull GameColor color) {
             this.colorOfPattern = color;
-            this.colorRequirements = EnumMapUtils.init(Color.class, 0);
+            this.colorRequirements = EnumMapUtils.init(GameColor.class, 0);
             this.colorRequirements.put(color, 3);
             return this;
         }

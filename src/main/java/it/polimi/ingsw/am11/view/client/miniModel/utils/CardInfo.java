@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.playable.ResourceCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.objective.ObjectiveDeckFactory;
@@ -42,7 +42,7 @@ public class CardInfo {
                       .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
     }
 
-    public static Color getPlayabelCardColor(int id) throws IllegalCardBuildException {
+    public static GameColor getPlayabelCardColor(int id) throws IllegalCardBuildException {
         return resDeck.getCardById(id)
                       .map(ResourceCard::getColor)
                       .or(() -> goldDeck.getCardById(id).map(GoldCard::getColor))

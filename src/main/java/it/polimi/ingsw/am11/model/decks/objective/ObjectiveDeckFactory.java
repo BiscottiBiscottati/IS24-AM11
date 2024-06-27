@@ -6,7 +6,7 @@ import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
 import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
 import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
 import it.polimi.ingsw.am11.model.cards.objective.positioning.TripletCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
@@ -87,7 +87,7 @@ public class ObjectiveDeckFactory {
                         resultSet.getInt("points")
                 );
 
-                for (Color color : Color.values()) {
+                for (GameColor color : GameColor.values()) {
                     cardBuilder.hasColor(color, resultSet.getInt(color.getColumnName()));
                 }
                 builder.put(id, cardBuilder.build());
@@ -123,9 +123,10 @@ public class ObjectiveDeckFactory {
                 );
                 cardBuilder.isFlipped(resultSet.getBoolean("is_flipped"));
                 cardBuilder.isRotated(resultSet.getBoolean("is_rotated"));
-                cardBuilder.hasPrimaryColor(Color.valueOf(resultSet.getString("primary_color")));
+                cardBuilder.hasPrimaryColor(
+                        GameColor.valueOf(resultSet.getString("primary_color")));
                 cardBuilder.hasSecondaryColor(
-                        Color.valueOf(resultSet.getString("secondary_color")));
+                        GameColor.valueOf(resultSet.getString("secondary_color")));
                 builder.put(id, cardBuilder.build());
             }
         }
@@ -138,7 +139,7 @@ public class ObjectiveDeckFactory {
                         resultSet.getInt("points")
                 );
                 cardBuilder.isFlipped(resultSet.getBoolean("is_flipped"));
-                cardBuilder.hasColor(Color.valueOf(resultSet.getString("primary_color")));
+                cardBuilder.hasColor(GameColor.valueOf(resultSet.getString("primary_color")));
                 builder.put(id, cardBuilder.build());
             }
         }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.network.RMI.client.game;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
@@ -47,7 +47,7 @@ public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater,
     }
 
     @Override
-    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull GameColor color) {
         viewUpdater.updateDeckTop(type, color);
 
     }

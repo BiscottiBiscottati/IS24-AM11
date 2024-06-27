@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.model.cards.objective.collecting;
 
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.ObjectiveCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
@@ -34,25 +34,25 @@ class ColorCollectCardTest {
 
         try {
             card = new ColorCollectCard.Builder(1, 2)
-                    .hasColor(Color.BLUE)
-                    .hasColor(Color.BLUE)
-                    .hasColor(Color.BLUE)
+                    .hasColor(GameColor.BLUE)
+                    .hasColor(GameColor.BLUE)
+                    .hasColor(GameColor.BLUE)
                     .build();
 
             card2 = new ColorCollectCard.Builder(2, 2)
-                    .hasColor(Color.BLUE, 3)
+                    .hasColor(GameColor.BLUE, 3)
                     .build();
 
             card3 = new ColorCollectCard.Builder(3, 2)
-                    .hasColor(Color.BLUE, 3)
-                    .hasColor(Color.BLUE)
+                    .hasColor(GameColor.BLUE, 3)
+                    .hasColor(GameColor.BLUE)
                     .build();
 
             cardWithMixedColors = new ColorCollectCard.Builder(4, 2)
-                    .hasColor(Color.BLUE)
-                    .hasColor(Color.GREEN)
-                    .hasColor(Color.RED)
-                    .hasColor(Color.PURPLE)
+                    .hasColor(GameColor.BLUE)
+                    .hasColor(GameColor.GREEN)
+                    .hasColor(GameColor.RED)
+                    .hasColor(GameColor.PURPLE)
                     .build();
         } catch (IllegalCardBuildException e) {
             fail(e);
@@ -68,13 +68,13 @@ class ColorCollectCardTest {
 
     @Test
     void getColorRequirements() {
-        assertEquals(3, card.getColorRequirements().get(Color.BLUE));
-        assertEquals(3, card2.getColorRequirements().get(Color.BLUE));
-        assertEquals(4, card3.getColorRequirements().get(Color.BLUE));
+        assertEquals(3, card.getColorRequirements().get(GameColor.BLUE));
+        assertEquals(3, card2.getColorRequirements().get(GameColor.BLUE));
+        assertEquals(4, card3.getColorRequirements().get(GameColor.BLUE));
 
-        for (Color color : Arrays.stream(Color.values())
-                                 .filter(key -> key != Color.BLUE)
-                                 .toList()) {
+        for (GameColor color : Arrays.stream(GameColor.values())
+                                     .filter(key -> key != GameColor.BLUE)
+                                     .toList()) {
             assertEquals(0, card.getColorRequirements().get(color));
             assertEquals(0, card2.getColorRequirements().get(color));
             assertEquals(0, card3.getColorRequirements().get(color));
@@ -98,30 +98,30 @@ class ColorCollectCardTest {
     @Test
     void countPoints() {
 
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(4);
+        Mockito.when(playerField.getNumberOf(GameColor.BLUE)).thenReturn(4);
         assertEquals(2, card.countPoints(playerField));
 
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(8);
+        Mockito.when(playerField.getNumberOf(GameColor.BLUE)).thenReturn(8);
         assertEquals(4, card.countPoints(playerField));
 
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(12);
+        Mockito.when(playerField.getNumberOf(GameColor.BLUE)).thenReturn(12);
         assertEquals(8, card.countPoints(playerField));
 
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(0);
+        Mockito.when(playerField.getNumberOf(GameColor.BLUE)).thenReturn(0);
         assertEquals(0, card.countPoints(playerField));
 
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(- 1);
+        Mockito.when(playerField.getNumberOf(GameColor.BLUE)).thenReturn(- 1);
         assertEquals(0, card.countPoints(playerField));
 
-        Arrays.stream(Color.values()).forEach(
+        Arrays.stream(GameColor.values()).forEach(
                 color -> Mockito.when(playerField.getNumberOf(color)).thenReturn(1)
         );
         assertEquals(2, cardWithMixedColors.countPoints(playerField));
 
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(30);
+        Mockito.when(playerField.getNumberOf(GameColor.BLUE)).thenReturn(30);
         assertEquals(2, cardWithMixedColors.countPoints(playerField));
 
-        Mockito.when(playerField.getNumberOf(Color.BLUE)).thenReturn(- 1);
+        Mockito.when(playerField.getNumberOf(GameColor.BLUE)).thenReturn(- 1);
         assertEquals(0, cardWithMixedColors.countPoints(playerField));
     }
 

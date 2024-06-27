@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am11.model.cards.objective.positioning;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PatternPurpose;
 import it.polimi.ingsw.am11.model.players.field.PlayerField;
 import it.polimi.ingsw.am11.model.players.field.PositionManager;
@@ -13,9 +13,9 @@ import java.util.*;
 
 public class LPatternCounter implements PatternCounter {
 
-    private final Color primaryColor;
+    private final GameColor primaryColor;
 
-    private final Color secondaryColor;
+    private final GameColor secondaryColor;
 
     private final EnumMap<PatternPurpose, List<Corner>> cornersPurpose;
 
@@ -23,8 +23,8 @@ public class LPatternCounter implements PatternCounter {
 
     private int numberOfPatterns;
 
-    public LPatternCounter(Color primaryColor,
-                           Color secondaryColor,
+    public LPatternCounter(GameColor primaryColor,
+                           GameColor secondaryColor,
                            EnumMap<PatternPurpose, List<Corner>> cornersPurpose) {
         this.primaryColor = primaryColor;
         this.secondaryColor = secondaryColor;

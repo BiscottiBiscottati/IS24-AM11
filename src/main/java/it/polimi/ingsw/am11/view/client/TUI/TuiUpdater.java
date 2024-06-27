@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.view.client.TUI;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
@@ -70,7 +70,7 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      * @param color the color of the card
      */
     @Override
-    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull GameColor color) {
         LOGGER.debug("{} picked a card from the {} deck, the {} deck top card is now {}",
                      model.getCurrentTurn(), type.getName(), type.getName(), color.getColumnName());
 

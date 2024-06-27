@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.view.client.GUI.utils;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
@@ -28,7 +28,8 @@ public class GuiResources {
     private static final String RETRO_CARD_PATH = "windows/cards/retro/%s_%s.png";
     private static final String FRONT_CARD_PATH = "windows/cards/front/%d.png";
 
-    public static @Nullable Image getTopDeck(@NotNull PlayableCardType type, @NotNull Color color) {
+    public static @Nullable Image getTopDeck(@NotNull PlayableCardType type,
+                                             @NotNull GameColor color) {
         return getImageOf(String.format(RETRO_CARD_PATH,
                                         color.getColumnName(),
                                         type.getColumnName()));
@@ -84,7 +85,7 @@ public class GuiResources {
                                             "_Retro.png"));
         } else {
             PlayableCardType typeName;
-            Color colorName;
+            GameColor colorName;
             try {
                 typeName = CardInfo.getPlayableCardType(cardId);
                 colorName = CardInfo.getPlayabelCardColor(cardId);
@@ -98,7 +99,7 @@ public class GuiResources {
     }
 
     public static @Nullable Image getRetro(@NotNull PlayableCardType typeName,
-                                           @NotNull Color colorName) {
+                                           @NotNull GameColor colorName) {
         return getImageOf(String.format(RETRO_CARD_PATH,
                                         colorName.getColumnName(),
                                         typeName.getColumnName()));

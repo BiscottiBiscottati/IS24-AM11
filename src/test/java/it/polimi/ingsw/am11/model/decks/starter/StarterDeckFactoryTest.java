@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am11.model.decks.starter;
 
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
 import org.junit.jupiter.api.AfterEach;
@@ -95,7 +95,7 @@ class StarterDeckFactoryTest {
                 // Testing the center colors
                 try (ResultSet centerResult = centerStatement.executeQuery()) {
                     centerResult.next();
-                    for (Color color : Color.values()) {
+                    for (GameColor color : GameColor.values()) {
                         if (centerResult.getBoolean(color.getColumnName())) {
                             assertTrue(card.getCenterColorsFront().contains(color));
                         } else assertFalse(card.getCenterColorsFront().contains(color));

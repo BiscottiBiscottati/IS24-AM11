@@ -2,7 +2,7 @@ package it.polimi.ingsw.am11.model.cards.utils;
 
 import com.google.common.base.Enums;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Availability;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,10 +17,10 @@ import java.util.Optional;
  * item inside will have <code>Availability.USABLE</code>
  *
  * @see Availability
- * @see Color
+ * @see GameColor
  * @see Symbol
  */
-public sealed interface CornerContainer permits Availability, Color, Symbol {
+public sealed interface CornerContainer permits Availability, GameColor, Symbol {
 
     /**
      * A method to get the corner container with the given name.
@@ -33,8 +33,8 @@ public sealed interface CornerContainer permits Availability, Color, Symbol {
     static @NotNull CornerContainer of(@NotNull String name) {
         if (Enums.getIfPresent(Availability.class, name).isPresent()) {
             return Availability.valueOf(name);
-        } else if (Enums.getIfPresent(Color.class, name).isPresent()) {
-            return Color.valueOf(name);
+        } else if (Enums.getIfPresent(GameColor.class, name).isPresent()) {
+            return GameColor.valueOf(name);
         } else if (Enums.getIfPresent(Symbol.class, name).isPresent()) {
             return Symbol.valueOf(name);
         } else {

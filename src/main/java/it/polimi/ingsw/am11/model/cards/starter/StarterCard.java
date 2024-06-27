@@ -7,8 +7,8 @@ import com.google.common.collect.Sets;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Availability;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.Contract;
@@ -41,8 +41,8 @@ public final class StarterCard implements FieldCard {
 
     private final int id;
     private final @NotNull ImmutableMap<Corner, CornerContainer> availableCornersFront;
-    private final @NotNull ImmutableMap<Corner, Color> availableColorCornerRetro;
-    private final @NotNull ImmutableSet<Color> centerColorsFront;
+    private final @NotNull ImmutableMap<Corner, GameColor> availableColorCornerRetro;
+    private final @NotNull ImmutableSet<GameColor> centerColorsFront;
 
     /**
      * Constructor for the <code>StarterCard</code> class.
@@ -109,7 +109,7 @@ public final class StarterCard implements FieldCard {
      * @return The <code>Color</code> corresponding to the given corner.
      */
     @NotNull
-    public Color checkRetroColorIn(@NotNull Corner corner) {
+    public GameColor checkRetroColorIn(@NotNull Corner corner) {
         return availableColorCornerRetro.get(corner);
     }
 
@@ -124,12 +124,12 @@ public final class StarterCard implements FieldCard {
      * colors on the front of the card.
      */
     @NotNull
-    public Set<Color> getCenterColorsFront() {
+    public Set<GameColor> getCenterColorsFront() {
         return centerColorsFront;
     }
 
     @Override
-    public boolean isColorEqual(@NotNull Color color) {
+    public boolean isColorEqual(@NotNull GameColor color) {
         return false;
     }
 
@@ -144,8 +144,8 @@ public final class StarterCard implements FieldCard {
         else return availableCornersFront.get(corner);
     }
 
-    public @NotNull Set<Color> getCenter(boolean isRetro) {
-        if (isRetro) return EnumSet.noneOf(Color.class);
+    public @NotNull Set<GameColor> getCenter(boolean isRetro) {
+        if (isRetro) return EnumSet.noneOf(GameColor.class);
         else return centerColorsFront;
     }
 
@@ -191,16 +191,16 @@ public final class StarterCard implements FieldCard {
      * {@snippet id = 'StarterCardBuilderExample' lang = 'java':
      * StarterCard card = new StarterCard.Builder(3)
      *        .hasItemFrontIn(Corner.DOWN_LX , Availability.USABLE)
-     *        .hasColorRetroIn(Corner.TOP_RX , Color.GREEN)
-     *        .hasCenterColors(Color.PURPLE)
+     *        .hasColorRetroIn(Corner.TOP_RX , GameColor.GREEN)
+     *        .hasCenterColors(GameColor.PURPLE)
      *        .build();
      *}
      */
     public static class Builder {
         private final int id;
         private final @NotNull EnumMap<Corner, CornerContainer> availableCornersFront;
-        private final @NotNull EnumMap<Corner, Color> availableColorCornerBack;
-        private final @NotNull EnumSet<Color> centerColors;
+        private final @NotNull EnumMap<Corner, GameColor> availableColorCornerBack;
+        private final @NotNull EnumSet<GameColor> centerColors;
 
         /**
          * Constructor for the <code>Builder</code> class.
@@ -220,7 +220,7 @@ public final class StarterCard implements FieldCard {
             this.id = id;
             this.availableCornersFront = EnumMapUtils.init(Corner.class, Availability.NOT_USABLE);
             this.availableColorCornerBack = new EnumMap<>(Corner.class);
-            this.centerColors = EnumSet.noneOf(Color.class);
+            this.centerColors = EnumSet.noneOf(GameColor.class);
         }
 
         /**
@@ -249,7 +249,7 @@ public final class StarterCard implements FieldCard {
         throws IllegalCardBuildException {
             switch (item) {
                 case Availability availability -> availableCornersFront.put(corner, availability);
-                case Color color -> availableCornersFront.put(corner, color);
+                case GameColor color -> availableCornersFront.put(corner, color);
                 default -> throw new IllegalCardBuildException("Illegal Item for starter:" + item);
             }
             return this;
@@ -270,7 +270,7 @@ public final class StarterCard implements FieldCard {
          * @param color  The color to be set for the given corner.
          * @return This <code>Builder</code> instance (for chaining).
          */
-        public @NotNull Builder hasColorRetroIn(@NotNull Corner corner, @NotNull Color color) {
+        public @NotNull Builder hasColorRetroIn(@NotNull Corner corner, @NotNull GameColor color) {
             availableColorCornerBack.put(corner, color);
             return this;
         }
@@ -286,7 +286,7 @@ public final class StarterCard implements FieldCard {
          * @param colors The set of colors to be added to the center of the card.
          * @return This <code>Builder</code> instance (for chaining).
          */
-        public @NotNull Builder hasCenterColors(@NotNull Set<Color> colors) {
+        public @NotNull Builder hasCenterColors(@NotNull Set<GameColor> colors) {
             centerColors.addAll(colors);
             return this;
         }
@@ -302,7 +302,7 @@ public final class StarterCard implements FieldCard {
          * @param color The color to be added to the center of the card.
          * @return This <code>Builder</code> instance (for chaining).
          */
-        public @NotNull Builder hasCenterColor(@NotNull Color color) {
+        public @NotNull Builder hasCenterColor(@NotNull GameColor color) {
             centerColors.add(color);
             return this;
         }

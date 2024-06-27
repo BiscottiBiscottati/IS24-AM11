@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.model.cards.objective.positioning.LCard;
 import it.polimi.ingsw.am11.model.cards.objective.positioning.TripletCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import org.jetbrains.annotations.NotNull;
@@ -36,16 +36,16 @@ public abstract sealed class PositioningCard extends ObjectiveCard
             )
     );
 
-    private final @NotNull ImmutableMap<Color, Integer> colorRequirements;
+    private final @NotNull ImmutableMap<GameColor, Integer> colorRequirements;
 
     protected PositioningCard(@NotNull Builder<?> builder,
-                              @NotNull EnumMap<Color, Integer> colorRequirements) {
+                              @NotNull EnumMap<GameColor, Integer> colorRequirements) {
         super(builder);
         this.colorRequirements = Maps.immutableEnumMap(colorRequirements);
     }
 
     @Override
-    public @NotNull Map<Color, Integer> getColorRequirements() {
+    public @NotNull Map<GameColor, Integer> getColorRequirements() {
         return colorRequirements;
     }
 
@@ -54,7 +54,7 @@ public abstract sealed class PositioningCard extends ObjectiveCard
         return SYMBOL_REQUIREMENTS;
     }
 
-    public abstract List<List<Color>> getPattern();
+    public abstract List<List<GameColor>> getPattern();
 
     public static abstract class Builder<T extends PositioningCard>
             extends ObjectiveCard.Builder<PositioningCard> {

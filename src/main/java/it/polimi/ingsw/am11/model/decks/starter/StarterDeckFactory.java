@@ -3,8 +3,8 @@ package it.polimi.ingsw.am11.model.decks.starter;
 import com.google.common.collect.ImmutableMap;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.decks.Deck;
 import it.polimi.ingsw.am11.model.decks.utils.DatabaseConstants;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
@@ -89,7 +89,7 @@ public class StarterDeckFactory {
                     CornerContainer.of(result.getString("front_" + corner.getColumnName())));
             cardBuilder.hasColorRetroIn(
                     corner,
-                    Color.valueOf(result.getString("retro_" + corner.getColumnName())));
+                    GameColor.valueOf(result.getString("retro_" + corner.getColumnName())));
         }
     }
 
@@ -100,7 +100,7 @@ public class StarterDeckFactory {
         centerStatement.setInt(1, result.getInt("front_center_color_id"));
         try (ResultSet centerResult = centerStatement.executeQuery()) {
             centerResult.next();
-            for (Color color : Color.values()) {
+            for (GameColor color : GameColor.values()) {
                 if (centerResult.getBoolean(color.getColumnName())) {
                     cardBuilder.hasCenterColor(color);
                 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am11.view.client.GUI;
 
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
@@ -16,6 +16,7 @@ import it.polimi.ingsw.am11.view.client.GUI.windows.WaitingRoomPage;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import it.polimi.ingsw.am11.view.client.miniModel.exceptions.SyncIssueException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,10 +62,10 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      * @param color the color of the card
      */
     @Override
-    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @Nullable GameColor color) {
         LOGGER.debug("{} picked a card from the {} deck, the {} deck top card is now {}",
                      miniGameModel.getCurrentTurn(), type.getName(), type.getName(),
-                     color.getColumnName());
+                     color);
 
         miniGameModel.table().refreshDeckTop(type, color);
         codexNaturalis.updateDeckTop(type, color);

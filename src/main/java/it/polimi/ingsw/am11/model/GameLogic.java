@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard;
 import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.decks.utils.CardDecoder;
 import it.polimi.ingsw.am11.model.exceptions.*;
@@ -844,7 +844,7 @@ public class GameLogic implements GameModel {
      * @throws GameStatusException if the game is not ongoing
      */
     @Override
-    public @NotNull Optional<Color> getDeckTop(@NotNull PlayableCardType type)
+    public @NotNull Optional<GameColor> getDeckTop(@NotNull PlayableCardType type)
     throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException("the game is not ongoing");

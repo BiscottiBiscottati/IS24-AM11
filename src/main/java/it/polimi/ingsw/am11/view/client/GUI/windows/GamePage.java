@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am11.view.client.GUI.windows;
 
 import it.polimi.ingsw.am11.model.cards.utils.enums.Corner;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.field.PositionManager;
@@ -34,6 +35,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -273,18 +275,25 @@ public class GamePage {
     }
 
 
-    public void updateDeckTop(PlayableCardType type,
-                              it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {
+    public void updateDeckTop(@NotNull PlayableCardType type,
+                              @Nullable GameColor color) {
         Platform.runLater(() -> {
-            if (type == PlayableCardType.RESOURCE) {
-                Image resourceDeckImage = GuiResources.getTopDeck(PlayableCardType.RESOURCE, color);
-                if (resourceDeckImage != null) {
-                    resourceDeck.setImage(resourceDeckImage);
+            switch (type) {
+                case RESOURCE -> {
+                    resourceDeck.setVisible(true);
+                    Optional.ofNullable(color)
+                            .map(gameColor -> GuiResources.getTopDeck(type, gameColor))
+                            .ifPresentOrElse(
+                                    image -> resourceDeck.setImage(image),
+                                    () -> resourceDeck.setVisible(false));
                 }
-            } else if (type == PlayableCardType.GOLD) {
-                Image goldDeckImage = GuiResources.getTopDeck(PlayableCardType.GOLD, color);
-                if (goldDeckImage != null) {
-                    goldDeck.setImage(goldDeckImage);
+                case GOLD -> {
+                    goldDeck.setVisible(true);
+                    Optional.ofNullable(color)
+                            .map(gameColor -> GuiResources.getTopDeck(type, gameColor))
+                            .ifPresentOrElse(
+                                    image -> resourceDeck.setImage(image),
+                                    () -> goldDeck.setVisible(false));
                 }
             }
             resourceDeck.getParent().layout();
@@ -657,7 +666,7 @@ public class GamePage {
             } else {
                 try {
                     PlayableCardType type = CardInfo.getPlayableCardType(id);
-                    it.polimi.ingsw.am11.model.cards.utils.enums.Color color =
+                    GameColor color =
                             CardInfo.getPlayabelCardColor(
                                     handIDs.get(handPos));
                     cardImage = GuiResources.getRetro(type, color);

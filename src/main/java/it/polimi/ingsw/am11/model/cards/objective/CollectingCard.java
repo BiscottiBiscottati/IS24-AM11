@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.model.cards.objective.collecting.ColorCollectCard;
 import it.polimi.ingsw.am11.model.cards.objective.collecting.SymbolCollectCard;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.cards.utils.enums.Symbol;
 import it.polimi.ingsw.am11.model.cards.utils.helpers.EnumMapUtils;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
@@ -29,8 +29,8 @@ public abstract sealed class CollectingCard extends ObjectiveCard
             EnumMapUtils.init(Symbol.class, 0)
     );
 
-    private static final ImmutableMap<Color, Integer> COLOR_TO_COLLECT = Maps.immutableEnumMap(
-            EnumMapUtils.init(Color.class, 0)
+    private static final ImmutableMap<GameColor, Integer> COLOR_TO_COLLECT = Maps.immutableEnumMap(
+            EnumMapUtils.init(GameColor.class, 0)
     );
 
     protected CollectingCard(@NotNull Builder<?> builder) {
@@ -45,7 +45,7 @@ public abstract sealed class CollectingCard extends ObjectiveCard
      * @return a map of the color requirements of the card.
      */
     @Override
-    public @NotNull Map<Color, Integer> getColorRequirements() {
+    public @NotNull Map<GameColor, Integer> getColorRequirements() {
         return COLOR_TO_COLLECT;
     }
 

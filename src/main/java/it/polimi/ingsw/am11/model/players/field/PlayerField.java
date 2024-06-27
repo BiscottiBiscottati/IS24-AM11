@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.model.cards.playable.PlayableCard;
 import it.polimi.ingsw.am11.model.cards.starter.StarterCard;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.Item;
-import it.polimi.ingsw.am11.model.cards.utils.enums.Color;
+import it.polimi.ingsw.am11.model.cards.utils.enums.GameColor;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
 import it.polimi.ingsw.am11.model.players.utils.Position;
@@ -179,11 +179,11 @@ public class PlayerField {
         return this.positionManager.getCardsPositioned();
     }
 
-    public Map<Color, Integer> getPlacedCardColours() {
+    public Map<GameColor, Integer> getPlacedCardColours() {
         return this.itemManager.getPlacedCardColors();
     }
 
-    public int getNumberOfPositionedColor(@NotNull Color color) {
+    public int getNumberOfPositionedColor(@NotNull GameColor color) {
         return this.itemManager.getPlacedCardOf(color);
     }
 
