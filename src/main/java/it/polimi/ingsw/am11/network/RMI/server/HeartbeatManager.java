@@ -34,8 +34,13 @@ public class HeartbeatManager implements HeartbeatInterface {
     private void checkHeartbeat() {
         long now = System.currentTimeMillis();
         lastHeartbeat.forEach((nickname, last) -> {
-            if (now - last > HEARTBEAT_TIMEOUT) {
-                LOGGER.info("RMI: Heartbeat timeout for player {}", nickname);
+            long interval = now - last;
+            if (interval > HEARTBEAT_INTERVAL)
+                LOGGER.debug("SERVER RMI: Ping interval missed {}ms for player {}",
+                             interval, nickname);
+            if (interval > HEARTBEAT_TIMEOUT) {
+                LOGGER.info("SERVER RMI: Heartbeat timeout for player {} of {}ms",
+                            nickname, interval);
                 disconnectService.submit(() -> {
                     lastHeartbeat.remove(nickname);
                     CentralController.INSTANCE.disconnectPlayer(nickname);

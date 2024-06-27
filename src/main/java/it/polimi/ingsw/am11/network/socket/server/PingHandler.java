@@ -40,10 +40,11 @@ public class PingHandler implements Runnable {
         long last = lastPing.get();
         if (last == - 1) return;
         long interval = now - last;
-        if (interval + 10 > PING_INTERVAL) LOGGER.debug("SERVER TCP: Ping interval missed: {}ms",
-                                                        interval);
+        if (interval > PING_INTERVAL) LOGGER.debug("SERVER TCP: Ping interval missed {}ms from {}",
+                                                   interval, clientSocket.getInetAddress());
         if (interval > PING_TIMEOUT) {
-            LOGGER.info("SERVER TCP: A ping timeout occurred: {}ms", interval);
+            LOGGER.info("SERVER TCP: A ping timeout occurred {}ms from {}",
+                        interval, clientSocket.getInetAddress());
             try {
                 clientSocket.close();
             } catch (Exception e) {
