@@ -19,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
@@ -163,7 +162,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
         miniGameModel.addCandidateObjectives(cardId);
 
-        codexNaturalis.receiveCandidateObjective();
+        CodexNaturalis.receiveCandidateObjective();
     }
 
     @Override
@@ -173,7 +172,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         miniGameModel.setMyName(candidateNick);
         miniGameModel.setGodPlayer(candidateNick);
 
-        codexNaturalis.notifyGodPlayer();
+        CodexNaturalis.notifyGodPlayer();
     }
 
     @Override
@@ -215,7 +214,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
             }
             case CHOOSING_OBJECTIVES -> {
                 WaitingRoomPage.hideWaitingRoomPage();
-                codexNaturalis.receiveCandidateObjective();
+                CodexNaturalis.receiveCandidateObjective();
                 SetObjCardsPage.showObjCardsPage();
             }
             case SETUP -> {

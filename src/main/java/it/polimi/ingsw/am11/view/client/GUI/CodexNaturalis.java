@@ -96,6 +96,18 @@ public class CodexNaturalis extends Application {
         gamePage = fxmlLoader.getController();
     }
 
+    public static void receiveCandidateObjective() {
+        Platform.runLater(() -> {
+
+            WaitingRoomPage.hideWaitingRoomPage();
+            SetObjCardsPage.showObjCardsPage();
+        });
+    }
+
+    public static void notifyGodPlayer() {
+        SetNumOfPlayersPage.showSetNumOfPlayersPage();
+    }
+
     public StackPane getSmallRoot() {
         return smallRoot;
     }
@@ -104,32 +116,26 @@ public class CodexNaturalis extends Application {
         return guiActuator;
     }
 
-
     public void updateDeckTop(PlayableCardType type, Color color) {
         gamePage.updateDeckTop(type, color);
     }
-
 
     public void updateField(String nickname, int x, int y, int cardId, boolean isRetro) {
         gamePage.printCardsOnField(nickname);
     }
 
-
     public void updateShownPlayable(Integer previousId, Integer currentId) {
         gamePage.updateShownPlayable();
     }
-
 
     public void updateTurnChange(String nickname) {
         gamePage.updateTurnChange(nickname);
         gamePage.printCardsOnField(nickname);
     }
 
-
     public void updatePlayerPoint(String nickname, int points) {
         gamePage.updatePlayerPoints(nickname, points);
     }
-
 
     public void updateGameStatus(GameStatus status) {
         switch (status) {
@@ -143,27 +149,84 @@ public class CodexNaturalis extends Application {
         }
     }
 
+    private void showGamePage() {
+        smallRoot.setVisible(false);
+        primaryStage.close();
+        primaryStage = new Stage();
+        primaryStage.setResizable(true);
+        bigRoot.setVisible(true);
+        primaryStage.setScene(
+                new Scene(bigRoot, 1080,
+                          720,
+                          javafx.scene.paint.Color.BLACK));
+        primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
+        primaryStage.show();
+        primaryStage.setFullScreen(true);
+    }
+
+    public void reconnectedToServer(GameStatus status) {
+        switch (status) {
+            case LAST_TURN, ARMAGEDDON -> Platform.runLater(this::showGamePage);
+            case ENDED -> {
+                Platform.runLater(this::showGamePage);
+                gamePage.gameEnded();
+            }
+            case ONGOING -> {
+                try {
+                    gamePage.createGamePage(this);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                Platform.runLater(() -> {
+                    showGamePage();
+                    gamePage.placeStarterCard();
+                    gamePage.updateHand();
+                    gamePage.updateCommonObj();
+                    gamePage.updatePersonalObjective();
+                    gamePage.updateShownPlayable();
+                    gamePage.updateDeckTop(PlayableCardType.RESOURCE,
+                                           getMiniGameModel().table().getDeckTop(
+                                                   PlayableCardType.RESOURCE));
+                    gamePage.updateDeckTop(PlayableCardType.GOLD,
+                                           getMiniGameModel().table().getDeckTop(
+                                                   PlayableCardType.GOLD));
+                    gamePage.printCardsOnField(getMiniGameModel().myName());
+                    gamePage.updateTurnChange(getMiniGameModel().getCurrentTurn());
+                    SequencedSet<String> players = getMiniGameModel().getPlayers();
+                    players.forEach(player -> gamePage.updatePlayerPoints(player,
+                                                                          getMiniGameModel().
+                                                                                  getCliPlayer(
+                                                                                          player).
+                                                                                  getPoints()));
+                });
+            }
+        }
+    }
+
+    public MiniGameModel getMiniGameModel() {
+        return guiUpdater.getMiniGameModel();
+    }
 
     public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
         gamePage.updateCommonObj();
     }
-
 
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
         LOGGER.debug("Leaderboard received");
         gamePage.gameEnded();
     }
 
-
     public void updateHand(int cardId, boolean removeMode) {
         gamePage.updateHand();
     }
 
-
     public void updatePersonalObjective(int cardId, boolean removeMode) {
         gamePage.updatePersonalObjective();
     }
-
 
     public void receiveStarterCard() {
         Platform.runLater(() -> {
@@ -177,30 +240,13 @@ public class CodexNaturalis extends Application {
         });
     }
 
-
-    public void receiveCandidateObjective() {
-        Platform.runLater(() -> {
-
-            WaitingRoomPage.hideWaitingRoomPage();
-            SetObjCardsPage.showObjCardsPage();
-        });
-    }
-
-
-    public void notifyGodPlayer() {
-        SetNumOfPlayersPage.showSetNumOfPlayersPage();
-    }
-
-
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
 
     }
 
-
     public void updateNumOfPlayers(int numOfPlayers) {
 
     }
-
 
     public void disconnectedFromServer() {
         Platform.runLater(() -> {
@@ -238,79 +284,12 @@ public class CodexNaturalis extends Application {
         });
     }
 
-    public MiniGameModel getMiniGameModel() {
-        return guiUpdater.getMiniGameModel();
-    }
-
-
     public void updateChat() {
         LOGGER.debug("Chat updated");
         gamePage.updateChat();
     }
 
-
     public void showErrorGamePage(String message) {
         gamePage.showErrorMessage(message);
-    }
-
-
-    public void reconnectedToServer(GameStatus status) {
-        switch (status) {
-            case LAST_TURN -> {
-                Platform.runLater(this::showGamePage);
-
-            }
-            case ARMAGEDDON -> {
-                Platform.runLater(this::showGamePage);
-            }
-            case ENDED -> {
-                Platform.runLater(this::showGamePage);
-                gamePage.gameEnded();
-            }
-            case ONGOING -> {
-                try {
-                    gamePage.createGamePage(this);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                Platform.runLater(() -> {
-                    showGamePage();
-                    gamePage.placeStarterCard();
-                    gamePage.updateHand();
-                    gamePage.updateCommonObj();
-                    gamePage.updatePersonalObjective();
-                    gamePage.updateShownPlayable();
-                    gamePage.updateDeckTop(PlayableCardType.RESOURCE,
-                                           getMiniGameModel().table().getDeckTop(
-                                                   PlayableCardType.RESOURCE));
-                    gamePage.updateDeckTop(PlayableCardType.GOLD,
-                                           getMiniGameModel().table().getDeckTop(
-                                                   PlayableCardType.GOLD));
-                    gamePage.printCardsOnField(getMiniGameModel().myName());
-                    gamePage.updateTurnChange(getMiniGameModel().getCurrentTurn());
-                    SequencedSet<String> players = getMiniGameModel().getPlayers();
-                    players.forEach(player -> gamePage.updatePlayerPoints(player,
-                                                                          getMiniGameModel().
-                                                                                  getCliPlayer(
-                                                                                          player).
-                                                                                  getPoints()));
-                });
-            }
-        }
-    }
-
-    private void showGamePage() {
-        smallRoot.setVisible(false);
-        primaryStage.close();
-        primaryStage = new Stage();
-        primaryStage.setResizable(true);
-        bigRoot.setVisible(true);
-        primaryStage.setScene(
-                new Scene(bigRoot, 1080,
-                          720,
-                          javafx.scene.paint.Color.BLACK));
-        primaryStage.initStyle(StageStyle.DECORATED);
-        primaryStage.show();
-        primaryStage.setFullScreen(true);
     }
 }
