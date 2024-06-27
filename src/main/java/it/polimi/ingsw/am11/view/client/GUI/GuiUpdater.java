@@ -62,7 +62,6 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
             miniGameModel.getCliPlayer(nickname).getField()
                          .place(new Position(x, y), cardId, isRetro);
         } catch (SyncIssueException e) {
-            //TODO handle this exception
             throw new RuntimeException(e);
         }
         codexNaturalis.updateField(nickname, x, y, cardId, isRetro);

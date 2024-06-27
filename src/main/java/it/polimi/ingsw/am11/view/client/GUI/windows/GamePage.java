@@ -360,7 +360,7 @@ public class GamePage {
         });
     }
 
-    public void createButtonsForAvailablePositions() {
+    private void createButtonsForAvailablePositions() {
         Platform.runLater(() -> {
             availablePositions = miniGameModel.getCliPlayer(
                     miniGameModel.myName()).getField().getAvailablePositions();
@@ -463,6 +463,9 @@ public class GamePage {
                                 nickname).getField().getCardsPositioned();
 
                 recursivePrinter(placedCards, cardsPositioned, new Position(0, 0));
+            } else if (currentSeenField.equals(miniGameModel.myName()) &&
+                       ! miniGameModel.getCurrentTurn().equals(miniGameModel.myName())) {
+                cardField.getChildren().removeIf(Rectangle.class::isInstance);
             }
         });
     }
@@ -737,7 +740,6 @@ public class GamePage {
                         commentField.clear();
                         return;
                     }
-                    guiActuator.sendPrivateMessage(player, comment);
                     isPrivate = true;
                 }
             }
