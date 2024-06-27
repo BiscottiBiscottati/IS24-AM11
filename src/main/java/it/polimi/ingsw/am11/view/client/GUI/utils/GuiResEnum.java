@@ -23,7 +23,8 @@ public enum GuiResEnum {
     PURPLE_GLD_RTR("elements/purple_gold.png"),
     RED_GLD_RTR("elements/red_gold.png"),
     GAME_BACKGROUND("elements/gamePageBG.png"),
-    OBJ_CARD("elements/objective.png");
+    OBJ_CARD("elements/objective.png"),
+    BEEP("/beep-02.mp3");
 
     private final String fileName;
 

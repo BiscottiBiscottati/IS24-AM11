@@ -26,7 +26,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull IllegalPlayerSpaceActionException ex) {
         LOGGER.debug("IllegalPlayerSpaceActionException {}", ex.getMessage());
-        codexNaturalis.showErrorGamePage("You can't place a worker in that space");
+        codexNaturalis.showErrorGamePage("You can't place a card in that position");
     }
 
     @Override

@@ -769,6 +769,8 @@ public class GamePage {
                 }
             });
 
+
+            closeBtn = new Button("Close");
             closeBtn.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
             closeBtn.setFont(FontManager.getFont(FontsEnum.CLOISTER_BLACK, 20));
             closeBtn.setTextFill(Color.web("#351F17"));
