@@ -137,11 +137,6 @@ public class GamePage {
     private double xOffset;
     private double yOffset;
     private VBox commentsBox;
-    Media drawCardSound;
-    Media changeFieldSound;
-    MediaPlayer mediaPlayer;
-    MediaPlayer mediaPlayer1;
-
 
     public GamePage() {
     }
@@ -172,15 +167,6 @@ public class GamePage {
         miniGameModel = codexNaturalis.getMiniGameModel();
         guiActuator = codexNaturalis.getGuiActuator();
         currentSeenField = miniGameModel.myName();
-        drawCardSound = new Media(Objects.requireNonNull(getClass()
-                                                                 .getResource("/draw_card.mp3"))
-                                         .toExternalForm());
-        mediaPlayer = new MediaPlayer(drawCardSound);
-        changeFieldSound = new Media(Objects.requireNonNull(getClass()
-                                                                 .getResource("/change_field.mp3"))
-                                         .toExternalForm());
-        mediaPlayer1 = new MediaPlayer(changeFieldSound);
-
         errorLabel.setVisible(false);
         lastTurnLabel.setVisible(false);
         finalLB.setVisible(false);
@@ -365,7 +351,6 @@ public class GamePage {
             signal.setVisible(false);
             signal.setOnMouseClicked(event -> {
                 if (selectedPosition != null) {
-                    mediaPlayer.play();
                     guiActuator.placeCard(selectedPosition.x(), selectedPosition.y(),
                                           handIDs.get(selectedHandPose),
                                           handRetro.get(selectedHandPose));
@@ -439,7 +424,6 @@ public class GamePage {
 
     public void printCardsOnField(String nickname) {
         Platform.runLater(() -> {
-            mediaPlayer1.play();
             if (currentSeenField.equals(nickname)) {
                 if (currentSeenField.equals(miniGameModel.myName()) &&
                     miniGameModel.myName().equals(miniGameModel.getCurrentTurn())) {
@@ -541,21 +525,18 @@ public class GamePage {
 
     public void pickFromGoldDeck(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
-            mediaPlayer.play();
             guiActuator.drawCard(false, PlayableCardType.GOLD, 0);
         });
     }
 
     public void pickFromResDeck(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
-            mediaPlayer.play();
             guiActuator.drawCard(false, PlayableCardType.RESOURCE, 0);
         });
     }
 
     public void chooseVis1(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
-            mediaPlayer.play();
             guiActuator.drawCard(true, PlayableCardType.GOLD,
                                  shownPlayable.getFirst());
         });
@@ -563,7 +544,6 @@ public class GamePage {
 
     public void chooseVis3(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
-            mediaPlayer.play();
             guiActuator.drawCard(true, PlayableCardType.GOLD,
                                  shownPlayable.get(2));
         });
@@ -571,7 +551,6 @@ public class GamePage {
 
     public void chooseVis2(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
-            mediaPlayer.play();
             guiActuator.drawCard(true, PlayableCardType.GOLD,
                                  shownPlayable.get(1));
         });
@@ -579,7 +558,6 @@ public class GamePage {
 
     public void chooseVis4(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
-            mediaPlayer.play();
             guiActuator.drawCard(true, PlayableCardType.GOLD,
                                  shownPlayable.get(3));
         });
