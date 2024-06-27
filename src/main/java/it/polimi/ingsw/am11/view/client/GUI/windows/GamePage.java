@@ -687,21 +687,36 @@ public class GamePage {
                 "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
 
         sendButton.setOnAction(e -> {
-            String comment = commentField.getText();
-            Stream<String> playerStream = miniGameModel.getPlayers().stream();
-            List<String> playerNames = playerStream.toList();
-            int i = playerNames.size();
+            String comment = commentField.getText().strip();
+            if (comment.isEmpty() || comment.isBlank()) {
+                commentField.clear();
+                return;
+            }
+            List<String> playerNames = new ArrayList<>(miniGameModel.getPlayers());
+            List<String> toPriv = new ArrayList<>();
             boolean isPrivate = false;
-            for (int j = 0; j < i; j++) {
-                if (comment.contains("/" + playerNames.get(j)) &&
-                    ! Objects.equals(miniGameModel.myName(), playerNames.get(j))) {
-                    comment = comment.replace("/" + playerNames.get(j), "");
-                    guiActuator.sendPrivateMessage(playerNames.get(j), comment);
+            for (String player : playerNames) {
+                if (comment.contains("/" + player) &&
+                    ! Objects.equals(miniGameModel.myName(), player)) {
+                    comment = comment.replace("/" + player, "").strip();
+                    toPriv.add(player);
+                    if (comment.isEmpty() || comment.isBlank()) {
+                        commentField.clear();
+                        return;
+                    }
+                    guiActuator.sendPrivateMessage(player, comment);
                     isPrivate = true;
                 }
             }
+
+
             if (! isPrivate) {
                 guiActuator.sendChatMessage(comment);
+            } else {
+                for (String player : toPriv) {
+                    guiActuator.sendPrivateMessage(player, comment);
+
+                }
             }
             commentField.clear();
         });
