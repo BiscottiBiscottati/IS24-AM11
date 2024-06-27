@@ -4,13 +4,19 @@ import it.polimi.ingsw.am11.controller.CentralController;
 import it.polimi.ingsw.am11.network.ServerNetworkManager;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Objects;
 
 /**
  * The main class for the server.
  */
 public class Server {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
+
     /**
      * The main method to start the server, it will open a socket and an RMI connection with the
      * passed ports.
@@ -22,6 +28,13 @@ public class Server {
         if (Objects.equals(parser.getOption("resume").orElseThrow().getValue(), "")) {
             CentralController.INSTANCE.loadMostRecent();
         } else CentralController.INSTANCE.createNewGame();
+
+        try {
+            LOGGER.info("SERVER: Starting server, local ip4 address: {}",
+                        InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException e) {
+            LOGGER.error("SERVER: Error while getting local ip4 address: {}", e.getMessage());
+        }
 
         int socketPort = 0;
         int rmiPort = 0;

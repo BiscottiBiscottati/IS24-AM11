@@ -39,6 +39,7 @@ public class Main {
                   -mode <mode>   Mode to start the application in (gui|tui) (only for client)
                   -v             Print debug logging information
                   -vv            Print trace logging information
+                  -vvv           Print all logging information
                   -resume        Load the most recent save
                 """;
 
@@ -69,6 +70,8 @@ public class Main {
                 .ifPresent(vValue -> rootlogger.setLevel(Level.DEBUG));
         Optional.ofNullable(parser.getOption("vv").orElseThrow().getValue())
                 .ifPresent(vvValue -> rootlogger.setLevel(Level.TRACE));
+        Optional.ofNullable(parser.getOption("vvv").orElseThrow().getValue())
+                .ifPresent(vvvValue -> rootlogger.setLevel(Level.ALL));
 
         String mode = parser.getPositionalArgs().getFirst();
         switch (mode.toLowerCase()) {
@@ -100,6 +103,9 @@ public class Main {
                             false);
         argParser.addOption("vv",
                             "Print trace logging information",
+                            false);
+        argParser.addOption("vvv",
+                            "Print all logging information",
                             false);
         argParser.addOption("resume",
                             "Load the most recent save",
