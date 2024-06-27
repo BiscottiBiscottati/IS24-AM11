@@ -160,6 +160,10 @@ public class CodexNaturalis extends Application {
                           720,
                           javafx.scene.paint.Color.BLACK));
         primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
         primaryStage.show();
         primaryStage.setFullScreen(true);
     }
