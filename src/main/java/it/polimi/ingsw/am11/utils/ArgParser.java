@@ -18,6 +18,12 @@ public class ArgParser {
         this.positionalArgs = new ArrayList<>(4);
     }
 
+    /**
+     * Parse the arguments
+     *
+     * @param args the arguments to parse
+     * @throws ParsingErrorException if an error occurs during parsing
+     */
     public void parse(String @NotNull [] args) throws ParsingErrorException {
         int length = args.length;
         for (int i = 0; i < length; i++) {

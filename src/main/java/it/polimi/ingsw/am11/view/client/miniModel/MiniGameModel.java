@@ -8,6 +8,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
+/**
+ * This is used to store the state of the game in the client, it is a stripped down verion of the
+ * GameLogic class, it is used to store only the necessary information to display the game on the
+ * client side, it has no logic.
+ */
 public class MiniGameModel {
     private final List<String> chatMessages;
     private final SequencedMap<String, CliPlayer> playerMap;

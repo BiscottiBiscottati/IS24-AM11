@@ -16,10 +16,12 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// Its purpose is to effectively actuate the commands parsed by the reader. This is an
-// "intermediate class" between the classes that read input and the interface of the network
-// (CltToNetConnector). It's needed because the connector is not initialized at the beginning of
-// the communication.
+/**
+ * Its purpose is to effectively actuate the commands parsed by the reader. This is an "intermediate
+ * class" between the classes that read input and the interface of the network (CltToNetConnector).
+ * It's needed because the connector is not initialized at the beginning of the communication.
+ */
+
 
 public class Actuator {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);

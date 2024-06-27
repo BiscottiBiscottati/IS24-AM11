@@ -143,18 +143,6 @@ public class PickablesTableTest {
         }
     }
 
-    @Test
-    public void pickObjectiveCard() {
-        // Pick cards from objectiveCardDeck until it's empty
-        while (true) {
-            try {
-                ObjectiveCard objectiveCard = pickablesTable.pickObjectiveCard();
-                Assertions.assertNotNull(objectiveCard);
-            } catch (NoSuchElementException e) {
-                break; // Exit the loop when the deck is empty
-            }
-        }
-    }
 
     @Test
     void getCommonObjectives() {

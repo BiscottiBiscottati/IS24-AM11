@@ -2,6 +2,10 @@ package it.polimi.ingsw.am11.view.client;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Interface that defines the methods that will be called from the network side to notify the user
+ * interface of a change in the chat.
+ */
 public interface ClientChatUpdater {
     /**
      * Receive a message from the chat

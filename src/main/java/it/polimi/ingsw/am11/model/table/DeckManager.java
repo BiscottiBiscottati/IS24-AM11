@@ -30,6 +30,9 @@ public class DeckManager {
         this.starterDeck = StarterDeckFactory.createDeck();
     }
 
+    /**
+     * Method to reset the deck based on its initial idMapping
+     */
     public void reset() {
         goldDeck.reset();
         resourceDeck.reset();
@@ -37,6 +40,9 @@ public class DeckManager {
         starterDeck.reset();
     }
 
+    /**
+     * Method to shuffle the deck, the shuffle is random
+     */
     public void shuffle() {
         goldDeck.shuffle();
         resourceDeck.shuffle();
@@ -44,6 +50,13 @@ public class DeckManager {
         starterDeck.shuffle();
     }
 
+    /**
+     * Used to get the Color of the top card of a deck, if the deck is empty it returns an empty
+     * Optional
+     *
+     * @param type the type of the deck
+     * @return the color of the top card of the deck, if present
+     */
     public @NotNull Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
         return switch (type) {
             case GOLD -> goldDeck.peekTop().map(GoldCard::getColor);
@@ -51,6 +64,13 @@ public class DeckManager {
         };
     }
 
+    /**
+     * Method to draw a card from deck of PlayableCardType cards, if the deck is empty it returns an
+     * empty Optional
+     *
+     * @param type the type of the deck
+     * @return the PlayableCard drawn from the deck, if present
+     */
     public @NotNull Optional<PlayableCard> drawPlayableFrom(@NotNull PlayableCardType type) {
         return switch (type) {
             case GOLD -> goldDeck.draw().map(PlayableCard.class::cast);
@@ -58,14 +78,31 @@ public class DeckManager {
         };
     }
 
+    /**
+     * Method to draw a card from the starter deck, if the deck is empty it returns an empty
+     * Optional
+     *
+     * @return the StarterCard drawn from the deck, if present
+     */
     public @NotNull Optional<StarterCard> drawStarter() {
         return starterDeck.draw();
     }
 
+    /**
+     * Method to draw a card from the objective deck, if the deck is empty it returns an empty
+     *
+     * @return the ObjectiveCard drawn from the deck, if present
+     */
     public @NotNull Optional<ObjectiveCard> drawObjective() {
         return objectiveDeck.draw();
     }
 
+    /**
+     * Method to get the number of remaining cards of a specific PlayableCardType type in the deck
+     *
+     * @param type the type of the deck
+     * @return the number of remaining cards of the specified type
+     */
     public int getRemainingCardsOf(@NotNull PlayableCardType type) {
         return switch (type) {
             case GOLD -> goldDeck.getRemainingCards();
@@ -73,6 +110,12 @@ public class DeckManager {
         };
     }
 
+    /**
+     * Method used to save the state of the decks, it saves also the order of the cards in the
+     * shuffled decks
+     *
+     * @return a DeckManagerMemento containing the state of the decks
+     */
     public @NotNull DeckManagerMemento save() {
         return new DeckManagerMemento(resourceDeck.save(),
                                       goldDeck.save(),
@@ -80,6 +123,12 @@ public class DeckManager {
                                       objectiveDeck.save());
     }
 
+    /**
+     * Method used to load an old configuration of the DeckManager, it loads also the order of the
+     * cards in the shuffled decks
+     *
+     * @param memento the DeckManagerMemento containing the state of the decks
+     */
     public void load(@NotNull DeckManagerMemento memento) {
         goldDeck.load(memento.goldDeck());
         resourceDeck.load(memento.resourceDeck());

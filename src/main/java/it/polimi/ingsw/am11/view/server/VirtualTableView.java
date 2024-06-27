@@ -14,6 +14,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
+/**
+ * This class is a virtual view for the parts of the model that are in common for all players, such
+ * as the field, the common objectives, the deck top cards, the player points, the shown playable
+ * cards, the turn, the final leaderboard. It is used receive updates from the server controller.
+ */
 public class VirtualTableView {
     private static final Logger LOGGER = LoggerFactory.getLogger(VirtualTableView.class);
     private final @NotNull Map<String, ServerTableConnector> connectors;

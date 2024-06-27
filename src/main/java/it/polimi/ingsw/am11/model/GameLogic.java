@@ -118,7 +118,7 @@ public class GameLogic implements GameModel {
      * @return the nickname of the player that is playing
      * @throws GameStatusException if the game hasn't started or has ended
      */
-    @Override // DONE
+    @Override
     public @NotNull String getCurrentTurnPlayer() throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP || plateau.getStatus() == GameStatus.ENDED) {
             throw new GameStatusException("the game has not started, turns haven't been decided");
@@ -135,7 +135,7 @@ public class GameLogic implements GameModel {
      * @return the nickname of the player that played the first turn
      * @throws GameStatusException if the game hasn't started or has ended
      */
-    @Override // DONE
+    @Override
     public @NotNull String getFirstPlayer() throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException("the game has not started, turns haven't been decided");
@@ -182,7 +182,7 @@ public class GameLogic implements GameModel {
      * @param nickname Nickname of the player of interest
      * @return a <code>List</code> of the IDs of the <code>ObjectiveCards</code> of the player
      */
-    @Override // DONE
+    @Override
     public @NotNull Set<Integer> getPlayerObjective(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
@@ -197,15 +197,23 @@ public class GameLogic implements GameModel {
      * @param nickname Nickname of the player of interest
      * @return the <code>PlayerColor</code> of the player
      */
-    @Override // DONE
+    @Override
     public @NotNull PlayerColor getPlayerColor(@NotNull String nickname)
     throws PlayerInitException {
         return playerManager.getPlayerColor(nickname)
                             .orElseThrow(() -> new PlayerInitException("Player not found"));
     }
 
+    /**
+     * Return a Map that has Positions as keys and CardContainers as values, it represents the field
+     * of a player.
+     *
+     * @param nickname nickname of the player of interest
+     * @return a map with the positions and the cards placed on the field
+     * @throws PlayerInitException if the player is not found
+     * @throws GameStatusException if the game is not ongoing
+     */
     @Override
-    //TODO model shouldn't return something that has a reference of a Card, it should use ID
     public Map<Position, CardContainer> getPositionedCard(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP ||
@@ -232,7 +240,7 @@ public class GameLogic implements GameModel {
      * @return the <code>Set</code> of <code>Position</code>s that are available for placing a card
      * in the field
      */
-    @Override //
+    @Override
     public @NotNull Set<Position> getAvailablePositions(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
@@ -247,7 +255,7 @@ public class GameLogic implements GameModel {
      *
      * @return a set of ID of <code>ObjectiveCard</code> that represent the common objectives
      */
-    @Override //
+    @Override
     public @NotNull Set<Integer> getCommonObjectives() throws GameStatusException {
         if (plateau.getStatus() == GameStatus.SETUP) {
             throw new GameStatusException(
@@ -259,6 +267,14 @@ public class GameLogic implements GameModel {
                              .collect(Collectors.toUnmodifiableSet());
     }
 
+    /**
+     * Return a Set of cardIDs, it represents the cards of PlayableCardType that are on their front
+     * on the table
+     *
+     * @param type type of the card to be shown
+     * @return a set of card IDs
+     * @throws GameStatusException if the game is not ongoing
+     */
     @Override
     public @NotNull Set<Integer> getExposedCards(@NotNull PlayableCardType type)
     throws GameStatusException {
@@ -278,7 +294,7 @@ public class GameLogic implements GameModel {
      * @param nickname nickname of the player of interest
      * @return the points of the player
      */
-    @Override //
+    @Override
     public int getPlayerPoints(@NotNull String nickname)
     throws GameStatusException,
            GameBreakingException, PlayerInitException {
@@ -303,7 +319,7 @@ public class GameLogic implements GameModel {
      * @param nickname of the player of interest
      * @return the position in the leaderboard of the player
      */
-    @Override //
+    @Override
     public int getPlayerFinishingPosition(@NotNull String nickname)
     throws PlayerInitException, GameStatusException,
            GameBreakingException {
@@ -327,7 +343,7 @@ public class GameLogic implements GameModel {
      *
      * @return a set with the names of the winners
      */
-    @Override //
+    @Override
     public @NotNull Set<String> getWinner() throws GameStatusException {
         if (plateau.getStatus() != GameStatus.ENDED) {
             throw new GameStatusException(
@@ -346,7 +362,7 @@ public class GameLogic implements GameModel {
      * @throws NumOfPlayersException If there aren't at least two players in the game
      * @throws GameStatusException   if a game is in progress
      */
-    @Override //
+    @Override
     public void initGame()
     throws NumOfPlayersException, GameStatusException, GameBreakingException {
         if (plateau.getStatus() != GameStatus.SETUP) {
@@ -391,6 +407,9 @@ public class GameLogic implements GameModel {
         }
     }
 
+    /**
+     * This method is used to reset the playerManager and plateau
+     */
     private void resetAll() {
         playerManager.resetAll();
         plateau.reset();
@@ -427,7 +446,7 @@ public class GameLogic implements GameModel {
      *                             been reached
      * @throws GameStatusException if a game is in progress
      */
-    @Override // DONE
+    @Override
     public void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
     throws PlayerInitException, GameStatusException, NumOfPlayersException {
         if (plateau.getStatus() != GameStatus.SETUP) {
@@ -440,15 +459,13 @@ public class GameLogic implements GameModel {
         LOGGER.info("MODEL: Added player {} with color {}", nickname, colour);
     }
 
-    // FIXME may not even be needed as a method
-
     /**
      * Remove a player from the player list if present, else it does nothing.
      *
      * @param nickname nickname of the player of interest
      * @throws GameStatusException if a game is in progress
      */
-    @Override // DONE
+    @Override
     public void removePlayer(@NotNull String nickname)
     throws GameStatusException {
         if (plateau.getStatus() != GameStatus.SETUP) {
@@ -472,7 +489,7 @@ public class GameLogic implements GameModel {
      * @throws IllegalCardPlacingException if there is already a card in that position
      * @throws GameStatusException         if the game is not ongoing
      */
-    @Override //
+    @Override
     public void setStarterFor(@NotNull String nickname, boolean isRetro)
     throws IllegalCardPlacingException, GameStatusException, PlayerInitException,
            GameBreakingException {
@@ -519,7 +536,7 @@ public class GameLogic implements GameModel {
      * @throws IllegalPlayerSpaceActionException if there are already too many objectives
      * @throws GameStatusException               if the game is not ongoing
      */
-    @Override //
+    @Override
     public void setObjectiveFor(@NotNull String nickname, int cardID)
     throws IllegalPlayerSpaceActionException, GameStatusException, PlayerInitException,
            GameBreakingException {
@@ -557,7 +574,7 @@ public class GameLogic implements GameModel {
      * @throws IllegalPlateauActionException if there isn't any player with that nickname
      * @throws GameStatusException           if the game is not ongoing
      */
-    @Override //
+    @Override
     public void placeCard(@NotNull String nickname, int cardID, @NotNull Position position,
                           boolean isRetro)
     throws IllegalCardPlacingException, TurnsOrderException, IllegalPlateauActionException,
@@ -579,7 +596,6 @@ public class GameLogic implements GameModel {
             );
         }
         if (playerManager.getCurrentAction() != TurnAction.PLACE_CARD) {
-            // FIXME to throw a different exception
             throw new TurnsOrderException(nickname + " has already placed a card first");
         }
         if (player.space().hasCardBeenPlaced()) {
@@ -624,6 +640,20 @@ public class GameLogic implements GameModel {
         plateau.addPlayerPoints(nickname, points);
     }
 
+    /**
+     * This method is used to draw a card from the deck of the specified type
+     *
+     * @param type     type of the card to be drawn
+     * @param nickname nickname of the player of interest
+     * @return the ID of the card drawn
+     * @throws GameStatusException        if the game is not started
+     * @throws TurnsOrderException        if it's not that player turn
+     * @throws GameBreakingException      if there are discrepancies between plateau and gameLogic
+     * @throws EmptyDeckException         if the deck is empty
+     * @throws PlayerInitException        if the player is not found
+     * @throws MaxHandSizeException       if the player hand is already full
+     * @throws IllegalPickActionException if the player hasn't placed a card yet
+     */
     @Override
     public int drawFromDeckOf(@NotNull PlayableCardType type, @NotNull String nickname)
     throws GameStatusException, TurnsOrderException, GameBreakingException, EmptyDeckException,
@@ -731,6 +761,21 @@ public class GameLogic implements GameModel {
         }
     }
 
+    /**
+     * Used to draw a card from the visible cards of the specified type
+     *
+     * @param type     type of the card to be drawn
+     * @param nickname nickname of the player of interest
+     * @param cardID   ID of the card to be drawn
+     * @return the ID of the card drawn
+     * @throws GameStatusException               if the game has not started
+     * @throws TurnsOrderException               if it's not that player turn
+     * @throws GameBreakingException             if there are discrepancies between plateau and
+     *                                           gameLogic
+     * @throws IllegalPlayerSpaceActionException if the player hand is already full
+     * @throws IllegalPickActionException        if the player hasn't placed a card yet
+     * @throws PlayerInitException               if the player is not found
+     */
     @Override
     public int drawVisibleOf(@NotNull PlayableCardType type, @NotNull String nickname, int cardID)
     throws GameStatusException, TurnsOrderException, GameBreakingException,
@@ -791,6 +836,13 @@ public class GameLogic implements GameModel {
         return plateau.getStatus();
     }
 
+    /**
+     * Used to get the Color of the top card of the specified type
+     *
+     * @param type type of the card
+     * @return the color of the top card of the specified type
+     * @throws GameStatusException if the game is not ongoing
+     */
     @Override
     public @NotNull Optional<Color> getDeckTop(@NotNull PlayableCardType type)
     throws GameStatusException {
@@ -800,6 +852,14 @@ public class GameLogic implements GameModel {
         return pickablesTable.getDeckTop(type);
     }
 
+    /**
+     * Used to get a Set of the candidate objectives of the specified player
+     *
+     * @param nickname nickname of the player of interest
+     * @return a set of the IDs of the candidate objectives
+     * @throws PlayerInitException if the player is not found
+     * @throws GameStatusException if the objectives has not been dealt yet
+     */
     @Override
     public @NotNull Set<Integer> getCandidateObjectives(@NotNull String nickname)
     throws PlayerInitException, GameStatusException {
@@ -831,6 +891,12 @@ public class GameLogic implements GameModel {
                             .map(StarterCard::getId);
     }
 
+    /**
+     * This method is used to add a listener to the model, it will be notified
+     *
+     * @param nickname       nickname of the player of interest
+     * @param playerListener listener to be added
+     */
     @Override
     public void addPlayerListener(@NotNull String nickname,
                                   @NotNull PlayerListener playerListener) {
@@ -840,6 +906,11 @@ public class GameLogic implements GameModel {
         pcs.addListener(nickname, playerListener);
     }
 
+    /**
+     * This method is used to add a listener to the model, it will be notified
+     *
+     * @param listener listener to be added
+     */
     @Override
     public void addTableListener(@NotNull TableListener listener) {
 
@@ -848,6 +919,11 @@ public class GameLogic implements GameModel {
         pcs.addListener(listener);
     }
 
+    /**
+     * This method is used to disconnect a player from the game
+     *
+     * @param nickname nickname of the player of interest
+     */
     @Override
     public void disconnectPlayer(@NotNull String nickname) {
         Player player = playerManager.getPlayer(nickname)
@@ -876,6 +952,13 @@ public class GameLogic implements GameModel {
         }
     }
 
+    /**
+     * This method is used to reconnect a player to the game
+     *
+     * @param nickname       nickname of the player of interest
+     * @param playerListener listener to be added
+     * @throws PlayerInitException if there is no player with that nickname that can reconnect
+     */
     @Override
     public void reconnectPlayer(@NotNull String nickname, @NotNull PlayerListener playerListener)
     throws PlayerInitException {
@@ -909,11 +992,20 @@ public class GameLogic implements GameModel {
         reSyncWith(nickname);
     }
 
+    /**
+     * To check if a player is currently disconnected
+     *
+     * @param nickname nickname of the player of interest
+     * @return true if the player is disconnected, false otherwise
+     */
     @Override
     public boolean isDisconnected(@NotNull String nickname) {
         return playerManager.isDisconnected(nickname);
     }
 
+    /**
+     * This method is used to end the game early, it will calculate the final points and the
+     */
     @Override
     public void endGameEarly() {
         plateau.setStatus(GameStatus.ENDED);
@@ -939,13 +1031,25 @@ public class GameLogic implements GameModel {
         CentralController.INSTANCE.destroyGame();
     }
 
+    /**
+     * Used to save the current state of the game
+     *
+     * @return a data structure that contains all the information necessary to restore the game to
+     * the current state
+     */
     @Override
     public @NotNull GameModelMemento save() {
         return new GameModelMemento(pickablesTable.save(),
                                     plateau.save(),
-                                    playerManager.save());
+                                    playerManager.savePublic());
     }
 
+    /**
+     * Used to load an old game to the model, the current model will be replaced by the one in the
+     * memento
+     *
+     * @param memento the data structure that contains the state of the game
+     */
     @Override
     public void load(@NotNull GameModelMemento memento) {
         pickablesTable.load(memento.table());
@@ -956,15 +1060,24 @@ public class GameLogic implements GameModel {
         playerManager.getPlayers().forEach(this::disconnectPlayer);
     }
 
+    /**
+     * Used tu update the client with the information of the loaded game
+     *
+     * @param nickname nickname of the player of interest
+     */
     @Override
     public void reSyncWith(@NotNull String nickname) {
-        ReconnectionModelMemento memento = new ReconnectionModelMemento(pickablesTable.savePublic(),
-                                                                        plateau.save(),
-                                                                        playerManager.save(
-                                                                                nickname));
+        ReconnectionModelMemento memento =
+                new ReconnectionModelMemento(pickablesTable.savePublic(),
+                                             plateau.save(),
+                                             playerManager.savePublic(nickname));
         pcs.fireEvent(new ReconnectionEvent(nickname, memento));
     }
 
+    /**
+     * This method is used to check if the game can continue, if all the players are disconnected
+     * the game will be stopped
+     */
     private void checkIfGameCanContinue() {
         if (playerManager.areAllDisconnected()) {
             LOGGER.info("MODEL: All players are disconnected, stopping the game");
@@ -972,6 +1085,7 @@ public class GameLogic implements GameModel {
             reconnectionTimer.cancelAll();
         }
     }
+
 
     private void giveCards() throws GameBreakingException {
         pickablesTable.initialize();

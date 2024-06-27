@@ -23,11 +23,13 @@ import java.util.SequencedMap;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-// This class is the implementation of the ClientViewUpdater and the ExceptionConnector.
-// The classes that handle the interpretation of the messages from the net will call these methods.
-// There are also methods designed to be used by the Actuator (and possibly other classes) to
-// update and get the TUIState and to save the candidateNick
-// (the nickname that the player tries to send to the server)
+/**
+ * This class is the implementation of the ClientViewUpdater and the ExceptionConnector. The classes
+ * that handle the interpretation of the messages from the net will call these methods. There are
+ * also methods designed to be used by the Actuator (and possibly other classes) to update and get
+ * the TUIState and to save the candidateNick (the nickname that the player tries to send to the
+ * server)
+ */
 
 public class
 TuiUpdater implements ClientViewUpdater, ClientChatUpdater {

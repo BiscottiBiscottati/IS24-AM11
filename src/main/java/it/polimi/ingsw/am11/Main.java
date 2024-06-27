@@ -12,8 +12,23 @@ import org.slf4j.Logger;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Main class of the application, used to start the server or the client based on the arguments
+ * passed to the application. The client can be started in GUI or TUI mode.
+ */
 public class Main {
 
+    /**
+     * Main method of the application, used to start the server or the client based on the
+     * arguments: Usage: java -jar <jar file> <server|client> [options] Options:<br> -rmi <port> RMI
+     * port to use for the server<br> -socket <port> Socket port to use for the server<br> -mode
+     * <mode> Mode to start the application in (gui|tui) (only for client)<br> -v Print debug
+     * logging information<br> -vv Print trace logging information<br> -resume Load the most recent
+     * save<br>
+     *
+     * @param args the arguments passed to the application
+     * @throws IOException if an I/O error occurs
+     */
     public static void main(String @Nullable [] args) throws IOException {
 
         final String HELP_MESSAGE = """
@@ -64,6 +79,11 @@ public class Main {
         }
     }
 
+    /**
+     * Set up the options for the command line parser
+     *
+     * @return the parser with the options set up
+     */
     private static @NotNull ArgParser setUpOptions() {
         ArgParser argParser = new ArgParser();
         argParser.addOption("rmi",

@@ -50,6 +50,11 @@ public class PlayerManager {
         this.pcs = pcs;
     }
 
+    /**
+     * Set the maximum number of players allowed in the game
+     *
+     * @param maxNumberOfPlayers the maximum number of players allowed
+     */
     public static void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
 
         LOGGER.debug("MODEL: Setting max number of players to {}", maxNumberOfPlayers);
@@ -57,36 +62,83 @@ public class PlayerManager {
         PlayerManager.maxNumberOfPlayers = maxNumberOfPlayers;
     }
 
+    /**
+     * Get the maximum number of players allowed in the game
+     *
+     * @return the maximum number of players allowed
+     */
     public static int getMaxNumberOfPlayer() {
         return PlayerManager.maxNumberOfPlayers;
     }
 
+    /**
+     * Return a SequencedSet of the players in the game, the order depends on the turn order if it
+     * has already been set
+     *
+     * @return a SequencedSet of the players in the game
+     */
     public SequencedSet<String> getPlayers() {
         return players.sequencedKeySet();
     }
 
+    /**
+     * Get the number of players in the game
+     *
+     * @return the number of players in the game
+     */
     public int getNumberOfPlayers() {
         return players.size();
     }
 
+    /**
+     * The name of the player whose turn is currently ongoing, if the game has not started yet this
+     * method will return an empty Optional
+     *
+     * @return the name of the player whose turn is currently ongoing, if present
+     */
     public @NotNull Optional<String> getCurrentTurnPlayer() {
         return Optional.ofNullable(currentPlaying)
                        .map(Player::nickname);
     }
 
+    /**
+     * If the players are all currently connected
+     *
+     * @return true if all the players are connected, false otherwise
+     */
     public boolean areAllReconnected() {
         return unavailablePlayers.isEmpty();
     }
 
+    /**
+     * Get the name of the starting player in the game, if the game has not started yet this method
+     * will return an empty Optional
+     *
+     * @return the name of the starting player in the game, if set
+     */
     public @NotNull Optional<String> getFirstPlayer() {
         return Optional.ofNullable(firstPlayer)
                        .map(Player::nickname);
     }
 
+    /**
+     * Get the Player class instance of the player with the given nickname, if the player is not
+     * present this method will return an empty Optional
+     *
+     * @param nickname the name of the player to get
+     * @return the Player with the given nickname, if present
+     */
     public @NotNull Optional<Player> getPlayer(String nickname) {
         return Optional.ofNullable(players.get(nickname));
     }
 
+    /**
+     * Get the hand of the player with the given nickname
+     *
+     * @param nickname the name of the player to get the hand of
+     * @return a Set of the ids of the cards in the hand of the player
+     * @throws PlayerInitException if the player with the given nickname is not present
+     */
     public @NotNull Set<Integer> getHand(String nickname) throws PlayerInitException {
         Player player = players.get(nickname);
         if (player != null) {
@@ -100,6 +152,13 @@ public class PlayerManager {
         }
     }
 
+    /**
+     * Get the personal objective cards of the player with the given nickname
+     *
+     * @param nickname the name of the player to get the personal objectives of
+     * @return a Set of the ids of the personal objectives of the player
+     * @throws PlayerInitException if the player with the given nickname is not present
+     */
     public @NotNull Set<Integer> getPlayerObjective(@NotNull String nickname)
     throws PlayerInitException {
         Player player = players.get(nickname);
@@ -114,6 +173,14 @@ public class PlayerManager {
         }
     }
 
+    /**
+     * Get the starter card of the player with the given nickname, if the player has not yet chosen
+     * a starter card this method will return an empty Optional
+     *
+     * @param nickname the name of the player to get the starter card of
+     * @return the starter card of the player with the given nickname, if present
+     * @throws PlayerInitException if the player with the given nickname is not present
+     */
     public @NotNull Optional<StarterCard> getStarterCard(@NotNull String nickname)
     throws PlayerInitException {
         Player player = players.get(nickname);
@@ -124,6 +191,14 @@ public class PlayerManager {
         }
     }
 
+    /**
+     * Get the candidate objectives of the player with the given nickname
+     *
+     * @param nickname the name of the player to get the candidate objectives of
+     * @return a Set of the ids of the candidate objectives of the player, empty if the cards have
+     * not been dealt yet
+     * @throws PlayerInitException if the player with the given nickname is not present
+     */
     public Set<ObjectiveCard> getCandidateObjectives(@NotNull String nickname)
     throws PlayerInitException {
         Player player = players.get(nickname);
@@ -134,6 +209,18 @@ public class PlayerManager {
         }
     }
 
+    /**
+     * Get the ObjectiveCard class instance of the candidate objective with the given id of the
+     * player with the given nickname
+     *
+     * @param nickname the name of the player to get the candidate objective of
+     * @param id       the id of the candidate objective to get
+     * @return the ObjectiveCard with the given id of the player with the given nickname
+     * @throws PlayerInitException               if the player with the given nickname is not
+     *                                           present
+     * @throws IllegalPlayerSpaceActionException if the objective with the given id is not one of
+     *                                           the candidate objectives of the player
+     */
     public ObjectiveCard getCandidateObjectiveByID(@NotNull String nickname, int id)
     throws PlayerInitException, IllegalPlayerSpaceActionException {
         Player player = players.get(nickname);
@@ -144,32 +231,75 @@ public class PlayerManager {
         }
     }
 
+    /**
+     * During a turn the player first have to place a card on the field, then they have to draw one
+     * from the ones in the table. This method returns the action that the player has to do in the
+     * current turn
+     *
+     * @return the action that the player has to do in the current turn
+     */
     public TurnAction getCurrentAction() {
         return currentAction;
     }
 
+    /**
+     * Set the action that the player has to do in the current turn
+     *
+     * @param action the action that the player has to do in the current turn
+     */
     public void setCurrentAction(@NotNull TurnAction action) {
         this.currentAction = action;
     }
 
+    /**
+     * Remove the given player from the list of disconnected players
+     *
+     * @param player the player to reconnect
+     */
     public void reconnectPlayer(Player player) {
         unavailablePlayers.remove(player);
     }
 
+    /**
+     * Check if the player with the given nickname is currently connected
+     *
+     * @param nickname the name of the player to check
+     * @return true if the player with the given nickname is connected, false otherwise
+     */
     public boolean isConnected(@NotNull String nickname) {
         return ! isDisconnected(nickname);
     }
 
+    /**
+     * Check if the player with the given nickname is currently disconnected
+     *
+     * @param nickname the name of the player to check
+     * @return true if the player with the given nickname is disconnected, false otherwise
+     */
     public boolean isDisconnected(@NotNull String nickname) {
         return unavailablePlayers.parallelStream()
                                  .map(Player::nickname)
                                  .anyMatch(nickname::equals);
     }
 
+    /**
+     * Add the given player to the list of disconnected players
+     *
+     * @param player the player to disconnect
+     */
     public void disconnectPlayer(Player player) {
         unavailablePlayers.add(player);
     }
 
+    /**
+     * Associate the given starter card to the player with the given nickname
+     *
+     * @param nickname the name of the player to associate the starter card to
+     * @param starter  the starter card to associate to the player
+     * @throws PlayerInitException               if the player with the given nickname is not
+     *                                           present
+     * @throws IllegalPlayerSpaceActionException if the player has already chosen a starter card
+     */
     public void setStarterCard(@NotNull String nickname, @NotNull StarterCard starter)
     throws PlayerInitException, IllegalPlayerSpaceActionException {
         Optional.ofNullable(players.get(nickname))
@@ -182,6 +312,13 @@ public class PlayerManager {
         pcs.fireEvent(new StarterCardEvent(nickname, null, starter.getId()));
     }
 
+    /**
+     * Associate the given candidate objectives to the player with the given nickname
+     *
+     * @param nickname   the name of the player to associate the candidate objectives to
+     * @param objectives the candidate objectives to associate to the player
+     * @throws PlayerInitException if the player with the given nickname is not present
+     */
     public void setCandidateObjectives(@NotNull String nickname,
                                        @NotNull Set<ObjectiveCard> objectives)
     throws PlayerInitException {
@@ -201,12 +338,26 @@ public class PlayerManager {
         pcs.fireEvent(new CandidateObjectiveEvent(nickname, null, candidateObjs));
     }
 
-
+    /**
+     * Get the PlayerColor of the player with the given nickname, if the player is not present this
+     * method will return an empty Optional
+     *
+     * @param nickname the name of the player to get the color of
+     * @return the PlayerColor of the player with the given nickname, if present
+     */
     public @NotNull Optional<PlayerColor> getPlayerColor(@NotNull String nickname) {
         return Optional.ofNullable(players.get(nickname))
                        .map(Player::color);
     }
 
+    /**
+     * Get the available positions to place a card on the field of the player with the given
+     * nickname
+     *
+     * @param nickname the name of the player to get the available positions of
+     * @return a Set of the available positions to place a card on the field of the player
+     * @throws PlayerInitException if the player with the given nickname is not present
+     */
     public Set<Position> getAvailablePositions(@NotNull String nickname)
     throws PlayerInitException {
         Player player = players.get(nickname);
@@ -217,6 +368,16 @@ public class PlayerManager {
         }
     }
 
+    /**
+     * Method used when adding a new player to the game, it will add the player to the list of
+     * players and to the queue of players.
+     *
+     * @param nickname the nickname of the player
+     * @param colour   the color of the player
+     * @throws PlayerInitException   if the nickname is already in use or the colour is already in
+     *                               use
+     * @throws NumOfPlayersException if the maximum number of players has been reached
+     */
     public void addPlayerToTable(@NotNull String nickname, @NotNull PlayerColor colour)
     throws PlayerInitException, NumOfPlayersException {
 
@@ -246,6 +407,12 @@ public class PlayerManager {
         }
     }
 
+    /**
+     * Method used when removing a player from the game, it will remove the player from the list of
+     * players and from the queue of players.
+     *
+     * @param nickname
+     */
     public void removePlayer(String nickname) {
         Player toRemove = players.get(nickname);
         if (toRemove == null) {
@@ -255,6 +422,10 @@ public class PlayerManager {
         players.remove(nickname);
     }
 
+    /**
+     * Method used to set the starting player of the game, it will choose a random player from the
+     * list. The player will be set as the first player and the current player.
+     */
     public void chooseFirstPlayer() {
         int randomIndex = new Random().nextInt(playerQueue.size());
         firstPlayer = players.values()
@@ -277,10 +448,21 @@ public class PlayerManager {
         pcs.fireEvent(new TurnChangeEvent(null, currentPlaying.nickname()));
     }
 
+    /**
+     * Return if the starting player is the current player, a true also means that a new round has
+     * started
+     *
+     * @return true if the starting player is the current player, false otherwise
+     */
     public boolean isFirstTheCurrent() {
         return firstPlayer == currentPlaying;
     }
 
+    /**
+     * Method used to continue the game to the next turn, it will put the current player at the end
+     * of the queue and, the next player as the current player and remove it from the front of the
+     * queue.
+     */
     public void goNextTurn() {
         assert currentPlaying != null;
         String previousPlayer = currentPlaying.nickname();
@@ -295,6 +477,10 @@ public class PlayerManager {
         pcs.fireEvent(new TurnChangeEvent(previousPlayer, currentPlaying.nickname()));
     }
 
+    /**
+     * Method used to reset the PlayerManager to the initial state, it will clear all the players
+     * hand and field.
+     */
     public void resetAll() {
         players.values()
                .stream()
@@ -320,17 +506,32 @@ public class PlayerManager {
         });
     }
 
+    /**
+     * Used to check if all players have set their starter card, by set it means that they chose to
+     * place it on the field on the front or on the retro
+     *
+     * @return true if all players have set their starter card, false otherwise
+     */
     public boolean areStarterSet() {
         return players.values().parallelStream()
                       .noneMatch(player -> player.field().isAvailable(Position.of(0, 0)));
     }
 
+    /**
+     * @return true if all players have set their candidate objectives, false otherwise
+     */
     public boolean areObjectiveSet() {
         return players.values().parallelStream()
                       .map(Player::space)
                       .allMatch(PersonalSpace::areObjectiveGiven);
     }
 
+    /**
+     * Check if the player with the given nickname is the one currently playing
+     *
+     * @param nickname the name of the player to check
+     * @return true if it's the turn of the player with the given nickname, false otherwise
+     */
     public boolean isTurnOf(@NotNull String nickname) {
         if (currentPlaying == null) {
             return false;
@@ -338,19 +539,40 @@ public class PlayerManager {
         return currentPlaying.nickname().equals(nickname);
     }
 
+    /**
+     * Check if the player whose turn is currently ongoing is disconnected
+     *
+     * @return true if the player whose turn is currently ongoing is disconnected, false otherwise
+     */
     public boolean isCurrentDisconnected() {
         return unavailablePlayers.contains(currentPlaying);
     }
 
+    /**
+     * Check if all players are disconnected
+     *
+     * @return true if all players are disconnected, false otherwise
+     */
     public boolean areAllDisconnected() {
         return unavailablePlayers.size() == players.size();
     }
 
+    /**
+     * Return the number of players that are currently connected, a player is considered connected
+     * if it is not in the list of disconnected players
+     *
+     * @return the number of players that are currently connected
+     */
     public int getNumberOfConnected() {
         return players.size() - unavailablePlayers.size();
     }
 
-    public @NotNull PlayerManagerMemento save() {
+    /**
+     * Used to save the state of the PlayerManager
+     *
+     * @return a PlayerManagerMemento containing the state of the PlayerManager
+     */
+    public @NotNull PlayerManagerMemento savePublic() {
         return new PlayerManagerMemento(
                 playerQueue.stream()
                            .map(Player::save)
@@ -361,7 +583,14 @@ public class PlayerManager {
         );
     }
 
-    public @NotNull PlayerManagerMemento save(@NotNull String nickname) {
+    /**
+     * Used to save the state of the PlayerManager, including only the private information of the
+     * player with the given nickname
+     *
+     * @param nickname the nickname of the player to save
+     * @return a PlayerManagerMemento containing the state of the PlayerManager
+     */
+    public @NotNull PlayerManagerMemento savePublic(@NotNull String nickname) {
         return new PlayerManagerMemento(
                 playerQueue.stream()
                            .map(player -> player.nickname().equals(nickname) ?
@@ -374,6 +603,11 @@ public class PlayerManager {
         );
     }
 
+    /**
+     * Used to load the state of the PlayerManager
+     *
+     * @param memento the PlayerManagerMemento containing the state of the PlayerManager
+     */
     public void load(@NotNull PlayerManagerMemento memento) {
         hardReset();
 
@@ -389,6 +623,9 @@ public class PlayerManager {
         currentAction = memento.currentAction();
     }
 
+    /**
+     * Used to hard reset the PlayerManager, it will clear all the players and the queue of players
+     */
     public void hardReset() {
         LOGGER.debug("MODEL: Hard reset on player manager");
 

@@ -11,6 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This class is responsible for receiving exceptions from the controller and handling them
+ */
 public class TuiExceptionReceiver implements ExceptionThrower {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiExceptionReceiver.class);
 

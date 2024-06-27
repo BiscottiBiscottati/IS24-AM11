@@ -7,8 +7,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+/**
+ * The main class for the server.
+ */
 public class Server {
-
+    /**
+     * The main method to start the server, it will open a socket and an RMI connection with the
+     * passed ports.
+     *
+     * @param parser The parser containing the arguments for the server.
+     */
     static void start(@NotNull ArgParser parser) {
 
         if (Objects.equals(parser.getOption("resume").orElseThrow().getValue(), "")) {

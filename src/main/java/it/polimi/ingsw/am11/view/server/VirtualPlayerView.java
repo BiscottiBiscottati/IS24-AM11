@@ -14,7 +14,12 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// I think this class calls the server controller methods
+// I think this class calls the server controller
+
+/**
+ * This class is a virtual view for a player in the server. It is used to send commands to the
+ * server controller and to receive updates from the server controller.
+ */
 public class VirtualPlayerView {
     private static final Logger LOGGER = LoggerFactory.getLogger(VirtualPlayerView.class);
     private final @NotNull CardController cardController;

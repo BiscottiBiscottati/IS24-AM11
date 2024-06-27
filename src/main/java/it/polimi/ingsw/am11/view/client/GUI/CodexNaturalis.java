@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.SequencedSet;
 import java.util.Set;
 
-public class CodexNaturalis extends Application implements GuiObserver {
+public class CodexNaturalis extends Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(CodexNaturalis.class);
 
     private static Stage primaryStage;
@@ -55,7 +55,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
         });
     }
 
-    @Override
+
     public void start(Stage primaryStage) {
         CodexNaturalis.primaryStage = primaryStage;
         fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -104,33 +104,33 @@ public class CodexNaturalis extends Application implements GuiObserver {
         return guiActuator;
     }
 
-    @Override
+
     public void updateDeckTop(PlayableCardType type, Color color) {
         gamePage.updateDeckTop(type, color);
     }
 
-    @Override
+
     public void updateField(String nickname, int x, int y, int cardId, boolean isRetro) {
         gamePage.printCardsOnField(nickname);
     }
 
-    @Override
+
     public void updateShownPlayable(Integer previousId, Integer currentId) {
         gamePage.updateShownPlayable();
     }
 
-    @Override
+
     public void updateTurnChange(String nickname) {
         gamePage.updateTurnChange(nickname);
         gamePage.printCardsOnField(nickname);
     }
 
-    @Override
+
     public void updatePlayerPoint(String nickname, int points) {
         gamePage.updatePlayerPoints(nickname, points);
     }
 
-    @Override
+
     public void updateGameStatus(GameStatus status) {
         switch (status) {
             case ONGOING -> {
@@ -143,28 +143,28 @@ public class CodexNaturalis extends Application implements GuiObserver {
         }
     }
 
-    @Override
+
     public void updateCommonObjective(Set<Integer> cardId, boolean removeMode) {
         gamePage.updateCommonObj();
     }
 
-    @Override
+
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
         LOGGER.debug("Leaderboard received");
         gamePage.gameEnded();
     }
 
-    @Override
+
     public void updateHand(int cardId, boolean removeMode) {
         gamePage.updateHand();
     }
 
-    @Override
+
     public void updatePersonalObjective(int cardId, boolean removeMode) {
         gamePage.updatePersonalObjective();
     }
 
-    @Override
+
     public void receiveStarterCard() {
         Platform.runLater(() -> {
             WaitingRoomPage.hideWaitingRoomPage();
@@ -177,7 +177,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
         });
     }
 
-    @Override
+
     public void receiveCandidateObjective() {
         Platform.runLater(() -> {
 
@@ -186,22 +186,22 @@ public class CodexNaturalis extends Application implements GuiObserver {
         });
     }
 
-    @Override
+
     public void notifyGodPlayer() {
         SetNumOfPlayersPage.showSetNumOfPlayersPage();
     }
 
-    @Override
+
     public void updatePlayers(Map<PlayerColor, String> currentPlayers) {
 
     }
 
-    @Override
+
     public void updateNumOfPlayers(int numOfPlayers) {
 
     }
 
-    @Override
+
     public void disconnectedFromServer() {
         Platform.runLater(() -> {
             if (getMiniGameModel().table().getStatus().equals(GameStatus.ENDED)) {
@@ -242,18 +242,18 @@ public class CodexNaturalis extends Application implements GuiObserver {
         return guiUpdater.getMiniGameModel();
     }
 
-    @Override
+
     public void updateChat() {
         LOGGER.debug("Chat updated");
         gamePage.updateChat();
     }
 
-    @Override
+
     public void showErrorGamePage(String message) {
         gamePage.showErrorMessage(message);
     }
 
-    @Override
+
     public void reconnectedToServer(GameStatus status) {
         switch (status) {
             case LAST_TURN -> {

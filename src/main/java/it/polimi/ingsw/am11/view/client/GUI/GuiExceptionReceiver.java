@@ -16,10 +16,10 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     private static final Logger LOGGER = LoggerFactory.getLogger(GuiExceptionReceiver.class);
 
     private final MiniGameModel model;
-    private final GuiObserver guiObserver;
+    private final CodexNaturalis codexNaturalis;
 
-    public GuiExceptionReceiver(MiniGameModel model, GuiObserver guiObserver) {
-        this.guiObserver = guiObserver;
+    public GuiExceptionReceiver(MiniGameModel model, CodexNaturalis codexNaturalis) {
+        this.codexNaturalis = codexNaturalis;
         this.model = model;
     }
 
@@ -34,7 +34,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull TurnsOrderException ex) {
         LOGGER.debug("TurnsOrderException {}", ex.getMessage());
-        guiObserver.showErrorGamePage("It's not your turn, pls stop!");
+        codexNaturalis.showErrorGamePage("It's not your turn, pls stop!");
     }
 
     @Override
@@ -49,7 +49,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull IllegalCardPlacingException ex) {
         LOGGER.debug("IllegalCardPlacingException {}", ex.getMessage());
-        guiObserver.showErrorGamePage("You don't have the requirements to place the card");
+        codexNaturalis.showErrorGamePage("You don't have the requirements to place the card");
 
     }
 
@@ -63,14 +63,14 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull NotInHandException ex) {
         LOGGER.debug("NotInHandException {}", ex.getMessage());
-        guiObserver.showErrorGamePage("You can't place a card that you don't have in your hand");
+        codexNaturalis.showErrorGamePage("You can't place a card that you don't have in your hand");
 
     }
 
     @Override
     public void throwException(@NotNull EmptyDeckException ex) {
         LOGGER.debug("EmptyDeckException {}", ex.getMessage());
-        guiObserver.showErrorGamePage("Deck is empty, you can't pick a card");
+        codexNaturalis.showErrorGamePage("Deck is empty, you can't pick a card");
 
     }
 
@@ -80,7 +80,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
         if (model.getGodPlayer().equals(model.myName())) {
             SetNumOfPlayersPage.showErrorMesssage();
         } else {
-            guiObserver.disconnectedFromServer();
+            codexNaturalis.disconnectedFromServer();
         }
 
     }
@@ -88,7 +88,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull NotGodPlayerException ex) {
         LOGGER.debug("NotGodPlayerException {}", ex.getMessage());
-        guiObserver.disconnectedFromServer();
+        codexNaturalis.disconnectedFromServer();
     }
 
     @Override
@@ -114,7 +114,7 @@ public class GuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull MaxHandSizeException ex) {
         LOGGER.debug("MaxHandSizeException {}", ex.getMessage());
-        guiObserver.showErrorGamePage("It's not your turn, pls stop!");
+        codexNaturalis.showErrorGamePage("It's not your turn, pls stop!");
 
     }
 

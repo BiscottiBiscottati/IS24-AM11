@@ -11,6 +11,11 @@ import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
 
+/**
+ * Interface that defines the methods that are called from the network side to notify the user
+ * interface of a change in the model, there is a method for each type of update so that the view
+ * can handle them in a different way.
+ */
 public interface ClientViewUpdater {
     /**
      * Update the deck top card

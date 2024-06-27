@@ -19,6 +19,7 @@ import it.polimi.ingsw.am11.view.events.view.table.ShownPlayableEvent;
 import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.TestOnly;
 import org.jetbrains.annotations.Unmodifiable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,26 +80,60 @@ public class PickablesTable {
               )));
     }
 
+    /**
+     * Get the color of the top card of the deck of the specified type
+     *
+     * @param type the type of the deck
+     * @return the color of the top card of the deck, if present
+     */
     public @NotNull Optional<Color> getDeckTop(@NotNull PlayableCardType type) {
         return deckManager.getDeckTop(type);
     }
 
+    /**
+     * Set the number of common objectives to be picked
+     *
+     * @param numOfCommonObjectives the number of common objectives to be picked
+     */
     public static void setNumOfCommonObjectives(int numOfCommonObjectives) {
         PickablesTable.numOfCommonObjectives = numOfCommonObjectives;
     }
 
+    /**
+     * Set the number of shown cards per type
+     *
+     * @param numOfShownPerType the number of shown cards per type
+     */
     public static void setNumOfShownPerType(int numOfShownPerType) {
         PickablesTable.numOfShownPerType = numOfShownPerType;
     }
 
+    /**
+     * Set the number of candidate objectives to be picked for each player
+     *
+     * @param numOfCandidatesObjectives the number of candidate objectives to be picked for each
+     *                                  player
+     */
     public static void setNumOfCandidatesObjectives(int numOfCandidatesObjectives) {
         PickablesTable.numOfCandidatesObjectives = numOfCandidatesObjectives;
     }
 
+    /**
+     * Get the common objectives, shared among all players
+     *
+     * @return the common objectives
+     */
     public @NotNull Set<ObjectiveCard> getCommonObjectives() {
         return Collections.unmodifiableSet(commonObjectives);
     }
 
+    /**
+     * Draw a playable card from the deck of the specified type
+     *
+     * @param type the type of the deck
+     * @return the drawn card
+     * @throws EmptyDeckException if the deck is empty
+     */
     public @NotNull PlayableCard drawPlayableFrom(@NotNull PlayableCardType type)
     throws EmptyDeckException {
         PlayableCard card = deckManager.drawPlayableFrom(type).orElseThrow(
@@ -116,11 +151,21 @@ public class PickablesTable {
         return card;
     }
 
+    /**
+     * Draw a starter card from the deck
+     *
+     * @return the drawn card
+     */
     public @NotNull StarterCard pickStarterCard() {
         return deckManager.drawStarter()
                           .orElseThrow();
     }
 
+    /**
+     * Pick a set of candidate objectives
+     *
+     * @return the set of candidate objectives
+     */
     public Set<ObjectiveCard> pickObjectiveCandidates() {
         Set<ObjectiveCard> objs = new HashSet<>(numOfCandidatesObjectives << 1);
         IntStream.range(0, numOfCandidatesObjectives)
@@ -128,11 +173,15 @@ public class PickablesTable {
         return Set.copyOf(objs);
     }
 
-    public @NotNull ObjectiveCard pickObjectiveCard() {
+
+    private @NotNull ObjectiveCard pickObjectiveCard() {
         return deckManager.drawObjective()
                           .orElseThrow();
     }
 
+    /**
+     * Initialize the table, picking common objectives and showing the first cards
+     */
     public void initialize() {
         clearTable();
         try {
@@ -159,11 +208,19 @@ public class PickablesTable {
         }
     }
 
+    /**
+     * Clear the table, removing all cards, common objectives and shown cards
+     */
     private void clearTable() {
         commonObjectives.clear();
         shownPlayable.values().forEach(Set::clear);
     }
 
+    /**
+     * Used to pick common objectives
+     *
+     * @throws EmptyDeckException if the deck of Objective Cards is empty
+     */
     public void pickCommonObjectives() throws EmptyDeckException {
         for (int i = 0; i < numOfCommonObjectives; i++) {
             commonObjectives.add(pickObjectiveCard());
@@ -179,6 +236,13 @@ public class PickablesTable {
                                                      objsID));
     }
 
+    /**
+     * Pick a visible card from the table and substitute it with a new one
+     *
+     * @param cardID the ID of the card to pick
+     * @return the picked card
+     * @throws IllegalPickActionException if the card is one of the shown cards
+     */
     public PlayableCard pickPlayableVisible(int cardID) throws IllegalPickActionException {
         return shownPlayable.values().stream()
                             .flatMap(Collection::stream)
@@ -218,14 +282,32 @@ public class PickablesTable {
         return playableCard;
     }
 
+    /**
+     * Get the shown playable cards of the specified type
+     *
+     * @param type the PlayableCardType of the cards to get
+     * @return the shown playable cards of the specified type
+     */
     public Set<PlayableCard> getShownPlayable(@NotNull PlayableCardType type) {
         return Set.copyOf(shownPlayable.get(type));
     }
 
+    /**
+     * Method to get the number of remaining cards of the specified type on the deck
+     *
+     * @param type the PlayableCardType of the deck
+     * @return the number of remaining cards of the specified type on the deck
+     */
     public int getRemainingDeckOf(@NotNull PlayableCardType type) {
         return deckManager.getRemainingCardsOf(type);
     }
 
+    /**
+     * Used to save the current state of the PickablesTable, it will contain also information about
+     * the order of the cards in the decks
+     *
+     * @return a memento of the PickablesTable
+     */
     public @NotNull PickablesTableMemento save() {
         return new PickablesTableMemento(
                 deckManager.save(),
@@ -248,6 +330,12 @@ public class PickablesTable {
                                .collect(Collectors.toUnmodifiableSet());
     }
 
+    /**
+     * Used to save the current state of the PickablesTable, it will contain only public information
+     * about the table, without the order of the cards in the decks
+     *
+     * @return
+     */
     public @NotNull ReconnectionTableMemento savePublic() {
         Map<PlayableCardType, Color> deckTops = new EnumMap<>(PlayableCardType.class);
         for (PlayableCardType type : PlayableCardType.values()) {
@@ -260,6 +348,11 @@ public class PickablesTable {
                 commonToIntSet());
     }
 
+    /**
+     * Used to load a PickablesTableMemento on the PickablesTable
+     *
+     * @param memento the information to load
+     */
     public void load(@NotNull PickablesTableMemento memento) {
         hardReset();
         deckManager.load(memento.deckManager());
@@ -276,6 +369,9 @@ public class PickablesTable {
                                        .collect(Collectors.toSet()));
     }
 
+    /**
+     * Used to reset the PickablesTable to the initial state
+     */
     public void hardReset() {
         LOGGER.debug("MODEL: Hard resetting PickablesTable");
 

@@ -5,6 +5,11 @@ import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Interface that defines the methods that will be called from the network side to notify the user
+ * interface that an exception has occurred, there is a method for each type of exception so that
+ * the view can handle them in a different way.
+ */
 public interface ExceptionThrower {
 
     /**

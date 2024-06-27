@@ -11,6 +11,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class is used to manage the listeners of the game.
+ */
 public class GameListenerSupport {
     private final @NotNull Map<String, PlayerListener> playerListeners;
     private final @NotNull Set<TableListener> tableListeners;

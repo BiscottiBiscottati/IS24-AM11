@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Plateau {
     private static final Logger LOGGER = LoggerFactory.getLogger(Plateau.class);
 
-    private static int armageddonTime;
+    private static int armageddonTimePoints;
     private final @NotNull Map<String, Integer> playerPoints;
     private final @NotNull Map<String, Integer> counterObjective;
     private final @NotNull Map<String, Integer> finalLeaderboard;
@@ -37,6 +37,11 @@ public class Plateau {
         return status.get();
     }
 
+    /**
+     * Set the game status and notify the listeners
+     *
+     * @param status the new game status
+     */
     public void setStatus(@NotNull GameStatus status) {
         GameStatus oldValue = this.status.get();
         this.status.compareAndSet(oldValue, status);
@@ -46,6 +51,13 @@ public class Plateau {
         pcs.fireEvent(new GameStatusChangeEvent(oldValue, status));
     }
 
+    /**
+     * Add points to the specified player and notify the listeners
+     *
+     * @param player the player to add points to
+     * @param points the points to add
+     * @throws IllegalPlateauActionException if the player is not found
+     */
     public void addPlayerPoints(@NotNull String player, int points)
     throws IllegalPlateauActionException {
         Integer temp = playerPoints.getOrDefault(player, null);
@@ -63,30 +75,53 @@ public class Plateau {
                     temp - points,
                     temp));
         }
-        if (temp >= armageddonTime && this.status.get() == GameStatus.ONGOING) {
+        if (temp >= armageddonTimePoints && this.status.get() == GameStatus.ONGOING) {
             setStatus(GameStatus.ARMAGEDDON);
         }
 
     }
 
+    /**
+     * Check if the game is in the status armageddon time
+     *
+     * @return true if the game is in the status armageddon time
+     */
     public boolean isArmageddonTime() {
         return status.get() == GameStatus.ARMAGEDDON;
     }
 
+    /**
+     * Set the points needed to activate the armageddon time
+     *
+     * @param armageddonTime the points needed to activate the armageddon time
+     */
     public static void setArmageddonTime(int armageddonTime) {
-        Plateau.armageddonTime = armageddonTime;
+        Plateau.armageddonTimePoints = armageddonTime;
     }
 
+    /**
+     * Set the game status to Armageddon
+     */
     public void activateArmageddon() {
         setStatus(GameStatus.ARMAGEDDON);
     }
 
+    /**
+     * Remove the specified player from the plateau, it will be removed from the points, counter
+     * objective and final leaderboard
+     *
+     * @param player the player to remove
+     */
     public void removePlayer(@NotNull String player) {
         playerPoints.remove(player);
         counterObjective.remove(player);
         finalLeaderboard.remove(player);
     }
 
+    /**
+     * Reset the points, counter objective and final leaderboard for every player, but it keeps the
+     * players in the plateau
+     */
     public void reset() {
         playerPoints.keySet()
                     .forEach(player -> {
@@ -107,11 +142,23 @@ public class Plateau {
                         );
     }
 
+    /**
+     * Add a new player to the plateau with 0 points and 0 counter objective
+     *
+     * @param newPlayer nickname of the new player to add
+     */
     public void addPlayer(@NotNull String newPlayer) {
         playerPoints.put(newPlayer, 0);
         counterObjective.put(newPlayer, 0);
     }
 
+    /**
+     * The counter objective is a Map that contains the number of objectives completed by each
+     * player, this method adds 1 to the counter objective of the specified player
+     *
+     * @param player the player to add the counter objective to
+     * @throws IllegalPlateauActionException if the player is not found
+     */
     public void addCounterObjective(@NotNull String player)
     throws IllegalPlateauActionException {
         if (! counterObjective.containsKey(player)) {
@@ -121,6 +168,13 @@ public class Plateau {
         }
     }
 
+    /**
+     * Get the points of the specified player
+     *
+     * @param player the player to get the points of
+     * @return the points of the specified player
+     * @throws IllegalPlateauActionException if the player is not found
+     */
     public int getPlayerPoints(@NotNull String player) throws IllegalPlateauActionException {
         Integer temp = playerPoints.getOrDefault(player, null);
         if (temp == null) {
@@ -128,6 +182,13 @@ public class Plateau {
         } else return temp;
     }
 
+    /**
+     * Get the number of completed objectives of the specified player
+     *
+     * @param player the player to get the counter objective of
+     * @return the number of completed objectives of the specified player
+     * @throws IllegalPlateauActionException if the player is not found
+     */
     public int getCounterObjective(@NotNull String player) throws IllegalPlateauActionException {
         Integer temp = counterObjective.getOrDefault(player, null);
         if (temp == null) {
@@ -135,6 +196,11 @@ public class Plateau {
         } else return temp;
     }
 
+    /**
+     * Set the final leaderboard, the final leaderboard is a Map that contains the final position of
+     * each player, more than one player can have the same final position if they have the same
+     * points and counter objective. It will be considered a  tie
+     */
     public void setFinalLeaderboard() {
         List<Map.Entry<String, Integer>> entries = new ArrayList<>(playerPoints.entrySet());
 
@@ -160,6 +226,14 @@ public class Plateau {
         pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboardString));
     }
 
+    /**
+     * Get the final position of the specified player, more than one player can have the same final
+     * position if they have the same * points and counter objective. It will be considered a  tie
+     *
+     * @param player the player to get the final position of
+     * @return the final position of the specified player
+     * @throws IllegalPlateauActionException if the player is not found
+     */
     public int getPlayerFinishingPosition(@NotNull String player)
     throws IllegalPlateauActionException {
         if (finalLeaderboard.containsKey(player)) {
@@ -169,6 +243,12 @@ public class Plateau {
         }
     }
 
+    /**
+     * Get the winner/winners of the game, the winner are the players that have position 1 in the
+     * final leaderboard
+     *
+     * @return set with the nickname of the winner/winners
+     */
     public @NotNull Set<String> getWinners() {
         Set<String> winners = new HashSet<>(8);
         for (Map.Entry<String, Integer> entry : finalLeaderboard.entrySet()) {
@@ -179,6 +259,12 @@ public class Plateau {
         return Set.copyOf(winners);
     }
 
+    /**
+     * Arbitrary set the winner of the game, the winner will have position 1 in the final
+     * leaderboard, the other players will have position 2
+     *
+     * @param player the nickname of the winner
+     */
     public void setWinner(@NotNull String player) {
         finalLeaderboard.keySet()
                         .forEach(p -> finalLeaderboard.put(p, 2));
@@ -190,6 +276,11 @@ public class Plateau {
         pcs.fireEvent(new FinalLeaderboardEvent(finalLeaderboard));
     }
 
+    /**
+     * Used to save the state of the plateau
+     *
+     * @return a memento with the state of the plateau
+     */
     public @NotNull PlateauMemento save() {
         return new PlateauMemento(Map.copyOf(playerPoints),
                                   Map.copyOf(counterObjective),
@@ -197,6 +288,11 @@ public class Plateau {
                                   status.get());
     }
 
+    /**
+     * Used to load the state of the plateau
+     *
+     * @param memento the memento with the state of the plateau
+     */
     public void load(@NotNull PlateauMemento memento) {
         hardReset();
 
@@ -207,6 +303,9 @@ public class Plateau {
         status.set(memento.status());
     }
 
+    /**
+     * Hard reset the plateau, it will remove all the players, points, counter objective and final
+     */
     public void hardReset() {
         LOGGER.debug("MODEL: Hard reset on plateau");
         playerPoints.clear();

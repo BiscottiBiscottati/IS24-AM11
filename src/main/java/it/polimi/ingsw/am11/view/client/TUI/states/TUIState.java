@@ -5,9 +5,15 @@ import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * This abstract class represents the states of the TUI. The states are used to display specific
+ * information to the user, each state will accept only specific commands and will display only
+ * specific information.
+ */
 public abstract class TUIState {
 
     protected MiniGameModel model;
+
 
     protected TUIState(@NotNull MiniGameModel model) {
         this.model = model;

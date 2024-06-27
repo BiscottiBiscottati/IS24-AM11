@@ -24,15 +24,16 @@ import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
 
+
 public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(GuiUpdater.class);
-    private final GuiObserver guiObserver;
+    private final CodexNaturalis codexNaturalis;
     MiniGameModel miniGameModel;
     private GuiExceptionReceiver exceptionReceiver;
     private String candidateNick = "";
 
-    public GuiUpdater(@NotNull GuiObserver guiObserver) {
-        this.guiObserver = guiObserver;
+    public GuiUpdater(@NotNull CodexNaturalis codexNaturalis) {
+        this.codexNaturalis = codexNaturalis;
         reset();
     }
 
@@ -41,7 +42,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      */
     public void reset() {
         this.miniGameModel = new MiniGameModel();
-        this.exceptionReceiver = new GuiExceptionReceiver(miniGameModel, guiObserver);
+        this.exceptionReceiver = new GuiExceptionReceiver(miniGameModel, codexNaturalis);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
                      color.getColumnName());
 
         miniGameModel.table().refreshDeckTop(type, color);
-        guiObserver.updateDeckTop(type, color);
+        codexNaturalis.updateDeckTop(type, color);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
             throw new RuntimeException(e);
         }
 
-        guiObserver.updateField(nickname, x, y, cardId, isRetro);
+        codexNaturalis.updateField(nickname, x, y, cardId, isRetro);
 
     }
 
@@ -75,7 +76,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         LOGGER.debug("Removed from visible: {}, Added: {}", previousId, currentId);
         if (previousId != null) miniGameModel.table().pickVisible(previousId);
         if (currentId != null) miniGameModel.table().addVisible(currentId);
-        guiObserver.updateShownPlayable(previousId, currentId);
+        codexNaturalis.updateShownPlayable(previousId, currentId);
 
     }
 
@@ -84,7 +85,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         miniGameModel.setCurrentTurn(nickname);
         LOGGER.debug("It's {} turn", nickname);
 
-        guiObserver.updateTurnChange(nickname);
+        codexNaturalis.updateTurnChange(nickname);
     }
 
     @Override
@@ -92,18 +93,14 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         miniGameModel.getCliPlayer(nickname).addPoints(points);
         LOGGER.debug("{} points added to {}", points, nickname);
 
-        guiObserver.updatePlayerPoint(nickname, points);
+        codexNaturalis.updatePlayerPoint(nickname, points);
     }
 
     @Override
     public void updateGameStatus(@NotNull GameStatus status) {
         miniGameModel.table().setStatus(status);
         LOGGER.debug("Game status event: {}", status);
-        try {
-            guiObserver.updateGameStatus(status);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        codexNaturalis.updateGameStatus(status);
     }
 
     @Override
@@ -116,15 +113,14 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
             LOGGER.debug("CommonObjAdd: {}", cardId);
         }
 
-        guiObserver.updateCommonObjective(cardId, removeMode);
+        codexNaturalis.updateCommonObjective(cardId, removeMode);
     }
 
     @Override
     public void receiveFinalLeaderboard(@NotNull Map<String, Integer> finalLeaderboard) {
         LOGGER.debug("Final leaderboard received");
         miniGameModel.setFinalLeaderboard(finalLeaderboard);
-
-        guiObserver.receiveFinalLeaderboard(finalLeaderboard);
+        codexNaturalis.receiveFinalLeaderboard(finalLeaderboard);
     }
 
     @Override
@@ -138,7 +134,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
             // miniGameModel.setiPlaced(false);
         }
 
-        guiObserver.updateHand(cardId, removeMode);
+        codexNaturalis.updateHand(cardId, removeMode);
     }
 
     @Override
@@ -150,14 +146,14 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         } else {
             miniGameModel.addPersonalObjective(cardId);
         }
-        guiObserver.updatePersonalObjective(cardId, removeMode);
+        codexNaturalis.updatePersonalObjective(cardId, removeMode);
     }
 
     @Override
     public void receiveStarterCard(int cardId) {
         LOGGER.debug("Received starter card: {}", cardId);
         miniGameModel.addStarterCard(cardId);
-        guiObserver.receiveStarterCard();
+        codexNaturalis.receiveStarterCard();
     }
 
     @Override
@@ -167,7 +163,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
         miniGameModel.addCandidateObjectives(cardId);
 
-        guiObserver.receiveCandidateObjective();
+        codexNaturalis.receiveCandidateObjective();
     }
 
     @Override
@@ -177,7 +173,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         miniGameModel.setMyName(candidateNick);
         miniGameModel.setGodPlayer(candidateNick);
 
-        guiObserver.notifyGodPlayer();
+        codexNaturalis.notifyGodPlayer();
     }
 
     @Override
@@ -190,18 +186,18 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         currentPlayers.sequencedKeySet()
                       .forEach(x -> miniGameModel.addPlayer(currentPlayers.get(x), x));
 
-        guiObserver.updatePlayers(currentPlayers);
+        codexNaturalis.updatePlayers(currentPlayers);
     }
 
     @Override
     public void updateNumOfPlayers(int numOfPlayers) {
-        guiObserver.updateNumOfPlayers(numOfPlayers);
+        codexNaturalis.updateNumOfPlayers(numOfPlayers);
     }
 
     @Override
     public void disconnectedFromServer(@NotNull String message) {
         LOGGER.error("Disconnected from server: {}", message);
-        guiObserver.disconnectedFromServer();
+        codexNaturalis.disconnectedFromServer();
     }
 
     @Override
@@ -214,12 +210,12 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         switch (miniGameModel.table().getStatus()) {
             case CHOOSING_STARTERS -> {
                 WaitingRoomPage.hideWaitingRoomPage();
-                guiObserver.receiveStarterCard();
+                codexNaturalis.receiveStarterCard();
                 SetStarterCardsPage.showStarterCardsPage();
             }
             case CHOOSING_OBJECTIVES -> {
                 WaitingRoomPage.hideWaitingRoomPage();
-                guiObserver.receiveCandidateObjective();
+                codexNaturalis.receiveCandidateObjective();
                 SetObjCardsPage.showObjCardsPage();
             }
             case SETUP -> {
@@ -227,7 +223,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
                 SetNickPage.showSettingNickPage();
             }
             case ONGOING, ENDED, ARMAGEDDON, LAST_TURN -> {
-                guiObserver.reconnectedToServer(miniGameModel.table().getStatus());
+                codexNaturalis.reconnectedToServer(miniGameModel.table().getStatus());
             }
         }
 
@@ -247,13 +243,13 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveMsg(@NotNull String sender, @NotNull String msg) {
         miniGameModel.addChatMessage("[PUBLIC] " + sender + ": " + msg);
-        guiObserver.updateChat();
+        codexNaturalis.updateChat();
     }
 
     @Override
     public void receivePrivateMsg(@NotNull String sender, @NotNull String msg) {
         miniGameModel.addChatMessage("[PRIVATE] " + sender + ": " + msg);
-        guiObserver.updateChat();
+        codexNaturalis.updateChat();
     }
 
     @Override
@@ -262,7 +258,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
         if (sender.equals(miniGameModel.myName())) {
             miniGameModel.addChatMessage("[YOU] " + sender + ": " + msg);
         }
-        guiObserver.updateChat();
+        codexNaturalis.updateChat();
     }
 
     public MiniGameModel getMiniGameModel() {

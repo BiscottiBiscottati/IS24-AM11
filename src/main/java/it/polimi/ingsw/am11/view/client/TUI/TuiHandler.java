@@ -4,7 +4,10 @@ import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 
 import java.io.IOException;
 
-// This class is basically the main class that initialize the tui
+/**
+ * This class is basically the main class that initialize the tui
+ */
+
 
 public class TuiHandler {
 
