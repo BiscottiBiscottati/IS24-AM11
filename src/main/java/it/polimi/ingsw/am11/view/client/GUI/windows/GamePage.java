@@ -365,6 +365,7 @@ public class GamePage {
             signal.setVisible(false);
             signal.setOnMouseClicked(event -> {
                 if (selectedPosition != null) {
+                    mediaPlayer.play();
                     guiActuator.placeCard(selectedPosition.x(), selectedPosition.y(),
                                           handIDs.get(selectedHandPose),
                                           handRetro.get(selectedHandPose));
