@@ -26,6 +26,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -429,6 +431,11 @@ public class GamePage {
 
     public void updateTurnChange(String nickname) {
         Platform.runLater(() -> {
+            Media sound = new Media(getClass().getResource("/windows/beep-02.mp3").toExternalForm());
+            // Crea un MediaPlayer
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            // Riproduce il suono
+            mediaPlayer.play();
             for (Label label : List.of(player1, player2, player3, player4)) {
                 if (label.getText().equals(nickname)) {
                     label.setStyle("-fx-background-color: #D7BC49");

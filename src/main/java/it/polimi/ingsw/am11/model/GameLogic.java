@@ -1058,7 +1058,7 @@ public class GameLogic implements GameModel {
                     "It's not " + nickname + " turn, it's " + currentTurnPlayer + " turn."
             );
         }
-        if (! playerManager.getPlayer(nickname).orElseThrow().space().hasCardBeenPlaced()) {
+        if (playerManager.getCurrentAction() != TurnAction.DRAW_CARD) {
             throw new IllegalPickActionException(nickname + " has to place a card first");
         }
 

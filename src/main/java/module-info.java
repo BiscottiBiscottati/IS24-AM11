@@ -24,6 +24,7 @@ module it.polimi.ingsw.am11 {
     requires java.smartcardio;
     requires jdk.net;
     requires ch.qos.logback.core;
+    requires javafx.media;
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
     exports it.polimi.ingsw.am11;
