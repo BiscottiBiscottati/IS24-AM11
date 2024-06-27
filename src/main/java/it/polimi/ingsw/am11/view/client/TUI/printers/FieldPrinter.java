@@ -307,9 +307,12 @@ public class FieldPrinter {
         //DOWN_LX corner
         setCorner(printMatrix, rowIndex + 1, columnIndex, card, Corner.DOWN_LX);
         // down separator
+        String strID = String.valueOf(card.getCard().getId());
         printMatrix.get(rowIndex + 1).set(columnIndex + 1,
-                                          centerStr(String.valueOf(card.getCard().getId())
-                                                  , CARD_WIDTH, HORIZONTAL_SEPARATOR.charAt(0), 1));
+                                          centerStr(strID,
+                                                    CARD_WIDTH,
+                                                    HORIZONTAL_SEPARATOR.charAt(0),
+                                                    strID.length()));
         //DOWN_RX corner
         setCorner(printMatrix, rowIndex + 1, columnIndex + 2, card, Corner.DOWN_RX);
     }

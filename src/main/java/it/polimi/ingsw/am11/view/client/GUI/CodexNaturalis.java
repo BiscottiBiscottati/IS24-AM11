@@ -44,14 +44,10 @@ public class CodexNaturalis extends Application {
 
     public static void restart() {
         Platform.runLater(() -> {
-            try {
-                bigRoot.setVisible(false);
-                primaryStage.hide();
-                primaryStage.close();
-                new CodexNaturalis().start(new Stage());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            bigRoot.setVisible(false);
+            primaryStage.hide();
+            primaryStage.close();
+            new CodexNaturalis().start(new Stage());
         });
     }
 

@@ -65,7 +65,6 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
             //TODO handle this exception
             throw new RuntimeException(e);
         }
-
         codexNaturalis.updateField(nickname, x, y, cardId, isRetro);
 
     }
