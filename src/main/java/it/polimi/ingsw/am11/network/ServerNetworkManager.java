@@ -6,6 +6,13 @@ import it.polimi.ingsw.am11.network.socket.server.SocketManager;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * This class is used to manage the network connections of the server.
+ * <p>
+ *     It starts the socket manager and the RMI server.
+ *     It also provides a method to kick all the players from the server.
+ * </p>
+ */
 public class ServerNetworkManager {
     private final ExecutorService executorService = Executors.newFixedThreadPool(1);
     private final SocketManager socketManager;

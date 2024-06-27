@@ -8,6 +8,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+/**
+ * This enum is used to select the type of connection to use.
+ * <p>
+ *     Each connection type has a string representation and a factory to create the connection.
+ *     The factory is used to create the connection to the server.
+ *     The string representation is used to select the connection type from the UI.
+ * </p>
+ */
 public enum ConnectionType {
     RMI("rmi", ClientRMI::new),
     SOCKET("socket", ClientSocket::new);

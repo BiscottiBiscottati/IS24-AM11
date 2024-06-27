@@ -16,12 +16,13 @@ public class CliTable {
     private final EnumMap<PlayableCardType, Color> deckTopColors;
     private final Set<Integer> shownCards;
     private final Set<Integer> commonObjectives;
-    private GameStatus status;
+    private @NotNull GameStatus status;
 
     public CliTable() {
         this.deckTopColors = new EnumMap<>(PlayableCardType.class);
         this.shownCards = new HashSet<>(8);
         this.commonObjectives = new HashSet<>(4);
+        this.status = GameStatus.SETUP;
     }
 
     public Set<Integer> getCommonObjectives() {
@@ -36,11 +37,11 @@ public class CliTable {
         commonObjectives.remove(cardId);
     }
 
-    public GameStatus getStatus() {
+    public @NotNull GameStatus getStatus() {
         return status;
     }
 
-    public void setStatus(GameStatus status) {
+    public void setStatus(@NotNull GameStatus status) {
         this.status = status;
     }
 
