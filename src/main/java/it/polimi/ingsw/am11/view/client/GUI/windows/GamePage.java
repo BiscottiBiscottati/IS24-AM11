@@ -139,6 +139,8 @@ public class GamePage {
     private double xOffset;
     private double yOffset;
     private VBox commentsBox;
+    Media soundtrack;
+    MediaPlayer soundtrack_p;
 
     public GamePage() {
         this.handIDs = new ArrayList<>(3);
@@ -173,6 +175,15 @@ public class GamePage {
         errorLabel.setVisible(false);
         lastTurnLabel.setVisible(false);
         finalLB.setVisible(false);
+        try {
+            soundtrack = new Media(Objects.requireNonNull(getClass()
+                                                             .getResource("/soundtrack.mp3"))
+                                             .toExternalForm());
+            soundtrack_p = new MediaPlayer(soundtrack);
+            soundtrack_p.setCycleCount(MediaPlayer.INDEFINITE);
+        } catch (Exception e) {
+            LOGGER.error("Error while playing sound");
+        }
 
         Font font = FontManager.getFont(FontsEnum.VINQUE, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
@@ -245,6 +256,7 @@ public class GamePage {
                         "-fx-background-color: #685C19; -fx-background-radius: 5"));
         audioBtn.setOnMouseReleased(event -> audioBtn.setStyle(
                 "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
+        audioBtn.setText("Mute");
 
     }
 
@@ -824,6 +836,15 @@ public class GamePage {
     }
 
     public void clickedAudioBtn(MouseEvent mouseEvent) {
+        Platform.runLater(() -> {
+            if (audioBtn.getText().equals("Mute")) {
+                audioBtn.setText("Unmute");
+                soundtrack_p.pause();
+            } else {
+                audioBtn.setText("Mute");
+                soundtrack_p.play();
+            }
+        });
     }
 }
 
