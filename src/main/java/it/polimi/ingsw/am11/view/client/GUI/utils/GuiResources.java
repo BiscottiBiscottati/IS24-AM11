@@ -39,7 +39,7 @@ public class GuiResources {
         try {
             URL url = CodexNaturalis.class.getResource(completePath);
             urlString = String.valueOf(url);
-            LOGGER.debug(urlString);
+            LOGGER.trace(urlString);
             return new Image(urlString);
         } catch (Exception e) {
             LOGGER.error("Error loading card image at Url: {}", urlString);

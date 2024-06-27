@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11;
 
+import ch.qos.logback.classic.Level;
 import it.polimi.ingsw.am11.utils.ArgParser;
 import it.polimi.ingsw.am11.utils.Constants;
 import it.polimi.ingsw.am11.utils.exceptions.ParsingErrorException;
@@ -21,7 +22,8 @@ public class Main {
                   -rmi <port>    RMI port to use for the server
                   -socket <port> Socket port to use for the server
                   -mode <mode>   Mode to start the application in (gui|tui) (only for client)
-                  -v             Print logging information
+                  -v             Print debug logging information
+                  -vv            Print trace logging information
                   -resume        Load the most recent save
                 """;
 
@@ -47,10 +49,11 @@ public class Main {
         ch.qos.logback.classic.Logger rootlogger =
                 (ch.qos.logback.classic.Logger) org.slf4j.LoggerFactory.getLogger(
                         Logger.ROOT_LOGGER_NAME);
+        rootlogger.setLevel(Level.INFO);
         Optional.ofNullable(parser.getOption("v").orElseThrow().getValue())
-                .ifPresentOrElse(
-                        v -> rootlogger.setLevel(ch.qos.logback.classic.Level.DEBUG),
-                        () -> rootlogger.setLevel(ch.qos.logback.classic.Level.INFO));
+                .ifPresent(vValue -> rootlogger.setLevel(Level.DEBUG));
+        Optional.ofNullable(parser.getOption("vv").orElseThrow().getValue())
+                .ifPresent(vvValue -> rootlogger.setLevel(Level.TRACE));
 
         String mode = parser.getPositionalArgs().getFirst();
         switch (mode.toLowerCase()) {
@@ -73,7 +76,10 @@ public class Main {
                             "Mode to start the application in (gui|tui)",
                             "tui");
         argParser.addOption("v",
-                            "Print logging information",
+                            "Print debug logging information",
+                            false);
+        argParser.addOption("vv",
+                            "Print trace logging information",
                             false);
         argParser.addOption("resume",
                             "Load the most recent save",
