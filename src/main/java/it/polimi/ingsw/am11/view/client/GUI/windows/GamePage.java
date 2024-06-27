@@ -123,6 +123,8 @@ public class GamePage {
     Label fourth;
     @FXML
     Button closeBtn;
+    @FXML
+    Button audioBtn;
     private MiniGameModel miniGameModel;
     private GuiActuator guiActuator;
     private List<Integer> handIDs;
@@ -234,6 +236,16 @@ public class GamePage {
                         "-fx-background-color: #685C19; -fx-background-radius: 5"));
         chatButton.setOnMouseReleased(event -> chatButton.setStyle(
                 "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
+
+        audioBtn.setStyle("-fx-background-color: #D7BC49; -fx-background-radius: 5");
+        audioBtn.setFont(font);
+        audioBtn.setTextFill(Color.web("#351F17"));
+        audioBtn.setOnMousePressed(
+                event -> audioBtn.setStyle(
+                        "-fx-background-color: #685C19; -fx-background-radius: 5"));
+        audioBtn.setOnMouseReleased(event -> audioBtn.setStyle(
+                "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
+
     }
 
 
@@ -809,6 +821,9 @@ public class GamePage {
             closeBtn.setOnMouseClicked(event -> CodexNaturalis.restart());
         });
 
+    }
+
+    public void clickedAudioBtn(MouseEvent mouseEvent) {
     }
 }
 

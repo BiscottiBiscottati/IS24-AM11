@@ -221,7 +221,7 @@
                 <Insets bottom="60.0" right="30.0" />
             </StackPane.margin>
             <content>
-                <StackPane fx:id="cardField" maxHeight="8000.0" maxWidth="12000.0" prefHeight="8000.0" prefWidth="12000.0" style="-fx-background-color: #8B0000;" />
+                <StackPane fx:id="cardField" maxHeight="8000.0" maxWidth="12000.0" onMouseClicked="#clickedAudioBtn" prefHeight="8000.0" prefWidth="12000.0" style="-fx-background-color: #8B0000;" />
             </content>
         </ScrollPane>
       <Label fx:id="errorLabel" text="It's not your turn, pls stop!" textFill="RED" StackPane.alignment="BOTTOM_CENTER">
@@ -293,8 +293,13 @@
             <Button fx:id="closeBtn" mnemonicParsing="false" text="Close" />
          </children>
          <StackPane.margin>
-            <Insets bottom="250.0" left="30.0" />
+            <Insets left="350.0" />
          </StackPane.margin>
       </VBox>
+      <Button fx:id="audioBtn" mnemonicParsing="false" onMouseClicked="#clickedAudioBtn" text="Audio ON">
+         <StackPane.margin>
+            <Insets top="10.0" />
+         </StackPane.margin>
+      </Button>
     </children>
 </StackPane>
