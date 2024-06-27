@@ -139,6 +139,7 @@ public class GamePage {
     private VBox commentsBox;
 
     public GamePage() {
+        this.handIDs = new ArrayList<>(3);
     }
 
     public void showErrorMessage(String message) {
@@ -280,8 +281,8 @@ public class GamePage {
             handRetro = new ArrayList<>(3);
 
             List<ImageView> handCards = List.of(handCard1, handCard2, handCard3);
-            handIDs = new ArrayList<>(miniGameModel.getCliPlayer(miniGameModel.myName())
-                                                   .getSpace().getPlayerHand());
+            handIDs.addAll(miniGameModel.getCliPlayer(miniGameModel.myName())
+                                        .getSpace().getPlayerHand());
             int size = handIDs.size();
             for (int i = 0; i < size; i++) {
                 Image cardImage = GuiResources.getCardImage(handIDs.get(i));
