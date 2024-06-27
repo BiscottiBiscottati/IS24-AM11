@@ -447,10 +447,17 @@ public class GamePage {
 
     public void updateTurnChange(String nickname) {
         Platform.runLater(() -> {
-
+            // Carica il file audio
+            Media sound =
+                    new Media(Objects.requireNonNull(getClass()
+                                                             .getResource("/beep-02.mp3"))
+                                     .toExternalForm());
+            // Crea un MediaPlayer
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
             for (Label label : List.of(player1, player2, player3, player4)) {
                 if (label.getText().equals(nickname)) {
                     label.setStyle("-fx-background-color: #D7BC49");
+                    mediaPlayer.play();
                 } else {
                     label.setStyle("--fx-background-image: transparent");
                 }
