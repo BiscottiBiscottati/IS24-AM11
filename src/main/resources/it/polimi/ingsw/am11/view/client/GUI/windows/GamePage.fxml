@@ -248,7 +248,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <VBox fx:id="finalLB" alignment="TOP_CENTER" maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #8B0000;" StackPane.alignment="CENTER">
+      <VBox fx:id="finalLB" alignment="TOP_CENTER" maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #CC9900;" StackPane.alignment="CENTER_LEFT">
          <children>
             <Label fx:id="finalLBLabel" alignment="CENTER" text="FINAL LEADERBOARD" textAlignment="CENTER">
                <font>
@@ -292,6 +292,9 @@
             </Label>
             <Button fx:id="closeBtn" mnemonicParsing="false" text="Close" />
          </children>
+         <StackPane.margin>
+            <Insets bottom="250.0" left="30.0" />
+         </StackPane.margin>
       </VBox>
     </children>
 </StackPane>
