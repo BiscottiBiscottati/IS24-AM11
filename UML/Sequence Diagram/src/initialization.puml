@@ -1,4 +1,4 @@
-@startuml Initialization
+@startuml initialization
 'https://plantuml.com/sequence-diagram
 
 autonumber
