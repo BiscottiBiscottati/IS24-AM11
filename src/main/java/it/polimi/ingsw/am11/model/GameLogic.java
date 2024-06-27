@@ -933,6 +933,11 @@ public class GameLogic implements GameModel {
             return;
         }
 
+        if (playerManager.isDisconnected(nickname)) {
+            LOGGER.info("MODEL: Player {} is already disconnected", nickname);
+            return;
+        }
+
         if (plateau.getStatus() == GameStatus.CHOOSING_STARTERS ||
             plateau.getStatus() == GameStatus.CHOOSING_OBJECTIVES) {
             LOGGER.info("MODEL: Disconnecting player {} during setup", nickname);

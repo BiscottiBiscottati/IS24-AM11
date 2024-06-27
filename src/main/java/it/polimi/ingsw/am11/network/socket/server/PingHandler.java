@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class PingHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(PingHandler.class);
     private static final int PING_INTERVAL = 1000;
-    private static final int PING_TIMEOUT = 3000;
+    private static final int PING_TIMEOUT = 5000;
 
     private final @NotNull Socket clientSocket;
     private final @NotNull PrintWriter out;
@@ -39,8 +39,11 @@ public class PingHandler implements Runnable {
         long now = System.currentTimeMillis();
         long last = lastPing.get();
         if (last == - 1) return;
-        if (now - last > PING_TIMEOUT) {
-            LOGGER.info("SERVER TCP: A ping timeout occurred");
+        long interval = now - last;
+        if (interval + 10 > PING_INTERVAL) LOGGER.debug("SERVER TCP: Ping interval missed: {}ms",
+                                                        interval);
+        if (interval > PING_TIMEOUT) {
+            LOGGER.info("SERVER TCP: A ping timeout occurred: {}ms", interval);
             try {
                 clientSocket.close();
             } catch (Exception e) {

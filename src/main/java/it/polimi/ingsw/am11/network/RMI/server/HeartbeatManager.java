@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 public class HeartbeatManager implements HeartbeatInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeartbeatManager.class);
     private static final int HEARTBEAT_INTERVAL = 1000;
-    private static final int HEARTBEAT_TIMEOUT = 3000;
+    private static final int HEARTBEAT_TIMEOUT = 5000;
 
     private final @NotNull ConcurrentHashMap<String, Long> lastHeartbeat;
     private final @NotNull ScheduledExecutorService heartbeatsService;
