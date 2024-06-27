@@ -16,6 +16,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -23,6 +25,8 @@ import java.util.SequencedSet;
 import java.util.Set;
 
 public class CodexNaturalis extends Application implements GuiObserver {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CodexNaturalis.class);
+
     private static Stage primaryStage;
     private static Parent bigRoot;
     private final GuiActuator guiActuator;
@@ -153,7 +157,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void receiveFinalLeaderboard(Map<String, Integer> finalLeaderboard) {
-        System.out.println("Leaderboard received");
+        LOGGER.debug("Leaderboard received");
         gamePage.gameEnded();
     }
 
@@ -247,7 +251,7 @@ public class CodexNaturalis extends Application implements GuiObserver {
 
     @Override
     public void updateChat() {
-        System.out.println("Chat updated");
+        LOGGER.debug("Chat updated");
         gamePage.updateChat();
     }
 

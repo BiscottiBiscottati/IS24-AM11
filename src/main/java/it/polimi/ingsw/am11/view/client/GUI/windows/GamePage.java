@@ -32,12 +32,15 @@ import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Stream;
 
 public class GamePage {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GamePage.class);
 
     private final Popup popup = new Popup();
     @FXML
@@ -242,7 +245,7 @@ public class GamePage {
                     miniGameModel.getCliPlayer(
                             miniGameModel.myName()).getSpace().getPlayerObjective();
             int cardId = cardIdSet.iterator().next();
-            System.out.println("Card id: " + cardId);
+            LOGGER.debug("Card id: " + cardId);
             Image personalObjImage = GuiResources.getCardImage(cardId);
 
             if (personalObjImage != null) {
@@ -350,7 +353,7 @@ public class GamePage {
                 newRectangle.setTranslateX(pos.x() * 117 + centreX);
                 newRectangle.setTranslateY(- pos.y() * 60 + centreY);
                 newRectangle.setOnMouseClicked(event -> {
-                    System.out.println(pos + " clicked");
+                    LOGGER.debug(pos + " clicked");
                     if (selectedPosition != pos) {
                         selectedPosition = pos;
                         signal.setVisible(true);

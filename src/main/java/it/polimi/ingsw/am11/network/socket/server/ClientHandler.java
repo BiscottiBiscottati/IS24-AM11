@@ -71,7 +71,7 @@ public class ClientHandler implements Runnable {
     public void run() {
         isRunning = true;
         ServerExceptionSender serverExceptionSender = new ServerExceptionSender(out);
-        if (! readNickname(serverExceptionSender)) return;// FIXME disconnection
+        if (! readNickname(serverExceptionSender)) return;
         loopMessageRead();
     }
 

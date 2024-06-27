@@ -15,6 +15,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.regex.Pattern;
 
@@ -22,6 +24,8 @@ import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.DISTANCE_TO
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
 
 public class SetNickPage {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SetNickPage.class);
+
     private static final Pattern SPACE_SPLIT = Pattern.compile("\\s+");
     private static MiniGameModel miniGameModel;
     private static GuiActuator guiActuator;
@@ -133,7 +137,7 @@ public class SetNickPage {
 
     public static void handleEnterBtn() {
         String nick = writeNick.getCharacters().toString().strip();
-        System.out.println(nick);
+        LOGGER.debug(nick);
         String[] nickSplit = SPACE_SPLIT.split(nick);
         if (nick.isEmpty()) {
             writeNick.setPromptText("Fail");
