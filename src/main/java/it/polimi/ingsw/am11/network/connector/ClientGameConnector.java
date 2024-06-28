@@ -46,15 +46,32 @@ public interface ClientGameConnector {
     void placeCard(@NotNull Position pos, int cardId, boolean isRetro);
 
     /**
-     * @param fromVisible
-     * @param type
-     * @param cardId
+     * Sends a command to the server to draw a card prom the table
+     *
+     * @param fromVisible true if the card is drawn from the visible cards, false otherwise
+     * @param type        the type of the card to draw
+     * @param cardId      the id of the card to drawn, ignored if the card is drawn from the visible
+     *                    decks
      */
     void drawCard(boolean fromVisible, @NotNull PlayableCardType type, int cardId);
 
+    /**
+     * Used by the godPlayer to specify the number of players in the game
+     *
+     * @param numOfPlayers the number of players that will play the game
+     */
     void setNumOfPlayers(int numOfPlayers);
 
+    /**
+     * Used to send to the server the chosen nickname
+     *
+     * @param nickname the nickname chosen by the player
+     */
     void setNickname(@NotNull String nickname);
 
+    /**
+     * Used in case the client model has discrepancies with the server model. It is a request to
+     * receive the complete game state from the server
+     */
     void syncMeUp();
 }

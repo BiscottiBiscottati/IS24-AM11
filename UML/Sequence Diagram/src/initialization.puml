@@ -37,12 +37,8 @@ deactivate Controller
 
 activate VirtualView
 
-VirtualView ->> ServerConnector: notifyGodPlayer()
+VirtualView ->> ClientViewUpdater: notifyGodPlayer()
 deactivate VirtualView
-activate ServerConnector
-
-ServerConnector ->> ClientViewUpdater: notifyGodPlayer()
-deactivate ServerConnector
 activate ClientViewUpdater
 
 ClientViewUpdater --> Mario: god player notification

@@ -9,8 +9,8 @@ import java.util.concurrent.Executors;
 /**
  * This class is used to manage the network connections of the server.
  * <p>
- *     It starts the socket manager and the RMI server.
- *     It also provides a method to kick all the players from the server.
+ * It starts the socket manager and the RMI server. It also provides a method to kick all the
+ * players from the server.
  * </p>
  */
 public class ServerNetworkManager {
@@ -23,12 +23,18 @@ public class ServerNetworkManager {
         serverRMI = new ServerRMI(rmiPort);
     }
 
+    /**
+     * Starts the socket and RMI connections for the server
+     */
     public void start() {
         executorService.submit(socketManager::start);
         serverRMI.start();
         Runtime.getRuntime().addShutdownHook(new Thread(executorService::shutdown));
     }
 
+    /**
+     * Kicks all the players from the server
+     */
     public void kickAllPlayers() {
         socketManager.removeClients();
         serverRMI.removeAllPlayers();

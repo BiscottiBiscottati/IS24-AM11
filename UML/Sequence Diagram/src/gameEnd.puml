@@ -1,0 +1,68 @@
+@startuml gameEnd
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+title Game End
+
+box User
+actor Mario
+entity ClientViewUpdater
+entity ClientConnector
+end box
+
+box Server
+entity ServerConnector
+entity VirtualView
+entity Controller
+entity Model
+end box
+
+== GAME ENDED ==
+
+Model->>VirtualView: updateTable/n(GameStatusChangeEvent(oldValue, status))
+activate VirtualView
+
+VirtualView ->> ClientViewUpdater: updateGameStatus\n(oldValue, status)
+deactivate VirtualView
+activate ClientViewUpdater
+
+ClientViewUpdater ->> Mario: updated game status
+deactivate ClientViewUpdater
+
+loop for each objective
+    Model->>VirtualView: updateTable/n(PlayerPointsChangeEvent(nickname, oldValue, newValue))
+    activate VirtualView
+
+    VirtualView ->> ClientViewUpdater: updatePlayerPoint\n(nickname, points)
+    deactivate VirtualView
+    activate ClientViewUpdater
+
+    ClientViewUpdater ->> Mario: updated the points
+    deactivate ClientViewUpdater
+end
+
+Model->>VirtualView: updateTable/n(FinalLeaderboardEvent(finalLeaderboard))
+activate VirtualView
+
+VirtualView ->> ClientViewUpdater: receiveFinalLeaderboard\n(finalLeaderboard)
+deactivate VirtualView
+activate ClientViewUpdater
+
+ClientViewUpdater ->> Mario: received final leaderboard
+deactivate ClientViewUpdater
+
+Model->>Controller: destroyGame()
+activate Controller
+
+Controller->>VirtualView: kickAllPlayers()
+deactivate Controller
+activate VirtualView
+
+VirtualView ->> ClientViewUpdater: disconnectedFromServer\n(message)
+deactivate VirtualView
+activate ClientViewUpdater
+
+ClientViewUpdater ->> Mario: disconnected from the server
+deactivate ClientViewUpdater
+@enduml
