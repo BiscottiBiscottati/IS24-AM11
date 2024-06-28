@@ -20,11 +20,19 @@ public class Main {
 
     /**
      * Main method of the application, used to start the server or the client based on the
-     * arguments: Usage: java -jar <jar file> <server|client> [options] Options:<br> -rmi <port> RMI
-     * port to use for the server<br> -socket <port> Socket port to use for the server<br> -mode
-     * <mode> Mode to start the application in (gui|tui) (only for client)<br> -v Print debug
-     * logging information<br> -vv Print trace logging information<br> -resume Load the most recent
-     * save<br>
+     * arguments:
+     * <p>
+     * Usage: java -jar <jar file> <server|client> [options] Options:
+     * <br>
+     * -rmi port RMI port to use for the server
+     * <br>
+     * -socket port Socket port to use for the server
+     * <br>
+     * -ui Mode to start the application in (gui|tui) (only for client)
+     * <br>
+     * -v Print debug logging information
+     * <br>
+     * -vv Print trace logging information<br> -resume Load the most recent save<br>
      *
      * @param args the arguments passed to the application
      * @throws IOException if an I/O error occurs

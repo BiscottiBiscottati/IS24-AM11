@@ -55,7 +55,7 @@ public interface GameModel {
      * Retrieves the nickname of the player that is first in the order of the turns
      * <p>
      * If the game has not been initialized with the method <code> .initGame </code> this method
-     * returns <code> null
+     * returns null
      *
      * @return the nickname of the player that played the first turn
      * @throws GameStatusException if the game hasn't started or has ended

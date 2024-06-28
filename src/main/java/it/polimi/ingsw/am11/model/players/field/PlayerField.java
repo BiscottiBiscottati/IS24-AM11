@@ -178,7 +178,7 @@ public class PlayerField {
     /**
      * It is used to get the map of cards positioned on the player's field.
      *
-     * @return Map<Position, CardContainer> - A map of cards positioned on the player's field.
+     * @return Map - A map of cards positioned on the player's field.
      */
     public Map<Position, CardContainer> getCardsPositioned() {
         return this.positionManager.getCardsPositioned();
@@ -187,8 +187,7 @@ public class PlayerField {
     /**
      * It is used to get the number of "placed" colors in the player's field.
      *
-     * @return Map<GameColor, Integer> - A map of colors and the number of exposed items of that
-     * color.
+     * @return Map - A map of colors and the number of exposed items of that color.
      */
     public Map<GameColor, Integer> getPlacedCardColours() {
         return this.itemManager.getPlacedCardColors();
