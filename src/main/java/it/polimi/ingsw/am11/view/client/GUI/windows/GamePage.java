@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.model.players.field.PositionManager;
 import it.polimi.ingsw.am11.model.players.utils.CardContainer;
+import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.players.utils.Position;
 import it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis;
 import it.polimi.ingsw.am11.view.client.GUI.GuiActuator;
@@ -40,7 +41,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * This class is used to create the page where the game is played.
@@ -73,6 +73,14 @@ public class GamePage {
     Label pointsPl3;
     @FXML
     Label pointsPl4;
+    @FXML
+    Label playerColor1;
+    @FXML
+    Label playerColor2;
+    @FXML
+    Label playerColor3;
+    @FXML
+    Label playerColor4;
     @FXML
     Label visiblesLabel;
     @FXML
@@ -229,32 +237,42 @@ public class GamePage {
         yourName.setText("YOUR NAME:\n" + miniGameModel.myName());
 
         // Get the stream of player names
-        Stream<String> playerStream = codexNaturalis.getMiniGameModel().getPlayers().stream();
-        List<String> playerNames = playerStream.toList();
+        List<String> playerNames = codexNaturalis.getMiniGameModel()
+                                                 .getPlayers()
+                                                 .stream()
+                                                 .toList()
+                                                 .reversed();
 
-        List<Label> playerLabels = List.of(player1, player2, player3, player4);
+        List<Label> playerLabels = List.of(player4, player3, player2, player1);
+        List<Label> pointsLabels = List.of(pointsPl4, pointsPl3, pointsPl2, pointsPl1);
+        List<Label> colorsLabels = List.of(playerColor4, playerColor3, playerColor2, playerColor1);
 
 
         int size = playerNames.size();
 
         for (int i = 0; i < size; i++) {
-            playerLabels.get(i).setText(playerNames.get(i));
+            String name = playerNames.get(i);
+            playerLabels.get(i).setText(name);
             playerLabels.get(i).setFont(font);
             playerLabels.get(i).setStyle("-fx-font-size: 30");
             playerLabels.get(i).setStyle("-fx-text-fill: #D7BC49");
             playerLabels.get(i).setStyle("-fx-background-color: #351F17");
             playerLabels.get(i).setStyle("-fx-background-radius: 5");
-        }
 
-        List<Label> pointsLabels = List.of(pointsPl1, pointsPl2, pointsPl3, pointsPl4);
-
-        for (int i = 0; i < size; i++) {
             pointsLabels.get(i).setText("0");
             pointsLabels.get(i).setFont(font);
             pointsLabels.get(i).setStyle("-fx-font-size: 30");
             pointsLabels.get(i).setStyle("-fx-text-fill: #D7BC49");
             pointsLabels.get(i).setStyle("-fx-background-color: #351F17");
             pointsLabels.get(i).setStyle("-fx-background-radius: 5");
+
+            PlayerColor color = codexNaturalis.getMiniGameModel().getCliPlayer(name).getColor();
+            colorsLabels.get(i).setText(color.toString());
+            colorsLabels.get(i).setFont(font);
+            colorsLabels.get(i).setStyle("-fx-font-size: 30");
+            colorsLabels.get(i).setStyle("-fx-text-fill: " + color.toString().toLowerCase());
+            colorsLabels.get(i).setStyle("-fx-background-color: #351F17");
+            colorsLabels.get(i).setStyle("-fx-background-radius: 5");
         }
 
         centreX = (int) (cardField.getWidth() / 2);
@@ -492,8 +510,8 @@ public class GamePage {
      * @param cardsPositioned A map that contains the positions of the cards on the game field.
      * @param pos             The current position being checked.
      */
-    private void recursivePrinter(Map<Position, ImageView> placedCards,
-                                  Map<Position, CardContainer> cardsPositioned,
+    private void recursivePrinter(@NotNull Map<Position, ImageView> placedCards,
+                                  @NotNull Map<Position, CardContainer> cardsPositioned,
                                   Position pos) {
 
         CardContainer cardContainer = cardsPositioned.get(pos);
@@ -622,8 +640,8 @@ public class GamePage {
      */
     public void updatePlayerPoints(String nickname, int points) {
         Platform.runLater(() -> {
-            List<Label> pointsLabels = List.of(pointsPl1, pointsPl2, pointsPl3, pointsPl4);
-            List<Label> playerLabels = List.of(player1, player2, player3, player4);
+            List<Label> pointsLabels = List.of(pointsPl4, pointsPl3, pointsPl2, pointsPl1);
+            List<Label> playerLabels = List.of(player4, player3, player2, player1);
             int size = playerLabels.size();
             for (int i = 0; i < size; i++) {
                 if (playerLabels.get(i).getText().equals(nickname)) {
