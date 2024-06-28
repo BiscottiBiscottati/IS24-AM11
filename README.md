@@ -2,10 +2,10 @@
 
 ## Team Members
 
-- [Zining Chen](zining.chen@mail.polimi.it)
-- [Edoardo Bergamo](edoardo.bergamo@mail.polimi.it)
-- [Osama Atiqi](osama.atiqi@mail.polimi.it)
-- [Ferdinando Maria Cioffi](ferdinandomaria.cioffi@mail.polimi.it)
+- [Zining Chen](mailto:zining.chen@mail.polimi.it)
+- [Edoardo Bergamo](mailto:edoardo.bergamo@mail.polimi.it)
+- [Osama Atiqi](mailto:osama.atiqi@mail.polimi.it)
+- [Ferdinando Maria Cioffi](mailto:ferdinandomaria.cioffi@mail.polimi.it)
 
 ## Project Description
 
@@ -14,17 +14,19 @@ game "[Codex Naturalis](https://www.craniocreations.it/prodotto/codex-naturalis)
 in a digital version.
 
 You can download the rules here:
+
 [Codex Naturalis Rules (ENG)](https://studiobombyx.com/en/rules/codex/)
+
 [Codex Naturalis Rules (ITA)](https://www.craniocreations.it/storage/media/product_downloads/126/1516/CODEX_ITA_Rules_compressed.pdf)
 
 ## Project Structure
 
 The project is structured as follows:
 
-- src: contains the source code of the project
-- javadoc: contains the javadoc of the project
-- UML: contains the UML class and sequence diagrams of the project
-- Peer Review: contains the peer review of another team design
+- *src*: contains the source code of the project
+- *javadoc*: contains the javadoc of the project
+- *UML*: contains the UML class and sequence diagrams of the project
+- *Peer Review*: contains the peer review of another team design
 
 ## How to run the project
 
