@@ -15,12 +15,23 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
+/**
+ * This class is responsible for handling the frame of the application. It includes methods for
+ * setting the icons of the application, creating title bar buttons, and making the application
+ * frame draggable.
+ */
 public class FrameHandler {
 
 
-    //This class is responsible for setting the frame of the application, the frame is the top
-    // bar of the application, and the icons of the application.
-
+    /**
+     * This method is used to set the icons of the application and create the title bar buttons. It
+     * sets the icon on the application bar and the icon on the taskbar/dock. It also creates the
+     * title bar buttons for the application. The close button closes the application, and the
+     * minimize button minimizes the application.
+     *
+     * @param stage The stage of the application.
+     * @param root  The root of the application.
+     */
     public static void setIcons(@NotNull Stage stage, StackPane root) {
 
         //Proportions
@@ -76,6 +87,17 @@ public class FrameHandler {
         stage.setOnShowing(event -> stage.setIconified(false));
     }
 
+    /**
+     * This method is used to create a draggable rectangle for the application frame. The rectangle
+     * is transparent and its size and position are determined by the provided parameters. The
+     * rectangle also has a mouse event handler that allows the user to drag the application frame
+     * around the screen.
+     *
+     * @param stage          The stage of the application.
+     * @param size           The size of the rectangle.
+     * @param halfButtonSize Half the size of the title bar button.
+     * @return The draggable rectangle.
+     */
     private static @NotNull Rectangle getDraggableRect(@NotNull Stage stage, int size,
                                                        int halfButtonSize) {
         Rectangle draggableRect = new Rectangle(size, halfButtonSize << 2);
@@ -88,6 +110,16 @@ public class FrameHandler {
         return draggableRect;
     }
 
+    /**
+     * This method is used to set up a tile bar button for the application. It creates a new button,
+     * sets its size, graphic, and position, and adds mouse event handlers. The button's opacity
+     * changes when the mouse enters, exits, or presses the button.
+     *
+     * @param size           The size of the button.
+     * @param halfButtonSize Half the size of the title bar button.
+     * @param imageView      The ImageView object to be set as the button's graphic.
+     * @return The set up title bar button.
+     */
     private static @NotNull Button setUpTilebarButton(int size, int halfButtonSize,
                                                       int distanceToBorder,
                                                       @NotNull ImageView imageView) {

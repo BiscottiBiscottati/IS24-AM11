@@ -23,6 +23,9 @@ import java.util.regex.Pattern;
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.DISTANCE_TO_BORDER;
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
 
+/**
+ * This class is used to create the page where the player can set their nickname.
+ */
 public class SetNickPage {
     private static final Logger LOGGER = LoggerFactory.getLogger(SetNickPage.class);
 
@@ -36,6 +39,12 @@ public class SetNickPage {
     private static Button goToNetwork;
     private static int halfButtonSize, distanceToBorder;
 
+    /**
+     * This static method is used to create the set nickname page in the GUI. It initializes the
+     * necessary components and sets their properties.
+     *
+     * @param codexNaturalis The GUI instance that the set nickname page is a part of.
+     */
     public static void createSettingNickPage(CodexNaturalis codexNaturalis) {
         guiActuator = codexNaturalis.getGuiActuator();
         StackPane root = codexNaturalis.getSmallRoot();
@@ -105,6 +114,10 @@ public class SetNickPage {
         goToNetwork.setVisible(false);
     }
 
+    /**
+     * This static method is used to show the set nickname page in the GUI. It sets the visibility
+     * of the set nickname page to true.
+     */
     public static void showSettingNickPage() {
 
         yourName.setVisible(true);
@@ -135,6 +148,10 @@ public class SetNickPage {
         });
     }
 
+    /**
+     * This static method is used to handle the event when the player clicks the "Choose" button. It
+     * checks if the nickname is valid and sets the player's nickname.
+     */
     public static void handleEnterBtn() {
         String nick = writeNick.getCharacters().toString().strip();
         LOGGER.debug(nick);
@@ -163,6 +180,12 @@ public class SetNickPage {
         }
     }
 
+    /**
+     * This static method is used to show an error message when the nickname entered is invalid or
+     * the number of player isn't set.
+     *
+     * @param message The error message to be displayed.
+     */
     public static void showErrorMesssage(String message) {
         Platform.runLater(() -> {
             nameAlreadyTaken.setText(message);
@@ -170,6 +193,10 @@ public class SetNickPage {
         });
     }
 
+    /**
+     * This static method is used to hide the set nickname page in the GUI. It sets the visibility
+     * of the set nickname page to false.
+     */
     public static void hideSettingNickPage() {
         if (writeNick != null) {
             chooseNick.setVisible(false);

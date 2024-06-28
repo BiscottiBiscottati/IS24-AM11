@@ -17,6 +17,10 @@ import javafx.scene.text.Font;
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.DISTANCE_TO_BORDER;
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
 
+/**
+ * The SetNumOfPlayersPage class is responsible for creating and managing the Set Number of Players
+ * Page in the GUI.
+ */
 public class SetNumOfPlayersPage {
     private static CodexNaturalis codexNaturalis;
     private static GuiActuator guiActuator;
@@ -29,6 +33,12 @@ public class SetNumOfPlayersPage {
     private static StackPane root;
 
 
+    /**
+     * This static method is used to create the Set Number of Players Page in the GUI. It
+     * initializes the necessary components and sets their properties.
+     *
+     * @param codexNaturalis The GUI instance that the Set Number of Players Page is a part of.
+     */
     public static void createNumOfPlayersPage(CodexNaturalis codexNaturalis) {
         SetNumOfPlayersPage.codexNaturalis = codexNaturalis;
 
@@ -80,6 +90,9 @@ public class SetNumOfPlayersPage {
                                   enterNumOfPlayers);
     }
 
+    /**
+     * This static method is used to show the Set Number of Players Page in the GUI.
+     */
     public static void showSetNumOfPlayersPage() {
         WaitingRoomPage.hideWaitingRoomPage();
         numOfPlayers.setVisible(true);
@@ -95,6 +108,10 @@ public class SetNumOfPlayersPage {
         });
     }
 
+    /**
+     * This static method is used to handle the event of entering the number of players. It checks
+     * if the number of players is valid and navigates to the Waiting Room Page if it is.
+     */
     public static void handleEnterNumOfPlayers() {
         int num = 0;
         try {
@@ -114,10 +131,18 @@ public class SetNumOfPlayersPage {
         }
     }
 
+    /**
+     * This static method is used to show an error message when the number of players entered is
+     * invalid.
+     */
     public static void showErrorMesssage() {
         invalidNumOfPlayers.setVisible(true);
     }
 
+    /**
+     * This static method is used to hide the Set Number of Players Page in the GUI. It sets the
+     * visibility of the Set Number of Players Page to false.
+     */
     public static void hideSetNumOfPlayersPage() {
         if (numOfPlayers != null) {
             numOfPlayers.setVisible(false);

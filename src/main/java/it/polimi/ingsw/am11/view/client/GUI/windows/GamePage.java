@@ -43,6 +43,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Stream;
 
+/**
+ * This class is used to create the page where the game is played.
+ */
 public class GamePage {
     private static final Logger LOGGER = LoggerFactory.getLogger(GamePage.class);
 
@@ -144,10 +147,19 @@ public class GamePage {
     private double yOffset;
     private VBox commentsBox;
 
+
+    /**
+     * This constructor initializes the handIDs list.
+     */
     public GamePage() {
         this.handIDs = new ArrayList<>(3);
     }
 
+    /**
+     * This method is used to show an error message on the screen.
+     *
+     * @param message The message to be shown.
+     */
     public void showErrorMessage(String message) {
         Platform.runLater(() -> {
             errorLabel.setText(message);
@@ -159,17 +171,26 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is used to show a message on the screen.
+     *
+     * @param msg The message to be shown.
+     */
     public void showLastTurnMessage(String msg) {
         Platform.runLater(() -> {
             lastTurnLabel.setText(msg);
             lastTurnLabel.setVisible(true);
-
-            PauseTransition pause = new PauseTransition(Duration.seconds(5));
-            pause.setOnFinished(event -> lastTurnLabel.setVisible(false));
-            pause.play();
         });
     }
 
+    /**
+     * This method is used to create the game page in the GUI. It initializes the necessary
+     * components, sets their properties, and prepares the game page for interaction. It also sets
+     * up the layout for the page and adds it to the root of the GUI.
+     *
+     * @param codexNaturalis The GUI instance that the game page is a part of.
+     * @throws IOException If an input or output exception occurred
+     */
     public void createGamePage(@NotNull CodexNaturalis codexNaturalis) throws IOException {
         miniGameModel = codexNaturalis.getMiniGameModel();
         guiActuator = codexNaturalis.getGuiActuator();
@@ -258,7 +279,7 @@ public class GamePage {
                         "-fx-background-color: #685C19; -fx-background-radius: 5"));
         audioBtn.setOnMouseReleased(event -> audioBtn.setStyle(
                 "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
-        audioBtn.setText("Mute");
+        audioBtn.setText("Unmute");
 
         audioBtn.setOnMouseClicked(event -> {
             Platform.runLater(() -> {
@@ -275,8 +296,15 @@ public class GamePage {
     }
 
 
-    public void updateDeckTop(@NotNull PlayableCardType type,
-                              @Nullable GameColor color) {
+    /**
+     * This method is used to update the top card of the deck in the GUI. It checks the type of the
+     * deck (resource or gold) and updates the image of the top card accordingly.
+     *
+     * @param type  The type of the deck (resource or gold).
+     * @param color The color of the card to be displayed on the top of the deck.
+     */
+    public void updateDeckTop(PlayableCardType type,
+                              it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {
         Platform.runLater(() -> {
             switch (type) {
                 case RESOURCE -> {
@@ -301,6 +329,10 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is used to update the personal objective card in the GUI. It retrieves the
+     * personal objective card from the game model and updates the corresponding image in the GUI.
+     */
     public void updatePersonalObjective() {
         Platform.runLater(() -> {
             Set<Integer> cardIdSet =
@@ -317,6 +349,11 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is used to update the hand of cards in the GUI. It clears the current hand of
+     * cards and retrieves the new hand from the game model. It then updates the corresponding
+     * images in the GUI for each card in the hand.
+     */
     public void updateHand() {
         Platform.runLater(() -> {
             handCard1.setImage(null);
@@ -340,6 +377,11 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is used to update the visible playable cards in the GUI. It clears the current
+     * visible playable cards and retrieves the new visible cards from the game model. It then
+     * updates the corresponding images in the GUI for each visible card.
+     */
     public void updateShownPlayable() {
         Platform.runLater(() -> {
             List<ImageView> shownCards = List.of(vis1, vis2, vis3, vis4);
@@ -358,6 +400,10 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is used to place the starter card on the game field in the GUI. It retrieves the
+     * starter card from the game model and updates the corresponding image in the GUI.
+     */
     public void placeStarterCard() {
         Platform.runLater(() -> {
             int cardId = miniGameModel.getCliPlayer(
@@ -381,6 +427,11 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is used to create buttons for available positions on the game field. It retrieves
+     * the available positions from the game model and creates a new button for each position. These
+     * buttons are then added to the game field in the GUI.
+     */
     private void createButtonsForAvailablePositions() {
         Platform.runLater(() -> {
             availablePositions = miniGameModel.getCliPlayer(
@@ -431,6 +482,17 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is used to recursively print the cards on the game field in the GUI. It checks if
+     * a card has already been placed at a position, if not, it places the card and saves it in the
+     * placedCards Map. It then checks the neighbouring positions and calls itself recursively for
+     * each neighbouring card.
+     *
+     * @param placedCards     A map that keeps track of the cards that have already been placed on
+     *                        the game field.
+     * @param cardsPositioned A map that contains the positions of the cards on the game field.
+     * @param pos             The current position being checked.
+     */
     private void recursivePrinter(Map<Position, ImageView> placedCards,
                                   Map<Position, CardContainer> cardsPositioned,
                                   Position pos) {
@@ -468,6 +530,14 @@ public class GamePage {
         }
     }
 
+    /**
+     * This method is used to print the cards on the game field in the GUI. It retrieves the field
+     * of the player with the given nickname and updates the GUI accordingly. If the current player
+     * is viewing their own field and it's their turn, it also creates buttons for available
+     * positions.
+     *
+     * @param nickname The nickname of the player whose field is to be printed.
+     */
     public void printCardsOnField(String nickname) {
         Platform.runLater(() -> {
             if (currentSeenField.equals(nickname)) {
@@ -491,7 +561,12 @@ public class GamePage {
         });
     }
 
-
+    /**
+     * This method is used to handle the change of turn in the game. It updates the GUI to reflect
+     * the player whose turn it is currently.
+     *
+     * @param nickname The nickname of the player whose turn it is.
+     */
     public void updateTurnChange(String nickname) {
         Platform.runLater(() -> {
             if (miniGameModel.myName().equals(nickname)) {
@@ -518,6 +593,10 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is used to update the common objective cards in the GUI. It retrieves the common
+     * objective cards from the game model and updates the corresponding images in the GUI.
+     */
     public void updateCommonObj() {
         Platform.runLater(() -> {
             Set<Integer> cardIdSet = miniGameModel.table().getCommonObjectives();
@@ -535,6 +614,13 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is used to update the points of a player in the game. It updates the GUI to
+     * reflect the current points of the player.
+     *
+     * @param nickname The nickname of the player whose points are to be updated.
+     * @param points   The new points of the player.
+     */
     public void updatePlayerPoints(String nickname, int points) {
         Platform.runLater(() -> {
             List<Label> pointsLabels = List.of(pointsPl1, pointsPl2, pointsPl3, pointsPl4);
@@ -548,6 +634,12 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is triggered when the player 1's field is clicked in the GUI. It updates the
+     * current field being viewed to player 1's field and prints the cards on player 1's field.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void showFieldPl1(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             currentSeenField = player1.getText();
@@ -555,6 +647,12 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is triggered when the player 2's field is clicked in the GUI. It updates the
+     * current field being viewed to player 2's field and prints the cards on player 2's field.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void showFieldPl2(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             currentSeenField = player2.getText();
@@ -562,6 +660,12 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is triggered when the player 3's field is clicked in the GUI. It updates the
+     * current field being viewed to player 3's field and prints the cards on player 3's field.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void showFieldPl3(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             currentSeenField = player3.getText();
@@ -569,6 +673,12 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is triggered when the player 4's field is clicked in the GUI. It updates the
+     * current field being viewed to player 4's field and prints the cards on player 4's field.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void showFieldPl4(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             currentSeenField = player4.getText();
@@ -576,18 +686,36 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is triggered when the gold deck is clicked in the GUI. It sends a request to the
+     * game model to draw a card from the gold deck.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void pickFromGoldDeck(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             guiActuator.drawCard(false, PlayableCardType.GOLD, 0);
         });
     }
 
+    /**
+     * This method is triggered when the resource deck is clicked in the GUI. It sends a request to
+     * the game model to draw a card from the resource deck.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void pickFromResDeck(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             guiActuator.drawCard(false, PlayableCardType.RESOURCE, 0);
         });
     }
 
+    /**
+     * This method is triggered when the first visible card is clicked in the GUI. It sends a
+     * request to the game model to draw a card from the first visible card.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void chooseVis1(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             guiActuator.drawCard(true, PlayableCardType.GOLD,
@@ -595,6 +723,12 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is triggered when the third visible card is clicked in the GUI. It sends a
+     * request to the game model to draw a card from the third visible card.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void chooseVis3(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             guiActuator.drawCard(true, PlayableCardType.GOLD,
@@ -602,6 +736,12 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is triggered when the second visible card is clicked in the GUI. It sends a
+     * request to the game model to draw a card from the second visible card.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void chooseVis2(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             guiActuator.drawCard(true, PlayableCardType.GOLD,
@@ -609,6 +749,12 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is triggered when the fourth visible card is clicked in the GUI. It sends a
+     * request to the game model to draw a card from the fourth visible card.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void chooseVis4(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             guiActuator.drawCard(true, PlayableCardType.GOLD,
@@ -616,6 +762,12 @@ public class GamePage {
         });
     }
 
+    /**
+     * This method is triggered when the first card in the hand is selected in the GUI. It handles
+     * the selection and flipping of the card.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void card1Selected(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             handSelect(mouseEvent, 0);
@@ -623,6 +775,16 @@ public class GamePage {
 
     }
 
+    /**
+     * This method handles the selection and flipping of a card in the player's hand. It is
+     * triggered when a card in the hand is selected in the GUI. If the selected card is different
+     * from the previously selected card, it moves the selected card upwards. If the right mouse
+     * button is clicked, it flips the card.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     * @param handPos    The position of the selected card in the hand (0 for the first card, 1 for
+     *                   the second card, etc.).
+     */
     private void handSelect(MouseEvent mouseEvent, int handPos) {
         boolean isRetro = false;
         if (selectedHandPose == null || selectedHandPose != handPos) {
@@ -693,18 +855,38 @@ public class GamePage {
 
     }
 
+    /**
+     * This method is triggered when the second card in the hand is selected in the GUI. It handles
+     * the selection and flipping of the card.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void card2Selected(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             handSelect(mouseEvent, 1);
         });
     }
 
+    /**
+     * This method is triggered when the third card in the hand is selected in the GUI. It handles
+     * the selection and flipping of the card.
+     *
+     * @param mouseEvent The MouseEvent object representing the details of the click event.
+     */
     public void card3Selected(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             handSelect(mouseEvent, 2);
         });
     }
 
+    /**
+     * This method is triggered when the chat button is clicked in the GUI. It opens a chat box
+     * where the user can send and receive messages. The chat box includes a text field for entering
+     * messages, a send button for sending messages, and a close button for closing the chat box.
+     * The chat box also displays the chat history.
+     *
+     * @param actionEvent The ActionEvent object representing the details of the click event.
+     */
     public void openChatBox(ActionEvent actionEvent) {
         VBox chatBox = new VBox();
 
@@ -743,38 +925,12 @@ public class GamePage {
         sendButton.setOnMouseReleased(event -> sendButton.setStyle(
                 "-fx-background-color: #D7BC49; -fx-background-radius: 5"));
 
-        sendButton.setOnAction(e -> {
-            String comment = commentField.getText().strip();
-            if (comment.isEmpty() || comment.isBlank()) {
-                commentField.clear();
-                return;
-            }
-            List<String> playerNames = new ArrayList<>(miniGameModel.getPlayers());
-            List<String> toPriv = new ArrayList<>();
-            boolean isPrivate = false;
-            for (String player : playerNames) {
-                if (comment.contains("/" + player) &&
-                    ! Objects.equals(miniGameModel.myName(), player)) {
-                    comment = comment.replace("/" + player, "").strip();
-                    toPriv.add(player);
-                    if (comment.isEmpty() || comment.isBlank()) {
-                        commentField.clear();
-                        return;
-                    }
-                    isPrivate = true;
-                }
-            }
+        sendButton.setOnAction(e -> handleComment(commentField));
 
-
-            if (! isPrivate) {
-                guiActuator.sendChatMessage(comment);
-            } else {
-                for (String player : toPriv) {
-                    guiActuator.sendPrivateMessage(player, comment);
-
-                }
+        commentField.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                handleComment(commentField);
             }
-            commentField.clear();
         });
 
         HBox chatInput = new HBox();
@@ -807,6 +963,54 @@ public class GamePage {
 
     }
 
+    /**
+     * This method is used to handle the sending of a message in the chat box. It sends the message
+     * to the game model, which then broadcasts it to all players in the game.
+     *
+     * @param commentField The TextField object representing the text field where the message is
+     *                     entered.
+     */
+    public void handleComment(TextField commentField) {
+        Platform.runLater(() -> {
+            String comment = commentField.getText().strip();
+            if (comment.isEmpty() || comment.isBlank()) {
+                commentField.clear();
+                return;
+            }
+            List<String> playerNames = new ArrayList<>(miniGameModel.getPlayers());
+            List<String> toPriv = new ArrayList<>();
+            boolean isPrivate = false;
+            for (String player : playerNames) {
+                if (comment.contains("/" + player) &&
+                    ! Objects.equals(miniGameModel.myName(), player)) {
+                    comment = comment.replace("/" + player, "").strip();
+                    toPriv.add(player);
+                    if (comment.isEmpty() || comment.isBlank()) {
+                        commentField.clear();
+                        return;
+                    }
+                    isPrivate = true;
+                }
+            }
+
+
+            if (! isPrivate) {
+                guiActuator.sendChatMessage(comment);
+            } else {
+                for (String player : toPriv) {
+                    guiActuator.sendPrivateMessage(player, comment);
+
+                }
+            }
+            commentField.clear();
+        });
+    }
+
+    /**
+     * This method is used to update the chat box in the GUI. It retrieves the chat messages from
+     * the game model and updates the chat box in the GUI to display the messages. If a new message
+     * is received, it also plays a sound notification.
+     */
     public void updateChat() {
         Platform.runLater(() -> {
             try {
@@ -831,7 +1035,9 @@ public class GamePage {
     }
 
     /**
-     *
+     * This method is triggered when the game ends. It updates the GUI to display the final
+     * leaderboard with the players' names and their corresponding scores. It also sets up a close
+     * button for the user to exit the game.
      */
     public void gameEnded() {
 
@@ -862,6 +1068,10 @@ public class GamePage {
 
     }
 
+    /**
+     * This method is used to stop the music in the game. It checks if the soundtrack player is not
+     * null and then stops the music.
+     */
     public void stopMusic() {
         if (soundtrack_p != null) {
             soundtrack_p.stop();

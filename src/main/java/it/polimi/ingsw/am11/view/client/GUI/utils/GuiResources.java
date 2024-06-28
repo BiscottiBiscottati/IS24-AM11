@@ -19,6 +19,11 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
+/**
+ * The GuiResources class is a utility class that manages the graphical resources of the
+ * application. It contains methods to retrieve images and image views for various elements of the
+ * GUI. It also maintains a map that links resource URLs to an enum for easy retrieval.
+ */
 public class GuiResources {
     private static final Logger LOGGER = LoggerFactory.getLogger(GuiResources.class);
 
@@ -35,6 +40,14 @@ public class GuiResources {
                                         type.getColumnName()));
     }
 
+    /**
+     * This method is used to retrieve an image from a given path. It attempts to load the image
+     * from the provided path and returns the image if successful. If the image cannot be loaded, it
+     * logs an error and returns null.
+     *
+     * @param completePath The complete path to the image resource.
+     * @return The loaded image, or null if the image cannot be loaded.
+     */
     private static @Nullable Image getImageOf(@NotNull String completePath) {
         String urlString = "";
         try {
@@ -48,11 +61,27 @@ public class GuiResources {
         }
     }
 
+    /**
+     * This method is used to get an ImageView of the resource specified by the provided enum. It
+     * retrieves the URL of the resource from the enum, loads the image from the URL, and then
+     * creates an ImageView with the loaded image.
+     *
+     * @param res The enum value that specifies the resource.
+     * @return An ImageView of the resource specified by the provided enum.
+     */
     public static @NotNull ImageView getTheImageView(GuiResEnum res) {
         Image image = new Image(String.valueOf(GuiResources.getTheUrl(res)));
         return new ImageView(image);
     }
 
+    /**
+     * This method is used to get the URL associated with the provided enum value. It checks if the
+     * URL is already present in the map. If not, it adds the URL to the map. The URL is retrieved
+     * from the resource file specified by the enum value.
+     *
+     * @param name The enum value that specifies the resource.
+     * @return The URL associated with the provided enum value.
+     */
     public static URL getTheUrl(GuiResEnum name) {
         if (urlMap.get(name) == null) {
             urlMap.put(name, LoadingScreen.class.getResource(name.getFileName()));
@@ -60,24 +89,66 @@ public class GuiResources {
         return urlMap.get(name);
     }
 
+    /**
+     * This method is used to get the image associated with the provided enum value. It retrieves
+     * the URL associated with the enum value and loads the image from the URL.
+     *
+     * @param res The enum value that specifies the resource.
+     * @return The image associated with the provided enum value.
+     */
     @Contract("_ -> new")
     public static @NotNull Image getTheImage(GuiResEnum res) {
         return new Image(String.valueOf(GuiResources.getTheUrl(res)));
     }
 
+    /**
+     * This method is used to get the URL associated with the provided enum value as a String. It
+     * retrieves the URL associated with the enum value and converts it to a String.
+     *
+     * @param name The enum value that specifies the resource.
+     * @return The URL associated with the provided enum value as a String.
+     */
     public static String getUrlString(GuiResEnum name) {
         return String.valueOf(getTheUrl(name));
     }
 
+    /**
+     * This method is used to get the image associated with the provided card ID. It formats the
+     * FRONT_CARD_PATH with the card ID to get the path of the image. Then, it retrieves the image
+     * from the path.
+     *
+     * @param cardId The ID of the card.
+     * @return The image of the card. If the image cannot be loaded, it returns null.
+     */
     public static @Nullable Image getCardImage(int cardId) {
         return getImageOf(String.format(FRONT_CARD_PATH, cardId)
         );
     }
 
+    /**
+     * This method is used to get an ImageView of the card specified by the provided card ID. It
+     * formats the FRONT_CARD_PATH with the card ID to get the path of the image. Then, it retrieves
+     * the image from the path and creates an ImageView with the loaded image.
+     *
+     * @param cardId The ID of the card.
+     * @return An ImageView of the card. If the image cannot be loaded, it returns an ImageView with
+     * a null image.
+     */
     public static @NotNull ImageView getImageView(int cardId) {
         return new ImageView(getImageOf(String.format(FRONT_CARD_PATH, cardId)));
     }
 
+    /**
+     * This method is used to get an ImageView of the card specified by the provided card ID. It
+     * checks if the card ID is in the list of invalid IDs. If it is, it retrieves the image from a
+     * specific path. If the card ID is not in the list of invalid IDs, it retrieves the card type
+     * and color associated with the card ID, and retrieves the image from the path formatted with
+     * the card type and color. Then, it creates an ImageView with the loaded image.
+     *
+     * @param cardId The ID of the card.
+     * @return An ImageView of the card. If the image cannot be loaded, it throws a
+     * RuntimeException.
+     */
     public static @NotNull ImageView getCardImageRetro(int cardId) {
         List<Integer> invalidIds = Arrays.asList(97, 98, 99, 100, 101, 102);
         if (invalidIds.contains(cardId)) {
@@ -98,6 +169,15 @@ public class GuiResources {
         }
     }
 
+    /**
+     * This method is used to get the retro image associated with the provided card type and color.
+     * It formats the RETRO_CARD_PATH with the column name of the color and the card type to get the
+     * path of the image. Then, it retrieves the image from the path.
+     *
+     * @param typeName  The type of the playable card.
+     * @param colorName The color of the playable card.
+     * @return The retro image of the card. If the image cannot be loaded, it returns null.
+     */
     public static @Nullable Image getRetro(@NotNull PlayableCardType typeName,
                                            @NotNull GameColor colorName) {
         return getImageOf(String.format(RETRO_CARD_PATH,

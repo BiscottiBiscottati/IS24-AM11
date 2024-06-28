@@ -12,6 +12,9 @@ import org.jetbrains.annotations.NotNull;
 
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.SQUARE_SIZE;
 
+/**
+ * The LoadingScreen class is responsible for creating and managing the Loading Screen in the GUI.
+ */
 public class LoadingScreen {
     private static final Duration FADE_TIME = Duration.millis(300);
     private static final Duration ROTATION_TIME = Duration.millis(800);
@@ -21,6 +24,12 @@ public class LoadingScreen {
     private static ParallelTransition prT;
     private static int size;
 
+    /**
+     * This static method is used to create the Loading Screen in the GUI. It initializes the
+     * necessary components and sets their properties.
+     *
+     * @param codexNaturalis The GUI instance that the Loading Screen is a part of.
+     */
     public static void createLoadingScreen(CodexNaturalis codexNaturalis) {
 
         StackPane root = codexNaturalis.getSmallRoot();
@@ -41,6 +50,10 @@ public class LoadingScreen {
                                   wolf, butterfly, mushroom, leaf);
     }
 
+    /**
+     * This static method is used to animate the Loading Screen in the GUI. It sets up the
+     * animations for the symbols and the background and plays them.
+     */
     public static void animateLoadingScreen() {
         // setup for loading screen
         int symbolSize = size / 8;
@@ -154,6 +167,13 @@ public class LoadingScreen {
 
     }
 
+
+    /**
+     * This static method is used to get the timeline of the rotation of the symbols.
+     * @param leafCenterRt the rotation of the leaf
+     * @param x the angle of the rotation
+     * @return the timeline of the rotation
+     */
     private static @NotNull Timeline getTl(@NotNull Rotate leafCenterRt,
                                            int x) {
         return new Timeline(

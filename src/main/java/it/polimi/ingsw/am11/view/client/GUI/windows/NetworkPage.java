@@ -19,6 +19,9 @@ import javafx.scene.text.Font;
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.DISTANCE_TO_BORDER;
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
 
+/**
+ * The NetworkPage class is responsible for creating and managing the Network Page in the GUI.
+ */
 public class NetworkPage {
     private static CodexNaturalis codexNaturalis;
     private static TextField ipAddress, port;
@@ -29,6 +32,12 @@ public class NetworkPage {
     private static GuiActuator guiActuator;
     private static VBox theBox;
 
+    /**
+     * This static method is used to create the Network Page in the GUI. It initializes the
+     * necessary components and sets their properties.
+     *
+     * @param codexNaturalis The GUI instance that the Network Page is a part of.
+     */
     public static void createNetworkPage(CodexNaturalis codexNaturalis) {
         NetworkPage.codexNaturalis = codexNaturalis;
 
@@ -133,6 +142,10 @@ public class NetworkPage {
         theBox.setVisible(false);
     }
 
+    /**
+     * This static method is used to show the Network Page in the GUI. It sets the visibility of the
+     * Network Page to true.
+     */
     public static void showNetworkPage() {
 
         connectionType.setVisible(true);
@@ -165,8 +178,19 @@ public class NetworkPage {
                 handleJoinButton();
             }
         });
+
+        ipAddress.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                handleJoinButton();
+            }
+        });
     }
 
+    /**
+     * This static method is used to handle the event of clicking the Join button. It checks if the
+     * connection type, IP address and port number are valid and navigates to the Set Nick Page if
+     * they are.
+     */
     public static void handleJoinButton() {
         String connectionTypeText = connectionType.getText().toLowerCase();
         String ip = ipAddress.getCharacters().toString();

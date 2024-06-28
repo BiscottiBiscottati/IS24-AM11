@@ -1,5 +1,11 @@
 package it.polimi.ingsw.am11.view.client.GUI.utils;
 
+/**
+ * This enum is used to map various resources used in the GUI to their file paths. Each enum value
+ * represents a different resource, and the associated String is the file path of the resource. The
+ * enum provides methods to get an enum value by a card ID, and to get the file path associated with
+ * an enum value.
+ */
 public enum GuiResEnum {
     ICON("elements/Icon.png"),
     LGIN_BACKGROUND("elements/LDBackGround.png"),
@@ -29,30 +35,21 @@ public enum GuiResEnum {
 
     private final String fileName;
 
+    /**
+     * Constructor for the GuiResEnum. It initializes the enum value with the provided file name.
+     *
+     * @param fileName The file name associated with the enum value.
+     */
     GuiResEnum(String fileName) {
         this.fileName = fileName;
     }
 
-    public static GuiResEnum getEnumByCardId(int cardId) {
-        String fileName = cardId + ".png";
-        for (GuiResEnum value : GuiResEnum.values()) {
-            if (value.fileName.equals(fileName)) {
-                return value;
-            }
-        }
-        throw new IllegalArgumentException("Invalid cardId: " + cardId);
-    }
-
-    public static GuiResEnum getEnumByCardIdRetro(int cardId) {
-        String fileName = cardId + "_Retro.png";
-        for (GuiResEnum value : GuiResEnum.values()) {
-            if (value.fileName.equals(fileName)) {
-                return value;
-            }
-        }
-        throw new IllegalArgumentException("Invalid cardId: " + cardId);
-    }
-
+    /**
+     * This method is used to get the file name associated with the enum value. It returns the file
+     * name that was set during the initialization of the enum value.
+     *
+     * @return The file name associated with the enum value.
+     */
     public String getFileName() {
         return fileName;
     }
