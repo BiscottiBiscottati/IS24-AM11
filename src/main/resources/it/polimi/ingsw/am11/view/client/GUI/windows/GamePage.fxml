@@ -21,7 +21,7 @@
                         <Insets right="30.0" top="40.0"/>
                     </HBox.margin>
                 </Label>
-                <VBox alignment="CENTER" minWidth="100.0">
+                <VBox alignment="CENTER" minWidth="130.0">
                     <children>
                         <Label fx:id="player1" alignment="TOP_CENTER" contentDisplay="CENTER"
                                onMouseClicked="#showFieldPl1" prefHeight="30.0" prefWidth="100.0"
@@ -35,7 +35,7 @@
                                 <Font size="24.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="playerColor1" alignment="CENTER" maxWidth="100.0" textAlignment="CENTER">
+                        <Label fx:id="playerColor1" alignment="CENTER" textAlignment="CENTER">
                             <font>
                                 <Font size="20.0"/>
                             </font>
@@ -45,7 +45,7 @@
                         </Label>
                     </children>
                 </VBox>
-                <VBox alignment="CENTER" minWidth="100.0">
+                <VBox alignment="CENTER" minWidth="130.0">
                     <children>
                         <Label fx:id="player2" alignment="TOP_CENTER" minHeight="30.0" minWidth="100.0"
                                onMouseClicked="#showFieldPl2" textAlignment="CENTER">
@@ -59,7 +59,7 @@
                                 <Font size="24.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="playerColor2" alignment="CENTER" maxWidth="100.0" textAlignment="CENTER">
+                        <Label fx:id="playerColor2" alignment="CENTER" textAlignment="CENTER">
                             <font>
                                 <Font size="20.0"/>
                             </font>
@@ -69,7 +69,7 @@
                         </Label>
                     </children>
                 </VBox>
-                <VBox alignment="CENTER" minWidth="100.0">
+                <VBox alignment="CENTER" minWidth="130.0">
                     <children>
                         <Label fx:id="player3" alignment="TOP_CENTER" minHeight="30.0" minWidth="100.0"
                                onMouseClicked="#showFieldPl3" textAlignment="JUSTIFY">
@@ -82,14 +82,14 @@
                                 <Font size="24.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="playerColor3" alignment="CENTER" maxWidth="100.0" textAlignment="CENTER">
+                        <Label fx:id="playerColor3" alignment="CENTER" textAlignment="CENTER">
                             <font>
                                 <Font size="20.0"/>
                             </font>
                         </Label>
                     </children>
                 </VBox>
-                <VBox alignment="CENTER" minWidth="100.0">
+                <VBox alignment="CENTER" minWidth="130.0">
                     <children>
                         <Label fx:id="player4" alignment="TOP_CENTER" contentDisplay="TOP"
                                onMouseClicked="#showFieldPl4" prefHeight="30.0" prefWidth="100.0"
@@ -103,7 +103,7 @@
                                 <Font size="24.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="playerColor4" alignment="CENTER" maxWidth="100.0" textAlignment="CENTER">
+                        <Label fx:id="playerColor4" alignment="CENTER" textAlignment="CENTER">
                             <font>
                                 <Font size="20.0"/>
                             </font>
