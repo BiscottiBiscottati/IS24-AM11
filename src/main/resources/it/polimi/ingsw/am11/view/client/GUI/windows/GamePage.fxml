@@ -1,229 +1,199 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="gamePage" alignment="TOP_LEFT" maxHeight="-Infinity"
-           maxWidth="-Infinity"
-           minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
-           style="-fx-background-color: #A58559;" xmlns="http://javafx.com/javafx/22"
-           fx:controller="it.polimi.ingsw.am11.view.client.GUI.windows.GamePage">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="gamePage" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #A58559;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am11.view.client.GUI.windows.GamePage">
     <children>
         <HBox alignment="TOP_RIGHT" StackPane.alignment="TOP_RIGHT">
             <children>
                 <Label fx:id="yourName" minHeight="60.0" minWidth="200.0" text="Username" textAlignment="CENTER">
                     <font>
-                        <Font size="20.0"/>
+                        <Font size="20.0" />
                     </font>
                     <HBox.margin>
-                        <Insets right="30.0" top="40.0"/>
+                        <Insets right="30.0" top="40.0" />
                     </HBox.margin>
                 </Label>
-                <VBox alignment="CENTER" minWidth="130.0">
+                <VBox alignment="CENTER" minWidth="100.0">
                     <children>
-                        <Label fx:id="player1" alignment="TOP_CENTER" contentDisplay="CENTER"
-                               onMouseClicked="#showFieldPl1" prefHeight="30.0" prefWidth="100.0"
-                               textAlignment="CENTER">
+                        <Label fx:id="player1" alignment="TOP_CENTER" contentDisplay="CENTER" onMouseClicked="#showFieldPl1" prefHeight="30.0" prefWidth="100.0" textAlignment="CENTER">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                         </Label>
                         <Label fx:id="pointsPl1" alignment="TOP_CENTER" prefHeight="30.0" prefWidth="50.0">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                         </Label>
-                        <Label fx:id="playerColor1" alignment="CENTER" textAlignment="CENTER">
+                        <Label fx:id="playerColor1" alignment="CENTER" maxWidth="100.0" textAlignment="CENTER">
                             <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                             </font>
                             <VBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </VBox.margin>
                         </Label>
                     </children>
                 </VBox>
-                <VBox alignment="CENTER" minWidth="130.0">
+                <VBox alignment="CENTER" minWidth="100.0">
                     <children>
-                        <Label fx:id="player2" alignment="TOP_CENTER" minHeight="30.0" minWidth="100.0"
-                               onMouseClicked="#showFieldPl2" textAlignment="CENTER">
+                        <Label fx:id="player2" alignment="TOP_CENTER" minHeight="30.0" minWidth="100.0" onMouseClicked="#showFieldPl2" textAlignment="CENTER">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                         </Label>
-                        <Label fx:id="pointsPl2" alignment="TOP_CENTER" minHeight="30.0" minWidth="50.0"
-                               textAlignment="CENTER">
+                        <Label fx:id="pointsPl2" alignment="TOP_CENTER" minHeight="30.0" minWidth="50.0" textAlignment="CENTER">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                         </Label>
-                        <Label fx:id="playerColor2" alignment="CENTER" textAlignment="CENTER">
+                        <Label fx:id="playerColor2" alignment="CENTER" maxWidth="100.0" textAlignment="CENTER">
                             <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                             </font>
                             <VBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </VBox.margin>
                         </Label>
                     </children>
                 </VBox>
-                <VBox alignment="CENTER" minWidth="130.0">
+                <VBox alignment="CENTER" minWidth="100.0">
                     <children>
-                        <Label fx:id="player3" alignment="TOP_CENTER" minHeight="30.0" minWidth="100.0"
-                               onMouseClicked="#showFieldPl3" textAlignment="JUSTIFY">
+                        <Label fx:id="player3" alignment="TOP_CENTER" minHeight="30.0" minWidth="100.0" onMouseClicked="#showFieldPl3" textAlignment="JUSTIFY">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                         </Label>
                         <Label fx:id="pointsPl3" alignment="TOP_CENTER" prefHeight="30.0" prefWidth="50.0">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                         </Label>
-                        <Label fx:id="playerColor3" alignment="CENTER" textAlignment="CENTER">
+                        <Label fx:id="playerColor3" alignment="CENTER" maxWidth="100.0" textAlignment="CENTER">
                             <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                             </font>
                         </Label>
                     </children>
                 </VBox>
-                <VBox alignment="CENTER" minWidth="130.0">
+                <VBox alignment="CENTER" minWidth="100.0">
                     <children>
-                        <Label fx:id="player4" alignment="TOP_CENTER" contentDisplay="TOP"
-                               onMouseClicked="#showFieldPl4" prefHeight="30.0" prefWidth="100.0"
-                               textAlignment="JUSTIFY">
+                        <Label fx:id="player4" alignment="TOP_CENTER" contentDisplay="TOP" onMouseClicked="#showFieldPl4" prefHeight="30.0" prefWidth="100.0" textAlignment="JUSTIFY">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                         </Label>
                         <Label fx:id="pointsPl4" alignment="TOP_CENTER" prefHeight="30.0" prefWidth="50.0">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                         </Label>
-                        <Label fx:id="playerColor4" alignment="CENTER" textAlignment="CENTER">
+                        <Label fx:id="playerColor4" alignment="CENTER" maxWidth="100.0" textAlignment="CENTER">
                             <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                             </font>
                         </Label>
                     </children>
                 </VBox>
             </children>
             <StackPane.margin>
-                <Insets bottom="950.0" left="1100.0" right="200.0"/>
+                <Insets bottom="950.0" left="1100.0" right="200.0" />
             </StackPane.margin>
         </HBox>
-        <VBox maxHeight="830.0" maxWidth="400.0" minHeight="430.0" minWidth="400.0" prefHeight="200.0"
-              prefWidth="100.0">
+        <VBox maxHeight="830.0" maxWidth="400.0" minHeight="430.0" minWidth="400.0" prefHeight="200.0" prefWidth="100.0">
             <children>
-                <VBox alignment="TOP_CENTER" maxHeight="430.0" maxWidth="400.0" minWidth="400.0" prefHeight="200.0"
-                      prefWidth="100.0">
+                <VBox alignment="TOP_CENTER" maxHeight="430.0" maxWidth="400.0" minWidth="400.0" prefHeight="200.0" prefWidth="100.0">
                     <children>
-                        <Label fx:id="decksLabel" alignment="CENTER" minHeight="50.0" minWidth="100.0" prefWidth="0.0"
-                               text="DECKS">
+                        <Label fx:id="decksLabel" alignment="CENTER" minHeight="50.0" minWidth="100.0" prefWidth="0.0" text="DECKS">
                             <font>
-                                <Font size="16.0"/>
+                                <Font size="16.0" />
                             </font>
                         </Label>
-                        <HBox alignment="CENTER" maxHeight="150.0" maxWidth="400.0" minHeight="150.0" minWidth="400.0"
-                              prefHeight="180.0" prefWidth="400.0">
+                        <HBox alignment="CENTER" maxHeight="150.0" maxWidth="400.0" minHeight="150.0" minWidth="400.0" prefHeight="180.0" prefWidth="400.0">
                             <children>
-                                <ImageView fx:id="goldDeck" fitHeight="150.0" fitWidth="200.0"
-                                           onMouseClicked="#pickFromGoldDeck" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="goldDeck" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#pickFromGoldDeck" pickOnBounds="true" preserveRatio="true">
                                     <HBox.margin>
-                                        <Insets left="5.0"/>
+                                        <Insets left="5.0" />
                                     </HBox.margin>
                                 </ImageView>
-                                <ImageView fx:id="resourceDeck" fitHeight="150.0" fitWidth="200.0"
-                                           onMouseClicked="#pickFromResDeck" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="resourceDeck" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#pickFromResDeck" pickOnBounds="true" preserveRatio="true">
                                     <HBox.margin>
-                                        <Insets left="5.0"/>
+                                        <Insets left="5.0" />
                                     </HBox.margin>
                                 </ImageView>
                             </children>
                         </HBox>
                     </children>
                 </VBox>
-                <VBox alignment="TOP_CENTER" maxHeight="330.0" maxWidth="400.0" minHeight="350.0" minWidth="400.0"
-                      prefHeight="335.0" prefWidth="601.0">
+                <VBox alignment="TOP_CENTER" maxHeight="330.0" maxWidth="400.0" minHeight="350.0" minWidth="400.0" prefHeight="335.0" prefWidth="601.0">
                     <children>
-                        <Label fx:id="visiblesLabel" alignment="CENTER" maxHeight="100.0" maxWidth="200.0"
-                               minHeight="50.0" minWidth="100.0" prefHeight="0.0" prefWidth="100.0" text="VISIBLES"
-                               textAlignment="JUSTIFY">
+                        <Label fx:id="visiblesLabel" alignment="CENTER" maxHeight="100.0" maxWidth="200.0" minHeight="50.0" minWidth="100.0" prefHeight="0.0" prefWidth="100.0" text="VISIBLES" textAlignment="JUSTIFY">
                             <font>
-                                <Font size="16.0"/>
+                                <Font size="16.0" />
                             </font>
                         </Label>
-                        <HBox alignment="TOP_CENTER" maxHeight="300.0" maxWidth="600.0" minHeight="300.0"
-                              minWidth="400.0" prefHeight="300.0" prefWidth="400.0">
+                        <HBox alignment="TOP_CENTER" maxHeight="300.0" maxWidth="600.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0">
                             <children>
-                                <VBox alignment="CENTER" maxHeight="300.0" maxWidth="200.0" minHeight="300.0"
-                                      minWidth="200.0" prefHeight="300.0" prefWidth="200.0">
+                                <VBox alignment="CENTER" maxHeight="300.0" maxWidth="200.0" minHeight="300.0" minWidth="200.0" prefHeight="300.0" prefWidth="200.0">
                                     <children>
-                                        <ImageView fx:id="vis1" fitHeight="150.0" fitWidth="200.0"
-                                                   onMouseClicked="#chooseVis1" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fx:id="vis1" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#chooseVis1" pickOnBounds="true" preserveRatio="true">
                                             <VBox.margin>
-                                                <Insets bottom="5.0" left="5.0"/>
+                                                <Insets bottom="5.0" left="5.0" />
                                             </VBox.margin>
                                         </ImageView>
-                                        <ImageView fx:id="vis3" fitHeight="150.0" fitWidth="200.0"
-                                                   onMouseClicked="#chooseVis3" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fx:id="vis3" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#chooseVis3" pickOnBounds="true" preserveRatio="true">
                                             <VBox.margin>
-                                                <Insets left="5.0"/>
+                                                <Insets left="5.0" />
                                             </VBox.margin>
                                         </ImageView>
                                     </children>
                                     <HBox.margin>
-                                        <Insets left="5.0"/>
+                                        <Insets left="5.0" />
                                     </HBox.margin>
                                 </VBox>
-                                <VBox alignment="CENTER" maxHeight="300.0" maxWidth="200.0" minHeight="300.0"
-                                      minWidth="200.0" prefHeight="300.0" prefWidth="200.0">
+                                <VBox alignment="CENTER" maxHeight="300.0" maxWidth="200.0" minHeight="300.0" minWidth="200.0" prefHeight="300.0" prefWidth="200.0">
                                     <children>
-                                        <ImageView fx:id="vis2" fitHeight="150.0" fitWidth="200.0"
-                                                   onMouseClicked="#chooseVis2" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fx:id="vis2" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#chooseVis2" pickOnBounds="true" preserveRatio="true">
                                             <VBox.margin>
-                                                <Insets bottom="5.0" left="10.0"/>
+                                                <Insets bottom="5.0" left="10.0" />
                                             </VBox.margin>
                                         </ImageView>
-                                        <ImageView fx:id="vis4" fitHeight="150.0" fitWidth="200.0"
-                                                   onMouseClicked="#chooseVis4" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fx:id="vis4" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#chooseVis4" pickOnBounds="true" preserveRatio="true">
                                             <VBox.margin>
-                                                <Insets left="10.0"/>
+                                                <Insets left="10.0" />
                                             </VBox.margin>
                                         </ImageView>
                                     </children>
                                     <HBox.margin>
-                                        <Insets right="5.0"/>
+                                        <Insets right="5.0" />
                                     </HBox.margin>
                                 </VBox>
                             </children>
                         </HBox>
                     </children>
                 </VBox>
-                <VBox alignment="TOP_CENTER" maxHeight="430.0" maxWidth="400.0" minWidth="400.0" prefHeight="200.0"
-                      prefWidth="100.0">
+                <VBox alignment="TOP_CENTER" maxHeight="430.0" maxWidth="400.0" minWidth="400.0" prefHeight="200.0" prefWidth="100.0">
                     <children>
-                        <Label fx:id="objLabel" alignment="CENTER" minHeight="50.0" minWidth="100.0"
-                               text="COMMON OBJECTIVE CARDS">
+                        <Label fx:id="objLabel" alignment="CENTER" minHeight="50.0" minWidth="100.0" text="COMMON OBJECTIVE CARDS">
                             <font>
-                                <Font size="16.0"/>
+                                <Font size="16.0" />
                             </font>
                         </Label>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <ImageView fx:id="commonObj1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true"
-                                           preserveRatio="true"/>
-                                <ImageView fx:id="commonObj2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true"
-                                           preserveRatio="true">
+                                <ImageView fx:id="commonObj1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                <ImageView fx:id="commonObj2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                     <HBox.margin>
-                                        <Insets left="5.0"/>
+                                        <Insets left="5.0" />
                                     </HBox.margin>
                                 </ImageView>
                             </children>
@@ -232,156 +202,143 @@
                 </VBox>
             </children>
             <StackPane.margin>
-                <Insets/>
+                <Insets />
             </StackPane.margin>
         </VBox>
-        <VBox alignment="TOP_CENTER" maxHeight="160.0" maxWidth="400.0" minHeight="160.0" minWidth="500.0"
-              prefHeight="200.0" prefWidth="100.0" StackPane.alignment="BOTTOM_CENTER">
+        <VBox alignment="TOP_CENTER" maxHeight="160.0" maxWidth="400.0" minHeight="160.0" minWidth="500.0" prefHeight="200.0" prefWidth="100.0" StackPane.alignment="BOTTOM_CENTER">
             <children>
                 <Label fx:id="handLabel" alignment="TOP_CENTER" contentDisplay="CENTER" minHeight="50.0" text="HAND">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
-                    <VBox.margin>
-                        <Insets/>
-                    </VBox.margin>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
                 </Label>
-                <HBox alignment="CENTER" maxHeight="160.0" maxWidth="400.0" minHeight="100.0" minWidth="500.0"
-                      prefHeight="100.0" prefWidth="200.0">
+                <HBox alignment="CENTER" maxHeight="160.0" maxWidth="400.0" minHeight="100.0" minWidth="500.0" prefHeight="100.0" prefWidth="200.0">
                     <children>
-                        <ImageView fx:id="handCard1" fitHeight="100.0" fitWidth="160.0" onMouseClicked="#card1Selected"
-                                   pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="handCard1" fitHeight="100.0" fitWidth="160.0" onMouseClicked="#card1Selected" pickOnBounds="true" preserveRatio="true">
                             <HBox.margin>
-                                <Insets bottom="20.0"/>
+                                <Insets bottom="20.0" />
                             </HBox.margin>
                         </ImageView>
-                        <ImageView fx:id="handCard2" fitHeight="100.0" fitWidth="160.0" onMouseClicked="#card2Selected"
-                                   pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="handCard2" fitHeight="100.0" fitWidth="160.0" onMouseClicked="#card2Selected" pickOnBounds="true" preserveRatio="true">
                             <HBox.margin>
-                                <Insets bottom="20.0"/>
+                                <Insets bottom="20.0" />
                             </HBox.margin>
                         </ImageView>
-                        <ImageView fx:id="handCard3" fitHeight="100.0" fitWidth="160.0" onMouseClicked="#card3Selected"
-                                   pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="handCard3" fitHeight="100.0" fitWidth="160.0" onMouseClicked="#card3Selected" pickOnBounds="true" preserveRatio="true">
                             <HBox.margin>
-                                <Insets bottom="20.0"/>
+                                <Insets bottom="20.0" />
                             </HBox.margin>
                         </ImageView>
                     </children>
                 </HBox>
             </children>
             <StackPane.margin>
-                <Insets/>
+                <Insets />
             </StackPane.margin>
         </VBox>
-        <Button fx:id="chatButton" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#openChatBox" text="CHAT"
-                StackPane.alignment="BOTTOM_LEFT">
+        <Button fx:id="chatButton" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#openChatBox" text="CHAT" StackPane.alignment="BOTTOM_LEFT">
             <font>
-                <Font size="24.0"/>
+                <Font size="24.0" />
             </font>
             <StackPane.margin>
-                <Insets bottom="10.0" left="10.0"/>
+                <Insets bottom="10.0" left="10.0" />
             </StackPane.margin>
         </Button>
         <VBox alignment="TOP_CENTER" StackPane.alignment="BOTTOM_RIGHT">
             <children>
-                <Label fx:id="personalObjLabel" alignment="TOP_CENTER" minWidth="300.0" text="YOUR OBJECTIVE CARD"
-                       textAlignment="CENTER">
+                <Label fx:id="personalObjLabel" alignment="TOP_CENTER" minWidth="300.0" text="YOUR OBJECTIVE CARD" textAlignment="CENTER">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
                 </Label>
-                <ImageView fx:id="personalObj" fitHeight="120.0" fitWidth="210.0" pickOnBounds="true"
-                           preserveRatio="true">
+                <ImageView fx:id="personalObj" fitHeight="120.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true">
                     <VBox.margin>
-                        <Insets top="10.0"/>
+                        <Insets top="10.0" />
                     </VBox.margin>
                 </ImageView>
             </children>
             <StackPane.margin>
-                <Insets bottom="20.0" left="1800.0" right="100.0" top="1800.0"/>
+                <Insets bottom="20.0" left="1800.0" right="100.0" top="1800.0" />
             </StackPane.margin>
         </VBox>
-        <Label fx:id="lastTurnLabel" text="Last Turn!" textAlignment="CENTER" StackPane.alignment="BOTTOM_CENTER">
+        <ScrollPane hbarPolicy="ALWAYS" hvalue="0.5" prefHeight="730.0" prefWidth="1190.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" vbarPolicy="ALWAYS" vvalue="0.5" StackPane.alignment="CENTER_RIGHT">
             <StackPane.margin>
-                <Insets bottom="50.0" left="700.0"/>
-            </StackPane.margin>
-            <font>
-                <Font size="15.0"/>
-            </font>
-        </Label>
-        <ScrollPane hbarPolicy="ALWAYS" hvalue="0.5" prefHeight="730.0" prefWidth="1190.0"
-                    style="-fx-background-color: transparent; -fx-border-color: transparent;" vbarPolicy="ALWAYS"
-                    vvalue="0.5" StackPane.alignment="CENTER_RIGHT">
-            <StackPane.margin>
-                <Insets bottom="200.0" left="550.0" right="30.0" top="150.0"/>
+                <Insets bottom="200.0" left="550.0" right="30.0" top="150.0" />
             </StackPane.margin>
             <content>
-                <StackPane fx:id="cardField" maxHeight="8000.0" maxWidth="12000.0" prefHeight="8000.0"
-                           prefWidth="12000.0" style="-fx-background-color: #8B0000;"/>
+                <StackPane fx:id="cardField" maxHeight="8000.0" maxWidth="12000.0" prefHeight="8000.0" prefWidth="12000.0" style="-fx-background-color: #8B0000;" />
             </content>
         </ScrollPane>
-        <Label fx:id="errorLabel" text="It's not your turn, pls stop!" textFill="RED"
-               StackPane.alignment="BOTTOM_CENTER">
+        <Label fx:id="errorLabel" text="It's not your turn, pls stop!" textFill="RED" StackPane.alignment="BOTTOM_CENTER">
             <StackPane.margin>
-                <Insets bottom="135.0" left="750.0"/>
+                <Insets bottom="160.0" />
             </StackPane.margin>
             <font>
-                <Font size="20.0"/>
+                <Font size="20.0" />
             </font>
         </Label>
-        <VBox fx:id="finalLB" alignment="TOP_CENTER" maxHeight="300.0" maxWidth="400.0" prefHeight="300.0"
-              prefWidth="400.0" style="-fx-background-color: #CC9900;" StackPane.alignment="CENTER_LEFT">
+        <Label fx:id="lastTurnLabel" text="Last Turn!" textAlignment="CENTER" StackPane.alignment="BOTTOM_CENTER">
+            <StackPane.margin>
+                <Insets bottom="50.0" left="700.0" />
+            </StackPane.margin>
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Label>
+        <VBox fx:id="finalLB" alignment="TOP_CENTER" maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #CC9900;" StackPane.alignment="CENTER_LEFT">
             <children>
                 <Label fx:id="finalLBLabel" alignment="CENTER" text="FINAL LEADERBOARD" textAlignment="CENTER">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                     <VBox.margin>
-                        <Insets bottom="20.0" top="10.0"/>
+                        <Insets bottom="20.0" top="10.0" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="first" text="1:">
+                <Label fx:id="first" text="Label">
                     <font>
-                        <Font size="20.0"/>
+                        <Font size="20.0" />
                     </font>
                     <VBox.margin>
-                        <Insets bottom="20.0"/>
+                        <Insets bottom="20.0" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="second" text="2:">
+                <Label fx:id="second" text="Label">
                     <font>
-                        <Font size="20.0"/>
+                        <Font size="20.0" />
                     </font>
                     <VBox.margin>
-                        <Insets bottom="20.0"/>
+                        <Insets bottom="20.0" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="third" text="3:">
+                <Label fx:id="third" text="Label">
                     <font>
-                        <Font size="20.0"/>
+                        <Font size="20.0" />
                     </font>
                     <VBox.margin>
-                        <Insets bottom="20.0"/>
+                        <Insets bottom="20.0" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="fourth" text="4:">
+                <Label fx:id="fourth" text="Label">
                     <font>
-                        <Font size="20.0"/>
+                        <Font size="20.0" />
                     </font>
                     <VBox.margin>
-                        <Insets bottom="20.0"/>
+                        <Insets bottom="20.0" />
                     </VBox.margin>
                 </Label>
-                <Button fx:id="closeBtn" mnemonicParsing="false" text="Close"/>
+                <Button fx:id="closeBtn" mnemonicParsing="false" text="Close" />
             </children>
             <StackPane.margin>
-                <Insets left="350.0"/>
+                <Insets left="350.0" />
             </StackPane.margin>
         </VBox>
         <Button fx:id="audioBtn" mnemonicParsing="false" text="Audio ON">
             <StackPane.margin>
-                <Insets left="10.0" top="10.0"/>
+                <Insets left="10.0" top="10.0" />
             </StackPane.margin>
         </Button>
     </children>
