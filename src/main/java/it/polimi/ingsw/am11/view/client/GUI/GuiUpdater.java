@@ -31,7 +31,7 @@ import java.util.Set;
 public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(GuiUpdater.class);
     private final @NotNull CodexNaturalis codexNaturalis;
-    MiniGameModel miniGameModel;
+    private MiniGameModel miniGameModel;
     private GuiExceptionReceiver exceptionReceiver;
     private String candidateNick = "";
 
