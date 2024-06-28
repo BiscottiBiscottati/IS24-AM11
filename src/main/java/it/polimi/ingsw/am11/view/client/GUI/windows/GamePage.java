@@ -292,7 +292,7 @@ public class GamePage {
                     Optional.ofNullable(color)
                             .map(gameColor -> GuiResources.getTopDeck(type, gameColor))
                             .ifPresentOrElse(
-                                    image -> resourceDeck.setImage(image),
+                                    image -> goldDeck.setImage(image),
                                     () -> goldDeck.setVisible(false));
                 }
             }

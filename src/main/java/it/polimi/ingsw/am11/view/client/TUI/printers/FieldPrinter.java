@@ -277,7 +277,6 @@ public class FieldPrinter {
      */
     private static void setCard(@NotNull List<List<String>> printMatrix, int rowIndex,
                                 int columnIndex, @NotNull CardContainer card) {
-        System.out.println("DEBUG: id:" + card.getCard().getId() + " isRetro:" + card.isRetro());
         //TOP_LX corner
         setCorner(printMatrix, rowIndex - 1, columnIndex, card, Corner.TOP_LX);
         // top separator

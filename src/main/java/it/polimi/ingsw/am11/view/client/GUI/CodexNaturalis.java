@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +36,9 @@ public class CodexNaturalis extends Application {
     private static Parent bigRoot;
     private final GuiActuator guiActuator;
     private final GuiUpdater guiUpdater;
-    Scene scene;
-    GamePage gamePage;
-    FXMLLoader fxmlLoader;
+    private Scene scene;
+    private GamePage gamePage;
+    private FXMLLoader fxmlLoader;
     private StackPane smallRoot;
 
 
@@ -69,6 +70,7 @@ public class CodexNaturalis extends Application {
      *                     can be set. Applications may create other stages, if needed, but they
      *                     will not be primary stages.
      */
+    @Override
     public void start(Stage primaryStage) {
         CodexNaturalis.primaryStage = primaryStage;
         fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -227,10 +229,8 @@ public class CodexNaturalis extends Application {
         primaryStage = new Stage();
         primaryStage.setResizable(true);
         bigRoot.setVisible(true);
-        primaryStage.setScene(
-                new Scene(bigRoot, 1080,
-                          720,
-                          javafx.scene.paint.Color.BLACK));
+        scene.setRoot(bigRoot);
+        primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.setOnCloseRequest(event -> {
             Platform.exit();
@@ -379,7 +379,7 @@ public class CodexNaturalis extends Application {
      *
      * @param status The current status of the game when the server connection is reestablished.
      */
-    public void reconnectedToServer(GameStatus status) {
+    public void reconnectedToServer(@NotNull GameStatus status) {
         switch (status) {
             case ENDED -> {
                 Platform.runLater(this::showGamePage);

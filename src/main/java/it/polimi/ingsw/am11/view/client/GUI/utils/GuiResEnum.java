@@ -24,6 +24,7 @@ public enum GuiResEnum {
     RED_GLD_RTR("elements/red_gold.png"),
     GAME_BACKGROUND("elements/gamePageBG.png"),
     OBJ_CARD("elements/objective.png"),
+    X_CARD("cards/retro/X.png"),
     BEEP("/beep-02.mp3");
 
     private final String fileName;

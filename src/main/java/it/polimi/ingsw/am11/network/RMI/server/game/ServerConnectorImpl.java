@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.network.connector.ServerPlayerConnector;
 import it.polimi.ingsw.am11.network.connector.ServerTableConnector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,7 +126,8 @@ public record ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConn
     }
 
     @Override
-    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull GameColor color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @Nullable GameColor color) {
+        LOGGER.info("SERVER RMI: Updating {} deck top to {}", type, color);
         executorService.submit(() -> {
             try {
                 remoteConnector.updateDeckTop(type, color);

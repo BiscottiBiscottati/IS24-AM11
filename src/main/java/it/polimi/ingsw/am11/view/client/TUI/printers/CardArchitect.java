@@ -261,7 +261,7 @@ public class CardArchitect {
     }
 
     // FIXME the center does not print as it says there's a null
-    public static String buildCenterString(@Nullable List<GameColor> center) {
+    public static String buildCenterString(List<GameColor> center) {
         char center1;
         char center2;
         char center3;
@@ -363,7 +363,9 @@ public class CardArchitect {
     public static List<String> buildDeck(@Nullable GameColor color, PlayableCardType type) {
         List<String> deck = new ArrayList<>(8);
         List<GameColor> center = new ArrayList<>(1);
-        center.add(color);
+        if (color != null) {
+            center.add(color);
+        }
 
         List<String> topLines = buildCornerLines(' ', ' ', true, null);
 

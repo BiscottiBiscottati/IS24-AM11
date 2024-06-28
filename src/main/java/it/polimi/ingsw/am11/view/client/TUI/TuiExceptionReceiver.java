@@ -131,8 +131,8 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull EmptyDeckException ex) {
         LOGGER.debug("EmptyDeckException {}", ex.getMessage());
-        tuiUpdater.setTuiState(TuiStates.WATCHING_FIELD);
-        tuiUpdater.setHomeState(TuiStates.WATCHING_FIELD);
+        tuiUpdater.setTuiState(TuiStates.WATCHING_TABLE);
+        tuiUpdater.setHomeState(TuiStates.WATCHING_TABLE);
         tuiUpdater.getCurrentTuiState().restart(true, ex);
     }
 

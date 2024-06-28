@@ -333,16 +333,15 @@ public class PickablesTable {
      * Used to save the current state of the PickablesTable, it will contain only public information
      * about the table, without the order of the cards in the decks
      *
-     * @return
+     * @return a memento of the PickablesTable for sending on the network
      */
     public @NotNull ReconnectionTableMemento savePublic() {
         Map<PlayableCardType, GameColor> deckTops = new EnumMap<>(PlayableCardType.class);
         for (PlayableCardType type : PlayableCardType.values()) {
             deckTops.put(type, getDeckTop(type).orElse(null));
         }
-
         return new ReconnectionTableMemento(
-                Map.copyOf(deckTops),
+                Collections.unmodifiableMap(deckTops),
                 shownToIntMap(),
                 commonToIntSet());
     }

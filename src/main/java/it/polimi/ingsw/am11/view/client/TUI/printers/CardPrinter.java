@@ -175,7 +175,10 @@ public class CardPrinter {
                       .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
     }
 
-    public static char getColorLetter(GameColor color) {
+    public static char getColorLetter(@Nullable GameColor color) {
+        if (color == null) {
+            return ' ';
+        }
         switch (color.getColumnName()) {
             case "red" -> {return 'R';}
             case "blue" -> {return 'B';}

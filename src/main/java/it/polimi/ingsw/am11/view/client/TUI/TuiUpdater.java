@@ -14,6 +14,7 @@ import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import it.polimi.ingsw.am11.view.client.miniModel.exceptions.SyncIssueException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,9 +71,9 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      * @param color the color of the card
      */
     @Override
-    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull GameColor color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @Nullable GameColor color) {
         LOGGER.debug("{} picked a card from the {} deck, the {} deck top card is now {}",
-                     model.getCurrentTurn(), type.getName(), type.getName(), color.getColumnName());
+                     model.getCurrentTurn(), type.getName(), type.getName(), color);
 
         model.table().refreshDeckTop(type, color);
 

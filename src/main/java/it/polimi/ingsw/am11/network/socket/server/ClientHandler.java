@@ -215,7 +215,7 @@ public class ClientHandler implements Runnable {
             String message = null;
             if (! clientSocket.isClosed()) message = in.readLine();
             if (message == null) {
-                LOGGER.info("SERVER TCP: Received message: {}", message);
+                LOGGER.info("SERVER TCP: Received message: {}", (Object) null);
                 LOGGER.info("SERVER TCP: Client {} disconnected", nickname);
                 assert nickname != null;
                 CentralController.INSTANCE.disconnectPlayer(nickname);

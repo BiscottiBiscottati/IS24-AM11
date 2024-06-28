@@ -126,7 +126,7 @@ public record ServerGameSender(@NotNull PrintWriter out)
     }
 
     @Override
-    public void updateShownPlayable(Integer previousId, Integer currentId) {
+    public void updateShownPlayable(@Nullable Integer previousId, @Nullable Integer currentId) {
         ObjectNode json = JsonFactory.createObjectNode(CONTEXT);
         json.put("method", "updateShownPlayable");
         json.put("previousId", previousId);

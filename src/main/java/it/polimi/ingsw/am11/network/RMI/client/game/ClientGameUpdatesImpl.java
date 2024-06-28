@@ -9,6 +9,7 @@ import it.polimi.ingsw.am11.network.RMI.client.ClientRMI;
 import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,7 +75,7 @@ public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater,
     }
 
     @Override
-    public void updateDeckTop(@NotNull PlayableCardType type, @NotNull GameColor color) {
+    public void updateDeckTop(@NotNull PlayableCardType type, @Nullable GameColor color) {
         viewUpdater.updateDeckTop(type, color);
 
     }
