@@ -22,7 +22,7 @@ public class Main {
      * Main method of the application, used to start the server or the client based on the
      * arguments:
      * <p>
-     * Usage: java -jar <jar file> <server|client> [options] Options:
+     * Usage: java -jar jarfile server|client [options] Options:
      * <br>
      * -rmi port RMI port to use for the server
      * <br>

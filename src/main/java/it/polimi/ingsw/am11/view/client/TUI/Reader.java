@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * This class will read the stdin and then use an argParser to extract the arguments from the
  * received command. The list of arguments will be passed to the current TuiState that is saved in
  * the TUIUpdater. TuiState is an interface that requires the implementation of the method
- * passArgs(Actuator actuator, List<String> positionalArgs). The Actuator is the class that will
+ * passArgs(Actuator actuator, List of String positionalArgs). The Actuator is the class that will
  * call the methods of the CltToNetConnector that will then communicate with the server.
  */
 

@@ -63,7 +63,7 @@ public sealed interface CornerContainer permits Availability, GameColor, Symbol 
      * <p>
      * If the corner contains an item, the method will return an Optional containing the item.
      *
-     * @return Optional<Item> - The item contained in the corner, wrapped in an Optional.
+     * @return Optional - The item contained in the corner, wrapped in an Optional.
      */
     Optional<Item> getItem();
 
