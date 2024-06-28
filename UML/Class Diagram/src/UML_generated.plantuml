@@ -1,0 +1,1145 @@
+@startuml UML_generated
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AnsiHelper {
+  + AnsiHelper(): 
+  + addColors(String, Color): String
+}
+enum Availability << enumeration >> {
+  - Availability(boolean, String): 
+  + NOT_USABLE: 
+  - isAvailable: boolean
+  + USABLE: 
+  - TUICode: String
+  + valueOf(String): Availability
+  + isAvailable(): boolean
+  + getItem(): Optional<Item>
+  + getTUICode(): String
+  + values(): Availability[]
+}
+class BasicRuleset {
+  + BasicRuleset(): 
+  - pointsToArmageddon: int
+  - maxRevealedCardsPerType: int
+  - numOfPersonalObjective: int
+  - maxPlayers: int
+  - objectiveToChooseFrom: int
+  - resourceAtStart: int
+  - HandSize: int
+  - numOfCommonObjectives: int
+  - goldAtStart: int
+  + getPointsToArmageddon(): int
+  + getHandSize(): int
+  + getNumOfCommonObjectives(): int
+  + getObjectiveToChooseFrom(): int
+  + getGoldAtStart(): int
+  + getResourceAtStart(): int
+  + getMaxRevealedCardsPerType(): int
+  + getMaxPlayers(): int
+  + getNumOfPersonalObjective(): int
+}
+class Builder {
+  + Builder(int, int, GameColor): 
+  - colorPlacingRequirements: EnumMap<GameColor, Integer>
+  - availableCornersOrSymbol: EnumMap<Corner, CornerContainer>
+  - symbolToCollect: Symbol?
+  - pointsRequirements: PointsRequirementsType
+  + hasIn(Corner, CornerContainer): Builder
+  + build(): GoldCard
+  + hasSymbolToCollect(Symbol?): Builder
+  + hasPointRequirements(PointsRequirementsType): Builder
+  + hasCorner(Corner, boolean): Builder
+  + hasCorner(Corner): Builder
+  + hasRequirements(GameColor, Integer): Builder
+}
+class Builder {
+  + Builder(int, int): 
+  - symbolToCollect: EnumMap<Symbol, Integer>
+  + hasSymbol(Symbol): Builder
+  + build(): SymbolCollectCard
+  + hasSymbol(Symbol, int): Builder
+}
+class Builder {
+  + Builder(int, int, GameColor): 
+  - availableCornerOrItem: EnumMap<Corner, CornerContainer>
+  + hasIn(Corner, CornerContainer): Builder
+  + build(): ResourceCard
+}
+class Builder {
+  + Builder(int, int): 
+  - colorRequirements: EnumMap<GameColor, Integer>
+  - colorOfPattern: GameColor?
+  - flippedFlag: boolean
+  + build(): TripletCard
+  + isFlipped(boolean): Builder
+  + hasColor(GameColor): Builder
+}
+class Builder {
+  + Builder(int): 
+  - availableCornersFront: EnumMap<Corner, CornerContainer>
+  - centerColors: EnumSet<GameColor>
+  - availableColorCornerBack: EnumMap<Corner, GameColor>
+  - id: int
+  - checkAllBackCornerCovered(): boolean
+  + build(): StarterCard
+  + hasCenterColor(GameColor): Builder
+  + hasColorRetroIn(Corner, GameColor): Builder
+  + hasCenterColors(Set<GameColor>): Builder
+  + hasItemFrontIn(Corner, CornerContainer): Builder
+}
+class Builder {
+  + Builder(int, int): 
+  - colorRequirements: EnumMap<GameColor, Integer>
+  - isFlippedFlag: boolean
+  - primaryColor: GameColor?
+  - isRotatedFlag: boolean
+  - secondaryColor: GameColor?
+  + hasSecondaryColor(GameColor): Builder
+  + isFlipped(boolean): Builder
+  + isRotated(boolean): Builder
+  + build(): LCard
+  + hasPrimaryColor(GameColor): Builder
+}
+class Builder {
+  + Builder(int, int): 
+  - colorToCollect: EnumMap<GameColor, Integer>
+  + build(): ColorCollectCard
+  + hasColor(GameColor): Builder
+  + hasColor(GameColor, int): Builder
+}
+class Builder<T> {
+  # Builder(int, int): 
+  + build(): T
+}
+class Builder<T> {
+  # Builder(int, int): 
+  - points: int
+  - id: int
+  + build(): T
+}
+class Builder<T> {
+  # Builder(int, int, GameColor): 
+  - cardPoints: int
+  - primaryColor: GameColor
+  - id: int
+  + build(): T
+  + hasIn(Corner, CornerContainer): Builder<T>
+}
+class Builder<T> {
+  # Builder(int, int): 
+  + build(): T
+}
+class CardContainer {
+  + CardContainer(FieldCard): 
+  + CardContainer(FieldCard, boolean): 
+  + CardContainer(FieldCard, Map<Corner, Boolean>, boolean): 
+  - isRetro: boolean
+  - card: FieldCard
+  - coveredCorners: EnumMap<Corner, Boolean>
+  + load(CardContainerMemento): CardContainer
+  + isColorEquals(GameColor?): boolean
+  + toString(): String
+  + of(FieldCard, boolean): CardContainer
+  + getCard(): FieldCard
+  + isCornerCovered(Corner): boolean
+  + isCardEquals(FieldCard?): boolean
+  + isRetro(): boolean
+  + getContainerOn(Corner): CornerContainer
+  + save(): CardContainerMemento
+  + cover(Corner): Optional<Item>
+}
+entity CardContainerMemento << record >> {
+  + CardContainerMemento(int, Map<Corner, Boolean>, boolean): 
+  - card: int
+  - coveredCorners: Map<Corner, Boolean>
+  - isRetro: boolean
+  + isRetro(): boolean
+  + card(): int
+  + coveredCorners(): Map<Corner, Boolean>
+}
+class CardDecoder {
+  + CardDecoder(): 
+  - resourceDeck: Deck<ResourceCard>
+  - goldDeck: Deck<GoldCard>
+  - starterDeck: Deck<StarterCard>
+  - objectiveDeck: Deck<ObjectiveCard>
+  + decodeFieldCard(int): Optional<FieldCard>
+  + decodePlayableCard(int): Optional<PlayableCard>
+  + decodeObjectiveCard(int): Optional<ObjectiveCard>
+  + decodeResourceCard(int): Optional<ResourceCard>
+  + decodeGoldCard(int): Optional<GoldCard>
+  + decodeStarterCard(int): Optional<StarterCard>
+}
+interface CardIdentity << interface >> {
+  + getId(): int
+}
+class CollectingCard {
+  # CollectingCard(Builder<?>): 
+  - SYMBOL_TO_COLLECT: ImmutableMap<Symbol, Integer>
+  - COLOR_TO_COLLECT: ImmutableMap<GameColor, Integer>
+  + getSymbolRequirements(): Map<Symbol, Integer>
+  + getColorRequirements(): Map<GameColor, Integer>
+}
+class ColorCollectCard {
+  - ColorCollectCard(Builder): 
+  - colorToCollect: ImmutableMap<GameColor, Integer>
+  + getType(): ObjectiveCardType
+  + countPoints(PlayerField): int
+  + getColorRequirements(): Map<GameColor, Integer>
+}
+enum Corner << enumeration >> {
+  - Corner(String): 
+  + TOP_RX: 
+  - columnName: String
+  + TOP_LX: 
+  + DOWN_LX: 
+  + DOWN_RX: 
+  + values(): Corner[]
+  + valueOf(String): Corner
+  + getColumnName(): String
+}
+interface CornerContainer << interface >> {
+  + of(String): CornerContainer
+  + getItem(): Optional<Item>
+  + getTUICode(): String
+  + isAvailable(): boolean
+}
+class DatabaseConstants {
+  + DatabaseConstants(): 
+  + DATABASE_URL: String
+}
+interface DatabaseSearchable << interface >> {
+  + getColumnName(): String
+}
+class Deck<T> {
+  + Deck(ImmutableMap<Integer, T>): 
+  - mappingIdToCard: ImmutableMap<Integer, T>
+  - deck: ArrayDeque<T>
+  + save(): DeckMemento
+  + load(DeckMemento): void
+  + peekTop(): Optional<T>
+  + draw(): Optional<T>
+  + getCardById(int): Optional<T>
+  + getRemainingCards(): int
+  + shuffle(): Deck<T>
+  + reset(): void
+}
+class DeckManager {
+  + DeckManager(): 
+  - resourceDeck: Deck<ResourceCard>
+  - objectiveDeck: Deck<ObjectiveCard>
+  - goldDeck: Deck<GoldCard>
+  - starterDeck: Deck<StarterCard>
+  + getDeckTop(PlayableCardType): Optional<GameColor>
+  + reset(): void
+  + drawStarter(): Optional<StarterCard>
+  + save(): DeckManagerMemento
+  + getRemainingCardsOf(PlayableCardType): int
+  + shuffle(): void
+  + drawObjective(): Optional<ObjectiveCard>
+  + load(DeckManagerMemento): void
+  + drawPlayableFrom(PlayableCardType): Optional<PlayableCard>
+}
+entity DeckManagerMemento << record >> {
+  + DeckManagerMemento(DeckMemento, DeckMemento, DeckMemento, DeckMemento): 
+  - resourceDeck: DeckMemento
+  - goldDeck: DeckMemento
+  - starterDeck: DeckMemento
+  - objectiveDeck: DeckMemento
+  + resourceDeck(): DeckMemento
+  + objectiveDeck(): DeckMemento
+  + goldDeck(): DeckMemento
+  + starterDeck(): DeckMemento
+}
+entity DeckMemento << record >> {
+  + DeckMemento(List<Integer>): 
+  - cards: List<Integer>
+  + cards(): List<Integer>
+}
+class DirectoryCreator {
+  - DirectoryCreator(): 
+  + GAME_DIR: Path
+  + SAVES_DIR: Path
+  - LOGGER: Logger
+  + createGameDirectories(): void
+}
+class EmptyDeckException {
+  + EmptyDeckException(String): 
+}
+class EnumMapUtils {
+  - EnumMapUtils(): 
+  + init(Class<K>, V): EnumMap<K, V>
+  + init(Class<K>, Supplier<V>): EnumMap<K, V>
+}
+class ExposedItemManager {
+  ~ ExposedItemManager(): 
+  - placedCardColors: EnumMap<GameColor, Integer>
+  - exposedColors: EnumMap<GameColor, Integer>
+  - exposedSymbols: EnumMap<Symbol, Integer>
+  ~ addToExposed(Item): void
+  ~ getExposedItem(Item): int
+  ~ isRequirementsMet(PlayableCard, boolean): boolean
+  ~ addCardColor(GameColor): void
+  ~ addExposedItemOn(FieldCard, boolean): void
+  ~ getPlacedCardColors(): Map<GameColor, Integer>
+  ~ load(ItemManagerMemento): void
+  ~ subToExposed(Item): void
+  ~ getPlacedCardOf(GameColor): int
+  ~ reset(): void
+  ~ save(): ItemManagerMemento
+}
+interface FieldCard << interface >> {
+  + getItemCorner(Corner, boolean): CornerContainer
+  + isColorEqual(GameColor): boolean
+  + getCenter(boolean): Set<GameColor>
+  + isAvailable(Corner, boolean): boolean
+}
+entity FieldMemento << record >> {
+  + FieldMemento(ItemManagerMemento, PositionManagerMemento): 
+  - exposedItems: ItemManagerMemento
+  - positionManager: PositionManagerMemento
+  + exposedItems(): ItemManagerMemento
+  + positionManager(): PositionManagerMemento
+}
+class GameBreakingException {
+  + GameBreakingException(Throwable): 
+  + GameBreakingException(String): 
+}
+enum GameColor << enumeration >> {
+  - GameColor(String, String): 
+  - TUIRepresentation: String
+  - columnName: String
+  + GREEN: 
+  + PURPLE: 
+  + RED: 
+  + BLUE: 
+  + values(): GameColor[]
+  + getColumnName(): String
+  + valueOf(String): GameColor
+  + isAvailable(): boolean
+  + getTUICode(): String
+  + getItem(): Optional<Item>
+}
+class GameLogic {
+  + GameLogic(): 
+  - playerManager: PlayerManager
+  - plateau: Plateau
+  - ruleSet: RuleSet
+  - LOGGER: Logger
+  - pcs: GameListenerSupport
+  - pickablesTable: PickablesTable
+  - reconnectionTimer: ReconnectionTimer
+  - isLoadedGame: boolean
+  - CLOSING_GRACE_TIME: int
+  - closeGame(): void
+  - checkIfGameCanContinue(): void
+  + addPlayerToTable(String, PlayerColor): void
+  + getExposedCards(PlayableCardType): Set<Integer>
+  + getPlayerFinishingPosition(String): int
+  + getFirstPlayer(): String
+  + endGameEarly(): void
+  + load(GameModelMemento): void
+  + reSyncWith(String): void
+  + getPlayers(): Set<String>
+  + drawVisibleOf(PlayableCardType, String, int): int
+  + getCurrentTurnPlayer(): String
+  + disconnectPlayer(String): void
+  + reconnectPlayer(String, PlayerListener): void
+  - setConstants(): void
+  + getPlayerObjective(String): Set<Integer>
+  - pickCandidateObjectives(): void
+  + getPlayerColor(String): PlayerColor
+  + getPositionedCard(String): Map<Position, CardContainer>
+  + getCommonObjectives(): Set<Integer>
+  + getStatus(): GameStatus
+  + goNextTurn(): void
+  + forceEnd(): void
+  + getRuleSet(): RuleSet
+  + getStarterCard(String): Optional<Integer>
+  + placeCard(String, int, Position, boolean): void
+  - giveCards(): void
+  + getWinner(): Set<String>
+  + getCandidateObjectives(String): Set<Integer>
+  + getAvailablePositions(String): Set<Position>
+  + setObjectiveFor(String, int): void
+  + getPlayerHand(String): Set<Integer>
+  + initGame(): void
+  - pickStarters(): void
+  + removePlayer(String): void
+  + addPlayerListener(String, PlayerListener): void
+  + drawFromDeckOf(PlayableCardType, String): int
+  + getPlayerPoints(String): int
+  + getDeckTop(PlayableCardType): Optional<GameColor>
+  + save(): GameModelMemento
+  - resetAll(): void
+  + isDisconnected(String): boolean
+  + addTableListener(TableListener): void
+  - countObjectivesPoints(): void
+  + setStarterFor(String, boolean): void
+  - checkIfDrawAllowed(String): void
+}
+interface GameModel << interface >> {
+  + removePlayer(String): void
+  + reconnectPlayer(String, PlayerListener): void
+  + getCurrentTurnPlayer(): String
+  + getAvailablePositions(String): Set<Position>
+  + setObjectiveFor(String, int): void
+  + placeCard(String, int, Position, boolean): void
+  + getPlayers(): Set<String>
+  + drawFromDeckOf(PlayableCardType, String): int
+  + load(GameModelMemento): void
+  + getStarterCard(String): Optional<Integer>
+  + isDisconnected(String): boolean
+  + getCommonObjectives(): Set<Integer>
+  + goNextTurn(): void
+  + getExposedCards(PlayableCardType): Set<Integer>
+  + getPlayerFinishingPosition(String): int
+  + getPlayerColor(String): PlayerColor
+  + addTableListener(TableListener): void
+  + getPlayerPoints(String): int
+  + initGame(): void
+  + save(): GameModelMemento
+  + getStatus(): GameStatus
+  + getDeckTop(PlayableCardType): Optional<GameColor>
+  + addPlayerListener(String, PlayerListener): void
+  + getFirstPlayer(): String
+  + addPlayerToTable(String, PlayerColor): void
+  + getPlayerObjective(String): Set<Integer>
+  + getPlayerHand(String): Set<Integer>
+  + forceEnd(): void
+  + disconnectPlayer(String): void
+  + setStarterFor(String, boolean): void
+  + reSyncWith(String): void
+  + getWinner(): Set<String>
+  + drawVisibleOf(PlayableCardType, String, int): int
+  + getCandidateObjectives(String): Set<Integer>
+  + getRuleSet(): RuleSet
+  + getPositionedCard(String): Map<Position, CardContainer>
+  + endGameEarly(): void
+}
+entity GameModelMemento << record >> {
+  + GameModelMemento(PickablesTableMemento, PlateauMemento, PlayerManagerMemento): 
+  - playerManager: PlayerManagerMemento
+  - table: PickablesTableMemento
+  - plateau: PlateauMemento
+  + table(): PickablesTableMemento
+  + plateau(): PlateauMemento
+  + playerManager(): PlayerManagerMemento
+}
+enum GameStatus << enumeration >> {
+  + GameStatus(): 
+  + CHOOSING_STARTERS: 
+  + CHOOSING_OBJECTIVES: 
+  + ONGOING: 
+  + ARMAGEDDON: 
+  + SETUP: 
+  + ENDED: 
+  + LAST_TURN: 
+  + values(): GameStatus[]
+  + valueOf(String): GameStatus
+}
+class GameStatusException {
+  + GameStatusException(String): 
+}
+class GoldCard {
+  - GoldCard(Builder): 
+  - symbolToCollect: Symbol?
+  - availableCornersOrSymbol: ImmutableMap<Corner, CornerContainer>
+  - pointsRequirements: PointsRequirementsType
+  - colorPlacingRequirements: ImmutableMap<GameColor, Integer>
+  + getType(): PlayableCardType
+  + countPoints(PlayerField, Position): int
+  + getItemCorner(Corner, boolean): CornerContainer
+  + getPointsRequirements(): PointsRequirementsType
+  + isFrontAvailable(Corner): boolean
+  + getItemCorner(Corner): CornerContainer
+  + isAvailable(Corner, boolean): boolean
+  + getPlacingRequirements(): Map<GameColor, Integer>
+  + getPlacingRequirementsOf(GameColor): int
+  + getSymbolToCollect(): Optional<Symbol>
+}
+class GoldDeckFactory {
+  - GoldDeckFactory(): 
+  + PLACING_REQ_QUERY: String
+  + queryStatement: String
+  - setPlacingRequirements(Builder, ResultSet): void
+  - setFrontCorners(Builder, ResultSet): void
+  - setPointsRequirements(Builder, ResultSet): void
+  - getCornerContainer(Corner, ResultSet): CornerContainer
+  + createDeck(): Deck<GoldCard>
+}
+class IllegalCardBuildException {
+  + IllegalCardBuildException(String): 
+}
+class IllegalCardPlacingException {
+  + IllegalCardPlacingException(String): 
+}
+class IllegalPickActionException {
+  + IllegalPickActionException(String): 
+}
+class IllegalPlateauActionException {
+  + IllegalPlateauActionException(String): 
+}
+class IllegalPlateauSetupException {
+  + IllegalPlateauSetupException(String): 
+}
+class IllegalPlayerSpaceActionException {
+  + IllegalPlayerSpaceActionException(String): 
+}
+interface Item << interface >>
+entity ItemManagerMemento << record >> {
+  + ItemManagerMemento(Map<GameColor, Integer>, Map<Symbol, Integer>, Map<GameColor, Integer>): 
+  - placedCardColors: Map<GameColor, Integer>
+  - exposedColors: Map<GameColor, Integer>
+  - exposedSymbols: Map<Symbol, Integer>
+  + exposedColors(): Map<GameColor, Integer>
+  + exposedSymbols(): Map<Symbol, Integer>
+  + placedCardColors(): Map<GameColor, Integer>
+}
+class LCard {
+  - LCard(Builder): 
+  - pattern: List<List<GameColor>>
+  - primaryColor: GameColor?
+  - counter: PatternCounter
+  - isFlippedFlag: boolean
+  - isRotatedFlag: boolean
+  - secondaryColor: GameColor?
+  + getPattern(): List<List<GameColor>>
+  + isFlipped(): boolean
+  + getType(): ObjectiveCardType
+  + countPoints(PlayerField): int
+  + isRotated(): boolean
+}
+class LPatternCounter {
+  + LPatternCounter(GameColor, GameColor, EnumMap<PatternPurpose, List<Corner>>): 
+  - numberOfPatterns: int
+  - cornersPurpose: EnumMap<PatternPurpose, List<Corner>>
+  - secondaryColor: GameColor
+  - seenPositions: Set<Position>
+  - primaryColor: GameColor
+  - countNumberOfPatterns(Map<Position, CardContainer>, Position, int): void
+  + count(PlayerField): int
+}
+class MatrixFiller {
+  - MatrixFiller(): 
+  + fillMatrixWithNull(int, int, Class<T>): List<List<T>>
+}
+class MaxHandSizeException {
+  + MaxHandSizeException(String): 
+}
+class NotInHandException {
+  + NotInHandException(String): 
+}
+class NumOfPlayersException {
+  + NumOfPlayersException(String): 
+}
+class ObjectiveCard {
+  # ObjectiveCard(Builder<?>): 
+  - points: int
+  - id: int
+  + getPoints(): int
+  + hasItemRequirements(Item): int
+  + hashCode(): int
+  + getId(): int
+  + getType(): ObjectiveCardType
+  + getColorRequirements(): Map<GameColor, Integer>
+  + getSymbolRequirements(): Map<Symbol, Integer>
+  + countPoints(PlayerField): int
+  + equals(Object): boolean
+}
+enum ObjectiveCardType << enumeration >> {
+  - ObjectiveCardType(Set<Position>): 
+  + COLOR_COLLECT: 
+  + L_SHAPE: 
+  - MAX_LENGTH_Y: int
+  + TRIPLET: 
+  - MAX_LENGTH_X: int
+  + SYMBOL_COLLECT: 
+  - positions: Set<Position>
+  + valueOf(String): ObjectiveCardType
+  + values(): ObjectiveCardType[]
+  + getPositions(boolean, boolean): Optional<Set<Position>>
+  - flipY(Set<Position>): Set<Position>
+  - flipX(Set<Position>): Set<Position>
+}
+class ObjectiveDeckFactory {
+  - ObjectiveDeckFactory(): 
+  - positioningStatement: String
+  - collectingStatement: String
+  + createDeck(): Deck<ObjectiveCard>
+  - setCollectingCards(PreparedStatement, Builder<Integer, ObjectiveCard>): void
+  - setPositioningCards(PreparedStatement, Builder<Integer, ObjectiveCard>): void
+}
+interface PatternCounter << interface >> {
+  + count(PlayerField): int
+}
+enum PatternPurpose << enumeration >> {
+  + PatternPurpose(): 
+  + ADJACENT_LX: 
+  + PREVIOUS_CHECK: 
+  + NEXT_CHECK: 
+  + ADJACENT_RX: 
+  + TO_COMPLETE: 
+  + valueOf(String): PatternPurpose
+  + values(): PatternPurpose[]
+}
+class PersonalSpace {
+  + PersonalSpace(): 
+  - candidateObjectives: Set<ObjectiveCard>
+  - playerHand: Set<PlayableCard>
+  - starterCard: StarterCard?
+  - maxObjectives: int
+  - maxSizeofHand: int
+  - maxCandidateObjectives: int
+  - playerObjective: Set<ObjectiveCard>
+  - placed: boolean
+  + getCandidateObjectives(): Set<ObjectiveCard>
+  + load(PersonalSpaceMemento): void
+  + removeCandidateObjective(int): void
+  + hasCardBeenPlaced(): boolean
+  + save(): PersonalSpaceMemento
+  + getPlayerHand(): Set<PlayableCard>
+  + getStarterCard(): Optional<StarterCard>
+  + setMaxCandidateObjectives(int): void
+  + pickCard(int): void
+  + addObjective(ObjectiveCard): void
+  + setNewCandidateObjectives(ObjectiveCard): void
+  + setMaxSizeofHand(int): void
+  + availableSpaceInHand(): int
+  + setMaxObjectives(int): void
+  + setCardBeenPlaced(boolean): void
+  + setStarterCard(StarterCard): void
+  + getCandidateObjectiveByID(int): ObjectiveCard
+  + areObjectiveGiven(): boolean
+  + getPlayerObjective(): Set<ObjectiveCard>
+  + addCardToHand(PlayableCard): void
+  + clearAll(): void
+}
+entity PersonalSpaceMemento << record >> {
+  + PersonalSpaceMemento(Set<Integer>, Set<Integer>, Set<Integer>, int): 
+  - candidateObjs: Set<Integer>
+  - starterCard: int
+  - personalObjs: Set<Integer>
+  - hand: Set<Integer>
+  + hand(): Set<Integer>
+  + candidateObjs(): Set<Integer>
+  + starterCard(): int
+  + personalObjs(): Set<Integer>
+}
+class PickablesTable {
+  + PickablesTable(GameListenerSupport): 
+  - LOGGER: Logger
+  - numOfCommonObjectives: int
+  - pcs: GameListenerSupport
+  - numOfCandidatesObjectives: int
+  - commonObjectives: Set<ObjectiveCard>
+  - shownPlayable: Map<PlayableCardType, Set<PlayableCard>>
+  - deckManager: DeckManager
+  - numOfShownPerType: int
+  - commonToIntSet(): Set<Integer>
+  - shuffleDecks(): void
+  + pickCommonObjectives(): void
+  + setNumOfShownPerType(int): void
+  + hardReset(): void
+  - removePlayable(PlayableCard): PlayableCard?
+  - clearTable(): void
+  + pickPlayableVisible(int): PlayableCard
+  + getDeckTop(PlayableCardType): Optional<GameColor>
+  + pickStarterCard(): StarterCard
+  + savePublic(): ReconnectionTableMemento
+  + pickObjectiveCandidates(): Set<ObjectiveCard>
+  - resetDecks(): void
+  + drawPlayableFrom(PlayableCardType): PlayableCard
+  + setNumOfCommonObjectives(int): void
+  + initialize(): void
+  - shownToIntMap(): Map<PlayableCardType, Set<Integer>>
+  + load(PickablesTableMemento): void
+  + getCommonObjectives(): Set<ObjectiveCard>
+  + save(): PickablesTableMemento
+  - pickObjectiveCard(): ObjectiveCard
+  + getShownPlayable(PlayableCardType): Set<PlayableCard>
+  + setNumOfCandidatesObjectives(int): void
+  + getRemainingDeckOf(PlayableCardType): int
+}
+entity PickablesTableMemento << record >> {
+  + PickablesTableMemento(DeckManagerMemento, Map<PlayableCardType, Set<Integer>>, Set<Integer>): 
+  - deckManager: DeckManagerMemento
+  - commonObjs: Set<Integer>
+  - shownPlayable: Map<PlayableCardType, Set<Integer>>
+  + shownPlayable(): Map<PlayableCardType, Set<Integer>>
+  + deckManager(): DeckManagerMemento
+  + commonObjs(): Set<Integer>
+}
+class Plateau {
+  + Plateau(GameListenerSupport): 
+  - counterObjective: Map<String, Integer>
+  - pcs: GameListenerSupport
+  - LOGGER: Logger
+  - status: AtomicReference<GameStatus>
+  - finalLeaderboard: Map<String, Integer>
+  - playerPoints: Map<String, Integer>
+  - armageddonTimePoints: int
+  + setStatus(GameStatus): void
+  + getPlayerFinishingPosition(String): int
+  + addCounterObjective(String): void
+  + setFinalLeaderboard(): void
+  + getStatus(): GameStatus
+  + reset(): void
+  + hardReset(): void
+  + isArmageddonTime(): boolean
+  + addPlayerPoints(String, int): void
+  + getWinners(): Set<String>
+  + addPlayer(String): void
+  + removePlayer(String): void
+  + getPlayerPoints(String): int
+  + load(PlateauMemento): void
+  + setWinner(String): void
+  + save(): PlateauMemento
+  + activateArmageddon(): void
+  + getCounterObjective(String): int
+  + setArmageddonTime(int): void
+}
+entity PlateauMemento << record >> {
+  + PlateauMemento(Map<String, Integer>, Map<String, Integer>, Map<String, Integer>, GameStatus): 
+  - objCounter: Map<String, Integer>
+  - leaderboard: Map<String, Integer>
+  - status: GameStatus
+  - playerPoints: Map<String, Integer>
+  + objCounter(): Map<String, Integer>
+  + leaderboard(): Map<String, Integer>
+  + status(): GameStatus
+  + playerPoints(): Map<String, Integer>
+}
+class PlayableCard {
+  # PlayableCard(Builder<?>): 
+  - color: GameColor
+  - points: int
+  - id: int
+  + equals(Object): boolean
+  + getPlacingRequirementsOf(GameColor): int
+  + countPoints(PlayerField, Position): int
+  + getId(): int
+  + getColor(): GameColor
+  + getPoints(): int
+  + isColorEqual(GameColor): boolean
+  + getType(): PlayableCardType
+  + hashCode(): int
+  + getPointsRequirements(): PointsRequirementsType
+  + getItemCorner(Corner): CornerContainer
+  + getPlacingRequirements(): Map<GameColor, Integer>
+  + isFrontAvailable(Corner): boolean
+  + getSymbolToCollect(): Optional<Symbol>
+  + getCenter(boolean): Set<GameColor>
+}
+enum PlayableCardType << enumeration >> {
+  - PlayableCardType(String, String): 
+  + GOLD: 
+  - typeName: String
+  + RESOURCE: 
+  - columnName: String
+  + values(): PlayableCardType[]
+  + getColumnName(): String
+  + getName(): String
+  + toString(): String
+  + valueOf(String): PlayableCardType
+}
+entity Player << record >> {
+  + Player(String, PlayerColor): 
+  + Player(String, PlayerColor, PersonalSpace, PlayerField): 
+  + Player(String, PlayerColor, PersonalSpace): 
+  - color: PlayerColor
+  - nickname: String
+  - field: PlayerField
+  - space: PersonalSpace
+  + nickname(): String
+  + color(): PlayerColor
+  + field(): PlayerField
+  + space(): PersonalSpace
+  + savePublic(): PlayerMemento
+  + load(PlayerMemento): Player
+  + save(): PlayerMemento
+}
+enum PlayerColor << enumeration >> {
+  + PlayerColor(): 
+  + GREEN: 
+  + YELLOW: 
+  + RED: 
+  + BLUE: 
+  + values(): PlayerColor[]
+  + valueOf(String): PlayerColor
+}
+class PlayerField {
+  + PlayerField(): 
+  - itemManager: ExposedItemManager
+  - positionManager: PositionManager
+  + getPlacedCardColours(): Map<GameColor, Integer>
+  + isAvailable(Position): boolean
+  + clearAll(): void
+  + place(PlayableCard, Position, boolean): int
+  + isRequirementMet(FieldCard, boolean): boolean
+  + placeStartingCard(StarterCard, boolean): void
+  + getAvailablePositions(): Set<Position>
+  + containsCard(FieldCard): boolean
+  + getNumberOf(Item): int
+  + getNumberOfPositionedColor(GameColor): int
+  + save(): FieldMemento
+  + load(FieldMemento): void
+  + getCardsPositioned(): Map<Position, CardContainer>
+}
+class PlayerInitException {
+  + PlayerInitException(String): 
+}
+class PlayerManager {
+  + PlayerManager(GameListenerSupport): 
+  - maxNumberOfPlayers: int
+  - LOGGER: Logger
+  - pcs: GameListenerSupport
+  - players: SequencedMap<String, Player>
+  - firstPlayer: Player?
+  - currentAction: TurnAction
+  - playerQueue: Queue<Player>
+  - unavailablePlayers: Set<Player>
+  - currentPlaying: Player?
+  + getCandidateObjectives(String): Set<ObjectiveCard>
+  + getPlayerColor(String): Optional<PlayerColor>
+  + load(PlayerManagerMemento): void
+  + getPlayerObjective(String): Set<Integer>
+  + addPlayerToTable(String, PlayerColor): void
+  + getNumberOfConnected(): int
+  + disconnectPlayer(Player): void
+  + hardReset(): void
+  + getCurrentAction(): TurnAction
+  + savePublic(String): PlayerManagerMemento
+  + getPlayer(String): Optional<Player>
+  + getAvailablePositions(String): Set<Position>
+  + removePlayer(String): void
+  + getFirstPlayer(): Optional<String>
+  + reconnectPlayer(Player): void
+  + getStarterCard(String): Optional<StarterCard>
+  + savePublic(): PlayerManagerMemento
+  + areObjectiveSet(): boolean
+  + isConnected(String): boolean
+  + getNumberOfPlayers(): int
+  + isTurnOf(String): boolean
+  + isCurrentDisconnected(): boolean
+  + isDisconnected(String): boolean
+  + setStarterCard(String, StarterCard): void
+  + getMaxNumberOfPlayer(): int
+  + getPlayers(): SequencedSet<String>
+  + getHand(String): Set<Integer>
+  + getCurrentTurnPlayer(): Optional<String>
+  + setCurrentAction(TurnAction): void
+  + areStarterSet(): boolean
+  + areAllReconnected(): boolean
+  + setCandidateObjectives(String, Set<ObjectiveCard>): void
+  + isFirstTheCurrent(): boolean
+  + getCandidateObjectiveByID(String, int): ObjectiveCard
+  + goNextTurn(): void
+  + resetAll(): void
+  + areAllDisconnected(): boolean
+  + chooseFirstPlayer(): void
+  + setMaxNumberOfPlayers(int): void
+}
+entity PlayerManagerMemento << record >> {
+  + PlayerManagerMemento(List<PlayerMemento>, String, String, TurnAction): 
+  - players: List<PlayerMemento>
+  - currentPlayer: String
+  - firstPlayer: String
+  - currentAction: TurnAction
+  + firstPlayer(): String
+  + currentAction(): TurnAction
+  + players(): List<PlayerMemento>
+  + currentPlayer(): String
+}
+entity PlayerMemento << record >> {
+  + PlayerMemento(String, PlayerColor, PersonalSpaceMemento, FieldMemento): 
+  - space: PersonalSpaceMemento
+  - field: FieldMemento
+  - nickname: String
+  - color: PlayerColor
+  + field(): FieldMemento
+  + space(): PersonalSpaceMemento
+  + color(): PlayerColor
+  + nickname(): String
+}
+enum PointsRequirementsType << enumeration >> {
+  + PointsRequirementsType(): 
+  + SYMBOLS: 
+  + CLASSIC: 
+  + COVERING_CORNERS: 
+  + valueOf(String): PointsRequirementsType
+  + values(): PointsRequirementsType[]
+}
+entity Position << record >> {
+  + Position(int, int): 
+  - y: int
+  - x: int
+  + toString(): String
+  + of(int, int): Position
+  + x(): int
+  + of(String): Position
+  + y(): int
+}
+class PositionManager {
+  + PositionManager(): 
+  - cardsPositioned: Map<Position, CardContainer>
+  - closedPositions: Set<Position>
+  - availablePositions: Set<Position>
+  + save(): PositionManagerMemento
+  + getCornerFromPositions(Position, Position): Optional<Corner>
+  + placeCard(FieldCard, Position, boolean): List<Item>
+  + getPositionIn(Position, Corner): Position
+  + containsCard(FieldCard): boolean
+  + reset(): void
+  + load(PositionManagerMemento): void
+  + getMovementOfPositions(Position, List<Corner>): Position
+  + isAvailable(Position): boolean
+  + getAvailablePositions(): Set<Position>
+  + getCardsPositioned(): Map<Position, CardContainer>
+}
+entity PositionManagerMemento << record >> {
+  + PositionManagerMemento(Set<Position>, Set<Position>, Map<Position, CardContainerMemento>): 
+  - availablePos: Set<Position>
+  - closedPos: Set<Position>
+  - cardPositioned: Map<Position, CardContainerMemento>
+  + cardPositioned(): Map<Position, CardContainerMemento>
+  + availablePos(): Set<Position>
+  + closedPos(): Set<Position>
+}
+class PositioningCard {
+  # PositioningCard(Builder<?>, EnumMap<GameColor, Integer>): 
+  - SYMBOL_REQUIREMENTS: ImmutableMap<Symbol, Integer>
+  - colorRequirements: ImmutableMap<GameColor, Integer>
+  + getColorRequirements(): Map<GameColor, Integer>
+  + getSymbolRequirements(): Map<Symbol, Integer>
+  + getPattern(): List<List<GameColor>>
+}
+entity ReconnectionModelMemento << record >> {
+  + ReconnectionModelMemento(ReconnectionTableMemento, PlateauMemento, PlayerManagerMemento): 
+  - table: ReconnectionTableMemento
+  - plateau: PlateauMemento
+  - playerManager: PlayerManagerMemento
+  + table(): ReconnectionTableMemento
+  + playerManager(): PlayerManagerMemento
+  + plateau(): PlateauMemento
+}
+entity ReconnectionTableMemento << record >> {
+  + ReconnectionTableMemento(Map<PlayableCardType, GameColor?>, Map<PlayableCardType, Set<Integer?>>, Set<Integer>): 
+  - deckTops: Map<PlayableCardType, GameColor?>
+  - shownPlayable: Map<PlayableCardType, Set<Integer?>>
+  - commonObjs: Set<Integer>
+  + shownPlayable(): Map<PlayableCardType, Set<Integer?>>
+  + deckTops(): Map<PlayableCardType, GameColor?>
+  + commonObjs(): Set<Integer>
+}
+class ReconnectionTimer {
+  + ReconnectionTimer(GameModel): 
+  - isWaitingForReconnection: boolean
+  - executor: ScheduledExecutorService
+  - totalReconnectionFuture: ScheduledFuture<?>?
+  - LOGGER: Logger
+  - TOTAL_RECONNECTION_TIME: int
+  - model: GameModel
+  - RECONNECTION_TIME: int
+  - reconnectionFuture: ScheduledFuture<?>?
+  - currentTurnFuture: ScheduledFuture<?>?
+  - numberOfDisconnected: int
+  + waitForReconnection(): void
+  + waitForTotalReconnection(): void
+  + reconnect(): void
+  + getReconnectionTime(): int
+  - getRunnable(String, TurnAction): Runnable
+  + cancelAll(): void
+  + setReconnectionTime(int): void
+  + disconnectCurrent(String, TurnAction): void
+  + reconnectCurrent(): void
+  + isWaitingForReconnection(): boolean
+}
+class ResourceCard {
+  - ResourceCard(Builder): 
+  - availableCornerOrItem: ImmutableMap<Corner, CornerContainer>
+  - PLACING_REQUIREMENTS: ImmutableMap<GameColor, Integer>
+  + getType(): PlayableCardType
+  + getSymbolToCollect(): Optional<Symbol>
+  + isAvailable(Corner, boolean): boolean
+  + getPlacingRequirements(): Map<GameColor, Integer>
+  + getPointsRequirements(): PointsRequirementsType
+  + getItemCorner(Corner): CornerContainer
+  + getPlacingRequirementsOf(GameColor): int
+  + getItemCorner(Corner, boolean): CornerContainer
+  + isFrontAvailable(Corner): boolean
+}
+class ResourceDeckFactory {
+  - ResourceDeckFactory(): 
+  + queryStatement: String
+  + createDeck(): Deck<ResourceCard>
+  - setFrontCorners(Builder, ResultSet): void
+  - getCornerContainer(Corner, ResultSet): CornerContainer
+}
+interface RuleSet << interface >> {
+  + getMaxRevealedCardsPerType(): int
+  + getNumOfPersonalObjective(): int
+  + getMaxPlayers(): int
+  + getResourceAtStart(): int
+  + getNumOfCommonObjectives(): int
+  + getObjectiveToChooseFrom(): int
+  + getGoldAtStart(): int
+  + getHandSize(): int
+  + getPointsToArmageddon(): int
+}
+class SQLQuery {
+  + SQLQuery(): 
+  + DELETE_ALL_CUSTOM: String
+  + TRIGGER_TO_DELETE_OLDER: String
+  + INSERT_SAVE: String
+  + CREATE_SAVES_TABLE: String
+  + DELETE_ALL_SAVES: String
+  + SELECT_MOST_RECENT: String
+  + CREATE_CUSTOM_TABLE: String
+}
+class SavesManager {
+  + SavesManager(): 
+  - MAPPER: ObjectMapper
+  - LOGGER: Logger
+  - DB_PATH: Path
+  + CONNECTION_URL: String
+  - createDB(): void
+  + deleteAll(): void
+  + saveGame(GameModelMemento): void
+  - createTables(Statement): void
+  + loadMostRecentGame(): Optional<GameModelMemento>
+}
+class StarterCard {
+  - StarterCard(Builder): 
+  - availableColorCornerRetro: ImmutableMap<Corner, GameColor>
+  - availableCornersFront: ImmutableMap<Corner, CornerContainer>
+  - id: int
+  - centerColorsFront: ImmutableSet<GameColor>
+  + isAvailable(Corner, boolean): boolean
+  + isColorEqual(GameColor): boolean
+  + getId(): int
+  + getCenterColorsFront(): Set<GameColor>
+  + hashCode(): int
+  + getCenter(boolean): Set<GameColor>
+  + checkFront(Corner): CornerContainer
+  + isFrontAvail(Corner): boolean
+  + equals(Object): boolean
+  + checkRetroColorIn(Corner): GameColor
+  + getItemCorner(Corner, boolean): CornerContainer
+}
+class StarterDeckFactory {
+  - StarterDeckFactory(): 
+  - queryStatement: String
+  - CENTER_QUERY: String
+  - setFrontRetroCorners(Builder, ResultSet): void
+  - setCenterColors(PreparedStatement, ResultSet, Builder): void
+  + createDeck(): Deck<StarterCard>
+}
+enum Symbol << enumeration >> {
+  - Symbol(String, String): 
+  + PAPER: 
+  - columnName: String
+  - TUIRepresentation: String
+  + FEATHER: 
+  + GLASS: 
+  + isAvailable(): boolean
+  + getTUICode(): String
+  + values(): Symbol[]
+  + valueOf(String): Symbol
+  + getItem(): Optional<Item>
+  + getColumnName(): String
+}
+class SymbolCollectCard {
+  - SymbolCollectCard(Builder): 
+  - symbolToCollect: ImmutableMap<Symbol, Integer>
+  + getType(): ObjectiveCardType
+  + countPoints(PlayerField): int
+  + getSymbolRequirements(): Map<Symbol, Integer>
+}
+class TripletCard {
+  - TripletCard(Builder): 
+  - flippedFlag: boolean
+  - counter: PatternCounter
+  - pattern: List<List<GameColor>>
+  - colorOfPattern: GameColor?
+  + countPoints(PlayerField): int
+  + isFlipped(): boolean
+  + getType(): ObjectiveCardType
+  + getPattern(): List<List<GameColor>>
+}
+class TripletPatternCounter {
+  # TripletPatternCounter(GameColor, EnumMap<PatternPurpose, Corner>): 
+  - seenPositions: Set<Position>
+  - tripletColor: GameColor
+  - cornersPurpose: EnumMap<PatternPurpose, Corner>
+  - numberOfPatterns: int
+  - countNumberOfPatterns(Map<Position, CardContainer>, Position, int): void
+  + count(PlayerField): int
+}
+enum TurnAction << enumeration >> {
+  + TurnAction(): 
+  + PLACE_CARD: 
+  + DRAW_CARD: 
+  + values(): TurnAction[]
+  + valueOf(String): TurnAction
+}
+class TurnsOrderException {
+  + TurnsOrderException(String): 
+}
+class Validator {
+  - Validator(): 
+  + nonNegativeValues(Map<K, Integer>): boolean
+}
+
+Availability                       -[#008200,dashed]-^  CornerContainer                   
+BasicRuleset                       -[#008200,dashed]-^  RuleSet                           
+Builder                            -[#000082,plain]-^  Builder                           
+Builder                            -[#000082,plain]-^  Builder                           
+Builder                            -[#000082,plain]-^  Builder                           
+Builder                            -[#000082,plain]-^  Builder                           
+Builder                            -[#000082,plain]-^  Builder                           
+Builder                            -[#000082,plain]-^  Builder                           
+Builder                            +-[#820000,plain]-  ColorCollectCard                  
+Builder                            +-[#820000,plain]-  GoldCard                          
+Builder                            +-[#820000,plain]-  LCard                             
+Builder                            +-[#820000,plain]-  ResourceCard                      
+Builder                            +-[#820000,plain]-  StarterCard                       
+Builder                            +-[#820000,plain]-  SymbolCollectCard                 
+Builder                            +-[#820000,plain]-  TripletCard                       
+Builder                            -[#000082,plain]-^  Builder                           
+Builder                            -[#000082,plain]-^  Builder                           
+Builder                            -[#595959,dashed]->  CollectingCard                    
+Builder                            +-[#820000,plain]-  CollectingCard                    
+Builder                            +-[#820000,plain]-  ObjectiveCard                     
+Builder                            -[#595959,dashed]->  ObjectiveCard                     
+Builder                            +-[#820000,plain]-  PlayableCard                      
+Builder                            -[#595959,dashed]->  PlayableCard                      
+Builder                            +-[#820000,plain]-  PositioningCard                   
+Builder                            -[#595959,dashed]->  PositioningCard                   
+CollectingCard                     -[#000082,plain]-^  ObjectiveCard                     
+ColorCollectCard                   -[#000082,plain]-^  CollectingCard                    
+Corner                             -[#008200,dashed]-^  DatabaseSearchable                
+Deck                               -[#595959,dashed]->  CardIdentity                      
+FieldCard                          -[#008200,plain]-^  CardIdentity                      
+GameColor                          -[#008200,dashed]-^  CornerContainer                   
+GameColor                          -[#008200,dashed]-^  Item                              
+GameLogic                          -[#008200,dashed]-^  GameModel                         
+GoldCard                           -[#000082,plain]-^  PlayableCard                      
+Item                               -[#008200,plain]-^  DatabaseSearchable                
+LCard                              -[#000082,plain]-^  PositioningCard                   
+LPatternCounter                    -[#008200,dashed]-^  PatternCounter                    
+ObjectiveCard                      -[#008200,dashed]-^  CardIdentity                      
+PlayableCard                       -[#008200,dashed]-^  FieldCard                         
+PlayableCardType                   -[#008200,dashed]-^  DatabaseSearchable                
+PositioningCard                    -[#000082,plain]-^  ObjectiveCard                     
+ResourceCard                       -[#000082,plain]-^  PlayableCard                      
+StarterCard                        -[#008200,dashed]-^  FieldCard                         
+Symbol                             -[#008200,dashed]-^  CornerContainer                   
+Symbol                             -[#008200,dashed]-^  Item                              
+SymbolCollectCard                  -[#000082,plain]-^  CollectingCard                    
+TripletCard                        -[#000082,plain]-^  PositioningCard                   
+TripletPatternCounter              -[#008200,dashed]-^  PatternCounter                    
+@enduml
