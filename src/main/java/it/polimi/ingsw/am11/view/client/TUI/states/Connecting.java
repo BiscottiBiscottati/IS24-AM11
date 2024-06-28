@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -255,7 +256,7 @@ public class Connecting extends TUIState {
     }
 
     @Override
-    public void restart(boolean dueToEx, @NotNull Exception exception) {
+    public void restart(boolean dueToEx, @Nullable Exception exception) {
         alreadyError = false;
         type = "";
         ip = "";
