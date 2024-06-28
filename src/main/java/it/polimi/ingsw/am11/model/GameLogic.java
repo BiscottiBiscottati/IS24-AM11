@@ -588,9 +588,6 @@ public class GameLogic implements GameModel {
         if (playerManager.getCurrentAction() != TurnAction.PLACE_CARD) {
             throw new TurnsOrderException(nickname + " has already placed a card first");
         }
-        if (player.space().hasCardBeenPlaced()) {
-            throw new TurnsOrderException(nickname + " has already placed a card first");
-        }
 
         PlayableCard card = CardDecoder.decodePlayableCard(cardID)
                                        .orElseThrow(() -> new IllegalCardPlacingException(
@@ -622,7 +619,6 @@ public class GameLogic implements GameModel {
                                            null,
                                            Map.entry(position, CardContainer.of(card, isRetro))));
 
-        player.space().setCardBeenPlaced(true);
         playerManager.setCurrentAction(TurnAction.DRAW_CARD);
 
         LOGGER.info("MODEL: Card placed, giving {} points to {}", points, nickname);

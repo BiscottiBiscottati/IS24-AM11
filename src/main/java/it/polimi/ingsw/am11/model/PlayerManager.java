@@ -471,7 +471,6 @@ public class PlayerManager {
         playerQueue.remove();
         playerQueue.add(currentPlaying);
         currentPlaying = playerQueue.element();
-        currentPlaying.space().setCardBeenPlaced(false);
         currentAction = TurnAction.PLACE_CARD;
 
         LOGGER.info("MODEL: Player {} is now playing", currentPlaying.nickname());

@@ -28,7 +28,6 @@ public class PersonalSpace {
     private final @NotNull Set<ObjectiveCard> playerObjective;
     private final @NotNull Set<ObjectiveCard> candidateObjectives;
     private @Nullable StarterCard starterCard;
-    private boolean placed;
 
     public PersonalSpace() {
         playerHand = new HashSet<>(maxSizeofHand << 1);
@@ -47,14 +46,6 @@ public class PersonalSpace {
 
     public static void setMaxCandidateObjectives(int maxCandidate) {
         PersonalSpace.maxCandidateObjectives = maxCandidate;
-    }
-
-    public void setCardBeenPlaced(boolean val) {
-        placed = val;
-    }
-
-    public boolean hasCardBeenPlaced() {
-        return placed;
     }
 
     public @NotNull Set<PlayableCard> getPlayerHand() {
