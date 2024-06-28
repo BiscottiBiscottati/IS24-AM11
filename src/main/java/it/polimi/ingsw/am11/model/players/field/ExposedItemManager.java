@@ -51,14 +51,14 @@ public class ExposedItemManager {
 
     void addExposedItemOn(@NotNull FieldCard card,
                           boolean isRetro) {
-        // add card's corner items to exposed counter
+        // add card's corner items to the exposed counter
         Stream.of(Corner.values())
               .map(corner -> card.getItemCorner(corner, isRetro).getItem())
               .filter(Optional::isPresent)
               .map(Optional::get)
               .forEach(this::addToExposed);
 
-        // add card center colors to exposed counter
+        // add card center colors to the exposed counter
         card.getCenter(isRetro)
             .forEach(this::addToExposed);
     }

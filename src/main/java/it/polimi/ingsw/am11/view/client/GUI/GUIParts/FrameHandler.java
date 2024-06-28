@@ -27,7 +27,7 @@ public class FrameHandler {
      * This method is used to set the icons of the application and create the title bar buttons. It
      * sets the icon on the application bar and the icon on the taskbar/dock. It also creates the
      * title bar buttons for the application. The close button closes the application, and the
-     * minimize button minimizes the application.
+     * minimized button minimizes the application.
      *
      * @param stage The stage of the application.
      * @param root  The root of the application.
@@ -118,7 +118,7 @@ public class FrameHandler {
      * @param size           The size of the button.
      * @param halfButtonSize Half the size of the title bar button.
      * @param imageView      The ImageView object to be set as the button's graphic.
-     * @return The set up title bar button.
+     * @return The set-up title bar button.
      */
     private static @NotNull Button setUpTilebarButton(int size, int halfButtonSize,
                                                       int distanceToBorder,

@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * This class is responsible for managing fonts used in the GUI. It provides a method to get a font
- * of a specific size, and caches the fonts to improve performance. The fonts are stored in a map,
+ * of a specific size and caches the fonts to improve performance. The fonts are stored in a map,
  * where the key is a FontsEnum value representing the font, and the value is another map. The inner
  * map's key is the size of the font, and the value is the Font object.
  */

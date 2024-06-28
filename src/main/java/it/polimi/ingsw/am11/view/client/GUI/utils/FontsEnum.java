@@ -3,7 +3,7 @@ package it.polimi.ingsw.am11.view.client.GUI.utils;
 /**
  * This enum is used to map different fonts used in the GUI to their file paths. Each enum value
  * represents a different font, and the associated GuiResEnum value is the file path of the font.
- * The enum provides methods to get the file name associated with a font, and to get the GuiResEnum
+ * The enum provides methods to get the file name associated with a font and to get the GuiResEnum
  * value associated with a font.
  */
 public enum FontsEnum {

@@ -53,7 +53,7 @@ public sealed interface FieldCard extends CardIdentity
      *
      * @param corner  Corner - The corner to check for an item.
      * @param isRetro boolean - Whether to check in retro mode or not.
-     * @return CornerContainer - The CornerContainer object associated with the corner, or null if
+     * @return CornerContainer - The CornerContainer object associated with the corner or null if
      * the corner is not available or does not contain an item.
      */
     @NotNull

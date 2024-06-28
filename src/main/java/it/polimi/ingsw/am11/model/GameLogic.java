@@ -230,7 +230,7 @@ public class GameLogic implements GameModel {
     /**
      * For placing a card on the field, a set of conditions has to be satisfied.
      * <p>
-     * The new card needs to touch at least one of the corners of another placed card and all the
+     * The new card needs to touch at least one of the corners of another placed card, and all the
      * corners of placed cards touched by the new card have to not be NOT_USABLE.
      * <p>
      * This method retrieves the positions that satisfy these conditions.
@@ -416,7 +416,6 @@ public class GameLogic implements GameModel {
     /**
      * Pick a <code>StarterCard</code> from the deck on the <code>PickableTable</code> and saves it
      * in player space
-     *
      */
 
     private void pickStarters()
@@ -807,7 +806,7 @@ public class GameLogic implements GameModel {
      * <p>
      * It doesn't clear the current state of the game. Doesn't calculate final points.
      * <p>
-     * It must be called with a initGame for reinitialization
+     * It must be called with an initGame for reinitialization
      */
     @Override //
     public void forceEnd() {
@@ -1070,7 +1069,7 @@ public class GameLogic implements GameModel {
     }
 
     /**
-     * This method is used to check if the game can continue, if all the players are disconnected
+     * This method is used to check if the game can continue, if all the players are disconnected,
      * the game will be stopped
      */
     private void checkIfGameCanContinue() {
@@ -1131,7 +1130,6 @@ public class GameLogic implements GameModel {
 
     /**
      * Pick a <code>ObjectiveCard</code> from the deck on the <code>PickableTable</code>.
-     *
      */
 
     private void pickCandidateObjectives()

@@ -230,9 +230,9 @@ public class FieldPrinter {
      * Set the usable coordinates in the printMatrix
      *
      * @param pos         the position to set
-     * @param rowIndex    the row index point to the central row of the coordinates ascii
+     * @param rowIndex    the row index point to the central row of the coordinate ascii
      *                    representation
-     * @param columnIndex the column index point to the central column of the coordinates ascii
+     * @param columnIndex the column index point to the central column of the coordinate ascii
      *                    representation
      * @param printMatrix the matrix with strings to print
      */

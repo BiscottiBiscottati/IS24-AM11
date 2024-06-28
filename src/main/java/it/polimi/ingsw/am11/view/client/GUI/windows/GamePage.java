@@ -655,8 +655,8 @@ public class GamePage {
     }
 
     /**
-     * This method is triggered when the player 1's field is clicked in the GUI. It updates the
-     * current field being viewed to player 1's field and prints the cards on player 1's field.
+     * This method is triggered when player 1's field is clicked in the GUI. It updates the current
+     * field being viewed to player 1's field and prints the cards on player 1's field.
      *
      * @param mouseEvent The MouseEvent object representing the details of the click event.
      */
@@ -668,8 +668,8 @@ public class GamePage {
     }
 
     /**
-     * This method is triggered when the player 2's field is clicked in the GUI. It updates the
-     * current field being viewed to player 2's field and prints the cards on player 2's field.
+     * This method is triggered when player 2's field is clicked in the GUI. It updates the current
+     * field being viewed to player 2's field and prints the cards on player 2's field.
      *
      * @param mouseEvent The MouseEvent object representing the details of the click event.
      */
@@ -681,8 +681,8 @@ public class GamePage {
     }
 
     /**
-     * This method is triggered when the player 3's field is clicked in the GUI. It updates the
-     * current field being viewed to player 3's field and prints the cards on player 3's field.
+     * This method is triggered when player 3's field is clicked in the GUI. It updates the current
+     * field being viewed to player 3's field and prints the cards on player 3's field.
      *
      * @param mouseEvent The MouseEvent object representing the details of the click event.
      */
@@ -694,8 +694,8 @@ public class GamePage {
     }
 
     /**
-     * This method is triggered when the player 4's field is clicked in the GUI. It updates the
-     * current field being viewed to player 4's field and prints the cards on player 4's field.
+     * This method is triggered when player 4's field is clicked in the GUI. It updates the current
+     * field being viewed to player 4's field and prints the cards on player 4's field.
      *
      * @param mouseEvent The MouseEvent object representing the details of the click event.
      */
@@ -902,7 +902,7 @@ public class GamePage {
     /**
      * This method is triggered when the chat button is clicked in the GUI. It opens a chat box
      * where the user can send and receive messages. The chat box includes a text field for entering
-     * messages, a send button for sending messages, and a close button for closing the chat box.
+     * messages, a sent button for sending messages, and a close button for closing the chat box.
      * The chat box also displays the chat history.
      *
      * @param actionEvent The ActionEvent object representing the details of the click event.
