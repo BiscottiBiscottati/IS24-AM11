@@ -1,0 +1,138 @@
+@startuml gameLoop
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+title Game Loop
+
+box User
+actor Mario
+entity ClientViewUpdater
+entity ClientConnector
+end box
+
+box Server
+entity ServerConnector
+entity VirtualView
+entity Controller
+entity Model
+end box
+
+loop until game ended
+    == PLACE CARD ==
+    Mario -> ClientConnector: placeCard\n(Position, id, isRetro)
+    activate Mario
+    activate ClientConnector
+
+    ClientConnector ->> VirtualView: placeCard\n(id, x, y, isRetro)
+    deactivate ClientConnector
+    activate VirtualView
+
+    VirtualView ->> Controller: placeCard\n(nickname, id, position, isRetro)
+    deactivate VirtualView
+    activate Controller
+
+    Controller -> Model: placeCard\n(nickname, id, position, isRetro)
+    activate Model
+
+    Model ->> VirtualView: updatePlayer\n(HandChangeEvent(nickname, cards))
+    activate VirtualView
+
+    VirtualView ->> ClientViewUpdater: updateHand\n(id, removeMode: boolean)
+    deactivate VirtualView
+    activate ClientViewUpdater
+
+    ClientViewUpdater ->> Mario: hand updated
+    deactivate ClientViewUpdater
+
+    Model ->> VirtualView: updateTable\n(FieldChangeEvent(x, y, id, isRetro))
+    activate VirtualView
+
+    VirtualView ->> ClientViewUpdater: updateField\n(nickname, x, y, id, isRetro)
+    deactivate VirtualView
+    activate ClientViewUpdater
+
+    ClientViewUpdater ->> Mario: field updated
+    deactivate ClientViewUpdater
+
+    Model ->> VirtualView: updateTable\n(PlayerPointsChangeEvent(nickname, points))
+    activate VirtualView
+
+    Model --> Controller: OK
+    deactivate Model
+    deactivate Controller
+
+    VirtualView ->> ClientViewUpdater: updatePoints\n(nickname, points)
+    deactivate VirtualView
+    activate ClientViewUpdater
+
+    ClientViewUpdater --> Mario: points updated
+    deactivate ClientViewUpdater
+    deactivate Mario
+
+    == DRAWING CARD ==
+
+    Mario -> ClientConnector: drawCard\n(PlayableCardType, fromVisible, id)
+    activate Mario
+    activate ClientConnector
+
+    ClientConnector ->> VirtualView: drawCard\n(PlayableCardType, fromVisible, id)
+    deactivate ClientConnector
+    activate VirtualView
+
+    VirtualView ->> Controller: drawCard\n(nickname, PlayableCardType, fromVisible, id)
+    deactivate VirtualView
+    activate Controller
+
+    alt fromVisible
+        Controller -> Model: drawVisibleOf\n(nickname, id, type)
+        activate Model
+
+        Model ->> VirtualView: updateTable\n(ShownPlayableChangeEvent(oldId, newId))
+        activate VirtualView
+
+        VirtualView ->> ClientViewUpdater: updateShownPlayable\n(oldId, newId)
+        deactivate VirtualView
+        activate ClientViewUpdater
+
+        ClientViewUpdater ->> Mario: shown playable updated
+        deactivate ClientViewUpdater
+
+    else fromDeck
+        Controller -> Model: drawFromDeckOf\n(nickname, type)
+    end
+
+    Model ->> VirtualView: updateTable\n(DeckTopChangeEvent(color, type))
+    activate VirtualView
+
+    VirtualView ->> ClientViewUpdater: updateDeckTop\n(color, type)
+    deactivate VirtualView
+    activate ClientViewUpdater
+
+    ClientViewUpdater ->> Mario: deck top updated
+    deactivate ClientViewUpdater
+
+    Model ->> VirtualView: updatePlayer\n(HandChangeEvent(nickname, id))
+    activate VirtualView
+
+    VirtualView ->> ClientViewUpdater: updateHand\n(id, removeMode: boolean)
+    deactivate VirtualView
+    activate ClientViewUpdater
+
+    ClientViewUpdater ->> Mario: hand updated
+    deactivate ClientViewUpdater
+
+    Model ->> VirtualView: updateTable\n(TurnChangeEvent(nickname))
+    activate VirtualView
+
+    VirtualView ->> ClientViewUpdater: updateTurn\n(nickname)
+    deactivate VirtualView
+    activate ClientViewUpdater
+
+    ClientViewUpdater --> Mario: turn updated
+    deactivate ClientViewUpdater
+    deactivate Mario
+
+end
+
+@enduml

@@ -1,1273 +1,1277 @@
 <svg xmlns="http://www.w3.org/2000/svg" contentStyleType="text/css"
-     height="3642px" preserveAspectRatio="none" style="width:1330px;height:3642px;background:#FFFFFF;" version="1.1"
-     viewBox="0 0 1330 3642" width="1330px" zoomAndPan="magnify">
+     height="3682px" preserveAspectRatio="none" style="width:1330px;height:3682px;background:#FFFFFF;" version="1.1"
+     viewBox="0 0 1330 3682" width="1330px" zoomAndPan="magnify">
     <defs/>
     <g>
-        <rect fill="#DDDDDD" height="3630.5037" style="stroke:#181818;stroke-width:0.5;" width="452.8125" x="26" y="6"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing"
+              textLength="90.125" x="621.8594" y="29.9659">Initialization
+        </text>
+        <rect fill="#DDDDDD" height="3630.5037" style="stroke:#181818;stroke-width:0.5;" width="452.8125" x="26"
+              y="46.0679"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="29.625" x="237.5938" y="19.897">User
+              textLength="29.625" x="237.5938" y="59.9649">User
         </text>
         <rect fill="#DDDDDD" height="3630.5037" style="stroke:#181818;stroke-width:0.5;" width="828.0313" x="480.8125"
-              y="6"/>
+              y="46.0679"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="40.4375" x="874.6094" y="19.897">Server
+              textLength="40.4375" x="874.6094" y="59.9649">Server
         </text>
         <rect fill="#FFFFFF" height="221.9421" style="stroke:#181818;stroke-width:1.0;" width="10" x="47.5"
-              y="140.4799"/>
+              y="180.5479"/>
         <rect fill="#FFFFFF" height="158.5301" style="stroke:#181818;stroke-width:1.0;" width="10" x="47.5"
-              y="394.1281"/>
+              y="434.196"/>
         <rect fill="#FFFFFF" height="533.2963" style="stroke:#181818;stroke-width:1.0;" width="10" x="47.5"
-              y="611.0702"/>
+              y="651.1381"/>
         <rect fill="#FFFFFF" height="857.7685" style="stroke:#181818;stroke-width:1.0;" width="10" x="47.5"
-              y="1202.7785"/>
+              y="1242.8464"/>
         <rect fill="#FFFFFF" height="597.1203" style="stroke:#181818;stroke-width:1.0;" width="10" x="52.5"
-              y="1463.4266"/>
+              y="1503.4945"/>
         <rect fill="#FFFFFF" height="1360.7707" style="stroke:#181818;stroke-width:1.0;" width="10" x="47.5"
-              y="2143.959"/>
+              y="2184.0269"/>
         <rect fill="#FFFFFF" height="1082.4166" style="stroke:#181818;stroke-width:1.0;" width="10" x="52.5"
-              y="2422.3131"/>
+              y="2462.3811"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="330.716"/>
+              y="370.784"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="520.9521"/>
+              y="561.0201"/>
         <rect fill="#FFFFFF" height="255.6481" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="888.7183"/>
+              y="928.7862"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="1361.3086"/>
+              y="1401.3765"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="1621.9567"/>
+              y="1662.0246"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="1859.6048"/>
+              y="1899.6728"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="2028.8409"/>
+              y="2068.9089"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="2351.9011"/>
+              y="2391.969"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="2598.5492"/>
+              y="2638.6172"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="2791.7853"/>
+              y="2831.8533"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="2931.3154"/>
+              y="2971.3833"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="3077.8455"/>
+              y="3117.9134"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="3251.0816"/>
+              y="3291.1495"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="3377.9057"/>
+              y="3417.9736"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="3473.0237"/>
+              y="3513.0916"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="140.4799"/>
+              y="180.5479"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="394.1281"/>
+              y="434.196"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="611.0702"/>
+              y="651.1381"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="1202.7785"/>
+              y="1242.8464"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="1463.4266"/>
+              y="1503.4945"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="2143.959"/>
+              y="2184.0269"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="2422.3131"/>
+              y="2462.3811"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="538.8125"
-              y="299.01"/>
+              y="339.0779"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="267.304"/>
+              y="307.3719"/>
         <rect fill="#FFFFFF" height="95.118" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="425.8341"/>
+              y="465.902"/>
         <rect fill="#FFFFFF" height="255.6481" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="857.0123"/>
+              y="897.0802"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1234.4845"/>
+              y="1274.5524"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1329.6026"/>
+              y="1369.6705"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1495.1326"/>
+              y="1535.2006"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1590.2507"/>
+              y="1630.3186"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1827.8988"/>
+              y="1867.9667"/>
         <rect fill="#FFFFFF" height="63.412" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1965.4289"/>
+              y="2005.4968"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="2175.665"/>
+              y="2215.7329"/>
         <rect fill="#FFFFFF" height="63.412" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="2288.4891"/>
+              y="2328.557"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="2454.0192"/>
+              y="2494.0871"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="2566.8432"/>
+              y="2606.9111"/>
         <rect fill="#FFFFFF" height="712.9444" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="2760.0793"/>
+              y="2800.1472"/>
         <rect fill="#FFFFFF" height="95.118" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="172.186"/>
+              y="212.2539"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="457.5401"/>
+              y="497.608"/>
         <rect fill="#FFFFFF" height="182.5301" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="642.7762"/>
+              y="682.8441"/>
         <rect fill="#FFFFFF" height="158.5301" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="1266.1905"/>
+              y="1306.2584"/>
         <rect fill="#FFFFFF" height="470.2963" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="1526.8387"/>
+              y="1566.9066"/>
         <rect fill="#FFFFFF" height="112.8241" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="2207.371"/>
+              y="2247.4389"/>
         <rect fill="#FFFFFF" height="1050.7106" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="2485.7252"/>
+              y="2525.7931"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="203.892"/>
+              y="243.9599"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="674.4822"/>
+              y="714.5501"/>
         <rect fill="#FFFFFF" height="255.6481" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="825.3063"/>
+              y="865.3742"/>
         <rect fill="#FFFFFF" height="126.8241" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="1297.8965"/>
+              y="1337.9645"/>
         <rect fill="#FFFFFF" height="438.5902" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="1558.5447"/>
+              y="1598.6126"/>
         <rect fill="#FFFFFF" height="81.118" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="2239.077"/>
+              y="2279.145"/>
         <rect fill="#FFFFFF" height="1019.0046" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="2517.4312"/>
+              y="2557.4991"/>
         <rect fill="none" height="146.5301" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="567.6582"/>
+              y="607.7261"/>
         <rect fill="none" height="114.8241" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="935.4243"/>
+              y="975.4923"/>
         <rect fill="none" height="273.3541" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="1159.3665"/>
+              y="1199.4344"/>
         <rect fill="none" height="150.2361" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="1749.0748"/>
+              y="1789.1427"/>
         <rect fill="none" height="291.0602" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="2100.547"/>
+              y="2140.6149"/>
         <rect fill="none" height="132.5301" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="2838.4914"/>
+              y="2878.5593"/>
         <rect fill="none" height="132.5301" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="2985.0214"/>
+              y="3025.0894"/>
         <rect fill="none" height="166.2361" style="stroke:#000000;stroke-width:1.5;" width="1314.8438" x="10"
-              y="3131.5515"/>
+              y="3171.6194"/>
         <rect fill="none" height="132.5301" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="3158.2575"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="52" x2="52" y1="106.7739"
-              y2="3554.4358"/>
+              y="3198.3255"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="52" x2="52" y1="146.8419"
+              y2="3594.5037"/>
         <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="284.8125" x2="284.8125"
-              y1="106.7739" y2="3554.4358"/>
+              y1="146.8419" y2="3594.5037"/>
         <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="417.8125" x2="417.8125"
-              y1="106.7739" y2="3554.4358"/>
+              y1="146.8419" y2="3594.5037"/>
         <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="543.8125" x2="543.8125"
-              y1="106.7739" y2="3554.4358"/>
+              y1="146.8419" y2="3594.5037"/>
         <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="688.7188" x2="688.7188"
-              y1="106.7739" y2="3554.4358"/>
+              y1="146.8419" y2="3594.5037"/>
         <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="984.5313" x2="984.5313"
-              y1="106.7739" y2="3554.4358"/>
+              y1="146.8419" y2="3594.5037"/>
         <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="1280.8438" x2="1280.8438"
-              y1="106.7739" y2="3554.4358"/>
+              y1="146.8419" y2="3594.5037"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="39" x="30"
-              y="102.672">Mario
+              y="142.7399">Mario
         </text>
-        <ellipse cx="52.5" cy="36.206" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
-        <path d="M52.5,44.206 L52.5,71.206 M39.5,52.206 L65.5,52.206 M52.5,71.206 L39.5,86.206 M52.5,71.206 L65.5,86.206 "
+        <ellipse cx="52.5" cy="76.2739" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M52.5,84.2739 L52.5,111.2739 M39.5,92.2739 L65.5,92.2739 M52.5,111.2739 L39.5,126.2739 M52.5,111.2739 L65.5,126.2739 "
               fill="none" style="stroke:#181818;stroke-width:0.5;"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="39" x="30"
-              y="3568.4017">Mario
+              y="3608.4696">Mario
         </text>
-        <ellipse cx="52.5" cy="3581.0037" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
-        <path d="M52.5,3589.0037 L52.5,3616.0037 M39.5,3597.0037 L65.5,3597.0037 M52.5,3616.0037 L39.5,3631.0037 M52.5,3616.0037 L65.5,3631.0037 "
+        <ellipse cx="52.5" cy="3621.0716" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M52.5,3629.0716 L52.5,3656.0716 M39.5,3637.0716 L65.5,3637.0716 M52.5,3656.0716 L39.5,3671.0716 M52.5,3656.0716 L65.5,3671.0716 "
               fill="none" style="stroke:#181818;stroke-width:0.5;"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="125"
-              x="219.8125" y="102.672">ClientViewUpdater
+              x="219.8125" y="142.7399">ClientViewUpdater
         </text>
-        <ellipse cx="285.3125" cy="71.706" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="273.3125" x2="297.3125" y1="85.706" y2="85.706"/>
+        <ellipse cx="285.3125" cy="111.7739" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="273.3125" x2="297.3125" y1="125.7739" y2="125.7739"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="125"
-              x="219.8125" y="3568.4017">ClientViewUpdater
+              x="219.8125" y="3608.4696">ClientViewUpdater
         </text>
-        <ellipse cx="285.3125" cy="3588.5037" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="273.3125" x2="297.3125" y1="3602.5037" y2="3602.5037"/>
+        <ellipse cx="285.3125" cy="3628.5716" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="273.3125" x2="297.3125" y1="3642.5716" y2="3642.5716"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108"
-              x="360.8125" y="102.672">ClientConnector
+              x="360.8125" y="142.7399">ClientConnector
         </text>
-        <ellipse cx="417.8125" cy="71.706" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="405.8125" x2="429.8125" y1="85.706" y2="85.706"/>
+        <ellipse cx="417.8125" cy="111.7739" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="405.8125" x2="429.8125" y1="125.7739" y2="125.7739"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108"
-              x="360.8125" y="3568.4017">ClientConnector
+              x="360.8125" y="3608.4696">ClientConnector
         </text>
-        <ellipse cx="417.8125" cy="3588.5037" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="405.8125" x2="429.8125" y1="3602.5037" y2="3602.5037"/>
+        <ellipse cx="417.8125" cy="3628.5716" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="405.8125" x2="429.8125" y1="3642.5716" y2="3642.5716"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112"
-              x="484.8125" y="102.672">ServerConnector
+              x="484.8125" y="142.7399">ServerConnector
         </text>
-        <ellipse cx="543.8125" cy="71.706" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="531.8125" x2="555.8125" y1="85.706" y2="85.706"/>
+        <ellipse cx="543.8125" cy="111.7739" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="531.8125" x2="555.8125" y1="125.7739" y2="125.7739"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112"
-              x="484.8125" y="3568.4017">ServerConnector
+              x="484.8125" y="3608.4696">ServerConnector
         </text>
-        <ellipse cx="543.8125" cy="3588.5037" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="531.8125" x2="555.8125" y1="3602.5037" y2="3602.5037"/>
+        <ellipse cx="543.8125" cy="3628.5716" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="531.8125" x2="555.8125" y1="3642.5716" y2="3642.5716"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75" x="648.7188"
-              y="102.672">VirtualView
+              y="142.7399">VirtualView
         </text>
-        <ellipse cx="689.2188" cy="71.706" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="677.2188" x2="701.2188" y1="85.706" y2="85.706"/>
+        <ellipse cx="689.2188" cy="111.7739" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="677.2188" x2="701.2188" y1="125.7739" y2="125.7739"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75" x="648.7188"
-              y="3568.4017">VirtualView
+              y="3608.4696">VirtualView
         </text>
-        <ellipse cx="689.2188" cy="3588.5037" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="677.2188" x2="701.2188" y1="3602.5037" y2="3602.5037"/>
+        <ellipse cx="689.2188" cy="3628.5716" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="677.2188" x2="701.2188" y1="3642.5716" y2="3642.5716"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="948.5313"
-              y="102.672">Controller
+              y="142.7399">Controller
         </text>
-        <ellipse cx="985.0313" cy="71.706" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="973.0313" x2="997.0313" y1="85.706" y2="85.706"/>
+        <ellipse cx="985.0313" cy="111.7739" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="973.0313" x2="997.0313" y1="125.7739" y2="125.7739"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="948.5313"
-              y="3568.4017">Controller
+              y="3608.4696">Controller
         </text>
-        <ellipse cx="985.0313" cy="3588.5037" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="973.0313" x2="997.0313" y1="3602.5037" y2="3602.5037"/>
+        <ellipse cx="985.0313" cy="3628.5716" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="973.0313" x2="997.0313" y1="3642.5716" y2="3642.5716"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42"
-              x="1256.8438" y="102.672">Model
+              x="1256.8438" y="142.7399">Model
         </text>
-        <ellipse cx="1280.8438" cy="71.706" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="1268.8438" x2="1292.8438" y1="85.706" y2="85.706"/>
+        <ellipse cx="1280.8438" cy="111.7739" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="1268.8438" x2="1292.8438" y1="125.7739" y2="125.7739"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42"
-              x="1256.8438" y="3568.4017">Model
+              x="1256.8438" y="3608.4696">Model
         </text>
-        <ellipse cx="1280.8438" cy="3588.5037" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="1268.8438" x2="1292.8438" y1="3602.5037" y2="3602.5037"/>
+        <ellipse cx="1280.8438" cy="3628.5716" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="1268.8438" x2="1292.8438" y1="3642.5716" y2="3642.5716"/>
         <rect fill="#FFFFFF" height="221.9421" style="stroke:#181818;stroke-width:1.0;" width="10" x="47.5"
-              y="140.4799"/>
+              y="180.5479"/>
         <rect fill="#FFFFFF" height="158.5301" style="stroke:#181818;stroke-width:1.0;" width="10" x="47.5"
-              y="394.1281"/>
+              y="434.196"/>
         <rect fill="#FFFFFF" height="533.2963" style="stroke:#181818;stroke-width:1.0;" width="10" x="47.5"
-              y="611.0702"/>
+              y="651.1381"/>
         <rect fill="#FFFFFF" height="857.7685" style="stroke:#181818;stroke-width:1.0;" width="10" x="47.5"
-              y="1202.7785"/>
+              y="1242.8464"/>
         <rect fill="#FFFFFF" height="597.1203" style="stroke:#181818;stroke-width:1.0;" width="10" x="52.5"
-              y="1463.4266"/>
+              y="1503.4945"/>
         <rect fill="#FFFFFF" height="1360.7707" style="stroke:#181818;stroke-width:1.0;" width="10" x="47.5"
-              y="2143.959"/>
+              y="2184.0269"/>
         <rect fill="#FFFFFF" height="1082.4166" style="stroke:#181818;stroke-width:1.0;" width="10" x="52.5"
-              y="2422.3131"/>
+              y="2462.3811"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="330.716"/>
+              y="370.784"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="520.9521"/>
+              y="561.0201"/>
         <rect fill="#FFFFFF" height="255.6481" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="888.7183"/>
+              y="928.7862"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="1361.3086"/>
+              y="1401.3765"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="1621.9567"/>
+              y="1662.0246"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="1859.6048"/>
+              y="1899.6728"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="2028.8409"/>
+              y="2068.9089"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="2351.9011"/>
+              y="2391.969"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="2598.5492"/>
+              y="2638.6172"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="2791.7853"/>
+              y="2831.8533"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="2931.3154"/>
+              y="2971.3833"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="3077.8455"/>
+              y="3117.9134"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="3251.0816"/>
+              y="3291.1495"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="3377.9057"/>
+              y="3417.9736"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="280.3125"
-              y="3473.0237"/>
+              y="3513.0916"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="140.4799"/>
+              y="180.5479"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="394.1281"/>
+              y="434.196"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="611.0702"/>
+              y="651.1381"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="1202.7785"/>
+              y="1242.8464"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="1463.4266"/>
+              y="1503.4945"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="2143.959"/>
+              y="2184.0269"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="412.8125"
-              y="2422.3131"/>
+              y="2462.3811"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="538.8125"
-              y="299.01"/>
+              y="339.0779"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="267.304"/>
+              y="307.3719"/>
         <rect fill="#FFFFFF" height="95.118" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="425.8341"/>
+              y="465.902"/>
         <rect fill="#FFFFFF" height="255.6481" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="857.0123"/>
+              y="897.0802"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1234.4845"/>
+              y="1274.5524"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1329.6026"/>
+              y="1369.6705"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1495.1326"/>
+              y="1535.2006"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1590.2507"/>
+              y="1630.3186"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1827.8988"/>
+              y="1867.9667"/>
         <rect fill="#FFFFFF" height="63.412" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="1965.4289"/>
+              y="2005.4968"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="2175.665"/>
+              y="2215.7329"/>
         <rect fill="#FFFFFF" height="63.412" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="2288.4891"/>
+              y="2328.557"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="2454.0192"/>
+              y="2494.0871"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="2566.8432"/>
+              y="2606.9111"/>
         <rect fill="#FFFFFF" height="712.9444" style="stroke:#181818;stroke-width:1.0;" width="10" x="684.2188"
-              y="2760.0793"/>
+              y="2800.1472"/>
         <rect fill="#FFFFFF" height="95.118" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="172.186"/>
+              y="212.2539"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="457.5401"/>
+              y="497.608"/>
         <rect fill="#FFFFFF" height="182.5301" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="642.7762"/>
+              y="682.8441"/>
         <rect fill="#FFFFFF" height="158.5301" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="1266.1905"/>
+              y="1306.2584"/>
         <rect fill="#FFFFFF" height="470.2963" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="1526.8387"/>
+              y="1566.9066"/>
         <rect fill="#FFFFFF" height="112.8241" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="2207.371"/>
+              y="2247.4389"/>
         <rect fill="#FFFFFF" height="1050.7106" style="stroke:#181818;stroke-width:1.0;" width="10" x="980.0313"
-              y="2485.7252"/>
+              y="2525.7931"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="203.892"/>
+              y="243.9599"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="674.4822"/>
+              y="714.5501"/>
         <rect fill="#FFFFFF" height="255.6481" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="825.3063"/>
+              y="865.3742"/>
         <rect fill="#FFFFFF" height="126.8241" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="1297.8965"/>
+              y="1337.9645"/>
         <rect fill="#FFFFFF" height="438.5902" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="1558.5447"/>
+              y="1598.6126"/>
         <rect fill="#FFFFFF" height="81.118" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="2239.077"/>
+              y="2279.145"/>
         <rect fill="#FFFFFF" height="1019.0046" style="stroke:#181818;stroke-width:1.0;" width="10" x="1275.8438"
-              y="2517.4312"/>
-        <polygon fill="#181818" points="400.8125,136.4799,410.8125,140.4799,400.8125,144.4799,404.8125,140.4799"
+              y="2557.4991"/>
+        <polygon fill="#181818" points="400.8125,176.5479,410.8125,180.5479,400.8125,184.5479,404.8125,180.5479"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="406.8125" y1="140.4799" y2="140.4799"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="406.8125" y1="180.5479" y2="180.5479"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="64.5" y="134.6709">1
+              textLength="7.4063" x="64.5" y="174.7389">1
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="146" x="75.9063"
-              y="134.6709">setNickname(username)
+              y="174.7389">setNickname(username)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="172.186" y2="168.186"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="172.186" y2="176.186"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="979.0313" y1="172.186" y2="172.186"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="212.2539" y2="208.2539"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="212.2539" y2="216.2539"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="979.0313" y1="212.2539" y2="212.2539"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="424.8125" y="166.377">2
+              textLength="7.4063" x="424.8125" y="206.4449">2
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="98" x="436.2188"
-              y="166.377">login(username)
+              y="206.4449">login(username)
         </text>
-        <polygon fill="#181818" points="1263.8438,199.892,1273.8438,203.892,1263.8438,207.892,1267.8438,203.892"
+        <polygon fill="#181818" points="1263.8438,239.9599,1273.8438,243.9599,1263.8438,247.9599,1267.8438,243.9599"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="203.892" y2="203.892"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="243.9599" y2="243.9599"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="997.0313" y="198.083">3
+              textLength="7.4063" x="997.0313" y="238.1509">3
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="175"
-              x="1008.4375" y="198.083">addPlayerToTable(username)
+              x="1008.4375" y="238.1509">addPlayerToTable(username)
         </text>
-        <polygon fill="#181818" points="1001.0313,231.598,991.0313,235.598,1001.0313,239.598,997.0313,235.598"
+        <polygon fill="#181818" points="1001.0313,271.6659,991.0313,275.6659,1001.0313,279.6659,997.0313,275.6659"
                  style="stroke:#181818;stroke-width:1.0;"/>
         <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="995.0313" x2="1279.8438"
-              y1="235.598" y2="235.598"/>
+              y1="275.6659" y2="275.6659"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="1007.0313" y="229.789">4
+              textLength="7.4063" x="1007.0313" y="269.8569">4
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="18"
-              x="1018.4375" y="229.789">OK
+              x="1018.4375" y="269.8569">OK
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="267.304" y2="263.304"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="267.304" y2="271.304"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="984.0313" y1="267.304" y2="267.304"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="307.3719" y2="303.3719"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="307.3719" y2="311.3719"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="984.0313" y1="307.3719" y2="307.3719"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="711.2188" y="261.495">5
+              textLength="7.4063" x="711.2188" y="301.5629">5
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105" x="722.625"
-              y="261.495">notifyGodPlayer()
+              y="301.5629">notifyGodPlayer()
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="549.8125" x2="559.8125" y1="299.01" y2="295.01"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="549.8125" x2="559.8125" y1="299.01" y2="303.01"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="548.8125" x2="688.2188" y1="299.01" y2="299.01"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="549.8125" x2="559.8125" y1="339.0779" y2="335.0779"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="549.8125" x2="559.8125" y1="339.0779" y2="343.0779"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="548.8125" x2="688.2188" y1="339.0779" y2="339.0779"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="565.8125" y="293.201">6
+              textLength="7.4063" x="565.8125" y="333.2689">6
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105"
-              x="577.2188" y="293.201">notifyGodPlayer()
+              x="577.2188" y="333.2689">notifyGodPlayer()
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="330.716" y2="326.716"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="330.716" y2="334.716"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="542.8125" y1="330.716" y2="330.716"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="370.784" y2="366.784"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="370.784" y2="374.784"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="542.8125" y1="370.784" y2="370.784"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="307.3125" y="324.907">7
+              textLength="7.4063" x="307.3125" y="364.975">7
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105"
-              x="318.7188" y="324.907">notifyGodPlayer()
+              x="318.7188" y="364.975">notifyGodPlayer()
         </text>
-        <polygon fill="#181818" points="63.5,358.4221,53.5,362.4221,63.5,366.4221,59.5,362.4221"
+        <polygon fill="#181818" points="63.5,398.49,53.5,402.49,63.5,406.49,59.5,402.49"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="57.5" x2="284.3125" y1="362.4221"
-              y2="362.4221"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="57.5" x2="284.3125" y1="402.49"
+              y2="402.49"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="69.5" y="356.6131">8
+              textLength="7.4063" x="69.5" y="396.681">8
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="135" x="80.9063"
-              y="356.6131">god player notification
+              y="396.681">god player notification
         </text>
-        <polygon fill="#181818" points="400.8125,390.1281,410.8125,394.1281,400.8125,398.1281,404.8125,394.1281"
+        <polygon fill="#181818" points="400.8125,430.196,410.8125,434.196,400.8125,438.196,404.8125,434.196"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="406.8125" y1="394.1281" y2="394.1281"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="406.8125" y1="434.196" y2="434.196"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="64.5" y="388.3191">9
+              textLength="7.4063" x="64.5" y="428.387">9
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="129" x="75.9063"
-              y="388.3191">setNumOfPlayers(int)
+              y="428.387">setNumOfPlayers(int)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="425.8341" y2="421.8341"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="425.8341" y2="429.8341"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="683.2188" y1="425.8341" y2="425.8341"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="465.902" y2="461.902"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="465.902" y2="469.902"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="683.2188" y1="465.902" y2="465.902"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="424.8125" y="420.0251">10
+              textLength="14.8125" x="424.8125" y="460.093">10
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="129" x="443.625"
-              y="420.0251">setNumOfPlayers(int)
+              y="460.093">setNumOfPlayers(int)
         </text>
-        <polygon fill="#181818" points="968.0313,453.5401,978.0313,457.5401,968.0313,461.5401,972.0313,457.5401"
+        <polygon fill="#181818" points="968.0313,493.608,978.0313,497.608,968.0313,501.608,972.0313,497.608"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="974.0313" y1="457.5401" y2="457.5401"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="974.0313" y1="497.608" y2="497.608"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="701.2188" y="451.7311">11
+              textLength="14.8125" x="701.2188" y="491.799">11
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="149"
-              x="720.0313" y="451.7311">setNumberOfPlayers(int)
+              x="720.0313" y="491.799">setNumberOfPlayers(int)
         </text>
-        <polygon fill="#181818" points="705.2188,485.2461,695.2188,489.2461,705.2188,493.2461,701.2188,489.2461"
+        <polygon fill="#181818" points="705.2188,525.314,695.2188,529.314,705.2188,533.314,701.2188,529.314"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="699.2188" x2="984.0313"
-              y1="489.2461" y2="489.2461"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="699.2188" x2="984.0313" y1="529.314"
+              y2="529.314"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="483.4371">12
+              textLength="14.8125" x="711.2188" y="523.505">12
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="198"
-              x="730.0313" y="483.4371">updateTable(NumOfPlayerEvent)
+              x="730.0313" y="523.505">updateTable(NumOfPlayerEvent)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="520.9521" y2="516.9521"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="520.9521" y2="524.9521"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="520.9521" y2="520.9521"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="561.0201" y2="557.0201"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="561.0201" y2="565.0201"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="561.0201" y2="561.0201"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="515.1431">13
+              textLength="14.8125" x="307.3125" y="555.2111">13
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="154" x="326.125"
-              y="515.1431">updateNumOfPlayers(int)
+              y="555.2111">updateNumOfPlayers(int)
         </text>
-        <polygon fill="#181818" points="63.5,548.6582,53.5,552.6582,63.5,556.6582,59.5,552.6582"
+        <polygon fill="#181818" points="63.5,588.7261,53.5,592.7261,63.5,596.7261,59.5,592.7261"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="57.5" x2="284.3125" y1="552.6582"
-              y2="552.6582"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="57.5" x2="284.3125" y1="592.7261"
+              y2="592.7261"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="69.5" y="546.8492">14
+              textLength="14.8125" x="69.5" y="586.9171">14
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="143" x="88.3125"
-              y="546.8492">num of players updated
+              y="586.9171">num of players updated
         </text>
-        <path d="M20,567.6582 L93.625,567.6582 L93.625,577.3642 L83.625,587.3642 L20,587.3642 L20,567.6582 "
+        <path d="M20,607.7261 L93.625,607.7261 L93.625,617.4321 L83.625,627.4321 L20,627.4321 L20,607.7261 "
               fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
         <rect fill="none" height="146.5301" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="567.6582"/>
+              y="607.7261"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="28.625" x="35" y="582.5552">loop
+              textLength="28.625" x="35" y="622.6231">loop
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="70.125" x="108.625" y="581.4171">[n-1 players]
+              textLength="70.125" x="108.625" y="621.485">[n-1 players]
         </text>
-        <polygon fill="#181818" points="400.8125,607.0702,410.8125,611.0702,400.8125,615.0702,404.8125,611.0702"
+        <polygon fill="#181818" points="400.8125,647.1381,410.8125,651.1381,400.8125,655.1381,404.8125,651.1381"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="406.8125" y1="611.0702" y2="611.0702"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="406.8125" y1="651.1381" y2="651.1381"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="64.5" y="605.2612">15
+              textLength="14.8125" x="64.5" y="645.3291">15
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="146" x="83.3125"
-              y="605.2612">setNickname(username)
+              y="645.3291">setNickname(username)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="642.7762" y2="638.7762"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="642.7762" y2="646.7762"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="979.0313" y1="642.7762" y2="642.7762"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="682.8441" y2="678.8441"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="682.8441" y2="686.8441"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="979.0313" y1="682.8441" y2="682.8441"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="424.8125" y="636.9672">16
+              textLength="14.8125" x="424.8125" y="677.0351">16
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="98" x="443.625"
-              y="636.9672">login(username)
+              y="677.0351">login(username)
         </text>
-        <polygon fill="#181818" points="1263.8438,670.4822,1273.8438,674.4822,1263.8438,678.4822,1267.8438,674.4822"
+        <polygon fill="#181818" points="1263.8438,710.5501,1273.8438,714.5501,1263.8438,718.5501,1267.8438,714.5501"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="674.4822" y2="674.4822"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="714.5501" y2="714.5501"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="997.0313" y="668.6732">17
+              textLength="14.8125" x="997.0313" y="708.7411">17
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="175"
-              x="1015.8438" y="668.6732">addPlayerToTable(username)
+              x="1015.8438" y="708.7411">addPlayerToTable(username)
         </text>
-        <polygon fill="#181818" points="1001.0313,702.1882,991.0313,706.1882,1001.0313,710.1882,997.0313,706.1882"
+        <polygon fill="#181818" points="1001.0313,742.2562,991.0313,746.2562,1001.0313,750.2562,997.0313,746.2562"
                  style="stroke:#181818;stroke-width:1.0;"/>
         <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="995.0313" x2="1279.8438"
-              y1="706.1882" y2="706.1882"/>
+              y1="746.2562" y2="746.2562"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="1007.0313" y="700.3792">18
+              textLength="14.8125" x="1007.0313" y="740.4472">18
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="18"
-              x="1025.8438" y="700.3792">OK
+              x="1025.8438" y="740.4472">OK
         </text>
-        <path d="M995,751.1882 L995,796.1882 L1108,796.1882 L1108,761.1882 L1098,751.1882 L995,751.1882 " fill="#FEFFDD"
+        <path d="M995,791.2562 L995,836.2562 L1108,836.2562 L1108,801.2562 L1098,791.2562 L995,791.2562 " fill="#FEFFDD"
               style="stroke:#181818;stroke-width:0.5;"/>
-        <path d="M1098,751.1882 L1098,761.1882 L1108,761.1882 L1098,751.1882 " fill="#FEFFDD"
+        <path d="M1098,791.2562 L1098,801.2562 L1108,801.2562 L1098,791.2562 " fill="#FEFFDD"
               style="stroke:#181818;stroke-width:0.5;"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="92" x="1001"
-              y="770.0853">When n players
+              y="810.1532">When n players
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="85" x="1001"
-              y="787.7913">are connected
+              y="827.8592">are connected
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="1273.8438" x2="1263.8438" y1="825.3063" y2="821.3063"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="1273.8438" x2="1263.8438" y1="825.3063" y2="829.3063"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="985.0313" x2="1274.8438" y1="825.3063" y2="825.3063"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="1273.8438" x2="1263.8438" y1="865.3742" y2="861.3742"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="1273.8438" x2="1263.8438" y1="865.3742" y2="869.3742"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="985.0313" x2="1274.8438" y1="865.3742" y2="865.3742"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="992.0313" y="819.4973">19
+              textLength="14.8125" x="992.0313" y="859.5652">19
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="62"
-              x="1010.8438" y="819.4973">initGame()
+              x="1010.8438" y="859.5652">initGame()
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="857.0123" y2="853.0123"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="857.0123" y2="861.0123"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="857.0123" y2="857.0123"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="897.0802" y2="893.0802"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="897.0802" y2="901.0802"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="897.0802" y2="897.0802"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="851.2033">20
+              textLength="14.8125" x="711.2188" y="891.2712">20
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="178"
-              x="730.0313" y="851.2033">updateTable(PlayerInfoEvent)
+              x="730.0313" y="891.2712">updateTable(PlayerInfoEvent)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="888.7183" y2="884.7183"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="888.7183" y2="892.7183"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="888.7183" y2="888.7183"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="928.7862" y2="924.7862"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="928.7862" y2="932.7862"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="928.7862" y2="928.7862"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="882.9093">21
+              textLength="14.8125" x="307.3125" y="922.9772">21
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="275" x="326.125"
-              y="882.9093">updatePlayers(SequencedMap&lt;Color, String&gt;)
+              y="922.9772">updatePlayers(SequencedMap&lt;Color, String&gt;)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="920.4243" y2="916.4243"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="920.4243" y2="924.4243"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="279.3125" y1="920.4243" y2="920.4243"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="960.4923" y2="956.4923"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="960.4923" y2="964.4923"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="279.3125" y1="960.4923" y2="960.4923"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="74.5" y="914.6153">22
+              textLength="14.8125" x="74.5" y="954.6833">22
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="97" x="93.3125"
-              y="914.6153">players updated
+              y="954.6833">players updated
         </text>
-        <path d="M20,935.4243 L93.625,935.4243 L93.625,945.1304 L83.625,955.1304 L20,955.1304 L20,935.4243 "
+        <path d="M20,975.4923 L93.625,975.4923 L93.625,985.1983 L83.625,995.1983 L20,995.1983 L20,975.4923 "
               fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
         <rect fill="none" height="114.8241" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="935.4243"/>
+              y="975.4923"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="28.625" x="35" y="950.3214">loop
+              textLength="28.625" x="35" y="990.3893">loop
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="59.4375" x="108.625" y="949.1833">[n players]
+              textLength="59.4375" x="108.625" y="989.2512">[n players]
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="978.8364" y2="974.8364"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="978.8364" y2="982.8364"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="978.8364" y2="978.8364"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1018.9043" y2="1014.9043"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1018.9043" y2="1022.9043"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="1018.9043" y2="1018.9043"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="973.0274">23
+              textLength="14.8125" x="711.2188" y="1013.0953">23
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="210"
-              x="730.0313" y="973.0274">updatePlayer(StarterCardEvent(id))
+              x="730.0313" y="1013.0953">updatePlayer(StarterCardEvent(id))
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1010.5424" y2="1006.5424"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1010.5424" y2="1014.5424"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="1010.5424" y2="1010.5424"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1050.6103" y2="1046.6103"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1050.6103" y2="1054.6103"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="1050.6103" y2="1050.6103"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="1004.7334">24
+              textLength="14.8125" x="307.3125" y="1044.8013">24
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="131" x="326.125"
-              y="1004.7334">updateStarterCard(id)
+              y="1044.8013">updateStarterCard(id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="1042.2484" y2="1038.2484"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="1042.2484" y2="1046.2484"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="279.3125" y1="1042.2484" y2="1042.2484"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="1082.3163" y2="1078.3163"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="1082.3163" y2="1086.3163"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="279.3125" y1="1082.3163" y2="1082.3163"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="74.5" y="1036.4394">25
+              textLength="14.8125" x="74.5" y="1076.5073">25
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105" x="93.3125"
-              y="1036.4394">starter card given
+              y="1076.5073">starter card given
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1080.9544" y2="1076.9544"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1080.9544" y2="1084.9544"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1279.8438" y1="1080.9544" y2="1080.9544"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1121.0223" y2="1117.0223"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1121.0223" y2="1125.0223"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1279.8438" y1="1121.0223" y2="1121.0223"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="1075.1454">26
+              textLength="14.8125" x="711.2188" y="1115.2133">26
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="351"
-              x="730.0313" y="1075.1454">updateTable(GameStatusChangeEvent(choosing_starters))
+              x="730.0313" y="1115.2133">updateTable(GameStatusChangeEvent(choosing_starters))
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1112.6604" y2="1108.6604"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1112.6604" y2="1116.6604"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="1112.6604" y2="1112.6604"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1152.7284" y2="1148.7284"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1152.7284" y2="1156.7284"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="1152.7284" y2="1152.7284"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="1106.8514">27
+              textLength="14.8125" x="307.3125" y="1146.9194">27
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="231" x="326.125"
-              y="1106.8514">updateGameStatus(choosing_starters)
+              y="1146.9194">updateGameStatus(choosing_starters)
         </text>
-        <polygon fill="#181818" points="63.5,1140.3665,53.5,1144.3665,63.5,1148.3665,59.5,1144.3665"
+        <polygon fill="#181818" points="63.5,1180.4344,53.5,1184.4344,63.5,1188.4344,59.5,1184.4344"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="57.5" x2="284.3125" y1="1144.3665"
-              y2="1144.3665"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="57.5" x2="284.3125" y1="1184.4344"
+              y2="1184.4344"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="69.5" y="1138.5575">28
+              textLength="14.8125" x="69.5" y="1178.6254">28
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="167" x="88.3125"
-              y="1138.5575">time to choose starter cards
+              y="1178.6254">time to choose starter cards
         </text>
-        <path d="M20,1159.3665 L93.625,1159.3665 L93.625,1169.0725 L83.625,1179.0725 L20,1179.0725 L20,1159.3665 "
+        <path d="M20,1199.4344 L93.625,1199.4344 L93.625,1209.1404 L83.625,1219.1404 L20,1219.1404 L20,1199.4344 "
               fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
         <rect fill="none" height="273.3541" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="1159.3665"/>
+              y="1199.4344"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="28.625" x="35" y="1174.2635">loop
+              textLength="28.625" x="35" y="1214.3314">loop
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="70.125" x="108.625" y="1173.1254">[n-1 players]
+              textLength="70.125" x="108.625" y="1213.1933">[n-1 players]
         </text>
-        <polygon fill="#181818" points="400.8125,1198.7785,410.8125,1202.7785,400.8125,1206.7785,404.8125,1202.7785"
+        <polygon fill="#181818" points="400.8125,1238.8464,410.8125,1242.8464,400.8125,1246.8464,404.8125,1242.8464"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="406.8125" y1="1202.7785" y2="1202.7785"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="406.8125" y1="1242.8464" y2="1242.8464"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="64.5" y="1196.9695">29
+              textLength="14.8125" x="64.5" y="1237.0374">29
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="192" x="83.3125"
-              y="1196.9695">setStarterCard(isRetro: boolean)
+              y="1237.0374">setStarterCard(isRetro: boolean)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="1234.4845" y2="1230.4845"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="1234.4845" y2="1238.4845"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="683.2188" y1="1234.4845" y2="1234.4845"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="1274.5524" y2="1270.5524"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="1274.5524" y2="1278.5524"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="683.2188" y1="1274.5524" y2="1274.5524"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="424.8125" y="1228.6755">30
+              textLength="14.8125" x="424.8125" y="1268.7434">30
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="192" x="443.625"
-              y="1228.6755">setStarterCard(isRetro: boolean)
+              y="1268.7434">setStarterCard(isRetro: boolean)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="1266.1905" y2="1262.1905"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="1266.1905" y2="1270.1905"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="689.2188" x2="979.0313" y1="1266.1905" y2="1266.1905"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="1306.2584" y2="1302.2584"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="1306.2584" y2="1310.2584"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="689.2188" x2="979.0313" y1="1306.2584" y2="1306.2584"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="696.2188" y="1260.3815">31
+              textLength="14.8125" x="696.2188" y="1300.4494">31
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="248"
-              x="715.0313" y="1260.3815">setStarterFor(nickname, isRetro: boolean)
+              x="715.0313" y="1300.4494">setStarterFor(nickname, isRetro: boolean)
         </text>
-        <polygon fill="#181818" points="1263.8438,1293.8965,1273.8438,1297.8965,1263.8438,1301.8965,1267.8438,1297.8965"
+        <polygon fill="#181818" points="1263.8438,1333.9645,1273.8438,1337.9645,1263.8438,1341.9645,1267.8438,1337.9645"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="1297.8965" y2="1297.8965"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="1337.9645" y2="1337.9645"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="997.0313" y="1292.0875">32
+              textLength="14.8125" x="997.0313" y="1332.1555">32
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="248"
-              x="1015.8438" y="1292.0875">setStarterFor(nickname, isRetro: boolean)
+              x="1015.8438" y="1332.1555">setStarterFor(nickname, isRetro: boolean)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1329.6026" y2="1325.6026"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1329.6026" y2="1333.6026"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="1329.6026" y2="1329.6026"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1369.6705" y2="1365.6705"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1369.6705" y2="1373.6705"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="1369.6705" y2="1369.6705"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="1323.7936">33
+              textLength="14.8125" x="711.2188" y="1363.8615">33
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="191"
-              x="730.0313" y="1323.7936">updateTable(FieldChangeEvent)
+              x="730.0313" y="1363.8615">updateTable(FieldChangeEvent)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1361.3086" y2="1357.3086"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1361.3086" y2="1365.3086"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="1361.3086" y2="1361.3086"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1401.3765" y2="1397.3765"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1401.3765" y2="1405.3765"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="1401.3765" y2="1401.3765"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="1355.4996">34
+              textLength="14.8125" x="307.3125" y="1395.5675">34
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="207" x="326.125"
-              y="1355.4996">updateField(player, x, y, id, isRetro)
+              y="1395.5675">updateField(player, x, y, id, isRetro)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="1393.0146" y2="1389.0146"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="1393.0146" y2="1397.0146"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="284.3125" y1="1393.0146" y2="1393.0146"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="1433.0825" y2="1429.0825"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="1433.0825" y2="1437.0825"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="284.3125" y1="1433.0825" y2="1433.0825"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="74.5" y="1387.2056">35
+              textLength="14.8125" x="74.5" y="1427.2735">35
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="79" x="93.3125"
-              y="1387.2056">field updated
+              y="1427.2735">field updated
         </text>
-        <polygon fill="#181818" points="996.0313,1420.7206,986.0313,1424.7206,996.0313,1428.7206,992.0313,1424.7206"
+        <polygon fill="#181818" points="996.0313,1460.7885,986.0313,1464.7885,996.0313,1468.7885,992.0313,1464.7885"
                  style="stroke:#181818;stroke-width:1.0;"/>
         <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="990.0313" x2="1279.8438"
-              y1="1424.7206" y2="1424.7206"/>
+              y1="1464.7885" y2="1464.7885"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="1002.0313" y="1418.9116">36
+              textLength="14.8125" x="1002.0313" y="1458.9795">36
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="18"
-              x="1020.8438" y="1418.9116">OK
+              x="1020.8438" y="1458.9795">OK
         </text>
-        <polygon fill="#181818" points="400.8125,1459.4266,410.8125,1463.4266,400.8125,1467.4266,404.8125,1463.4266"
+        <polygon fill="#181818" points="400.8125,1499.4945,410.8125,1503.4945,400.8125,1507.4945,404.8125,1503.4945"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="406.8125" y1="1463.4266" y2="1463.4266"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="406.8125" y1="1503.4945" y2="1503.4945"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="69.5" y="1457.6176">37
+              textLength="14.8125" x="69.5" y="1497.6855">37
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="192" x="88.3125"
-              y="1457.6176">setStarterCard(isRetro: boolean)
+              y="1497.6855">setStarterCard(isRetro: boolean)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="1495.1326" y2="1491.1326"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="1495.1326" y2="1499.1326"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="683.2188" y1="1495.1326" y2="1495.1326"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="1535.2006" y2="1531.2006"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="1535.2006" y2="1539.2006"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="683.2188" y1="1535.2006" y2="1535.2006"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="424.8125" y="1489.3236">38
+              textLength="14.8125" x="424.8125" y="1529.3916">38
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="192" x="443.625"
-              y="1489.3236">setStarterCard(isRetro: boolean)
+              y="1529.3916">setStarterCard(isRetro: boolean)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="1526.8387" y2="1522.8387"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="1526.8387" y2="1530.8387"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="689.2188" x2="979.0313" y1="1526.8387" y2="1526.8387"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="1566.9066" y2="1562.9066"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="1566.9066" y2="1570.9066"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="689.2188" x2="979.0313" y1="1566.9066" y2="1566.9066"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="696.2188" y="1521.0297">39
+              textLength="14.8125" x="696.2188" y="1561.0976">39
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="248"
-              x="715.0313" y="1521.0297">setStarterFor(nickname, isRetro: boolean)
+              x="715.0313" y="1561.0976">setStarterFor(nickname, isRetro: boolean)
         </text>
-        <polygon fill="#181818" points="1263.8438,1554.5447,1273.8438,1558.5447,1263.8438,1562.5447,1267.8438,1558.5447"
+        <polygon fill="#181818" points="1263.8438,1594.6126,1273.8438,1598.6126,1263.8438,1602.6126,1267.8438,1598.6126"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="1558.5447" y2="1558.5447"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="1598.6126" y2="1598.6126"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="997.0313" y="1552.7357">40
+              textLength="14.8125" x="997.0313" y="1592.8036">40
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="248"
-              x="1015.8438" y="1552.7357">setStarterFor(nickname, isRetro: boolean)
+              x="1015.8438" y="1592.8036">setStarterFor(nickname, isRetro: boolean)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1590.2507" y2="1586.2507"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1590.2507" y2="1594.2507"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="1590.2507" y2="1590.2507"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1630.3186" y2="1626.3186"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1630.3186" y2="1634.3186"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="1630.3186" y2="1630.3186"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="1584.4417">41
+              textLength="14.8125" x="711.2188" y="1624.5096">41
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="191"
-              x="730.0313" y="1584.4417">updateTable(FieldChangeEvent)
+              x="730.0313" y="1624.5096">updateTable(FieldChangeEvent)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1621.9567" y2="1617.9567"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1621.9567" y2="1625.9567"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="1621.9567" y2="1621.9567"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1662.0246" y2="1658.0246"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1662.0246" y2="1666.0246"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="1662.0246" y2="1662.0246"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="1616.1477">42
+              textLength="14.8125" x="307.3125" y="1656.2156">42
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="207" x="326.125"
-              y="1616.1477">updateField(player, x, y, id, isRetro)
+              y="1656.2156">updateField(player, x, y, id, isRetro)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="1653.6627" y2="1649.6627"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="1653.6627" y2="1657.6627"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="1653.6627" y2="1653.6627"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="1693.7306" y2="1689.7306"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="1693.7306" y2="1697.7306"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="1693.7306" y2="1693.7306"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="79.5" y="1647.8537">43
+              textLength="14.8125" x="79.5" y="1687.9216">43
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="79" x="98.3125"
-              y="1647.8537">field updated
+              y="1687.9216">field updated
         </text>
-        <path d="M1119,1691.6627 L1119,1736.6627 L1270,1736.6627 L1270,1701.6627 L1260,1691.6627 L1119,1691.6627 "
+        <path d="M1119,1731.7306 L1119,1776.7306 L1270,1776.7306 L1270,1741.7306 L1260,1731.7306 L1119,1731.7306 "
               fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
-        <path d="M1260,1691.6627 L1260,1701.6627 L1270,1701.6627 L1260,1691.6627 " fill="#FEFFDD"
+        <path d="M1260,1731.7306 L1260,1741.7306 L1270,1741.7306 L1260,1731.7306 " fill="#FEFFDD"
               style="stroke:#181818;stroke-width:0.5;"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="130" x="1125"
-              y="1710.5597">When all Starter cards
+              y="1750.6277">When all Starter cards
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="61" x="1125"
-              y="1728.2658">are placed
+              y="1768.3337">are placed
         </text>
-        <path d="M20,1749.0748 L93.625,1749.0748 L93.625,1758.7808 L83.625,1768.7808 L20,1768.7808 L20,1749.0748 "
+        <path d="M20,1789.1427 L93.625,1789.1427 L93.625,1798.8487 L83.625,1808.8487 L20,1808.8487 L20,1789.1427 "
               fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
         <rect fill="none" height="150.2361" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="1749.0748"/>
+              y="1789.1427"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="28.625" x="35" y="1763.9718">loop
+              textLength="28.625" x="35" y="1804.0397">loop
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="59.4375" x="108.625" y="1762.8337">[n players]
+              textLength="59.4375" x="108.625" y="1802.9016">[n players]
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1827.8988" y2="1823.8988"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1827.8988" y2="1831.8988"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="1827.8988" y2="1827.8988"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1867.9667" y2="1863.9667"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1867.9667" y2="1871.9667"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="1867.9667" y2="1867.9667"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="1804.3838">44
+              textLength="14.8125" x="711.2188" y="1844.4517">44
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="80" x="730.0313"
-              y="1786.6778">updatePlayer
+              y="1826.7457">updatePlayer
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="44" x="730.0313"
-              y="1804.3838">(player,
+              y="1844.4517">(player,
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="235"
-              x="730.0313" y="1822.0898">CandidateObjectiveEvent(set&lt;card id&gt;))
+              x="730.0313" y="1862.1577">CandidateObjectiveEvent(set&lt;card id&gt;))
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1859.6048" y2="1855.6048"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1859.6048" y2="1863.6048"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="1859.6048" y2="1859.6048"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1899.6728" y2="1895.6728"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="1899.6728" y2="1903.6728"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="1899.6728" y2="1899.6728"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="1853.7958">45
+              textLength="14.8125" x="307.3125" y="1893.8638">45
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="239" x="326.125"
-              y="1853.7958">receiveCandidateObjective(set&lt;card id&gt;)
+              y="1893.8638">receiveCandidateObjective(set&lt;card id&gt;)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="1891.3109" y2="1887.3109"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="1891.3109" y2="1895.3109"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="1891.3109" y2="1891.3109"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="1931.3788" y2="1927.3788"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="1931.3788" y2="1935.3788"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="1931.3788" y2="1931.3788"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="79.5" y="1885.5019">46
+              textLength="14.8125" x="79.5" y="1925.5698">46
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="175" x="98.3125"
-              y="1885.5019">candidate objectives received
+              y="1925.5698">candidate objectives received
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1965.4289" y2="1961.4289"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="1965.4289" y2="1969.4289"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="1965.4289" y2="1965.4289"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2005.4968" y2="2001.4968"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2005.4968" y2="2009.4968"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="2005.4968" y2="2005.4968"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="1941.9139">47
+              textLength="14.8125" x="711.2188" y="1981.9818">47
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="75" x="730.0313"
-              y="1924.2079">updateTable
+              y="1964.2758">updateTable
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="157"
-              x="730.0313" y="1941.9139">(GameStatusChangeEvent
+              x="730.0313" y="1981.9818">(GameStatusChangeEvent
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="133"
-              x="730.0313" y="1959.6199">(choosing_objectives))
+              x="730.0313" y="1999.6878">(choosing_objectives))
         </text>
-        <polygon fill="#181818" points="996.0313,1993.1349,986.0313,1997.1349,996.0313,2001.1349,992.0313,1997.1349"
+        <polygon fill="#181818" points="996.0313,2033.2028,986.0313,2037.2028,996.0313,2041.2028,992.0313,2037.2028"
                  style="stroke:#181818;stroke-width:1.0;"/>
         <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="990.0313" x2="1279.8438"
-              y1="1997.1349" y2="1997.1349"/>
+              y1="2037.2028" y2="2037.2028"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="1002.0313" y="1991.3259">48
+              textLength="14.8125" x="1002.0313" y="2031.3938">48
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="18"
-              x="1020.8438" y="1991.3259">OK
+              x="1020.8438" y="2031.3938">OK
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2028.8409" y2="2024.8409"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2028.8409" y2="2032.8409"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="2028.8409" y2="2028.8409"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2068.9089" y2="2064.9089"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2068.9089" y2="2072.9089"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="2068.9089" y2="2068.9089"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="2023.0319">49
+              textLength="14.8125" x="307.3125" y="2063.0999">49
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="245" x="326.125"
-              y="2023.0319">updateGameStatus(choosing_objectives)
+              y="2063.0999">updateGameStatus(choosing_objectives)
         </text>
-        <polygon fill="#181818" points="63.5,2056.547,53.5,2060.547,63.5,2064.547,59.5,2060.547"
+        <polygon fill="#181818" points="63.5,2096.6149,53.5,2100.6149,63.5,2104.6149,59.5,2100.6149"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="57.5" x2="284.3125" y1="2060.547"
-              y2="2060.547"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="57.5" x2="284.3125" y1="2100.6149"
+              y2="2100.6149"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="69.5" y="2054.738">50
+              textLength="14.8125" x="69.5" y="2094.8059">50
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="152" x="88.3125"
-              y="2054.738">time to choose objectives
+              y="2094.8059">time to choose objectives
         </text>
-        <path d="M20,2100.547 L93.625,2100.547 L93.625,2110.253 L83.625,2120.253 L20,2120.253 L20,2100.547 "
+        <path d="M20,2140.6149 L93.625,2140.6149 L93.625,2150.3209 L83.625,2160.3209 L20,2160.3209 L20,2140.6149 "
               fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
         <rect fill="none" height="291.0602" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="2100.547"/>
+              y="2140.6149"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="28.625" x="35" y="2115.444">loop
+              textLength="28.625" x="35" y="2155.5119">loop
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="70.125" x="108.625" y="2114.3059">[n-1 players]
+              textLength="70.125" x="108.625" y="2154.3738">[n-1 players]
         </text>
-        <polygon fill="#181818" points="400.8125,2139.959,410.8125,2143.959,400.8125,2147.959,404.8125,2143.959"
+        <polygon fill="#181818" points="400.8125,2180.0269,410.8125,2184.0269,400.8125,2188.0269,404.8125,2184.0269"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="406.8125" y1="2143.959" y2="2143.959"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="406.8125" y1="2184.0269" y2="2184.0269"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="64.5" y="2138.15">51
+              textLength="14.8125" x="64.5" y="2178.2179">51
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="145" x="83.3125"
-              y="2138.15">setPersonalObjective(id)
+              y="2178.2179">setPersonalObjective(id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="2175.665" y2="2171.665"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="2175.665" y2="2179.665"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="683.2188" y1="2175.665" y2="2175.665"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="2215.7329" y2="2211.7329"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="2215.7329" y2="2219.7329"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="683.2188" y1="2215.7329" y2="2215.7329"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="424.8125" y="2169.856">52
+              textLength="14.8125" x="424.8125" y="2209.9239">52
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="145" x="443.625"
-              y="2169.856">setPersonalObjective(id)
+              y="2209.9239">setPersonalObjective(id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="2207.371" y2="2203.371"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="2207.371" y2="2211.371"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="689.2188" x2="979.0313" y1="2207.371" y2="2207.371"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="2247.4389" y2="2243.4389"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="2247.4389" y2="2251.4389"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="689.2188" x2="979.0313" y1="2247.4389" y2="2247.4389"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="696.2188" y="2201.562">53
+              textLength="14.8125" x="696.2188" y="2241.6299">53
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="178"
-              x="715.0313" y="2201.562">SetObjectiveFor(nickname, id)
+              x="715.0313" y="2241.6299">SetObjectiveFor(nickname, id)
         </text>
-        <polygon fill="#181818" points="1263.8438,2235.077,1273.8438,2239.077,1263.8438,2243.077,1267.8438,2239.077"
+        <polygon fill="#181818" points="1263.8438,2275.145,1273.8438,2279.145,1263.8438,2283.145,1267.8438,2279.145"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="2239.077" y2="2239.077"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="2279.145" y2="2279.145"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="997.0313" y="2233.268">54
+              textLength="14.8125" x="997.0313" y="2273.336">54
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="177"
-              x="1015.8438" y="2233.268">setObjectiveFor(nickname, id)
+              x="1015.8438" y="2273.336">setObjectiveFor(nickname, id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2288.4891" y2="2284.4891"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2288.4891" y2="2292.4891"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="2288.4891" y2="2288.4891"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2328.557" y2="2324.557"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2328.557" y2="2332.557"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="2328.557" y2="2328.557"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="2273.8271">55
+              textLength="14.8125" x="711.2188" y="2313.895">55
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="124"
-              x="730.0313" y="2264.9741">updatePlayer(player,
+              x="730.0313" y="2305.042">updatePlayer(player,
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="165"
-              x="730.0313" y="2282.6801">PersonalObjectiveEvent(id))
+              x="730.0313" y="2322.748">PersonalObjectiveEvent(id))
         </text>
-        <polygon fill="#181818" points="996.0313,2316.1951,986.0313,2320.1951,996.0313,2324.1951,992.0313,2320.1951"
+        <polygon fill="#181818" points="996.0313,2356.263,986.0313,2360.263,996.0313,2364.263,992.0313,2360.263"
                  style="stroke:#181818;stroke-width:1.0;"/>
         <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="990.0313" x2="1279.8438"
-              y1="2320.1951" y2="2320.1951"/>
+              y1="2360.263" y2="2360.263"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="1002.0313" y="2314.3861">56
+              textLength="14.8125" x="1002.0313" y="2354.454">56
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="18"
-              x="1020.8438" y="2314.3861">OK
+              x="1020.8438" y="2354.454">OK
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2351.9011" y2="2347.9011"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2351.9011" y2="2355.9011"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="2351.9011" y2="2351.9011"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2391.969" y2="2387.969"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2391.969" y2="2395.969"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="2391.969" y2="2391.969"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="2346.0921">57
+              textLength="14.8125" x="307.3125" y="2386.16">57
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="170" x="326.125"
-              y="2346.0921">updatePersonalObjective(id)
+              y="2386.16">updatePersonalObjective(id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="2383.6071" y2="2379.6071"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="2383.6071" y2="2387.6071"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="284.3125" y1="2383.6071" y2="2383.6071"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="2423.675" y2="2419.675"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="58.5" x2="68.5" y1="2423.675" y2="2427.675"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="284.3125" y1="2423.675" y2="2423.675"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="74.5" y="2377.7981">58
+              textLength="14.8125" x="74.5" y="2417.866">58
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="163" x="93.3125"
-              y="2377.7981">personal objective updated
+              y="2417.866">personal objective updated
         </text>
-        <polygon fill="#181818" points="400.8125,2418.3131,410.8125,2422.3131,400.8125,2426.3131,404.8125,2422.3131"
+        <polygon fill="#181818" points="400.8125,2458.3811,410.8125,2462.3811,400.8125,2466.3811,404.8125,2462.3811"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="406.8125" y1="2422.3131" y2="2422.3131"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="406.8125" y1="2462.3811" y2="2462.3811"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="69.5" y="2416.5041">59
+              textLength="14.8125" x="69.5" y="2456.5721">59
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="145" x="88.3125"
-              y="2416.5041">setPersonalObjective(id)
+              y="2456.5721">setPersonalObjective(id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="2454.0192" y2="2450.0192"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="2454.0192" y2="2458.0192"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="683.2188" y1="2454.0192" y2="2454.0192"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="2494.0871" y2="2490.0871"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="682.2188" x2="672.2188" y1="2494.0871" y2="2498.0871"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="417.8125" x2="683.2188" y1="2494.0871" y2="2494.0871"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="424.8125" y="2448.2102">60
+              textLength="14.8125" x="424.8125" y="2488.2781">60
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="145" x="443.625"
-              y="2448.2102">setPersonalObjective(id)
+              y="2488.2781">setPersonalObjective(id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="2485.7252" y2="2481.7252"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="2485.7252" y2="2489.7252"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="689.2188" x2="979.0313" y1="2485.7252" y2="2485.7252"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="2525.7931" y2="2521.7931"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="978.0313" x2="968.0313" y1="2525.7931" y2="2529.7931"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="689.2188" x2="979.0313" y1="2525.7931" y2="2525.7931"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="696.2188" y="2479.9162">61
+              textLength="14.8125" x="696.2188" y="2519.9841">61
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="178"
-              x="715.0313" y="2479.9162">SetObjectiveFor(nickname, id)
+              x="715.0313" y="2519.9841">SetObjectiveFor(nickname, id)
         </text>
-        <polygon fill="#181818" points="1263.8438,2513.4312,1273.8438,2517.4312,1263.8438,2521.4312,1267.8438,2517.4312"
+        <polygon fill="#181818" points="1263.8438,2553.4991,1273.8438,2557.4991,1263.8438,2561.4991,1267.8438,2557.4991"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="2517.4312" y2="2517.4312"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="990.0313" x2="1269.8438" y1="2557.4991" y2="2557.4991"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="997.0313" y="2511.6222">62
+              textLength="14.8125" x="997.0313" y="2551.6901">62
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="177"
-              x="1015.8438" y="2511.6222">setObjectiveFor(nickname, id)
+              x="1015.8438" y="2551.6901">setObjectiveFor(nickname, id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2566.8432" y2="2562.8432"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2566.8432" y2="2570.8432"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="2566.8432" y2="2566.8432"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2606.9111" y2="2602.9111"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2606.9111" y2="2610.9111"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="2606.9111" y2="2606.9111"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="2552.1812">63
+              textLength="14.8125" x="711.2188" y="2592.2491">63
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="124"
-              x="730.0313" y="2543.3282">updatePlayer(player,
+              x="730.0313" y="2583.3961">updatePlayer(player,
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="165"
-              x="730.0313" y="2561.0342">PersonalObjectiveEvent(id))
+              x="730.0313" y="2601.1021">PersonalObjectiveEvent(id))
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2598.5492" y2="2594.5492"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2598.5492" y2="2602.5492"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="2598.5492" y2="2598.5492"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2638.6172" y2="2634.6172"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2638.6172" y2="2642.6172"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="2638.6172" y2="2638.6172"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="2592.7402">64
+              textLength="14.8125" x="307.3125" y="2632.8082">64
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="170" x="326.125"
-              y="2592.7402">updatePersonalObjective(id)
+              y="2632.8082">updatePersonalObjective(id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="2630.2553" y2="2626.2553"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="2630.2553" y2="2634.2553"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="2630.2553" y2="2630.2553"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="2670.3232" y2="2666.3232"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="2670.3232" y2="2674.3232"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="2670.3232" y2="2670.3232"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="79.5" y="2624.4463">65
+              textLength="14.8125" x="79.5" y="2664.5142">65
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="163" x="98.3125"
-              y="2624.4463">personal objective updated
+              y="2664.5142">personal objective updated
         </text>
-        <path d="M1133,2668.2553 L1133,2713.2553 L1270,2713.2553 L1270,2678.2553 L1260,2668.2553 L1133,2668.2553 "
+        <path d="M1133,2708.3232 L1133,2753.3232 L1270,2753.3232 L1270,2718.3232 L1260,2708.3232 L1133,2708.3232 "
               fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
-        <path d="M1260,2668.2553 L1260,2678.2553 L1270,2678.2553 L1260,2668.2553 " fill="#FEFFDD"
+        <path d="M1260,2708.3232 L1260,2718.3232 L1270,2718.3232 L1260,2708.3232 " fill="#FEFFDD"
               style="stroke:#181818;stroke-width:0.5;"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="116" x="1139"
-              y="2687.1523">When all Objectives
+              y="2727.2202">When all Objectives
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="40" x="1139"
-              y="2704.8583">are set
+              y="2744.9262">are set
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2760.0793" y2="2756.0793"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2760.0793" y2="2764.0793"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="2760.0793" y2="2760.0793"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2800.1472" y2="2796.1472"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2800.1472" y2="2804.1472"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="2800.1472" y2="2800.1472"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="2745.4173">66
+              textLength="14.8125" x="711.2188" y="2785.4852">66
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="75" x="730.0313"
-              y="2736.5643">updateTable
+              y="2776.6322">updateTable
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="234"
-              x="730.0313" y="2754.2703">(CommonObjectiveEvent(set&lt;card id&gt;))
+              x="730.0313" y="2794.3382">(CommonObjectiveEvent(set&lt;card id&gt;))
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2791.7853" y2="2787.7853"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2791.7853" y2="2795.7853"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="2791.7853" y2="2791.7853"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2831.8533" y2="2827.8533"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2831.8533" y2="2835.8533"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="2831.8533" y2="2831.8533"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="2785.9763">67
+              textLength="14.8125" x="307.3125" y="2826.0443">67
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="235" x="326.125"
-              y="2785.9763">updateCommonObjective(set&lt;card id&gt;)
+              y="2826.0443">updateCommonObjective(set&lt;card id&gt;)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="2823.4914" y2="2819.4914"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="2823.4914" y2="2827.4914"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="2823.4914" y2="2823.4914"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="2863.5593" y2="2859.5593"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="2863.5593" y2="2867.5593"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="2863.5593" y2="2863.5593"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="79.5" y="2817.6824">68
+              textLength="14.8125" x="79.5" y="2857.7503">68
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="165" x="98.3125"
-              y="2817.6824">common objective updated
+              y="2857.7503">common objective updated
         </text>
-        <path d="M20,2838.4914 L93.625,2838.4914 L93.625,2848.1974 L83.625,2858.1974 L20,2858.1974 L20,2838.4914 "
+        <path d="M20,2878.5593 L93.625,2878.5593 L93.625,2888.2653 L83.625,2898.2653 L20,2898.2653 L20,2878.5593 "
               fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
         <rect fill="none" height="132.5301" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="2838.4914"/>
+              y="2878.5593"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="28.625" x="35" y="2853.3884">loop
+              textLength="28.625" x="35" y="2893.4563">loop
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="156.9063" x="108.625" y="2852.2503">[number of shown playable]
+              textLength="156.9063" x="108.625" y="2892.3182">[number of shown playable]
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2899.6094" y2="2895.6094"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2899.6094" y2="2903.6094"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="2899.6094" y2="2899.6094"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2939.6773" y2="2935.6773"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="2939.6773" y2="2943.6773"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="2939.6773" y2="2939.6773"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="2884.9474">69
+              textLength="14.8125" x="711.2188" y="2925.0153">69
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="75" x="730.0313"
-              y="2876.0944">updateTable
+              y="2916.1623">updateTable
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="152"
-              x="730.0313" y="2893.8004">(ShownPlayableEvent(id))
+              x="730.0313" y="2933.8683">(ShownPlayableEvent(id))
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2931.3154" y2="2927.3154"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2931.3154" y2="2935.3154"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="2931.3154" y2="2931.3154"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2971.3833" y2="2967.3833"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="2971.3833" y2="2975.3833"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="2971.3833" y2="2971.3833"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="2925.5064">70
+              textLength="14.8125" x="307.3125" y="2965.5743">70
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="153" x="326.125"
-              y="2925.5064">updateShownPlayable(id)
+              y="2965.5743">updateShownPlayable(id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="2963.0214" y2="2959.0214"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="2963.0214" y2="2967.0214"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="2963.0214" y2="2963.0214"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3003.0894" y2="2999.0894"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3003.0894" y2="3007.0894"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="3003.0894" y2="3003.0894"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="79.5" y="2957.2124">71
+              textLength="14.8125" x="79.5" y="2997.2804">71
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="147" x="98.3125"
-              y="2957.2124">shown playable updated
+              y="2997.2804">shown playable updated
         </text>
-        <path d="M20,2985.0214 L93.625,2985.0214 L93.625,2994.7275 L83.625,3004.7275 L20,3004.7275 L20,2985.0214 "
+        <path d="M20,3025.0894 L93.625,3025.0894 L93.625,3034.7954 L83.625,3044.7954 L20,3044.7954 L20,3025.0894 "
               fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
         <rect fill="none" height="132.5301" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="2985.0214"/>
+              y="3025.0894"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="28.625" x="35" y="2999.9185">loop
+              textLength="28.625" x="35" y="3039.9864">loop
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="62.4375" x="108.625" y="2998.7804">[two times]
+              textLength="62.4375" x="108.625" y="3038.8483">[two times]
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3046.1395" y2="3042.1395"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3046.1395" y2="3050.1395"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="3046.1395" y2="3046.1395"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3086.2074" y2="3082.2074"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3086.2074" y2="3090.2074"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="3086.2074" y2="3086.2074"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="3031.4775">72
+              textLength="14.8125" x="711.2188" y="3071.5454">72
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="75" x="730.0313"
-              y="3022.6245">updateTable
+              y="3062.6924">updateTable
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="180"
-              x="730.0313" y="3040.3305">(DeckTopChangeEvent(Color))
+              x="730.0313" y="3080.3984">(DeckTopChangeEvent(Color))
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3077.8455" y2="3073.8455"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3077.8455" y2="3081.8455"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="3077.8455" y2="3077.8455"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3117.9134" y2="3113.9134"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3117.9134" y2="3121.9134"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="3117.9134" y2="3117.9134"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="3072.0365">73
+              textLength="14.8125" x="307.3125" y="3112.1044">73
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="135" x="326.125"
-              y="3072.0365">updateDeckTop(Color)
+              y="3112.1044">updateDeckTop(Color)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3109.5515" y2="3105.5515"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3109.5515" y2="3113.5515"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="3109.5515" y2="3109.5515"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3149.6194" y2="3145.6194"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3149.6194" y2="3153.6194"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="3149.6194" y2="3149.6194"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="79.5" y="3103.7425">74
+              textLength="14.8125" x="79.5" y="3143.8104">74
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="140" x="98.3125"
-              y="3103.7425">deck top color changed
+              y="3143.8104">deck top color changed
         </text>
-        <path d="M10,3131.5515 L83.625,3131.5515 L83.625,3141.2575 L73.625,3151.2575 L10,3151.2575 L10,3131.5515 "
+        <path d="M10,3171.6194 L83.625,3171.6194 L83.625,3181.3255 L73.625,3191.3255 L10,3191.3255 L10,3171.6194 "
               fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
         <rect fill="none" height="166.2361" style="stroke:#000000;stroke-width:1.5;" width="1314.8438" x="10"
-              y="3131.5515"/>
+              y="3171.6194"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="28.625" x="25" y="3146.4485">loop
+              textLength="28.625" x="25" y="3186.5165">loop
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="59.4375" x="98.625" y="3145.3104">[n players]
+              textLength="59.4375" x="98.625" y="3185.3784">[n players]
         </text>
-        <path d="M20,3158.2575 L93.625,3158.2575 L93.625,3167.9636 L83.625,3177.9636 L20,3177.9636 L20,3158.2575 "
+        <path d="M20,3198.3255 L93.625,3198.3255 L93.625,3208.0315 L83.625,3218.0315 L20,3218.0315 L20,3198.3255 "
               fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
         <rect fill="none" height="132.5301" style="stroke:#000000;stroke-width:1.5;" width="1294.8438" x="20"
-              y="3158.2575"/>
+              y="3198.3255"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="28.625" x="35" y="3173.1546">loop
+              textLength="28.625" x="35" y="3213.2225">loop
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="100.1563" x="108.625" y="3172.0164">[number of cards]
+              textLength="100.1563" x="108.625" y="3212.0844">[number of cards]
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3219.3756" y2="3215.3756"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3219.3756" y2="3223.3756"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="3219.3756" y2="3219.3756"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3259.4435" y2="3255.4435"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3259.4435" y2="3263.4435"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="3259.4435" y2="3259.4435"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="3204.7136">75
+              textLength="14.8125" x="711.2188" y="3244.7815">75
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="124"
-              x="730.0313" y="3195.8606">updatePlayer(player,
+              x="730.0313" y="3235.9285">updatePlayer(player,
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="136"
-              x="730.0313" y="3213.5666">HandChangeEvent(id))
+              x="730.0313" y="3253.6345">HandChangeEvent(id))
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3251.0816" y2="3247.0816"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3251.0816" y2="3255.0816"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="3251.0816" y2="3251.0816"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3291.1495" y2="3287.1495"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3291.1495" y2="3295.1495"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="3291.1495" y2="3291.1495"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="3245.2726">76
+              textLength="14.8125" x="307.3125" y="3285.3405">76
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="95" x="326.125"
-              y="3245.2726">updateHand(id)
+              y="3285.3405">updateHand(id)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3282.7876" y2="3278.7876"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3282.7876" y2="3286.7876"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="3282.7876" y2="3282.7876"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3322.8555" y2="3318.8555"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3322.8555" y2="3326.8555"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="3322.8555" y2="3322.8555"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="79.5" y="3276.9786">77
+              textLength="14.8125" x="79.5" y="3317.0465">77
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="121" x="98.3125"
-              y="3276.9786">drawn card updated
+              y="3317.0465">drawn card updated
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3346.1997" y2="3342.1997"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3346.1997" y2="3350.1997"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="3346.1997" y2="3346.1997"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3386.2676" y2="3382.2676"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3386.2676" y2="3390.2676"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="3386.2676" y2="3386.2676"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="3331.5376">78
+              textLength="14.8125" x="711.2188" y="3371.6056">78
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="75" x="730.0313"
-              y="3322.6846">updateTable
+              y="3362.7526">updateTable
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="182"
-              x="730.0313" y="3340.3907">(TurnChangeEvent(nickname))
+              x="730.0313" y="3380.4586">(TurnChangeEvent(nickname))
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3377.9057" y2="3373.9057"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3377.9057" y2="3381.9057"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="3377.9057" y2="3377.9057"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3417.9736" y2="3413.9736"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3417.9736" y2="3421.9736"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="683.2188" y1="3417.9736" y2="3417.9736"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="3372.0967">79
+              textLength="14.8125" x="307.3125" y="3412.1646">79
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="137" x="326.125"
-              y="3372.0967">updateTurn(nickname)
+              y="3412.1646">updateTurn(nickname)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3409.6117" y2="3405.6117"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3409.6117" y2="3413.6117"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="3409.6117" y2="3409.6117"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3449.6796" y2="3445.6796"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="63.5" x2="73.5" y1="3449.6796" y2="3453.6796"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="62.5" x2="284.3125" y1="3449.6796" y2="3449.6796"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="79.5" y="3403.8027">80
+              textLength="14.8125" x="79.5" y="3443.8706">80
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="81" x="98.3125"
-              y="3403.8027">turn changed
+              y="3443.8706">turn changed
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3441.3177" y2="3437.3177"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3441.3177" y2="3445.3177"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="3441.3177" y2="3441.3177"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3481.3856" y2="3477.3856"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="695.2188" x2="705.2188" y1="3481.3856" y2="3485.3856"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="694.2188" x2="1274.8438" y1="3481.3856" y2="3481.3856"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="711.2188" y="3435.5087">81
+              textLength="14.8125" x="711.2188" y="3475.5766">81
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="212"
-              x="730.0313" y="3435.5087">GameStatusChangeEvent(ongoing)
+              x="730.0313" y="3475.5766">GameStatusChangeEvent(ongoing)
         </text>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3473.0237" y2="3469.0237"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3473.0237" y2="3477.0237"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="3473.0237" y2="3473.0237"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3513.0916" y2="3509.0916"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="291.3125" x2="301.3125" y1="3513.0916" y2="3517.0916"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="290.3125" x2="688.2188" y1="3513.0916" y2="3513.0916"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="307.3125" y="3467.2147">82
+              textLength="14.8125" x="307.3125" y="3507.2826">82
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="175" x="326.125"
-              y="3467.2147">updateGameStatus(ongoing)
+              y="3507.2826">updateGameStatus(ongoing)
         </text>
-        <polygon fill="#181818" points="63.5,3500.7297,53.5,3504.7297,63.5,3508.7297,59.5,3504.7297"
+        <polygon fill="#181818" points="63.5,3540.7977,53.5,3544.7977,63.5,3548.7977,59.5,3544.7977"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="57.5" x2="284.3125" y1="3504.7297"
-              y2="3504.7297"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="57.5" x2="284.3125" y1="3544.7977"
+              y2="3544.7977"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="69.5" y="3498.9207">83
+              textLength="14.8125" x="69.5" y="3538.9886">83
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="80" x="88.3125"
-              y="3498.9207">game started
+              y="3538.9886">game started
         </text>
-        <polygon fill="#181818" points="996.0313,3532.4358,986.0313,3536.4358,996.0313,3540.4358,992.0313,3536.4358"
+        <polygon fill="#181818" points="996.0313,3572.5037,986.0313,3576.5037,996.0313,3580.5037,992.0313,3576.5037"
                  style="stroke:#181818;stroke-width:1.0;"/>
         <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="990.0313" x2="1279.8438"
-              y1="3536.4358" y2="3536.4358"/>
+              y1="3576.5037" y2="3576.5037"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="1002.0313" y="3530.6267">84
+              textLength="14.8125" x="1002.0313" y="3570.6947">84
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="18"
-              x="1020.8438" y="3530.6267">OK
-        </text><!--SRC=[jLXBR-Cs4BxhL_1M6uWRz6eiV76xsw984zJPxMM11IFIDhiowKfKiW7oupiazQ0eYI9j9PV8b3ZFRsO-ygUZbETYVNjxpZ2NvIdxEHMdsuB-LrAUqXLX-93ZKvBWKWfUdfvedYHFuWVwNC0JJgN8qHtEcKWebqo-ect6uEaBeo-VpmHB-AZpOYiufseNB1C4Weoq7SsVsq_DB_jJlVo5vRB4cPBT21LSvYBBshrtWj2i5QvjGwkDgtwD2Yh_OkbtZazqKO8pwc6fF6BFO7RbLFFJjJvn5a35nh9cZJ9nODmIJEYehFP5wqtIFYlhjLThX0bvoF0hpH_58txARCCjotK44lqFhLPTi-x_j2qndtPKRUmmhn4NakrVFubAxwBhY6LlisXdAR5-QDbEPYVaswAQHHSSYRDWCk6YS4AJAzJ9bGtdfBUaWwpniaO7GT1PAp0AMOeb4ppfvz-MQQT4usu2j-NfVc_SA1QCoojXsqdueFWGy7hota6WKG1znD4nNGOhnzHIHyyKWcNpRy_KjTaIw29o02b6hZSAWyYCnGgqKoJs5LoAIYtn8sK0AfaGPyHNlzI24WH_iNrFxN44TvPwG59lOtkWskE1KbUXbJEjAx8VTXqoBL47PgmjEiOrSoH9tjxUaWIgcQAS7OvIvSooJktxvqWvufq4u9oYrBW6ELNpI4bmUstb1-DCVb896OFjI7FVU2h21EOFlXTLGOHrwD5wg4jXLr43SeVF7xOY4_aDsicSySDc6LiBcwOMt2AeKDt5jC_fggll9Cv1z1RdHBkzO6Hfm13ig2L2xRQGFc9xOJQW57QW0mEr1ZS1IL991tsoBBP7p0_Ks9mUXIWWeDygoSLosP_QuPbhbGn87kjg_jObsOaYAP2MHpiHAA9dtGKTh9EZucyATR86mYSoYlcCpSoTZDDgGzjR9zI3yEoEp4hpHv4lUDMzRz2a2RQM-EuQfzRJR7qLy97HZ5ZWNyR6QGprMl328Ee6_RX1hs0vQQoFY5M_bKssXBrItZIpGM3O0kC7aolIFWUH2VheH_6iLDAlwafQUMcHJFAugMDOkAeBvdQ_8AuSt9E5C0-l7GE_dywst2gZUqsjMdnhLeMp3EqwuwLcL-1HQbEh2od3Lrx7vYlVOawOUdN_z2zLLbS36HB-GKztHZRB6JfKJbCAmllgkfhUjKMbjN8aQkr5RLX0omfaE13TGOu3wmqNQVKlny0UVfbnxR5lY2nP1iv-27IOLAigbaNrLtHjnNEh1_XAS9oreAnPyBjmgd5rxyAbTbGscfpkJURdJnEgeZbJTSff6bOlUCwXPpn6Sz6DE58MbEnPszovqjXMLZWjcwPIm_xCIg66LSnAdVmrCGTTyeYFeaWn-B_slcCgxhDm9GyyPo1Ez-qqgLaJ9AEbJ47pUojE9y7zZEZAM3ig71Ra2OEVuMYfqP4r4rDVKQkm5aVnOaYbYaVWiHR2jbFx7gfj5zz5sKBwStZu9Ec_hEgu4zaBTMZaYz2ifGYFnQyq_VueplOTbxuvZ0r79QVQV7Ki28W3xdK6f80ye63AlAXOjASDlSk1JdjUYHxilmCxjyFLG2SgNafAWvg0Q4r7BCU07bsQDdA2BZXqrCAF3Ozbpkq8r5C3uX3ilvBHRhouaKWGqw33tpp6V1k-w1Ny8E20iRpiVDBidljCSW0TrPqkkVeOSkNHxNy0]-->
+              x="1020.8438" y="3570.6947">OK
+        </text><!--SRC=[jLZFRzis5Bxhh-1jDX0lsDKeVF7MhXYo17FQNGeKZ4ZRN6dIawYa6Vh7xv6Y98gIAD5MSeb5YU_dzzxxo9-EIftpzUtjcMEXYXF_EPMdsvp-Mr2HqXLX-93XKvBWGabHd9vebYIAAKxHHy4KmvpzXnMJ8acUv7VqAOVtE5KoGtSuOpAX0Zv-HLlEuDTdHby-dGbMy57hnLOAGVKkM2O819NITZHxRZujdznFpV9dbga2Sosx5Yg5oYJdpTuxIIXlX1lRq6hZgr-ZdAe_MVfDu1DT5E2C_h7K7h5dCDiwLJ_wrYVU0gZOEDQi4PS79Xp1X0xAQbuqtYJDRsszyMgDC24F7B_Ix54-uYVk6kvORYAGc7zejMgRTV-7QqdvQKlLnWtp6WcfsFxrWxHw5sr777lhHJTBYVDWP7kP7P7lYgeNVN0ataAP2H-58vfyeLwkN3WddIKJP8ENDJf8Wiv6GQcGfRPcElbtPRefCRWRmMrnkj-NRkGB9jILi6qbl5Vy5F06yjv2OAa0kekdOxmCLfwfXObUMGYEpRyzKzzcHw2Fo1wab7A3KUX5PYnMeCaYkRTmoQrQ4aPA3rIub6SaLhzKWX84Vx5zJ-_n1BUMEa3IRsDxeDuJW59RePCpeoko7xOTAbkY2SnGM_ICg-T8alpuyID9e9efojZXg7JE7Elqlh-FL23HIW3EA4fBro2dUXvf2NwljNum6B0VT4A6O3lGt3U1YYW3yr7ifIs8QHrwi1wgKjXPma3kyFdTLdAPtQ2TofWuR9QnjR2fQy4l0elgDgP3JjkklbCu0z5Rd17ZzeAHPGc6oOuw8lHk1-a3jkVb1fJ23dHWeBR4pOGawQI3FbNasoCM1rhQd1wbp26WNwtaVBdiJktfcMkKz4WUwchXrgNOYI8baP57Mn78esVT1HsibQFyBmfriWR29pd5OiPcva_6SRLJsrihrBtmR8zCg_czp1R2TkyRD6g2goM-kyQf3JJRK0MyPvGJ1_pBs3WDeTu8NfI8ka7VRz0hM4vgwoDYrMrbeorXhvNNpQmN6Ax0-C7aYtJFGMI4FePHF2kL3AkwabPUMYIZF6xi63PTrGLpkriGLmxkqKAOXzSEWJzCPnjknUdUKAi6tuPLOSxHhZLUAdO57gKkjRgGCdmHLMo-Y2qMXEbNzq__K6sr7SYGy7TckZEoMSxGeJAQKX3ULTVMzAOjAgsK8rbfpol39hIiYGm7ejlBSM2zvYAD_kKGsATVPbnxxEiZIuw1iny2FIRLg8fbKTqLKrlntEe1lf82ymQK5Gj-4qurhEvDkDIEgbgJrxt9_FnfH5KqPxAddBfXTOBd7Ng6OpGNtOWZPPEIFMkRErkDJMLDfsNZLAhVdrafLB-AMQbJk2Rce4i1yL4KAGR_rzvtZCLz5guKWESCnEc-cIOLQu9aD9HfqlpUojD9YZ0ZkZBMdWgF1GN246OuHcfqPCk9QQweTLZpetmfIQMEnyHZBOHjf_Szs6qNtqMvGhfpkFya6RwiQhaJsGjDQDIBDAmbdnwBNsdwxL6UtJikStCO6muhnsw-EXO4n07tEWDIG1vGC6rUL2oQquRPvK6dEQz43_RVWPsxuQgX4nKlBQL6pOHeZKSimu0UKvekSYPTS9YeJJysF1QPS2DGJGs8msJ_jOncuyMDH86O6XtXvZ7aM_z5hnG72GUCvMNdathtt6UI0-YmTxhawcF8bKUt_m40]-->
     </g>
 </svg>

@@ -110,7 +110,7 @@ public interface GameModel {
     /**
      * For placing a card on the field, a set of conditions has to be satisfied.
      * <p>
-     * The new card needs to touch at least one of the corners of another placed card and all the
+     * The new card needs to touch at least one of the corners of another placed card, and all the
      * corners of placed cards touched by the new card have to not be NOT_USABLE.
      * <p>
      * This method retrieves the positions that satisfy these conditions.
@@ -169,10 +169,10 @@ public interface GameModel {
     Set<String> getWinner() throws GameStatusException;
 
     /**
-     * This method initialize a new game, it has to be called after all the players have joined the
-     * games This method shuffle the players Set in order to randomize the turns order, it chooses
-     * the first player, it clears the field, the hand and the objectives for each player, it resets
-     * the plateau and the pickableTable.
+     * This method initializes a new game, it has to be called after all the players have joined the
+     * games This method shuffles the players Set to randomize the turn order, it chooses the first
+     * player, it clears the field, the hand, and the objectives for each player, it resets the
+     * plateau and the pickableTable.
      *
      * @throws NumOfPlayersException If there aren't at least two players in the game
      * @throws GameStatusException   if a game is in progress
@@ -301,7 +301,7 @@ public interface GameModel {
      * <p>
      * It doesn't clear the current state of the game. Doesn't calculate final points.
      * <p>
-     * It must be called with a initGame for reinitialization
+     * It must be called with an initGame for reinitialization
      */
     void forceEnd();
 
@@ -314,10 +314,10 @@ public interface GameModel {
     GameStatus getStatus();
 
     /**
-     * Used to get the Color of the top card of the specified type
+     * Used to get the Color on the top of the specified card.
      *
      * @param type type of the card
-     * @return the color of the top card of the specified type
+     * @return the color of the top card
      * @throws GameStatusException if the game is not ongoing
      */
     Optional<GameColor> getDeckTop(@NotNull PlayableCardType type) throws GameStatusException;
@@ -328,7 +328,7 @@ public interface GameModel {
      * @param nickname nickname of the player of interest
      * @return a set of the IDs of the candidate objectives
      * @throws PlayerInitException if the player is not found
-     * @throws GameStatusException if the objectives has not been dealt yet
+     * @throws GameStatusException if the objectives have not been dealt with yet
      */
     Set<Integer> getCandidateObjectives(@NotNull String nickname)
     throws PlayerInitException, GameStatusException;

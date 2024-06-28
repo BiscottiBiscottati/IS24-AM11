@@ -3,6 +3,8 @@
 
 autonumber
 
+title Initialization
+
 box User
 actor Mario
 entity ClientViewUpdater

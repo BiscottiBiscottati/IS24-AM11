@@ -3,6 +3,8 @@
 
 autonumber
 
+title Heartbeat
+
 box User
 actor Mario
 participant "HeartbeatSender /\nPongHandler" as Sender

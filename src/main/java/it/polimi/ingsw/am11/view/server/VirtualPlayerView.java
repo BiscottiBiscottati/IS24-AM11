@@ -23,12 +23,11 @@ import org.slf4j.LoggerFactory;
 public class VirtualPlayerView {
     private static final Logger LOGGER = LoggerFactory.getLogger(VirtualPlayerView.class);
     private final @NotNull CardController cardController;
-    private final @NotNull GameController gameController;
     private final @NotNull ServerPlayerConnector connector;
     private final @NotNull String nickname;
 
     public VirtualPlayerView(@NotNull ServerPlayerConnector connector, @NotNull String nickname) {
-        gameController = CentralController.INSTANCE.getAnyGame();
+        GameController gameController = CentralController.INSTANCE.getAnyGame();
         cardController = gameController.getCardController();
         this.connector = connector;
         this.nickname = nickname;

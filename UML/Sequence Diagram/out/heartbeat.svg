@@ -1,341 +1,345 @@
 <svg xmlns="http://www.w3.org/2000/svg" contentStyleType="text/css"
-     height="1035px" preserveAspectRatio="none" style="width:774px;height:1035px;background:#FFFFFF;" version="1.1"
-     viewBox="0 0 774 1035" width="774px" zoomAndPan="magnify">
+     height="1075px" preserveAspectRatio="none" style="width:774px;height:1075px;background:#FFFFFF;" version="1.1"
+     viewBox="0 0 774 1075" width="774px" zoomAndPan="magnify">
     <defs/>
     <g>
-        <rect fill="#DDDDDD" height="1023.456" style="stroke:#181818;stroke-width:0.5;" width="224.9063" x="26" y="6"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing"
+              textLength="70.9375" x="353.0469" y="29.9659">Heartbeat
+        </text>
+        <rect fill="#DDDDDD" height="1023.456" style="stroke:#181818;stroke-width:0.5;" width="224.9063" x="26"
+              y="46.0679"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="29.625" x="123.6406" y="19.897">User
+              textLength="29.625" x="123.6406" y="59.9649">User
         </text>
         <rect fill="#DDDDDD" height="1023.456" style="stroke:#181818;stroke-width:0.5;" width="499.125" x="252.9063"
-              y="6"/>
+              y="46.0679"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="40.4375" x="482.25" y="19.897">Server
+              textLength="40.4375" x="482.25" y="59.9649">Server
         </text>
         <rect fill="#FFFFFF" height="733.4961" style="stroke:#181818;stroke-width:1.0;" width="10" x="172.9063"
-              y="203.892"/>
+              y="243.9599"/>
         <rect fill="#FFFFFF" height="701.7901" style="stroke:#181818;stroke-width:1.0;" width="10" x="327.4063"
-              y="235.598"/>
+              y="275.6659"/>
         <rect fill="#FFFFFF" height="63.412" style="stroke:#181818;stroke-width:1.0;" width="10" x="523.2188"
-              y="575.3461"/>
+              y="615.414"/>
         <rect fill="#FFFFFF" height="63.412" style="stroke:#181818;stroke-width:1.0;" width="10" x="523.2188"
-              y="851.9761"/>
+              y="892.044"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="719.0313"
-              y="607.0521"/>
+              y="647.12"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="719.0313"
-              y="883.6821"/>
+              y="923.75"/>
         <rect fill="none" height="648.0841" style="stroke:#000000;stroke-width:1.5;" width="758.0313" x="10"
-              y="282.304"/>
+              y="322.3719"/>
         <rect fill="none" height="614.3781" style="stroke:#000000;stroke-width:1.5;" width="738.0313" x="20"
-              y="309.01"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="52" x2="52" y1="106.7739"
-              y2="947.3881"/>
+              y="349.0779"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="52" x2="52" y1="146.8419"
+              y2="987.456"/>
         <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="177.9063" x2="177.9063"
-              y1="106.7739" y2="947.3881"/>
+              y1="146.8419" y2="987.456"/>
         <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="331.9063" x2="331.9063"
-              y1="106.7739" y2="947.3881"/>
+              y1="146.8419" y2="987.456"/>
         <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="527.7188" x2="527.7188"
-              y1="106.7739" y2="947.3881"/>
+              y1="146.8419" y2="987.456"/>
         <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="724.0313" x2="724.0313"
-              y1="106.7739" y2="947.3881"/>
+              y1="146.8419" y2="987.456"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="39" x="30"
-              y="102.672">Mario
+              y="142.7399">Mario
         </text>
-        <ellipse cx="52.5" cy="36.206" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
-        <path d="M52.5,44.206 L52.5,71.206 M39.5,52.206 L65.5,52.206 M52.5,71.206 L39.5,86.206 M52.5,71.206 L65.5,86.206 "
+        <ellipse cx="52.5" cy="76.2739" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M52.5,84.2739 L52.5,111.2739 M39.5,92.2739 L65.5,92.2739 M52.5,111.2739 L39.5,126.2739 M52.5,111.2739 L65.5,126.2739 "
               fill="none" style="stroke:#181818;stroke-width:0.5;"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="39" x="30"
-              y="961.3541">Mario
+              y="1001.422">Mario
         </text>
-        <ellipse cx="52.5" cy="973.956" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
-        <path d="M52.5,981.956 L52.5,1008.956 M39.5,989.956 L65.5,989.956 M52.5,1008.956 L39.5,1023.956 M52.5,1008.956 L65.5,1023.956 "
+        <ellipse cx="52.5" cy="1014.024" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M52.5,1022.024 L52.5,1049.024 M39.5,1030.024 L65.5,1030.024 M52.5,1049.024 L39.5,1064.024 M52.5,1049.024 L65.5,1064.024 "
               fill="none" style="stroke:#181818;stroke-width:0.5;"/>
         <rect fill="#E2E2F0" height="52.1358" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138"
-              x="108.9063" y="53.6381"/>
+              x="108.9063" y="93.706"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="124"
-              x="115.9063" y="75.604">HeartbeatSender /
+              x="115.9063" y="115.672">HeartbeatSender /
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="88" x="133.9063"
-              y="94.672">PongHandler
+              y="134.7399">PongHandler
         </text>
         <rect fill="#E2E2F0" height="52.1358" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138"
-              x="108.9063" y="946.3881"/>
+              x="108.9063" y="986.456"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="124"
-              x="115.9063" y="968.3541">HeartbeatSender /
+              x="115.9063" y="1008.422">HeartbeatSender /
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="88" x="133.9063"
-              y="987.422">PongHandler
+              y="1027.4899">PongHandler
         </text>
         <rect fill="#E2E2F0" height="52.1358" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151"
-              x="256.9063" y="53.6381"/>
+              x="256.9063" y="93.706"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="137"
-              x="263.9063" y="75.604">HeartbeatManager /
+              x="263.9063" y="115.672">HeartbeatManager /
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="290.4063"
-              y="94.672">PingHandler
+              y="134.7399">PingHandler
         </text>
         <rect fill="#E2E2F0" height="52.1358" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151"
-              x="256.9063" y="946.3881"/>
+              x="256.9063" y="986.456"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="137"
-              x="263.9063" y="968.3541">HeartbeatManager /
+              x="263.9063" y="1008.422">HeartbeatManager /
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="290.4063"
-              y="987.422">PingHandler
+              y="1027.4899">PingHandler
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="491.7188"
-              y="102.672">Controller
+              y="142.7399">Controller
         </text>
-        <ellipse cx="528.2188" cy="71.706" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="516.2188" x2="540.2188" y1="85.706" y2="85.706"/>
+        <ellipse cx="528.2188" cy="111.7739" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="516.2188" x2="540.2188" y1="125.7739" y2="125.7739"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="491.7188"
-              y="961.3541">Controller
+              y="1001.422">Controller
         </text>
-        <ellipse cx="528.2188" cy="981.456" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="516.2188" x2="540.2188" y1="995.456" y2="995.456"/>
+        <ellipse cx="528.2188" cy="1021.524" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="516.2188" x2="540.2188" y1="1035.524" y2="1035.524"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="700.0313"
-              y="102.672">Model
+              y="142.7399">Model
         </text>
-        <ellipse cx="724.0313" cy="71.706" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="712.0313" x2="736.0313" y1="85.706" y2="85.706"/>
+        <ellipse cx="724.0313" cy="111.7739" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="712.0313" x2="736.0313" y1="125.7739" y2="125.7739"/>
         <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="700.0313"
-              y="961.3541">Model
+              y="1001.422">Model
         </text>
-        <ellipse cx="724.0313" cy="981.456" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="712.0313" x2="736.0313" y1="995.456" y2="995.456"/>
+        <ellipse cx="724.0313" cy="1021.524" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="712.0313" x2="736.0313" y1="1035.524" y2="1035.524"/>
         <rect fill="#FFFFFF" height="733.4961" style="stroke:#181818;stroke-width:1.0;" width="10" x="172.9063"
-              y="203.892"/>
+              y="243.9599"/>
         <rect fill="#FFFFFF" height="701.7901" style="stroke:#181818;stroke-width:1.0;" width="10" x="327.4063"
-              y="235.598"/>
+              y="275.6659"/>
         <rect fill="#FFFFFF" height="63.412" style="stroke:#181818;stroke-width:1.0;" width="10" x="523.2188"
-              y="575.3461"/>
+              y="615.414"/>
         <rect fill="#FFFFFF" height="63.412" style="stroke:#181818;stroke-width:1.0;" width="10" x="523.2188"
-              y="851.9761"/>
+              y="892.044"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="719.0313"
-              y="607.0521"/>
+              y="647.12"/>
         <rect fill="#FFFFFF" height="31.706" style="stroke:#181818;stroke-width:1.0;" width="10" x="719.0313"
-              y="883.6821"/>
-        <polygon fill="#181818" points="516.2188,136.4799,526.2188,140.4799,516.2188,144.4799,520.2188,140.4799"
+              y="923.75"/>
+        <polygon fill="#181818" points="516.2188,176.5479,526.2188,180.5479,516.2188,184.5479,520.2188,180.5479"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="52.5" x2="522.2188" y1="140.4799" y2="140.4799"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="52.5" x2="522.2188" y1="180.5479" y2="180.5479"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="59.5" y="134.6709">1
+              textLength="7.4063" x="59.5" y="174.7389">1
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="137" x="70.9063"
-              y="134.6709">Login(see initialization)
+              y="174.7389">Login(see initialization)
         </text>
-        <polygon fill="#181818" points="712.0313,168.186,722.0313,172.186,712.0313,176.186,716.0313,172.186"
+        <polygon fill="#181818" points="712.0313,208.2539,722.0313,212.2539,712.0313,216.2539,716.0313,212.2539"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="528.2188" x2="718.0313" y1="172.186" y2="172.186"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="528.2188" x2="718.0313" y1="212.2539" y2="212.2539"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="535.2188" y="166.377">2
+              textLength="7.4063" x="535.2188" y="206.4449">2
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="34" x="546.625"
-              y="166.377">Login
+              y="206.4449">Login
         </text>
-        <polygon fill="#181818" points="160.9063,199.892,170.9063,203.892,160.9063,207.892,164.9063,203.892"
+        <polygon fill="#181818" points="160.9063,239.9599,170.9063,243.9599,160.9063,247.9599,164.9063,243.9599"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="52.5" x2="166.9063" y1="203.892" y2="203.892"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="52.5" x2="166.9063" y1="243.9599" y2="243.9599"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="59.5" y="198.083">3
+              textLength="7.4063" x="59.5" y="238.1509">3
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="90" x="70.9063"
-              y="198.083">StartHeartbeat
+              y="238.1509">StartHeartbeat
         </text>
-        <polygon fill="#181818" points="315.4063,231.598,325.4063,235.598,315.4063,239.598,319.4063,235.598"
+        <polygon fill="#181818" points="315.4063,271.6659,325.4063,275.6659,315.4063,279.6659,319.4063,275.6659"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="182.9063" x2="321.4063" y1="235.598" y2="235.598"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="182.9063" x2="321.4063" y1="275.6659" y2="275.6659"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="189.9063" y="229.789">4
+              textLength="7.4063" x="189.9063" y="269.8569">4
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="27" x="201.3125"
-              y="229.789">Ping
+              y="269.8569">Ping
         </text>
-        <polygon fill="#181818" points="193.9063,263.304,183.9063,267.304,193.9063,271.304,189.9063,267.304"
-                 style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="187.9063" x2="326.4063" y1="267.304"
-              y2="267.304"/>
-        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="199.9063" y="261.495">5
-        </text>
-        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="32" x="211.3125"
-              y="261.495">Pong
-        </text>
-        <path d="M10,282.304 L83.625,282.304 L83.625,292.01 L73.625,302.01 L10,302.01 L10,282.304 " fill="#EEEEEE"
-              style="stroke:#000000;stroke-width:1.5;"/>
-        <rect fill="none" height="648.0841" style="stroke:#000000;stroke-width:1.5;" width="758.0313" x="10"
-              y="282.304"/>
-        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="28.625" x="25" y="297.201">loop
-        </text>
-        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="97.1563" x="98.625" y="296.0629">[every n seconds]
-        </text>
-        <path d="M20,309.01 L81.2188,309.01 L81.2188,318.716 L71.2188,328.716 L20,328.716 L20,309.01 " fill="#EEEEEE"
-              style="stroke:#000000;stroke-width:1.5;"/>
-        <rect fill="none" height="614.3781" style="stroke:#000000;stroke-width:1.5;" width="738.0313" x="20"
-              y="309.01"/>
-        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="16.2188" x="35" y="323.907">alt
-        </text>
-        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="73.7813" x="96.2188" y="322.7689">[no problem]
-        </text>
-        <path d="M44,333.716 L44,396.716 L167,396.716 L167,343.716 L157,333.716 L44,333.716 " fill="#FEFFDD"
-              style="stroke:#181818;stroke-width:0.5;"/>
-        <path d="M157,333.716 L157,343.716 L167,343.716 L157,333.716 " fill="#FEFFDD"
-              style="stroke:#181818;stroke-width:0.5;"/>
-        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82" x="50"
-              y="352.6131">There's 5 tries
-        </text>
-        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="102" x="50"
-              y="370.3191">before the player
-        </text>
-        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="92" x="50"
-              y="388.0251">is disconnected
-        </text>
-        <polygon fill="#181818" points="315.4063,421.5401,325.4063,425.5401,315.4063,429.5401,319.4063,425.5401"
-                 style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="182.9063" x2="321.4063" y1="425.5401" y2="425.5401"/>
-        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="189.9063" y="419.7311">6
-        </text>
-        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="27" x="201.3125"
-              y="419.7311">Ping
-        </text>
-        <polygon fill="#181818" points="193.9063,453.2461,183.9063,457.2461,193.9063,461.2461,189.9063,457.2461"
+        <polygon fill="#181818" points="193.9063,303.3719,183.9063,307.3719,193.9063,311.3719,189.9063,307.3719"
                  style="stroke:#181818;stroke-width:1.0;"/>
         <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="187.9063" x2="326.4063"
-              y1="457.2461" y2="457.2461"/>
+              y1="307.3719" y2="307.3719"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="199.9063" y="451.4371">7
+              textLength="7.4063" x="199.9063" y="301.5629">5
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="32" x="211.3125"
-              y="451.4371">Pong
+              y="301.5629">Pong
         </text>
-        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="758.0313" y1="466.2461"
-              y2="466.2461"/>
-        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="98.1563" x="25" y="478.005">[Sender problem]
-        </text>
-        <line style="stroke:#181818;stroke-width:2.0;" x1="309.4063" x2="319.4063" y1="500.934" y2="510.934"/>
-        <line style="stroke:#181818;stroke-width:2.0;" x1="309.4063" x2="319.4063" y1="510.934" y2="500.934"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="182.9063" x2="314.4063" y1="505.934" y2="505.934"/>
+        <path d="M10,322.3719 L83.625,322.3719 L83.625,332.0779 L73.625,342.0779 L10,342.0779 L10,322.3719 "
+              fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="648.0841" style="stroke:#000000;stroke-width:1.5;" width="758.0313" x="10"
+              y="322.3719"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="189.9063" y="500.125">8
+              textLength="28.625" x="25" y="337.2689">loop
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="97.1563" x="98.625" y="336.1308">[every n seconds]
+        </text>
+        <path d="M20,349.0779 L81.2188,349.0779 L81.2188,358.784 L71.2188,368.784 L20,368.784 L20,349.0779 "
+              fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/>
+        <rect fill="none" height="614.3781" style="stroke:#000000;stroke-width:1.5;" width="738.0313" x="20"
+              y="349.0779"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="16.2188" x="35" y="363.975">alt
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="73.7813" x="96.2188" y="362.8369">[no problem]
+        </text>
+        <path d="M44,373.784 L44,436.784 L167,436.784 L167,383.784 L157,373.784 L44,373.784 " fill="#FEFFDD"
+              style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M157,373.784 L157,383.784 L167,383.784 L157,373.784 " fill="#FEFFDD"
+              style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82" x="50"
+              y="392.681">There's 5 tries
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="102" x="50"
+              y="410.387">before the player
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="92" x="50"
+              y="428.093">is disconnected
+        </text>
+        <polygon fill="#181818" points="315.4063,461.608,325.4063,465.608,315.4063,469.608,319.4063,465.608"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="182.9063" x2="321.4063" y1="465.608" y2="465.608"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="7.4063" x="189.9063" y="459.799">6
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="27" x="201.3125"
-              y="500.125">Ping
+              y="459.799">Ping
         </text>
-        <path d="M342,518.934 L342,545.934 L413,545.934 L413,528.934 L403,518.934 L342,518.934 " fill="#FEFFDD"
+        <polygon fill="#181818" points="193.9063,493.314,183.9063,497.314,193.9063,501.314,189.9063,497.314"
+                 style="stroke:#181818;stroke-width:1.0;"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="187.9063" x2="326.4063" y1="497.314"
+              y2="497.314"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="7.4063" x="199.9063" y="491.505">7
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="32" x="211.3125"
+              y="491.505">Pong
+        </text>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="758.0313" y1="506.314"
+              y2="506.314"/>
+        <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
+              textLength="98.1563" x="25" y="518.073">[Sender problem]
+        </text>
+        <line style="stroke:#181818;stroke-width:2.0;" x1="309.4063" x2="319.4063" y1="541.002" y2="551.002"/>
+        <line style="stroke:#181818;stroke-width:2.0;" x1="309.4063" x2="319.4063" y1="551.002" y2="541.002"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="182.9063" x2="314.4063" y1="546.002" y2="546.002"/>
+        <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
+              textLength="7.4063" x="189.9063" y="540.1929">8
+        </text>
+        <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="27" x="201.3125"
+              y="540.1929">Ping
+        </text>
+        <path d="M342,559.002 L342,586.002 L413,586.002 L413,569.002 L403,559.002 L342,559.002 " fill="#FEFFDD"
               style="stroke:#181818;stroke-width:0.5;"/>
-        <path d="M403,518.934 L403,528.934 L413,528.934 L403,518.934 " fill="#FEFFDD"
+        <path d="M403,559.002 L403,569.002 L413,569.002 L403,559.002 " fill="#FEFFDD"
               style="stroke:#181818;stroke-width:0.5;"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="50" x="348"
-              y="537.831">Timeout
+              y="577.899">Timeout
         </text>
-        <polygon fill="#181818" points="511.2188,571.3461,521.2188,575.3461,511.2188,579.3461,515.2188,575.3461"
+        <polygon fill="#181818" points="511.2188,611.414,521.2188,615.414,511.2188,619.414,515.2188,615.414"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="337.4063" x2="517.2188" y1="575.3461" y2="575.3461"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="337.4063" x2="517.2188" y1="615.414" y2="615.414"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="7.4063" x="344.4063" y="569.5371">9
+              textLength="7.4063" x="344.4063" y="609.605">9
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="148"
-              x="355.8125" y="569.5371">DisconnectPlayer(player)
+              x="355.8125" y="609.605">DisconnectPlayer(player)
         </text>
-        <polygon fill="#181818" points="707.0313,603.0521,717.0313,607.0521,707.0313,611.0521,711.0313,607.0521"
+        <polygon fill="#181818" points="707.0313,643.12,717.0313,647.12,707.0313,651.12,711.0313,647.12"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="533.2188" x2="713.0313" y1="607.0521" y2="607.0521"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="533.2188" x2="713.0313" y1="647.12" y2="647.12"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="540.2188" y="601.2431">10
+              textLength="14.8125" x="540.2188" y="641.311">10
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="148"
-              x="559.0313" y="601.2431">DisconnectPlayer(player)
+              x="559.0313" y="641.311">DisconnectPlayer(player)
         </text>
-        <polygon fill="#181818" points="539.2188,634.7581,529.2188,638.7581,539.2188,642.7581,535.2188,638.7581"
+        <polygon fill="#181818" points="539.2188,674.826,529.2188,678.826,539.2188,682.826,535.2188,678.826"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="533.2188" x2="723.0313"
-              y1="638.7581" y2="638.7581"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="533.2188" x2="723.0313" y1="678.826"
+              y2="678.826"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="545.2188" y="632.9491">11
+              textLength="14.8125" x="545.2188" y="673.017">11
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="18" x="564.0313"
-              y="632.9491">OK
+              y="673.017">OK
         </text>
-        <polygon fill="#181818" points="63.5,666.4641,53.5,670.4641,63.5,674.4641,59.5,670.4641"
+        <polygon fill="#181818" points="63.5,706.532,53.5,710.532,63.5,714.532,59.5,710.532"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="171.9063" y1="670.4641" y2="670.4641"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="171.9063" y1="710.532" y2="710.532"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="69.5" y="664.6551">12
+              textLength="14.8125" x="69.5" y="704.723">12
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="66" x="88.3125"
-              y="664.6551">Disconnect
+              y="704.723">Disconnect
         </text>
-        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="758.0313" y1="679.4641"
-              y2="679.4641"/>
+        <line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="20" x2="758.0313" y1="719.532"
+              y2="719.532"/>
         <text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing"
-              textLength="105.8438" x="25" y="691.223">[Receiver problem]
+              textLength="105.8438" x="25" y="731.2909">[Receiver problem]
         </text>
-        <polygon fill="#181818" points="315.4063,715.152,325.4063,719.152,315.4063,723.152,319.4063,719.152"
+        <polygon fill="#181818" points="315.4063,755.2199,325.4063,759.2199,315.4063,763.2199,319.4063,759.2199"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="182.9063" x2="321.4063" y1="719.152" y2="719.152"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="182.9063" x2="321.4063" y1="759.2199" y2="759.2199"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="189.9063" y="713.343">13
+              textLength="14.8125" x="189.9063" y="753.4109">13
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="27" x="208.7188"
-              y="713.343">Ping
+              y="753.4109">Ping
         </text>
-        <line style="stroke:#181818;stroke-width:2.0;" x1="189.9063" x2="199.9063" y1="745.858" y2="755.858"/>
-        <line style="stroke:#181818;stroke-width:2.0;" x1="189.9063" x2="199.9063" y1="755.858" y2="745.858"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="194.9063" x2="326.4063" y1="750.858" y2="750.858"/>
+        <line style="stroke:#181818;stroke-width:2.0;" x1="189.9063" x2="199.9063" y1="785.926" y2="795.926"/>
+        <line style="stroke:#181818;stroke-width:2.0;" x1="189.9063" x2="199.9063" y1="795.926" y2="785.926"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="194.9063" x2="326.4063" y1="790.926" y2="790.926"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="199.9063" y="745.049">14
+              textLength="14.8125" x="199.9063" y="785.117">14
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="32" x="218.7188"
-              y="745.049">Pong
+              y="785.117">Pong
         </text>
-        <path d="M96,763.858 L96,790.858 L167,790.858 L167,773.858 L157,763.858 L96,763.858 " fill="#FEFFDD"
+        <path d="M96,803.926 L96,830.926 L167,830.926 L167,813.926 L157,803.926 L96,803.926 " fill="#FEFFDD"
               style="stroke:#181818;stroke-width:0.5;"/>
-        <path d="M157,763.858 L157,773.858 L167,773.858 L157,763.858 " fill="#FEFFDD"
+        <path d="M157,803.926 L157,813.926 L167,813.926 L157,803.926 " fill="#FEFFDD"
               style="stroke:#181818;stroke-width:0.5;"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="50" x="102"
-              y="782.7551">Timeout
+              y="822.823">Timeout
         </text>
-        <polygon fill="#181818" points="63.5,816.2701,53.5,820.2701,63.5,824.2701,59.5,820.2701"
+        <polygon fill="#181818" points="63.5,856.338,53.5,860.338,63.5,864.338,59.5,860.338"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="171.9063" y1="820.2701" y2="820.2701"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="57.5" x2="171.9063" y1="860.338" y2="860.338"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="69.5" y="814.4611">15
+              textLength="14.8125" x="69.5" y="854.529">15
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="66" x="88.3125"
-              y="814.4611">Disconnect
+              y="854.529">Disconnect
         </text>
-        <polygon fill="#181818" points="511.2188,847.9761,521.2188,851.9761,511.2188,855.9761,515.2188,851.9761"
+        <polygon fill="#181818" points="511.2188,888.044,521.2188,892.044,511.2188,896.044,515.2188,892.044"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="337.4063" x2="517.2188" y1="851.9761" y2="851.9761"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="337.4063" x2="517.2188" y1="892.044" y2="892.044"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="344.4063" y="846.1671">16
+              textLength="14.8125" x="344.4063" y="886.235">16
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="148"
-              x="363.2188" y="846.1671">DisconnectPlayer(player)
+              x="363.2188" y="886.235">DisconnectPlayer(player)
         </text>
-        <polygon fill="#181818" points="707.0313,879.6821,717.0313,883.6821,707.0313,887.6821,711.0313,883.6821"
+        <polygon fill="#181818" points="707.0313,919.75,717.0313,923.75,707.0313,927.75,711.0313,923.75"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;" x1="533.2188" x2="713.0313" y1="883.6821" y2="883.6821"/>
+        <line style="stroke:#181818;stroke-width:1.0;" x1="533.2188" x2="713.0313" y1="923.75" y2="923.75"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="540.2188" y="877.8731">17
+              textLength="14.8125" x="540.2188" y="917.941">17
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="148"
-              x="559.0313" y="877.8731">DisconnectPlayer(player)
+              x="559.0313" y="917.941">DisconnectPlayer(player)
         </text>
-        <polygon fill="#181818" points="539.2188,911.3881,529.2188,915.3881,539.2188,919.3881,535.2188,915.3881"
+        <polygon fill="#181818" points="539.2188,951.456,529.2188,955.456,539.2188,959.456,535.2188,955.456"
                  style="stroke:#181818;stroke-width:1.0;"/>
-        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="533.2188" x2="723.0313"
-              y1="915.3881" y2="915.3881"/>
+        <line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="533.2188" x2="723.0313" y1="955.456"
+              y2="955.456"/>
         <text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing"
-              textLength="14.8125" x="545.2188" y="909.5791">18
+              textLength="14.8125" x="545.2188" y="949.647">18
         </text>
         <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="18" x="564.0313"
-              y="909.5791">OK
-        </text><!--SRC=[vLGzRzim4DtvAmvPd0oEfouUihH3WCHeK2T0XooKT9OFe7WgUJBY_FfIb4J9YGLd3mT3ke_7zzwTlDYBr7wzMjL6MsagSvjpjVBuhq6Rux8WNJfTAQKROTjK6JgbCdw35n-UT2xiOACTiQgr4ygf3YXmTO_XBKCjMxG5EbYzsYUsvRssXK5t1Tf3br7X5m9U1xf5TmYnyr0RRNNPOz4frX_CaGuHJKYEy9EjE3PcZ6ouG3DU5Yd3ycvIkOP7BibUUqGWIqBQqBiMOdkZnggs9sBrvIDIfsSDMmby4sdLUaG7BJW8LhqbeMMWlOPMq5YPvAZX2PQJ6redbM6k0KFg21OyvcmBhnI4eus0PQWTPmQh66gFvO1iS2V0ku4BJCxp7XqkFFm0SOJ-99VXZXs2x172cXm_T9A7WdnWO34NB5AkTRkzDGLcbGy5yt8Zdl63Yv_K9UY_SzXHlwDo7mr85fzOG1Lo8_C2Hdwdc_ChoN-AzbntBjsanZJQoMQcvDdj-Zfajzef7b-ZWLE6lnzIGO4VMiyapj4SfnTtVafn74zoQ7P0bsSVPlXfzb_Qu4lZkwJWkuwuDwlzUrIJYjxYIIHzDVy1]-->
+              y="949.647">OK
+        </text><!--SRC=[vLGzRzim4DtvAmvPaWokfouUihH3WDPeK3T0XooKT9OFe7WgUJBg_FfIb4JHYGLdBmT1le_7zzwTV7iGQVrclMwDjj8rvbF9pThZdmvjYQkATErqevJkX6tN5EYK4XA3y8ZQIO5Qb2huBppxaDAbi8EjTiIg3MaggGsmS9EATsWhTB1-iKziwqTjAuFk1hI78QF24mBU0Bf3Tmonor1RRNKzOj4vrayiaOuHBP0zmHUsujYOERBb2iryMQGCguUiSWFVkIPxvn61B0bfGwzQYEszcglwdeWrbiz8WvuDx2JmpSmA7j5H2qw2rMX9Q9beRw0ND5ScEMfwWrLsG- -aCimjO4YTm8B7actbbO9mj16m3AtZmc0JG_sn790DxWLuFt61xFmweCDR3vz17A4_onMuPuSW1uImDwStdUIX8XyOM2m5gvJhtUvlJO55vLF1ijo8P_pauZjr2Vht4dRKxwW-H0EInMSMK8FSoRA0cT_vvdnDyf-YFNU3I_UfCOqssyoKlBXT7uSSLZl5uyzeOCxmnxTKKE6RrWk9IpJdwSMTpodEuqaEBGxe-kp33D_D_aCRV6ryrnJyhoCUpUh_7bLMCLgSHT9Nymy0]-->
     </g>
 </svg>

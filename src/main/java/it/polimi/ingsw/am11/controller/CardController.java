@@ -39,7 +39,8 @@ public class CardController {
         SavesManager.saveGame(model.save());
     }
 
-    public synchronized void placeCard(@NotNull String Nickname, int cardId,
+    public synchronized void placeCard(@NotNull String Nickname,
+                                       int cardId,
                                        @NotNull Position position,
                                        boolean isRetro)
     throws GameStatusException,
