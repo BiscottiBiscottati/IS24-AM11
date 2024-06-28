@@ -589,6 +589,20 @@ public class GamePage {
      */
     public void updateTurnChange(String nickname) {
         Platform.runLater(() -> {
+            if (miniGameModel.getStartingPlayer().isEmpty()) {
+                miniGameModel.setStartingPlayer(nickname);
+                Map.of(player1, playerColor1,
+                       player2, playerColor2,
+                       player3, playerColor3,
+                       player4, playerColor4)
+                   .forEach((label, colorLabel) -> {
+                       if (label.getText().equals(nickname)) {
+                           colorLabel.setText(
+                                   ">" +
+                                   miniGameModel.getCliPlayer(nickname).getColor().toString());
+                       }
+                   });
+            }
             if (miniGameModel.myName().equals(nickname)) {
                 try {
                     Media turn_sound =

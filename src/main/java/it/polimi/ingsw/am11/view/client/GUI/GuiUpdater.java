@@ -103,9 +103,6 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     @Override
     public void updateTurnChange(@NotNull String nickname) {
-        if (miniGameModel.getStartingPlayer().isEmpty()) {
-            miniGameModel.setStartingPlayer(nickname);
-        }
         miniGameModel.setCurrentTurn(nickname);
         LOGGER.debug("It's {} turn", nickname);
 
