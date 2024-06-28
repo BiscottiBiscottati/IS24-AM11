@@ -36,8 +36,8 @@ public class SetObjCardsPage {
 
     /**
      * This static method is used to create the Objective Cards Page in the GUI. It initializes the
-     * necessary components and sets their properties. It also sets up the layout for the page and
-     * adds it to the root of the GUI.
+     * necessary parts and sets their properties. It also sets up the layout for the page and adds
+     * it to the root of the GUI.
      *
      * @param codexNaturalis The GUI instance that the Objective Cards Page is a part of.
      */

@@ -17,6 +17,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
+/**
+ * This class represents the personal space of a player. It contains the player's hand, objectives,
+ * and candidate objectives.
+ */
 public class PersonalSpace {
 
 
@@ -36,30 +40,66 @@ public class PersonalSpace {
         starterCard = null;
     }
 
+    /**
+     * This method sets the maximum size of the hand.
+     *
+     * @param maxSizeofHand the maximum size of the hand
+     */
     public static void setMaxSizeofHand(int maxSizeofHand) {
         PersonalSpace.maxSizeofHand = maxSizeofHand;
     }
 
+    /**
+     * This method sets the maximum number of objectives that a player can have.
+     *
+     * @param maxObjectives the maximum number of objectives
+     */
     public static void setMaxObjectives(int maxObjectives) {
         PersonalSpace.maxObjectives = maxObjectives;
     }
 
+    /**
+     * This method sets the maximum number of candidate objectives that a player can have.
+     *
+     * @param maxCandidate the maximum number of candidate objectives
+     */
     public static void setMaxCandidateObjectives(int maxCandidate) {
         PersonalSpace.maxCandidateObjectives = maxCandidate;
     }
 
+    /**
+     * This method returns the player's hand.
+     *
+     * @return the player's hand
+     */
     public @NotNull Set<PlayableCard> getPlayerHand() {
         return playerHand;
     }
 
+    /**
+     * This method returns the player's objectives.
+     *
+     * @return the player's objectives
+     */
     public @NotNull Set<ObjectiveCard> getPlayerObjective() {
         return playerObjective;
     }
 
+    /**
+     * This method returns the player's starter card.
+     *
+     * @return the player's starter card
+     */
     public @NotNull Optional<StarterCard> getStarterCard() {
         return Optional.ofNullable(starterCard);
     }
 
+    /**
+     * This method sets the player's starter card.
+     *
+     * @param starter the starter card
+     * @throws IllegalPlayerSpaceActionException if the starter card is already set
+     */
     public void setStarterCard(@NotNull StarterCard starter)
     throws IllegalPlayerSpaceActionException {
         if (starterCard == null) {
@@ -70,10 +110,23 @@ public class PersonalSpace {
         }
     }
 
+    /**
+     * This method returns the candidate objectives.
+     *
+     * @return the candidate objectives
+     */
     public Set<ObjectiveCard> getCandidateObjectives() {
         return Set.copyOf(candidateObjectives);
     }
 
+    /**
+     * This method returns the candidate objective with the given id.
+     *
+     * @param id the id of the candidate objective
+     * @return the candidate objective with the given id
+     * @throws IllegalPlayerSpaceActionException if the objective with the given id is not one of
+     *                                           the
+     */
     public ObjectiveCard getCandidateObjectiveByID(int id)
     throws IllegalPlayerSpaceActionException {
         return candidateObjectives.stream()
@@ -84,14 +137,30 @@ public class PersonalSpace {
                                           " one of yours"));
     }
 
+    /**
+     * This method sets the new candidate objectives.
+     *
+     * @param objective the new candidate objective
+     */
     public void setNewCandidateObjectives(@NotNull ObjectiveCard objective) {
         candidateObjectives.add(objective);
     }
 
+    /**
+     * This method returns the number of available spaces in the player's hand.
+     *
+     * @return the number of available spaces in the player's hand
+     */
     public int availableSpaceInHand() {
         return maxSizeofHand - playerHand.size();
     }
 
+    /**
+     * This method adds a new card to the player's hand.
+     *
+     * @param newCard the new card to add
+     * @throws MaxHandSizeException if the player's hand is already full
+     */
     public void addCardToHand(PlayableCard newCard) throws MaxHandSizeException {
         //throw alreadyMaxCardInHand
         if (playerHand.size() >= maxSizeofHand) {
@@ -101,6 +170,12 @@ public class PersonalSpace {
         }
     }
 
+    /**
+     * This method removes a card from the player's hand.
+     *
+     * @param cardId the id of the card to remove
+     * @throws NotInHandException if the card with the given id is not in the player's hand
+     */
     public void pickCard(int cardId) throws NotInHandException {
         PlayableCard cardToRemove = playerHand.stream()
                                               .filter(card -> card.getId() == cardId)
@@ -115,6 +190,12 @@ public class PersonalSpace {
 
     }
 
+    /**
+     * This method adds a new objective to the player's objectives.
+     *
+     * @param newObjective the new objective to add
+     * @throws IllegalPlayerSpaceActionException if the player's objectives are already full
+     */
     public void addObjective(@NotNull ObjectiveCard newObjective)
     throws IllegalPlayerSpaceActionException {
         Optional.of(newObjective)
@@ -129,14 +210,20 @@ public class PersonalSpace {
         }
     }
 
-    public void removeCandidateObjective(int id) {
-        candidateObjectives.removeIf(obj -> obj.getId() == id);
-    }
-
+    /**
+     * This method returns true if the player has all the objectives that he should have.
+     *
+     * @return true if the player has all the objectives that he should have
+     */
     public boolean areObjectiveGiven() {
         return maxObjectives == playerObjective.size();
     }
 
+    /**
+     * This method saves the current state of the player's personal space.
+     *
+     * @return the memento with the current state of the player's personal space
+     */
     public @NotNull PersonalSpaceMemento save() {
         return new PersonalSpaceMemento(playerHand.stream()
                                                   .map(PlayableCard::getId)
@@ -150,6 +237,11 @@ public class PersonalSpace {
                                         starterCard != null ? starterCard.getId() : - 1);
     }
 
+    /**
+     * This method reloads an old status of the player's personal space from a memento.
+     *
+     * @param memento the memento to reload
+     */
     public void load(@NotNull PersonalSpaceMemento memento) {
         clearAll();
 
@@ -165,6 +257,9 @@ public class PersonalSpace {
         starterCard = CardDecoder.decodeStarterCard(memento.starterCard()).orElseThrow();
     }
 
+    /**
+     * This method clears all the player's personal space.
+     */
     public void clearAll() {
         playerHand.clear();
         playerObjective.clear();

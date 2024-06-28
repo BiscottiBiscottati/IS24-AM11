@@ -7,8 +7,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 /**
- * This class is a superclass for the event that are sent to the view through the TableViewUpdater.
- * These events are used to notify an update that have to be notified to all the players.
+ * This class is a superclass for the event that is sent to the view through the TableViewUpdater.
+ * These events are used to notify an update that has to be notified to all the players.
  */
 public abstract class TableViewEvent extends ViewEvent {
 

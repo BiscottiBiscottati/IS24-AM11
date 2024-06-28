@@ -46,7 +46,7 @@ public interface ClientGameConnector {
     void placeCard(@NotNull Position pos, int cardId, boolean isRetro);
 
     /**
-     * Sends a command to the server to draw a card prom the table
+     * Sends a command to the server to draw a card from the table
      *
      * @param fromVisible true if the card is drawn from the visible cards, false otherwise
      * @param type        the type of the card to draw

@@ -123,7 +123,7 @@ public class PlayerManager {
 
     /**
      * Get the Player class instance of the player with the given nickname, if the player is not
-     * present this method will return an empty Optional
+     * present, this method will return an empty Optional
      *
      * @param nickname the name of the player to get
      * @return the Player with the given nickname, if present
@@ -175,7 +175,7 @@ public class PlayerManager {
 
     /**
      * Get the starter card of the player with the given nickname, if the player has not yet chosen
-     * a starter card this method will return an empty Optional
+     * a starter card, this method will return an empty Optional
      *
      * @param nickname the name of the player to get the starter card of
      * @return the starter card of the player with the given nickname, if present
@@ -232,7 +232,7 @@ public class PlayerManager {
     }
 
     /**
-     * During a turn the player first have to place a card on the field, then they have to draw one
+     * During a turn, the player first has to place a card on the field; then they have to draw one
      * from the ones in the table. This method returns the action that the player has to do in the
      * current turn
      *
@@ -339,7 +339,7 @@ public class PlayerManager {
     }
 
     /**
-     * Get the PlayerColor of the player with the given nickname, if the player is not present this
+     * Get the PlayerColor of the player with the given nickname, if the player is not present, this
      * method will return an empty Optional
      *
      * @param nickname the name of the player to get the color of
@@ -369,7 +369,7 @@ public class PlayerManager {
     }
 
     /**
-     * Method used when adding a new player to the game, it will add the player to the list of
+     * The Method used when adding a new player to the game, it will add the player to the list of
      * players and to the queue of players.
      *
      * @param nickname the nickname of the player
@@ -408,8 +408,8 @@ public class PlayerManager {
     }
 
     /**
-     * Method used when removing a player from the game, it will remove the player from the list of
-     * players and from the queue of players.
+     * The Method used when removing a player from the game, it will remove the player from the list
+     * of players and from the queue of players.
      *
      * @param nickname of the player to remove
      */

@@ -53,8 +53,7 @@ public interface ExceptionThrower {
     void throwException(@NotNull IllegalPickActionException ex);
 
     /**
-     * Handles the NotInHandException, thrown when the player tries to use a card that is not in his
-     * hand
+     * Handles the NotInHandException, thrown when the player tries to use a card not in his hand
      *
      * @param ex the exception thrown
      */
@@ -77,16 +76,16 @@ public interface ExceptionThrower {
     void throwException(@NotNull NumOfPlayersException ex);
 
     /**
-     * Handles the NotGodPlayerException, thrown when the player tries to perform an action that is
-     * allowed only to the god player
+     * Handles the NotGodPlayerException, thrown when the player tries to perform an action allowed
+     * only to the god player
      *
      * @param ex the exception thrown
      */
     void throwException(@NotNull NotGodPlayerException ex);
 
     /**
-     * Handles the GameStatusException, thrown when the player tries to perform an action that is
-     * not allowed in the current game status
+     * Handles the GameStatusException, thrown when the player tries to perform an action not
+     * allowed in the current game status
      *
      * @param ex the exception thrown
      */

@@ -32,7 +32,7 @@ public class SetStarterCardsPage {
 
     /**
      * This static method is used to create the starter cards page in the GUI. It initializes the
-     * necessary components and sets their properties.
+     * necessary parts and sets their properties.
      *
      * @param codexNaturalis The GUI instance that the starter cards page is a part of.
      */

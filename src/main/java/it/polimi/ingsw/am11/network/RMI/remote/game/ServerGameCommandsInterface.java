@@ -9,7 +9,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * This interface is used by the server to receive commands from the clients.
+ * The server uses this interface to receive commands from the clients.
  */
 public interface ServerGameCommandsInterface extends Remote {
     /**
@@ -30,8 +30,8 @@ public interface ServerGameCommandsInterface extends Remote {
      * @param nick   The nickname of the player who is setting the personal objective card.
      * @param cardId The id of the card to set.
      * @throws RemoteException                   If a network error occurs.
-     * @throws IllegalPlayerSpaceActionException If the player try to choose a card that is not in
-     *                                           the candidate objective list.
+     * @throws IllegalPlayerSpaceActionException If the player tries to choose a card, that is not
+     *                                           in the candidate objective list.
      * @throws GameStatusException               If the game is not in the right status to set the
      *                                           personal objective card.
      */
@@ -64,7 +64,7 @@ public interface ServerGameCommandsInterface extends Remote {
      * This method is used to draw a card from the table
      *
      * @param nick        The nickname of the player who is drawing the card
-     * @param fromVisible True if the card is drawn from the visibles , false otherwise
+     * @param fromVisible True if the card is drawn from the visibles, false otherwise
      * @param type        The type of the card to draw
      * @param cardId      The id of the card to draw
      * @throws RemoteException                   If a network error occurs
@@ -99,7 +99,7 @@ public interface ServerGameCommandsInterface extends Remote {
     throws RemoteException, NumOfPlayersException, NotGodPlayerException, GameStatusException;
 
     /**
-     * This method notify that the client needs to resync with the server, the player will expect
+     * This method notifies that the client needs to resync with the server; the player will expect
      * all the information about the game.
      *
      * @param nick The nickname of the player who needs to resync

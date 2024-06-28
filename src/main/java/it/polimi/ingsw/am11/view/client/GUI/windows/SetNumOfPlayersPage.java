@@ -34,7 +34,7 @@ public class SetNumOfPlayersPage {
 
     /**
      * This static method is used to create the Set Number of Players Page in the GUI. It
-     * initializes the necessary components and sets their properties.
+     * initializes the necessary parts and sets their properties.
      *
      * @param codexNaturalis The GUI instance that the Set Number of Players Page is a part of.
      */

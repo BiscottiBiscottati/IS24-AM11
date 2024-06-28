@@ -99,7 +99,7 @@ public class Connecting extends TUIState {
 
         // Handling of Choose socket or rmi >>>
         if (type.isEmpty()) {
-            // Check type
+            // Check a type
             switch (word.toLowerCase()) {
                 case "socket" -> type = "socket";
                 case "rmi" -> type = "rmi";

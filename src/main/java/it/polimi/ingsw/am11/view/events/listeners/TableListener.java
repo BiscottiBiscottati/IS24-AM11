@@ -4,7 +4,7 @@ import it.polimi.ingsw.am11.view.events.TableViewEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Listener for events that should be received bya all the players in the game, if will be used by
+ * Listener for events that should be received bya all the players in the game, if you are used by
  * the model or controller to notify the changes to the clients
  */
 public interface TableListener {

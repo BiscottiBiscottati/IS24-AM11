@@ -286,6 +286,11 @@ public class PositionManager {
         return Map.copyOf(cardsPositioned);
     }
 
+    /**
+     * Used to save the current state of the PositionManager in a memento.
+     *
+     * @return the memento with the current state of the PositionManager
+     */
     @NotNull
     public PositionManagerMemento save() {
         Map<Position, CardContainerMemento> temp = new HashMap<>(64);
@@ -295,6 +300,11 @@ public class PositionManager {
                                           temp);
     }
 
+    /**
+     * Used to reload an old status of the PositionManager from a memento.
+     *
+     * @param memento the memento to reload
+     */
     public void load(@NotNull PositionManagerMemento memento) {
         this.availablePositions.clear();
         this.closedPositions.clear();

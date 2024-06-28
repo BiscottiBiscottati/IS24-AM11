@@ -6,12 +6,12 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * This interface is used by the client to send chat messages to the server.
+ * The client uses this interface to send chat messages to the server.
  */
 public interface ServerChatInterface extends Remote {
 
     /**
-     * This method is used by the client to send a public message to the server.
+     * The client uses this method to send a public message to the server.
      *
      * @param sender the sender of the message
      * @param msg    the message that has been sent
@@ -20,7 +20,7 @@ public interface ServerChatInterface extends Remote {
     void pubMsg(@NotNull String sender, @NotNull String msg) throws RemoteException;
 
     /**
-     * This method is used by the client to send a private message to the server.
+     * The client uses this method to send a private message to the server.
      *
      * @param sender    the sender of the message
      * @param recipient the recipient of the message

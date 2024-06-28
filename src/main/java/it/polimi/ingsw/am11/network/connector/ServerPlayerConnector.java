@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 
 /**
- * This interface is used by the server to send updates to player private data.
+ * The server uses this interface to send updates to player private data.
  * <p>
  * Each player should have an implementation of this interface to receive updates from the server.
  *

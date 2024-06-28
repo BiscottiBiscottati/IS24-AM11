@@ -191,9 +191,9 @@ public class GamePage {
     }
 
     /**
-     * This method is used to create the game page in the GUI. It initializes the necessary
-     * components, sets their properties, and prepares the game page for interaction. It also sets
-     * up the layout for the page and adds it to the root of the GUI.
+     * This method is used to create the game page in the GUI. It initializes the necessary parts,
+     * sets their properties, and prepares the game page for interaction. It also sets up the layout
+     * for the page and adds it to the root of the GUI.
      *
      * @param codexNaturalis The GUI instance that the game page is a part of.
      */
@@ -501,8 +501,8 @@ public class GamePage {
     /**
      * This method is used to recursively print the cards on the game field in the GUI. It checks if
      * a card has already been placed at a position, if not, it places the card and saves it in the
-     * placedCards Map. It then checks the neighbouring positions and calls itself recursively for
-     * each neighbouring card.
+     * placedCards Map. It then checks the neighboring positions and calls itself recursively for
+     * each neighboring card.
      *
      * @param placedCards     A map that keeps track of the cards that have already been placed on
      *                        the game field.
@@ -515,7 +515,7 @@ public class GamePage {
 
         CardContainer cardContainer = cardsPositioned.get(pos);
         if (placedCards.containsKey(pos)) {
-            //if we already placed that card we simply put it to the front
+            //if we already placed that card, we simply put it to the front
             placedCards.get(pos).toFront();
         } else {
             //if the card has not been placed yet we place it and save it in the placedCards Map
@@ -537,7 +537,7 @@ public class GamePage {
             cardImageView.toFront();
         }
 
-        //now let's check the neighbouring cards
+        //now let's check the neighboring cards
         for (Corner corner : Corner.values()) {
             if (cardsPositioned.get(pos).isCornerCovered(corner)) {
                 recursivePrinter(placedCards, cardsPositioned,
@@ -902,7 +902,7 @@ public class GamePage {
     /**
      * This method is triggered when the chat button is clicked in the GUI. It opens a chat box
      * where the user can send and receive messages. The chat box includes a text field for entering
-     * messages, a sent button for sending messages, and a close button for closing the chat box.
+     * messages, a send button for sending messages, and a close button for closing the chat box.
      * The chat box also displays the chat history.
      *
      * @param actionEvent The ActionEvent object representing the details of the click event.

@@ -23,7 +23,7 @@ public class WaitingRoomPage {
 
     /**
      * This static method is used to create the waiting room page in the GUI. It initializes the
-     * necessary components and sets their properties.
+     * necessary parts and sets their properties.
      *
      * @param codexNaturalis The GUI instance that the waiting room page is a part of.
      */

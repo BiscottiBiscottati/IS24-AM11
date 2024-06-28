@@ -41,7 +41,7 @@ public class SetNickPage {
 
     /**
      * This static method is used to create the set nickname page in the GUI. It initializes the
-     * necessary components and sets their properties.
+     * necessary parts and sets their properties.
      *
      * @param codexNaturalis The GUI instance that the set nickname page is a part of.
      */
@@ -184,7 +184,7 @@ public class SetNickPage {
 
     /**
      * This static method is used to show an error message when the nickname entered is invalid or
-     * the number of player isn't set.
+     * the number of players isn't set.
      *
      * @param message The error message to be displayed.
      */

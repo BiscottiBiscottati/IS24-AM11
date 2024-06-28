@@ -20,9 +20,9 @@ import java.util.Set;
  * <p>
  * It manages the positioning and exposure of cards on the field.
  * <p>
- * The class contains two main components: an ExposedItemManager and a PositionManager.
+ * The class contains two main parts: an ExposedItemManager and a PositionManager.
  * <p>
- * The ExposedItemManager is responsible for managing the items exposed on the field.
+ * The ExposedItemManager is responsible for managing the items exposed in the field.
  * <p>
  * The PositionManager is responsible for managing the positions of the cards on the field.
  * <p>
@@ -175,14 +175,31 @@ public class PlayerField {
         return this.positionManager.containsCard(card);
     }
 
+    /**
+     * It is used to get the map of cards positioned on the player's field.
+     *
+     * @return Map<Position, CardContainer> - A map of cards positioned on the player's field.
+     */
     public Map<Position, CardContainer> getCardsPositioned() {
         return this.positionManager.getCardsPositioned();
     }
 
+    /**
+     * It is used to get the number of "placed" colors in the player's field.
+     *
+     * @return Map<GameColor, Integer> - A map of colors and the number of exposed items of that
+     * color.
+     */
     public Map<GameColor, Integer> getPlacedCardColours() {
         return this.itemManager.getPlacedCardColors();
     }
 
+    /**
+     * It is used to get the number of items of a specific color exposed on the player's field.
+     *
+     * @param color GameColor - The color for which to get the count.
+     * @return int - The number of items of the specified color exposed on the player's field.
+     */
     public int getNumberOfPositionedColor(@NotNull GameColor color) {
         return this.itemManager.getPlacedCardOf(color);
     }

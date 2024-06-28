@@ -74,6 +74,15 @@ public class Chat extends TUIState {
         return TuiStates.CHAT;
     }
 
+    /**
+     * This method parse and handle the chat messages
+     *
+     * @param actuator the actuator to send messages
+     * @param args     the arguments, it comprehends the command and the message
+     * @param players  the players in the game
+     * @return the message to print on the screen
+     * @throws ParsingErrorException if the arguments are not correct
+     */
     public static @NotNull String chatter(@NotNull Actuator actuator, String @NotNull [] args,
                                           @NotNull Set<String> players)
     throws ParsingErrorException {

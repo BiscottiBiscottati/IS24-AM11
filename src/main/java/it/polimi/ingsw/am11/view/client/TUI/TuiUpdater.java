@@ -83,7 +83,7 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     /**
-     * Update the field of the player, it can place or remove a card, if the removeMode is true the
+     * Update the field of the player, it can place or remove a card, if the removeMode is true, the
      * cardId and isRetro are ignored.
      *
      * @param nickname the nickname of the player
@@ -160,7 +160,7 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     /**
-     * Update the status of the game, it is referred to the status of the model, not the state of
+     * Update the status of the game; it is referred to the status of the model, not the state of
      * the TUI
      *
      * @param status the new status of the game
@@ -495,7 +495,7 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     /**
-     * Get the candidateNick, the candidateNick is the nickname that the player try to send to the
+     * Get the candidateNick; the candidateNick is the nickname that the player tries to send to the
      * server
      *
      * @return the candidateNick
@@ -506,7 +506,7 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
 
     /**
      * Set the candidateNick to the nickname passed as argument, the candidateNick is the nickname
-     * that the player try to send to the server
+     * that the player tries to send to the server
      *
      * @param candidateNick the candidateNick to set
      */

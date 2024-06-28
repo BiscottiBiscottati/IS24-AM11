@@ -22,8 +22,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * This class is used by the server to send updates to the clients for the game.
- * Implements the {@link ServerPlayerConnector} and {@link ServerTableConnector} interfaces.
+ * The server uses this class to send updates to the clients for the game. Implements the
+ * {@link ServerPlayerConnector} and {@link ServerTableConnector} interfaces.
+ *
  * @param remoteConnector the interface to send updates to the clients
  */
 public record ServerConnectorImpl(@NotNull ClientGameUpdatesInterface remoteConnector)

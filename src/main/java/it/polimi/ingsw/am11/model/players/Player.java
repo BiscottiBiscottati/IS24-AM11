@@ -40,6 +40,12 @@ public record Player(@NotNull String nickname,
         this(nickname, color, space, new PlayerField());
     }
 
+    /**
+     * This method is used to reload an old status of player from a memento.
+     *
+     * @param memento the memento to reload
+     * @return the player with the status reloaded from the memento
+     */
     public static @NotNull Player load(@NotNull PlayerMemento memento) {
         PersonalSpace space = new PersonalSpace();
         space.load(memento.space());
@@ -48,10 +54,22 @@ public record Player(@NotNull String nickname,
         return new Player(memento.nickname(), memento.color(), space, field);
     }
 
+    /**
+     * This method creates a new <code>PlayerMemento</code> with the complete current state of the
+     * player.
+     *
+     * @return the memento with the current state of the player
+     */
     public @NotNull PlayerMemento save() {
         return new PlayerMemento(nickname, color, space.save(), field.save());
     }
 
+    /**
+     * This method creates a new <code>PlayerMemento</code> with the state of the player that can be
+     * shared with other players.
+     *
+     * @return the memento with the public state of the player
+     */
     public @NotNull PlayerMemento savePublic() {
         return new PlayerMemento(nickname, color, new PersonalSpace().save(), field.save());
     }

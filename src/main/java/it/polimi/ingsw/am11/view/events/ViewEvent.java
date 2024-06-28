@@ -37,7 +37,7 @@ public abstract class ViewEvent {
     public abstract @Nullable Object getNewValue();
 
     /**
-     * This method is guaranteed something not null that represent the event
+     * This method is guaranteed something not null that represents the event
      *
      * @return the value of the action that has been performed.
      */

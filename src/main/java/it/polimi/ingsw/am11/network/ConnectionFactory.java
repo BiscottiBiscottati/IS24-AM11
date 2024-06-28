@@ -4,8 +4,8 @@ import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This interface is used by the UI to create a new connection to the server. Each network
- * implementation will provide an implementation of this interface.
+ * The UI uses this interface to create a new connection to the server. Each network implementation
+ * will provide an implementation of this interface.
  */
 @FunctionalInterface
 public interface ConnectionFactory {

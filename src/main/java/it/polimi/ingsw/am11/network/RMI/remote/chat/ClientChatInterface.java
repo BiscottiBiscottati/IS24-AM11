@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
  */
 public interface ClientChatInterface extends Remote {
     /**
-     * This method is used by the server to send a public message to a specific client.
+     * The server uses this method to send a public message to a specific client.
      *
      * @param sender the sender of the message
      * @param msg    the message that has been sent

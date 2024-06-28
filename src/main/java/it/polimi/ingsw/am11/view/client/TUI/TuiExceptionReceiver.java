@@ -35,7 +35,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     @Override
     public void throwException(@NotNull IllegalPlayerSpaceActionException ex) {
         LOGGER.debug("IllegalPlayerSpaceActionException {}", ex.getMessage());
-        //CASE: trying to set objective that is not yours
+        //CASE: trying to set a goal that is not yours
         if (tuiUpdater.isCurrentState(TuiStates.WAITING)) {
             tuiUpdater.setTuiState(TuiStates.CHOOSING_OBJECTIVE);
             tuiUpdater.setHomeState(TuiStates.CHOOSING_OBJECTIVE);
@@ -108,8 +108,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     }
 
     /**
-     * Handles the NotInHandException, thrown when the player tries to use a card that is not in his
-     * hand
+     * Handles the NotInHandException, thrown when the player tries to use a card not in his hand
      *
      * @param ex the exception thrown
      */
@@ -158,8 +157,8 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     }
 
     /**
-     * Handles the NotGodPlayerException, thrown when the player tries to perform an action that is
-     * allowed only to the god player
+     * Handles the NotGodPlayerException, thrown when the player tries to perform an action allowed
+     * only to the god player
      *
      * @param ex the exception thrown
      */
@@ -173,8 +172,8 @@ public class TuiExceptionReceiver implements ExceptionThrower {
     }
 
     /**
-     * Handles the GameStatusException, thrown when the player tries to perform an action that is
-     * not allowed in the current game status
+     * Handles the GameStatusException, thrown when the player tries to perform an action not
+     * allowed in the current game status
      *
      * @param ex the exception thrown
      */
@@ -203,7 +202,7 @@ public class TuiExceptionReceiver implements ExceptionThrower {
 
     /**
      * Handles the IllegalPlateauActionException, thrown when the player tries to perform an action
-     * that is not allowed on the plateau
+     * not allowed on the plateau
      *
      * @param ex the exception thrown
      */

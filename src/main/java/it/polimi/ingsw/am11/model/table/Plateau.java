@@ -107,8 +107,8 @@ public class Plateau {
     }
 
     /**
-     * Remove the specified player from the plateau, it will be removed from the points, counter
-     * objective and final leaderboard
+     * Remove the specified player from the plateau, it will be removed from the points, counter-
+     * * objective and final leaderboard
      *
      * @param player the player to remove
      */
@@ -143,7 +143,7 @@ public class Plateau {
     }
 
     /**
-     * Add a new player to the plateau with 0 points and 0 counter objective
+     * Add a new player to the plateau with 0 points and 0 counter objectives
      *
      * @param newPlayer nickname of the new player to add
      */
@@ -153,10 +153,10 @@ public class Plateau {
     }
 
     /**
-     * The counter objective is a Map that contains the number of objectives completed by each
-     * player, this method adds 1 to the counter objective of the specified player
+     * The counter-objective is a Map that contains the number of objectives completed by each
+     * player; this method adds 1 to the counter-objective of the specified player
      *
-     * @param player the player to add the counter objective to
+     * @param player the player to add the counter-objective to
      * @throws IllegalPlateauActionException if the player is not found
      */
     public void addCounterObjective(@NotNull String player)
@@ -185,7 +185,7 @@ public class Plateau {
     /**
      * Get the number of completed objectives of the specified player
      *
-     * @param player the player to get the counter objective of
+     * @param player the player to get the counter-objective of
      * @return the number of completed objectives of the specified player
      * @throws IllegalPlateauActionException if the player is not found
      */
@@ -199,7 +199,7 @@ public class Plateau {
     /**
      * Set the final leaderboard, the final leaderboard is a Map that contains the final position of
      * each player, more than one player can have the same final position if they have the same
-     * points and counter objective. It will be considered a  tie
+     * points and counter-objective. It will be considered a  tie
      */
     public void setFinalLeaderboard() {
         List<Map.Entry<String, Integer>> entries = new ArrayList<>(playerPoints.entrySet());
@@ -228,7 +228,7 @@ public class Plateau {
 
     /**
      * Get the final position of the specified player, more than one player can have the same final
-     * position if they have the same * points and counter objective. It will be considered a  tie
+     * position if they have the same * points and counter-objective. It will be considered a  tie
      *
      * @param player the player to get the final position of
      * @return the final position of the specified player
@@ -304,7 +304,7 @@ public class Plateau {
     }
 
     /**
-     * Hard reset the plateau, it will remove all the players, points, counter objective and final
+     * Hard reset the plateau, it will remove all the players, points, counter-objective and final
      */
     public void hardReset() {
         LOGGER.debug("MODEL: Hard reset on plateau");
