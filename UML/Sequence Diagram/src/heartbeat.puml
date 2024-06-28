@@ -1,0 +1,74 @@
+@startuml heartbeat
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+box User
+actor Mario
+participant "HeartbeatSender /\nPongHandler" as Sender
+end box
+
+box Server
+participant "HeartbeatManager /\nPingHandler" as Receiver
+entity Controller
+entity Model
+end box
+
+Mario -> Controller: Login(see initialization)
+Controller -> Model: Login
+Mario -> Sender: StartHeartbeat
+
+activate Sender
+
+Sender -> Receiver: Ping
+activate Receiver
+
+Receiver --> Sender: Pong
+loop every n seconds
+
+    alt no problem
+        note left of Sender
+            There's 5 tries
+            before the player
+            is disconnected
+        end note
+        Sender -> Receiver: Ping
+        Receiver --> Sender: Pong
+    else Sender problem
+        Sender ->X Receiver: Ping
+        note right of Receiver
+            Timeout
+        end note
+        Receiver -> Controller: DisconnectPlayer(player)
+        activate Controller
+
+        Controller -> Model: DisconnectPlayer(player)
+        activate Model
+
+        Model --> Controller: OK
+        deactivate Model
+        deactivate Controller
+
+        Sender -> Mario: Disconnect
+    else Receiver problem
+        Sender -> Receiver: Ping
+        Receiver ->X Sender: Pong
+        note left of Sender
+            Timeout
+        end note
+        Sender -> Mario: Disconnect
+        Receiver -> Controller: DisconnectPlayer(player)
+        activate Controller
+
+        Controller -> Model: DisconnectPlayer(player)
+        activate Model
+
+        Model --> Controller: OK
+        deactivate Model
+        deactivate Controller
+    end
+end
+deactivate Sender
+deactivate Receiver
+
+@enduml
