@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
  * This interface is used by the server to receive heartbeat pings from the clients.
  */
 public interface HeartbeatInterface extends Remote {
+
     void ping(@NotNull String nickname) throws RemoteException;
 
     int getInterval() throws RemoteException;
