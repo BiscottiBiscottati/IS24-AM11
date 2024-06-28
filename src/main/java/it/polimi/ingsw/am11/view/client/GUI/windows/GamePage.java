@@ -849,7 +849,7 @@ public class GamePage {
                 try {
                     PlayableCardType type = CardInfo.getPlayableCardType(id);
                     GameColor color =
-                            CardInfo.getPlayabelCardColor(
+                            CardInfo.getPlayableCardColor(
                                     handIDs.get(handPos));
                     cardImage = GuiResources.getRetro(type, color);
                     handRetro.set(handPos, true);

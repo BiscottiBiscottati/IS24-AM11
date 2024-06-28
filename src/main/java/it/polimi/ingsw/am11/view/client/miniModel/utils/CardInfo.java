@@ -27,7 +27,7 @@ public class CardInfo {
                       .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
     }
 
-    public static GameColor getPlayabelCardColor(int id) throws IllegalCardBuildException {
+    public static GameColor getPlayableCardColor(int id) throws IllegalCardBuildException {
         return resDeck.getCardById(id)
                       .map(ResourceCard::getColor)
                       .or(() -> goldDeck.getCardById(id).map(GoldCard::getColor))

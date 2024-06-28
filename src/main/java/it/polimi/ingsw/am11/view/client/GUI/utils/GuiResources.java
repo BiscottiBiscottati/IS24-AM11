@@ -169,7 +169,7 @@ public class GuiResources {
             GameColor colorName;
             try {
                 typeName = CardInfo.getPlayableCardType(cardId);
-                colorName = CardInfo.getPlayabelCardColor(cardId);
+                colorName = CardInfo.getPlayableCardColor(cardId);
             } catch (IllegalCardBuildException e) {
                 throw new RuntimeException(e);
             }
