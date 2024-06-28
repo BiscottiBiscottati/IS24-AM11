@@ -130,6 +130,9 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      */
     @Override
     public void updateTurnChange(@NotNull String nickname) {
+        if (model.getStartingPlayer().isEmpty()) {
+            model.setStartingPlayer(nickname);
+        }
         model.setCurrentTurn(nickname);
         LOGGER.debug("It's {} turn", nickname);
 
@@ -368,6 +371,7 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void receiveReconnection(@NotNull ReconnectionModelMemento memento) {
         LOGGER.debug("Reconnection event received");
+        model = new MiniGameModel();
         model.load(memento);
         model.setMyName(candidateNick);
 

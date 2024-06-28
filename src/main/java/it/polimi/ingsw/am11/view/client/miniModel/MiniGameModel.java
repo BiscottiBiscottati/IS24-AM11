@@ -283,4 +283,13 @@ public class MiniGameModel {
         return startingPlayer;
     }
 
+    /**
+     * Sets the name of the starting player.
+     *
+     * @param startingPlayer The name of the starting player.s
+     */
+    public void setStartingPlayer(String startingPlayer) {
+        this.startingPlayer = startingPlayer;
+    }
+
 }
