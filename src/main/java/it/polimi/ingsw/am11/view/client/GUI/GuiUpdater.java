@@ -82,15 +82,12 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      * @param isRetro  if the card is placed on it's retro
      */
     @Override
-    public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro) {
+    public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro)
+    throws SyncIssueException {
         LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {},",
                      nickname, x, y, cardId, isRetro);
-        try {
-            miniGameModel.getCliPlayer(nickname).getField()
-                         .place(new Position(x, y), cardId, isRetro);
-        } catch (SyncIssueException e) {
-            throw new RuntimeException(e);
-        }
+        miniGameModel.getCliPlayer(nickname).getField()
+                     .place(new Position(x, y), cardId, isRetro);
         codexNaturalis.updateField(nickname, x, y, cardId, isRetro);
 
     }
@@ -154,8 +151,6 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
             miniGameModel.removeCardFromHand(cardId);
         } else {
             miniGameModel.addCardInHand(cardId);
-            // FIXME check if it is not necessary to use iPlaced
-            // miniGameModel.setIPlaced(false);
         }
 
         codexNaturalis.updateHand(cardId, removeMode);

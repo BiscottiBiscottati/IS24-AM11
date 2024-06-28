@@ -194,13 +194,8 @@ class PlayerManagerTest {
         } catch (PlayerInitException | NumOfPlayersException e) {
             fail(e);
         }
-        //TODO
     }
 
-    @Test
-    void getPlayerObjective() {
-        //TODO
-    }
 
     @Test
     void getPlayerColor() {
@@ -347,10 +342,6 @@ class PlayerManagerTest {
         assertTrue(manager.isFirstTheCurrent());
     }
 
-    @Test
-    void resetAll() {
-        //TODO
-    }
 
     @Test
     void addListener() {
@@ -366,7 +357,6 @@ class PlayerManagerTest {
         manager.goNextTurn();
         manager.goNextTurn();
 
-        // TODO asserts for firing events
     }
 
     @Test

@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
+import it.polimi.ingsw.am11.view.client.miniModel.exceptions.SyncIssueException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,7 +38,7 @@ public interface ClientViewUpdater {
      * @param isRetro  if the card is placed on it's retro
      */
     void updateField(@NotNull String nickname, int x, int y, int cardId,
-                     boolean isRetro);
+                     boolean isRetro) throws SyncIssueException;
 
     /**
      * Update the visible cards on the table, it will remove the previousId and add the currentId

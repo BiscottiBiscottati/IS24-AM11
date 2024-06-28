@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException;
 import it.polimi.ingsw.am11.model.exceptions.GameStatusException;
 import it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException;
 import it.polimi.ingsw.am11.model.exceptions.PlayerInitException;
+import it.polimi.ingsw.am11.network.exceptions.SocketCreationException;
 import it.polimi.ingsw.am11.network.socket.server.chat.ServerChatReceiver;
 import it.polimi.ingsw.am11.network.socket.server.chat.ServerChatSender;
 import it.polimi.ingsw.am11.network.socket.server.game.ServerExceptionSender;
@@ -25,21 +26,21 @@ import java.net.Socket;
 /**
  * The class that handles the client socket connection
  * <p>
- *     The class that handles the client socket connection and the communication with the server
- *     <br>
- *     It uses a {@link PingHandler} to handle the ping messages
- *     <br>
- *     It uses a {@link ServerGameSender} to send the game messages to the client
- *     <br>
- *     It uses a {@link ServerMessageHandler} to handle the messages received from the client
- *     <br>
- *     It uses a {@link Socket} to handle the connection
- *     <br>
- *     It uses a {@link BufferedReader} to read the messages from the client
- *     <br>
- *     It uses a {@link PrintWriter} to send the messages to the client
- *     <br>
- *     It uses a {@link Logger} to log the messages
+ * The class that handles the client socket connection and the communication with the server
+ * <br>
+ * It uses a {@link PingHandler} to handle the ping messages
+ * <br>
+ * It uses a {@link ServerGameSender} to send the game messages to the client
+ * <br>
+ * It uses a {@link ServerMessageHandler} to handle the messages received from the client
+ * <br>
+ * It uses a {@link Socket} to handle the connection
+ * <br>
+ * It uses a {@link BufferedReader} to read the messages from the client
+ * <br>
+ * It uses a {@link PrintWriter} to send the messages to the client
+ * <br>
+ * It uses a {@link Logger} to log the messages
  * </p>
  */
 public class ClientHandler implements Runnable {
@@ -54,15 +55,14 @@ public class ClientHandler implements Runnable {
     private @Nullable String nickname;
     private boolean isRunning;
 
-    public ClientHandler(@NotNull Socket clientSocket) {
+    public ClientHandler(@NotNull Socket clientSocket) throws SocketCreationException {
         this.clientSocket = clientSocket;
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
         } catch (IOException e) {
             LOGGER.error("SERVER TCP: Error while creating client handler", e);
-            // TODO could throw a custom exception
-            throw new RuntimeException(e);
+            throw new SocketCreationException(e.getMessage());
         }
 
         pingHandler = new PingHandler(clientSocket, out);
@@ -76,19 +76,19 @@ public class ClientHandler implements Runnable {
     /**
      * Stops the client handler
      * <p>
-     *     Stops the client handler and closes the connection
-     *     <br>
-     *     It sets the {@link #isRunning} to false
-     *     <br>
-     *     It closes the {@link PingHandler}
-     *     <br>
-     *     It closes the {@link ServerMessageHandler}
-     *     <br>
-     *     It closes the {@link Socket}
-     *     <br>
-     *     It closes the {@link BufferedReader}
-     *     <br>
-     *     It closes the {@link PrintWriter}
+     * Stops the client handler and closes the connection
+     * <br>
+     * It sets the {@link #isRunning} to false
+     * <br>
+     * It closes the {@link PingHandler}
+     * <br>
+     * It closes the {@link ServerMessageHandler}
+     * <br>
+     * It closes the {@link Socket}
+     * <br>
+     * It closes the {@link BufferedReader}
+     * <br>
+     * It closes the {@link PrintWriter}
      * </p>
      */
     public void stop() {
@@ -108,11 +108,11 @@ public class ClientHandler implements Runnable {
     /**
      * The method that runs the client handler
      * <p>
-     *     The method that runs the client handler and waits for the nickname
-     *     <br>
-     *     It uses a {@link ServerExceptionSender} to send the exceptions to the client
-     *     <br>
-     *     It calls the {@link #loopMessageRead()} to loop the message read
+     * The method that runs the client handler and waits for the nickname
+     * <br>
+     * It uses a {@link ServerExceptionSender} to send the exceptions to the client
+     * <br>
+     * It calls the {@link #loopMessageRead()} to loop the message read
      * </p>
      */
     @Override
@@ -126,10 +126,11 @@ public class ClientHandler implements Runnable {
     /**
      * Reads the nickname from the client
      * <p>
-     *     Reads the nickname from the client and connects the player to the game
-     *     <br>
-     *     It uses a {@link ServerExceptionSender} to send the exceptions to the client
+     * Reads the nickname from the client and connects the player to the game
+     * <br>
+     * It uses a {@link ServerExceptionSender} to send the exceptions to the client
      * </p>
+     *
      * @param exceptionSender the exception sender
      * @return true if the nickname is valid, false otherwise
      */
@@ -181,11 +182,11 @@ public class ClientHandler implements Runnable {
     /**
      * Loops the message read
      * <p>
-     *     Loops the message read and calls the message handler to handle the message
-     *     <br>
-     *     It stops the client handler if the message is null
-     *     <br>
-     *     It throws an exception if the message handler is null
+     * Loops the message read and calls the message handler to handle the message
+     * <br>
+     * It stops the client handler if the message is null
+     * <br>
+     * It throws an exception if the message handler is null
      * </p>
      */
     private void loopMessageRead() {
@@ -200,14 +201,15 @@ public class ClientHandler implements Runnable {
     /**
      * Reads the input from the client
      * <p>
-     *     Reads the input from the client and returns the message read
-     *     <br>
-     *     It logs the message received
-     *     <br>
-     *     It disconnects the player if the message is null
-     *     <br>
-     *     It catches the {@link IOException} and disconnects the player
+     * Reads the input from the client and returns the message read
+     * <br>
+     * It logs the message received
+     * <br>
+     * It disconnects the player if the message is null
+     * <br>
+     * It catches the {@link IOException} and disconnects the player
      * </p>
+     *
      * @return the message read from the client
      */
     private @Nullable String readInput() {

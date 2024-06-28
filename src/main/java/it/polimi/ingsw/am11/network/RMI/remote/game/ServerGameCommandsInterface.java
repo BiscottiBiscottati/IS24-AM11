@@ -14,20 +14,20 @@ import java.rmi.RemoteException;
 public interface ServerGameCommandsInterface extends Remote {
 
     void setStarterCard(@NotNull String nick, boolean isRetro)
-    throws RemoteException, PlayerInitException, IllegalCardPlacingException, GameStatusException;
+    throws RemoteException, GameStatusException;
 
     void setObjectiveCard(@NotNull String nick, int cardId)
-    throws RemoteException, IllegalPlayerSpaceActionException, PlayerInitException,
+    throws RemoteException, IllegalPlayerSpaceActionException,
            GameStatusException;
 
     void placeCard(@NotNull String nick, int cardId, int x, int y, boolean isRetro)
-    throws RemoteException, TurnsOrderException, PlayerInitException, IllegalCardPlacingException,
-           NotInHandException, IllegalPlateauActionException, GameStatusException;
+    throws RemoteException, TurnsOrderException, IllegalCardPlacingException,
+           NotInHandException, GameStatusException;
 
     void drawCard(@NotNull String nick, boolean fromVisible, @NotNull PlayableCardType type,
                   int cardId)
     throws RemoteException, IllegalPlayerSpaceActionException, TurnsOrderException,
-           IllegalPickActionException, PlayerInitException, EmptyDeckException,
+           IllegalPickActionException, EmptyDeckException,
            MaxHandSizeException, GameStatusException;
 
     void setNumOfPlayers(@NotNull String nick, int numOfPlayers)

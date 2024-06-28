@@ -9,8 +9,10 @@ import it.polimi.ingsw.am11.model.players.utils.PlayerColor;
 import it.polimi.ingsw.am11.model.utils.GameStatus;
 import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.network.socket.MessageReceiver;
+import it.polimi.ingsw.am11.network.socket.client.ClientSocket;
 import it.polimi.ingsw.am11.network.socket.utils.JsonFactory;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import it.polimi.ingsw.am11.view.client.miniModel.exceptions.SyncIssueException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,7 @@ import java.util.Set;
 
 /**
  * The class that receives the game messages from the server and updates the game
+ *
  * @see MessageReceiver
  * @see ClientViewUpdater
  * @see ClientExceptionReceiver
@@ -31,11 +34,14 @@ public class ClientGameReceiver implements MessageReceiver {
 
     private final @NotNull ClientViewUpdater clientPlayerView;
     private final @NotNull ClientExceptionReceiver clientExceptionReceiver;
+    private final @NotNull ClientSocket clientSocket;
 
-    public ClientGameReceiver(@NotNull ClientViewUpdater clientPlayerView) {
+    public ClientGameReceiver(@NotNull ClientViewUpdater clientPlayerView,
+                              @NotNull ClientSocket clientSocket) {
         this.clientPlayerView = clientPlayerView;
-        this.clientExceptionReceiver = new ClientExceptionReceiver(
-                clientPlayerView.getExceptionThrower());
+        this.clientExceptionReceiver =
+                new ClientExceptionReceiver(clientPlayerView.getExceptionThrower());
+        this.clientSocket = clientSocket;
     }
 
     public void receive(@NotNull JsonNode jsonNode) {
@@ -134,6 +140,8 @@ public class ClientGameReceiver implements MessageReceiver {
             }
         } catch (IOException e) {
             System.out.println("Received invalid message.");
+        } catch (SyncIssueException e) {
+            clientSocket.getGameConnector().syncMeUp();
         }
     }
 

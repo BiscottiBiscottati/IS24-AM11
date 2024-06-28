@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class PersonalObjectiveChangeEvent extends PlayerViewEvent {
 
-    // TODO to add to model
     private final Integer oldCardId;
     private final Integer newCardId;
 

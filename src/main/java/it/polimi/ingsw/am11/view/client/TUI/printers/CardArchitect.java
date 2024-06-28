@@ -31,7 +31,6 @@ public class CardArchitect {
         List<String> goldDeckLines = buildDeck(goldColor, PlayableCardType.GOLD);
         List<String> resDeckLines = buildDeck(resColor, PlayableCardType.RESOURCE);
 
-        //FIXME case of empty deck
 
         List<String> card1 = buildCard(visiblesId.get(0));
         List<String> card2 = buildCard(visiblesId.get(1));
@@ -260,7 +259,6 @@ public class CardArchitect {
         return lines;
     }
 
-    // FIXME the center does not print as it says there's a null
     public static String buildCenterString(List<GameColor> center) {
         char center1;
         char center2;

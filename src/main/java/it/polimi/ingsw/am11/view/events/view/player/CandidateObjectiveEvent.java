@@ -8,7 +8,6 @@ import java.util.Set;
 
 public class CandidateObjectiveEvent extends PlayerViewEvent {
 
-    // TODO to add to model
     private final Set<Integer> oldCardsId;
     private final @NotNull Set<Integer> newCardsId;
 

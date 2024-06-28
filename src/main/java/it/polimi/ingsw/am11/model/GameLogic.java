@@ -153,7 +153,6 @@ public class GameLogic implements GameModel {
     @Override
     public @NotNull Set<Integer> getPlayerHand(@NotNull String nickname)
     throws GameStatusException, PlayerInitException {
-        //FIXME to be precise cards are dealt in initGame so they are dealt
         if (Set.of(GameStatus.SETUP, GameStatus.CHOOSING_STARTERS, GameStatus.CHOOSING_OBJECTIVES)
                .contains(plateau.getStatus())) {
             throw new GameStatusException("the game is" +
@@ -476,7 +475,7 @@ public class GameLogic implements GameModel {
 
         playerManager.removePlayer(nickname);
         plateau.removePlayer(nickname);
-        pcs.removeListener(nickname); // FIXME for table listeners
+        pcs.removeListener(nickname);
     }
 
     /**
@@ -681,7 +680,6 @@ public class GameLogic implements GameModel {
             goNextTurn();
             return card.getId();
         } else {
-            //TODO this exception should be transformed in a max hand size exception
             throw new MaxHandSizeException(nickname + " hand is already full");
         }
     }

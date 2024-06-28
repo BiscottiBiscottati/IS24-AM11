@@ -8,6 +8,7 @@ import it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento;
 import it.polimi.ingsw.am11.network.RMI.client.ClientRMI;
 import it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
+import it.polimi.ingsw.am11.view.client.miniModel.exceptions.SyncIssueException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -19,14 +20,15 @@ import java.util.SequencedMap;
 import java.util.Set;
 
 /**
- * This class is the implementation of the ClientGameUpdatesInterface.
- * It is used by the server to send updates to the client.
+ * This class is the implementation of the ClientGameUpdatesInterface. It is used by the server to
+ * send updates to the client.
  * <p>
- *     The view updater is the object that will update the view of the client.
- *     Implements the {@link ClientGameUpdatesInterface} interface.
+ * The view updater is the object that will update the view of the client. Implements the
+ * {@link ClientGameUpdatesInterface} interface.
  * </p>
+ *
  * @param viewUpdater The view updater
- * @param clientRMI The client RMI
+ * @param clientRMI   The client RMI
  */
 public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater,
                                     @NotNull ClientRMI clientRMI)
@@ -36,7 +38,8 @@ public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater,
 
     /**
      * Updates the hand of the player
-     * @param cardId The card id
+     *
+     * @param cardId     The card id
      * @param removeMode The remove mode
      */
     @Override
@@ -46,7 +49,8 @@ public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater,
 
     /**
      * Updates the personal objective of the player
-     * @param cardId The card id
+     *
+     * @param cardId     The card id
      * @param removeMode The remove mode
      */
     @Override
@@ -57,15 +61,17 @@ public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater,
 
     /**
      * Receives the starter card
+     *
      * @param cardId The card id
      */
     @Override
     public void receiveStarterCard(int cardId) {
         viewUpdater.receiveStarterCard(cardId);
-
     }
 
-    /** Receives the candidate objective
+    /**
+     * Receives the candidate objective
+     *
      * @param cardsId The cards id
      */
     @Override
@@ -82,7 +88,13 @@ public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater,
 
     @Override
     public void updateField(@NotNull String nickname, int x, int y, int cardId, boolean isRetro) {
-        viewUpdater.updateField(nickname, x, y, cardId, isRetro);
+        try {
+            viewUpdater.updateField(nickname, x, y, cardId, isRetro);
+        } catch (SyncIssueException e) {
+            clientRMI.getGameConnector().syncMeUp();
+        }
+
+
     }
 
     @Override

@@ -94,16 +94,11 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      */
     @Override
     public void updateField(@NotNull String nickname, int x, int y, int cardId,
-                            boolean isRetro) {
+                            boolean isRetro) throws SyncIssueException {
         LOGGER.debug("updateField: Nickname: {}, X: {}, Y: {}, cardId: {}, isRetro: {}",
                      nickname, x, y, cardId, isRetro);
         Position pos = new Position(x, y);
-        try {
-            model.getCliPlayer(nickname).getField().place(pos, cardId, isRetro);
-        } catch (SyncIssueException e) {
-            //TODO to handle
-            throw new RuntimeException(e);
-        }
+        model.getCliPlayer(nickname).getField().place(pos, cardId, isRetro);
 
         if (isCurrentState(TuiStates.WATCHING_FIELD)) {
             String[] args = {"notify", nickname};

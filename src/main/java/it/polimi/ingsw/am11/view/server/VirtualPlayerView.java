@@ -41,9 +41,13 @@ public class VirtualPlayerView {
     }
 
     public void setStarterCard(boolean isRetro)
-    throws PlayerInitException, IllegalCardPlacingException, GameStatusException {
+    throws GameStatusException {
         LOGGER.debug("COMMAND: Starter set for {} on {}", nickname, isRetro ? "retro" : "front");
-        cardController.setStarterFor(nickname, isRetro);
+        try {
+            cardController.setStarterFor(nickname, isRetro);
+        } catch (PlayerInitException | IllegalCardPlacingException e) {
+            throw new GameBreakingException("Discrepancies between view and game");
+        }
     }
 
     public void setObjectiveCard(int cardId)

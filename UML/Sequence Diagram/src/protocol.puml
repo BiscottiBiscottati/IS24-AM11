@@ -51,8 +51,6 @@ VirtualView --> Mario: String waitingForPlayers
 deactivate Mario
 deactivate VirtualView
 
-'TODO first player entry need to set number of players
-
 loop n-1 players
     Mario -> VirtualView: Username
     activate Mario

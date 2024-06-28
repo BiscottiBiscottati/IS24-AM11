@@ -221,5 +221,9 @@ public class Actuator {
         return tuiUpdater.getCurrentTuiState();
     }
 
+    public void syncMeUp() {
+        connector.syncMeUp();
+    }
+
 
 }

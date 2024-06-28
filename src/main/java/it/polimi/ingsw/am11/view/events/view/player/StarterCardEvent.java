@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class StarterCardEvent extends PlayerViewEvent {
 
-    //TODO to add to model
     private final Integer oldCardId;
     private final @NotNull Integer newCardId;
 

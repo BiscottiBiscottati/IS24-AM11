@@ -31,7 +31,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class TestCommunication {
 
-    //TODO
 
     static final Logger LOGGER = LoggerFactory.getLogger(TestCommunication.class);
 
@@ -64,7 +63,6 @@ class TestCommunication {
         centralController = CentralController.INSTANCE;
     }
 
-    // FIXME there are side effects when doing the tests together
     @BeforeEach
     void setUp() throws IOException {
         when(clientViewUpdaterMock.getExceptionThrower()).thenReturn(exceptionThrowerMock);
@@ -191,23 +189,15 @@ class TestCommunication {
         ClientGameSender clientGameSender = new ClientGameSender(clientSocket.getOut(),
                                                                  pongHandler,
                                                                  chatSender);
-        ClientGameReceiver clientGameReceiver = new ClientGameReceiver(
-                clientViewUpdaterMock);
         ClientGameSender clientGameSender2 = new ClientGameSender(clientSocket2.getOut(),
                                                                   pongHandler,
                                                                   chatSender);
-        ClientGameReceiver clientGameReceiver2 = new ClientGameReceiver(
-                clientViewUpdaterMock2);
         ClientGameSender clientGameSender3 = new ClientGameSender(clientSocket3.getOut(),
                                                                   pongHandler,
                                                                   chatSender);
-        ClientGameReceiver clientGameReceiver3 = new ClientGameReceiver(
-                clientViewUpdaterMock3);
         ClientGameSender clientGameSender4 = new ClientGameSender(clientSocket4.getOut(),
                                                                   pongHandler,
                                                                   chatSender);
-        ClientGameReceiver clientGameReceiver4 = new ClientGameReceiver(
-                clientViewUpdaterMock4);
 
         CountDownLatch latchForGod = new CountDownLatch(2);
         CountDownLatch latchForFinish = new CountDownLatch(8);

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am11.network.socket.server;
 
+import it.polimi.ingsw.am11.network.exceptions.SocketCreationException;
 import jdk.net.ExtendedSocketOptions;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -17,15 +18,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * The class that manages the server socket
  * <p>
- *     The class that manages the server socket and the client connections
- *     <br>
- *     It uses a {@link ServerSocket} to handle the server socket
- *     <br>
- *     It uses a {@link List} of {@link ClientHandler} to handle the client connections
- *     <br>
- *     It uses a {@link ExecutorService} to handle the client connections
- *     <br>
- *     It uses a {@link Logger} to log the messages
+ * The class that manages the server socket and the client connections
+ * <br>
+ * It uses a {@link ServerSocket} to handle the server socket
+ * <br>
+ * It uses a {@link List} of {@link ClientHandler} to handle the client connections
+ * <br>
+ * It uses a {@link ExecutorService} to handle the client connections
+ * <br>
+ * It uses a {@link Logger} to log the messages
  * </p>
  */
 public class SocketManager {
@@ -56,13 +57,14 @@ public class SocketManager {
     /**
      * Stops the socket server
      * <p>
-     *     It uses the {@link #removeClients()} method to remove the clients
-     *     <br>
-     *     It uses the {@link ExecutorService#shutdown()} method to stop accepting new tasks
-     *     <br>
-     *     It uses the {@link ExecutorService#awaitTermination(long, TimeUnit)} method to wait for termination
-     *     <br>
-     *     It uses the {@link ServerSocket#close()} method to close the server socket
+     * It uses the {@link #removeClients()} method to remove the clients
+     * <br>
+     * It uses the {@link ExecutorService#shutdown()} method to stop accepting new tasks
+     * <br>
+     * It uses the {@link ExecutorService#awaitTermination(long, TimeUnit)} method to wait for
+     * termination
+     * <br>
+     * It uses the {@link ServerSocket#close()} method to close the server socket
      * </p>
      */
     public void stop() {
@@ -93,20 +95,20 @@ public class SocketManager {
     /**
      * Starts the server socket
      * <p>
-     *     It uses the {@link ServerSocket#accept()} method to accept a new connection from a client
-     *     <br>
-     *     It uses the {@link Socket#setKeepAlive(boolean)} method to keep the connection alive
-     *     <br>
-     *     It uses the {@link Socket#setSoTimeout(int)} method to set the timeout for the connection
-     *     <br>
-     *     It uses the {@link ClientHandler} to handle the client connection
-     *     <br>
-     *     It uses the {@link ExecutorService#execute(Runnable)} method to execute the client
-     *     handler in a separate thread
-     *     <br>
-     *     It uses the {@link Logger} to log the messages
-     *     <br>
-     *     It uses the {@link #isRunning} to check if the server is running
+     * It uses the {@link ServerSocket#accept()} method to accept a new connection from a client
+     * <br>
+     * It uses the {@link Socket#setKeepAlive(boolean)} method to keep the connection alive
+     * <br>
+     * It uses the {@link Socket#setSoTimeout(int)} method to set the timeout for the connection
+     * <br>
+     * It uses the {@link ClientHandler} to handle the client connection
+     * <br>
+     * It uses the {@link ExecutorService#execute(Runnable)} method to execute the client handler in
+     * a separate thread
+     * <br>
+     * It uses the {@link Logger} to log the messages
+     * <br>
+     * It uses the {@link #isRunning} to check if the server is running
      * </p>
      */
     public void start() {
@@ -129,6 +131,8 @@ public class SocketManager {
                 clientHandlers.add(clientHandler);
                 // Execute the client handler in a separate thread
                 threadPool.execute(clientHandler);
+            } catch (SocketCreationException e) {
+                LOGGER.error("SERVER TCP: Error while creating client handler: {}", e.getMessage());
             } catch (IOException e) {
                 LOGGER.warn("SERVER TCP: Error while accepting: {}", e.getMessage());
             }

@@ -13,9 +13,6 @@ import java.util.Arrays;
 
 public class SettingName extends TUIState {
 
-    //TODO: check that the name is not help or other command names
-    //TODO: check in all states that the case sensitiveness is respected
-
     static final String askYourName = "What's your name? >>> \033[K";
     private static final String infoBar = "STATUS: Choosing a nickname...";
     private boolean isQuote = false;
