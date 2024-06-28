@@ -12,9 +12,8 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * To get this connector, the UI should call the getConnector method of the
  * <code>ClientNetworkHandler</code>.
- * <p>
  * Each network implementation will provide an implementation of this interface.
- *
+ * </p>
  * @see ClientConnectorImpl
  * @see ClientGameSender
  */

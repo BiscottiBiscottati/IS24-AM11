@@ -10,6 +10,11 @@ import java.rmi.RemoteException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * This class is used by the server to send messages to the clients for the chat.
+ * Implements the {@link ServerChatConnector} interface.
+ * @param chatInterface the interface to send messages to the clients
+ */
 public record ServerChatConnectorImpl(@NotNull ClientChatInterface chatInterface)
         implements ServerChatConnector {
     private static final Logger LOGGER =

@@ -8,6 +8,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintWriter;
 
+/**
+ * The class that sends the chat messages to the server
+ * @see ClientChatConnector
+ * @see ContextJSON
+ */
 public class ClientChatSender implements ClientChatConnector {
     private static final ContextJSON CONTEXT = ContextJSON.CHAT;
 

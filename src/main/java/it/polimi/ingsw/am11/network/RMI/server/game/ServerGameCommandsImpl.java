@@ -16,6 +16,12 @@ import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Implementation of the {@link ServerGameCommandsInterface} interface for RMI connections.
+ * This class is responsible for receiving commands from the clients for game purposes.
+ * It is used to add and remove players, set the starter card, set the objective card, place a card,
+ * draw a card, set the number of players and synchronize the client's view.
+ */
 public class ServerGameCommandsImpl implements ServerGameCommandsInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerGameCommandsImpl.class);
     private final @NotNull Map<String, VirtualPlayerView> views;

@@ -10,6 +10,12 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The class that receives the exceptions from the server and throws them
+ * @see MessageReceiver
+ * @see ExceptionThrower
+ * @param exceptionThrower the class that throws the exceptions
+ */
 public record ClientExceptionReceiver(@NotNull ExceptionThrower exceptionThrower)
         implements MessageReceiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientExceptionReceiver.class);

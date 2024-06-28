@@ -14,6 +14,36 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * The class that handles the ping messages
+ * <p>
+ *     The class that handles the ping messages and checks if the ping messages are received
+ *     <br>
+ *     It implements the {@link Runnable} interface
+ *     <br>
+ *     It uses a {@link Socket} to handle the connection
+ *     <br>
+ *     It uses a {@link PrintWriter} to send the messages to the client
+ *     <br>
+ *     It uses a {@link AtomicLong} to store the last ping message received
+ *     <br>
+ *     It uses a {@link ScheduledExecutorService} to schedule the ping messages
+ *     <br>
+ *     It uses a {@link ObjectNode} to store the pong message
+ *     <br>
+ *     It uses a {@link Logger} to log the messages
+ *     <br>
+ *     It uses the {@link #PING_INTERVAL} to set the interval between the ping messages
+ *     <br>
+ *     It uses the {@link #PING_TIMEOUT} to set the timeout for the ping messages
+ *     <br>
+ *     It uses the {@link #ping()} method to send the ping messages
+ *     <br>
+ *     It uses the {@link #close()} method to close the ping messages
+ *     <br>
+ *     It uses the {@link #run()} method to check if the ping messages are received
+ * </p>
+ */
 public class PingHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(PingHandler.class);
     private static final int PING_INTERVAL = 1000;

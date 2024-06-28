@@ -10,6 +10,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 
+/**
+ * Implementation of the {@link ClientChatConnector} interface for RMI connections.
+ * This class is responsible for sending messages to the server for chat purposes.
+ * <p>
+ *     The class is instantiated with a {@link Registry} object, which is used to lookup the server's remote object.
+ *     The sender's name is set using the {@link #setSender(String)} method.
+ *     The class provides two methods to send messages to the server:
+ * </p>
+ */
 public final class ClientChatConnectorImpl
         implements ClientChatConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientChatConnectorImpl.class);
@@ -25,6 +34,10 @@ public final class ClientChatConnectorImpl
     }
 
 
+    /**
+     * Sends a public message to the server.
+     * @param msg The message to send to the server.
+     */
     @Override
     public void pubMsg(@NotNull String msg) {
         try {
@@ -37,6 +50,11 @@ public final class ClientChatConnectorImpl
         }
     }
 
+    /**
+     * Sends a private message to the server.
+     * @param recipient The recipient of the message (the user's name).
+     * @param msg The message to send to the server.
+     */
     @Override
     public void pubPrivateMsg(@NotNull String recipient, @NotNull String msg) {
         try {

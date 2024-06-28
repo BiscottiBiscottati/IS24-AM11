@@ -12,6 +12,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintWriter;
 
+/**
+ * The class that sends the game messages to the server
+ * @see ClientGameConnector
+ * @see ContextJSON
+ * @see PongHandler
+ * @see ClientChatSender
+ * @param out the output stream
+ * @param pongHandler the pong handler
+ * @param chatSender the chat sender
+ */
 public record ClientGameSender(@NotNull PrintWriter out, @NotNull PongHandler pongHandler,
                                @NotNull ClientChatSender chatSender)
         implements ClientGameConnector {

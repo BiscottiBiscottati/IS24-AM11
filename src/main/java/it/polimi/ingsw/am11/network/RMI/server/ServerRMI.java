@@ -28,6 +28,16 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is responsible for managing the RMI server.
+ * It implements the {@link ServerLoggable} interface.
+ * <p>
+ *     The class is instantiated with a port number, which is used to create a {@link Registry} object.
+ *     The class provides methods to start and close the server, as well as to add and remove players.
+ *     The class also provides a method to log in a player.
+ *     The class also provides a method to remove all players.
+ * </p>
+ */
 public class ServerRMI implements ServerLoggable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerRMI.class);
 
@@ -38,6 +48,16 @@ public class ServerRMI implements ServerLoggable {
     private final @NotNull HeartbeatManager heartbeatManager;
     private final @NotNull List<ClientGameUpdatesInterface> playersRemote;
 
+    /**
+     * Creates a new RMI server.
+     * @param port The port number to create the server on.
+     * @throws RuntimeException if an error occurs while creating the server.
+     * @see LocateRegistry#createRegistry(int)
+     * @see ServerGameCommandsImpl
+     * @see HeartbeatManager
+     * @see ServerChatInterfaceImpl
+     * @see ServerConnectorImpl
+     */
     public ServerRMI(int port) {
         this.port = port;
         this.playersRemote = new ArrayList<>(4);
@@ -53,6 +73,16 @@ public class ServerRMI implements ServerLoggable {
         ServerChatConnectorImpl.start();
     }
 
+    /**
+     * Starts the server.
+     * <p>
+     *     The method exports the server's remote objects and binds them to the registry.
+     *     The method also adds a shutdown hook to close the server when the JVM is shut down.
+     *     The method logs a message when the server is open.
+     *     The method throws a {@link RuntimeException} if an error occurs while exporting or binding the remote objects.
+     *     The method catches and logs any {@link RemoteException} or {@link AlreadyBoundException} thrown while binding the remote objects.
+     *     The method also catches and logs any {@link NotBoundException} thrown while closing the server.
+     */
     public void start() {
         ServerLoggable log;
         ServerGameCommandsInterface view;
@@ -87,6 +117,17 @@ public class ServerRMI implements ServerLoggable {
         Runtime.getRuntime().addShutdownHook(new Thread(this::close));
     }
 
+    /**
+     * Closes the server.
+     * <p>
+     *     The method unbinds the remote objects from the registry.
+     *     The method also unexports the remote objects.
+     *     The method logs a message when the server is closed.
+     *     The method catches and logs any {@link RemoteException} or {@link NotBoundException} thrown while unbinding the remote objects.
+     *     The method also catches and logs any {@link NoSuchObjectException} thrown while unexporting the remote objects.
+     *     The method also closes the {@link HeartbeatManager}.
+     *     The method also stops the {@link ServerConnectorImpl} and {@link ServerChatConnectorImpl}.
+     */
     public void close() {
         try {
             registry.unbind("Loggable");
@@ -132,6 +173,14 @@ public class ServerRMI implements ServerLoggable {
         ServerGameCommands.removePlayer(nick);
     }
 
+    /**
+     * Logs in a player.
+     * <p>
+     *     The method adds the player to the {@link #playersRemote} list.
+     *     The method creates a new {@link ServerConnectorImpl} and {@link ServerChatConnectorImpl}
+     *     object for the player.
+     * </p>
+     */
     @Override
     public void login(@NotNull String nick, @NotNull ClientGameUpdatesInterface remoteConnector,
                       @NotNull ClientChatInterface remoteChat)

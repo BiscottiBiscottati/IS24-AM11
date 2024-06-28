@@ -14,6 +14,10 @@ import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
 
+/**
+ * This interface is used by the client to receive updates from the server.
+ */
+
 public interface ClientGameUpdatesInterface extends Remote {
 
     void updateHand(int cardId, boolean removeMode) throws RemoteException;

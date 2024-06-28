@@ -10,6 +10,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 
+/**
+ * The class that sends the chat messages to the clients
+ * @see ServerChatConnector
+ * @see ContextJSON
+ * @param out the output stream
+ */
 public record ServerChatSender(@NotNull PrintWriter out) implements ServerChatConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerChatSender.class);
     private static final ContextJSON CONTEXT = ContextJSON.CHAT;

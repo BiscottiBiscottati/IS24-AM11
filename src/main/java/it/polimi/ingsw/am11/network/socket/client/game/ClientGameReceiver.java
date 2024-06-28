@@ -20,6 +20,12 @@ import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
 
+/**
+ * The class that receives the game messages from the server and updates the game
+ * @see MessageReceiver
+ * @see ClientViewUpdater
+ * @see ClientExceptionReceiver
+ */
 public class ClientGameReceiver implements MessageReceiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientGameReceiver.class);
 

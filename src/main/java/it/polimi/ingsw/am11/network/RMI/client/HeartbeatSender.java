@@ -12,6 +12,15 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * This class is the heartbeat sender.
+ * It sends the heartbeat to the server.
+ * <p>
+ *     The heartbeat is sent every HEARTBEAT_INTERVAL milliseconds.
+ *     The nickname is set by the client when the client is connected to the server.
+ *     The nickname is used to send the heartbeat.
+ * </p>
+ */
 public class HeartbeatSender implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeartbeatSender.class);
     private static int HEARTBEAT_INTERVAL = 1000;
@@ -46,6 +55,13 @@ public class HeartbeatSender implements Runnable {
         HEARTBEAT_INTERVAL = interval;
     }
 
+    /**
+     * Sends the heartbeat to the server
+     * <p>
+     *     The heartbeat is sent only if the client is connected to the server.
+     *     If the client is not connected to the server, the client is disconnected from the server.
+     * </p>
+     */
     @Override
     public void run() {
         String tempNickname = nickname.get();

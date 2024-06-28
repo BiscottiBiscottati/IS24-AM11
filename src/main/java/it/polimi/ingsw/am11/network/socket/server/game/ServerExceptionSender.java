@@ -9,6 +9,19 @@ import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 
+/**
+ * The class that sends the game exceptions to the client
+ * <p>
+ *     The class that sends the game exceptions to the client
+ *     <br>
+ *     It uses a {@link PrintWriter} to send the messages to the client
+ *     <br>
+ * </p>
+ * @param out the output stream
+ * @see ContextJSON
+ * @see JsonFactory
+ * @see Logger
+ */
 public record ServerExceptionSender(@NotNull PrintWriter out) {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerExceptionSender.class);
     private static final ContextJSON CONTEXT = ContextJSON.EXCEPTION;

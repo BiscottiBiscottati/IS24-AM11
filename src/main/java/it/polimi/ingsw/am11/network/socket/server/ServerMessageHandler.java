@@ -11,6 +11,23 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The class that handles the messages received from the clients
+ * <p>
+ *     The class that handles the messages received from the clients and calls the appropriate method
+ *     of the message receiver.
+ *     <br>
+ *     It uses the {@link ServerGameReceiver} to receive the game messages
+ *     <br>
+ *     It uses the {@link ServerChatReceiver} to receive the chat messages
+ *     <br>
+ *     It uses the {@link PingHandler} to receive the ping messages
+ *     <br>
+ *     It uses the {@link Logger} to log the messages
+ *     <br>
+ *     It uses the {@link #receive(String)} method to receive the messages
+ * </p>
+ */
 public class ServerMessageHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerMessageHandler.class);
 

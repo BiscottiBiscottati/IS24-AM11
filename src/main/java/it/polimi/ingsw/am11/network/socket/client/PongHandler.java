@@ -14,6 +14,31 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * The class that handles the pong messages
+ * <p>
+ *     The class that handles the pong messages and checks if the pong messages are received
+ *     <br>
+ *     It implements the {@link Runnable} interface
+ *     <br>
+ *     It uses a {@link Socket} to handle the connection
+ *     <br>
+ *     It uses a {@link PrintWriter} to send the messages to the server
+ *     <br>
+ *     It uses a {@link AtomicLong} to store the last pong message received
+ *     <br>
+ *     It uses a {@link ScheduledExecutorService} to schedule the pong messages
+ *     <br>
+ *     It uses a {@link ObjectNode} to store the ping message
+ *     <br>
+ *     It uses a {@link Logger} to log the messages
+ *     <br>
+ *     It uses the {@link #PONG_INTERVAL} to set the interval between the pong messages
+ *     <br>
+ *     It uses the {@link #PONG_TIMEOUT} to set the timeout for the pong messages
+ *     <br>
+ * </p>
+ */
 public class PongHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(PongHandler.class);
     private static final int PONG_INTERVAL = 1000;
@@ -45,6 +70,17 @@ public class PongHandler implements Runnable {
         } else lastPong.set(System.currentTimeMillis());
     }
 
+    /**
+     * Checks if the pong messages are received
+     * <p>
+     *     The method that checks if the pong messages are received
+     *     <br>
+     *     If the pong messages are not received, it closes the connection
+     *     <br>
+     *     If the pong messages are received, it sends a ping message
+     *     <br>
+     * </p>
+     */
     @Override
     public void run() {
         long now = System.currentTimeMillis();

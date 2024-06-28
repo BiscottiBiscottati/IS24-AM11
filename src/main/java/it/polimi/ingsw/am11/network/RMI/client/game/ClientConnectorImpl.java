@@ -25,6 +25,22 @@ import java.rmi.registry.Registry;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * This class is the implementation of the {@link ClientGameConnector} interface.
+ * It is used to send commands to the server through RMI.
+ * <p>
+ *     The class is used by the {@link ClientRMI} class to send commands to the server.
+ *     The class uses a {@link ClientGameUpdatesInterface} to send game updates to the server.
+ *     The class uses a {@link ClientChatInterface} to send chat messages to the server.
+ *     The class uses a {@link ClientChatConnectorImpl} to send chat messages to the server.
+ *     The class uses a {@link ClientViewUpdater} to update the view.
+ *     The class uses a {@link ExceptionThrower} to throw exceptions.
+ *     The class uses an {@link AtomicReference} to store the nickname of the player.
+ *     The class uses a {@link Future} to store the last command sent to the server.
+ *     The class uses a {@link ExecutorService} to execute commands.
+ *     The class uses a {@link Logger} to log messages.
+ * </p>
+ */
 public class ClientConnectorImpl implements ClientGameConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientConnectorImpl.class);
     private static ExecutorService commandExecutor;
@@ -56,18 +72,41 @@ public class ClientConnectorImpl implements ClientGameConnector {
         this.future = CompletableFuture.completedFuture(null);
     }
 
+    /**
+     * Starts the command executor.
+     * <p>
+     *     The command executor is a single thread executor that is used to send commands to the server.
+     *     The executor is started when the client is created.
+     * </p>
+     */
     public synchronized static void start() {
         commandExecutor = Executors.newSingleThreadExecutor();
     }
 
+    /**
+     * Stops the command executor.
+     */
     public synchronized static void stop() {
         commandExecutor.shutdown();
     }
 
+    /**
+     * @return The nickname of the player.
+     */
     public synchronized @Nullable String getNickname() {
         return nickname.get();
     }
 
+    /**
+     * Sets the nickname of the player and sends a login request to the server.
+     * <p>
+     *     The method sends a login request to the server.
+     *     The method uses the command executor to send the request.
+     *     The method uses a future to store the last command sent to the server.
+     *     The method uses an atomic reference to store the nickname of the player.
+     * </p>
+     * @param nickname The nickname of the player.
+     */
     @Override
     public synchronized void setNickname(@NotNull String nickname) {
         try {
@@ -100,6 +139,9 @@ public class ClientConnectorImpl implements ClientGameConnector {
         });
     }
 
+    /**
+     * Sends a syncMeUp request to the server to synchronize the client with the server.
+     */
     @Override
     public void syncMeUp() {
         try {
@@ -121,12 +163,19 @@ public class ClientConnectorImpl implements ClientGameConnector {
         });
     }
 
+    /**
+     * Checks if the nickname of the player is set.
+     */
     private void checkIfNickSet() {
         if (nickname.get() == null) {
             throw new RuntimeException("Nickname not set");
         }
     }
 
+    /**
+     * Sends a setStarterCard request to the server to set the starter card.
+     * @param isRetro The retro flag.
+     */
     @Override
     public synchronized void setStarterCard(boolean isRetro) {
         try {
@@ -157,6 +206,10 @@ public class ClientConnectorImpl implements ClientGameConnector {
         });
     }
 
+    /**
+     * Sends a setPersonalObjective request to the server to set the personal objective card.
+     * @param cardId The id of the card.
+     */
     @Override
     public synchronized void setPersonalObjective(int cardId) {
         try {
@@ -186,6 +239,12 @@ public class ClientConnectorImpl implements ClientGameConnector {
         });
     }
 
+    /**
+     * Sends a placeCard request to the server to place a card.
+     * @param pos The position of the card.
+     * @param cardId The id of the card.
+     * @param isRetro The retro flag.
+     */
     @Override
     public synchronized void placeCard(@NotNull Position pos, int cardId, boolean isRetro) {
         try {
@@ -222,6 +281,12 @@ public class ClientConnectorImpl implements ClientGameConnector {
         });
     }
 
+    /**
+     * Sends a drawCard request to the server to draw a card.
+     * @param fromVisible Defines if the card is drawn from the visible deck or not.
+     * @param type The type of the card.
+     * @param cardId The id of the card.
+     */
     @Override
     public synchronized void drawCard(boolean fromVisible, @NotNull PlayableCardType type,
                                       int cardId) {
@@ -260,6 +325,10 @@ public class ClientConnectorImpl implements ClientGameConnector {
         });
     }
 
+    /**
+     * Sends a setNumOfPlayers request to the server to set the number of players.
+     * @param numOfPlayers The number of players.
+     */
     @Override
     public synchronized void setNumOfPlayers(int numOfPlayers) {
         try {

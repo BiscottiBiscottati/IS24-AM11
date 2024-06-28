@@ -9,6 +9,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.rmi.RemoteException;
 
+/**
+ * Implementation of the {@link ServerChatInterface} interface for RMI connections.
+ * This class is responsible for receiving messages from the clients for chat purposes.
+ */
 public class ServerChatInterfaceImpl implements ServerChatInterface {
     private final @NotNull ChatController chatController;
 

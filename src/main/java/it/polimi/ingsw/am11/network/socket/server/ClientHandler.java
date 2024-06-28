@@ -22,6 +22,26 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * The class that handles the client socket connection
+ * <p>
+ *     The class that handles the client socket connection and the communication with the server
+ *     <br>
+ *     It uses a {@link PingHandler} to handle the ping messages
+ *     <br>
+ *     It uses a {@link ServerGameSender} to send the game messages to the client
+ *     <br>
+ *     It uses a {@link ServerMessageHandler} to handle the messages received from the client
+ *     <br>
+ *     It uses a {@link Socket} to handle the connection
+ *     <br>
+ *     It uses a {@link BufferedReader} to read the messages from the client
+ *     <br>
+ *     It uses a {@link PrintWriter} to send the messages to the client
+ *     <br>
+ *     It uses a {@link Logger} to log the messages
+ * </p>
+ */
 public class ClientHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
 
@@ -53,6 +73,24 @@ public class ClientHandler implements Runnable {
         }));
     }
 
+    /**
+     * Stops the client handler
+     * <p>
+     *     Stops the client handler and closes the connection
+     *     <br>
+     *     It sets the {@link #isRunning} to false
+     *     <br>
+     *     It closes the {@link PingHandler}
+     *     <br>
+     *     It closes the {@link ServerMessageHandler}
+     *     <br>
+     *     It closes the {@link Socket}
+     *     <br>
+     *     It closes the {@link BufferedReader}
+     *     <br>
+     *     It closes the {@link PrintWriter}
+     * </p>
+     */
     public void stop() {
         LOGGER.debug("SERVER TCP: Stopping client handler");
         isRunning = false;
@@ -67,6 +105,16 @@ public class ClientHandler implements Runnable {
         out.close();
     }
 
+    /**
+     * The method that runs the client handler
+     * <p>
+     *     The method that runs the client handler and waits for the nickname
+     *     <br>
+     *     It uses a {@link ServerExceptionSender} to send the exceptions to the client
+     *     <br>
+     *     It calls the {@link #loopMessageRead()} to loop the message read
+     * </p>
+     */
     @Override
     public void run() {
         isRunning = true;
@@ -75,6 +123,16 @@ public class ClientHandler implements Runnable {
         loopMessageRead();
     }
 
+    /**
+     * Reads the nickname from the client
+     * <p>
+     *     Reads the nickname from the client and connects the player to the game
+     *     <br>
+     *     It uses a {@link ServerExceptionSender} to send the exceptions to the client
+     * </p>
+     * @param exceptionSender the exception sender
+     * @return true if the nickname is valid, false otherwise
+     */
     private boolean readNickname(@NotNull ServerExceptionSender exceptionSender) {
         boolean validNickname = false;
         while (! validNickname) {
@@ -120,6 +178,16 @@ public class ClientHandler implements Runnable {
         return true;
     }
 
+    /**
+     * Loops the message read
+     * <p>
+     *     Loops the message read and calls the message handler to handle the message
+     *     <br>
+     *     It stops the client handler if the message is null
+     *     <br>
+     *     It throws an exception if the message handler is null
+     * </p>
+     */
     private void loopMessageRead() {
         while (isRunning) {
             String message = readInput();
@@ -129,6 +197,19 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * Reads the input from the client
+     * <p>
+     *     Reads the input from the client and returns the message read
+     *     <br>
+     *     It logs the message received
+     *     <br>
+     *     It disconnects the player if the message is null
+     *     <br>
+     *     It catches the {@link IOException} and disconnects the player
+     * </p>
+     * @return the message read from the client
+     */
     private @Nullable String readInput() {
         try {
             String message = null;

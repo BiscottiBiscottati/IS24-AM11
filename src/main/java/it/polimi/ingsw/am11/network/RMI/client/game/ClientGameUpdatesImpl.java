@@ -17,29 +17,56 @@ import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
 
+/**
+ * This class is the implementation of the ClientGameUpdatesInterface.
+ * It is used by the server to send updates to the client.
+ * <p>
+ *     The view updater is the object that will update the view of the client.
+ *     Implements the {@link ClientGameUpdatesInterface} interface.
+ * </p>
+ * @param viewUpdater The view updater
+ * @param clientRMI The client RMI
+ */
 public record ClientGameUpdatesImpl(@NotNull ClientViewUpdater viewUpdater,
                                     @NotNull ClientRMI clientRMI)
         implements ClientGameUpdatesInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientGameUpdatesImpl.class);
 
+    /**
+     * Updates the hand of the player
+     * @param cardId The card id
+     * @param removeMode The remove mode
+     */
     @Override
     public void updateHand(int cardId, boolean removeMode) {
         viewUpdater.updateHand(cardId, removeMode);
     }
 
+    /**
+     * Updates the personal objective of the player
+     * @param cardId The card id
+     * @param removeMode The remove mode
+     */
     @Override
     public void updatePersonalObjective(int cardId, boolean removeMode) {
         viewUpdater.updatePersonalObjective(cardId, removeMode);
 
     }
 
+    /**
+     * Receives the starter card
+     * @param cardId The card id
+     */
     @Override
     public void receiveStarterCard(int cardId) {
         viewUpdater.receiveStarterCard(cardId);
 
     }
 
+    /** Receives the candidate objective
+     * @param cardsId The cards id
+     */
     @Override
     public void receiveCandidateObjective(@NotNull Set<Integer> cardsId) {
         viewUpdater.receiveCandidateObjective(cardsId);

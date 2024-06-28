@@ -8,6 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+/**
+ * This interface is used by the server to receive commands from the clients.
+ */
 public interface ServerGameCommandsInterface extends Remote {
 
     void setStarterCard(@NotNull String nick, boolean isRetro)

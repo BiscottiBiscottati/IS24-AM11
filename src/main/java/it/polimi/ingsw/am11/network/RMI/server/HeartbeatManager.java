@@ -9,6 +9,10 @@ import org.slf4j.LoggerFactory;
 import java.rmi.RemoteException;
 import java.util.concurrent.*;
 
+/**
+ * This class is used by the server to manage the heartbeat of the clients.
+ * Implements the {@link HeartbeatInterface} interface.
+ */
 public class HeartbeatManager implements HeartbeatInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeartbeatManager.class);
     private static final int HEARTBEAT_INTERVAL = 1000;
@@ -31,6 +35,14 @@ public class HeartbeatManager implements HeartbeatInterface {
                                                    TimeUnit.MILLISECONDS);
     }
 
+    /**
+     * Check the heartbeat of the clients.
+     * If the heartbeat is missed, the client is disconnected.
+     * If the heartbeat is timed out, the client is disconnected.
+     * The client is disconnected by the {@link CentralController} and removed from the server.
+     * The client is removed from the {@link #lastHeartbeat} map.
+     * The client is removed from the {@link ServerRMI} object.
+     */
     private void checkHeartbeat() {
         long now = System.currentTimeMillis();
         lastHeartbeat.forEach((nickname, last) -> {

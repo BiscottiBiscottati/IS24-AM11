@@ -5,6 +5,11 @@ import it.polimi.ingsw.am11.network.socket.MessageReceiver;
 import it.polimi.ingsw.am11.view.client.ClientChatUpdater;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The class that receives the chat messages from the server and updates the chat
+ * @see MessageReceiver
+ * @see ClientChatUpdater
+ */
 public record ClientChatReceiver(@NotNull ClientChatUpdater chatUpdater)
         implements MessageReceiver {
 

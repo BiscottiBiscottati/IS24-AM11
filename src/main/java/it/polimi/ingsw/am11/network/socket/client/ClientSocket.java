@@ -22,6 +22,42 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The class that handles the client socket connection
+ * <p>
+ *     The class that handles the client socket connection and the communication with the server
+ *     <br>
+ *     It implements the {@link ClientNetworkHandler} interface
+ *     <br>
+ *     It uses a {@link ClientMessageHandler} to handle the messages received from the server
+ *     <br>
+ *     It uses a {@link ClientGameSender} to send the game messages to the server
+ *     <br>
+ *     It uses a {@link ClientChatSender} to send the chat messages to the server
+ *     <br>
+ *     It uses a {@link ClientGameReceiver} to receive the game messages from the server
+ *     <br>
+ *     It uses a {@link ClientChatReceiver} to receive the chat messages from the server
+ *     <br>
+ *     It uses a {@link ClientExceptionReceiver} to receive the exceptions from the server
+ *     <br>
+ *     It uses a {@link PongHandler} to handle the pong messages
+ *     <br>
+ *     It uses a {@link ClientViewUpdater} to update the client view
+ *     <br>
+ *     It uses a {@link Socket} to handle the connection
+ *     <br>
+ *     It uses a {@link BufferedReader} to read the messages from the server
+ *     <br>
+ *     It uses a {@link PrintWriter} to send the messages to the server
+ *     <br>
+ *     It uses a {@link ExecutorService} to run the client
+ *     <br>
+ *     It uses a boolean {@link #isRunning} to check if the client is running
+ *     <br>
+ *     It uses a {@link Logger} to log the messages
+ * </p>
+ */
 public class ClientSocket implements ClientNetworkHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientSocket.class);
 
@@ -78,6 +114,10 @@ public class ClientSocket implements ClientNetworkHandler {
         }
     }
 
+    /**
+     * The method that runs the client socket connection and receives the messages from the server
+     * @see ClientMessageHandler
+     */
     private void run() {
         isRunning = true;
         String message;
@@ -113,6 +153,22 @@ public class ClientSocket implements ClientNetworkHandler {
         return clientChatSender;
     }
 
+    /**
+     * The method that closes the client socket connection
+     * <p>
+     *     It closes the client socket connection and the communication with the server
+     *     <br>
+     *     It closes the {@link ClientMessageHandler}
+     *     <br>
+     *     It closes the {@link Socket}
+     *     <br>
+     *     It closes the {@link BufferedReader}
+     *     <br>
+     *     It closes the {@link PrintWriter}
+     *     <br>
+     *     It sets the {@link #isRunning} to false
+     * </p>
+     */
     @Override
     public void close() {
         LOGGER.debug("CLIENT TCP: Closing client");

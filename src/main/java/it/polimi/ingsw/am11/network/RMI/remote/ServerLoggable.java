@@ -11,6 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+/**
+ * This interface is used by the server to log in the clients.
+ */
 public interface ServerLoggable extends Remote {
 
     void login(@NotNull String nick, @NotNull ClientGameUpdatesInterface remoteConnector,

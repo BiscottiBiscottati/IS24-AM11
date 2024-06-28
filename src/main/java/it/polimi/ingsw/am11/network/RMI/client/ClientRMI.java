@@ -22,6 +22,17 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+/**
+ * This class is the RMI implementation of the ClientNetworkHandler.
+ * It creates the client object and exports it to the server.
+ * It also creates the heartbeat sender and the chat connector.
+ * <p>
+ *     The client object is the object that the server will use to send updates to the client.
+ *     The heartbeat sender is the object that will send the heartbeat to the server.
+ *     The chat connector is the object that will connect the client to the chat.
+ *     The client connector is the object that will connect the client to the game.
+ * </p>
+ */
 public class ClientRMI implements ClientNetworkHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientRMI.class);
@@ -74,15 +85,31 @@ public class ClientRMI implements ClientNetworkHandler {
         HeartbeatSender.setHeartbeatInterval(ping.getInterval());
     }
 
+    /**
+     * @return the game connector
+     */
     public @NotNull ClientGameConnector getGameConnector() {
         return clientConnectorImpl;
     }
 
+    /**
+     * @return the chat connector
+     */
     @Override
     public @NotNull ClientChatConnector getChatConnector() {
         return chatConnectorImpl;
     }
 
+    /**
+     * Closes the client
+     * <p>
+     *     It stops the heartbeat sender and un-exports the client object.
+     *     It also un-exports the chat object.
+     *     Finally, it stops the client connector.
+     *     The client is now closed.
+     *     The client can be re-opened by creating a new ClientRMI object.
+     * </p>
+     */
     @Override
     public void close() {
         heartbeatSender.stop();
@@ -97,6 +124,10 @@ public class ClientRMI implements ClientNetworkHandler {
         }
     }
 
+    /**
+     * Sets the nickname for the heartbeat sender
+     * @param nickname the nickname to set
+     */
     public void setHeartbeatNickname(@NotNull String nickname) {
         heartbeatSender.setNickname(nickname);
     }
