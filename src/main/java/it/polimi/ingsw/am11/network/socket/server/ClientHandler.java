@@ -24,24 +24,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- * The class that handles the client socket connection
- * <p>
- * The class that handles the client socket connection and the communication with the server
- * <br>
- * It uses a {@link PingHandler} to handle the ping messages
- * <br>
- * It uses a {@link ServerGameSender} to send the game messages to the client
- * <br>
- * It uses a {@link ServerMessageHandler} to handle the messages received from the client
- * <br>
- * It uses a {@link Socket} to handle the connection
- * <br>
- * It uses a {@link BufferedReader} to read the messages from the client
- * <br>
- * It uses a {@link PrintWriter} to send the messages to the client
- * <br>
- * It uses a {@link Logger} to log the messages
- * </p>
+ * Each client connection is managed by a ClientHandler, which is executed in a separate thread.
+ * This class is used to listen to a client after the connection is established. It reads the
+ * nickname of the player, and then it starts the loop to read the messages from the client.
  */
 public class ClientHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
@@ -74,22 +59,8 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * Stops the client handler
-     * <p>
-     * Stops the client handler and closes the connection
-     * <br>
-     * It sets the {@link #isRunning} to false
-     * <br>
-     * It closes the {@link PingHandler}
-     * <br>
-     * It closes the {@link ServerMessageHandler}
-     * <br>
-     * It closes the {@link Socket}
-     * <br>
-     * It closes the {@link BufferedReader}
-     * <br>
-     * It closes the {@link PrintWriter}
-     * </p>
+     * Stops the client handler and closes the connection, it will also stop the ping handler and
+     * the message handler.
      */
     public void stop() {
         LOGGER.debug("SERVER TCP: Stopping client handler");
@@ -106,14 +77,9 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * The method that runs the client handler
-     * <p>
-     * The method that runs the client handler and waits for the nickname
-     * <br>
-     * It uses a {@link ServerExceptionSender} to send the exceptions to the client
-     * <br>
-     * It calls the {@link #loopMessageRead()} to loop the message read
-     * </p>
+     * This method is called to start the client handler, it will wait for the nickname of the
+     * player, and then it will start the loop to read the messages from the client if the nickname
+     * is valid.
      */
     @Override
     public void run() {
@@ -124,14 +90,12 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * Reads the nickname from the client
-     * <p>
-     * Reads the nickname from the client and connects the player to the game
-     * <br>
-     * It uses a {@link ServerExceptionSender} to send the exceptions to the client
-     * </p>
+     * Reads the nickname from the client and connects the player to the game, if the nickname has
+     * an invalid format it continues to ask for a new nickname. If the nickname is in a valid
+     * format it tries to connect the player to the game. The success of the connection depends on
+     * the requisites of the game.
      *
-     * @param exceptionSender the exception sender
+     * @param exceptionSender the exception sender used to throw exceptions to the client
      * @return true if the nickname is valid, false otherwise
      */
     private boolean readNickname(@NotNull ServerExceptionSender exceptionSender) {
@@ -180,14 +144,8 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * Loops the message read
-     * <p>
-     * Loops the message read and calls the message handler to handle the message
-     * <br>
-     * It stops the client handler if the message is null
-     * <br>
-     * It throws an exception if the message handler is null
-     * </p>
+     * While the client handler is running, it continuously reads the input from the client and
+     * calls the {@link ServerMessageHandler} to handle the message.
      */
     private void loopMessageRead() {
         while (isRunning) {
@@ -199,16 +157,8 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * Reads the input from the client
-     * <p>
-     * Reads the input from the client and returns the message read
-     * <br>
-     * It logs the message received
-     * <br>
-     * It disconnects the player if the message is null
-     * <br>
-     * It catches the {@link IOException} and disconnects the player
-     * </p>
+     * Reads the input from the client and returns the message read. If the message is null, it
+     * disconnects the player.
      *
      * @return the message read from the client
      */
@@ -232,6 +182,9 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * Sends a message to the client to disconnect from the server
+     */
     public void youUgly() {
         gameSender.youUgly();
     }

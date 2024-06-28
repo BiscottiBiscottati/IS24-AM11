@@ -10,22 +10,20 @@ import org.slf4j.LoggerFactory;
 import java.io.PrintWriter;
 
 /**
- * The class that sends the game exceptions to the client
- * <p>
- *     The class that sends the game exceptions to the client
- *     <br>
- *     It uses a {@link PrintWriter} to send the messages to the client
- *     <br>
- * </p>
+ * The class that sends the game exceptions to the client It uses a {@link PrintWriter} to send the
+ * messages to the client
+ *
  * @param out the output stream
- * @see ContextJSON
- * @see JsonFactory
- * @see Logger
  */
 public record ServerExceptionSender(@NotNull PrintWriter out) {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerExceptionSender.class);
     private static final ContextJSON CONTEXT = ContextJSON.EXCEPTION;
 
+    /**
+     * Sends the exception to the client
+     *
+     * @param e the exception to send
+     */
     public void exception(@NotNull Exception e) {
         LOGGER.info("SERVER TCP: Exception to send: {}", e.getClass().getSimpleName());
         ObjectNode json = JsonFactory.createObjectNode(CONTEXT);

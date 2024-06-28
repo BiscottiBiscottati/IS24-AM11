@@ -22,22 +22,9 @@ import java.util.SequencedMap;
 import java.util.Set;
 
 /**
- * The class that sends the game messages to the clients
- * <p>
- *     It uses a {@link PrintWriter} to send the messages to the clients
- *     <br>
- *     It implements the {@link ServerPlayerConnector} and {@link ServerTableConnector} interfaces
- *     <br>
- *     It uses the {@link ContextJSON} to set the context of the messages
- *     <br>
- *     It uses the {@link Logger} to log the messages
- *     <br>
- *     It uses the {@link JsonFactory} to create the JSON objects
- *     <br>
- *     It uses the {@link ObjectNode} to store the JSON objects
- * </p>
- * @see ServerPlayerConnector
- * @see ServerTableConnector
+ * The class that sends the game messages to the clients. It implements the
+ * {@link ServerPlayerConnector} and {@link ServerTableConnector} interfaces
+ *
  * @param out the output stream
  */
 public record ServerGameSender(@NotNull PrintWriter out)

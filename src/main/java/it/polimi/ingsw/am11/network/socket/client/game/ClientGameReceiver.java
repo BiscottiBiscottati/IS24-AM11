@@ -23,7 +23,7 @@ import java.util.SequencedMap;
 import java.util.Set;
 
 /**
- * The class that receives the game messages from the server and updates the game
+ * The class that receives the game messages from the server and notify the game view
  *
  * @see MessageReceiver
  * @see ClientViewUpdater

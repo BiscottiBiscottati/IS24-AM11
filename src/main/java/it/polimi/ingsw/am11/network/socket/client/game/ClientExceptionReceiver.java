@@ -11,10 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The class that receives the exceptions from the server and throws them
+ * The class that receives notifications of exceptions from the server and throws them to the
+ * client
+ *
+ * @param exceptionThrower the class that throws the exceptions
  * @see MessageReceiver
  * @see ExceptionThrower
- * @param exceptionThrower the class that throws the exceptions
  */
 public record ClientExceptionReceiver(@NotNull ExceptionThrower exceptionThrower)
         implements MessageReceiver {

@@ -16,18 +16,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The class that manages the server socket
- * <p>
- * The class that manages the server socket and the client connections
- * <br>
- * It uses a {@link ServerSocket} to handle the server socket
- * <br>
- * It uses a {@link List} of {@link ClientHandler} to handle the client connections
- * <br>
- * It uses a {@link ExecutorService} to handle the client connections
- * <br>
- * It uses a {@link Logger} to log the messages
- * </p>
+ * The SocketManager class is responsible for managing the socket connection of the server, a new
+ * ClientHandler is created for each client connection and executed in a separate thread
  */
 public class SocketManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketManager.class);
@@ -55,17 +45,7 @@ public class SocketManager {
     }
 
     /**
-     * Stops the socket server
-     * <p>
-     * It uses the {@link #removeClients()} method to remove the clients
-     * <br>
-     * It uses the {@link ExecutorService#shutdown()} method to stop accepting new tasks
-     * <br>
-     * It uses the {@link ExecutorService#awaitTermination(long, TimeUnit)} method to wait for
-     * termination
-     * <br>
-     * It uses the {@link ServerSocket#close()} method to close the server socket
-     * </p>
+     * Stops the server socket and the client handlers, it waits for the termination of the thread.
      */
     public void stop() {
         isRunning = false;
@@ -83,7 +63,7 @@ public class SocketManager {
     }
 
     /**
-     * Removes the clients from the server socket
+     * It notifies the client of the disconnection and stops the client handler
      */
     public void removeClients() {
         for (ClientHandler clientHandler : clientHandlers) {
@@ -93,23 +73,8 @@ public class SocketManager {
     }
 
     /**
-     * Starts the server socket
-     * <p>
-     * It uses the {@link ServerSocket#accept()} method to accept a new connection from a client
-     * <br>
-     * It uses the {@link Socket#setKeepAlive(boolean)} method to keep the connection alive
-     * <br>
-     * It uses the {@link Socket#setSoTimeout(int)} method to set the timeout for the connection
-     * <br>
-     * It uses the {@link ClientHandler} to handle the client connection
-     * <br>
-     * It uses the {@link ExecutorService#execute(Runnable)} method to execute the client handler in
-     * a separate thread
-     * <br>
-     * It uses the {@link Logger} to log the messages
-     * <br>
-     * It uses the {@link #isRunning} to check if the server is running
-     * </p>
+     * This method while the server is running, waits for a new connection and creates a new client
+     * handler for each client.
      */
     public void start() {
         LOGGER.info("SERVER TCP: Server started on port: {}", serverSocket.getLocalPort());

@@ -13,12 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The handler of the messages received from the server by the client socket connection.
- * It is responsible for dispatching the messages to the correct receiver.
- * @param messageReceiver The receiver of the game messages from the server
+ * The handler of the messages received from the server by the client socket connection. It is
+ * responsible for dispatching the messages to the correct receiver.
+ *
+ * @param messageReceiver   The receiver of the game messages from the server
  * @param exceptionReceiver The receiver of the exceptions from the server
- * @param pongHandler The handler of the pong messages
- * @param chatReceiver The receiver of the chat messages from the server
+ * @param pongHandler       The handler of the pong messages
+ * @param chatReceiver      The receiver of the chat messages from the server
  */
 public record ClientMessageHandler(@NotNull ClientGameReceiver messageReceiver,
                                    @NotNull ClientExceptionReceiver exceptionReceiver,
@@ -27,8 +28,10 @@ public record ClientMessageHandler(@NotNull ClientGameReceiver messageReceiver,
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientMessageHandler.class);
 
     /**
-     * Receives a message from the server and dispatches it to the correct receiver
-     * @param message The message received from the server
+     * This method is called when a message is received, it will parse the message and dispatch it
+     * to the correct receiver.
+     *
+     * @param message the message received by the server
      */
     public void receive(@NotNull String message) {
         JsonNode jsonNode;

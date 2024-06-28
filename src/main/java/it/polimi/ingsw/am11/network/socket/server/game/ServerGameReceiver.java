@@ -16,20 +16,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * The class that receives the game messages from the client and updates the game
- * <p>
- *     It uses a {@link VirtualPlayerView} to update the game
- *     <br>
- *     It uses a {@link ServerExceptionSender} to send the exceptions to the client
- *     <br>
- *     It implements the {@link MessageReceiver} interface
- *     <br>
- *     It uses a {@link Logger} to log the messages
- *     <br>
- * </p>
- * @see MessageReceiver
- * @see ServerExceptionSender
- * @see VirtualPlayerView
+ * The class that receives the game messages from the client regarding the model, if the message
+ * contains an exception, it sends it to the client with a {@link ServerExceptionSender} to send the
+ * exceptions to the client.
  */
 public class ServerGameReceiver implements MessageReceiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerGameReceiver.class);
@@ -45,6 +34,7 @@ public class ServerGameReceiver implements MessageReceiver {
 
     /**
      * Receives the nickname from the client and returns it as a string
+     *
      * @param message the message received from the client
      */
     public static @Nullable String receiveNickname(@NotNull String message) {
@@ -61,7 +51,10 @@ public class ServerGameReceiver implements MessageReceiver {
     }
 
     /**
-     * Receives the message from the client and calls the appropriate method of the player view
+     * Receives the message from the client and calls the appropriate method of the player view. If
+     * the method throws an exception, it sends the exception to the client with the
+     * ServerExceptionSender
+     *
      * @param jsonNode the message received from the client
      */
     public void receive(@NotNull JsonNode jsonNode) {

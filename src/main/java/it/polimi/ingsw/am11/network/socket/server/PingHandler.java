@@ -15,34 +15,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * The class that handles the ping messages
- * <p>
- *     The class that handles the ping messages and checks if the ping messages are received
- *     <br>
- *     It implements the {@link Runnable} interface
- *     <br>
- *     It uses a {@link Socket} to handle the connection
- *     <br>
- *     It uses a {@link PrintWriter} to send the messages to the client
- *     <br>
- *     It uses a {@link AtomicLong} to store the last ping message received
- *     <br>
- *     It uses a {@link ScheduledExecutorService} to schedule the ping messages
- *     <br>
- *     It uses a {@link ObjectNode} to store the pong message
- *     <br>
- *     It uses a {@link Logger} to log the messages
- *     <br>
- *     It uses the {@link #PING_INTERVAL} to set the interval between the ping messages
- *     <br>
- *     It uses the {@link #PING_TIMEOUT} to set the timeout for the ping messages
- *     <br>
- *     It uses the {@link #ping()} method to send the ping messages
- *     <br>
- *     It uses the {@link #close()} method to close the ping messages
- *     <br>
- *     It uses the {@link #run()} method to check if the ping messages are received
- * </p>
+ * The class handles the ping messages and checks if the ping messages are received It implements
+ * the {@link Runnable} interface
  */
 public class PingHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(PingHandler.class);
@@ -64,6 +38,12 @@ public class PingHandler implements Runnable {
         this.pingExecutor = Executors.newSingleThreadScheduledExecutor();
     }
 
+    /**
+     * This method checks if the ping messages are received. If the interval between the ping
+     * messages is greater than the {@link #PING_INTERVAL} it logs a message, if the interval
+     * between the ping messages is greater than the {@link #PING_TIMEOUT} it logs a message and
+     * closes the connection with the client.
+     */
     @Override
     public void run() {
         long now = System.currentTimeMillis();
@@ -85,6 +65,10 @@ public class PingHandler implements Runnable {
         }
     }
 
+    /**
+     * This method is called when a ping message is received, it sends a pong message to the client.
+     * It also schedules the check for the ping messages.
+     */
     public void ping() {
         if (lastPing.compareAndSet(- 1, System.currentTimeMillis())) {
             pingExecutor.scheduleAtFixedRate(this, PING_INTERVAL, PING_INTERVAL,
@@ -93,6 +77,9 @@ public class PingHandler implements Runnable {
         out.println(pongMessage);
     }
 
+    /**
+     * Used to shut down the ping handler and consequently the connection with the client.
+     */
     public void close() {
         if (! pingExecutor.isShutdown()) pingExecutor.shutdown();
     }

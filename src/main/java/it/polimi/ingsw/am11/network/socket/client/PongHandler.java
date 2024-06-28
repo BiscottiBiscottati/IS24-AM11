@@ -15,29 +15,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * The class that handles the pong messages
- * <p>
- *     The class that handles the pong messages and checks if the pong messages are received
- *     <br>
- *     It implements the {@link Runnable} interface
- *     <br>
- *     It uses a {@link Socket} to handle the connection
- *     <br>
- *     It uses a {@link PrintWriter} to send the messages to the server
- *     <br>
- *     It uses a {@link AtomicLong} to store the last pong message received
- *     <br>
- *     It uses a {@link ScheduledExecutorService} to schedule the pong messages
- *     <br>
- *     It uses a {@link ObjectNode} to store the ping message
- *     <br>
- *     It uses a {@link Logger} to log the messages
- *     <br>
- *     It uses the {@link #PONG_INTERVAL} to set the interval between the pong messages
- *     <br>
- *     It uses the {@link #PONG_TIMEOUT} to set the timeout for the pong messages
- *     <br>
- * </p>
+ * The class that handles the pong messages and checks if the pong messages are received.It
+ * implements the {@link Runnable} interface. It uses the {@link #PONG_INTERVAL} to set the interval
+ * between the pong messages and the {@link #PONG_TIMEOUT} to set the timeout for the pong messages
  */
 public class PongHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(PongHandler.class);
@@ -59,10 +39,17 @@ public class PongHandler implements Runnable {
         this.pingMessage = JsonFactory.createObjectNode(ContextJSON.PING);
     }
 
+    /**
+     * It starts the ping-pong mechanism by sending a ping message to the server
+     */
     public void start() {
         out.println(pingMessage);
     }
 
+    /**
+     * This method is called when a pong message is received, it sends a ping message to the client.
+     * It also schedules the check for the pong messages.
+     */
     public void pong() {
         if (lastPong.compareAndSet(- 1, System.currentTimeMillis())) {
             pongExecutor.scheduleAtFixedRate(this, PONG_INTERVAL, PONG_INTERVAL,
@@ -71,15 +58,10 @@ public class PongHandler implements Runnable {
     }
 
     /**
-     * Checks if the pong messages are received
-     * <p>
-     *     The method that checks if the pong messages are received
-     *     <br>
-     *     If the pong messages are not received, it closes the connection
-     *     <br>
-     *     If the pong messages are received, it sends a ping message
-     *     <br>
-     * </p>
+     * This method checks if the pong messages are received. If the interval between the pong
+     * messages is greater than the {@link #PONG_INTERVAL} it logs a message, if the interval
+     * between the pong messages is greater than the {@link #PONG_TIMEOUT} it logs a message and
+     * closes the connection with the client.
      */
     @Override
     public void run() {
@@ -102,6 +84,9 @@ public class PongHandler implements Runnable {
         }
     }
 
+    /**
+     * Used to shut down the ping handler and consequently the connection with the server.
+     */
     public void close() {
         pongExecutor.shutdown();
     }
