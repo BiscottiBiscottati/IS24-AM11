@@ -411,7 +411,7 @@ public class PlayerManager {
      * Method used when removing a player from the game, it will remove the player from the list of
      * players and from the queue of players.
      *
-     * @param nickname
+     * @param nickname of the player to remove
      */
     public void removePlayer(String nickname) {
         Player toRemove = players.get(nickname);
@@ -442,7 +442,9 @@ public class PlayerManager {
         currentPlaying = playerQueue.element();
         currentAction = TurnAction.PLACE_CARD;
 
+        assert firstPlayer != null;
         LOGGER.info("MODEL: First player is {}", firstPlayer.nickname());
+        assert currentPlaying != null;
         LOGGER.debug("MODEL: Current player is {}", currentPlaying.nickname());
 
         pcs.fireEvent(new TurnChangeEvent(null, currentPlaying.nickname()));

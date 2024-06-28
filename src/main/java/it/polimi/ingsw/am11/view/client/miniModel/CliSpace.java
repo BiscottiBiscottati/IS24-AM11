@@ -8,8 +8,8 @@ import java.util.Set;
 
 public class CliSpace {
 
-    private final Set<Integer> playerHand;
-    private final Set<Integer> playerObjective;
+    private final @NotNull Set<Integer> playerHand;
+    private final @NotNull Set<Integer> playerObjective;
     private Set<Integer> candidateObjectives;
     private Integer starterCard;
     private boolean starterIsRetro;
@@ -19,11 +19,11 @@ public class CliSpace {
         this.playerObjective = new HashSet<>(2);
     }
 
-    public Set<Integer> getPlayerHand() {
+    public @NotNull Set<Integer> getPlayerHand() {
         return playerHand;
     }
 
-    public Set<Integer> getPlayerObjective() {
+    public @NotNull Set<Integer> getPlayerObjective() {
         return playerObjective;
     }
 

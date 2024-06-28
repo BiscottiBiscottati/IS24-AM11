@@ -7,6 +7,7 @@ import it.polimi.ingsw.am11.network.ConnectionType;
 import it.polimi.ingsw.am11.network.connector.ClientChatConnector;
 import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This class is used to interact with the GUI, it is used to send messages to the server and to
@@ -14,10 +15,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GuiActuator {
 
-    private final GuiUpdater guiUpdater;
-    private ClientNetworkHandler connection;
-    private ClientGameConnector connector;
-    private ClientChatConnector chatConnector;
+    private final @NotNull GuiUpdater guiUpdater;
+    private @Nullable ClientNetworkHandler connection;
+    private @Nullable ClientGameConnector connector;
+    private @Nullable ClientChatConnector chatConnector;
 
     /**
      * Creates a new GuiActuator with the given gui updater and sets the connection to null
@@ -38,7 +39,7 @@ public class GuiActuator {
      * @param ip   the server ip
      * @param port the server port
      */
-    public void connect(@NotNull String type, String ip, int port) throws Exception {
+    public void connect(@NotNull String type, @NotNull String ip, int port) throws Exception {
         connection = ConnectionType.fromString(type)
                                    .orElseThrow(() -> new RuntimeException(
                                            "Type is set neither to rmi nor " +
@@ -53,7 +54,8 @@ public class GuiActuator {
      *
      * @param nick the nickname
      */
-    public void setName(String nick) {
+    public void setName(@NotNull String nick) {
+        assert connector != null;
         connector.setNickname(nick);
         guiUpdater.setCandidateNick(nick);
     }
@@ -64,6 +66,7 @@ public class GuiActuator {
      * @param numOfPlayers the number of players
      */
     public void setNumOfPlayers(int numOfPlayers) {
+        assert connector != null;
         connector.setNumOfPlayers(numOfPlayers);
     }
 
@@ -73,6 +76,7 @@ public class GuiActuator {
      * @param isRetro true if the card is placed on the back
      */
     public void setStarterCard(boolean isRetro) {
+        assert connector != null;
         connector.setStarterCard(isRetro);
     }
 
@@ -82,6 +86,7 @@ public class GuiActuator {
      * @param cardId the id of the card
      */
     public void setPersonalObjective(int cardId) {
+        assert connector != null;
         connector.setPersonalObjective(cardId);
     }
 
@@ -95,6 +100,7 @@ public class GuiActuator {
      * @param isRetro true if the card is placed on the back
      */
     public void placeCard(int x, int y, int cardId, boolean isRetro) {
+        assert connector != null;
         connector.placeCard(new Position(x, y), cardId, isRetro);
     }
 
@@ -106,8 +112,12 @@ public class GuiActuator {
      * @param type        the type of the card
      * @param cardId      the id of the card
      */
-    public void drawCard(boolean fromVisible, PlayableCardType type, int cardId) {
-        if (fromVisible) {connector.drawCard(true, type, cardId);} else {
+    public void drawCard(boolean fromVisible, @NotNull PlayableCardType type, int cardId) {
+        if (fromVisible) {
+            assert connector != null;
+            connector.drawCard(true, type, cardId);
+        } else {
+            assert connector != null;
             connector.drawCard(false, type, 0);
         }
     }
@@ -117,7 +127,8 @@ public class GuiActuator {
      *
      * @param message the message
      */
-    public void sendChatMessage(String message) {
+    public void sendChatMessage(@NotNull String message) {
+        assert chatConnector != null;
         chatConnector.pubMsg(message);
     }
 
@@ -127,7 +138,8 @@ public class GuiActuator {
      * @param recipient the recipient
      * @param message   the message
      */
-    public void sendPrivateMessage(String recipient, String message) {
+    public void sendPrivateMessage(@NotNull String recipient, @NotNull String message) {
+        assert chatConnector != null;
         chatConnector.pubPrivateMsg(recipient, message);
     }
 }

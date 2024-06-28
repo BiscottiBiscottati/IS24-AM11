@@ -8,7 +8,6 @@ import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
@@ -17,12 +16,12 @@ public class Waiting extends TUIState {
     private static final String infoBar = "STATUS: Waiting...";
     private boolean alreadyError = false;
 
-    public Waiting(MiniGameModel model) {
+    public Waiting(@NotNull MiniGameModel model) {
         super(model);
     }
 
     @Override
-    public void passArgs(Actuator actuator, String[] args) {
+    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
         ArgParser parser = setUpOptions();
 
         if (args[0].isEmpty()) {
@@ -43,10 +42,7 @@ public class Waiting extends TUIState {
 
         String word = parser.getPositionalArgs().getFirst();
         switch (word.toLowerCase()) {
-            case "help" -> {
-                Actuator.help();
-                return;
-            }
+            case "help" -> Actuator.help();
             case "exit" -> Actuator.close();
             case "get" -> {
                 if (model.table().getStatus().equals(GameStatus.CHOOSING_STARTERS) ||
@@ -94,7 +90,7 @@ public class Waiting extends TUIState {
     }
 
     @Override
-    public void restart(boolean dueToEx, Exception exception) {
+    public void restart(boolean dueToEx, @NotNull Exception exception) {
         alreadyError = false;
 
         ConsUtils.clear();
@@ -109,7 +105,7 @@ public class Waiting extends TUIState {
     }
 
     @Override
-    public TuiStates getState() {
+    public @NotNull TuiStates getState() {
         return TuiStates.WAITING;
     }
 
@@ -124,7 +120,7 @@ public class Waiting extends TUIState {
         System.out.println("\033[F" + "\033[K" + text);
     }
 
-    private void get(Actuator actuator, ArgParser parser) {
+    private void get(@NotNull Actuator actuator, @NotNull ArgParser parser) {
         if (parser.getPositionalArgs().size() < 2) {
             errorsHappensEvenTwice("ERROR: get command requires an argument");
             alreadyError = true;
@@ -134,9 +130,8 @@ public class Waiting extends TUIState {
 
         String word = parser.getPositionalArgs().get(1);
 
-        if (word.toLowerCase().equals("chat")) {
+        if (word.equalsIgnoreCase("chat")) {
             actuator.setTuiState(TuiStates.CHAT);
-            return;
         }
 
     }

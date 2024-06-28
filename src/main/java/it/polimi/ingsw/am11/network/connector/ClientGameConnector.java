@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 public interface ClientGameConnector {
 
     /**
-     * Sends a command to the server to place the starter card ont the field on the specified
+     * Sends a command to the server to place the starter card onto the field on the specified
      * position
      *
      * @param isRetro true if the card is placed face down, false otherwise
@@ -36,7 +36,7 @@ public interface ClientGameConnector {
     void setPersonalObjective(int cardId);
 
     /**
-     * Sends a command to the server to place a card ont the field on the specified position and
+     * Sends a command to the server to place a card onto the field on the specified position and
      * orientation
      *
      * @param pos     the position where to place the card

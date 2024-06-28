@@ -21,12 +21,12 @@ public class ChoosingObj extends TUIState {
     private boolean isBlocked = false;
 
 
-    public ChoosingObj(MiniGameModel model) {
+    public ChoosingObj(@NotNull MiniGameModel model) {
         super(model);
     }
 
     @Override
-    public void passArgs(Actuator actuator, String[] args) {
+    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
         ArgParser parser = setUpOptions();
         int val;
 
@@ -66,9 +66,7 @@ public class ChoosingObj extends TUIState {
                 Actuator.help();
                 return;
             }
-            case "get" -> {
-                get(actuator, parser);
-            }
+            case "get" -> get(actuator, parser);
             case "msg", "send" -> {
                 String note;
                 try {
@@ -137,6 +135,7 @@ public class ChoosingObj extends TUIState {
         }
 
         if (dueToEx) {
+            assert exception != null;
             System.out.println("ERROR: " + exception.getMessage());
             alreadyError = true;
         } else {
@@ -147,7 +146,7 @@ public class ChoosingObj extends TUIState {
     }
 
     @Override
-    public TuiStates getState() {
+    public @NotNull TuiStates getState() {
         return TuiStates.CHOOSING_OBJECTIVE;
     }
 
@@ -162,7 +161,7 @@ public class ChoosingObj extends TUIState {
         System.out.println("\033[F" + "\033[K" + text);
     }
 
-    private void get(Actuator actuator, ArgParser parser) {
+    private void get(@NotNull Actuator actuator, @NotNull ArgParser parser) {
         if (parser.getPositionalArgs().size() < 2) {
             errorsHappensEvenTwice("ERROR: get command requires an argument");
             alreadyError = true;
@@ -172,7 +171,7 @@ public class ChoosingObj extends TUIState {
 
         String word = parser.getPositionalArgs().get(1);
 
-        if (word.toLowerCase().equals("chat")) {
+        if (word.equalsIgnoreCase("chat")) {
             actuator.setTuiState(TuiStates.CHAT);
         }
 

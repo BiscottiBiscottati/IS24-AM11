@@ -398,8 +398,7 @@ public class GameLogic implements GameModel {
             LOGGER.info("MODEL: Picking starters...");
             pickStarters();
             plateau.setStatus(GameStatus.CHOOSING_STARTERS);
-        } catch (IllegalPlayerSpaceActionException | GameStatusException |
-                 IllegalPickActionException | PlayerInitException e) {
+        } catch (IllegalPlayerSpaceActionException | PlayerInitException e) {
             LOGGER.error("Something broke while dealing starters or objectives! Error: {}",
                          e.getMessage());
             throw new GameBreakingException("Something broke while dealing starters or objectives");
@@ -418,12 +417,11 @@ public class GameLogic implements GameModel {
      * Pick a <code>StarterCard</code> from the deck on the <code>PickableTable</code> and saves it
      * in player space
      *
-     * @throws GameStatusException if the game is not ongoing
      */
 
     private void pickStarters()
-    throws GameStatusException, PlayerInitException,
-           IllegalPlayerSpaceActionException, IllegalPickActionException {
+    throws PlayerInitException,
+           IllegalPlayerSpaceActionException {
         for (String nickname : playerManager.getPlayers()) {
             StarterCard starter = pickablesTable.pickStarterCard();
 
@@ -516,13 +514,7 @@ public class GameLogic implements GameModel {
 
             LOGGER.info("MODEL: All starters have been placed, moving to objectives");
 
-            try {
-                pickCandidateObjectives();
-            } catch (EmptyDeckException | IllegalPickActionException e) {
-                LOGGER.error("Something broke while dealing objectives! Error: {}", e.getMessage());
-                throw new GameBreakingException(
-                        "Something broke while dealing starters or objectives");
-            }
+            pickCandidateObjectives();
             plateau.setStatus(GameStatus.CHOOSING_OBJECTIVES);
         }
     }
@@ -1140,12 +1132,10 @@ public class GameLogic implements GameModel {
     /**
      * Pick a <code>ObjectiveCard</code> from the deck on the <code>PickableTable</code>.
      *
-     * @throws EmptyDeckException if the deck of  <code>ObjectiveCard</code> is empty
      */
 
     private void pickCandidateObjectives()
-    throws EmptyDeckException, PlayerInitException,
-           IllegalPickActionException {
+    throws PlayerInitException {
 
         for (String nickname : playerManager.getPlayers()) {
             Set<ObjectiveCard> objectives = pickablesTable.pickObjectiveCandidates();

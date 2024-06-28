@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class PlayersPrinter {
 
-    public static List<String> buildPlayers(MiniGameModel model) {
+    public static @NotNull List<String> buildPlayers(@NotNull MiniGameModel model) {
         //Players INFO: Name, color, points, isStarter
 
         //Size: 96*
@@ -85,7 +85,7 @@ public class PlayersPrinter {
 //                                   """);
     }
 
-    public static String baseLine(boolean isBottom) {
+    public static @NotNull String baseLine(boolean isBottom) {
         if (isBottom) {
             return "╚═══════════════════╝";
         } else {
@@ -93,11 +93,12 @@ public class PlayersPrinter {
         }
     }
 
-    public static String spaces(int num) {
+    public static @NotNull String spaces(int num) {
         return " ".repeat(Math.max(0, num));
     }
 
-    public static List<String> infoLine(String nick, PlayerColor color, int points) {
+    public static @NotNull List<String> infoLine(@NotNull String nick, @NotNull PlayerColor color,
+                                                 int points) {
         List<String> result = new ArrayList<>(2);
         String names;
         String colors;
@@ -130,7 +131,7 @@ public class PlayersPrinter {
         return result;
     }
 
-    public static String isTurn(int val) {
+    public static @NotNull String isTurn(int val) {
         String word = "Playing ^";
         String spaces = spaces(21).repeat(val - 1) + spaces(5);
         return spaces + word;

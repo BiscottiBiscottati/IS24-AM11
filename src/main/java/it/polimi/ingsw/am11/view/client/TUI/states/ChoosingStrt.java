@@ -20,12 +20,12 @@ public class ChoosingStrt extends TUIState {
     private boolean isBlocked = false;
 
 
-    public ChoosingStrt(MiniGameModel model) {
+    public ChoosingStrt(@NotNull MiniGameModel model) {
         super(model);
     }
 
     @Override
-    public void passArgs(Actuator actuator, String[] args) {
+    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
 
         ArgParser parser = setUpOptions();
 
@@ -63,7 +63,6 @@ public class ChoosingStrt extends TUIState {
                     return;
                 }
                 Actuator.help();
-                return;
             }
             case "exit" -> {
                 if (parser.getPositionalArgs().size() > 1) {
@@ -75,9 +74,7 @@ public class ChoosingStrt extends TUIState {
                 }
                 Actuator.close();
             }
-            case "get" -> {
-                get(actuator, parser);
-            }
+            case "get" -> get(actuator, parser);
             case "msg", "send" -> {
                 String note;
                 try {
@@ -93,7 +90,6 @@ public class ChoosingStrt extends TUIState {
                     errorsHappensEvenTwice(note);
                     alreadyError = true;
                     TuiStates.printAskLine(this);
-                    return;
                 } else {
                     System.out.print("\033[F");
                     TuiStates.printAskLine(this);
@@ -146,6 +142,7 @@ public class ChoosingStrt extends TUIState {
         }
 
         if (dueToEx) {
+            assert exception != null;
             System.out.println("ERROR: " + exception.getMessage());
             alreadyError = true;
         } else {
@@ -156,7 +153,7 @@ public class ChoosingStrt extends TUIState {
     }
 
     @Override
-    public TuiStates getState() {
+    public @NotNull TuiStates getState() {
         return TuiStates.CHOOSING_STARTER;
     }
 
@@ -171,7 +168,7 @@ public class ChoosingStrt extends TUIState {
         System.out.println("\033[F" + "\033[K" + text);
     }
 
-    private void get(Actuator actuator, ArgParser parser) {
+    private void get(@NotNull Actuator actuator, @NotNull ArgParser parser) {
         if (parser.getPositionalArgs().size() < 2) {
             errorsHappensEvenTwice("ERROR: get command requires an argument");
             alreadyError = true;
@@ -181,7 +178,7 @@ public class ChoosingStrt extends TUIState {
 
         String word = parser.getPositionalArgs().get(1);
 
-        if (word.toLowerCase().equals("chat")) {
+        if (word.equalsIgnoreCase("chat")) {
             actuator.setTuiState(TuiStates.CHAT);
         }
 

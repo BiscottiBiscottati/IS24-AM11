@@ -2,6 +2,7 @@ package it.polimi.ingsw.am11.network;
 
 import it.polimi.ingsw.am11.network.RMI.server.ServerRMI;
 import it.polimi.ingsw.am11.network.socket.server.SocketManager;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,8 +16,8 @@ import java.util.concurrent.Executors;
  */
 public class ServerNetworkManager {
     private final ExecutorService executorService = Executors.newFixedThreadPool(1);
-    private final SocketManager socketManager;
-    private final ServerRMI serverRMI;
+    private final @NotNull SocketManager socketManager;
+    private final @NotNull ServerRMI serverRMI;
 
     public ServerNetworkManager(int socketPort, int rmiPort) {
         socketManager = new SocketManager(socketPort);

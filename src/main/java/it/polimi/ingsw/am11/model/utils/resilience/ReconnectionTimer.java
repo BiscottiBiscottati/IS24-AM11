@@ -6,6 +6,7 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType;
 import it.polimi.ingsw.am11.model.exceptions.*;
 import it.polimi.ingsw.am11.model.utils.TurnAction;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +22,9 @@ public class ReconnectionTimer {
     private static int RECONNECTION_TIME = 10000;
     private final @NotNull ScheduledExecutorService executor;
     private final @NotNull GameModel model;
-    private ScheduledFuture<?> currentTurnFuture;
-    private ScheduledFuture<?> reconnectionFuture;
-    private ScheduledFuture<?> totalReconnectionFuture;
+    private @Nullable ScheduledFuture<?> currentTurnFuture;
+    private @Nullable ScheduledFuture<?> reconnectionFuture;
+    private @Nullable ScheduledFuture<?> totalReconnectionFuture;
     private boolean isWaitingForReconnection = false;
     private int numberOfDisconnected = 0;
 
@@ -51,7 +52,8 @@ public class ReconnectionTimer {
         currentTurnFuture = executor.schedule(runnable, RECONNECTION_TIME, TimeUnit.MILLISECONDS);
     }
 
-    private @NotNull Runnable getRunnable(String nickname, @NotNull TurnAction turnAction) {
+    private @NotNull Runnable getRunnable(@NotNull String nickname,
+                                          @NotNull TurnAction turnAction) {
         Runnable runnable = () -> {};
 
         switch (turnAction) {

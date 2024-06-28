@@ -51,11 +51,10 @@ public class DeckManager {
     }
 
     /**
-     * Used to get the Color of the top card of a deck, if the deck is empty it returns an empty
-     * Optional
+     * Used to get the Color out of the deck, if the deck is empty, it returns an empty Optional
      *
      * @param type the type of the deck
-     * @return the color of the top card of the deck, if present
+     * @return the color of the top card out of the deck, if present
      */
     public @NotNull Optional<GameColor> getDeckTop(@NotNull PlayableCardType type) {
         return switch (type) {
@@ -65,8 +64,8 @@ public class DeckManager {
     }
 
     /**
-     * Method to draw a card from deck of PlayableCardType cards, if the deck is empty it returns an
-     * empty Optional
+     * Method to draw a card from a deck of PlayableCardType cards, if the deck is empty, it returns
+     * an empty Optional
      *
      * @param type the type of the deck
      * @return the PlayableCard drawn from the deck, if present
@@ -79,7 +78,7 @@ public class DeckManager {
     }
 
     /**
-     * Method to draw a card from the starter deck, if the deck is empty it returns an empty
+     * Method to draw a card from the starter deck, if the deck is empty, it returns an empty
      * Optional
      *
      * @return the StarterCard drawn from the deck, if present
@@ -89,7 +88,7 @@ public class DeckManager {
     }
 
     /**
-     * Method to draw a card from the objective deck, if the deck is empty it returns an empty
+     * Method to draw a card from the objective deck, if the deck is empty, it returns an empty
      *
      * @return the ObjectiveCard drawn from the deck, if present
      */

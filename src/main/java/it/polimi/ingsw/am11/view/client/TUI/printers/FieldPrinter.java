@@ -221,7 +221,7 @@ public class FieldPrinter {
      * @param <T>    the type of the matrix
      * @return true if the position is on the border, false otherwise
      */
-    private static <T> boolean isBorder(List<List<T>> matrix, int x, int y) {
+    private static <T> boolean isBorder(@NotNull List<List<T>> matrix, int x, int y) {
         return x == 0 || y == 0 || x == matrix.getFirst().size() - 1 ||
                y == matrix.size() - 1;
     }
@@ -234,7 +234,7 @@ public class FieldPrinter {
      *                    representation
      * @param columnIndex the column index point to the central column of the coordinates ascii
      *                    representation
-     * @param printMatrix
+     * @param printMatrix the matrix with strings to print
      */
     private static void setCoordinates(@NotNull Position pos, int rowIndex, int columnIndex,
                                        @NotNull List<List<String>> printMatrix) {
@@ -299,7 +299,7 @@ public class FieldPrinter {
             throw new RuntimeException(e);
         }
         printMatrix.get(rowIndex).set(columnIndex + 1,
-                                      centerStr(centers, CARD_WIDTH, ' ', numOfCenters));
+                                      centerStr(centers, ' ', numOfCenters));
         // right vertical separator
         printMatrix.get(rowIndex).set(columnIndex + 2, VERTICAL_SEPARATOR);
 
@@ -309,7 +309,6 @@ public class FieldPrinter {
         String strID = String.valueOf(card.getCard().getId());
         printMatrix.get(rowIndex + 1).set(columnIndex + 1,
                                           centerStr(strID,
-                                                    CARD_WIDTH,
                                                     HORIZONTAL_SEPARATOR.charAt(0),
                                                     strID.length()));
         //DOWN_RX corner
@@ -327,7 +326,8 @@ public class FieldPrinter {
      * @param corner      the specific corner to set
      */
     private static void setCorner(@NotNull List<List<String>> printMatrix, int rowIndex,
-                                  int columnIndex, @NotNull CardContainer card, Corner corner) {
+                                  int columnIndex, @NotNull CardContainer card,
+                                  @NotNull Corner corner) {
 
         if (! card.isCornerCovered(corner)) {
             printMatrix.get(rowIndex).set(columnIndex,
@@ -341,15 +341,14 @@ public class FieldPrinter {
      * string length is odd, the padding character will be added to the left
      *
      * @param string  the string to center
-     * @param width   the width of the string
      * @param padChar the padding character
      * @return the centered string
      */
-    private static @NotNull String centerStr(@NotNull String string, int width, char padChar,
+    private static @NotNull String centerStr(@NotNull String string, char padChar,
                                              int numOfElements) {
         String strChar = String.valueOf(padChar);
-        return strChar.repeat((width - numOfElements + 1) / 2) + string +
-               strChar.repeat((width - numOfElements) / 2);
+        return strChar.repeat((FieldPrinter.CARD_WIDTH - numOfElements + 1) / 2) + string +
+               strChar.repeat((FieldPrinter.CARD_WIDTH - numOfElements) / 2);
     }
 
 

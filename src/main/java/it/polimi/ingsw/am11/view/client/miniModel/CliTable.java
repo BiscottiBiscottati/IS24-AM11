@@ -15,9 +15,9 @@ import java.util.Set;
 
 public class CliTable {
 
-    private final Map<PlayableCardType, GameColor> deckTopColors;
-    private final Set<Integer> shownCards;
-    private final Set<Integer> commonObjectives;
+    private final @NotNull Map<PlayableCardType, GameColor> deckTopColors;
+    private final @NotNull Set<Integer> shownCards;
+    private final @NotNull Set<Integer> commonObjectives;
     private @NotNull GameStatus status;
 
     public CliTable() {

@@ -36,8 +36,7 @@ public class CandidateObjectiveEvent extends PlayerViewEvent {
     @Override
     public @NotNull Set<Integer> getValueOfAction() {
         if (oldCardsId != null) return oldCardsId;
-        if (newCardsId != null) return newCardsId;
-        throw new UnsupportedOperationException("both are null cannot be called");
+        return newCardsId;
     }
 
 

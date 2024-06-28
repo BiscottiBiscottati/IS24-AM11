@@ -79,7 +79,7 @@ public class GuiResources {
      * @param res The enum value that specifies the resource.
      * @return An ImageView of the resource specified by the provided enum.
      */
-    public static @NotNull ImageView getTheImageView(GuiResEnum res) {
+    public static @NotNull ImageView getTheImageView(@NotNull GuiResEnum res) {
         Image image = new Image(String.valueOf(GuiResources.getTheUrl(res)));
         return new ImageView(image);
     }
@@ -92,7 +92,7 @@ public class GuiResources {
      * @param name The enum value that specifies the resource.
      * @return The URL associated with the provided enum value.
      */
-    public static URL getTheUrl(GuiResEnum name) {
+    public static URL getTheUrl(@NotNull GuiResEnum name) {
         if (urlMap.get(name) == null) {
             urlMap.put(name, LoadingScreen.class.getResource(name.getFileName()));
         }
@@ -107,7 +107,7 @@ public class GuiResources {
      * @return The image associated with the provided enum value.
      */
     @Contract("_ -> new")
-    public static @NotNull Image getTheImage(GuiResEnum res) {
+    public static @NotNull Image getTheImage(@NotNull GuiResEnum res) {
         return new Image(String.valueOf(GuiResources.getTheUrl(res)));
     }
 
@@ -118,7 +118,7 @@ public class GuiResources {
      * @param name The enum value that specifies the resource.
      * @return The URL associated with the provided enum value as a String.
      */
-    public static String getUrlString(GuiResEnum name) {
+    public static String getUrlString(@NotNull GuiResEnum name) {
         return String.valueOf(getTheUrl(name));
     }
 

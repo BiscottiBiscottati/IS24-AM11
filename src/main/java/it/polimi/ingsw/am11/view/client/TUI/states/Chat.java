@@ -5,6 +5,7 @@ import it.polimi.ingsw.am11.view.client.TUI.Actuator;
 import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
@@ -17,12 +18,12 @@ public class Chat extends TUIState {
     private static final String infoBar = "CHAT: Talk with your enemies...";
     private boolean alreadyError = false;
 
-    public Chat(MiniGameModel model) {
+    public Chat(@NotNull MiniGameModel model) {
         super(model);
     }
 
     @Override
-    public void passArgs(Actuator actuator, String[] args) {
+    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
 
         //Empty string
         if (args[0].isEmpty()) {
@@ -58,6 +59,7 @@ public class Chat extends TUIState {
         model.getChatMessages().forEach(System.out::println);
 
         if (dueToEx) {
+            assert exception != null;
             System.out.println("ERROR: " + exception.getMessage());
             alreadyError = true;
         } else {
@@ -68,18 +70,12 @@ public class Chat extends TUIState {
     }
 
     @Override
-    public TuiStates getState() {
+    public @NotNull TuiStates getState() {
         return TuiStates.CHAT;
     }
 
-    private void errorsHappensEvenTwice(String text) {
-        if (alreadyError) {
-            System.out.print("\033[F" + "\033[K");
-        }
-        System.out.println("\033[F" + "\033[K" + text);
-    }
-
-    public static String chatter(Actuator actuator, String[] args, Set<String> players)
+    public static @NotNull String chatter(@NotNull Actuator actuator, String @NotNull [] args,
+                                          @NotNull Set<String> players)
     throws ParsingErrorException {
         //This method will receive already checked arguments
         switch (args[0].toLowerCase()) {
@@ -134,6 +130,13 @@ public class Chat extends TUIState {
                 return "";
             }
         }
+    }
+
+    private void errorsHappensEvenTwice(String text) {
+        if (alreadyError) {
+            System.out.print("\033[F" + "\033[K");
+        }
+        System.out.println("\033[F" + "\033[K" + text);
     }
 
 }

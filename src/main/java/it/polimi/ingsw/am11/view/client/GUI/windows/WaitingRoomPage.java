@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This class is used to create the waiting room page, where the player waits for the other players
@@ -26,7 +27,7 @@ public class WaitingRoomPage {
      *
      * @param codexNaturalis The GUI instance that the waiting room page is a part of.
      */
-    public static void createWaitingRoomPage(CodexNaturalis codexNaturalis) {
+    public static void createWaitingRoomPage(@NotNull CodexNaturalis codexNaturalis) {
         WaitingRoomPage.codexNaturalis = codexNaturalis;
 
         StackPane root = codexNaturalis.getSmallRoot();

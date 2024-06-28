@@ -10,7 +10,7 @@ public class TableViewUpdater implements TableListener {
     public TableViewUpdater(VirtualTableView virtualView) {
         this.virtualView = virtualView;
     }
-    
+
     @Override
     public void propertyChange(@NotNull TableViewEvent event) {
         event.updateView(virtualView);

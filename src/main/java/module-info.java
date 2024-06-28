@@ -2,15 +2,9 @@
 module it.polimi.ingsw.am11 {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
+    requires javafx.graphics;
+    requires javafx.base;
 
-    requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires net.synedra.validatorfx;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
-    requires com.almasb.fxgl.all;
     requires org.jetbrains.annotations;
     requires com.google.common;
 
@@ -21,9 +15,7 @@ module it.polimi.ingsw.am11 {
     requires org.slf4j;
     requires org.fusesource.jansi;
     requires ch.qos.logback.classic;
-    requires java.smartcardio;
     requires jdk.net;
-    requires ch.qos.logback.core;
     requires javafx.media;
 
     opens it.polimi.ingsw.am11 to javafx.fxml;
@@ -33,6 +25,7 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.view.client.GUI.utils;
     opens it.polimi.ingsw.am11.view.client.GUI.utils to javafx.fxml;
 
+    exports it.polimi.ingsw.am11.network.connector;
     exports it.polimi.ingsw.am11.network.RMI.client;
     exports it.polimi.ingsw.am11.network.RMI.remote;
     exports it.polimi.ingsw.am11.network.RMI.server;
@@ -51,6 +44,7 @@ module it.polimi.ingsw.am11 {
     exports it.polimi.ingsw.am11.model.cards.utils.enums;
     exports it.polimi.ingsw.am11.model.players.field;
     exports it.polimi.ingsw.am11.controller.exceptions;
+    exports it.polimi.ingsw.am11.view.client;
     exports it.polimi.ingsw.am11.view.client.GUI.windows;
     exports it.polimi.ingsw.am11.view.client.miniModel;
     exports it.polimi.ingsw.am11.view.client.miniModel.exceptions;

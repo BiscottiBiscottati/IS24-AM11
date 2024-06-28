@@ -21,19 +21,20 @@ public class Connecting extends TUIState {
     private static final String setIp = "IP address set to: ";
     private static final String setPort = "Port set to: ";
     private static final String infoBar = " STATUS: Connecting to the server...";
-
-    private boolean alreadyError = false;
+    @NotNull
     String type = "";
+    @NotNull
     String ip = "";
     int port = - 1;
+    private boolean alreadyError = false;
 
 
-    public Connecting(MiniGameModel model) {
+    public Connecting(@NotNull MiniGameModel model) {
         super(model);
     }
 
     @Override
-    public void passArgs(Actuator actuator, String[] args) {
+    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
         ArgParser parser = setUpOptions();
 
         // Handel empty string
@@ -121,6 +122,7 @@ public class Connecting extends TUIState {
 
             //check ip, if given
             String optIP = parser.getOption("ip").orElseThrow().getValue();
+            assert optIP != null;
             if (! optIP.isEmpty()) {
                 if (validateIP(optIP) || optIP.equals("localhost")) {
                     ip = optIP;
@@ -133,6 +135,7 @@ public class Connecting extends TUIState {
 
             //check port if given
             String optPort = parser.getOption("port").orElseThrow().getValue();
+            assert optPort != null;
             if (! optPort.isEmpty()) {
                 try {
                     port = Integer.parseInt(optPort);
@@ -143,7 +146,7 @@ public class Connecting extends TUIState {
                 }
             }
 
-            //ask for new value if necessary
+            //ask for a new value if necessary
             if (ip.isEmpty()) {
                 upClearDownThenFalse();
                 System.out.println(setSocketOrRmi + type);
@@ -231,7 +234,7 @@ public class Connecting extends TUIState {
         System.out.println("\033[F" + "\033[K" + text);
     }
 
-    private static boolean validateIP(String ip) {
+    private static boolean validateIP(@NotNull String ip) {
         // Regex expression for validating IPv4
         String regexV4 = "(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}" +
                          "([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])";
@@ -242,17 +245,17 @@ public class Connecting extends TUIState {
         Pattern pV4 = Pattern.compile(regexV4);
         Pattern pV6 = Pattern.compile(regexV6);
 
-        // Checking if it is a valid IPv4 addresses
+        // Checking if it is a valid IPv4 address
         if (pV4.matcher(ip).matches())
             return true;
 
-            // Checking if it is a valid IPv6 addresses
+            // Checking if it is a valid IPv6 address
         else return pV6.matcher(ip).matches();
 
     }
 
     @Override
-    public void restart(boolean dueToEx, Exception exception) {
+    public void restart(boolean dueToEx, @NotNull Exception exception) {
         alreadyError = false;
         type = "";
         ip = "";
@@ -271,7 +274,7 @@ public class Connecting extends TUIState {
     }
 
     @Override
-    public TuiStates getState() {
+    public @NotNull TuiStates getState() {
         return TuiStates.CONNECTING;
     }
 }

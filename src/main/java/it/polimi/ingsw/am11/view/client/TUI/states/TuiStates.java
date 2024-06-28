@@ -21,11 +21,7 @@ public enum TuiStates {
         this.stateFactory = stateFactory;
     }
 
-    public @NotNull TUIState getNewState(@NotNull MiniGameModel model) {
-        return stateFactory.createState(model);
-    }
-
-    public static void printAskLine(TUIState state) {
+    public static void printAskLine(@NotNull TUIState state) {
         switch (state.getState()) {
             case CONNECTING -> {
                 Connecting conn = (Connecting) state;
@@ -69,6 +65,10 @@ public enum TuiStates {
             }
             case CHAT -> System.out.print(Chat.askForMsg);
         }
+    }
+
+    public @NotNull TUIState getNewState(@NotNull MiniGameModel model) {
+        return stateFactory.createState(model);
     }
 
 

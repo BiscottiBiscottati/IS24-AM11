@@ -23,7 +23,7 @@ public class BasicRuleset implements RuleSet {
     }
 
     /**
-     * @return the number of resource cards dealt at the beginning
+     * @return the number of resource cards dealt with at the beginning
      */
     @Override
     public int getResourceAtStart() {

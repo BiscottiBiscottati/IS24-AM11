@@ -14,9 +14,9 @@ import java.util.*;
  * client side, it has no logic.
  */
 public class MiniGameModel {
-    private final List<String> chatMessages;
-    private final SequencedMap<String, CliPlayer> playerMap;
-    private final CliTable table;
+    private final @NotNull List<String> chatMessages;
+    private final @NotNull SequencedMap<String, CliPlayer> playerMap;
+    private final @NotNull CliTable table;
     private Map<String, Integer> finalLeaderboard;
     private String currentTurn;
     private String godPlayer;
@@ -72,7 +72,7 @@ public class MiniGameModel {
         currentTurn = nickname;
     }
 
-    public CliTable table() {
+    public @NotNull CliTable table() {
         return table;
     }
 
@@ -137,7 +137,7 @@ public class MiniGameModel {
         chatMessages.add(message);
     }
 
-    public List<String> getChatMessages() {
+    public @NotNull List<String> getChatMessages() {
         return chatMessages;
     }
 

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am11.model.players.utils;
 
-import com.google.common.collect.Maps;
 import it.polimi.ingsw.am11.model.cards.utils.CornerContainer;
 import it.polimi.ingsw.am11.model.cards.utils.FieldCard;
 import it.polimi.ingsw.am11.model.cards.utils.Item;
@@ -103,18 +102,6 @@ public class CardContainer {
     }
 
     /**
-     * This method returns an immutable <code>EnumMap</code> that maps each {@link Corner} of the
-     * card to a Boolean value indicating whether that corner is covered. The returned map is a
-     * snapshot of the current state and will not reflect any future changes to the covered
-     * corners.
-     *
-     * @return An immutable <code>Map</code> of the covered corners of the card.
-     */
-    public @NotNull Map<Corner, Boolean> getCoveredCorners() {
-        return Maps.immutableEnumMap(this.coveredCorners);
-    }
-
-    /**
      * Checks if a specified corner of the card is covered.
      *
      * @param corner The corner of the card to check.
@@ -188,24 +175,7 @@ public class CardContainer {
         return isRetro;
     }
 
-    /**
-     * Returns the item on the specified corner of the card.
-     * <p>
-     * This method takes a {@link Corner} object as a parameter and returns the item on the
-     * specified corner of the card. If the card is retro, the item on the retro side of the card is
-     * returned.
-     * <p>
-     * If there is no item on the specified corner, this method returns an empty {@link Optional}.
-     *
-     * @param corner The corner of the card to get the item from.
-     * @return An {@link Optional} containing the item on the specified corner of the card, or an
-     * empty {@link Optional} if there is no item on that corner.
-     */
-    public Optional<Item> getItemOn(@NotNull Corner corner) {
-        return card.getItemCorner(corner, isRetro).getItem();
-    }
-
-    public CornerContainer getContainerOn(@NotNull Corner corner) {
+    public @NotNull CornerContainer getContainerOn(@NotNull Corner corner) {
         return card.getItemCorner(corner, isRetro);
     }
 
@@ -215,7 +185,7 @@ public class CardContainer {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "ID: " + card.getId() + " isRtr: " + isRetro +
                " covered TL: " + coveredCorners.get(Corner.TOP_LX) +
                " TR: " + coveredCorners.get(Corner.TOP_RX) +

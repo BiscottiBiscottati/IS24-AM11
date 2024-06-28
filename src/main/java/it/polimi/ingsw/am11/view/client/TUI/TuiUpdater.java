@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class
 TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
-    private final EnumMap<TuiStates, TUIState> tuiStates;
+    private final @NotNull EnumMap<TuiStates, TUIState> tuiStates;
     private MiniGameModel model;
     private TuiExceptionReceiver exceptionReceiver;
     private AtomicReference<TUIState> currentState;
@@ -113,7 +113,7 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
      * @param currentId  the id of the card to add
      */
     @Override
-    public void updateShownPlayable(Integer previousId, Integer currentId) {
+    public void updateShownPlayable(@Nullable Integer previousId, @Nullable Integer currentId) {
         if (previousId != null) model.table().pickVisible(previousId);
         if (currentId != null) model.table().addVisible(currentId);
         LOGGER.debug("Removed from visible: {}, Added: {}", previousId, currentId);
@@ -188,6 +188,7 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
                 currentState.get().restart(false, null);
             }
             case ONGOING -> {
+                assert model.getCurrentTurn() != null;
                 if (model.getCurrentTurn().equals(model.myName())) {
                     setTuiState(TuiStates.WATCHING_FIELD);
                     homeState.set(tuiStates.get(TuiStates.WATCHING_FIELD));
@@ -198,9 +199,8 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
                     currentState.get().restart(false, null);
                 }
             }
-            case null, default -> {
-                throw new RuntimeException("Received null or invalid game status update");
-            }
+            case null, default ->
+                    throw new RuntimeException("Received null or invalid game status update");
         }
     }
 
@@ -213,10 +213,10 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     @Override
     public void updateCommonObjective(@NotNull Set<Integer> cardId, boolean removeMode) {
         if (removeMode) {
-            cardId.stream().forEach(x -> model.table().removeCommonObjective(x));
+            cardId.forEach(x -> model.table().removeCommonObjective(x));
             LOGGER.debug("CommonObjRm: {}", cardId);
         } else {
-            cardId.stream().forEach(x -> model.table().addCommonObjectives(x));
+            cardId.forEach(x -> model.table().addCommonObjectives(x));
             LOGGER.debug("CommonObjAdd: {}", cardId);
         }
 
@@ -389,6 +389,7 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
                 currentState.get().restart(false, null);
             }
             case ONGOING, ARMAGEDDON, LAST_TURN -> {
+                assert model.getCurrentTurn() != null;
                 if (model.getCurrentTurn().equals(model.myName()) && ! model.getiPlaced()) {
                     currentState.set(tuiStates.get(TuiStates.WATCHING_FIELD));
                     homeState.set(tuiStates.get(TuiStates.WATCHING_FIELD));
@@ -404,9 +405,8 @@ TuiUpdater implements ClientViewUpdater, ClientChatUpdater {
                 homeState.set(tuiStates.get(TuiStates.WAITING));
                 currentState.get().restart(false, null);
             }
-            case null, default -> {
-                throw new RuntimeException("Received null or invalid game status update");
-            }
+            case null, default ->
+                    throw new RuntimeException("Received null or invalid game status update");
 
         }
         LOGGER.debug("Reconnection completed");

@@ -183,11 +183,7 @@ public class PickablesTable {
      */
     public void initialize() {
         clearTable();
-        try {
-            pickCommonObjectives();
-        } catch (EmptyDeckException e) {
-            throw new RuntimeException(e);
-        }
+        pickCommonObjectives();
         for (int i = 0; i < numOfShownPerType; i++) {
             Stream.of(PlayableCardType.values())
                   .map(type -> new Pair<>(shownPlayable.get(type),
@@ -218,9 +214,8 @@ public class PickablesTable {
     /**
      * Used to pick common objectives
      *
-     * @throws EmptyDeckException if the deck of Objective Cards is empty
      */
-    public void pickCommonObjectives() throws EmptyDeckException {
+    public void pickCommonObjectives() {
         for (int i = 0; i < numOfCommonObjectives; i++) {
             commonObjectives.add(pickObjectiveCard());
         }

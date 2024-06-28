@@ -72,7 +72,7 @@ public sealed interface CornerContainer permits Availability, GameColor, Symbol 
      * <p>
      * It is used to get the Text User Interface (TUI) code associated with the corner container.
      * <p>
-     * The TUI code is a string representation of the corner container which can be used in
+     * The TUI code is a string representation of the corner container that can be used in
      * text-based user interfaces.
      *
      * @return String - The TUI code of the corner container.

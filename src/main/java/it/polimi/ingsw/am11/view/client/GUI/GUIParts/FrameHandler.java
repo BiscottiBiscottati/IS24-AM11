@@ -32,7 +32,7 @@ public class FrameHandler {
      * @param stage The stage of the application.
      * @param root  The root of the application.
      */
-    public static void setIcons(@NotNull Stage stage, StackPane root) {
+    public static void setIcons(@NotNull Stage stage, @NotNull StackPane root) {
 
         //Proportions
         int size = Proportions.SQUARE_SIZE.getValue();

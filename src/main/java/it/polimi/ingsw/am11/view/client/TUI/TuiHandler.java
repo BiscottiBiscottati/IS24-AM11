@@ -2,8 +2,6 @@ package it.polimi.ingsw.am11.view.client.TUI;
 
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 
-import java.io.IOException;
-
 /**
  * This class is basically the main class that initialize the tui
  */
@@ -13,10 +11,8 @@ public class TuiHandler {
 
     /**
      * Starts the TUI
-     *
-     * @throws IOException
      */
-    public static void start() throws IOException {
+    public static void start() {
         ConsUtils.clear();
 
         System.out.println("""
@@ -31,7 +27,7 @@ public class TuiHandler {
                                                                                                                                                                    \s
                                                                                                                                                                    \s
                                                                                                                                                                    \s
-                                                                   
+                                                                      
                                    """);
 
         System.out.println("""

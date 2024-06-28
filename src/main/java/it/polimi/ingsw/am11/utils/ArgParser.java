@@ -62,10 +62,6 @@ public class ArgParser {
         return positionalArgs;
     }
 
-    public void addOption(Option option) {
-        options.add(option);
-    }
-
     public void addOption(@NotNull String name, String description, String defaultValue) {
         options.add(new Option(name, description, defaultValue));
     }

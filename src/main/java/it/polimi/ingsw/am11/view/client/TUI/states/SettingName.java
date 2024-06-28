@@ -9,8 +9,6 @@ import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-
 public class SettingName extends TUIState {
 
     static final String askYourName = "What's your name? >>> \033[K";
@@ -19,17 +17,16 @@ public class SettingName extends TUIState {
     private boolean isBlocked = false;
     private boolean alreadyError = false;
 
+    public SettingName(@NotNull MiniGameModel model) {
+        super(model);
+    }
+
     private static void errorsHappens(String text) {
         System.out.println("\033[F" + "\033[K" + text);
     }
 
-
-    public SettingName(MiniGameModel model) {
-        super(model);
-    }
-
     @Override
-    public void passArgs(Actuator actuator, String[] args) {
+    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
         ArgParser parser = setUpOptions();
 
 
@@ -105,7 +102,7 @@ public class SettingName extends TUIState {
     }
 
     @Override
-    public void restart(boolean dueToEx, Exception exception) {
+    public void restart(boolean dueToEx, @NotNull Exception exception) {
         isBlocked = false;
         alreadyError = false;
 
@@ -121,7 +118,7 @@ public class SettingName extends TUIState {
     }
 
     @Override
-    public TuiStates getState() {
+    public @NotNull TuiStates getState() {
         return TuiStates.SETTING_NAME;
     }
 

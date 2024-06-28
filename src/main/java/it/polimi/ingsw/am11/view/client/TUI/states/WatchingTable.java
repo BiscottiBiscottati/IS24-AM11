@@ -23,15 +23,15 @@ public class WatchingTable extends TUIState {
     static final String askForCommand = "What you wanna do? Draw a card? >>> \033[K";
     private static final String helpDraw = "HELP: draw <cardId/gold/resource> \033[K";
     private static final String helpGet = "GET: get <table/[nickname]/chat> \033[K";
-    private static String gameStatus = "";
+    private static @NotNull String gameStatus = "";
     private boolean alreadyError = false;
 
-    public WatchingTable(MiniGameModel model) {
+    public WatchingTable(@NotNull MiniGameModel model) {
         super(model);
     }
 
     @Override
-    public void passArgs(Actuator actuator, String[] args) {
+    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
         ArgParser parser = setUpOptions();
 
         //Empty string
@@ -144,7 +144,7 @@ public class WatchingTable extends TUIState {
     }
 
     @Override
-    public TuiStates getState() {
+    public @NotNull TuiStates getState() {
         return TuiStates.WATCHING_TABLE;
     }
 
@@ -172,7 +172,7 @@ public class WatchingTable extends TUIState {
         System.out.println("\033[F" + "\033[K" + text);
     }
 
-    private void get(Actuator actuator, ArgParser parser) {
+    private void get(@NotNull Actuator actuator, @NotNull ArgParser parser) {
         List<String> positionalArgs = parser.getPositionalArgs();
 
         Set<String> playerList = model.getPlayers();
@@ -197,9 +197,7 @@ public class WatchingTable extends TUIState {
                     alreadyError = true;
                     System.out.print(askLine);
                 }
-                case "chat" -> {
-                    actuator.setTuiState(TuiStates.CHAT);
-                }
+                case "chat" -> actuator.setTuiState(TuiStates.CHAT);
                 default -> {
                     errorsHappensEvenTwice("ERROR: " + secondWord + " is not a valid option");
                     alreadyError = true;
@@ -209,7 +207,7 @@ public class WatchingTable extends TUIState {
         }
     }
 
-    private void draw(Actuator actuator, ArgParser parser) {
+    private void draw(@NotNull Actuator actuator, @NotNull ArgParser parser) {
         List<String> positionalArgs = parser.getPositionalArgs();
 
         if (positionalArgs.size() != 2) {
@@ -258,7 +256,7 @@ public class WatchingTable extends TUIState {
 
         if (model.table().getShownCards().contains(val)) {
             try {
-                actuator.draw(val, null);
+                actuator.draw(val, PlayableCardType.RESOURCE);
             } catch (IllegalCardBuildException e) {
                 errorsHappensEvenTwice("ERROR" + secondWord + " is not a valid cardId");
                 alreadyError = true;
