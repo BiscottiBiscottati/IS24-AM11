@@ -207,26 +207,29 @@
         </VBox>
         <VBox alignment="TOP_CENTER" maxHeight="160.0" maxWidth="400.0" minHeight="160.0" minWidth="500.0" prefHeight="200.0" prefWidth="100.0" StackPane.alignment="BOTTOM_CENTER">
             <children>
-                <Label fx:id="handLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="50.0" text="HAND">
+                <Label fx:id="handLabel" alignment="TOP_CENTER" contentDisplay="CENTER" minHeight="50.0" text="HAND">
                     <font>
                         <Font size="16.0" />
                     </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
                 </Label>
-                <HBox alignment="CENTER" maxHeight="160.0" maxWidth="400.0" minHeight="160.0" minWidth="500.0" prefHeight="100.0" prefWidth="200.0">
+                <HBox alignment="CENTER" maxHeight="160.0" maxWidth="400.0" minHeight="100.0" minWidth="500.0" prefHeight="100.0" prefWidth="200.0">
                     <children>
                         <ImageView fx:id="handCard1" fitHeight="100.0" fitWidth="160.0" onMouseClicked="#card1Selected" pickOnBounds="true" preserveRatio="true">
                             <HBox.margin>
-                                <Insets bottom="80.0" />
+                                <Insets bottom="20.0" />
                             </HBox.margin>
                         </ImageView>
                         <ImageView fx:id="handCard2" fitHeight="100.0" fitWidth="160.0" onMouseClicked="#card2Selected" pickOnBounds="true" preserveRatio="true">
                             <HBox.margin>
-                                <Insets bottom="80.0" />
+                                <Insets bottom="20.0" />
                             </HBox.margin>
                         </ImageView>
                         <ImageView fx:id="handCard3" fitHeight="100.0" fitWidth="160.0" onMouseClicked="#card3Selected" pickOnBounds="true" preserveRatio="true">
                             <HBox.margin>
-                                <Insets bottom="80.0" />
+                                <Insets bottom="20.0" />
                             </HBox.margin>
                         </ImageView>
                     </children>
@@ -246,7 +249,7 @@
         </Button>
         <VBox alignment="TOP_CENTER" StackPane.alignment="BOTTOM_RIGHT">
             <children>
-                <Label fx:id="personalObjLabel" minWidth="300.0" text="YOUR OBJECTIVE CARD">
+                <Label fx:id="personalObjLabel" alignment="TOP_CENTER" minWidth="300.0" text="YOUR OBJECTIVE CARD" textAlignment="CENTER">
                     <font>
                         <Font size="16.0" />
                     </font>
