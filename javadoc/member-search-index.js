@@ -1,0 +1,7270 @@
+memberSearchIndex = [{
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "activateArmageddon()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "Actuator(TuiUpdater)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.TUI.TuiUpdater)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "PrintComposite",
+    "l": "add(PrintComposite)",
+    "u": "add(it.polimi.ingsw.am11.view.client.TUI.utils.PrintComposite)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "addCandidateObjectives(Set<Integer>)",
+    "u": "addCandidateObjectives(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "addCandidateObjectives(Set<Integer>)",
+    "u": "addCandidateObjectives(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "addCardInHand(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "addCardInHand(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "addCardToHand(PlayableCard)",
+    "u": "addCardToHand(it.polimi.ingsw.am11.model.cards.playable.PlayableCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "addChatMessage(String)",
+    "u": "addChatMessage(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.helpers",
+    "c": "AnsiHelper",
+    "l": "addColors(String, Ansi.Color)",
+    "u": "addColors(java.lang.String,org.fusesource.jansi.Ansi.Color)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "addCommonObjectives(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "addConnector(String, ServerTableConnector)",
+    "u": "addConnector(java.lang.String,it.polimi.ingsw.am11.network.connector.ServerTableConnector)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "addCounterObjective(String)",
+    "u": "addCounterObjective(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.support",
+    "c": "GameListenerSupport",
+    "l": "addListener(String, PlayerListener)",
+    "u": "addListener(java.lang.String,it.polimi.ingsw.am11.view.events.listeners.PlayerListener)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.support",
+    "c": "GameListenerSupport",
+    "l": "addListener(TableListener)",
+    "u": "addListener(it.polimi.ingsw.am11.view.events.listeners.TableListener)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "addObjective(ObjectiveCard)",
+    "u": "addObjective(it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "ArgParser",
+    "l": "addOption(String, String, boolean)",
+    "u": "addOption(java.lang.String,java.lang.String,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "ArgParser",
+    "l": "addOption(String, String, String)",
+    "u": "addOption(java.lang.String,java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "Line",
+    "l": "addPart(Part)",
+    "u": "addPart(it.polimi.ingsw.am11.view.client.TUI.utils.Part)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "Line",
+    "l": "addParts(List<Part>)",
+    "u": "addParts(java.util.List)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "addPersonalObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "addPersonalObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "addPlayer(String)",
+    "u": "addPlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "addPlayer(String, PlayerColor)",
+    "u": "addPlayer(java.lang.String,it.polimi.ingsw.am11.model.players.utils.PlayerColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.chat",
+    "c": "ChatManager",
+    "l": "addPlayer(String, ServerChatConnector)",
+    "u": "addPlayer(java.lang.String,it.polimi.ingsw.am11.network.connector.ServerChatConnector)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "ChatController",
+    "l": "addPlayer(String, ServerChatConnector)",
+    "u": "addPlayer(java.lang.String,it.polimi.ingsw.am11.network.connector.ServerChatConnector)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerGameCommandsImpl",
+    "l": "addPlayer(String, ServerConnectorImpl, ServerChatConnectorImpl)",
+    "u": "addPlayer(java.lang.String,it.polimi.ingsw.am11.network.RMI.server.game.ServerConnectorImpl,it.polimi.ingsw.am11.network.RMI.server.chat.ServerChatConnectorImpl)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "addPlayerListener(String, PlayerListener)",
+    "u": "addPlayerListener(java.lang.String,it.polimi.ingsw.am11.view.events.listeners.PlayerListener)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "addPlayerListener(String, PlayerListener)",
+    "u": "addPlayerListener(java.lang.String,it.polimi.ingsw.am11.view.events.listeners.PlayerListener)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "addPlayerPoints(String, int)",
+    "u": "addPlayerPoints(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "addPlayerToTable(String, PlayerColor)",
+    "u": "addPlayerToTable(java.lang.String,it.polimi.ingsw.am11.model.players.utils.PlayerColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "addPlayerToTable(String, PlayerColor)",
+    "u": "addPlayerToTable(java.lang.String,it.polimi.ingsw.am11.model.players.utils.PlayerColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "addPlayerToTable(String, PlayerColor)",
+    "u": "addPlayerToTable(java.lang.String,it.polimi.ingsw.am11.model.players.utils.PlayerColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliPlayer",
+    "l": "addPoints(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "addStarterCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "addTableListener(TableListener)",
+    "u": "addTableListener(it.polimi.ingsw.am11.view.events.listeners.TableListener)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "addTableListener(TableListener)",
+    "u": "addTableListener(it.polimi.ingsw.am11.view.events.listeners.TableListener)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "addVisible(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PatternPurpose",
+    "l": "ADJACENT_LX"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PatternPurpose",
+    "l": "ADJACENT_RX"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "LoadingScreen",
+    "l": "animateLoadingScreen()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.helpers",
+    "c": "AnsiHelper",
+    "l": "AnsiHelper()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "areAllDisconnected()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "areAllReconnected()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "areObjectiveGiven()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "areObjectiveSet()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "areStarterSet()"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "ArgParser",
+    "l": "ArgParser()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "GameStatus",
+    "l": "ARMAGEDDON"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PositionManagerMemento",
+    "l": "availablePos()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "availableSpaceInHand()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "PlayersPrinter",
+    "l": "baseLine(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "BasicRuleset",
+    "l": "BasicRuleset()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "BEEP"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "BLU_GLD_RTR"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "BLU_RES_RTR"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "GameColor",
+    "l": "BLUE"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "PlayerColor",
+    "l": "BLUE"
+}, {
+    "p": "it.polimi.ingsw.am11.chat",
+    "c": "ChatManager",
+    "l": "broadcastMessage(String, String)",
+    "u": "broadcastMessage(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "ChatController",
+    "l": "broadcastMessage(String, String)",
+    "u": "broadcastMessage(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "ColorCollectCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "SymbolCollectCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "CollectingCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "TripletCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "PositioningCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard.Builder",
+    "l": "build()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "buildCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "buildCenterString(List<GameColor>)",
+    "u": "buildCenterString(java.util.List)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "buildCornerLines(char, char, boolean, PlayableCard)",
+    "u": "buildCornerLines(char,char,boolean,it.polimi.ingsw.am11.model.cards.playable.PlayableCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "buildDeck(GameColor, PlayableCardType)",
+    "u": "buildDeck(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor,it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard.Builder",
+    "l": "Builder(int)",
+    "u": "%3Cinit%3E(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "ColorCollectCard.Builder",
+    "l": "Builder(int, int)",
+    "u": "%3Cinit%3E(int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "SymbolCollectCard.Builder",
+    "l": "Builder(int, int)",
+    "u": "%3Cinit%3E(int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "CollectingCard.Builder",
+    "l": "Builder(int, int)",
+    "u": "%3Cinit%3E(int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard.Builder",
+    "l": "Builder(int, int)",
+    "u": "%3Cinit%3E(int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard.Builder",
+    "l": "Builder(int, int)",
+    "u": "%3Cinit%3E(int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "TripletCard.Builder",
+    "l": "Builder(int, int)",
+    "u": "%3Cinit%3E(int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "PositioningCard.Builder",
+    "l": "Builder(int, int)",
+    "u": "%3Cinit%3E(int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard.Builder",
+    "l": "Builder(int, int, GameColor)",
+    "u": "%3Cinit%3E(int,int,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard.Builder",
+    "l": "Builder(int, int, GameColor)",
+    "u": "%3Cinit%3E(int,int,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard.Builder",
+    "l": "Builder(int, int, GameColor)",
+    "u": "%3Cinit%3E(int,int,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "buildHand(List<Integer>)",
+    "u": "buildHand(java.util.List)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "buildObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "PlayersPrinter",
+    "l": "buildPlayers(MiniGameModel)",
+    "u": "buildPlayers(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "buildPointsString(PlayableCard)",
+    "u": "buildPointsString(it.polimi.ingsw.am11.model.cards.playable.PlayableCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "buildRequirementsString(Map<GameColor, Integer>)",
+    "u": "buildRequirementsString(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "buildTable(List<Integer>, GameColor, GameColor)",
+    "u": "buildTable(java.util.List,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "buildVertObj(int, int, int)",
+    "u": "buildVertObj(int,int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "BUTTERLFY_ICON"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.resilience",
+    "c": "ReconnectionTimer",
+    "l": "cancelAll()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "CandidateObjectiveEvent",
+    "l": "CandidateObjectiveEvent(String, Set<Integer>, Set<Integer>)",
+    "u": "%3Cinit%3E(java.lang.String,java.util.Set,java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PersonalSpaceMemento",
+    "l": "candidateObjs()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "FieldPrinter",
+    "l": "CARD_WIDTH"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "CardContainerMemento",
+    "l": "card()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "card1Selected(MouseEvent)",
+    "u": "card1Selected(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "card2Selected(MouseEvent)",
+    "u": "card2Selected(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "card3Selected(MouseEvent)",
+    "u": "card3Selected(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "CardArchitect()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "CardContainer(FieldCard)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.utils.FieldCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "CardContainer(FieldCard, boolean)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.utils.FieldCard,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "CardContainer(FieldCard, Map<Corner, Boolean>, boolean)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.utils.FieldCard,java.util.Map,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "CardContainerMemento",
+    "l": "CardContainerMemento(int, Map<Corner, Boolean>, boolean)",
+    "u": "%3Cinit%3E(int,java.util.Map,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.utils",
+    "c": "CardDecoder",
+    "l": "CardDecoder()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel.utils",
+    "c": "CardInfo",
+    "l": "CardInfo()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PositionManagerMemento",
+    "l": "cardPositioned()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "CardPrinter()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckMemento",
+    "l": "cards()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "ContextJSON",
+    "l": "CHAT"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "CHAT"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Chat",
+    "l": "Chat(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatConnectorImpl",
+    "l": "chatInterface()"
+}, {
+    "p": "it.polimi.ingsw.am11.chat",
+    "c": "ChatManager",
+    "l": "ChatManager()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientMessageHandler",
+    "l": "chatReceiver()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "chatSender()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Chat",
+    "l": "chatter(Actuator, String[], Set<String>)",
+    "u": "chatter(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[],java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatInterfaceImpl",
+    "l": "chatUpdater()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.chat",
+    "c": "ClientChatReceiver",
+    "l": "chatUpdater()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "checkFront(Corner)",
+    "u": "checkFront(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "checkRetroColorIn(Corner)",
+    "u": "checkRetroColorIn(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "chooseFirstPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "chooseVis1(MouseEvent)",
+    "u": "chooseVis1(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "chooseVis2(MouseEvent)",
+    "u": "chooseVis2(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "chooseVis3(MouseEvent)",
+    "u": "chooseVis3(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "chooseVis4(MouseEvent)",
+    "u": "chooseVis4(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "CHOOSING_OBJECTIVE"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "GameStatus",
+    "l": "CHOOSING_OBJECTIVES"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "CHOOSING_STARTER"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "GameStatus",
+    "l": "CHOOSING_STARTERS"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "ChoosingObj",
+    "l": "ChoosingObj(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "ChoosingStrt",
+    "l": "ChoosingStrt(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PointsRequirementsType",
+    "l": "CLASSIC"
+}, {"p": "it.polimi.ingsw.am11.view.events.utils", "c": "ActionMode", "l": "CLEAR"}, {
+    "p": "it.polimi.ingsw.am11.chat",
+    "c": "ChatManager",
+    "l": "clear()"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "ChatController",
+    "l": "clear()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "HeartbeatManager",
+    "l": "clear()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "ConsUtils",
+    "l": "clear()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "clearAll()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "clearAll()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.support",
+    "c": "GameListenerSupport",
+    "l": "clearListeners()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerGameCommandsImpl",
+    "l": "clearPlayers()"
+}, {
+    "p": "it.polimi.ingsw.am11",
+    "c": "Client",
+    "l": "Client()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatConnectorImpl",
+    "l": "ClientChatConnectorImpl(Registry)",
+    "u": "%3Cinit%3E(java.rmi.registry.Registry)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatInterfaceImpl",
+    "l": "ClientChatInterfaceImpl(ClientChatUpdater)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.ClientChatUpdater)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.chat",
+    "c": "ClientChatReceiver",
+    "l": "ClientChatReceiver(ClientChatUpdater)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.ClientChatUpdater)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.chat",
+    "c": "ClientChatSender",
+    "l": "ClientChatSender(PrintWriter)",
+    "u": "%3Cinit%3E(java.io.PrintWriter)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientConnectorImpl",
+    "l": "ClientConnectorImpl(ClientRMI, Registry, ClientGameUpdatesInterface, ClientChatInterface, ClientChatConnectorImpl, ClientViewUpdater)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.network.RMI.client.ClientRMI,java.rmi.registry.Registry,it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface,it.polimi.ingsw.am11.network.RMI.remote.chat.ClientChatInterface,it.polimi.ingsw.am11.network.RMI.client.chat.ClientChatConnectorImpl,it.polimi.ingsw.am11.view.client.ClientViewUpdater)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientExceptionReceiver",
+    "l": "ClientExceptionReceiver(ExceptionThrower)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.ExceptionThrower)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameReceiver",
+    "l": "ClientGameReceiver(ClientViewUpdater, ClientSocket)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.ClientViewUpdater,it.polimi.ingsw.am11.network.socket.client.ClientSocket)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "ClientGameSender(PrintWriter, PongHandler, ClientChatSender)",
+    "u": "%3Cinit%3E(java.io.PrintWriter,it.polimi.ingsw.am11.network.socket.client.PongHandler,it.polimi.ingsw.am11.network.socket.client.chat.ClientChatSender)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "ClientGameUpdatesImpl(ClientViewUpdater, ClientRMI)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.ClientViewUpdater,it.polimi.ingsw.am11.network.RMI.client.ClientRMI)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "ClientHandler",
+    "l": "ClientHandler(Socket)",
+    "u": "%3Cinit%3E(java.net.Socket)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientMessageHandler",
+    "l": "ClientMessageHandler(ClientGameReceiver, ClientExceptionReceiver, PongHandler, ClientChatReceiver)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.network.socket.client.game.ClientGameReceiver,it.polimi.ingsw.am11.network.socket.client.game.ClientExceptionReceiver,it.polimi.ingsw.am11.network.socket.client.PongHandler,it.polimi.ingsw.am11.network.socket.client.chat.ClientChatReceiver)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "clientRMI()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client",
+    "c": "ClientRMI",
+    "l": "ClientRMI(String, int, ClientViewUpdater)",
+    "u": "%3Cinit%3E(java.lang.String,int,it.polimi.ingsw.am11.view.client.ClientViewUpdater)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientSocket",
+    "l": "ClientSocket(String, int, ClientViewUpdater)",
+    "u": "%3Cinit%3E(java.lang.String,int,it.polimi.ingsw.am11.view.client.ClientViewUpdater)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliField",
+    "l": "CliField()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliPlayer",
+    "l": "CliPlayer(String, PlayerColor)",
+    "u": "%3Cinit%3E(java.lang.String,it.polimi.ingsw.am11.model.players.utils.PlayerColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "CliSpace()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "CliTable()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "FontsEnum",
+    "l": "CLOISTER_BLACK"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "CLOISTER_BLACK"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "CLOSE_CROSS"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ClientNetworkHandler",
+    "l": "close()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client",
+    "c": "ClientRMI",
+    "l": "close()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "HeartbeatManager",
+    "l": "close()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "ServerRMI",
+    "l": "close()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientMessageHandler",
+    "l": "close()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientSocket",
+    "l": "close()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "PongHandler",
+    "l": "close()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "PingHandler",
+    "l": "close()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "ServerMessageHandler",
+    "l": "close()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "close()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PositionManagerMemento",
+    "l": "closedPos()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "CodexNaturalis()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "CollectingCard",
+    "l": "CollectingCard(CollectingCard.Builder<?>)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.objective.CollectingCard.Builder)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "ObjectiveCardType",
+    "l": "COLOR_COLLECT"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "color()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerMemento",
+    "l": "color()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "CommonObjectiveChangeEvent",
+    "l": "CommonObjectiveChangeEvent(Set<Integer>, Set<Integer>)",
+    "u": "%3Cinit%3E(java.util.Set,java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PickablesTableMemento",
+    "l": "commonObjs()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionTableMemento",
+    "l": "commonObjs()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerChatConnector",
+    "l": "confirmSentMsg(String, String)",
+    "u": "confirmSentMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatConnectorImpl",
+    "l": "confirmSentMsg(String, String)",
+    "u": "confirmSentMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.chat",
+    "c": "ServerChatSender",
+    "l": "confirmSentMsg(String, String)",
+    "u": "confirmSentMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientChatUpdater",
+    "l": "confirmSentMsg(String, String)",
+    "u": "confirmSentMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "confirmSentMsg(String, String)",
+    "u": "confirmSentMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "confirmSentMsg(String, String)",
+    "u": "confirmSentMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiActuator",
+    "l": "connect(String, String, int)",
+    "u": "connect(java.lang.String,java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "connect(String, String, int)",
+    "u": "connect(java.lang.String,java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "CONNECTING"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Connecting",
+    "l": "Connecting(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SavesManager",
+    "l": "CONNECTION_URL"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "connectPlayer(String, ServerPlayerConnector, ServerTableConnector, ServerChatConnector)",
+    "u": "connectPlayer(java.lang.String,it.polimi.ingsw.am11.network.connector.ServerPlayerConnector,it.polimi.ingsw.am11.network.connector.ServerTableConnector,it.polimi.ingsw.am11.network.connector.ServerChatConnector)"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "Constants",
+    "l": "Constants()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "containsCard(FieldCard)",
+    "u": "containsCard(it.polimi.ingsw.am11.model.cards.utils.FieldCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "containsCard(FieldCard)",
+    "u": "containsCard(it.polimi.ingsw.am11.model.cards.utils.FieldCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "PrintComposite",
+    "l": "count()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LPatternCounter",
+    "l": "count(PlayerField)",
+    "u": "count(it.polimi.ingsw.am11.model.players.field.PlayerField)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "TripletPatternCounter",
+    "l": "count(PlayerField)",
+    "u": "count(it.polimi.ingsw.am11.model.players.field.PlayerField)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "PatternCounter",
+    "l": "count(PlayerField)",
+    "u": "count(it.polimi.ingsw.am11.model.players.field.PlayerField)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "ColorCollectCard",
+    "l": "countPoints(PlayerField)",
+    "u": "countPoints(it.polimi.ingsw.am11.model.players.field.PlayerField)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "SymbolCollectCard",
+    "l": "countPoints(PlayerField)",
+    "u": "countPoints(it.polimi.ingsw.am11.model.players.field.PlayerField)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard",
+    "l": "countPoints(PlayerField)",
+    "u": "countPoints(it.polimi.ingsw.am11.model.players.field.PlayerField)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "TripletCard",
+    "l": "countPoints(PlayerField)",
+    "u": "countPoints(it.polimi.ingsw.am11.model.players.field.PlayerField)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard",
+    "l": "countPoints(PlayerField)",
+    "u": "countPoints(it.polimi.ingsw.am11.model.players.field.PlayerField)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard",
+    "l": "countPoints(PlayerField, Position)",
+    "u": "countPoints(it.polimi.ingsw.am11.model.players.field.PlayerField,it.polimi.ingsw.am11.model.players.utils.Position)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "countPoints(PlayerField, Position)",
+    "u": "countPoints(it.polimi.ingsw.am11.model.players.field.PlayerField,it.polimi.ingsw.am11.model.players.utils.Position)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "cover(Corner)",
+    "u": "cover(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "CardContainerMemento",
+    "l": "coveredCorners()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PointsRequirementsType",
+    "l": "COVERING_CORNERS"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SQLQuery",
+    "l": "CREATE_CUSTOM_TABLE"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SQLQuery",
+    "l": "CREATE_SAVES_TABLE"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ConnectionFactory",
+    "l": "create(String, int, ClientViewUpdater)",
+    "u": "create(java.lang.String,int,it.polimi.ingsw.am11.view.client.ClientViewUpdater)"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ConnectionType",
+    "l": "create(String, int, ClientViewUpdater)",
+    "u": "create(java.lang.String,int,it.polimi.ingsw.am11.view.client.ClientViewUpdater)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.objective",
+    "c": "ObjectiveDeckFactory",
+    "l": "createDeck()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.playable",
+    "c": "GoldDeckFactory",
+    "l": "createDeck()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.playable",
+    "c": "ResourceDeckFactory",
+    "l": "createDeck()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.starter",
+    "c": "StarterDeckFactory",
+    "l": "createDeck()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "DirectoryCreator",
+    "l": "createGameDirectories()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "createGamePage(CodexNaturalis)",
+    "u": "createGamePage(it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "LoadingScreen",
+    "l": "createLoadingScreen(CodexNaturalis)",
+    "u": "createLoadingScreen(it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "NetworkPage",
+    "l": "createNetworkPage(CodexNaturalis)",
+    "u": "createNetworkPage(it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "createNewGame()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNumOfPlayersPage",
+    "l": "createNumOfPlayersPage(CodexNaturalis)",
+    "u": "createNumOfPlayersPage(it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetObjCardsPage",
+    "l": "createObjCardsPage(CodexNaturalis)",
+    "u": "createObjCardsPage(it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "ContextJSON",
+    "l": "createObjectNode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "JsonFactory",
+    "l": "createObjectNode(ContextJSON)",
+    "u": "createObjectNode(it.polimi.ingsw.am11.network.socket.utils.ContextJSON)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNickPage",
+    "l": "createSettingNickPage(CodexNaturalis)",
+    "u": "createSettingNickPage(it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetStarterCardsPage",
+    "l": "createStarterCardsPage(CodexNaturalis)",
+    "u": "createStarterCardsPage(it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "StateFactory",
+    "l": "createState(MiniGameModel)",
+    "u": "createState(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "WaitingRoomPage",
+    "l": "createWaitingRoomPage(CodexNaturalis)",
+    "u": "createWaitingRoomPage(it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerManagerMemento",
+    "l": "currentAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerManagerMemento",
+    "l": "currentPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.utils",
+    "c": "DatabaseConstants",
+    "l": "DATABASE_URL"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.utils",
+    "c": "DatabaseConstants",
+    "l": "DatabaseConstants()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks",
+    "c": "Deck",
+    "l": "Deck(ImmutableMap<Integer, T>)",
+    "u": "%3Cinit%3E(com.google.common.collect.ImmutableMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PickablesTableMemento",
+    "l": "deckManager()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "DeckManager",
+    "l": "DeckManager()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckManagerMemento",
+    "l": "DeckManagerMemento(DeckMemento, DeckMemento, DeckMemento, DeckMemento)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.utils.memento.DeckMemento,it.polimi.ingsw.am11.model.utils.memento.DeckMemento,it.polimi.ingsw.am11.model.utils.memento.DeckMemento,it.polimi.ingsw.am11.model.utils.memento.DeckMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckMemento",
+    "l": "DeckMemento(List<Integer>)",
+    "u": "%3Cinit%3E(java.util.List)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "DeckTopChangeEvent",
+    "l": "DeckTopChangeEvent(PlayableCardType, GameColor, GameColor)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionTableMemento",
+    "l": "deckTops()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.utils",
+    "c": "CardDecoder",
+    "l": "decodeFieldCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.utils",
+    "c": "CardDecoder",
+    "l": "decodeGoldCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.utils",
+    "c": "CardDecoder",
+    "l": "decodeObjectiveCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.utils",
+    "c": "CardDecoder",
+    "l": "decodePlayableCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.utils",
+    "c": "CardDecoder",
+    "l": "decodeResourceCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.utils",
+    "c": "CardDecoder",
+    "l": "decodeStarterCard(int)"
+}, {"p": "it.polimi.ingsw.am11.utils", "c": "Constants", "l": "DEFAULT_RMI_PORT"}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "Constants",
+    "l": "DEFAULT_SOCKET_PORT"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SQLQuery",
+    "l": "DELETE_ALL_CUSTOM"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SQLQuery",
+    "l": "DELETE_ALL_SAVES"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SavesManager",
+    "l": "deleteAll()"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "destroyGame()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.resilience",
+    "c": "ReconnectionTimer",
+    "l": "disconnectCurrent(String, TurnAction)",
+    "u": "disconnectCurrent(java.lang.String,it.polimi.ingsw.am11.model.utils.TurnAction)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "disconnectedFromServer()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "disconnectedFromServer(String)",
+    "u": "disconnectedFromServer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "disconnectedFromServer(String)",
+    "u": "disconnectedFromServer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "disconnectedFromServer(String)",
+    "u": "disconnectedFromServer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "disconnectPlayer(Player)",
+    "u": "disconnectPlayer(it.polimi.ingsw.am11.model.players.Player)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "disconnectPlayer(String)",
+    "u": "disconnectPlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "disconnectPlayer(String)",
+    "u": "disconnectPlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "disconnectPlayer(String)",
+    "u": "disconnectPlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "Proportions",
+    "l": "DISTANCE_TO_BORDER"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Corner",
+    "l": "DOWN_LX"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Corner",
+    "l": "DOWN_RX"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "TurnAction",
+    "l": "DRAW_CARD"
+}, {"p": "it.polimi.ingsw.am11.model.decks", "c": "Deck", "l": "draw()"}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "draw(Integer, PlayableCardType)",
+    "u": "draw(java.lang.Integer,it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ClientGameConnector",
+    "l": "drawCard(boolean, PlayableCardType, int)",
+    "u": "drawCard(boolean,it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientConnectorImpl",
+    "l": "drawCard(boolean, PlayableCardType, int)",
+    "u": "drawCard(boolean,it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "drawCard(boolean, PlayableCardType, int)",
+    "u": "drawCard(boolean,it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiActuator",
+    "l": "drawCard(boolean, PlayableCardType, int)",
+    "u": "drawCard(boolean,it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "drawCard(boolean, PlayableCardType, int)",
+    "u": "drawCard(boolean,it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CardController",
+    "l": "drawCard(boolean, PlayableCardType, String, int)",
+    "u": "drawCard(boolean,it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ServerGameCommandsInterface",
+    "l": "drawCard(String, boolean, PlayableCardType, int)",
+    "u": "drawCard(java.lang.String,boolean,it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerGameCommandsImpl",
+    "l": "drawCard(String, boolean, PlayableCardType, int)",
+    "u": "drawCard(java.lang.String,boolean,it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "drawFromDeckOf(PlayableCardType, String)",
+    "u": "drawFromDeckOf(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "drawFromDeckOf(PlayableCardType, String)",
+    "u": "drawFromDeckOf(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "DeckManager",
+    "l": "drawObjective()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "DeckManager",
+    "l": "drawPlayableFrom(PlayableCardType)",
+    "u": "drawPlayableFrom(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "drawPlayableFrom(PlayableCardType)",
+    "u": "drawPlayableFrom(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "DeckManager",
+    "l": "drawStarter()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "drawVisibleOf(PlayableCardType, String, int)",
+    "u": "drawVisibleOf(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "drawVisibleOf(PlayableCardType, String, int)",
+    "u": "drawVisibleOf(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "EmptyDeckException",
+    "l": "EmptyDeckException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "GameStatus",
+    "l": "ENDED"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "ENDED"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Ended",
+    "l": "Ended(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {"p": "it.polimi.ingsw.am11.model", "c": "GameLogic", "l": "endGameEarly()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "endGameEarly()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "Position",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "CardContainerMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckManagerMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "FieldMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "GameModelMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ItemManagerMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PersonalSpaceMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PickablesTableMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlateauMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerManagerMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PositionManagerMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionModelMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionTableMemento",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatInterfaceImpl",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatConnectorImpl",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.chat",
+    "c": "ClientChatReceiver",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientMessageHandler",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientExceptionReceiver",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.chat",
+    "c": "ServerChatSender",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerExceptionSender",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "ContextJSON",
+    "l": "EXCEPTION"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerExceptionSender",
+    "l": "exception(Exception)",
+    "u": "exception(java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientMessageHandler",
+    "l": "exceptionReceiver()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientExceptionReceiver",
+    "l": "exceptionThrower()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ItemManagerMemento",
+    "l": "exposedColors()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "FieldMemento",
+    "l": "exposedItems()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ItemManagerMemento",
+    "l": "exposedSymbols()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Symbol",
+    "l": "FEATHER"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "field()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerMemento",
+    "l": "field()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "FieldChangeEvent",
+    "l": "FieldChangeEvent(String, Map.Entry<Position, CardContainer>, Map.Entry<Position, CardContainer>)",
+    "u": "%3Cinit%3E(java.lang.String,java.util.Map.Entry,java.util.Map.Entry)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "FieldMemento",
+    "l": "FieldMemento(ItemManagerMemento, PositionManagerMemento)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.utils.memento.ItemManagerMemento,it.polimi.ingsw.am11.model.utils.memento.PositionManagerMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "FieldPrinter",
+    "l": "FieldPrinter()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.helpers",
+    "c": "MatrixFiller",
+    "l": "fillMatrixWithNull(int, int, Class<T>)",
+    "u": "fillMatrixWithNull(int,int,java.lang.Class)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "FinalLeaderboardEvent",
+    "l": "FinalLeaderboardEvent(Map<String, Integer>)",
+    "u": "%3Cinit%3E(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.support",
+    "c": "GameListenerSupport",
+    "l": "fireEvent(PlayerViewEvent)",
+    "u": "fireEvent(it.polimi.ingsw.am11.view.events.PlayerViewEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.support",
+    "c": "GameListenerSupport",
+    "l": "fireEvent(TableViewEvent)",
+    "u": "fireEvent(it.polimi.ingsw.am11.view.events.TableViewEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerManagerMemento",
+    "l": "firstPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "FontManager",
+    "l": "FontManager()",
+    "u": "%3Cinit%3E()"
+}, {"p": "it.polimi.ingsw.am11.model", "c": "GameLogic", "l": "forceEnd()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "forceEnd()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.GUIParts",
+    "c": "FrameHandler",
+    "l": "FrameHandler()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ConnectionType",
+    "l": "fromString(String)",
+    "u": "fromString(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "ContextJSON",
+    "l": "GAME"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "GAME_BACKGROUND"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "DirectoryCreator",
+    "l": "GAME_DIR"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "GameBreakingException",
+    "l": "GameBreakingException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "GameBreakingException",
+    "l": "GameBreakingException(Throwable)",
+    "u": "%3Cinit%3E(java.lang.Throwable)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "gameEnded()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.support",
+    "c": "GameListenerSupport",
+    "l": "GameListenerSupport()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "GameLogic()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "GameModelMemento",
+    "l": "GameModelMemento(PickablesTableMemento, PlateauMemento, PlayerManagerMemento)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.utils.memento.PickablesTableMemento,it.polimi.ingsw.am11.model.utils.memento.PlateauMemento,it.polimi.ingsw.am11.model.utils.memento.PlayerManagerMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "GamePage()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "GameStatusChangeEvent",
+    "l": "GameStatusChangeEvent(GameStatus, GameStatus)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.utils.GameStatus,it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "GameStatusException",
+    "l": "GameStatusException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "ViewEvent",
+    "l": "getAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "getAnyGame()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "getAvailablePositions()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "getAvailablePositions()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliField",
+    "l": "getAvailablePositions()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getAvailablePositions(String)",
+    "u": "getAvailablePositions(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getAvailablePositions(String)",
+    "u": "getAvailablePositions(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getAvailablePositions(String)",
+    "u": "getAvailablePositions(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "getCandidateNick()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "getCandidateNick()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "getCandidateObjectiveByID(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getCandidateObjectiveByID(String, int)",
+    "u": "getCandidateObjectiveByID(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "getCandidateObjectives()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "getCandidateObjectives()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getCandidateObjectives(String)",
+    "u": "getCandidateObjectives(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getCandidateObjectives(String)",
+    "u": "getCandidateObjectives(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getCandidateObjectives(String)",
+    "u": "getCandidateObjectives(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "getCard()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks",
+    "c": "Deck",
+    "l": "getCardById(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "GameController",
+    "l": "getCardController()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResources",
+    "l": "getCardImage(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResources",
+    "l": "getCardImageRetro(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "getCardsPositioned()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "getCardsPositioned()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliField",
+    "l": "getCardsPositioned()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "DeckTopChangeEvent",
+    "l": "getCardType()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "ShownPlayableEvent",
+    "l": "getCardType()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "getCenter(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "getCenter(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils",
+    "c": "FieldCard",
+    "l": "getCenter(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "getCenterColorsFront()"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ClientNetworkHandler",
+    "l": "getChatConnector()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client",
+    "c": "ClientRMI",
+    "l": "getChatConnector()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientSocket",
+    "l": "getChatConnector()"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "getChatController()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "getChatMessages()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "getChatUpdater()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "getChatUpdater()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "getChatUpdater()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "getCliPlayer(String)",
+    "u": "getCliPlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "getColor()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliPlayer",
+    "l": "getColor()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "getColorLetter(GameColor)",
+    "u": "getColorLetter(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "ColorCollectCard",
+    "l": "getColorRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "CollectingCard",
+    "l": "getColorRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard",
+    "l": "getColorRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "PositioningCard",
+    "l": "getColorRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils",
+    "c": "DatabaseSearchable",
+    "l": "getColumnName()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Corner",
+    "l": "getColumnName()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "GameColor",
+    "l": "getColumnName()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PlayableCardType",
+    "l": "getColumnName()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Symbol",
+    "l": "getColumnName()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getCommonObjectives()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getCommonObjectives()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "getCommonObjectives()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "getCommonObjectives()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "getContainerOn(Corner)",
+    "u": "getContainerOn(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "getCornerFromPositions(Position, Position)",
+    "u": "getCornerFromPositions(it.polimi.ingsw.am11.model.players.utils.Position,it.polimi.ingsw.am11.model.players.utils.Position)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "getCounterObjective(String)",
+    "u": "getCounterObjective(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getCurrentAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "getCurrentTuiState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "getCurrentTuiState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "getCurrentTurn()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getCurrentTurnPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getCurrentTurnPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getCurrentTurnPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getDeckTop(PlayableCardType)",
+    "u": "getDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getDeckTop(PlayableCardType)",
+    "u": "getDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "DeckManager",
+    "l": "getDeckTop(PlayableCardType)",
+    "u": "getDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "getDeckTop(PlayableCardType)",
+    "u": "getDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "getDeckTop(PlayableCardType)",
+    "u": "getDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "Option",
+    "l": "getDescription()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "getExceptionThrower()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "getExceptionThrower()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "getExceptionThrower()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getExposedCards(PlayableCardType)",
+    "u": "getExposedCards(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getExposedCards(PlayableCardType)",
+    "u": "getExposedCards(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliPlayer",
+    "l": "getField()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "getFieldCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "getFileName()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "getFinalLeaderboard()"
+}, {"p": "it.polimi.ingsw.am11.model", "c": "GameLogic", "l": "getFirstPlayer()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getFirstPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getFirstPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "FontManager",
+    "l": "getFont(FontsEnum, int)",
+    "u": "getFont(it.polimi.ingsw.am11.view.client.GUI.utils.FontsEnum,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "FontsEnum",
+    "l": "getFontRes()"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ClientNetworkHandler",
+    "l": "getGameConnector()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client",
+    "c": "ClientRMI",
+    "l": "getGameConnector()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientSocket",
+    "l": "getGameConnector()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "getGodPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "BasicRuleset",
+    "l": "getGoldAtStart()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "RuleSet",
+    "l": "getGoldAtStart()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "getGuiActuator()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getHand(String)",
+    "u": "getHand(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "BasicRuleset",
+    "l": "getHandSize()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "RuleSet",
+    "l": "getHandSize()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard",
+    "l": "getId()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "getId()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "getId()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils",
+    "c": "CardIdentity",
+    "l": "getId()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResources",
+    "l": "getImageView(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.heartbeat",
+    "c": "HeartbeatInterface",
+    "l": "getInterval()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "HeartbeatManager",
+    "l": "getInterval()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "getiPlaced()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils",
+    "c": "CornerContainer",
+    "l": "getItem()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Availability",
+    "l": "getItem()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "GameColor",
+    "l": "getItem()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Symbol",
+    "l": "getItem()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard",
+    "l": "getItemCorner(Corner)",
+    "u": "getItemCorner(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "getItemCorner(Corner)",
+    "u": "getItemCorner(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard",
+    "l": "getItemCorner(Corner)",
+    "u": "getItemCorner(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard",
+    "l": "getItemCorner(Corner, boolean)",
+    "u": "getItemCorner(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard",
+    "l": "getItemCorner(Corner, boolean)",
+    "u": "getItemCorner(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "getItemCorner(Corner, boolean)",
+    "u": "getItemCorner(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils",
+    "c": "FieldCard",
+    "l": "getItemCorner(Corner, boolean)",
+    "u": "getItemCorner(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "getLetter(CornerContainer)",
+    "u": "getLetter(it.polimi.ingsw.am11.model.cards.utils.CornerContainer)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getMaxNumberOfPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "BasicRuleset",
+    "l": "getMaxPlayers()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "RuleSet",
+    "l": "getMaxPlayers()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "BasicRuleset",
+    "l": "getMaxRevealedCardsPerType()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "RuleSet",
+    "l": "getMaxRevealedCardsPerType()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "getMiniGameModel()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "getMiniGameModel()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "getMovementOfPositions(Position, List<Corner>)",
+    "u": "getMovementOfPositions(it.polimi.ingsw.am11.model.players.utils.Position,java.util.List)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PlayableCardType",
+    "l": "getName()"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "Option",
+    "l": "getName()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "getNewState(MiniGameModel)",
+    "u": "getNewState(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "CandidateObjectiveEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "HandChangeEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "PersonalObjectiveChangeEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "ReconnectionEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "StarterCardEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "CommonObjectiveChangeEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "DeckTopChangeEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "FieldChangeEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "FinalLeaderboardEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "GameStatusChangeEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "NumOfPlayerEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "PlayerInfoEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "PlayerPointsChangeEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "ShownPlayableEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "TurnChangeEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "ViewEvent",
+    "l": "getNewValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliPlayer",
+    "l": "getNickname()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "getNumberOf(Item)",
+    "u": "getNumberOf(it.polimi.ingsw.am11.model.cards.utils.Item)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getNumberOfConnected()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getNumberOfPlayers()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "getNumberOfPositionedColor(GameColor)",
+    "u": "getNumberOfPositionedColor(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "BasicRuleset",
+    "l": "getNumOfCommonObjectives()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "RuleSet",
+    "l": "getNumOfCommonObjectives()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "BasicRuleset",
+    "l": "getNumOfPersonalObjective()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "RuleSet",
+    "l": "getNumOfPersonalObjective()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "getObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "BasicRuleset",
+    "l": "getObjectiveToChooseFrom()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "RuleSet",
+    "l": "getObjectiveToChooseFrom()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "CandidateObjectiveEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "HandChangeEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "PersonalObjectiveChangeEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "ReconnectionEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "StarterCardEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "CommonObjectiveChangeEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "DeckTopChangeEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "FieldChangeEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "FinalLeaderboardEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "GameStatusChangeEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "NumOfPlayerEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "PlayerInfoEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "PlayerPointsChangeEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "ShownPlayableEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "TurnChangeEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "ViewEvent",
+    "l": "getOldValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "ArgParser",
+    "l": "getOption(String)",
+    "u": "getOption(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientSocket",
+    "l": "getOut()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard",
+    "l": "getPattern()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "TripletCard",
+    "l": "getPattern()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "PositioningCard",
+    "l": "getPattern()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "getPlacedCardColours()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard",
+    "l": "getPlacingRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "getPlacingRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard",
+    "l": "getPlacingRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard",
+    "l": "getPlacingRequirementsOf(GameColor)",
+    "u": "getPlacingRequirementsOf(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "getPlacingRequirementsOf(GameColor)",
+    "u": "getPlacingRequirementsOf(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard",
+    "l": "getPlacingRequirementsOf(GameColor)",
+    "u": "getPlacingRequirementsOf(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "getPlayableCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel.utils",
+    "c": "CardInfo",
+    "l": "getPlayableCardColor(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel.utils",
+    "c": "CardInfo",
+    "l": "getPlayableCardType(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "PlayerViewEvent",
+    "l": "getPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "TableViewEvent",
+    "l": "getPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getPlayer(String)",
+    "u": "getPlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getPlayerColor(String)",
+    "u": "getPlayerColor(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getPlayerColor(String)",
+    "u": "getPlayerColor(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getPlayerColor(String)",
+    "u": "getPlayerColor(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getPlayerFinishingPosition(String)",
+    "u": "getPlayerFinishingPosition(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getPlayerFinishingPosition(String)",
+    "u": "getPlayerFinishingPosition(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "getPlayerFinishingPosition(String)",
+    "u": "getPlayerFinishingPosition(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "getPlayerHand()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "getPlayerHand()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getPlayerHand(String)",
+    "u": "getPlayerHand(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getPlayerHand(String)",
+    "u": "getPlayerHand(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "getPlayerObjective()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "getPlayerObjective()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getPlayerObjective(String)",
+    "u": "getPlayerObjective(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getPlayerObjective(String)",
+    "u": "getPlayerObjective(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getPlayerObjective(String)",
+    "u": "getPlayerObjective(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getPlayerPoints(String)",
+    "u": "getPlayerPoints(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getPlayerPoints(String)",
+    "u": "getPlayerPoints(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "getPlayerPoints(String)",
+    "u": "getPlayerPoints(java.lang.String)"
+}, {"p": "it.polimi.ingsw.am11.model", "c": "GameLogic", "l": "getPlayers()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getPlayers()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getPlayers()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "getPlayers()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard",
+    "l": "getPoints()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "getPoints()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliPlayer",
+    "l": "getPoints()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard",
+    "l": "getPointsRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "getPointsRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard",
+    "l": "getPointsRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "BasicRuleset",
+    "l": "getPointsToArmageddon()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "RuleSet",
+    "l": "getPointsToArmageddon()"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "ArgParser",
+    "l": "getPositionalArgs()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getPositionedCard(String)",
+    "u": "getPositionedCard(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getPositionedCard(String)",
+    "u": "getPositionedCard(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "getPositionIn(Position, Corner)",
+    "u": "getPositionIn(it.polimi.ingsw.am11.model.players.utils.Position,it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "ObjectiveCardType",
+    "l": "getPositions(boolean, boolean)",
+    "u": "getPositions(boolean,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameReceiver",
+    "l": "getReceiveException()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.resilience",
+    "c": "ReconnectionTimer",
+    "l": "getReconnectionTime()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks",
+    "c": "Deck",
+    "l": "getRemainingCards()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "DeckManager",
+    "l": "getRemainingCardsOf(PlayableCardType)",
+    "u": "getRemainingCardsOf(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "getRemainingDeckOf(PlayableCardType)",
+    "u": "getRemainingDeckOf(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "BasicRuleset",
+    "l": "getResourceAtStart()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "RuleSet",
+    "l": "getResourceAtStart()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResources",
+    "l": "getRetro(PlayableCardType, GameColor)",
+    "u": "getRetro(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {"p": "it.polimi.ingsw.am11.model", "c": "GameLogic", "l": "getRuleSet()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getRuleSet()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "getShownCards()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "getShownPlayable(PlayableCardType)",
+    "u": "getShownPlayable(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "getSmallRoot()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliPlayer",
+    "l": "getSpace()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "getStarterCard()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "getStarterCard()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "getStarterCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "getStarterCard(String)",
+    "u": "getStarterCard(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getStarterCard(String)",
+    "u": "getStarterCard(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "getStarterCard(String)",
+    "u": "getStarterCard(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "getStartingPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Chat",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "ChoosingObj",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "ChoosingStrt",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Connecting",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Ended",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "SettingName",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "SettingNum",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TUIState",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Waiting",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "WatchingField",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "WatchingTable",
+    "l": "getState()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "getState(TuiStates)",
+    "u": "getState(it.polimi.ingsw.am11.view.client.TUI.states.TuiStates)"
+}, {"p": "it.polimi.ingsw.am11.model", "c": "GameLogic", "l": "getStatus()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getStatus()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "getStatus()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "getStatus()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "SymbolCollectCard",
+    "l": "getSymbolRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "CollectingCard",
+    "l": "getSymbolRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard",
+    "l": "getSymbolRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "PositioningCard",
+    "l": "getSymbolRequirements()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard",
+    "l": "getSymbolToCollect()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "getSymbolToCollect()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard",
+    "l": "getSymbolToCollect()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResources",
+    "l": "getTheImage(GuiResEnum)",
+    "u": "getTheImage(it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResources",
+    "l": "getTheImageView(GuiResEnum)",
+    "u": "getTheImageView(it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResources",
+    "l": "getTheUrl(GuiResEnum)",
+    "u": "getTheUrl(it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResources",
+    "l": "getTopDeck(PlayableCardType, GameColor)",
+    "u": "getTopDeck(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils",
+    "c": "CornerContainer",
+    "l": "getTUICode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Availability",
+    "l": "getTUICode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "GameColor",
+    "l": "getTUICode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Symbol",
+    "l": "getTUICode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "ColorCollectCard",
+    "l": "getType()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "SymbolCollectCard",
+    "l": "getType()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard",
+    "l": "getType()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard",
+    "l": "getType()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "TripletCard",
+    "l": "getType()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard",
+    "l": "getType()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "getType()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard",
+    "l": "getType()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResources",
+    "l": "getUrlString(GuiResEnum)",
+    "u": "getUrlString(it.polimi.ingsw.am11.view.client.GUI.utils.GuiResEnum)"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "Option",
+    "l": "getValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "Proportions",
+    "l": "getValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "CandidateObjectiveEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "HandChangeEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "PersonalObjectiveChangeEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "ReconnectionEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "StarterCardEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "CommonObjectiveChangeEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "DeckTopChangeEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "FieldChangeEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "FinalLeaderboardEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "GameStatusChangeEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "NumOfPlayerEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "PlayerInfoEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "PlayerPointsChangeEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "ShownPlayableEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "TurnChangeEvent",
+    "l": "getValueOfAction()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "ViewEvent",
+    "l": "getValueOfAction()"
+}, {"p": "it.polimi.ingsw.am11.model", "c": "GameLogic", "l": "getWinner()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "getWinner()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "getWinners()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Symbol",
+    "l": "GLASS"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "goBack()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "goBack()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PlayableCardType",
+    "l": "GOLD"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckManagerMemento",
+    "l": "goldDeck()"
+}, {"p": "it.polimi.ingsw.am11.model", "c": "GameLogic", "l": "goNextTurn()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "goNextTurn()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "goNextTurn()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "GameColor",
+    "l": "GREEN"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "PlayerColor",
+    "l": "GREEN"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "GREEN_GLD_RTR"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "GREEN_RES_RTR"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiActuator",
+    "l": "GuiActuator(GuiUpdater)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.GUI.GuiUpdater)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "GuiExceptionReceiver(MiniGameModel, CodexNaturalis)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel,it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResources",
+    "l": "GuiResources()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "GuiUpdater(CodexNaturalis)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.GUI.CodexNaturalis)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "Proportions",
+    "l": "HALF_BUTTON_SIZE"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PersonalSpaceMemento",
+    "l": "hand()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "HandChangeEvent",
+    "l": "HandChangeEvent(String, Integer, Integer)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "handleComment(TextField)",
+    "u": "handleComment(javafx.scene.control.TextField)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNickPage",
+    "l": "handleEnterBtn()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNumOfPlayersPage",
+    "l": "handleEnterNumOfPlayers()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "NetworkPage",
+    "l": "handleJoinButton()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "hardReset()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "hardReset()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "hardReset()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard.Builder",
+    "l": "hasCenterColor(GameColor)",
+    "u": "hasCenterColor(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard.Builder",
+    "l": "hasCenterColors(Set<GameColor>)",
+    "u": "hasCenterColors(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "TripletCard.Builder",
+    "l": "hasColor(GameColor)",
+    "u": "hasColor(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "ColorCollectCard.Builder",
+    "l": "hasColor(GameColor)",
+    "u": "hasColor(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "ColorCollectCard.Builder",
+    "l": "hasColor(GameColor, int)",
+    "u": "hasColor(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard.Builder",
+    "l": "hasColorRetroIn(Corner, GameColor)",
+    "u": "hasColorRetroIn(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard.Builder",
+    "l": "hasCorner(Corner)",
+    "u": "hasCorner(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard.Builder",
+    "l": "hasCorner(Corner, boolean)",
+    "u": "hasCorner(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "Position",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "CardContainerMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckManagerMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "FieldMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "GameModelMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ItemManagerMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PersonalSpaceMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PickablesTableMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlateauMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerManagerMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PositionManagerMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionModelMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionTableMemento",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatInterfaceImpl",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatConnectorImpl",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.chat",
+    "c": "ClientChatReceiver",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientMessageHandler",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientExceptionReceiver",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.chat",
+    "c": "ServerChatSender",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerExceptionSender",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "hashCode()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard.Builder",
+    "l": "hasIn(Corner, CornerContainer)",
+    "u": "hasIn(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,it.polimi.ingsw.am11.model.cards.utils.CornerContainer)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard.Builder",
+    "l": "hasIn(Corner, CornerContainer)",
+    "u": "hasIn(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,it.polimi.ingsw.am11.model.cards.utils.CornerContainer)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard.Builder",
+    "l": "hasIn(Corner, CornerContainer)",
+    "u": "hasIn(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,it.polimi.ingsw.am11.model.cards.utils.CornerContainer)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard.Builder",
+    "l": "hasItemFrontIn(Corner, CornerContainer)",
+    "u": "hasItemFrontIn(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,it.polimi.ingsw.am11.model.cards.utils.CornerContainer)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard",
+    "l": "hasItemRequirements(Item)",
+    "u": "hasItemRequirements(it.polimi.ingsw.am11.model.cards.utils.Item)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard.Builder",
+    "l": "hasPointRequirements(PointsRequirementsType)",
+    "u": "hasPointRequirements(it.polimi.ingsw.am11.model.cards.utils.enums.PointsRequirementsType)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard.Builder",
+    "l": "hasPrimaryColor(GameColor)",
+    "u": "hasPrimaryColor(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard.Builder",
+    "l": "hasRequirements(GameColor, Integer)",
+    "u": "hasRequirements(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard.Builder",
+    "l": "hasSecondaryColor(GameColor)",
+    "u": "hasSecondaryColor(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "SymbolCollectCard.Builder",
+    "l": "hasSymbol(Symbol)",
+    "u": "hasSymbol(it.polimi.ingsw.am11.model.cards.utils.enums.Symbol)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.collecting",
+    "c": "SymbolCollectCard.Builder",
+    "l": "hasSymbol(Symbol, int)",
+    "u": "hasSymbol(it.polimi.ingsw.am11.model.cards.utils.enums.Symbol,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard.Builder",
+    "l": "hasSymbolToCollect(Symbol)",
+    "u": "hasSymbolToCollect(it.polimi.ingsw.am11.model.cards.utils.enums.Symbol)"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "Option",
+    "l": "hasValue()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "HeartbeatManager",
+    "l": "HeartbeatManager(ServerRMI)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.network.RMI.server.ServerRMI)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client",
+    "c": "HeartbeatSender",
+    "l": "HeartbeatSender(HeartbeatInterface, ClientViewUpdater, ClientRMI)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.network.RMI.remote.heartbeat.HeartbeatInterface,it.polimi.ingsw.am11.view.client.ClientViewUpdater,it.polimi.ingsw.am11.network.RMI.client.ClientRMI)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "help()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetObjCardsPage",
+    "l": "hideObjCardsPage()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNumOfPlayersPage",
+    "l": "hideSetNumOfPlayersPage()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNickPage",
+    "l": "hideSettingNickPage()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetStarterCardsPage",
+    "l": "hideStarterCardsPage()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "WaitingRoomPage",
+    "l": "hideWaitingRoomPage()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "FieldPrinter",
+    "l": "HORIZONTAL_SEPARATOR"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "ICON"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "IllegalCardBuildException",
+    "l": "IllegalCardBuildException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "IllegalCardPlacingException",
+    "l": "IllegalCardPlacingException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "IllegalPickActionException",
+    "l": "IllegalPickActionException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "IllegalPlateauActionException",
+    "l": "IllegalPlateauActionException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "IllegalPlateauSetupException",
+    "l": "IllegalPlateauSetupException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "IllegalPlayerSpaceActionException",
+    "l": "IllegalPlayerSpaceActionException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "InfoBarPrinter",
+    "l": "InfoBarPrinter()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "PlayersPrinter",
+    "l": "infoLine(String, PlayerColor, int)",
+    "u": "infoLine(java.lang.String,it.polimi.ingsw.am11.model.players.utils.PlayerColor,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.helpers",
+    "c": "EnumMapUtils",
+    "l": "init(Class<K>, Supplier<V>)",
+    "u": "init(java.lang.Class,java.util.function.Supplier)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.helpers",
+    "c": "EnumMapUtils",
+    "l": "init(Class<K>, V)",
+    "u": "init(java.lang.Class,V)"
+}, {"p": "it.polimi.ingsw.am11.model", "c": "GameLogic", "l": "initGame()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "initGame()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "initialize()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SQLQuery",
+    "l": "INSERT_SAVE"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.utils",
+    "c": "ActionMode",
+    "l": "INSERTION"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "INSTANCE"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.exceptions",
+    "c": "InvalidArgumetsException",
+    "l": "InvalidArgumetsException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "isArmageddonTime()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils",
+    "c": "CornerContainer",
+    "l": "isAvailable()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Availability",
+    "l": "isAvailable()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "GameColor",
+    "l": "isAvailable()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Symbol",
+    "l": "isAvailable()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard",
+    "l": "isAvailable(Corner, boolean)",
+    "u": "isAvailable(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard",
+    "l": "isAvailable(Corner, boolean)",
+    "u": "isAvailable(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "isAvailable(Corner, boolean)",
+    "u": "isAvailable(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils",
+    "c": "FieldCard",
+    "l": "isAvailable(Corner, boolean)",
+    "u": "isAvailable(it.polimi.ingsw.am11.model.cards.utils.enums.Corner,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "isAvailable(Position)",
+    "u": "isAvailable(it.polimi.ingsw.am11.model.players.utils.Position)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "isAvailable(Position)",
+    "u": "isAvailable(it.polimi.ingsw.am11.model.players.utils.Position)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "isCardEquals(FieldCard)",
+    "u": "isCardEquals(it.polimi.ingsw.am11.model.cards.utils.FieldCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "isColorEqual(GameColor)",
+    "u": "isColorEqual(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "isColorEqual(GameColor)",
+    "u": "isColorEqual(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils",
+    "c": "FieldCard",
+    "l": "isColorEqual(GameColor)",
+    "u": "isColorEqual(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "isColorEquals(GameColor)",
+    "u": "isColorEquals(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "isConnected(String)",
+    "u": "isConnected(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "isCornerCovered(Corner)",
+    "u": "isCornerCovered(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "isCurrentDisconnected()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "isCurrentState(TuiStates)",
+    "u": "isCurrentState(it.polimi.ingsw.am11.view.client.TUI.states.TuiStates)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "isDisconnected(String)",
+    "u": "isDisconnected(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "isDisconnected(String)",
+    "u": "isDisconnected(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "isDisconnected(String)",
+    "u": "isDisconnected(java.lang.String)"
+}, {"p": "it.polimi.ingsw.am11.utils", "c": "Option", "l": "isEmpty()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "isFirstTheCurrent()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard",
+    "l": "isFlipped()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "TripletCard",
+    "l": "isFlipped()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard.Builder",
+    "l": "isFlipped(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "TripletCard.Builder",
+    "l": "isFlipped(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.starter",
+    "c": "StarterCard",
+    "l": "isFrontAvail(Corner)",
+    "u": "isFrontAvail(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "GoldCard",
+    "l": "isFrontAvailable(Corner)",
+    "u": "isFrontAvailable(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "isFrontAvailable(Corner)",
+    "u": "isFrontAvailable(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "ResourceCard",
+    "l": "isFrontAvailable(Corner)",
+    "u": "isFrontAvailable(it.polimi.ingsw.am11.model.cards.utils.enums.Corner)"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "Option",
+    "l": "isPresent()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "isRequirementMet(FieldCard, boolean)",
+    "u": "isRequirementMet(it.polimi.ingsw.am11.model.cards.utils.FieldCard,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "isRetro()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "CardContainerMemento",
+    "l": "isRetro()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard",
+    "l": "isRotated()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LCard.Builder",
+    "l": "isRotated(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "isStarterRetro()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "PlayersPrinter",
+    "l": "isTurn(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "isTurnOf(String)",
+    "u": "isTurnOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.resilience",
+    "c": "ReconnectionTimer",
+    "l": "isWaitingForReconnection()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ItemManagerMemento",
+    "l": "ItemManagerMemento(Map<GameColor, Integer>, Map<Symbol, Integer>, Map<GameColor, Integer>)",
+    "u": "%3Cinit%3E(java.util.Map,java.util.Map,java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "JsonFactory",
+    "l": "JsonFactory()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ServerNetworkManager",
+    "l": "kickAllPlayers()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "ObjectiveCardType",
+    "l": "L_SHAPE"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "GameStatus",
+    "l": "LAST_TURN"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlateauMemento",
+    "l": "leaderboard()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "LEAF_ICON"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "LGIN_BACKGROUND"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "LGIN_DISK"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "LGIN_SQUARE"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "LGIN_WRITINGS"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "Line",
+    "l": "Line(List<Part>)",
+    "u": "%3Cinit%3E(java.util.List)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Reader",
+    "l": "listen()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "load(CardContainerMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.CardContainerMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "DeckManager",
+    "l": "load(DeckManagerMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.DeckManagerMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks",
+    "c": "Deck",
+    "l": "load(DeckMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.DeckMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "load(FieldMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.FieldMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "load(GameModelMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.GameModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "load(GameModelMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.GameModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "load(PersonalSpaceMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.PersonalSpaceMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "load(PersonalSpaceMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.PersonalSpaceMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "load(PickablesTableMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.PickablesTableMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "load(PlateauMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.PlateauMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "load(PlayerManagerMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.PlayerManagerMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "load(PlayerMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.PlayerMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliPlayer",
+    "l": "load(PlayerMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.PlayerMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "load(PositionManagerMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.PositionManagerMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "load(ReconnectionModelMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "load(ReconnectionTableMemento, PlateauMemento)",
+    "u": "load(it.polimi.ingsw.am11.model.utils.memento.ReconnectionTableMemento,it.polimi.ingsw.am11.model.utils.memento.PlateauMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliField",
+    "l": "loadField(PositionManagerMemento)",
+    "u": "loadField(it.polimi.ingsw.am11.model.utils.memento.PositionManagerMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "LoadingScreen",
+    "l": "LoadingScreen()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "loadMostRecent()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SavesManager",
+    "l": "loadMostRecentGame()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote",
+    "c": "ServerLoggable",
+    "l": "login(String, ClientGameUpdatesInterface, ClientChatInterface)",
+    "u": "login(java.lang.String,it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface,it.polimi.ingsw.am11.network.RMI.remote.chat.ClientChatInterface)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "ServerRMI",
+    "l": "login(String, ClientGameUpdatesInterface, ClientChatInterface)",
+    "u": "login(java.lang.String,it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface,it.polimi.ingsw.am11.network.RMI.remote.chat.ClientChatInterface)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "LPatternCounter",
+    "l": "LPatternCounter(GameColor, GameColor, EnumMap<PatternPurpose, List<Corner>>)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor,java.util.EnumMap)"
+}, {"p": "it.polimi.ingsw.am11", "c": "Main", "l": "Main()", "u": "%3Cinit%3E()"}, {
+    "p": "it.polimi.ingsw.am11",
+    "c": "Main",
+    "l": "main(String[])",
+    "u": "main(java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "Matrix",
+    "l": "Matrix(List<Line>)",
+    "u": "%3Cinit%3E(java.util.List)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "MaxHandSizeException",
+    "l": "MaxHandSizeException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientMessageHandler",
+    "l": "messageReceiver()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "MiniGameModel()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "MINIMIZE_BAR"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TUIState",
+    "l": "model"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "MUSHROOM_ICON"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "myName()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "NetworkPage",
+    "l": "NetworkPage()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PatternPurpose",
+    "l": "NEXT_CHECK"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "nickname()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerMemento",
+    "l": "nickname()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.helpers",
+    "c": "Validator",
+    "l": "nonNegativeValues(Map<K, Integer>)",
+    "u": "nonNegativeValues(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Availability",
+    "l": "NOT_USABLE"
+}, {
+    "p": "it.polimi.ingsw.am11.controller.exceptions",
+    "c": "NotGodPlayerException",
+    "l": "NotGodPlayerException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerPlayerConnector",
+    "l": "notifyGodPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "notifyGodPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "notifyGodPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "notifyGodPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "notifyGodPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "notifyGodPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "notifyGodPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "notifyGodPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "notifyGodPlayer()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "NotInHandException",
+    "l": "NotInHandException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller.exceptions",
+    "c": "NotSetNumOfPlayerException",
+    "l": "NotSetNumOfPlayerException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "NumOfPlayerEvent",
+    "l": "NumOfPlayerEvent(int)",
+    "u": "%3Cinit%3E(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "NumOfPlayersException",
+    "l": "NumOfPlayersException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "OBJ_CARD"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlateauMemento",
+    "l": "objCounter()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "ObjectiveCard",
+    "l": "ObjectiveCard(ObjectiveCard.Builder<?>)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard.Builder)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckManagerMemento",
+    "l": "objectiveDeck()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "of(FieldCard, boolean)",
+    "u": "of(it.polimi.ingsw.am11.model.cards.utils.FieldCard,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "Position",
+    "l": "of(int, int)",
+    "u": "of(int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils",
+    "c": "CornerContainer",
+    "l": "of(String)",
+    "u": "of(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "Position",
+    "l": "of(String)",
+    "u": "of(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "GameStatus",
+    "l": "ONGOING"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "openChatBox(ActionEvent)",
+    "u": "openChatBox(javafx.event.ActionEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "Option",
+    "l": "Option(String, String, boolean)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.String,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "Option",
+    "l": "Option(String, String, String)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "out()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.chat",
+    "c": "ServerChatSender",
+    "l": "out()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerExceptionSender",
+    "l": "out()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "out()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Symbol",
+    "l": "PAPER"
+}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "ArgParser",
+    "l": "parse(String[])",
+    "u": "parse(java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.utils.exceptions",
+    "c": "ParsingErrorException",
+    "l": "ParsingErrorException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "Part",
+    "l": "Part(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Chat",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "ChoosingObj",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "ChoosingStrt",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Connecting",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Ended",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "SettingName",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "SettingNum",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Waiting",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "WatchingTable",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "WatchingField",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TUIState",
+    "l": "passArgs(Actuator, String[])",
+    "u": "passArgs(it.polimi.ingsw.am11.view.client.TUI.Actuator,java.lang.String[])"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks",
+    "c": "Deck",
+    "l": "peekTop()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "PersonalObjectiveChangeEvent",
+    "l": "PersonalObjectiveChangeEvent(String, Integer, Integer)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PersonalSpaceMemento",
+    "l": "personalObjs()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "PersonalSpace()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PersonalSpaceMemento",
+    "l": "PersonalSpaceMemento(Set<Integer>, Set<Integer>, Set<Integer>, int)",
+    "u": "%3Cinit%3E(java.util.Set,java.util.Set,java.util.Set,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "PickablesTable(GameListenerSupport)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.events.support.GameListenerSupport)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PickablesTableMemento",
+    "l": "PickablesTableMemento(DeckManagerMemento, Map<PlayableCardType, Set<Integer>>, Set<Integer>)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.utils.memento.DeckManagerMemento,java.util.Map,java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "pickCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "pickCommonObjectives()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "pickFromGoldDeck(MouseEvent)",
+    "u": "pickFromGoldDeck(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "pickFromResDeck(MouseEvent)",
+    "u": "pickFromResDeck(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "pickObjectiveCandidates()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "pickPlayableVisible(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "pickStarterCard()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "pickVisible(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "ContextJSON",
+    "l": "PING"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "PingHandler",
+    "l": "ping()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.heartbeat",
+    "c": "HeartbeatInterface",
+    "l": "ping(String)",
+    "u": "ping(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "HeartbeatManager",
+    "l": "ping(String)",
+    "u": "ping(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "PingHandler",
+    "l": "PingHandler(Socket, PrintWriter)",
+    "u": "%3Cinit%3E(java.net.Socket,java.io.PrintWriter)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "TurnAction",
+    "l": "PLACE_CARD"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "place(int, int, int, boolean)",
+    "u": "place(int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "place(PlayableCard, Position, boolean)",
+    "u": "place(it.polimi.ingsw.am11.model.cards.playable.PlayableCard,it.polimi.ingsw.am11.model.players.utils.Position,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliField",
+    "l": "place(Position, int, boolean)",
+    "u": "place(it.polimi.ingsw.am11.model.players.utils.Position,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "placeCard(FieldCard, Position, boolean)",
+    "u": "placeCard(it.polimi.ingsw.am11.model.cards.utils.FieldCard,it.polimi.ingsw.am11.model.players.utils.Position,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiActuator",
+    "l": "placeCard(int, int, int, boolean)",
+    "u": "placeCard(int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "placeCard(int, int, int, boolean)",
+    "u": "placeCard(int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ClientGameConnector",
+    "l": "placeCard(Position, int, boolean)",
+    "u": "placeCard(it.polimi.ingsw.am11.model.players.utils.Position,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientConnectorImpl",
+    "l": "placeCard(Position, int, boolean)",
+    "u": "placeCard(it.polimi.ingsw.am11.model.players.utils.Position,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "placeCard(Position, int, boolean)",
+    "u": "placeCard(it.polimi.ingsw.am11.model.players.utils.Position,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ServerGameCommandsInterface",
+    "l": "placeCard(String, int, int, int, boolean)",
+    "u": "placeCard(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerGameCommandsImpl",
+    "l": "placeCard(String, int, int, int, boolean)",
+    "u": "placeCard(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CardController",
+    "l": "placeCard(String, int, Position, boolean)",
+    "u": "placeCard(java.lang.String,int,it.polimi.ingsw.am11.model.players.utils.Position,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "placeCard(String, int, Position, boolean)",
+    "u": "placeCard(java.lang.String,int,it.polimi.ingsw.am11.model.players.utils.Position,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "placeCard(String, int, Position, boolean)",
+    "u": "placeCard(java.lang.String,int,it.polimi.ingsw.am11.model.players.utils.Position,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ItemManagerMemento",
+    "l": "placedCardColors()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "placeStarterCard()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "placeStartingCard(StarterCard, boolean)",
+    "u": "placeStartingCard(it.polimi.ingsw.am11.model.cards.starter.StarterCard,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.playable",
+    "c": "GoldDeckFactory",
+    "l": "PLACING_REQ_QUERY"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "GameModelMemento",
+    "l": "plateau()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionModelMemento",
+    "l": "plateau()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "Plateau(GameListenerSupport)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.events.support.GameListenerSupport)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlateauMemento",
+    "l": "PlateauMemento(Map<String, Integer>, Map<String, Integer>, Map<String, Integer>, GameStatus)",
+    "u": "%3Cinit%3E(java.util.Map,java.util.Map,java.util.Map,it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.playable",
+    "c": "PlayableCard",
+    "l": "PlayableCard(PlayableCard.Builder<?>)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.playable.PlayableCard.Builder)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "Player(String, PlayerColor)",
+    "u": "%3Cinit%3E(java.lang.String,it.polimi.ingsw.am11.model.players.utils.PlayerColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "Player(String, PlayerColor, PersonalSpace)",
+    "u": "%3Cinit%3E(java.lang.String,it.polimi.ingsw.am11.model.players.utils.PlayerColor,it.polimi.ingsw.am11.model.players.PersonalSpace)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "Player(String, PlayerColor, PersonalSpace, PlayerField)",
+    "u": "%3Cinit%3E(java.lang.String,it.polimi.ingsw.am11.model.players.utils.PlayerColor,it.polimi.ingsw.am11.model.players.PersonalSpace,it.polimi.ingsw.am11.model.players.field.PlayerField)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "PlayerField()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "PlayerInfoEvent",
+    "l": "PlayerInfoEvent(SequencedMap<PlayerColor, String>)",
+    "u": "%3Cinit%3E(java.util.SequencedMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "PlayerInitException",
+    "l": "PlayerInitException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "GameModelMemento",
+    "l": "playerManager()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionModelMemento",
+    "l": "playerManager()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "PlayerManager(GameListenerSupport)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.events.support.GameListenerSupport)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerManagerMemento",
+    "l": "PlayerManagerMemento(List<PlayerMemento>, String, String, TurnAction)",
+    "u": "%3Cinit%3E(java.util.List,java.lang.String,java.lang.String,it.polimi.ingsw.am11.model.utils.TurnAction)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerMemento",
+    "l": "PlayerMemento(String, PlayerColor, PersonalSpaceMemento, FieldMemento)",
+    "u": "%3Cinit%3E(java.lang.String,it.polimi.ingsw.am11.model.players.utils.PlayerColor,it.polimi.ingsw.am11.model.utils.memento.PersonalSpaceMemento,it.polimi.ingsw.am11.model.utils.memento.FieldMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlateauMemento",
+    "l": "playerPoints()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "PlayerPointsChangeEvent",
+    "l": "PlayerPointsChangeEvent(String, Integer, Integer)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerManagerMemento",
+    "l": "players()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "PlayersPrinter",
+    "l": "PlayersPrinter()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "PlayerViewEvent",
+    "l": "PlayerViewEvent(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "PlayerViewUpdater",
+    "l": "PlayerViewUpdater(VirtualPlayerView)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.server.VirtualPlayerView)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "PongHandler",
+    "l": "pong()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientMessageHandler",
+    "l": "pongHandler()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "pongHandler()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "PongHandler",
+    "l": "PongHandler(Socket, PrintWriter)",
+    "u": "%3Cinit%3E(java.net.Socket,java.io.PrintWriter)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "Position",
+    "l": "Position(int, int)",
+    "u": "%3Cinit%3E(int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective",
+    "c": "PositioningCard",
+    "l": "PositioningCard(PositioningCard.Builder<?>, EnumMap<GameColor, Integer>)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.objective.PositioningCard.Builder,java.util.EnumMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "FieldMemento",
+    "l": "positionManager()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "PositionManager()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PositionManagerMemento",
+    "l": "PositionManagerMemento(Set<Position>, Set<Position>, Map<Position, CardContainerMemento>)",
+    "u": "%3Cinit%3E(java.util.Set,java.util.Set,java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PatternPurpose",
+    "l": "PREVIOUS_CHECK"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "PrintComposite",
+    "l": "print()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "printAskLine(TUIState)",
+    "u": "printAskLine(it.polimi.ingsw.am11.view.client.TUI.states.TUIState)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "printCardFrontAndBack(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "printCardsOnField(String)",
+    "u": "printCardsOnField(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "PrintComposite",
+    "l": "PrintComposite()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "printHand(List<Integer>)",
+    "u": "printHand(java.util.List)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "InfoBarPrinter",
+    "l": "printInfoBar(String)",
+    "u": "printInfoBar(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "InfoBarPrinter",
+    "l": "printInfoBar(String, String, String)",
+    "u": "printInfoBar(java.lang.String,java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "PlayersPrinter",
+    "l": "printLeaderboard(Map<String, Integer>)",
+    "u": "printLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiHandler",
+    "l": "printLoadingBar(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "printObjectives(List<Integer>)",
+    "u": "printObjectives(java.util.List)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "Line",
+    "l": "printThisAfter()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "PrintComposite",
+    "l": "printThisAfter()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "Part",
+    "l": "printThisBefore()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.utils",
+    "c": "PrintComposite",
+    "l": "printThisBefore()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "printWaitingForTrn(MiniGameModel)",
+    "u": "printWaitingForTrn(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "PlayerViewUpdater",
+    "l": "propertyChange(PlayerViewEvent)",
+    "u": "propertyChange(it.polimi.ingsw.am11.view.events.PlayerViewEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.listeners",
+    "c": "PlayerListener",
+    "l": "propertyChange(PlayerViewEvent)",
+    "u": "propertyChange(it.polimi.ingsw.am11.view.events.PlayerViewEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.listeners",
+    "c": "TableListener",
+    "l": "propertyChange(TableViewEvent)",
+    "u": "propertyChange(it.polimi.ingsw.am11.view.events.TableViewEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "TableViewUpdater",
+    "l": "propertyChange(TableViewEvent)",
+    "u": "propertyChange(it.polimi.ingsw.am11.view.events.TableViewEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ClientChatConnector",
+    "l": "pubMsg(String)",
+    "u": "pubMsg(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatConnectorImpl",
+    "l": "pubMsg(String)",
+    "u": "pubMsg(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.chat",
+    "c": "ClientChatSender",
+    "l": "pubMsg(String)",
+    "u": "pubMsg(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.chat",
+    "c": "ServerChatInterface",
+    "l": "pubMsg(String, String)",
+    "u": "pubMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatInterfaceImpl",
+    "l": "pubMsg(String, String)",
+    "u": "pubMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ClientChatConnector",
+    "l": "pubPrivateMsg(String, String)",
+    "u": "pubPrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatConnectorImpl",
+    "l": "pubPrivateMsg(String, String)",
+    "u": "pubPrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.chat",
+    "c": "ClientChatSender",
+    "l": "pubPrivateMsg(String, String)",
+    "u": "pubPrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatInterfaceImpl",
+    "l": "pubPrivateMsg(String, String, String)",
+    "u": "pubPrivateMsg(java.lang.String,java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.chat",
+    "c": "ServerChatInterface",
+    "l": "pubPrivateMsg(String, String, String)",
+    "u": "pubPrivateMsg(java.lang.String,java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "GameColor",
+    "l": "PURPLE"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "PURPLE_GLD_RTR"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "PURPLE_RES_RTR"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.playable",
+    "c": "GoldDeckFactory",
+    "l": "queryStatement"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks.playable",
+    "c": "ResourceDeckFactory",
+    "l": "queryStatement"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Reader",
+    "l": "Reader()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "JsonFactory",
+    "l": "readValue(String, TypeReference<T>)",
+    "u": "readValue(java.lang.String,com.fasterxml.jackson.core.type.TypeReference)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.chat",
+    "c": "ClientChatReceiver",
+    "l": "receive(JsonNode)",
+    "u": "receive(com.fasterxml.jackson.databind.JsonNode)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientExceptionReceiver",
+    "l": "receive(JsonNode)",
+    "u": "receive(com.fasterxml.jackson.databind.JsonNode)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameReceiver",
+    "l": "receive(JsonNode)",
+    "u": "receive(com.fasterxml.jackson.databind.JsonNode)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket",
+    "c": "MessageReceiver",
+    "l": "receive(JsonNode)",
+    "u": "receive(com.fasterxml.jackson.databind.JsonNode)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.chat",
+    "c": "ServerChatReceiver",
+    "l": "receive(JsonNode)",
+    "u": "receive(com.fasterxml.jackson.databind.JsonNode)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameReceiver",
+    "l": "receive(JsonNode)",
+    "u": "receive(com.fasterxml.jackson.databind.JsonNode)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientMessageHandler",
+    "l": "receive(String)",
+    "u": "receive(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "ServerMessageHandler",
+    "l": "receive(String)",
+    "u": "receive(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "receiveCandidateObjective()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "receiveCandidateObjective(Set<Integer>)",
+    "u": "receiveCandidateObjective(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "receiveCandidateObjective(Set<Integer>)",
+    "u": "receiveCandidateObjective(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "receiveCandidateObjective(Set<Integer>)",
+    "u": "receiveCandidateObjective(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "receiveCandidateObjective(Set<Integer>)",
+    "u": "receiveCandidateObjective(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "receiveCandidateObjective(Set<Integer>)",
+    "u": "receiveCandidateObjective(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatInterfaceImpl",
+    "l": "receiveConfirmation(String, String)",
+    "u": "receiveConfirmation(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.chat",
+    "c": "ClientChatInterface",
+    "l": "receiveConfirmation(String, String)",
+    "u": "receiveConfirmation(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "receiveFinalLeaderboard(Map<String, Integer>)",
+    "u": "receiveFinalLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "receiveFinalLeaderboard(Map<String, Integer>)",
+    "u": "receiveFinalLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "receiveFinalLeaderboard(Map<String, Integer>)",
+    "u": "receiveFinalLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "receiveFinalLeaderboard(Map<String, Integer>)",
+    "u": "receiveFinalLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatInterfaceImpl",
+    "l": "receiveMsg(String, String)",
+    "u": "receiveMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.chat",
+    "c": "ClientChatInterface",
+    "l": "receiveMsg(String, String)",
+    "u": "receiveMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientChatUpdater",
+    "l": "receiveMsg(String, String)",
+    "u": "receiveMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "receiveMsg(String, String)",
+    "u": "receiveMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "receiveMsg(String, String)",
+    "u": "receiveMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameReceiver",
+    "l": "receiveNickname(String)",
+    "u": "receiveNickname(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatInterfaceImpl",
+    "l": "receivePrivateMsg(String, String)",
+    "u": "receivePrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.chat",
+    "c": "ClientChatInterface",
+    "l": "receivePrivateMsg(String, String)",
+    "u": "receivePrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientChatUpdater",
+    "l": "receivePrivateMsg(String, String)",
+    "u": "receivePrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "receivePrivateMsg(String, String)",
+    "u": "receivePrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "receivePrivateMsg(String, String)",
+    "u": "receivePrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "receiveReconnection(ReconnectionModelMemento)",
+    "u": "receiveReconnection(it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "receiveReconnection(ReconnectionModelMemento)",
+    "u": "receiveReconnection(it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "receiveReconnection(ReconnectionModelMemento)",
+    "u": "receiveReconnection(it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "receiveStarterCard()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "receiveStarterCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "receiveStarterCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "receiveStarterCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "receiveStarterCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "receiveStarterCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.resilience",
+    "c": "ReconnectionTimer",
+    "l": "reconnect()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.resilience",
+    "c": "ReconnectionTimer",
+    "l": "reconnectCurrent()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "reconnectedToServer(GameStatus)",
+    "u": "reconnectedToServer(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "ReconnectionEvent",
+    "l": "ReconnectionEvent(String, ReconnectionModelMemento)",
+    "u": "%3Cinit%3E(java.lang.String,it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionModelMemento",
+    "l": "ReconnectionModelMemento(ReconnectionTableMemento, PlateauMemento, PlayerManagerMemento)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.utils.memento.ReconnectionTableMemento,it.polimi.ingsw.am11.model.utils.memento.PlateauMemento,it.polimi.ingsw.am11.model.utils.memento.PlayerManagerMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionTableMemento",
+    "l": "ReconnectionTableMemento(Map<PlayableCardType, GameColor>, Map<PlayableCardType, Set<Integer>>, Set<Integer>)",
+    "u": "%3Cinit%3E(java.util.Map,java.util.Map,java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.resilience",
+    "c": "ReconnectionTimer",
+    "l": "ReconnectionTimer(GameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.GameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "reconnectPlayer(Player)",
+    "u": "reconnectPlayer(it.polimi.ingsw.am11.model.players.Player)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "reconnectPlayer(String, PlayerListener)",
+    "u": "reconnectPlayer(java.lang.String,it.polimi.ingsw.am11.view.events.listeners.PlayerListener)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "reconnectPlayer(String, PlayerListener)",
+    "u": "reconnectPlayer(java.lang.String,it.polimi.ingsw.am11.view.events.listeners.PlayerListener)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "Proportions",
+    "l": "RECTANGLE_SIZE"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "GameColor",
+    "l": "RED"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "PlayerColor",
+    "l": "RED"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "RED_GLD_RTR"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "RED_RES_RTR"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "refreshDeckTop(PlayableCardType, GameColor)",
+    "u": "refreshDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "remoteConnector()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.utils",
+    "c": "ActionMode",
+    "l": "REMOVAL"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "ServerRMI",
+    "l": "removeAllPlayers()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "removeCardFromHand(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "removeCardFromHand(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "SocketManager",
+    "l": "removeClients()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "removeCommonObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "removeConnector(String)",
+    "u": "removeConnector(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.support",
+    "c": "GameListenerSupport",
+    "l": "removeListener(String)",
+    "u": "removeListener(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.chat",
+    "c": "ChatManager",
+    "l": "removePlayer(String)",
+    "u": "removePlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "ChatController",
+    "l": "removePlayer(String)",
+    "u": "removePlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "removePlayer(String)",
+    "u": "removePlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "removePlayer(String)",
+    "u": "removePlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "removePlayer(String)",
+    "u": "removePlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerGameCommandsImpl",
+    "l": "removePlayer(String)",
+    "u": "removePlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "ServerRMI",
+    "l": "removePlayer(String)",
+    "u": "removePlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "removePlayer(String)",
+    "u": "removePlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "FieldPrinter",
+    "l": "render(CliField, boolean)",
+    "u": "render(it.polimi.ingsw.am11.view.client.miniModel.CliField,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.decks",
+    "c": "Deck",
+    "l": "reset()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "reset()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "DeckManager",
+    "l": "reset()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "reset()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "reset()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "reset(TuiStates)",
+    "u": "reset(it.polimi.ingsw.am11.view.client.TUI.states.TuiStates)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "resetAll()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PlayableCardType",
+    "l": "RESOURCE"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckManagerMemento",
+    "l": "resourceDeck()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "restart()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Waiting",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Chat",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "ChoosingObj",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "ChoosingStrt",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Connecting",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Ended",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "SettingName",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "SettingNum",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TUIState",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "WatchingField",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "WatchingTable",
+    "l": "restart(boolean, Exception)",
+    "u": "restart(boolean,java.lang.Exception)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "reSyncPlayer(String)",
+    "u": "reSyncPlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "reSyncWith(String)",
+    "u": "reSyncWith(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "reSyncWith(String)",
+    "u": "reSyncWith(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ConnectionType",
+    "l": "RMI"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "rmPersonalObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "rmPersonalObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client",
+    "c": "HeartbeatSender",
+    "l": "run()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "PongHandler",
+    "l": "run()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "ClientHandler",
+    "l": "run()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "PingHandler",
+    "l": "run()"
+}, {"p": "it.polimi.ingsw.am11.model.decks", "c": "Deck", "l": "save()"}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "save()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "save()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PlayerField",
+    "l": "save()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.field",
+    "c": "PositionManager",
+    "l": "save()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "save()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "save()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "save()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "DeckManager",
+    "l": "save()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "save()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "save()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SavesManager",
+    "l": "saveGame(GameModelMemento)",
+    "u": "saveGame(it.polimi.ingsw.am11.model.utils.memento.GameModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "savePublic()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "savePublic()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "savePublic()"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "savePublic(String)",
+    "u": "savePublic(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "DirectoryCreator",
+    "l": "SAVES_DIR"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SavesManager",
+    "l": "SavesManager()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SQLQuery",
+    "l": "SELECT_MOST_RECENT"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerPlayerConnector",
+    "l": "sendCandidateObjective(Set<Integer>)",
+    "u": "sendCandidateObjective(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "sendCandidateObjective(Set<Integer>)",
+    "u": "sendCandidateObjective(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "sendCandidateObjective(Set<Integer>)",
+    "u": "sendCandidateObjective(java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiActuator",
+    "l": "sendChatMessage(String)",
+    "u": "sendChatMessage(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "sendChatMessage(String)",
+    "u": "sendChatMessage(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerTableConnector",
+    "l": "sendFinalLeaderboard(Map<String, Integer>)",
+    "u": "sendFinalLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "sendFinalLeaderboard(Map<String, Integer>)",
+    "u": "sendFinalLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "sendFinalLeaderboard(Map<String, Integer>)",
+    "u": "sendFinalLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "sendFinalLeaderboard(Map<String, Integer>)",
+    "u": "sendFinalLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "sendFinalLeaderboard(Map<String, Integer>)",
+    "u": "sendFinalLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiActuator",
+    "l": "sendPrivateMessage(String, String)",
+    "u": "sendPrivateMessage(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "sendPrivateMessage(String, String)",
+    "u": "sendPrivateMessage(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.chat",
+    "c": "ChatManager",
+    "l": "sendPrivateMessage(String, String, String)",
+    "u": "sendPrivateMessage(java.lang.String,java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "ChatController",
+    "l": "sendPrivateMessage(String, String, String)",
+    "u": "sendPrivateMessage(java.lang.String,java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerChatConnector",
+    "l": "sendPrivateMsg(String, String)",
+    "u": "sendPrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatConnectorImpl",
+    "l": "sendPrivateMsg(String, String)",
+    "u": "sendPrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.chat",
+    "c": "ServerChatSender",
+    "l": "sendPrivateMsg(String, String)",
+    "u": "sendPrivateMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerChatConnector",
+    "l": "sendPublicMsg(String, String)",
+    "u": "sendPublicMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatConnectorImpl",
+    "l": "sendPublicMsg(String, String)",
+    "u": "sendPublicMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.chat",
+    "c": "ServerChatSender",
+    "l": "sendPublicMsg(String, String)",
+    "u": "sendPublicMsg(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerPlayerConnector",
+    "l": "sendReconnection(ReconnectionModelMemento)",
+    "u": "sendReconnection(it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "sendReconnection(ReconnectionModelMemento)",
+    "u": "sendReconnection(it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "sendReconnection(ReconnectionModelMemento)",
+    "u": "sendReconnection(it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "sendReconnection(ReconnectionModelMemento)",
+    "u": "sendReconnection(it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "sendReconnection(ReconnectionModelMemento)",
+    "u": "sendReconnection(it.polimi.ingsw.am11.model.utils.memento.ReconnectionModelMemento)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerPlayerConnector",
+    "l": "sendStarterCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "sendStarterCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "sendStarterCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11",
+    "c": "Server",
+    "l": "Server()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatConnectorImpl",
+    "l": "ServerChatConnectorImpl(ClientChatInterface)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.network.RMI.remote.chat.ClientChatInterface)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatInterfaceImpl",
+    "l": "ServerChatInterfaceImpl()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.chat",
+    "c": "ServerChatReceiver",
+    "l": "ServerChatReceiver(ServerExceptionSender)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.network.socket.server.game.ServerExceptionSender)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.chat",
+    "c": "ServerChatSender",
+    "l": "ServerChatSender(PrintWriter)",
+    "u": "%3Cinit%3E(java.io.PrintWriter)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "ServerConnectorImpl(ClientGameUpdatesInterface)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.network.RMI.remote.game.ClientGameUpdatesInterface)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerExceptionSender",
+    "l": "ServerExceptionSender(PrintWriter)",
+    "u": "%3Cinit%3E(java.io.PrintWriter)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerGameCommandsImpl",
+    "l": "ServerGameCommandsImpl()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameReceiver",
+    "l": "ServerGameReceiver(VirtualPlayerView, ServerExceptionSender)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.server.VirtualPlayerView,it.polimi.ingsw.am11.network.socket.server.game.ServerExceptionSender)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "ServerGameSender(PrintWriter)",
+    "u": "%3Cinit%3E(java.io.PrintWriter)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "ServerMessageHandler",
+    "l": "ServerMessageHandler(ServerGameReceiver, PingHandler, ServerChatReceiver)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.network.socket.server.game.ServerGameReceiver,it.polimi.ingsw.am11.network.socket.server.PingHandler,it.polimi.ingsw.am11.network.socket.server.chat.ServerChatReceiver)"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ServerNetworkManager",
+    "l": "ServerNetworkManager(int, int)",
+    "u": "%3Cinit%3E(int,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "ServerRMI",
+    "l": "ServerRMI(int)",
+    "u": "%3Cinit%3E(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "setArmageddonTime(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "setCandidateNick(String)",
+    "u": "setCandidateNick(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "setCandidateNick(String)",
+    "u": "setCandidateNick(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "setCandidateObjectives(String, Set<ObjectiveCard>)",
+    "u": "setCandidateObjectives(java.lang.String,java.util.Set)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "setCurrentAction(TurnAction)",
+    "u": "setCurrentAction(it.polimi.ingsw.am11.model.utils.TurnAction)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "setCurrentTurn(String)",
+    "u": "setCurrentTurn(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliPlayer",
+    "l": "setField(CliField)",
+    "u": "setField(it.polimi.ingsw.am11.view.client.miniModel.CliField)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "setFinalLeaderboard()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "setFinalLeaderboard(Map<String, Integer>)",
+    "u": "setFinalLeaderboard(java.util.Map)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "setGodPlayer(String)",
+    "u": "setGodPlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client",
+    "c": "HeartbeatSender",
+    "l": "setHeartbeatInterval(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client",
+    "c": "ClientRMI",
+    "l": "setHeartbeatNickname(String)",
+    "u": "setHeartbeatNickname(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "setHomeState(TuiStates)",
+    "u": "setHomeState(it.polimi.ingsw.am11.view.client.TUI.states.TuiStates)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.GUIParts",
+    "c": "FrameHandler",
+    "l": "setIcons(Stage, StackPane)",
+    "u": "setIcons(javafx.stage.Stage,javafx.scene.layout.StackPane)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "setIPlaced(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "setMaxCandidateObjectives(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "setMaxNumberOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "setMaxObjectives(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "setMaxSizeofHand(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "setMyName(String)",
+    "u": "setMyName(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiActuator",
+    "l": "setName(String)",
+    "u": "setName(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "setName(String)",
+    "u": "setName(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "setNetworkManager(ServerNetworkManager)",
+    "u": "setNetworkManager(it.polimi.ingsw.am11.network.ServerNetworkManager)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "setNewCandidateObjectives(ObjectiveCard)",
+    "u": "setNewCandidateObjectives(it.polimi.ingsw.am11.model.cards.objective.ObjectiveCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ClientGameConnector",
+    "l": "setNickname(String)",
+    "u": "setNickname(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientConnectorImpl",
+    "l": "setNickname(String)",
+    "u": "setNickname(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client",
+    "c": "HeartbeatSender",
+    "l": "setNickname(String)",
+    "u": "setNickname(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.chat",
+    "c": "ClientChatSender",
+    "l": "setNickname(String)",
+    "u": "setNickname(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "setNickname(String)",
+    "u": "setNickname(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNickPage",
+    "l": "SetNickPage()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "setNumOfCandidatesObjectives(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "setNumOfCommonObjectives(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ClientGameConnector",
+    "l": "setNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientConnectorImpl",
+    "l": "setNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "setNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiActuator",
+    "l": "setNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "setNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "setNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "setNumOfPlayers(String, int)",
+    "u": "setNumOfPlayers(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ServerGameCommandsInterface",
+    "l": "setNumOfPlayers(String, int)",
+    "u": "setNumOfPlayers(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerGameCommandsImpl",
+    "l": "setNumOfPlayers(String, int)",
+    "u": "setNumOfPlayers(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNumOfPlayersPage",
+    "l": "SetNumOfPlayersPage()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "PickablesTable",
+    "l": "setNumOfShownPerType(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetObjCardsPage",
+    "l": "SetObjCardsPage()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "setObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "setObjectiveCard(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ServerGameCommandsInterface",
+    "l": "setObjectiveCard(String, int)",
+    "u": "setObjectiveCard(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerGameCommandsImpl",
+    "l": "setObjectiveCard(String, int)",
+    "u": "setObjectiveCard(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CardController",
+    "l": "setObjectiveFor(String, int)",
+    "u": "setObjectiveFor(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "setObjectiveFor(String, int)",
+    "u": "setObjectiveFor(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "setObjectiveFor(String, int)",
+    "u": "setObjectiveFor(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ClientGameConnector",
+    "l": "setPersonalObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientConnectorImpl",
+    "l": "setPersonalObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "setPersonalObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiActuator",
+    "l": "setPersonalObjective(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.resilience",
+    "c": "ReconnectionTimer",
+    "l": "setReconnectionTime(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatConnectorImpl",
+    "l": "setSender(String)",
+    "u": "setSender(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliPlayer",
+    "l": "setSpace(CliSpace)",
+    "u": "setSpace(it.polimi.ingsw.am11.view.client.miniModel.CliSpace)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "setStarter(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ClientGameConnector",
+    "l": "setStarterCard(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientConnectorImpl",
+    "l": "setStarterCard(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "setStarterCard(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiActuator",
+    "l": "setStarterCard(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "setStarterCard(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "setStarterCard(Integer)",
+    "u": "setStarterCard(java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "PersonalSpace",
+    "l": "setStarterCard(StarterCard)",
+    "u": "setStarterCard(it.polimi.ingsw.am11.model.cards.starter.StarterCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ServerGameCommandsInterface",
+    "l": "setStarterCard(String, boolean)",
+    "u": "setStarterCard(java.lang.String,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerGameCommandsImpl",
+    "l": "setStarterCard(String, boolean)",
+    "u": "setStarterCard(java.lang.String,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "PlayerManager",
+    "l": "setStarterCard(String, StarterCard)",
+    "u": "setStarterCard(java.lang.String,it.polimi.ingsw.am11.model.cards.starter.StarterCard)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetStarterCardsPage",
+    "l": "SetStarterCardsPage()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CardController",
+    "l": "setStarterFor(String, boolean)",
+    "u": "setStarterFor(java.lang.String,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameLogic",
+    "l": "setStarterFor(String, boolean)",
+    "u": "setStarterFor(java.lang.String,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.model",
+    "c": "GameModel",
+    "l": "setStarterFor(String, boolean)",
+    "u": "setStarterFor(java.lang.String,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliSpace",
+    "l": "setStarterIsRetro(boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "setStartingPlayer(String)",
+    "u": "setStartingPlayer(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "setStatus(GameStatus)",
+    "u": "setStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliTable",
+    "l": "setStatus(GameStatus)",
+    "u": "setStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "SETTING_NAME"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "SETTING_NUM"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "SettingName",
+    "l": "SettingName(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "SettingNum",
+    "l": "SettingNum(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "Actuator",
+    "l": "setTuiState(TuiStates)",
+    "u": "setTuiState(it.polimi.ingsw.am11.view.client.TUI.states.TuiStates)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "setTuiState(TuiStates)",
+    "u": "setTuiState(it.polimi.ingsw.am11.view.client.TUI.states.TuiStates)"
+}, {"p": "it.polimi.ingsw.am11.model.utils", "c": "GameStatus", "l": "SETUP"}, {
+    "p": "it.polimi.ingsw.am11.utils",
+    "c": "Option",
+    "l": "setValue(String)",
+    "u": "setValue(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "Plateau",
+    "l": "setWinner(String)",
+    "u": "setWinner(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "showErrorGamePage(String)",
+    "u": "showErrorGamePage(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "showErrorMessage(String)",
+    "u": "showErrorMessage(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNumOfPlayersPage",
+    "l": "showErrorMesssage()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNickPage",
+    "l": "showErrorMesssage(String)",
+    "u": "showErrorMesssage(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "showFieldPl1(MouseEvent)",
+    "u": "showFieldPl1(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "showFieldPl2(MouseEvent)",
+    "u": "showFieldPl2(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "showFieldPl3(MouseEvent)",
+    "u": "showFieldPl3(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "showFieldPl4(MouseEvent)",
+    "u": "showFieldPl4(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "showLastTurnMessage(String)",
+    "u": "showLastTurnMessage(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "NetworkPage",
+    "l": "showNetworkPage()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PickablesTableMemento",
+    "l": "shownPlayable()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionTableMemento",
+    "l": "shownPlayable()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "ShownPlayableEvent",
+    "l": "ShownPlayableEvent(PlayableCardType, Integer, Integer)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetObjCardsPage",
+    "l": "showObjCardsPage()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNumOfPlayersPage",
+    "l": "showSetNumOfPlayersPage()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetNickPage",
+    "l": "showSettingNickPage()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "SetStarterCardsPage",
+    "l": "showStarterCardsPage()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "WaitingRoomPage",
+    "l": "showWaitingRoomPage()"
+}, {"p": "it.polimi.ingsw.am11.model.decks", "c": "Deck", "l": "shuffle()"}, {
+    "p": "it.polimi.ingsw.am11.model.table",
+    "c": "DeckManager",
+    "l": "shuffle()"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ConnectionType",
+    "l": "SOCKET"
+}, {
+    "p": "it.polimi.ingsw.am11.network.exceptions",
+    "c": "SocketCreationException",
+    "l": "SocketCreationException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "SocketManager",
+    "l": "SocketManager(int)",
+    "u": "%3Cinit%3E(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "space()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerMemento",
+    "l": "space()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardArchitect",
+    "l": "spaces(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "CardPrinter",
+    "l": "spaces(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "PlayersPrinter",
+    "l": "spaces(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SQLQuery",
+    "l": "SQLQuery()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "Proportions",
+    "l": "SQUARE_SIZE"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientConnectorImpl",
+    "l": "start()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatConnectorImpl",
+    "l": "start()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "start()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server",
+    "c": "ServerRMI",
+    "l": "start()"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ServerNetworkManager",
+    "l": "start()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "PongHandler",
+    "l": "start()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "SocketManager",
+    "l": "start()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiHandler",
+    "l": "start()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "start(Stage)",
+    "u": "start(javafx.stage.Stage)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PersonalSpaceMemento",
+    "l": "starterCard()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "StarterCardEvent",
+    "l": "StarterCardEvent(String, Integer, Integer)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckManagerMemento",
+    "l": "starterDeck()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlateauMemento",
+    "l": "status()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientConnectorImpl",
+    "l": "stop()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client",
+    "c": "HeartbeatSender",
+    "l": "stop()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatConnectorImpl",
+    "l": "stop()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "stop()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "ClientHandler",
+    "l": "stop()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "SocketManager",
+    "l": "stop()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "stopMusic()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "ObjectiveCardType",
+    "l": "SYMBOL_COLLECT"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PointsRequirementsType",
+    "l": "SYMBOLS"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel.exceptions",
+    "c": "SyncIssueException",
+    "l": "SyncIssueException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ClientGameConnector",
+    "l": "syncMeUp()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientConnectorImpl",
+    "l": "syncMeUp()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "syncMeUp()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "syncMeUp()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ServerGameCommandsInterface",
+    "l": "syncMeUp(String)",
+    "u": "syncMeUp(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerGameCommandsImpl",
+    "l": "syncMeUp(String)",
+    "u": "syncMeUp(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "GameModelMemento",
+    "l": "table()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionModelMemento",
+    "l": "table()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "MiniGameModel",
+    "l": "table()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "TableViewEvent",
+    "l": "TableViewEvent()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "TableViewEvent",
+    "l": "TableViewEvent(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "TableViewUpdater",
+    "l": "TableViewUpdater(VirtualTableView)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(EmptyDeckException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.EmptyDeckException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(EmptyDeckException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.EmptyDeckException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(EmptyDeckException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.EmptyDeckException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(GameStatusException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.GameStatusException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(GameStatusException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.GameStatusException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(GameStatusException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.GameStatusException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(IllegalCardPlacingException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(IllegalCardPlacingException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(IllegalCardPlacingException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalCardPlacingException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(IllegalPickActionException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(IllegalPickActionException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(IllegalPickActionException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalPickActionException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(IllegalPlateauActionException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(IllegalPlateauActionException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(IllegalPlateauActionException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalPlateauActionException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(IllegalPlayerSpaceActionException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(IllegalPlayerSpaceActionException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(IllegalPlayerSpaceActionException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.IllegalPlayerSpaceActionException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(MaxHandSizeException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(MaxHandSizeException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(MaxHandSizeException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.MaxHandSizeException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(NotGodPlayerException)",
+    "u": "throwException(it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(NotGodPlayerException)",
+    "u": "throwException(it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(NotGodPlayerException)",
+    "u": "throwException(it.polimi.ingsw.am11.controller.exceptions.NotGodPlayerException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(NotInHandException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.NotInHandException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(NotInHandException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.NotInHandException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(NotInHandException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.NotInHandException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(NotSetNumOfPlayerException)",
+    "u": "throwException(it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(NotSetNumOfPlayerException)",
+    "u": "throwException(it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(NotSetNumOfPlayerException)",
+    "u": "throwException(it.polimi.ingsw.am11.controller.exceptions.NotSetNumOfPlayerException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(NumOfPlayersException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(NumOfPlayersException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(NumOfPlayersException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.NumOfPlayersException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(PlayerInitException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.PlayerInitException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(PlayerInitException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.PlayerInitException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(PlayerInitException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.PlayerInitException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ExceptionThrower",
+    "l": "throwException(TurnsOrderException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.TurnsOrderException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiExceptionReceiver",
+    "l": "throwException(TurnsOrderException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.TurnsOrderException)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "throwException(TurnsOrderException)",
+    "u": "throwException(it.polimi.ingsw.am11.model.exceptions.TurnsOrderException)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PatternPurpose",
+    "l": "TO_COMPLETE"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "JsonFactory",
+    "l": "toJsonNode(String)",
+    "u": "toJsonNode(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.exceptions",
+    "c": "TooManyRequestsException",
+    "l": "TooManyRequestsException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Corner",
+    "l": "TOP_LX"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Corner",
+    "l": "TOP_RX"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PlayableCardType",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players",
+    "c": "Player",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "CardContainer",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "Position",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "CardContainerMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckManagerMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "DeckMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "FieldMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "GameModelMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ItemManagerMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PersonalSpaceMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PickablesTableMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlateauMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerManagerMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PlayerMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "PositionManagerMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionModelMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.memento",
+    "c": "ReconnectionTableMemento",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.chat",
+    "c": "ClientChatInterfaceImpl",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.chat",
+    "c": "ServerChatConnectorImpl",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.chat",
+    "c": "ClientChatReceiver",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client",
+    "c": "ClientMessageHandler",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientExceptionReceiver",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.client.game",
+    "c": "ClientGameSender",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.chat",
+    "c": "ServerChatSender",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerExceptionSender",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.miniModel",
+    "c": "CliField",
+    "l": "toString()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.persistence",
+    "c": "SQLQuery",
+    "l": "TRIGGER_TO_DELETE_OLDER"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "ObjectiveCardType",
+    "l": "TRIPLET"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.objective.positioning",
+    "c": "TripletPatternCounter",
+    "l": "TripletPatternCounter(GameColor, EnumMap<PatternPurpose, Corner>)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.model.cards.utils.enums.GameColor,java.util.EnumMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiExceptionReceiver",
+    "l": "TuiExceptionReceiver(MiniGameModel, TuiUpdater)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel,it.polimi.ingsw.am11.view.client.TUI.TuiUpdater)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiHandler",
+    "l": "TuiHandler()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TUIState",
+    "l": "TUIState(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "TuiUpdater(TuiStates)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.TUI.states.TuiStates)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "TurnChangeEvent",
+    "l": "TurnChangeEvent(String, String)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.exceptions",
+    "c": "TurnsOrderException",
+    "l": "TurnsOrderException(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "updateChat()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "updateChat()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "updateCommonObj()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerTableConnector",
+    "l": "updateCommonObjective(Set<Integer>, boolean)",
+    "u": "updateCommonObjective(java.util.Set,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updateCommonObjective(Set<Integer>, boolean)",
+    "u": "updateCommonObjective(java.util.Set,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updateCommonObjective(Set<Integer>, boolean)",
+    "u": "updateCommonObjective(java.util.Set,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updateCommonObjective(Set<Integer>, boolean)",
+    "u": "updateCommonObjective(java.util.Set,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updateCommonObjective(Set<Integer>, boolean)",
+    "u": "updateCommonObjective(java.util.Set,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updateCommonObjective(Set<Integer>, boolean)",
+    "u": "updateCommonObjective(java.util.Set,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updateCommonObjective(Set<Integer>, boolean)",
+    "u": "updateCommonObjective(java.util.Set,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updateCommonObjective(Set<Integer>, boolean)",
+    "u": "updateCommonObjective(java.util.Set,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "updateCommonObjective(Set<Integer>, boolean)",
+    "u": "updateCommonObjective(java.util.Set,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerTableConnector",
+    "l": "updateDeckTop(PlayableCardType, GameColor)",
+    "u": "updateDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updateDeckTop(PlayableCardType, GameColor)",
+    "u": "updateDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updateDeckTop(PlayableCardType, GameColor)",
+    "u": "updateDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updateDeckTop(PlayableCardType, GameColor)",
+    "u": "updateDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updateDeckTop(PlayableCardType, GameColor)",
+    "u": "updateDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updateDeckTop(PlayableCardType, GameColor)",
+    "u": "updateDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "updateDeckTop(PlayableCardType, GameColor)",
+    "u": "updateDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updateDeckTop(PlayableCardType, GameColor)",
+    "u": "updateDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updateDeckTop(PlayableCardType, GameColor)",
+    "u": "updateDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "updateDeckTop(PlayableCardType, GameColor)",
+    "u": "updateDeckTop(it.polimi.ingsw.am11.model.cards.utils.enums.PlayableCardType,it.polimi.ingsw.am11.model.cards.utils.enums.GameColor)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerTableConnector",
+    "l": "updateField(String, int, int, int, boolean)",
+    "u": "updateField(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updateField(String, int, int, int, boolean)",
+    "u": "updateField(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updateField(String, int, int, int, boolean)",
+    "u": "updateField(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updateField(String, int, int, int, boolean)",
+    "u": "updateField(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updateField(String, int, int, int, boolean)",
+    "u": "updateField(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updateField(String, int, int, int, boolean)",
+    "u": "updateField(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updateField(String, int, int, int, boolean)",
+    "u": "updateField(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updateField(String, int, int, int, boolean)",
+    "u": "updateField(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "updateField(String, int, int, int, boolean)",
+    "u": "updateField(java.lang.String,int,int,int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerTableConnector",
+    "l": "updateGameStatus(GameStatus)",
+    "u": "updateGameStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updateGameStatus(GameStatus)",
+    "u": "updateGameStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updateGameStatus(GameStatus)",
+    "u": "updateGameStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updateGameStatus(GameStatus)",
+    "u": "updateGameStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updateGameStatus(GameStatus)",
+    "u": "updateGameStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updateGameStatus(GameStatus)",
+    "u": "updateGameStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "updateGameStatus(GameStatus)",
+    "u": "updateGameStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updateGameStatus(GameStatus)",
+    "u": "updateGameStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updateGameStatus(GameStatus)",
+    "u": "updateGameStatus(it.polimi.ingsw.am11.model.utils.GameStatus)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "updateHand()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerPlayerConnector",
+    "l": "updateHand(int, boolean)",
+    "u": "updateHand(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updateHand(int, boolean)",
+    "u": "updateHand(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updateHand(int, boolean)",
+    "u": "updateHand(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updateHand(int, boolean)",
+    "u": "updateHand(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updateHand(int, boolean)",
+    "u": "updateHand(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updateHand(int, boolean)",
+    "u": "updateHand(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "updateHand(int, boolean)",
+    "u": "updateHand(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updateHand(int, boolean)",
+    "u": "updateHand(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updateHand(int, boolean)",
+    "u": "updateHand(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updateNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updateNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updateNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updateNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updateNumOfPlayers(int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerTableConnector",
+    "l": "updateNumOfPlayers(Integer)",
+    "u": "updateNumOfPlayers(java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updateNumOfPlayers(Integer)",
+    "u": "updateNumOfPlayers(java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updateNumOfPlayers(Integer)",
+    "u": "updateNumOfPlayers(java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "updatePersonalObjective()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerPlayerConnector",
+    "l": "updatePersonalObjective(int, boolean)",
+    "u": "updatePersonalObjective(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updatePersonalObjective(int, boolean)",
+    "u": "updatePersonalObjective(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updatePersonalObjective(int, boolean)",
+    "u": "updatePersonalObjective(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updatePersonalObjective(int, boolean)",
+    "u": "updatePersonalObjective(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updatePersonalObjective(int, boolean)",
+    "u": "updatePersonalObjective(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updatePersonalObjective(int, boolean)",
+    "u": "updatePersonalObjective(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "updatePersonalObjective(int, boolean)",
+    "u": "updatePersonalObjective(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updatePersonalObjective(int, boolean)",
+    "u": "updatePersonalObjective(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updatePersonalObjective(int, boolean)",
+    "u": "updatePersonalObjective(int,boolean)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "updatePlayer(CandidateObjectiveEvent)",
+    "u": "updatePlayer(it.polimi.ingsw.am11.view.events.view.player.CandidateObjectiveEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "updatePlayer(HandChangeEvent)",
+    "u": "updatePlayer(it.polimi.ingsw.am11.view.events.view.player.HandChangeEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "updatePlayer(PersonalObjectiveChangeEvent)",
+    "u": "updatePlayer(it.polimi.ingsw.am11.view.events.view.player.PersonalObjectiveChangeEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "updatePlayer(ReconnectionEvent)",
+    "u": "updatePlayer(it.polimi.ingsw.am11.view.events.view.player.ReconnectionEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "updatePlayer(StarterCardEvent)",
+    "u": "updatePlayer(it.polimi.ingsw.am11.view.events.view.player.StarterCardEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerTableConnector",
+    "l": "updatePlayerPoint(String, int)",
+    "u": "updatePlayerPoint(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updatePlayerPoint(String, int)",
+    "u": "updatePlayerPoint(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updatePlayerPoint(String, int)",
+    "u": "updatePlayerPoint(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updatePlayerPoint(String, int)",
+    "u": "updatePlayerPoint(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updatePlayerPoint(String, int)",
+    "u": "updatePlayerPoint(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updatePlayerPoint(String, int)",
+    "u": "updatePlayerPoint(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updatePlayerPoint(String, int)",
+    "u": "updatePlayerPoint(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updatePlayerPoint(String, int)",
+    "u": "updatePlayerPoint(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "updatePlayerPoint(String, int)",
+    "u": "updatePlayerPoint(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "updatePlayerPoints(String, int)",
+    "u": "updatePlayerPoints(java.lang.String,int)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerTableConnector",
+    "l": "updatePlayers(SequencedMap<PlayerColor, String>)",
+    "u": "updatePlayers(java.util.SequencedMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updatePlayers(SequencedMap<PlayerColor, String>)",
+    "u": "updatePlayers(java.util.SequencedMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updatePlayers(SequencedMap<PlayerColor, String>)",
+    "u": "updatePlayers(java.util.SequencedMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updatePlayers(SequencedMap<PlayerColor, String>)",
+    "u": "updatePlayers(java.util.SequencedMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updatePlayers(SequencedMap<PlayerColor, String>)",
+    "u": "updatePlayers(java.util.SequencedMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updatePlayers(SequencedMap<PlayerColor, String>)",
+    "u": "updatePlayers(java.util.SequencedMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updatePlayers(SequencedMap<PlayerColor, String>)",
+    "u": "updatePlayers(java.util.SequencedMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updatePlayers(SequencedMap<PlayerColor, String>)",
+    "u": "updatePlayers(java.util.SequencedMap)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "updateShownPlayable()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerTableConnector",
+    "l": "updateShownPlayable(Integer, Integer)",
+    "u": "updateShownPlayable(java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updateShownPlayable(Integer, Integer)",
+    "u": "updateShownPlayable(java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updateShownPlayable(Integer, Integer)",
+    "u": "updateShownPlayable(java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updateShownPlayable(Integer, Integer)",
+    "u": "updateShownPlayable(java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updateShownPlayable(Integer, Integer)",
+    "u": "updateShownPlayable(java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updateShownPlayable(Integer, Integer)",
+    "u": "updateShownPlayable(java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updateShownPlayable(Integer, Integer)",
+    "u": "updateShownPlayable(java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updateShownPlayable(Integer, Integer)",
+    "u": "updateShownPlayable(java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "updateShownPlayable(Integer, Integer)",
+    "u": "updateShownPlayable(java.lang.Integer,java.lang.Integer)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "updateTable(CommonObjectiveChangeEvent)",
+    "u": "updateTable(it.polimi.ingsw.am11.view.events.view.table.CommonObjectiveChangeEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "updateTable(DeckTopChangeEvent)",
+    "u": "updateTable(it.polimi.ingsw.am11.view.events.view.table.DeckTopChangeEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "updateTable(FieldChangeEvent)",
+    "u": "updateTable(it.polimi.ingsw.am11.view.events.view.table.FieldChangeEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "updateTable(FinalLeaderboardEvent)",
+    "u": "updateTable(it.polimi.ingsw.am11.view.events.view.table.FinalLeaderboardEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "updateTable(GameStatusChangeEvent)",
+    "u": "updateTable(it.polimi.ingsw.am11.view.events.view.table.GameStatusChangeEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "updateTable(NumOfPlayerEvent)",
+    "u": "updateTable(it.polimi.ingsw.am11.view.events.view.table.NumOfPlayerEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "updateTable(PlayerInfoEvent)",
+    "u": "updateTable(it.polimi.ingsw.am11.view.events.view.table.PlayerInfoEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "updateTable(PlayerPointsChangeEvent)",
+    "u": "updateTable(it.polimi.ingsw.am11.view.events.view.table.PlayerPointsChangeEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "updateTable(ShownPlayableEvent)",
+    "u": "updateTable(it.polimi.ingsw.am11.view.events.view.table.ShownPlayableEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "updateTable(TurnChangeEvent)",
+    "u": "updateTable(it.polimi.ingsw.am11.view.events.view.table.TurnChangeEvent)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.connector",
+    "c": "ServerTableConnector",
+    "l": "updateTurnChange(String)",
+    "u": "updateTurnChange(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "updateTurnChange(String)",
+    "u": "updateTurnChange(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "updateTurnChange(String)",
+    "u": "updateTurnChange(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.server.game",
+    "c": "ServerConnectorImpl",
+    "l": "updateTurnChange(String)",
+    "u": "updateTurnChange(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server.game",
+    "c": "ServerGameSender",
+    "l": "updateTurnChange(String)",
+    "u": "updateTurnChange(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client",
+    "c": "ClientViewUpdater",
+    "l": "updateTurnChange(String)",
+    "u": "updateTurnChange(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "GuiUpdater",
+    "l": "updateTurnChange(String)",
+    "u": "updateTurnChange(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI",
+    "c": "TuiUpdater",
+    "l": "updateTurnChange(String)",
+    "u": "updateTurnChange(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI",
+    "c": "CodexNaturalis",
+    "l": "updateTurnChange(String)",
+    "u": "updateTurnChange(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "GamePage",
+    "l": "updateTurnChange(String)",
+    "u": "updateTurnChange(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "PlayerViewEvent",
+    "l": "updateView(VirtualPlayerView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualPlayerView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "CandidateObjectiveEvent",
+    "l": "updateView(VirtualPlayerView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualPlayerView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "HandChangeEvent",
+    "l": "updateView(VirtualPlayerView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualPlayerView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "PersonalObjectiveChangeEvent",
+    "l": "updateView(VirtualPlayerView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualPlayerView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "ReconnectionEvent",
+    "l": "updateView(VirtualPlayerView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualPlayerView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.player",
+    "c": "StarterCardEvent",
+    "l": "updateView(VirtualPlayerView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualPlayerView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "TableViewEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "CommonObjectiveChangeEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "DeckTopChangeEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "FieldChangeEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "FinalLeaderboardEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "GameStatusChangeEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "NumOfPlayerEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "PlayerInfoEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "PlayerPointsChangeEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "ShownPlayableEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.view.table",
+    "c": "TurnChangeEvent",
+    "l": "updateView(VirtualTableView)",
+    "u": "updateView(it.polimi.ingsw.am11.view.server.VirtualTableView)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Availability",
+    "l": "USABLE"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Availability",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Corner",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "GameColor",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "ObjectiveCardType",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PatternPurpose",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PlayableCardType",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PointsRequirementsType",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Symbol",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "PlayerColor",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "GameStatus",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "TurnAction",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ConnectionType",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "ContextJSON",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "FontsEnum",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "Proportions",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.utils",
+    "c": "ActionMode",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.controller",
+    "c": "CentralController",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Availability",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Corner",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "GameColor",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "ObjectiveCardType",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PatternPurpose",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PlayableCardType",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "PointsRequirementsType",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.cards.utils.enums",
+    "c": "Symbol",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "PlayerColor",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils",
+    "c": "GameStatus",
+    "l": "values()"
+}, {"p": "it.polimi.ingsw.am11.model.utils", "c": "TurnAction", "l": "values()"}, {
+    "p": "it.polimi.ingsw.am11.network",
+    "c": "ConnectionType",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "ContextJSON",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "FontsEnum",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "Proportions",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events.utils",
+    "c": "ActionMode",
+    "l": "values()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "FieldPrinter",
+    "l": "VERTICAL_COORD_SEP"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.printers",
+    "c": "FieldPrinter",
+    "l": "VERTICAL_SEPARATOR"
+}, {
+    "p": "it.polimi.ingsw.am11.view.events",
+    "c": "ViewEvent",
+    "l": "ViewEvent()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "viewUpdater()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "FontsEnum",
+    "l": "VINQUE"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "VINQUE"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualPlayerView",
+    "l": "VirtualPlayerView(ServerPlayerConnector, String)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.network.connector.ServerPlayerConnector,java.lang.String)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.server",
+    "c": "VirtualTableView",
+    "l": "VirtualTableView()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.resilience",
+    "c": "ReconnectionTimer",
+    "l": "waitForReconnection()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.utils.resilience",
+    "c": "ReconnectionTimer",
+    "l": "waitForTotalReconnection()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "WAITING"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "Waiting",
+    "l": "Waiting(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.windows",
+    "c": "WaitingRoomPage",
+    "l": "WaitingRoomPage()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "WATCHING_FIELD"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "TuiStates",
+    "l": "WATCHING_TABLE"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "WatchingField",
+    "l": "WatchingField(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.TUI.states",
+    "c": "WatchingTable",
+    "l": "WatchingTable(MiniGameModel)",
+    "u": "%3Cinit%3E(it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "WOLF_ICON"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.utils",
+    "c": "JsonFactory",
+    "l": "writeValueAsString(Object)",
+    "u": "writeValueAsString(java.lang.Object)"
+}, {
+    "p": "it.polimi.ingsw.am11.view.client.GUI.utils",
+    "c": "GuiResEnum",
+    "l": "X_CARD"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "Position",
+    "l": "x()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "Position",
+    "l": "y()"
+}, {
+    "p": "it.polimi.ingsw.am11.model.players.utils",
+    "c": "PlayerColor",
+    "l": "YELLOW"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.client.game",
+    "c": "ClientGameUpdatesImpl",
+    "l": "youUgly()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.RMI.remote.game",
+    "c": "ClientGameUpdatesInterface",
+    "l": "youUgly()"
+}, {
+    "p": "it.polimi.ingsw.am11.network.socket.server",
+    "c": "ClientHandler",
+    "l": "youUgly()"
+}, {"p": "it.polimi.ingsw.am11.network.socket.server.game", "c": "ServerGameSender", "l": "youUgly()"}];
+updateSearchResults();
