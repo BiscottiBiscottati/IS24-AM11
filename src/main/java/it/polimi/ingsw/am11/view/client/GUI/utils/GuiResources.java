@@ -33,6 +33,16 @@ public class GuiResources {
     private static final String RETRO_CARD_PATH = "windows/cards/retro/%s_%s.png";
     private static final String FRONT_CARD_PATH = "windows/cards/front/%d.png";
 
+    /**
+     * This method is used to get the top card of the deck as an image. It formats the
+     * RETRO_CARD_PATH with the column name of the color and the card type to get the path of the
+     * image. Then, it retrieves the image from the path.
+     *
+     * @param type  The type of the playable card.
+     * @param color The color of the playable card.
+     * @return The image of the top card of the deck. If the image cannot be loaded, it returns
+     * null.
+     */
     public static @Nullable Image getTopDeck(@NotNull PlayableCardType type,
                                              @NotNull GameColor color) {
         return getImageOf(String.format(RETRO_CARD_PATH,

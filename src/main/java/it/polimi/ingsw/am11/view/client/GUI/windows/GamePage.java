@@ -35,7 +35,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -304,7 +303,7 @@ public class GamePage {
      * @param color The color of the card to be displayed on the top of the deck.
      */
     public void updateDeckTop(PlayableCardType type,
-                              it.polimi.ingsw.am11.model.cards.utils.enums.Color color) {
+                              it.polimi.ingsw.am11.model.cards.utils.enums.GameColor color) {
         Platform.runLater(() -> {
             switch (type) {
                 case RESOURCE -> {
