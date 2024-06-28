@@ -1,4 +1,4 @@
-# SOFTWARE ENGINEERING FINAL PROJECT
+# SOFTWARE ENGINEERING FINAL PROJECT 2024
 
 ## Team Members
 
@@ -23,10 +23,10 @@ You can download the rules here:
 
 The project is structured as follows:
 
-- *src*: contains the source code of the project
-- *javadoc*: contains the javadoc of the project
-- *UML*: contains the UML class and sequence diagrams of the project
-- *Peer Review*: contains the peer review of another team design
+- **src**: contains the source code of the project
+- **javadoc**: contains the javadoc of the project
+- **UML**: contains the UML class and sequence diagrams of the project
+- **Peer Review**: contains the peer review of another team design
 
 ## How to run the project
 
