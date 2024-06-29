@@ -21,7 +21,7 @@ public enum TuiStates {
         this.stateFactory = stateFactory;
     }
 
-    public static void printAskLine(@NotNull TUIState state) {
+    public static void printAskLine(TUIState state) {
         switch (state.getState()) {
             case CONNECTING -> {
                 Connecting conn = (Connecting) state;

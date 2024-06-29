@@ -33,7 +33,8 @@ public class PlayerPointsChangeEvent extends TableViewEvent {
     @Override
     public @NotNull Integer getValueOfAction() {
         if (oldValue != null) return oldValue;
-        return newValue;
+        if (newValue != null) return newValue;
+        throw new UnsupportedOperationException("both are null cannot be called");
     }
 
 }

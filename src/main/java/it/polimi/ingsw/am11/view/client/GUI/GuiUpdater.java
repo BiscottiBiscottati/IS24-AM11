@@ -30,8 +30,8 @@ import java.util.Set;
  */
 public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     private static final Logger LOGGER = LoggerFactory.getLogger(GuiUpdater.class);
-    private final @NotNull CodexNaturalis codexNaturalis;
-    private MiniGameModel miniGameModel;
+    private final CodexNaturalis codexNaturalis;
+    MiniGameModel miniGameModel;
     private GuiExceptionReceiver exceptionReceiver;
     private String candidateNick = "";
 
@@ -93,7 +93,7 @@ public class GuiUpdater implements ClientViewUpdater, ClientChatUpdater {
     }
 
     @Override
-    public void updateShownPlayable(@Nullable Integer previousId, @Nullable Integer currentId) {
+    public void updateShownPlayable(Integer previousId, Integer currentId) {
         LOGGER.debug("Removed from visible: {}, Added: {}", previousId, currentId);
         if (previousId != null) miniGameModel.table().pickVisible(previousId);
         if (currentId != null) miniGameModel.table().addVisible(currentId);

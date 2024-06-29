@@ -15,7 +15,7 @@ import java.util.SequencedMap;
 import java.util.Set;
 
 /**
- * The client uses this interface to receive updates from the server.
+ * This interface is used by the client to receive updates from the server.
  */
 
 public interface ClientGameUpdatesInterface extends Remote {
@@ -65,7 +65,7 @@ public interface ClientGameUpdatesInterface extends Remote {
     throws RemoteException;
 
     /**
-     * Update the field of the player, it can place or remove a card, if the removeMode is true, the
+     * Update the field of the player, it can place or remove a card, if the removeMode is true the
      * cardId and isRetro are ignored.
      *
      * @param nickname the nickname of the player
@@ -106,7 +106,7 @@ public interface ClientGameUpdatesInterface extends Remote {
     void updatePlayerPoint(@NotNull String nickname, int points) throws RemoteException;
 
     /**
-     * Update the status of the game; it is referred to the status of the model, not the state of
+     * Update the status of the game, it is referred to the status of the model, not the state of
      * the implemented user interface
      *
      * @param status the new status of the game

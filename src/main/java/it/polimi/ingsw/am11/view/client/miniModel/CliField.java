@@ -44,7 +44,7 @@ public class CliField {
     }
 
     @Override
-    public @NotNull String toString() {
+    public String toString() {
         StringBuilder result;
         result = new StringBuilder(16);
         for (CardContainer cardContainer : positionManager.getCardsPositioned().values()) {

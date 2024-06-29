@@ -30,7 +30,7 @@ public class LoadingScreen {
      *
      * @param codexNaturalis The GUI instance that the Loading Screen is a part of.
      */
-    public static void createLoadingScreen(@NotNull CodexNaturalis codexNaturalis) {
+    public static void createLoadingScreen(CodexNaturalis codexNaturalis) {
 
         StackPane root = codexNaturalis.getSmallRoot();
         size = SQUARE_SIZE.getValue();
@@ -170,9 +170,8 @@ public class LoadingScreen {
 
     /**
      * This static method is used to get the timeline of the rotation of the symbols.
-     *
      * @param leafCenterRt the rotation of the leaf
-     * @param x            the angle of the rotation
+     * @param x the angle of the rotation
      * @return the timeline of the rotation
      */
     private static @NotNull Timeline getTl(@NotNull Rotate leafCenterRt,

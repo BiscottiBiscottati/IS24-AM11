@@ -16,12 +16,12 @@ public class Waiting extends TUIState {
     private static final String infoBar = "STATUS: Waiting...";
     private boolean alreadyError = false;
 
-    public Waiting(@NotNull MiniGameModel model) {
+    public Waiting(MiniGameModel model) {
         super(model);
     }
 
     @Override
-    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
+    public void passArgs(Actuator actuator, String[] args) {
         ArgParser parser = setUpOptions();
 
         if (args[0].isEmpty()) {
@@ -42,7 +42,9 @@ public class Waiting extends TUIState {
 
         String word = parser.getPositionalArgs().getFirst();
         switch (word.toLowerCase()) {
-            case "help" -> Actuator.help();
+            case "help" -> {
+                Actuator.help();
+            }
             case "exit" -> Actuator.close();
             case "get" -> {
                 if (model.table().getStatus().equals(GameStatus.CHOOSING_STARTERS) ||
@@ -90,7 +92,7 @@ public class Waiting extends TUIState {
     }
 
     @Override
-    public void restart(boolean dueToEx, @NotNull Exception exception) {
+    public void restart(boolean dueToEx, Exception exception) {
         alreadyError = false;
 
         ConsUtils.clear();
@@ -105,7 +107,7 @@ public class Waiting extends TUIState {
     }
 
     @Override
-    public @NotNull TuiStates getState() {
+    public TuiStates getState() {
         return TuiStates.WAITING;
     }
 
@@ -120,7 +122,7 @@ public class Waiting extends TUIState {
         System.out.println("\033[F" + "\033[K" + text);
     }
 
-    private void get(@NotNull Actuator actuator, @NotNull ArgParser parser) {
+    private void get(Actuator actuator, ArgParser parser) {
         if (parser.getPositionalArgs().size() < 2) {
             errorsHappensEvenTwice("ERROR: get command requires an argument");
             alreadyError = true;

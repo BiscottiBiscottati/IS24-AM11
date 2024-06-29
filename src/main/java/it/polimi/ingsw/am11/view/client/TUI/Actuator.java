@@ -12,7 +12,8 @@ import it.polimi.ingsw.am11.view.client.TUI.printers.CardPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.states.TUIState;
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Its purpose is to effectively actuate the commands parsed by the reader. This is an "intermediate
@@ -22,10 +23,11 @@ import org.jetbrains.annotations.Nullable;
 
 
 public class Actuator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TuiUpdater.class);
 
-    private final @NotNull TuiUpdater tuiUpdater;
-    private @Nullable ClientGameConnector connector;
-    private @Nullable ClientChatConnector chatConnector;
+    private final TuiUpdater tuiUpdater;
+    private ClientGameConnector connector;
+    private ClientChatConnector chatConnector;
 
     public Actuator(@NotNull TuiUpdater tuiUpdater) {
         this.tuiUpdater = tuiUpdater;
@@ -68,7 +70,7 @@ public class Actuator {
      * @param ip   the server ip
      * @param port the server port
      */
-    public void connect(@NotNull String type, @NotNull String ip, int port) {
+    public void connect(@NotNull String type, String ip, int port) {
         try {
             ClientNetworkHandler connection = ConnectionType.fromString(type)
                                                             .orElseThrow(() -> new RuntimeException(
@@ -92,7 +94,7 @@ public class Actuator {
      * @param nick the nickname
      * @throws TooManyRequestsException if the player already sent a nickname
      */
-    public void setName(@NotNull String nick)
+    public void setName(String nick)
     throws TooManyRequestsException {
         tuiUpdater.setTuiState(TuiStates.WAITING);
         tuiUpdater.setHomeState(TuiStates.WAITING);
@@ -102,7 +104,6 @@ public class Actuator {
         }
 
         tuiUpdater.setCandidateNick(nick);
-        assert connector != null;
         connector.setNickname(nick);
     }
 
@@ -115,7 +116,6 @@ public class Actuator {
         tuiUpdater.setTuiState(TuiStates.WAITING);
         tuiUpdater.setHomeState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
-        assert connector != null;
         connector.setNumOfPlayers(num);
     }
 
@@ -128,7 +128,6 @@ public class Actuator {
         tuiUpdater.setTuiState(TuiStates.WAITING);
         tuiUpdater.setHomeState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
-        assert connector != null;
         connector.setStarterCard(isRetro);
     }
 
@@ -141,7 +140,6 @@ public class Actuator {
         tuiUpdater.setTuiState(TuiStates.WAITING);
         tuiUpdater.setHomeState(TuiStates.WAITING);
         tuiUpdater.getCurrentTuiState().restart(false, null);
-        assert connector != null;
         connector.setPersonalObjective(cardId);
     }
 
@@ -157,7 +155,6 @@ public class Actuator {
         tuiUpdater.setTuiState(TuiStates.WATCHING_TABLE);
         tuiUpdater.setHomeState(TuiStates.WATCHING_TABLE);
         tuiUpdater.getCurrentTuiState().restart(false, null);
-        assert connector != null;
         connector.placeCard(new Position(x, y), cardId, isRetro);
     }
 
@@ -168,10 +165,8 @@ public class Actuator {
      * @param deck   the deck from which the card is drawn
      * @throws IllegalCardBuildException if the card cannot be built by the CardPrinter
      */
-    public void draw(@Nullable Integer cardId, @NotNull PlayableCardType deck)
-    throws IllegalCardBuildException {
+    public void draw(Integer cardId, PlayableCardType deck) throws IllegalCardBuildException {
         tuiUpdater.getCurrentTuiState().restart(false, null);
-        assert connector != null;
         if (cardId == null) {
             connector.drawCard(false, deck, 0);
         } else {
@@ -182,7 +177,7 @@ public class Actuator {
     /**
      * Set the current state of the TuiUpdater and restart it
      *
-     * @param state the current state
+     * @param state
      */
     public void setTuiState(TuiStates state) {
         tuiUpdater.setTuiState(state);
@@ -194,8 +189,7 @@ public class Actuator {
      *
      * @param message the message
      */
-    public void sendChatMessage(@NotNull String message) {
-        assert chatConnector != null;
+    public void sendChatMessage(String message) {
         chatConnector.pubMsg(message);
     }
 
@@ -205,8 +199,7 @@ public class Actuator {
      * @param recipient the recipient
      * @param message   the message
      */
-    public void sendPrivateMessage(@NotNull String recipient, @NotNull String message) {
-        assert chatConnector != null;
+    public void sendPrivateMessage(String recipient, String message) {
         chatConnector.pubPrivateMsg(recipient, message);
     }
 
@@ -225,6 +218,10 @@ public class Actuator {
      */
     public TUIState getCurrentTuiState() {
         return tuiUpdater.getCurrentTuiState();
+    }
+
+    public void syncMeUp() {
+        connector.syncMeUp();
     }
 
 

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ReconnectionEvent extends PlayerViewEvent {
 
-    final ReconnectionModelMemento reconnectionModelMemento;
+    ReconnectionModelMemento reconnectionModelMemento;
 
     public ReconnectionEvent(@NotNull String player,
                              @NotNull ReconnectionModelMemento reconnectionModelMemento) {

@@ -15,6 +15,7 @@ import it.polimi.ingsw.am11.network.connector.ClientGameConnector;
 import it.polimi.ingsw.am11.view.client.ClientViewUpdater;
 import it.polimi.ingsw.am11.view.client.ExceptionThrower;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,6 +86,88 @@ public class ClientConnectorImpl implements ClientGameConnector {
      */
     public synchronized static void stop() {
         commandExecutor.shutdown();
+    }
+
+    /**
+     * @return The nickname of the player.
+     */
+    public synchronized @Nullable String getNickname() {
+        return nickname.get();
+    }
+
+    /**
+     * Sets the nickname of the player and sends a login request to the server.
+     * <p>
+     * The method sends a login request to the server. The method uses the command executor to send
+     * the request. The method uses a future to store the last command sent to the server. The
+     * method uses an atomic reference to store the nickname of the player.
+     * </p>
+     *
+     * @param nickname The nickname of the player.
+     */
+    @Override
+    public synchronized void setNickname(@NotNull String nickname) {
+        try {
+            future.get();
+        } catch (ExecutionException | InterruptedException ignored) {}
+
+        this.nickname.set(nickname);
+
+        LOGGER.debug("CLIENT RMI: Sending login request to server");
+        future = commandExecutor.submit(() -> {
+            try {
+                LOGGER.debug("CLIENT RMI: Looking up Loggable and logging in");
+                ((ServerLoggable) registry.lookup("Loggable"))
+                        .login(nickname, remoteGameCommands, remoteChat);
+                main.setHeartbeatNickname(nickname);
+                chatConnector.setSender(nickname);
+
+            } catch (NotBoundException | RemoteException e) {
+                LOGGER.debug("CLIENT RMI: Connection error while logging in: {}", e.getMessage());
+                updater.disconnectedFromServer(e.getMessage());
+            } catch (NumOfPlayersException e) {
+                exceptionThrower.throwException(e);
+            } catch (NotSetNumOfPlayerException e) {
+                exceptionThrower.throwException(e);
+            } catch (GameStatusException e) {
+                exceptionThrower.throwException(e);
+            } catch (PlayerInitException e) {
+                exceptionThrower.throwException(e);
+            }
+        });
+    }
+
+    /**
+     * Sends a syncMeUp request to the server to synchronize the client with the server.
+     */
+    @Override
+    public void syncMeUp() {
+        try {
+            future.get();
+        } catch (ExecutionException | InterruptedException ignored) {}
+
+        LOGGER.debug("CLIENT RMI: Sending syncMeUp request to server");
+
+        checkIfNickSet();
+
+        future = commandExecutor.submit(() -> {
+            try {
+                ((ServerGameCommandsInterface) registry.lookup("PlayerView"))
+                        .syncMeUp(nickname.get());
+            } catch (NotBoundException | RemoteException e) {
+                LOGGER.debug("CLIENT RMI: Connection error while syncing up: {}", e.getMessage());
+                updater.disconnectedFromServer(e.getMessage());
+            }
+        });
+    }
+
+    /**
+     * Checks if the nickname of the player is set.
+     */
+    private void checkIfNickSet() {
+        if (nickname.get() == null) {
+            throw new RuntimeException("Nickname not set");
+        }
     }
 
     /**
@@ -257,80 +340,5 @@ public class ClientConnectorImpl implements ClientGameConnector {
                 exceptionThrower.throwException(e);
             }
         });
-    }
-
-    /**
-     * Sets the nickname of the player and sends a login request to the server.
-     * <p>
-     * The method sends a login request to the server. The method uses the command executor to send
-     * the request. The method uses a future to store the last command sent to the server. The
-     * method uses an atomic reference to store the nickname of the player.
-     * </p>
-     *
-     * @param nickname The nickname of the player.
-     */
-    @Override
-    public synchronized void setNickname(@NotNull String nickname) {
-        try {
-            future.get();
-        } catch (ExecutionException | InterruptedException ignored) {}
-
-        this.nickname.set(nickname);
-
-        LOGGER.debug("CLIENT RMI: Sending login request to server");
-        future = commandExecutor.submit(() -> {
-            try {
-                LOGGER.debug("CLIENT RMI: Looking up Loggable and logging in");
-                ((ServerLoggable) registry.lookup("Loggable"))
-                        .login(nickname, remoteGameCommands, remoteChat);
-                main.setHeartbeatNickname(nickname);
-                chatConnector.setSender(nickname);
-
-            } catch (NotBoundException | RemoteException e) {
-                LOGGER.debug("CLIENT RMI: Connection error while logging in: {}", e.getMessage());
-                updater.disconnectedFromServer(e.getMessage());
-            } catch (NumOfPlayersException e) {
-                exceptionThrower.throwException(e);
-            } catch (NotSetNumOfPlayerException e) {
-                exceptionThrower.throwException(e);
-            } catch (GameStatusException e) {
-                exceptionThrower.throwException(e);
-            } catch (PlayerInitException e) {
-                exceptionThrower.throwException(e);
-            }
-        });
-    }
-
-    /**
-     * Sends a syncMeUp request to the server to synchronize the client with the server.
-     */
-    @Override
-    public void syncMeUp() {
-        try {
-            future.get();
-        } catch (ExecutionException | InterruptedException ignored) {}
-
-        LOGGER.debug("CLIENT RMI: Sending syncMeUp request to server");
-
-        checkIfNickSet();
-
-        future = commandExecutor.submit(() -> {
-            try {
-                ((ServerGameCommandsInterface) registry.lookup("PlayerView"))
-                        .syncMeUp(nickname.get());
-            } catch (NotBoundException | RemoteException e) {
-                LOGGER.debug("CLIENT RMI: Connection error while syncing up: {}", e.getMessage());
-                updater.disconnectedFromServer(e.getMessage());
-            }
-        });
-    }
-
-    /**
-     * Checks if the nickname of the player is set.
-     */
-    private void checkIfNickSet() {
-        if (nickname.get() == null) {
-            throw new RuntimeException("Nickname not set");
-        }
     }
 }

@@ -34,7 +34,8 @@ public class StarterCardEvent extends PlayerViewEvent {
     @Override
     public @NotNull Integer getValueOfAction() {
         if (oldCardId != null) return oldCardId;
-        return newCardId;
+        if (newCardId != null) return newCardId;
+        throw new UnsupportedOperationException("both are null cannot be called");
     }
 
 

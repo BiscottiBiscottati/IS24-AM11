@@ -18,7 +18,6 @@ import it.polimi.ingsw.am11.model.decks.playable.ResourceDeckFactory;
 import it.polimi.ingsw.am11.model.decks.starter.StarterDeckFactory;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -151,12 +150,11 @@ public class CardPrinter {
 
     }
 
-    public static @NotNull String spaces(int num) {
+    public static String spaces(int num) {
         return " ".repeat(Math.max(0, num));
     }
 
-    public static void printObjectives(@NotNull List<Integer> ids)
-    throws IllegalCardBuildException {
+    public static void printObjectives(List<Integer> ids) throws IllegalCardBuildException {
         List<List<String>> allObj = new ArrayList<>();
         for (Integer id : ids) {
             allObj.add(CardArchitect.buildObjective(id));
@@ -177,7 +175,35 @@ public class CardPrinter {
                       .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
     }
 
-    public static void printWaitingForTrn(@NotNull MiniGameModel model) {
+    public static char getColorLetter(@Nullable GameColor color) {
+        if (color == null) {
+            return ' ';
+        }
+        switch (color.getColumnName()) {
+            case "red" -> {return 'R';}
+            case "blue" -> {return 'B';}
+            case "green" -> {return 'G';}
+            case "purple" -> {return 'P';}
+            default -> throw new RuntimeException("Color is not one of the default ones: "
+                                                  + color.getItem().orElseThrow());
+        }
+    }
+
+    public static FieldCard getFieldCard(int id) throws IllegalCardBuildException {
+        return resDeck.getCardById(id)
+                      .map(FieldCard.class::cast)
+                      .or(() -> goldDeck.getCardById(id))
+                      .map(FieldCard.class::cast)
+                      .or(() -> starterDeck.getCardById(id))
+                      .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
+    }
+
+    public static ObjectiveCard getObjective(int id) throws IllegalCardBuildException {
+        return objDeck.getCardById(id).orElseThrow(
+                () -> new IllegalCardBuildException("Card not found"));
+    }
+
+    public static void printWaitingForTrn(MiniGameModel model) {
         List<String> playersInfo = PlayersPrinter.buildPlayers(model);
         List<String> table;
         try {
@@ -196,7 +222,7 @@ public class CardPrinter {
         try {
             obj = CardArchitect.buildVertObj(commObjs.get(0),
                                              commObjs.get(1),
-                                             persOnj.getFirst());
+                                             persOnj.get(0));
         } catch (IllegalCardBuildException e) {
             throw new RuntimeException(e);
         }
@@ -230,35 +256,7 @@ public class CardPrinter {
         }
     }
 
-    public static char getColorLetter(@Nullable GameColor color) {
-        if (color == null) {
-            return ' ';
-        }
-        switch (color.getColumnName()) {
-            case "red" -> {return 'R';}
-            case "blue" -> {return 'B';}
-            case "green" -> {return 'G';}
-            case "purple" -> {return 'P';}
-            default -> throw new RuntimeException("Color is not one of the default ones: "
-                                                  + color.getItem().orElseThrow());
-        }
-    }
-
-    public static FieldCard getFieldCard(int id) throws IllegalCardBuildException {
-        return resDeck.getCardById(id)
-                      .map(FieldCard.class::cast)
-                      .or(() -> goldDeck.getCardById(id))
-                      .map(FieldCard.class::cast)
-                      .or(() -> starterDeck.getCardById(id))
-                      .orElseThrow(() -> new IllegalCardBuildException("Card not found"));
-    }
-
-    public static ObjectiveCard getObjective(int id) throws IllegalCardBuildException {
-        return objDeck.getCardById(id).orElseThrow(
-                () -> new IllegalCardBuildException("Card not found"));
-    }
-
-    public static void printHand(@NotNull List<Integer> cardIds) throws IllegalCardBuildException {
+    public static void printHand(List<Integer> cardIds) throws IllegalCardBuildException {
         List<String> hand = CardArchitect.buildHand(cardIds);
         for (String str : hand) {
             System.out.println(str);

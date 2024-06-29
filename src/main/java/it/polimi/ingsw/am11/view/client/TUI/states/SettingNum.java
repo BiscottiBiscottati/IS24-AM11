@@ -15,16 +15,16 @@ public class SettingNum extends TUIState {
     private boolean alreadyError = false;
     private boolean isBlocked = false;
 
-    public SettingNum(@NotNull MiniGameModel model) {
-        super(model);
-    }
-
     private static void errorsHappens(String text) {
         System.out.println("\033[F" + "\033[K" + text);
     }
 
+    public SettingNum(MiniGameModel model) {
+        super(model);
+    }
+
     @Override
-    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
+    public void passArgs(Actuator actuator, String[] args) {
         ArgParser parser = setUpOptions();
         int val;
 
@@ -91,7 +91,6 @@ public class SettingNum extends TUIState {
         InfoBarPrinter.printInfoBar(infoBar);
 
         if (dueToEx) {
-            assert exception != null;
             System.out.println("ERROR: " + exception.getMessage());
             alreadyError = true;
         }
@@ -101,7 +100,7 @@ public class SettingNum extends TUIState {
     }
 
     @Override
-    public @NotNull TuiStates getState() {
+    public TuiStates getState() {
         return TuiStates.SETTING_NUM;
     }
 

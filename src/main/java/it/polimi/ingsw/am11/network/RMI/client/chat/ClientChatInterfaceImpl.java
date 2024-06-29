@@ -7,8 +7,9 @@ import org.jetbrains.annotations.NotNull;
 import java.rmi.RemoteException;
 
 /**
- * Implementation of the {@link ClientChatInterface} interface for RMI connections.
- * This class is responsible for receiving messages from the server for chat purposes.
+ * Implementation of the {@link ClientChatInterface} interface for RMI connections. This class is
+ * responsible for receiving messages from the server for chat purposes.
+ *
  * @param chatUpdater The {@link ClientChatUpdater} object that will be used to update the client's
  *                    chat.
  */

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.view.client.GUI.utils;
 
 import javafx.scene.text.Font;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -27,7 +26,7 @@ public class FontManager {
      * @param size The size of the font.
      * @return The Font object of the specific size for the given font type.
      */
-    public static Font getFont(@NotNull FontsEnum font, int size) {
+    public static Font getFont(FontsEnum font, int size) {
         // Check if the font is already cached
         if (! fontCache.containsKey(font)) {
             fontCache.put(font, new HashMap<>(2));

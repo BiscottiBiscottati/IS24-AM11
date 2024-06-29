@@ -24,16 +24,16 @@ public class WatchingField extends TUIState {
     static final String askForCommand = "What you wanna do? Place a card? >>> \033[K";
     private static final String helpPlace = "HELP: place <x> <y> <cardId> <front/retro> \033[K";
     private static final String helpGet = "GET: get <table/[nickname]/chat> \033[K";
-    private static @NotNull String gameStatus = "";
+    private static String gameStatus = "";
     private boolean alreadyError = false;
-    private @Nullable String currentFieldShowed = "";
+    private String currentFieldShowed = "";
 
-    protected WatchingField(@NotNull MiniGameModel model) {
+    protected WatchingField(MiniGameModel model) {
         super(model);
     }
 
     @Override
-    public void passArgs(@Nullable Actuator actuator, String @NotNull [] args) {
+    public void passArgs(@Nullable Actuator actuator, String[] args) {
         ArgParser parser = setUpOptions();
 
         //Empty string
@@ -58,7 +58,6 @@ public class WatchingField extends TUIState {
             String secondArg = parser.getPositionalArgs().get(1);
 
             if (firstArg.equals("notify") && model.getPlayers().contains(secondArg)) {
-                assert currentFieldShowed != null;
                 if (currentFieldShowed.equals(secondArg)) {
                     refresh();
                 }
@@ -171,7 +170,7 @@ public class WatchingField extends TUIState {
     }
 
     @Override
-    public @NotNull TuiStates getState() {
+    public TuiStates getState() {
         return TuiStates.WATCHING_FIELD;
     }
 
@@ -229,7 +228,7 @@ public class WatchingField extends TUIState {
         TuiStates.printAskLine(this);
     }
 
-    private void get(@NotNull Actuator actuator, @NotNull ArgParser parser) {
+    private void get(Actuator actuator, ArgParser parser) {
         List<String> positionalArgs = parser.getPositionalArgs();
 
         Set<String> playerList = model.getPlayers();
@@ -265,7 +264,7 @@ public class WatchingField extends TUIState {
 
     }
 
-    private void place(@NotNull Actuator actuator, @NotNull ArgParser parser) {
+    private void place(Actuator actuator, ArgParser parser) {
         List<String> positionalArgs = parser.getPositionalArgs();
 
         if (positionalArgs.size() == 2) {

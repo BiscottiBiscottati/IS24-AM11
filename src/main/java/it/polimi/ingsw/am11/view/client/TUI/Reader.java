@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am11.view.client.TUI;
 
 import it.polimi.ingsw.am11.view.client.TUI.states.TuiStates;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -17,9 +16,9 @@ import java.util.regex.Pattern;
 
 public class Reader {
     private static final Pattern SPACE_SPLIT = Pattern.compile("\\s+");
-    private final @NotNull Scanner input;
-    private final @NotNull TuiUpdater tuiUpdater;
-    private final @NotNull Actuator actuator;
+    private final Scanner input;
+    private final TuiUpdater tuiUpdater;
+    private final Actuator actuator;
 
     public Reader() {
         this.input = new Scanner(System.in);

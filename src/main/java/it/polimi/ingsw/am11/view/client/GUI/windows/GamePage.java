@@ -36,10 +36,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -145,7 +145,7 @@ public class GamePage {
     private List<Boolean> handRetro;
     private List<Integer> shownPlayable;
     private Set<Position> availablePositions;
-    private @Nullable Position selectedPosition;
+    private Position selectedPosition;
     private Integer selectedHandPose;
     private String currentSeenField;
     private int centreX;
@@ -196,8 +196,9 @@ public class GamePage {
      * for the page and adds it to the root of the GUI.
      *
      * @param codexNaturalis The GUI instance that the game page is a part of.
+     * @throws IOException If an input or output exception occurred
      */
-    public void createGamePage(@NotNull CodexNaturalis codexNaturalis) {
+    public void createGamePage(@NotNull CodexNaturalis codexNaturalis) throws IOException {
         miniGameModel = codexNaturalis.getMiniGameModel();
         guiActuator = codexNaturalis.getGuiActuator();
         currentSeenField = miniGameModel.myName();
@@ -319,7 +320,7 @@ public class GamePage {
      * @param type  The type of the deck (resource or gold).
      * @param color The color of the card to be displayed on the top of the deck.
      */
-    public void updateDeckTop(@NotNull PlayableCardType type,
+    public void updateDeckTop(PlayableCardType type,
                               it.polimi.ingsw.am11.model.cards.utils.enums.GameColor color) {
         Platform.runLater(() -> {
             switch (type) {
@@ -355,7 +356,7 @@ public class GamePage {
                     miniGameModel.getCliPlayer(
                             miniGameModel.myName()).getSpace().getPlayerObjective();
             int cardId = cardIdSet.iterator().next();
-            LOGGER.debug("Card id: {}", cardId);
+            LOGGER.debug("Card id: " + cardId);
             Image personalObjImage = GuiResources.getCardImage(cardId);
 
             if (personalObjImage != null) {
@@ -482,7 +483,7 @@ public class GamePage {
                 newRectangle.setTranslateX(pos.x() * 117 + centreX);
                 newRectangle.setTranslateY(- pos.y() * 60 + centreY);
                 newRectangle.setOnMouseClicked(event -> {
-                    LOGGER.debug("{} clicked", pos);
+                    LOGGER.debug(pos + " clicked");
                     if (selectedPosition != pos) {
                         selectedPosition = pos;
                         signal.setVisible(true);
@@ -511,7 +512,7 @@ public class GamePage {
      */
     private void recursivePrinter(@NotNull Map<Position, ImageView> placedCards,
                                   @NotNull Map<Position, CardContainer> cardsPositioned,
-                                  @NotNull Position pos) {
+                                  Position pos) {
 
         CardContainer cardContainer = cardsPositioned.get(pos);
         if (placedCards.containsKey(pos)) {
@@ -570,13 +571,9 @@ public class GamePage {
                                 nickname).getField().getCardsPositioned();
 
                 recursivePrinter(placedCards, cardsPositioned, new Position(0, 0));
-            } else {
-                if (currentSeenField.equals(miniGameModel.myName())) {
-                    assert miniGameModel.getCurrentTurn() != null;
-                    if (! miniGameModel.getCurrentTurn().equals(miniGameModel.myName())) {
-                        cardField.getChildren().removeIf(Rectangle.class::isInstance);
-                    }
-                }
+            } else if (currentSeenField.equals(miniGameModel.myName()) &&
+                       ! miniGameModel.getCurrentTurn().equals(miniGameModel.myName())) {
+                cardField.getChildren().removeIf(Rectangle.class::isInstance);
             }
         });
     }
@@ -802,7 +799,7 @@ public class GamePage {
      *
      * @param mouseEvent The MouseEvent object representing the details of the click event.
      */
-    public void card1Selected(@NotNull MouseEvent mouseEvent) {
+    public void card1Selected(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             handSelect(mouseEvent, 0);
         });
@@ -819,7 +816,7 @@ public class GamePage {
      * @param handPos    The position of the selected card in the hand (0 for the first card, 1 for
      *                   the second card, etc.).
      */
-    private void handSelect(@NotNull MouseEvent mouseEvent, int handPos) {
+    private void handSelect(MouseEvent mouseEvent, int handPos) {
         boolean isRetro = false;
         if (selectedHandPose == null || selectedHandPose != handPos) {
             switch (selectedHandPose) {
@@ -895,7 +892,7 @@ public class GamePage {
      *
      * @param mouseEvent The MouseEvent object representing the details of the click event.
      */
-    public void card2Selected(@NotNull MouseEvent mouseEvent) {
+    public void card2Selected(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             handSelect(mouseEvent, 1);
         });
@@ -907,7 +904,7 @@ public class GamePage {
      *
      * @param mouseEvent The MouseEvent object representing the details of the click event.
      */
-    public void card3Selected(@NotNull MouseEvent mouseEvent) {
+    public void card3Selected(MouseEvent mouseEvent) {
         Platform.runLater(() -> {
             handSelect(mouseEvent, 2);
         });
@@ -1004,7 +1001,7 @@ public class GamePage {
      * @param commentField The TextField object representing the text field where the message is
      *                     entered.
      */
-    public void handleComment(@NotNull TextField commentField) {
+    public void handleComment(TextField commentField) {
         Platform.runLater(() -> {
             String comment = commentField.getText().strip();
             if (comment.isEmpty() || comment.isBlank()) {
@@ -1079,7 +1076,6 @@ public class GamePage {
             finalLB.setVisible(true);
 
             Map<String, Integer> finalLeaderboard = miniGameModel.getFinalLeaderboard();
-            assert finalLeaderboard != null;
             finalLeaderboard.forEach((key, value) -> {
                 switch (value) {
                     case 1 -> first.setText(key + " - " + value);

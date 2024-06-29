@@ -15,19 +15,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * This class is used to create the page where the player can choose the starter card.
  */
 public class SetStarterCardsPage {
     private static GuiActuator guiActuator;
-    private static @Nullable Label message = null;
-    private static @Nullable ImageView cardImage = null;
-    private static @Nullable ImageView cardRetro = null;
-    private static @Nullable HBox layout = null;
-    private static @Nullable VBox vbox = null;
+    private static Label message = null;
+    private static ImageView cardImage = null;
+    private static ImageView cardRetro = null;
+    private static HBox layout = null;
+    private static VBox vbox = null;
     private static MiniGameModel miniGameModel;
 
     /**
@@ -36,7 +34,7 @@ public class SetStarterCardsPage {
      *
      * @param codexNaturalis The GUI instance that the starter cards page is a part of.
      */
-    public static void createStarterCardsPage(@NotNull CodexNaturalis codexNaturalis) {
+    public static void createStarterCardsPage(CodexNaturalis codexNaturalis) {
         miniGameModel = codexNaturalis.getMiniGameModel();
 
         StackPane root = codexNaturalis.getSmallRoot();
@@ -78,13 +76,10 @@ public class SetStarterCardsPage {
 
         cardRetro.setFitHeight(75);
         cardRetro.setFitWidth(120);
-        assert layout != null;
         layout.getChildren().addAll(cardImage, cardRetro);
 
-        assert message != null;
         message.setVisible(true);
         layout.setVisible(true);
-        assert vbox != null;
         vbox.setVisible(true);
         cardImage.setVisible(true);
         cardRetro.setVisible(true);
@@ -117,13 +112,9 @@ public class SetStarterCardsPage {
     public static void hideStarterCardsPage() {
         if (cardImage != null) {
             cardImage.setVisible(false);
-            assert cardRetro != null;
             cardRetro.setVisible(false);
-            assert message != null;
             message.setVisible(false);
-            assert layout != null;
             layout.setVisible(false);
-            assert vbox != null;
             vbox.setVisible(false);
         }
     }

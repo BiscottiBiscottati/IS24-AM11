@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class TUIState {
 
-    protected final MiniGameModel model;
+    protected MiniGameModel model;
 
 
     protected TUIState(@NotNull MiniGameModel model) {

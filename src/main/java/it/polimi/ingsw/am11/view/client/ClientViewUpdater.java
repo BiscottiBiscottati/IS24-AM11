@@ -28,7 +28,7 @@ public interface ClientViewUpdater {
     void updateDeckTop(@NotNull PlayableCardType type, @Nullable GameColor color);
 
     /**
-     * Update the field of the player, it can place or remove a card, if the removeMode is true, the
+     * Update the field of the player, it can place or remove a card, if the removeMode is true the
      * cardId and isRetro are ignored.
      *
      * @param nickname the nickname of the player
@@ -64,7 +64,7 @@ public interface ClientViewUpdater {
     void updatePlayerPoint(@NotNull String nickname, int points);
 
     /**
-     * Update the status of the game; it is referred to the status of the model, not the state of
+     * Update the status of the game, it is referred to the status of the model, not the state of
      * the implemented user interface
      *
      * @param status the new status of the game

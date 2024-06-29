@@ -15,8 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -28,7 +26,7 @@ import java.util.List;
 public class SetObjCardsPage {
     private static GuiActuator guiActuator;
     private static Label message;
-    private static @Nullable ImageView cardImage1 = null;
+    private static ImageView cardImage1 = null;
     private static ImageView cardImage2;
     private static HBox layout;
     private static VBox vbox;
@@ -41,7 +39,7 @@ public class SetObjCardsPage {
      *
      * @param codexNaturalis The GUI instance that the Objective Cards Page is a part of.
      */
-    public static void createObjCardsPage(@NotNull CodexNaturalis codexNaturalis) {
+    public static void createObjCardsPage(CodexNaturalis codexNaturalis) {
         SetObjCardsPage.miniGameModel = codexNaturalis.getMiniGameModel();
 
         StackPane root = codexNaturalis.getSmallRoot();

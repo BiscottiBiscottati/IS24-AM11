@@ -13,8 +13,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.DISTANCE_TO_BORDER;
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
@@ -26,10 +24,13 @@ import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON
 public class SetNumOfPlayersPage {
     private static CodexNaturalis codexNaturalis;
     private static GuiActuator guiActuator;
-    private static @Nullable Label numOfPlayers = null;
-    private static @Nullable Label invalidNumOfPlayers = null;
-    private static @Nullable TextField writeNumOfPlayers = null;
-    private static @Nullable Button enterNumOfPlayers = null;
+    private static Label numOfPlayers = null;
+    private static Label invalidNumOfPlayers = null;
+    private static Font font;
+    private static int halfButtonSize, distanceToBorder;
+    private static TextField writeNumOfPlayers = null;
+    private static Button enterNumOfPlayers = null;
+    private static StackPane root;
 
 
     /**
@@ -38,15 +39,15 @@ public class SetNumOfPlayersPage {
      *
      * @param codexNaturalis The GUI instance that the Set Number of Players Page is a part of.
      */
-    public static void createNumOfPlayersPage(@NotNull CodexNaturalis codexNaturalis) {
+    public static void createNumOfPlayersPage(CodexNaturalis codexNaturalis) {
         SetNumOfPlayersPage.codexNaturalis = codexNaturalis;
 
-        Font font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+        font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
-        int halfButtonSize = HALF_BUTTON_SIZE.getValue();
+        halfButtonSize = HALF_BUTTON_SIZE.getValue();
         guiActuator = codexNaturalis.getGuiActuator();
-        int distanceToBorder = DISTANCE_TO_BORDER.getValue();
-        StackPane root = codexNaturalis.getSmallRoot();
+        distanceToBorder = DISTANCE_TO_BORDER.getValue();
+        root = codexNaturalis.getSmallRoot();
 
         numOfPlayers = new Label("Number of players:");
         numOfPlayers.setBackground(Background.EMPTY);
@@ -94,11 +95,8 @@ public class SetNumOfPlayersPage {
      */
     public static void showSetNumOfPlayersPage() {
         WaitingRoomPage.hideWaitingRoomPage();
-        assert numOfPlayers != null;
         numOfPlayers.setVisible(true);
-        assert writeNumOfPlayers != null;
         writeNumOfPlayers.setVisible(true);
-        assert enterNumOfPlayers != null;
         enterNumOfPlayers.setVisible(true);
         writeNumOfPlayers.setOnKeyPressed(event -> {
             if (event.getCode().toString().equals("ENTER")) {
@@ -117,24 +115,18 @@ public class SetNumOfPlayersPage {
     public static void handleEnterNumOfPlayers() {
         int num = 0;
         try {
-            assert writeNumOfPlayers != null;
             num = Integer.parseInt(writeNumOfPlayers.getCharacters().toString());
         } catch (NumberFormatException e) {
-            assert invalidNumOfPlayers != null;
             invalidNumOfPlayers.setVisible(true);
         }
         if (num < 2 || num > 4) {
-            assert invalidNumOfPlayers != null;
             invalidNumOfPlayers.setVisible(true);
         } else {
             guiActuator.setNumOfPlayers(num);
-            assert enterNumOfPlayers != null;
             enterNumOfPlayers.setVisible(false);
-            assert numOfPlayers != null;
             numOfPlayers.setVisible(false);
             writeNumOfPlayers.setVisible(false);
             WaitingRoomPage.showWaitingRoomPage();
-            assert invalidNumOfPlayers != null;
             invalidNumOfPlayers.setVisible(false);
         }
     }
@@ -144,7 +136,6 @@ public class SetNumOfPlayersPage {
      * invalid.
      */
     public static void showErrorMesssage() {
-        assert invalidNumOfPlayers != null;
         invalidNumOfPlayers.setVisible(true);
     }
 
@@ -155,11 +146,8 @@ public class SetNumOfPlayersPage {
     public static void hideSetNumOfPlayersPage() {
         if (numOfPlayers != null) {
             numOfPlayers.setVisible(false);
-            assert writeNumOfPlayers != null;
             writeNumOfPlayers.setVisible(false);
-            assert enterNumOfPlayers != null;
             enterNumOfPlayers.setVisible(false);
-            assert invalidNumOfPlayers != null;
             invalidNumOfPlayers.setVisible(false);
         }
     }

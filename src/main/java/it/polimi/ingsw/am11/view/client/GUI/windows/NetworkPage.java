@@ -15,7 +15,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import org.jetbrains.annotations.NotNull;
 
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.DISTANCE_TO_BORDER;
 import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON_SIZE;
@@ -26,6 +25,8 @@ import static it.polimi.ingsw.am11.view.client.GUI.utils.Proportions.HALF_BUTTON
 public class NetworkPage {
     private static CodexNaturalis codexNaturalis;
     private static TextField ipAddress, port;
+    private static Font font;
+    private static int halfButtonSize, distanceToBorder;
     private static Label connectionType, connectionFailed;
     private static Button chooseSocket, chooseRMI, joinButton;
     private static GuiActuator guiActuator;
@@ -37,16 +38,16 @@ public class NetworkPage {
      *
      * @param codexNaturalis The GUI instance that the Network Page is a part of.
      */
-    public static void createNetworkPage(@NotNull CodexNaturalis codexNaturalis) {
+    public static void createNetworkPage(CodexNaturalis codexNaturalis) {
         NetworkPage.codexNaturalis = codexNaturalis;
 
         StackPane root = codexNaturalis.getSmallRoot();
-        Font font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+        font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
 
-        int halfButtonSize = HALF_BUTTON_SIZE.getValue();
+        halfButtonSize = HALF_BUTTON_SIZE.getValue();
         guiActuator = codexNaturalis.getGuiActuator();
-        int distanceToBorder = DISTANCE_TO_BORDER.getValue();
+        distanceToBorder = DISTANCE_TO_BORDER.getValue();
 
         theBox = new VBox(2 * halfButtonSize);
         theBox.setAlignment(Pos.CENTER);

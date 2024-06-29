@@ -15,8 +15,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,10 +32,12 @@ public class SetNickPage {
     private static final Pattern SPACE_SPLIT = Pattern.compile("\\s+");
     private static MiniGameModel miniGameModel;
     private static GuiActuator guiActuator;
-    private static @Nullable TextField writeNick = null;
+    private static TextField writeNick = null;
     private static Label yourName, nameAlreadyTaken;
+    private static Font font, fontBig;
     private static Button chooseNick;
     private static Button goToNetwork;
+    private static int halfButtonSize, distanceToBorder;
 
     /**
      * This static method is used to create the set nickname page in the GUI. It initializes the
@@ -45,16 +45,16 @@ public class SetNickPage {
      *
      * @param codexNaturalis The GUI instance that the set nickname page is a part of.
      */
-    public static void createSettingNickPage(@NotNull CodexNaturalis codexNaturalis) {
+    public static void createSettingNickPage(CodexNaturalis codexNaturalis) {
         guiActuator = codexNaturalis.getGuiActuator();
         StackPane root = codexNaturalis.getSmallRoot();
         miniGameModel = codexNaturalis.getMiniGameModel();
-        Font font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
+        font = FontManager.getFont(FontsEnum.CLOISTER_BLACK, (int) (
                 Proportions.HALF_BUTTON_SIZE.getValue() * 1.5));
-        Font fontBig = FontManager.getFont(FontsEnum.CLOISTER_BLACK,
-                                           Proportions.HALF_BUTTON_SIZE.getValue() * 3);
-        int halfButtonSize = HALF_BUTTON_SIZE.getValue();
-        int distanceToBorder = DISTANCE_TO_BORDER.getValue();
+        fontBig = FontManager.getFont(FontsEnum.CLOISTER_BLACK,
+                                      Proportions.HALF_BUTTON_SIZE.getValue() * 3);
+        halfButtonSize = HALF_BUTTON_SIZE.getValue();
+        distanceToBorder = DISTANCE_TO_BORDER.getValue();
         writeNick = new TextField();
 
         writeNick.setAlignment(Pos.CENTER);
@@ -121,7 +121,6 @@ public class SetNickPage {
     public static void showSettingNickPage() {
 
         yourName.setVisible(true);
-        assert writeNick != null;
         writeNick.setVisible(true);
         nameAlreadyTaken.setVisible(false);
         chooseNick.setVisible(true);
@@ -154,7 +153,6 @@ public class SetNickPage {
      * checks if the nickname is valid and sets the player's nickname.
      */
     public static void handleEnterBtn() {
-        assert writeNick != null;
         String nick = writeNick.getCharacters().toString().strip();
         LOGGER.debug(nick);
         String[] nickSplit = SPACE_SPLIT.split(nick);

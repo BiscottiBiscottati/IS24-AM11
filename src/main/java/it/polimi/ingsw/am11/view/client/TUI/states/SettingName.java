@@ -8,7 +8,6 @@ import it.polimi.ingsw.am11.view.client.TUI.printers.InfoBarPrinter;
 import it.polimi.ingsw.am11.view.client.TUI.utils.ConsUtils;
 import it.polimi.ingsw.am11.view.client.miniModel.MiniGameModel;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class SettingName extends TUIState {
 
@@ -18,7 +17,7 @@ public class SettingName extends TUIState {
     private boolean isBlocked = false;
     private boolean alreadyError = false;
 
-    public SettingName(@NotNull MiniGameModel model) {
+    public SettingName(MiniGameModel model) {
         super(model);
     }
 
@@ -27,7 +26,7 @@ public class SettingName extends TUIState {
     }
 
     @Override
-    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
+    public void passArgs(Actuator actuator, String[] args) {
         ArgParser parser = setUpOptions();
 
 
@@ -103,7 +102,7 @@ public class SettingName extends TUIState {
     }
 
     @Override
-    public void restart(boolean dueToEx, @Nullable Exception exception) {
+    public void restart(boolean dueToEx, Exception exception) {
         isBlocked = false;
         alreadyError = false;
 
@@ -119,7 +118,7 @@ public class SettingName extends TUIState {
     }
 
     @Override
-    public @NotNull TuiStates getState() {
+    public TuiStates getState() {
         return TuiStates.SETTING_NAME;
     }
 

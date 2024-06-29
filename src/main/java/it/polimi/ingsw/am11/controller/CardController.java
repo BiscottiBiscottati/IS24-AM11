@@ -53,17 +53,19 @@ public class CardController {
         saveExecutor.submit(this::saveToDisk);
     }
 
-    public synchronized void drawCard(boolean fromVisible, @NotNull PlayableCardType type,
-                                      @NotNull String nickname,
-                                      int cardID)
+    public synchronized int drawCard(boolean fromVisible, @NotNull PlayableCardType type,
+                                     @NotNull String nickname,
+                                     int cardID)
     throws IllegalPlayerSpaceActionException, TurnsOrderException, IllegalPickActionException,
            PlayerInitException, GameStatusException, EmptyDeckException,
            MaxHandSizeException {
         try {
+            int card;
             if (fromVisible) {
-                model.drawVisibleOf(type, nickname, cardID);
-            } else model.drawFromDeckOf(type, nickname);
+                card = model.drawVisibleOf(type, nickname, cardID);
+            } else card = model.drawFromDeckOf(type, nickname);
             saveExecutor.submit(this::saveToDisk);
+            return card;
         } catch (GameBreakingException e) {
             throw new RuntimeException(e);
         }

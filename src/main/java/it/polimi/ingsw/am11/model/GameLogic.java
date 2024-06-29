@@ -398,7 +398,8 @@ public class GameLogic implements GameModel {
             LOGGER.info("MODEL: Picking starters...");
             pickStarters();
             plateau.setStatus(GameStatus.CHOOSING_STARTERS);
-        } catch (IllegalPlayerSpaceActionException | PlayerInitException e) {
+        } catch (IllegalPlayerSpaceActionException | GameStatusException |
+                 IllegalPickActionException | PlayerInitException e) {
             LOGGER.error("Something broke while dealing starters or objectives! Error: {}",
                          e.getMessage());
             throw new GameBreakingException("Something broke while dealing starters or objectives");
@@ -416,11 +417,13 @@ public class GameLogic implements GameModel {
     /**
      * Pick a <code>StarterCard</code> from the deck on the <code>PickableTable</code> and saves it
      * in player space
+     *
+     * @throws GameStatusException if the game is not ongoing
      */
 
     private void pickStarters()
-    throws PlayerInitException,
-           IllegalPlayerSpaceActionException {
+    throws GameStatusException, PlayerInitException,
+           IllegalPlayerSpaceActionException, IllegalPickActionException {
         for (String nickname : playerManager.getPlayers()) {
             StarterCard starter = pickablesTable.pickStarterCard();
 
@@ -1126,6 +1129,7 @@ public class GameLogic implements GameModel {
 
     /**
      * Pick a <code>ObjectiveCard</code> from the deck on the <code>PickableTable</code>.
+     *
      */
 
     private void pickCandidateObjectives()

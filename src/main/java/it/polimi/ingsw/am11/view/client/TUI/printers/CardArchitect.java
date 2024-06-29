@@ -10,7 +10,6 @@ import it.polimi.ingsw.am11.model.cards.utils.enums.*;
 import it.polimi.ingsw.am11.model.exceptions.IllegalCardBuildException;
 import it.polimi.ingsw.am11.view.client.TUI.utils.Line;
 import it.polimi.ingsw.am11.view.client.TUI.utils.Part;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -20,9 +19,8 @@ import java.util.Optional;
 
 public class CardArchitect {
 
-    public static @NotNull List<String> buildTable(@NotNull List<Integer> visiblesId,
-                                                   @Nullable GameColor goldColor,
-                                                   @Nullable GameColor resColor)
+    public static List<String> buildTable(List<Integer> visiblesId, @Nullable GameColor goldColor,
+                                          @Nullable GameColor resColor)
     throws IllegalCardBuildException {
 
         //size: 73*19
@@ -60,8 +58,7 @@ public class CardArchitect {
         return result;
     }
 
-    public static @NotNull List<String> buildHand(@NotNull List<Integer> cardIds)
-    throws IllegalCardBuildException {
+    public static List<String> buildHand(List<Integer> cardIds) throws IllegalCardBuildException {
 
         //size 73 * 10
         if (cardIds.size() > 3) {
@@ -100,7 +97,7 @@ public class CardArchitect {
         return result;
     }
 
-    public static @NotNull List<String> buildCard(int id) throws IllegalCardBuildException {
+    public static List<String> buildCard(int id) throws IllegalCardBuildException {
 
         List<String> card = new ArrayList<>();
 
@@ -128,8 +125,8 @@ public class CardArchitect {
         return card;
     }
 
-    public static @NotNull List<String> buildCornerLines(char left, char right, boolean isTop,
-                                                         @Nullable PlayableCard card) {
+    public static List<String> buildCornerLines(char left, char right, boolean isTop,
+                                                PlayableCard card) {
         String line1;
         String line2;
         String line3;
@@ -198,6 +195,7 @@ public class CardArchitect {
             } else {
                 rightPart = "└───╢";
             }
+            line3 = leftPart + centralPart + rightPart;
         } else {
             //LINE 1
             if (left == 'X') {
@@ -251,8 +249,8 @@ public class CardArchitect {
             } else {
                 rightPart = "╧═══╝";
             }
+            line3 = leftPart + centralPart + rightPart;
         }
-        line3 = leftPart + centralPart + rightPart;
 
 
         lines.add(line1);
@@ -261,7 +259,7 @@ public class CardArchitect {
         return lines;
     }
 
-    public static @NotNull String buildCenterString(@Nullable List<GameColor> center) {
+    public static String buildCenterString(List<GameColor> center) {
         char center1;
         char center2;
         char center3;
@@ -286,7 +284,7 @@ public class CardArchitect {
         return "║       error       ║";
     }
 
-    public static @NotNull String buildPointsString(@NotNull PlayableCard card) {
+    public static String buildPointsString(PlayableCard card) {
         int points = card.getPoints();
         PointsRequirementsType type = card.getPointsRequirements();
         Optional<Symbol> symbol = card.getSymbolToCollect();
@@ -317,8 +315,7 @@ public class CardArchitect {
         return "   error   ";
     }
 
-    public static @NotNull String buildRequirementsString(
-            @NotNull Map<GameColor, Integer> requirements) {
+    public static String buildRequirementsString(Map<GameColor, Integer> requirements) {
         int i;
 
         int numOfRed = requirements.get(GameColor.RED);
@@ -361,8 +358,7 @@ public class CardArchitect {
         }
     }
 
-    public static @NotNull List<String> buildDeck(@Nullable GameColor color,
-                                                  PlayableCardType type) {
+    public static List<String> buildDeck(@Nullable GameColor color, PlayableCardType type) {
         List<String> deck = new ArrayList<>(8);
         List<GameColor> center = new ArrayList<>(1);
         if (color != null) {
@@ -392,7 +388,7 @@ public class CardArchitect {
         return deck;
     }
 
-    public static @NotNull List<String> buildVertObj(int comm1, int comm2, int pers)
+    public static List<String> buildVertObj(int comm1, int comm2, int pers)
     throws IllegalCardBuildException {
         //size: comm: 16 lines
         //size: pers: 9 lines
@@ -436,7 +432,7 @@ public class CardArchitect {
         return res;
     }
 
-    public static @NotNull List<String> buildObjective(int id) throws IllegalCardBuildException {
+    public static List<String> buildObjective(int id) throws IllegalCardBuildException {
         List<String> result = new ArrayList<>();
         ObjectiveCard objectiveCard = CardPrinter.getObjective(id);
 
@@ -601,7 +597,7 @@ public class CardArchitect {
         return result;
     }
 
-    public static @NotNull String spaces(int num) {
+    public static String spaces(int num) {
         return " ".repeat(Math.max(0, num));
     }
 }

@@ -35,7 +35,7 @@ public class ClientHandler implements Runnable {
     private final @NotNull BufferedReader in;
     private final @NotNull PrintWriter out;
     private final @NotNull PingHandler pingHandler;
-    private final @NotNull ServerGameSender gameSender;
+    private final ServerGameSender gameSender;
     private @Nullable ServerMessageHandler messageHandler;
     private @Nullable String nickname;
     private boolean isRunning;
@@ -91,8 +91,8 @@ public class ClientHandler implements Runnable {
 
     /**
      * Reads the nickname from the client and connects the player to the game, if the nickname has
-     * an invalid format, it continues to ask for a new nickname. If the nickname is in a valid
-     * format, it tries to connect the player to the game. The success of the connection depends on
+     * an invalid format it continues to ask for a new nickname. If the nickname is in a valid
+     * format it tries to connect the player to the game. The success of the connection depends on
      * the requisites of the game.
      *
      * @param exceptionSender the exception sender used to throw exceptions to the client

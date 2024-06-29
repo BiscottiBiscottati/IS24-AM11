@@ -34,8 +34,8 @@ public class CodexNaturalis extends Application {
 
     private static Stage primaryStage;
     private static Parent bigRoot;
-    private final @NotNull GuiActuator guiActuator;
-    private final @NotNull GuiUpdater guiUpdater;
+    private final GuiActuator guiActuator;
+    private final GuiUpdater guiUpdater;
     private Scene scene;
     private GamePage gamePage;
     private FXMLLoader fxmlLoader;
@@ -71,7 +71,7 @@ public class CodexNaturalis extends Application {
      *                     will not be primary stages.
      */
     @Override
-    public void start(@NotNull Stage primaryStage) {
+    public void start(Stage primaryStage) {
         CodexNaturalis.primaryStage = primaryStage;
         fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/it/polimi/ingsw/am11/view/client/GUI/windows/GamePage.fxml"));
@@ -144,7 +144,7 @@ public class CodexNaturalis extends Application {
      *
      * @return the gui actuator
      */
-    public @NotNull GuiActuator getGuiActuator() {
+    public GuiActuator getGuiActuator() {
         return guiActuator;
     }
 
@@ -154,7 +154,7 @@ public class CodexNaturalis extends Application {
      * @param type  The type of the playable card. It can be RESOURCE, GOLD, etc.
      * @param color The color of the card. It can be RED, BLUE, etc.
      */
-    public void updateDeckTop(@NotNull PlayableCardType type, @Nullable GameColor color) {
+    public void updateDeckTop(PlayableCardType type, @Nullable GameColor color) {
         gamePage.updateDeckTop(type, color);
     }
 
@@ -207,7 +207,7 @@ public class CodexNaturalis extends Application {
      *
      * @param status The new status of the game.
      */
-    public void updateGameStatus(@NotNull GameStatus status) {
+    public void updateGameStatus(GameStatus status) {
         switch (status) {
             case ONGOING -> {
                 gamePage.placeStarterCard();
@@ -221,7 +221,7 @@ public class CodexNaturalis extends Application {
 
     /**
      * This method is used to display the game page in the GUI. It sets the visibility of the game
-     * page, adjusts the stage settings, and enters full-screen mode.
+     * page, adjusts the stage settings, and enters full screen mode.
      */
     private void showGamePage() {
         smallRoot.setVisible(false);
@@ -293,7 +293,11 @@ public class CodexNaturalis extends Application {
         Platform.runLater(() -> {
             WaitingRoomPage.hideWaitingRoomPage();
             SetStarterCardsPage.showStarterCardsPage();
-            gamePage.createGamePage(this);
+            try {
+                gamePage.createGamePage(this);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -382,7 +386,11 @@ public class CodexNaturalis extends Application {
                 gamePage.gameEnded();
             }
             case ONGOING, ARMAGEDDON, LAST_TURN -> {
-                gamePage.createGamePage(this);
+                try {
+                    gamePage.createGamePage(this);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 Platform.runLater(() -> {
                     showGamePage();
                     gamePage.placeStarterCard();

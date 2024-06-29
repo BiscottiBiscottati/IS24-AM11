@@ -13,17 +13,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 
 public class Ended extends TUIState {
-    static final @NotNull String tellNothing = "Nothing to do here, you can exit the game >>> " +
-                                               "\033[K";
     private static final String infoBar = "STATUS: The game has ended";
+    static String tellNothing = "Nothing to do here, you can exit the game >>> \033[K";
     private boolean alreadyError = false;
 
-    public Ended(@NotNull MiniGameModel model) {
+    public Ended(MiniGameModel model) {
         super(model);
     }
 
     @Override
-    public void passArgs(@NotNull Actuator actuator, String @NotNull [] args) {
+    public void passArgs(Actuator actuator, String[] args) {
         ArgParser parser = setUpOptions();
         //Empty string
         if (args[0].isEmpty()) {
@@ -34,8 +33,12 @@ public class Ended extends TUIState {
 
         String word = parser.getPositionalArgs().getFirst();
         switch (word.toLowerCase()) {
-            case "help" -> Actuator.help();
-            case "get" -> get(actuator, parser);
+            case "help" -> {
+                Actuator.help();
+            }
+            case "get" -> {
+                get(actuator, parser);
+            }
             case "msg", "send" -> {
                 String note;
                 try {
@@ -66,7 +69,7 @@ public class Ended extends TUIState {
         return new ArgParser();
     }
 
-    private void get(@NotNull Actuator actuator, @NotNull ArgParser parser) {
+    private void get(Actuator actuator, ArgParser parser) {
         if (parser.getPositionalArgs().size() < 2) {
             errorsHappensEvenTwice("ERROR: get command requires an argument");
             alreadyError = true;
@@ -100,7 +103,7 @@ public class Ended extends TUIState {
     }
 
     @Override
-    public @NotNull TuiStates getState() {
+    public TuiStates getState() {
         return TuiStates.ENDED;
     }
 
