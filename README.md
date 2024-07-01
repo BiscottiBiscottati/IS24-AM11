@@ -19,6 +19,37 @@ You can download the rules here:
 
 [Codex Naturalis Rules (ITA)](https://www.craniocreations.it/storage/media/product_downloads/126/1516/CODEX_ITA_Rules_compressed.pdf)
 
+## Project Requirements
+
+### Functional Requirements
+
+| Requirement      | Status |
+|------------------|--------|
+| Complete Ruleset | ✅      |
+| Model            | ✅      |
+| Controller       | ✅      |
+| RMI              | ✅      |
+| Socket           | ✅      |
+| TUI              | ✅      |
+| GUI              | ✅      |
+
+### Additional Features
+
+| Requirement    | Status |
+|----------------|--------|
+| Persistence    | ✅      |
+| Resilience     | ✅      |
+| Chat           | ✅      |
+| Multiple Games | ❌      |
+
+### Non-Functional Requirements
+
+| Requirement  | Status |
+|--------------|--------|
+| UML Diagrams | ✅      |
+| Javadoc      | ✅      |
+| Peer Review  | ✅      |
+
 ## Project Structure
 
 The project is structured as follows:
