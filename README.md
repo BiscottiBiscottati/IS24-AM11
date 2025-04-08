@@ -1,4 +1,4 @@
-# SOFTWARE ENGINEERING FINAL PROJECT 2024
+# IS24-AM11: Codex Naturalis Digital Version
 
 ## Team Members
 
@@ -9,86 +9,119 @@
 
 ## Project Description
 
-The project consists of the development of the board
-game "[Codex Naturalis](https://www.craniocreations.it/prodotto/codex-naturalis)"
-in a digital version.
+This project is a digital implementation of the board game ”[Codex Naturalis](https://www.craniocreations.it/prodotto/codex-naturalis)”.
 
-You can download the rules here:
+You can find the official rules here:
 
-[Codex Naturalis Rules (ENG)](https://studiobombyx.com/en/rules/codex/)
+- [Codex Naturalis Rules (ENG)](https://studiobombyx.com/en/rules/codex/)
+- [Codex Naturalis Rules (ITA)](https://www.craniocreations.it/storage/media/product_downloads/126/1516/CODEX_ITA_Rules_compressed.pdf)
 
-[Codex Naturalis Rules (ITA)](https://www.craniocreations.it/storage/media/product_downloads/126/1516/CODEX_ITA_Rules_compressed.pdf)
-
-## Project Requirements
+## Features
 
 ### Functional Requirements
 
-| Requirement      | Status |
-|------------------|--------|
-| Complete Ruleset | ✅      |
-| Model            | ✅      |
-| Controller       | ✅      |
-| RMI              | ✅      |
-| Socket           | ✅      |
-| TUI              | ✅      |
-| GUI              | ✅      |
+| Requirement      | Status | Description                                  |
+|------------------|--------|----------------------------------------------|
+| Complete Ruleset | ✅      | Implements all rules of the base game.       |
+| Model            | ✅      | Core game logic and state representation.    |
+| Controller       | ✅      | Manages game flow and user interactions.     |
+| RMI              | ✅      | Network communication via Java RMI.          |
+| Socket           | ✅      | Network communication via Sockets.           |
+| TUI              | ✅      | Text-based User Interface for gameplay.      |
+| GUI              | ✅      | Graphical User Interface using JavaFX.       |
 
 ### Additional Features
 
-| Requirement    | Status |
-|----------------|--------|
-| Persistence    | ✅      |
-| Resilience     | ✅      |
-| Chat           | ✅      |
-| Multiple Games | ❌      |
+| Requirement    | Status | Description                                      |
+|----------------|--------|--------------------------------------------------|
+| Persistence    | ✅      | Game state can be saved and potentially loaded.  |
+| Resilience     | ✅      | Handles client disconnections and reconnections. |
+| Chat           | ✅      | In-game chat functionality between players.      |
+| Multiple Games | ❌      | Server currently supports only one game instance.|
 
 ### Non-Functional Requirements
 
-| Requirement  | Status |
-|--------------|--------|
-| UML Diagrams | ✅      |
-| Javadoc      | ✅      |
-| Peer Review  | ✅      |
+| Requirement  | Status | Description                                      |
+|--------------|--------|--------------------------------------------------|
+| UML Diagrams | ✅      | Class and Sequence diagrams provided in `/UML`.  |
+| Javadoc      | ✅      | Code documentation generated in `/javadoc`.      |
+| Peer Review  | ✅      | Peer review documents available in `/Peer Review`.|
 
 ## Project Structure
 
-The project is structured as follows:
+- **`/src`**: Contains the Java source code (`main`) and tests (`test`).
+- **`/javadoc`**: Contains the generated Javadoc API documentation.
+- **`/UML`**: Contains UML diagrams (Class and Sequence).
+- **`/Peer Review`**: Contains peer review documents.
+- **`/target`**: Contains compiled code and the packaged JAR file (after build).
+- **`pom.xml`**: Maven project configuration file.
+- **`mvnw`/`mvnw.cmd`**: Maven wrapper scripts.
+- **`README.md`**: This file.
 
-- **src**: contains the source code of the project
-- **javadoc**: contains the javadoc of the project
-- **UML**: contains the UML class and sequence diagrams of the project
-- **Peer Review**: contains the peer review of another team design
+## Getting Started
 
-## How to run the project
+### Prerequisites
 
-To run the project, you need to first package it with maven and then run the jar file.
+- Java Development Kit (JDK) 21 or later.
 
-The resulting jar will be a shaded jar that contains all the dependencies.
+### Building the Project
 
-Requirements:
+This project uses the Maven wrapper, so you don’t need a separate Maven installation.
 
-- Java 21
-- Maven
+1. **Clone the repository:**
 
-Run as server:
+    ```bash
+    git clone <repository-url>
+    cd IS24-AM11
+    ```
+
+2. **Package the application:**
+    - On Linux/macOS:
+
+      ```bash
+      ./mvnw clean package
+      ```
+
+    - On Windows:
+
+      ```bash
+      .\mvnw.cmd clean package
+      ```
+
+    This command compiles the code, runs tests, and creates a runnable JAR file (`target/AM11-1.0-ALPHA.jar`) with all dependencies included.
+
+### Running the Application
+
+The application can be run in server mode or client mode.
+
+**Run as Server:**
 
 ```bash
-java -jar <jar-file> server [-rmi <port>] [-socket <port>]
+java -jar target/AM11-1.0-ALPHA.jar server [-rmi <rmi_port>] [-socket <socket_port>]
 ```
 
-Run as client:
+- Replace `<rmi_port>` and `<socket_port>` with desired port numbers (defaults will be used if omitted).
+
+**Run as Client:**
 
 ```bash
-java -jar <jar-file> client [-ui <tui|gui>]
+java -jar target/AM11-1.0-ALPHA.jar client [-ui <tui|gui>] [-host <server_host>] [-rmi <rmi_port>] [-socket <socket_port>]
 ```
 
-## Additional Notes
+- `-ui`: Choose the interface (`tui` or `gui`, defaults to `gui` if omitted).
+- `-host`: Specify the server’s hostname or IP address (defaults to localhost).
+- `-rmi`/`-socket`: Specify the ports the server is listening on (if different from defaults).
 
-The project uses:
+## Technologies Used
 
-- Sqlite as a database for saving the game state
-- both Java RMI and Socket for the communication between server and client
-- JavaFX for the GUI
-- Maven for building and packaging
-- JUnit5 for testing
-- Slf4j for logging implemented with Logback
+- **Language:** Java 21
+- **Build Tool:** Maven
+- **Networking:** Java RMI, Sockets
+- **GUI:** JavaFX
+- **Database:** SQLite (for persistence)
+- **Testing:** JUnit 5, Mockito
+- **Logging:** SLF4j with Logback
+
+## License
+
+This project is licensed under the GNU General Public License v2.0. See the [LICENSE](javadoc/legal/LICENSE) file for details.
